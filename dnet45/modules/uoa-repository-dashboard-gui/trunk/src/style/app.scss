@@ -1,0 +1,22 @@
+// styles in src/style directory are applied to the whole page
+
+// 1. Your custom variables and variable overwrites.
+$global-link-color: #DA7D02;
+
+// 2. Import default variables and available mixins.
+@import "../public/scss/variables-theme.scss";
+@import "../public/scss/mixins-theme.scss";
+
+// 3. Your custom mixin overwrites.
+@mixin hook-card() { color: #000; }
+
+// 4. Import UIkit.
+@import "../public/scss/uikit-theme.scss";
+
+body {
+    background: #0147A7;
+    color: #fff;
+}
+a {
+    color: #03A9F4;
+}
