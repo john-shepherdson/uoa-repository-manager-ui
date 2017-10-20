@@ -1,0 +1,233 @@
+<div class="tm-header-mobile uk-hidden@m">
+  <nav class="uk-navbar-container uk-navbar" uk-navbar="">
+    <div class="uk-navbar-left">
+      <a class="uk-navbar-toggle" href="#tm-mobile" uk-toggle="">
+        <div uk-navbar-toggle-icon="" class="uk-navbar-toggle-icon uk-icon">
+        </div>
+      </a>
+    </div>
+    <div class="uk-navbar-center">
+      <a class="uk-navbar-item uk-logo" [routerLink]="['/search']">
+        <img src="http://openminted.eu/wp-content/uploads/2016/02/OpenMINTED_Tag_Color.png"
+             class="uk-responsive-height" alt="OpenMinTeD">
+      </a>
+    </div>
+  </nav>
+  <div id="tm-mobile" uk-offcanvas="" mode="slide" overlay="" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+      <button class="uk-offcanvas-close uk-close uk-icon" type="button" uk-close="">
+      </button>
+      <div class="uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+        <div>
+          <div class="uk-panel" id="module-0">
+            <ul class="uk-nav uk-nav-default">
+              <li class="uk-nav-header" [routerLinkActive]="['uk-active']">
+                <a [routerLink]="['/home']" routerLinkActive="uk-active" class="uk-offcanvas-close offcanvas-close">
+                  Home
+                  <!--<img class="uk-responsive-height" src="./imgs/Icons/Home_24white.svg" alt="home">-->
+                </a>
+              </li>
+              <li class="uk-nav-header uk-parent" [routerLinkActive]="['uk-active']">Search
+                <ul class="uk-nav-sub">
+                  <li><a [routerLink]="['/search', { resourceType: 'component' }]" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Service/Tools</a></li>
+                  <li><a [routerLink]="['/search', { resourceType: 'corpus' }]" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Corpora</a></li>
+                </ul>
+              </li>
+              <li class="uk-nav-header uk-parent" [routerLinkActive]="['uk-active']">Actions
+                <ul class="uk-nav-sub">
+                  <li><a [routerLink]="['/resourceRegistration/corpus/searchForPublications']"
+                         routerLinkActive="uk-active" class="uk-offcanvas-close offcanvas-close">Access OA docs</a></li>
+                  <li><a [routerLink]="['/resourceRegistration/corpus/upload']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Upload docs</a></li>
+                  <li><a [routerLink]="['/runApplication']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Run a service</a></li>
+                  <li><a [routerLink]="['/buildWorkflow']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Build a workflow</a></li>
+                </ul>
+              </li>
+              <li class="uk-nav-header uk-parent" [routerLinkActive]="['uk-active']">Add
+                <ul class="uk-nav-sub">
+                  <li><a [routerLink]="['/resourceRegistration/component']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Tool/Service/Component</a></li>
+                  <li><a [routerLink]="['/resourceRegistration/dataSource']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Data Source</a></li>
+                </ul>
+              </li>
+              <li class="uk-nav-header" [routerLinkActive]="['uk-active']">
+                <a [routerLink]="['/support']" routerLinkActive="uk-active" class="uk-offcanvas-close offcanvas-close">
+                  Support
+                  <!--<img class="uk-responsive-height" src="./imgs/Icons/Home_24white.svg" alt="home">-->
+                </a>
+              </li>
+              <li class="uk-nav-header uk-parent" [routerLinkActive]="['uk-active']">About
+                <ul class="uk-nav-sub">
+                  <li><a href="http://openminted.eu/about/overview/" target="_blank" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Who we are</a></li>
+                  <li><a href="http://openminted.eu/" target="_blank" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Project</a></li>
+                  <li><a [routerLink]="['/communities']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">Communities</a></li>
+                </ul>
+              </li>
+              <li *ngIf="oAuthService.isUserLoggedIn" class="uk-nav-header uk-parent"
+                  [routerLinkActive]="['uk-active']">My Resources
+                <ul class="uk-nav-sub">
+                  <li><a [routerLink]="['/mySpace/corpora']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">My Corpora</a></li>
+                  <li><a [routerLink]="['/mySpace/services']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">My Services/Tools</a></li>
+                  <li><a [routerLink]="['/mySpace/operations']" routerLinkActive="uk-active"
+                         class="uk-offcanvas-close offcanvas-close">My Operations</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tm-header uk-visible@m" uk-header="">
+  <div class="uk-navbar-container uk-sticky" uk-sticky="" media="768" cls-active="uk-active uk-navbar-sticky" style="">
+    <div class="uk-container uk-container-expand">
+      <nav class="uk-navbar" uk-navbar="{&quot;align&quot;:&quot;left&quot;}">
+        <div class="uk-navbar-left">
+          <a routerLink="/home" class="uk-navbar-item uk-logo">
+            <img src="http://openminted.eu/wp-content/uploads/2016/02/OpenMINTED_Tag_Color.png"
+                 class="uk-responsive-height" alt="OpenMinTeD">
+          </a>
+        </div>
+        <div class="uk-navbar-center">
+          <ul class="uk-navbar-nav">
+            <li class="uk-parent" [routerLinkActive]="['uk-active']">
+              <a routerLink="/home" routerLinkActive="uk-active">
+                Home
+              </a>
+            </li>
+            <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
+                                                                        aria-expanded="false">Search</a>
+              <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
+                   id="searchMenu" (click)="onClick('searchMenu')">
+                <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                  <div class="uk-first-column">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                      <li><a [routerLink]="['/search', { resourceType: 'component' }]" routerLinkActive="uk-active">Service/Tools</a>
+                      </li>
+                      <li><a [routerLink]="['/search', { resourceType: 'corpus' }]"
+                             routerLinkActive="uk-active">Corpora</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
+                                                                        aria-expanded="false">Actions</a>
+              <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
+                   id="actions" (click)="onClick('actions')">
+                <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                  <div class="uk-first-column">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                      <li><a [routerLink]="['/resourceRegistration/corpus/searchForPublications']"
+                             routerLinkActive="uk-active">Access OA docs</a></li>
+                      <li><a [routerLink]="['/resourceRegistration/corpus/upload']" routerLinkActive="uk-active">Upload
+                        docs</a></li>
+                      <li><a [routerLink]="['/runApplication']" routerLinkActive="uk-active">Run a service</a></li>
+                      <li><a [routerLink]="['/buildWorkflow']" routerLinkActive="uk-active">Build a workflow</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class="" aria-expanded="false">Add</a>
+              <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;" id="add"
+                   (click)="onClick('add')">
+                <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                  <div class="uk-first-column">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                      <li><a [routerLink]="['/resourceRegistration/component']" routerLinkActive="uk-active">Tool/Service/Component</a>
+                      </li>
+                      <li><a [routerLink]="['/resourceRegistration/dataSource']" routerLinkActive="uk-active">Data
+                        Source</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="uk-parent" [routerLinkActive]="['uk-active']">
+              <a routerLink="/support" routerLinkActive="uk-active">
+                Support
+                <!--<img class="uk-responsive-height" src="./imgs/Icons/Home_24white.svg" alt="home">-->
+              </a>
+            </li>
+            <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
+                                                                        aria-expanded="false">About</a>
+              <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
+                   id="about" (click)="onClick('about')">
+                <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                  <div class="uk-first-column">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                      <li><a href="http://openminted.eu/about/overview/" target="_blank" routerLinkActive="uk-active">Who
+                        we are</a></li>
+                      <li><a href="http://openminted.eu/" target="_blank" routerLinkActive="uk-active">Project</a></li>
+                      <li><a [routerLink]="['/about/communities']" routerLinkActive="uk-active">Communities</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li *ngIf="oAuthService.isUserLoggedIn" class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#"
+                                                                                                            class=""
+                                                                                                            aria-expanded="false">My
+              Resources</a>
+              <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
+                   id="mySpace" (click)="onClick('mySpace')">
+                <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                  <div class="uk-first-column">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                      <li><a [routerLink]="['/mySpace/corpora']" routerLinkActive="uk-active">My Corpora</a></li>
+                      <li><a [routerLink]="['/mySpace/services']" routerLinkActive="uk-active">My Services/Tools</a>
+                      </li>
+                      <li><a [routerLink]="['/mySpace/operations']" routerLinkActive="uk-active">My Operations</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="uk-navbar-right">
+          <div class="uk-navbar-item btlogin" id="module-367">
+            <div id="btl">
+
+              <!-- Panel top -->
+              <div class="btl-panel" style="float: right;">
+                <!-- Login button -->
+                <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" id="btl-panel-login"
+                      class="btl-dropdown">
+			                        <a class="loginLink"> SIGN IN   </a>
+                                </span>
+                |
+                <!-- Registration button -->
+                <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" class="btl-dropdown">
+			                        <a routerLinkActive="uk-active" class="loginLink">REGISTER</a>
+                </span>
+              </div>
+
+              <!-- Panel top -->
+              <div *ngIf="false" class="btl-panel" style="float: right;">
+                <!-- Login button -->
+                <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" class="btl-dropdown">
+			                        <a routerLink="/home" routerLinkActive="uk-active" class="loginLink">SIGN OUT </a>
+                                </span>
+              </div>
+              <!-- content dropdown/modal box -->
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="uk-sticky-placeholder" style="height: 80px; margin: 0px;" hidden="hidden"></div>
+</div>
