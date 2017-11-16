@@ -12,6 +12,7 @@ import {Component, ViewEncapsulation} from "@angular/core";
 
 export class TopMenuComponent {
 
+
   constructor() {
   }
 

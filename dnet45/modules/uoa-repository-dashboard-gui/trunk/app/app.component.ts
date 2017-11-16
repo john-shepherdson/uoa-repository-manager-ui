@@ -5,7 +5,7 @@ import {Component, OnInit} from "@angular/core";
 import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
-  selector: 'openminted-platform',
+  selector: 'openaire-platform',
   templateUrl: './app.component.html',
 })
 

@@ -8,8 +8,8 @@
     </div>
     <div class="uk-navbar-center">
       <a class="uk-navbar-item uk-logo" [routerLink]="['/search']">
-        <img src="http://openminted.eu/wp-content/uploads/2016/02/OpenMINTED_Tag_Color.png"
-             class="uk-responsive-height" alt="OpenMinTeD">
+        <img src="assets/imgs/OA_JOIN_A.png"
+             class="uk-responsive-height" alt="OpenAIRE">
       </a>
     </div>
   </nav>
@@ -20,7 +20,7 @@
       <div class="uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
         <div>
           <div class="uk-panel" id="module-0">
-            <ul class="uk-nav uk-nav-default">
+            <ul class="uk-nav uk-nav-default" >
               <li class="uk-nav-header" [routerLinkActive]="['uk-active']">
                 <a [routerLink]="['/home']" routerLinkActive="uk-active" class="uk-offcanvas-close offcanvas-close">
                   Home
@@ -63,9 +63,9 @@
               </li>
               <li class="uk-nav-header uk-parent" [routerLinkActive]="['uk-active']">About
                 <ul class="uk-nav-sub">
-                  <li><a href="http://openminted.eu/about/overview/" target="_blank" routerLinkActive="uk-active"
+                  <li><a href="#" target="_blank" routerLinkActive="uk-active"
                          class="uk-offcanvas-close offcanvas-close">Who we are</a></li>
-                  <li><a href="http://openminted.eu/" target="_blank" routerLinkActive="uk-active"
+                  <li><a href="#" target="_blank" routerLinkActive="uk-active"
                          class="uk-offcanvas-close offcanvas-close">Project</a></li>
                   <li><a [routerLink]="['/communities']" routerLinkActive="uk-active"
                          class="uk-offcanvas-close offcanvas-close">Communities</a></li>
@@ -89,17 +89,46 @@
     </div>
   </div>
 </div>
-<div class="tm-header uk-visible@m" uk-header="">
-  <div class="uk-navbar-container uk-sticky" uk-sticky="" media="768" cls-active="uk-active uk-navbar-sticky" style="">
+
+<div class="tm-toolbar uk-visible@m">
+  <div class="uk-container uk-flex uk-flex-middle uk-container-expand">
+   <div class="uk-margin-auto-left">
+      <div class="uk-grid-medium uk-child-width-auto uk-flex-middle uk-grid uk-grid-stack"
+           uk-grid="margin: uk-margin-small-top">
+        <div class="uk-first-column">
+          <div class="uk-panel inner" id="module-119">
+            <ul class="uk-subnav uk-subnav-line">
+              <li class="uk-active"><a
+                href="/index.php?option=com_content&amp;view=article&amp;id=292&amp;Itemid=1860"><img
+                class="uk-responsive-height"
+                src="http://dl119.madgik.di.uoa.gr/images/site_images/Home-icon.png"
+                alt="home"></a></li>
+              <li><a href="/www.cnn.com">Discover/Share</a></li>
+              <li class="active"><a href="/www.cnn.com">Join</a></li>
+              <li><a href="/www.cnn.com">Connect</a></li>
+              <li><a href="/www.cnn.com">Monitor</a></li>
+              <li><a href="/www.cnn.com">Develop</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="tm-header uk-visible@m tm-header-transparent" uk-header="">
+  <div class="uk-navbar-container uk-sticky uk-navbar-transparent uk-light" uk-sticky="" media="768"
+       cls-active="uk-active uk-navbar-sticky" style="" animation="uk-animation-slide-top"
+       top=".tm-header + [class*=&quot;uk-section&quot;]" cls-inactive="uk-navbar-transparent uk-light">
     <div class="uk-container uk-container-expand">
       <nav class="uk-navbar" uk-navbar="{&quot;align&quot;:&quot;left&quot;}">
         <div class="uk-navbar-left">
-          <a routerLink="/home" class="uk-navbar-item uk-logo">
-            <img src="http://openminted.eu/wp-content/uploads/2016/02/OpenMINTED_Tag_Color.png"
-                 class="uk-responsive-height" alt="OpenMinTeD">
+          <a href="http://dl119.madgik.di.uoa.gr" class="uk-logo uk-navbar-item">
+            <img src="assets/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="uk-responsive-height">
           </a>
         </div>
-        <div class="uk-navbar-center">
+        <div class="uk-navbar-center" >
           <ul class="uk-navbar-nav">
             <li class="uk-parent" [routerLinkActive]="['uk-active']">
               <a routerLink="/home" routerLinkActive="uk-active">
@@ -107,49 +136,46 @@
               </a>
             </li>
             <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
-                                                                        aria-expanded="false">Search</a>
+                                                                        aria-expanded="false">Sources</a>
               <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
                    id="searchMenu" (click)="onClick('searchMenu')">
                 <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                   <div class="uk-first-column">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
-                      <li><a [routerLink]="['/search', { resourceType: 'component' }]" routerLinkActive="uk-active">Service/Tools</a>
+                      <li><a [routerLink]="['/search', { resourceType: 'component' }]" routerLinkActive="uk-active">Register</a>
                       </li>
                       <li><a [routerLink]="['/search', { resourceType: 'corpus' }]"
-                             routerLinkActive="uk-active">Corpora</a></li>
+                             routerLinkActive="uk-active">Update</a></li>
                     </ul>
                   </div>
                 </div>
               </div>
             </li>
             <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
-                                                                        aria-expanded="false">Actions</a>
+                                                                        aria-expanded="false">Compatibility</a>
               <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
                    id="actions" (click)="onClick('actions')">
                 <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                   <div class="uk-first-column">
+
                     <ul class="uk-nav uk-navbar-dropdown-nav">
                       <li><a [routerLink]="['/resourceRegistration/corpus/searchForPublications']"
-                             routerLinkActive="uk-active">Access OA docs</a></li>
-                      <li><a [routerLink]="['/resourceRegistration/corpus/upload']" routerLinkActive="uk-active">Upload
-                        docs</a></li>
-                      <li><a [routerLink]="['/runApplication']" routerLinkActive="uk-active">Run a service</a></li>
-                      <li><a [routerLink]="['/buildWorkflow']" routerLinkActive="uk-active">Build a workflow</a></li>
+                             routerLinkActive="uk-active">Validation</a></li>
+                      <li><a [routerLink]="['/resourceRegistration/corpus/upload']" routerLinkActive="uk-active">Monitor</a></li>
                     </ul>
                   </div>
                 </div>
               </div>
             </li>
-            <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class="" aria-expanded="false">Add</a>
+            <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class="" aria-expanded="false">Content</a>
               <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;" id="add"
                    (click)="onClick('add')">
                 <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                   <div class="uk-first-column">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
-                      <li><a [routerLink]="['/resourceRegistration/component']" routerLinkActive="uk-active">Tool/Service/Component</a>
+                      <li><a [routerLink]="['/resourceRegistration/component']" routerLinkActive="uk-active">Events</a>
                       </li>
-                      <li><a [routerLink]="['/resourceRegistration/dataSource']" routerLinkActive="uk-active">Data
-                        Source</a></li>
+                      <li><a [routerLink]="['/resourceRegistration/dataSource']" routerLinkActive="uk-active">Notifications</a></li>
                     </ul>
                   </div>
                 </div>
@@ -157,21 +183,19 @@
             </li>
             <li class="uk-parent" [routerLinkActive]="['uk-active']">
               <a routerLink="/support" routerLinkActive="uk-active">
-                Support
+                Metrics
                 <!--<img class="uk-responsive-height" src="./imgs/Icons/Home_24white.svg" alt="home">-->
               </a>
             </li>
             <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
-                                                                        aria-expanded="false">About</a>
+                                                                        aria-expanded="false">Admin</a>
               <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
                    id="about" (click)="onClick('about')">
                 <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                   <div class="uk-first-column">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
-                      <li><a href="http://openminted.eu/about/overview/" target="_blank" routerLinkActive="uk-active">Who
-                        we are</a></li>
-                      <li><a href="http://openminted.eu/" target="_blank" routerLinkActive="uk-active">Project</a></li>
-                      <li><a [routerLink]="['/about/communities']" routerLinkActive="uk-active">Communities</a></li>
+                      <li><a href="#" target="_blank" routerLinkActive="uk-active">Help Texts</a></li>
+                      <li><a href="#" target="_blank" routerLinkActive="uk-active">Metrics</a></li>
                     </ul>
                   </div>
                 </div>
@@ -229,5 +253,5 @@
       </nav>
     </div>
   </div>
-  <div class="uk-sticky-placeholder" style="height: 80px; margin: 0px;" hidden="hidden"></div>
+  <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" hidden="hidden"></div>
 </div>
