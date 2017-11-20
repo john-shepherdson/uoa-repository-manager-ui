@@ -11,14 +11,24 @@ import {Component, ViewEncapsulation} from "@angular/core";
 })
 
 export class TopMenuComponent {
-
+  isLoggedIn: boolean;
 
   constructor() {
+    this.isLoggedIn = true;
   }
 
   onClick(id: string) {
     var el: HTMLElement = document.getElementById(id);
     el.classList.remove('uk-open');
   }
+
+  logintoggle(){
+    if( this.isLoggedIn ){
+      this.isLoggedIn = false;
+    } else {
+      this.isLoggedIn = true;
+    }
+  }
+
 
 }

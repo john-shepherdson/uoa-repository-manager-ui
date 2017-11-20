@@ -8,12 +8,13 @@ import {HttpModule, JsonpModule} from "@angular/http";
 
 import {TabsModule, ModalModule} from "ngx-bootstrap";
 
-import {appRoutingProviders, routing} from "./app.routing";
+import {AppRouting} from "./app.routing";
 import {AppComponent} from "./app.component";
 import {TopMenuComponent} from "./shared/topmenu/topmenu.component";
 import {FooterComponent} from "./shared/footer/footer.component";
 import {ConfirmationDialogComponent} from "./shared/confirmation-dialog.component";
-import {HomeComponent} from './shared/home/home.component';
+import {HomeComponent} from './pages/home/home.component';
+import {MetricsComponent} from './pages/metrics/metrics.component';
 
 
 @NgModule({
@@ -24,8 +25,8 @@ import {HomeComponent} from './shared/home/home.component';
     HttpModule,
     JsonpModule,
     ModalModule.forRoot(),
-    routing,
-//    AppRouting,
+//    routing,
+    AppRouting,
     TabsModule,
   ],
   declarations: [
@@ -33,10 +34,11 @@ import {HomeComponent} from './shared/home/home.component';
     TopMenuComponent,
     FooterComponent,
     ConfirmationDialogComponent,
-    HomeComponent
+    HomeComponent,
+    MetricsComponent
   ],
   providers: [
-    appRoutingProviders
+//    appRoutingProviders
   ],
   bootstrap: [AppComponent]
 })
