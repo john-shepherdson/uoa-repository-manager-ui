@@ -1,11 +1,17 @@
 <div *ngIf="!isLoggedIn">
+
   <div class="image-front-topbar uk-section-muted uk-light"
        uk-scrollspy="{&quot;target&quot;:&quot;[uk-scrollspy-class]&quot;,&quot;cls&quot;:&quot;uk-animation-slide-top&quot;,&quot;delay&quot;:false}"
        tm-header-transparent="light">
     <div style="background-image: url('http://dl119.madgik.di.uoa.gr/images/Test/Birds_Arrow_01.jpg'); background-color: rgb(30, 48, 64); box-sizing: border-box; min-height: calc(100vh - 107.067px);"
          class="uk-background-norepeat uk-background-cover uk-background-top-center uk-background-fixed uk-section uk-padding-remove-vertical uk-flex uk-flex-middle"
          uk-height-viewport="offset-top: true;offset-bottom: 20">
+
       <div class="uk-width-1-1">
+
+        <!-- MARGIN-TOP  -->
+        <div class="uk-sticky-placeholder" style="height: 168px; margin: 0px;" aria-hidden="aria-hidden"></div>
+
         <div class="uk-container">
           <div class="tm-header-placeholder uk-margin-remove-adjacent" style="height: 84px;"></div>
           <div class="uk-margin-remove-vertical uk-grid uk-grid-stack" uk-grid="">
@@ -126,14 +132,14 @@
 </div>
 
 <div *ngIf="isLoggedIn" id="contentWrapper" class="tm-main uk-section uk-section-default" uk-height-viewport="expand: true" style="box-sizing: border-box;" >
-
-  <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" hidden="hidden"></div>
   <div>
     <div class="uk-container">
       <div class="uk-grid uk-grid-stack">
         <div class="uk-width-expand@m">
           <div>
             <div class="gwt-HTML">
+              <!-- MARGIN-TOP  -->
+              <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="aria-hidden"></div>
               <div class="uk-width-1-1@m uk-first-column">
                 <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade" uk-scrollspy-class="" uk-grid="" style="">
                   <div class="uk-first-column">

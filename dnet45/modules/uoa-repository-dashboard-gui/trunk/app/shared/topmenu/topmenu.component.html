@@ -109,8 +109,11 @@
                 <img src="assets/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="uk-responsive-height">
               </a>
             </div>
+
+            <!-- THERE WAS COMMENTED SCRIPT HERE - CHECK REPOSITORYMANAGER.HTML -->
+
             <div class="uk-navbar-center" *ngIf="isLoggedIn">
-              <!-- THERE WAS COMMENTED SCRIPT HERE - CHECK REPOSITORYMANAGER.HTML -->
+
               <ul class="uk-navbar-nav">
                 <li class="uk-parent" [routerLinkActive]="['uk-active']">
                   <a routerLink="/home" routerLinkActive="uk-active">
@@ -235,8 +238,45 @@
           </nav>
         </div>
       </div>
+
+      <!-- hidden="hidden" DOESN'T WORK! PROBABLY NOT NEEDED div ANYWAY! -->
       <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" hidden="hidden"></div>
     </div>
 
   </div>
 </div>
+
+<div id="login" style="display:none">
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>
+        <!--<img src="http://dl119.madgik.di.uoa.gr/images/openaire/Logo_Horizontal.png" alt="OpenAIRE" class="" width="100%">-->
+        <img src="img/OA_JOIN_B.png" alt="OpenAIRE" class="" width="100%">
+      </div>
+      <h3>Welcome to OpenAIRE's Repository Manager</h3>
+
+      <p>This service uses the same sign-in mechanism as the OpenAIRE portal so you can use the same
+        credentials.</p>
+
+      <p>Login in. To see it in action.</p>
+
+      <div id="loginForm">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="register" style="display:none">
+  <div class="middle-box text-center loginscreen   animated fadeInDown">
+    <div>
+      <div>
+        <img src="assete/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="" width="100%">
+      </div>
+      <h3>Register to OpenAIRE's Repository Manager</h3>
+      <!--<p>Register to use the OpenAIRE repository manager services.</p>-->
+      <div id="registerForm">
+      </div>
+    </div>
+  </div>
+</div>
+
