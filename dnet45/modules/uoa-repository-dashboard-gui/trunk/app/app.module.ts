@@ -15,6 +15,7 @@ import {FooterComponent} from "./shared/footer/footer.component";
 import {ConfirmationDialogComponent} from "./shared/confirmation-dialog.component";
 import {HomeComponent} from './pages/home/home.component';
 import {MetricsComponent} from './pages/metrics/metrics.component';
+import {LoginComponent} from "./user/login/login.component";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {MetricsComponent} from './pages/metrics/metrics.component';
     FooterComponent,
     ConfirmationDialogComponent,
     HomeComponent,
-    MetricsComponent
+    MetricsComponent,
+    LoginComponent
   ],
   providers: [
 //    appRoutingProviders

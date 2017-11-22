@@ -1,11 +1,3 @@
-
-<div style="display:none;">
-  <form id="login_form" method="post" action="ccsadmin/login">
-    <input id="creds_username" name="username" type="text" required=""/>
-    <input id="creds_password" name="password" type="password" required=""/>
-  </form>
-</div>
-
 <div id="landingPage">
   <div class="uk-offcanvas-content">
 
@@ -116,7 +108,7 @@
 
               <ul class="uk-navbar-nav">
                 <li class="uk-parent" [routerLinkActive]="['uk-active']">
-                  <a routerLink="/home" routerLinkActive="uk-active">
+                  <a routerLink="/home" routerLinkActive="uk-active" >
                     Home
                   </a>
                 </li>
@@ -215,7 +207,7 @@
                     <!-- Login button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" id="btl-panel-login"
                           class="btl-dropdown">
-                                  <a class="loginLink" (click)="logintoggle()"> SIGN IN   </a>
+                                  <a class="loginLink" (click)="logintoggle()" href="/login"> SIGN IN   </a>
                                     </span>
                     |
                     <!-- Registration button -->
@@ -246,31 +238,12 @@
   </div>
 </div>
 
-<div id="login" style="display:none">
-  <div class="middle-box text-center loginscreen animated fadeInDown">
-    <div>
-      <div>
-        <!--<img src="http://dl119.madgik.di.uoa.gr/images/openaire/Logo_Horizontal.png" alt="OpenAIRE" class="" width="100%">-->
-        <img src="img/OA_JOIN_B.png" alt="OpenAIRE" class="" width="100%">
-      </div>
-      <h3>Welcome to OpenAIRE's Repository Manager</h3>
-
-      <p>This service uses the same sign-in mechanism as the OpenAIRE portal so you can use the same
-        credentials.</p>
-
-      <p>Login in. To see it in action.</p>
-
-      <div id="loginForm">
-      </div>
-    </div>
-  </div>
-</div>
 
 <div id="register" style="display:none">
   <div class="middle-box text-center loginscreen   animated fadeInDown">
     <div>
       <div>
-        <img src="assete/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="" width="100%">
+        <img src="assets/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="" width="100%">
       </div>
       <h3>Register to OpenAIRE's Repository Manager</h3>
       <!--<p>Register to use the OpenAIRE repository manager services.</p>-->
