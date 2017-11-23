@@ -16,7 +16,7 @@
           </a>
         </div>
         <div class="uk-navbar-center">
-          <a class="uk-navbar-item uk-logo" href="http://dl119.madgik.di.uoa.gr">
+          <a class="uk-navbar-item uk-logo" routerLink="/pages/home">
             <img src="img/OA_JOIN_A.png" alt="OpenAIRE"
                  class="uk-responsive-height"> </a>
         </div>
@@ -97,7 +97,7 @@
         <div class="uk-container uk-container-expand">
           <nav class="uk-navbar" uk-navbar="{&quot;align&quot;:&quot;left&quot;}">
             <div class="uk-navbar-left">
-              <a href="http://dl119.madgik.di.uoa.gr" class="uk-logo uk-navbar-item">
+              <a routerLink="/pages/home" class="uk-logo uk-navbar-item">
                 <img src="assets/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="uk-responsive-height">
               </a>
             </div>
@@ -108,7 +108,7 @@
 
               <ul class="uk-navbar-nav">
                 <li class="uk-parent" [routerLinkActive]="['uk-active']">
-                  <a routerLink="/home" routerLinkActive="uk-active" >
+                  <a routerLink="/pages/home" routerLinkActive="uk-active" >
                     Home
                   </a>
                 </li>
@@ -159,7 +159,7 @@
                   </div>
                 </li>
                 <li class="uk-parent" [routerLinkActive]="['uk-active']">
-                  <a routerLink="/metrics" routerLinkActive="uk-active">
+                  <a routerLink="/pages/metrics" routerLinkActive="uk-active">
                     Metrics
                     <!--<img class="uk-responsive-height" src="./imgs/Icons/Home_24white.svg" alt="home">-->
                   </a>
@@ -207,12 +207,12 @@
                     <!-- Login button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" id="btl-panel-login"
                           class="btl-dropdown">
-                                  <a class="loginLink" (click)="logintoggle()" href="/login"> SIGN IN   </a>
+                                  <a class="loginLink" href="/user/login"> SIGN IN   </a>
                                     </span>
                     |
                     <!-- Registration button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" class="btl-dropdown">
-                                  <a routerLinkActive="uk-active" class="loginLink">REGISTER</a>
+                                  <a routerLinkActive="uk-active" (click)="logintoggle()" class="loginLink">REGISTER</a>
                     </span>
                   </div>
 
@@ -220,7 +220,7 @@
                   <div *ngIf="false" class="btl-panel" style="float: right;">
                     <!-- Login button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" class="btl-dropdown">
-                                  <a routerLink="/home" routerLinkActive="uk-active" class="loginLink" >SIGN OUT </a>
+                                  <a routerLink="/pages/home" routerLinkActive="uk-active" class="loginLink" >SIGN OUT </a>
                                     </span>
                   </div>
                   <!-- content dropdown/modal box -->

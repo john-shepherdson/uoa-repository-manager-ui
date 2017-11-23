@@ -10,12 +10,9 @@ import {TabsModule, ModalModule} from "ngx-bootstrap";
 
 import {AppRouting} from "./app.routing";
 import {AppComponent} from "./app.component";
-import {TopMenuComponent} from "./shared/topmenu/topmenu.component";
-import {FooterComponent} from "./shared/footer/footer.component";
 import {ConfirmationDialogComponent} from "./shared/confirmation-dialog.component";
-import {HomeComponent} from './pages/home/home.component';
-import {MetricsComponent} from './pages/metrics/metrics.component';
-import {LoginComponent} from "./user/login/login.component";
+import {UserModule} from "./user/user.module";
+import {PagesModule} from "./pages/pages.module";
 
 
 @NgModule({
@@ -29,15 +26,12 @@ import {LoginComponent} from "./user/login/login.component";
 //    routing,
     AppRouting,
     TabsModule,
+    PagesModule,
+    UserModule
   ],
   declarations: [
     AppComponent,
-    TopMenuComponent,
-    FooterComponent,
     ConfirmationDialogComponent,
-    HomeComponent,
-    MetricsComponent,
-    LoginComponent
   ],
   providers: [
 //    appRoutingProviders
