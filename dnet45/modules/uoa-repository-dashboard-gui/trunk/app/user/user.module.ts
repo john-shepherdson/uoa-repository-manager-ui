@@ -4,6 +4,7 @@ import { CommonModule }   from '@angular/common';
 import {LoginComponent} from "./login/login.component";
 import {UserRouting} from "./user.routing";
 import {TabsModule} from "ngx-bootstrap";
+import {RegisterComponent} from './register/register.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import {TabsModule} from "ngx-bootstrap";
     TabsModule.forRoot(),
   ],
   declarations: [
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ]
 })
 

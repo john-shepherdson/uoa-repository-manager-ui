@@ -97,7 +97,7 @@
         <div class="uk-container uk-container-expand">
           <nav class="uk-navbar" uk-navbar="{&quot;align&quot;:&quot;left&quot;}">
             <div class="uk-navbar-left">
-              <a routerLink="/pages/home" class="uk-logo uk-navbar-item">
+              <a (click)="logintoggle()" class="uk-logo uk-navbar-item">
                 <img src="assets/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="uk-responsive-height">
               </a>
             </div>
@@ -212,7 +212,7 @@
                     |
                     <!-- Registration button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" class="btl-dropdown">
-                                  <a routerLinkActive="uk-active" (click)="logintoggle()" class="loginLink">REGISTER</a>
+                                  <a routerLinkActive="uk-active" routerLink="/user/register" class="loginLink">REGISTER</a>
                     </span>
                   </div>
 
@@ -235,21 +235,6 @@
       <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" hidden="hidden"></div>
     </div>
 
-  </div>
-</div>
-
-
-<div id="register" style="display:none">
-  <div class="middle-box text-center loginscreen   animated fadeInDown">
-    <div>
-      <div>
-        <img src="assets/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="" width="100%">
-      </div>
-      <h3>Register to OpenAIRE's Repository Manager</h3>
-      <!--<p>Register to use the OpenAIRE repository manager services.</p>-->
-      <div id="registerForm">
-      </div>
-    </div>
   </div>
 </div>
 

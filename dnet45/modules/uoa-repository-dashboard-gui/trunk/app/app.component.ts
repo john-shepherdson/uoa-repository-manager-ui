@@ -5,7 +5,7 @@ import {Component, OnInit} from "@angular/core";
 import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
-  selector: 'openaire-platform',
+  selector: 'openaire-dashboard',
   templateUrl: './app.component.html',
 })
 

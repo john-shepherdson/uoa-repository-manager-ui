@@ -7,6 +7,8 @@ import {MetricsComponent} from "./metrics/metrics.component";
 import {PagesComponent} from "./pages.component";
 import {TopMenuComponent} from "../shared/topmenu/topmenu.component";
 import {FooterComponent} from "../shared/footer/footer.component";
+import {DnspaceStartComponent} from './metrics/dnspace-start.component';
+import {InstructionsComponent} from './metrics/instructions.component';
 
 @NgModule ({
   imports: [
@@ -19,7 +21,9 @@ import {FooterComponent} from "../shared/footer/footer.component";
     FooterComponent,
     PagesComponent,
     HomeComponent,
-    MetricsComponent
+    MetricsComponent,
+    DnspaceStartComponent,
+    InstructionsComponent
   ]
 })
 
