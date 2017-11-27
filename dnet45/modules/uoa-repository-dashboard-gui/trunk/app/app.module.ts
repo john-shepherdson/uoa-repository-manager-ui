@@ -12,7 +12,10 @@ import {AppRouting} from "./app.routing";
 import {AppComponent} from "./app.component";
 import {ConfirmationDialogComponent} from "./shared/confirmation-dialog.component";
 import {UserModule} from "./user/user.module";
-import {PagesModule} from "./pages/pages.module";
+import {HomeComponent} from './pages/home/home.component';
+import {TopMenuComponent} from './shared/topmenu/topmenu.component';
+import {FooterComponent} from './shared/footer/footer.component';
+import {MetricsModule} from './pages/metrics/metrics.module';
 
 
 @NgModule({
@@ -26,11 +29,14 @@ import {PagesModule} from "./pages/pages.module";
 //    routing,
     AppRouting,
     TabsModule,
-    PagesModule,
+    MetricsModule,
     UserModule
   ],
   declarations: [
     AppComponent,
+    TopMenuComponent,
+    FooterComponent,
+    HomeComponent,
     ConfirmationDialogComponent,
   ],
   providers: [

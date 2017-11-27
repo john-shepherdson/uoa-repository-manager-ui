@@ -17,7 +17,7 @@ const userRoutes: Routes = [
   },
   {
     path: 'user/**',
-    redirectTo: '/pages/home'
+    redirectTo: '/home'
   }
 ];
 

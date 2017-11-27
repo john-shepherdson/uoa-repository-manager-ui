@@ -36,7 +36,7 @@
                   </a>
                   .
                 </div>
-                <button class="btn btn-primary" type="button">Enable Metrics</button>
+                <button class="btn btn-primary" (click)="confirmEnabling()">Enable Metrics</button>
               </div>
             </div>
           </div>
@@ -58,3 +58,10 @@
     </div>
   </div>
 </div>
+
+<!--
+<confirmation-dialog #confirmEnablingModal [title]="'Confirmation'" [isModalShown]="isModalShown"
+                     [confirmActionButton]="'Yes, enable it'" (emmitObject)="confirmedEnabling($event)">
+  Are you sure you want to enable metrics for this repository?
+</confirmation-dialog>
+-->
