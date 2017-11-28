@@ -112,16 +112,16 @@
                     Home
                   </a>
                 </li>
-                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
+                <li class="uk-parent" routerLink="/sources" routerLinkActive="uk-active"><a href="#" class=""
                                                                             aria-expanded="false">Sources</a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="searchMenu" (click)="onClick('searchMenu')">
+                       id="sourcesMenu" (click)="onClick('sourcesMenu')">
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/search', { resourceType: 'component' }]" routerLinkActive="uk-active">Register</a>
+                          <li><a routerLink="/sources/register">Register</a>
                           </li>
-                          <li><a [routerLink]="['/search', { resourceType: 'corpus' }]"
+                          <li><a [routerLink]="['update']"
                                  routerLinkActive="uk-active">Update</a></li>
                         </ul>
                       </div>

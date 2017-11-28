@@ -16,6 +16,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {TopMenuComponent} from './shared/topmenu/topmenu.component';
 import {FooterComponent} from './shared/footer/footer.component';
 import {MetricsModule} from './pages/metrics/metrics.module';
+import {SourcesModule} from './pages/sources/sources.module';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {MetricsModule} from './pages/metrics/metrics.module';
     AppRouting,
     TabsModule,
     MetricsModule,
+    SourcesModule,
     UserModule
   ],
   declarations: [
