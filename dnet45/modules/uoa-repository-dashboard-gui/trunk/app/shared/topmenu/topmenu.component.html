@@ -5,9 +5,8 @@
       <nav class="uk-navbar-container uk-navbar" uk-navbar="">
         <div class="uk-navbar-left">
           <a class="uk-navbar-toggle" href="#tm-mobile" uk-toggle="">
-            <div uk-navbar-toggle-icon="" class="uk-navbar-toggle-icon uk-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                   icon="navbar-toggle-icon" ratio="1">
+            <div class="uk-navbar-toggle-icon uk-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" ratio="1">
                 <rect y="9" width="20" height="2"/>
                 <rect y="3" width="20" height="2"/>
                 <rect y="15" width="20" height="2"/>
@@ -17,15 +16,14 @@
         </div>
         <div class="uk-navbar-center">
           <a class="uk-navbar-item uk-logo" routerLink="/">
-            <img src="img/OA_JOIN_A.png" alt="OpenAIRE"
+            <img src="assets/imgs/OA_JOIN_A.png" alt="OpenAIRE"
                  class="uk-responsive-height"> </a>
         </div>
       </nav>
       <div id="tm-mobile" uk-offcanvas="" mode="slide" overlay="" class="uk-offcanvas">
         <div class="uk-offcanvas-bar">
-          <button class="uk-offcanvas-close uk-close uk-icon" type="button" uk-close="">
-            <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"
-                 icon="close-icon" ratio="1">
+          <button class="uk-offcanvas-close uk-close uk-icon" type="button">
+            <svg width="14" height="14" viewBox="0 0 14 14" ratio="1">
               <line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"/>
               <line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"/>
             </svg>
@@ -40,11 +38,9 @@
               <div class="uk-panel" id="module-tm-2">
                 <form id="search-tm-2" action="/index.php" method="post" role="search"
                       class="uk-search uk-search-default">
-                                <span uk-search-icon="" class="uk-search-icon uk-icon"><svg width="20" height="20"
-                                                                                            viewBox="0 0 20 20"
-                                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                                            icon="search-icon"
-                                                                                            ratio="1">
+                                <span class="uk-search-icon uk-icon"><svg width="20" height="20"
+                                                                          viewBox="0 0 20 20"
+                                                                          ratio="1">
                                     <circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"/>
                                     <path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"/>
                                 </svg></span>
@@ -112,17 +108,15 @@
                     Home
                   </a>
                 </li>
-                <li class="uk-parent" routerLink="/sources" routerLinkActive="uk-active"><a href="#" class=""
+                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
                                                                             aria-expanded="false">Sources</a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
                        id="sourcesMenu" (click)="onClick('sourcesMenu')">
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a routerLink="/sources/register">Register</a>
-                          </li>
-                          <li><a [routerLink]="['update']"
-                                 routerLinkActive="uk-active">Update</a></li>
+                          <li><a routerLink="/sources/register">Register</a></li>
+                          <li><a routerLink="/sources/update">Update</a></li>
                         </ul>
                       </div>
                     </div>
@@ -131,14 +125,14 @@
                 <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
                                                                             aria-expanded="false">Compatibility</a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="actions" (click)="onClick('actions')">
+                       id="compatibilityMenu" (click)="onClick('compatibilityMenu')">
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
-
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/resourceRegistration/corpus/searchForPublications']"
+                          <li><a routerLink="/compatibility/validation"
                                  routerLinkActive="uk-active">Validation</a></li>
-                          <li><a [routerLink]="['/resourceRegistration/corpus/upload']" routerLinkActive="uk-active">Monitor</a></li>
+                          <li><a routerLink="/compatibility/monitor"
+                                 routerLinkActive="uk-active">Monitor</a></li>
                         </ul>
                       </div>
                     </div>

@@ -4,6 +4,7 @@ import {SourcesComponent} from './sources.component';
 import {SourcesRegisterComponent} from './sources-register.component';
 import {CommonModule} from '@angular/common';
 import {TabsModule} from 'ngx-bootstrap';
+import {SourcesUpdateComponent} from "./sources-update.component";
 
 @NgModule ({
   imports: [
@@ -13,7 +14,8 @@ import {TabsModule} from 'ngx-bootstrap';
   ],
   declarations: [
     SourcesComponent,
-    SourcesRegisterComponent
+    SourcesRegisterComponent,
+    SourcesUpdateComponent
   ]
 })
 

@@ -17,6 +17,7 @@ import {TopMenuComponent} from './shared/topmenu/topmenu.component';
 import {FooterComponent} from './shared/footer/footer.component';
 import {MetricsModule} from './pages/metrics/metrics.module';
 import {SourcesModule} from './pages/sources/sources.module';
+import {CompatibilityModule} from "./pages/compatibility/compatibility.module";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {SourcesModule} from './pages/sources/sources.module';
     TabsModule,
     MetricsModule,
     SourcesModule,
+    CompatibilityModule,
     UserModule
   ],
   declarations: [
