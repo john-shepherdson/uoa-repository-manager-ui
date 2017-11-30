@@ -1,11 +1,12 @@
 import {Component, OnInit} from "@angular/core";
 
 @Component ({
-  selector: 'app-compatibility',
+  selector: 'app-admin',
   templateUrl: '../pageContainer.html'
 })
 
-export class CompatibilityComponent implements OnInit {
+export class AdminPgComponent implements OnInit {
+
   constructor() {}
 
   ngOnInit() {}

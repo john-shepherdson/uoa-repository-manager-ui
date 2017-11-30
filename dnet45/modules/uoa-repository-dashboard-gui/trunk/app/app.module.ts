@@ -18,6 +18,8 @@ import {FooterComponent} from './shared/footer/footer.component';
 import {MetricsModule} from './pages/metrics/metrics.module';
 import {SourcesModule} from './pages/sources/sources.module';
 import {CompatibilityModule} from "./pages/compatibility/compatibility.module";
+import {ContentModule} from "./pages/content/content.module";
+import {AdminPgModule} from "./pages/adminPg/adminPg.module";
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import {CompatibilityModule} from "./pages/compatibility/compatibility.module";
     MetricsModule,
     SourcesModule,
     CompatibilityModule,
+    ContentModule,
+    AdminPgModule,
     UserModule
   ],
   declarations: [

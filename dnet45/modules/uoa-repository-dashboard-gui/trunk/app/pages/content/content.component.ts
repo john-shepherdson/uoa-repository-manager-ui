@@ -1,11 +1,12 @@
 import {Component, OnInit} from "@angular/core";
 
 @Component ({
-  selector: 'app-compatibility',
+  selector: 'app-content',
   templateUrl: '../pageContainer.html'
 })
 
-export class CompatibilityComponent implements OnInit {
+export class ContentComponent implements OnInit {
+
   constructor() {}
 
   ngOnInit() {}

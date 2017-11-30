@@ -138,15 +138,17 @@
                     </div>
                   </div>
                 </li>
-                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class="" aria-expanded="false">Content</a>
-                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;" id="add"
-                       (click)="onClick('add')">
+                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
+                                                                            aria-expanded="false">Content</a>
+                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
+                       id="contentMenu" (click)="onClick('contentMenu')">
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/resourceRegistration/component']" routerLinkActive="uk-active">Events</a>
-                          </li>
-                          <li><a [routerLink]="['/resourceRegistration/dataSource']" routerLinkActive="uk-active">Notifications</a></li>
+                          <li><a routerLink="/content/events"
+                                 routerLinkActive="uk-active">Events</a></li>
+                          <li><a routerLink="/content/notifications"
+                                 routerLinkActive="uk-active">Notifications</a></li>
                         </ul>
                       </div>
                     </div>
@@ -161,12 +163,14 @@
                 <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
                                                                             aria-expanded="false">Admin</a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="about" (click)="onClick('about')">
+                       id="adminMenu" (click)="onClick('adminMenu')">
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a href="#" target="_blank" routerLinkActive="uk-active">Help Texts</a></li>
-                          <li><a href="#" target="_blank" routerLinkActive="uk-active">Metrics</a></li>
+                          <li><a routerLink="/admin/help-texts"
+                                 routerLinkActive="uk-active">Help Texts</a></li>
+                          <li><a routerLink="/admin/metrics"
+                                 routerLinkActive="uk-active">Metrics</a></li>
                         </ul>
                       </div>
                     </div>

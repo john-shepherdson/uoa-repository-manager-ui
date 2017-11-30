@@ -3,7 +3,7 @@ import {SourcesRegisterComponent} from './sources-register.component';
 
 @Component ({
   selector: 'app-sources',
-  templateUrl: 'sources.component.html',
+  templateUrl: '../pageContainer.html',
 })
 
 export class SourcesComponent implements OnInit {

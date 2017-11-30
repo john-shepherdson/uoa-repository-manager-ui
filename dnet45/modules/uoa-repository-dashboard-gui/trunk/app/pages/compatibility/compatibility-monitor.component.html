@@ -7,6 +7,117 @@
       <div class="alert alert-danger" style="display: none;" aria-hidden="true"></div>
       <div class="alert alert-success" style="display: none;" aria-hidden="true"></div>
       <div class="alert alert-warning" style="display: none;" aria-hidden="true"></div>
+      <div class="uk-grid page-controls">
+        <div class="uk-margin-bottom uk-width-1-1 filters">
+          <div class="links">
+            <div class="filterLabel">Filter by job type:</div>
+            <div class="inlineBlock">
+              <select class="form-control">
+                <option value="noneSelected">--none selected--</option>
+                <option *ngFor="let job of jobTypes" value="{{job}}">{{job}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="uk-margin-bottom uk-width-1-1 filters">
+          <div class="links uk-inline"></div>
+          <div class="show-options uk-inline" style="float: left;">
+            <div class="filterLabel" style="display: inline;">Filter validation jobs:</div>
+            <a class="active" href="#">All jobs (0)</a>
+            <a href="#">successfull (0)</a>
+            <a href="#">failed (0)</a>
+            <a href="#">ongoing (0)</a>
+          </div>
+          <div class="show-options uk-inline" style="float: right;">
+            <div class="filterLabel" style="display: inline;">Jobs per page:</div>
+            <div class="inlineBlock">
+              <select class="form-control">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contentAndPagerPanel">
+        <div>
+          <ul class="uk-pagination">
+            <li class="uk-disabled">
+              <a class="disabled" href="#" disabled="">
+                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
+                </span>
+                Previous
+              </a>
+            </li>
+            <li class="uk-margin-auto-left uk-disabled">
+              <a class="disabled" href="#" disabled="">
+                Next
+                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="resultsPageLabel">page 1 of ?</div>
+        </div>
+        <div>
+          <div>
+            <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-top uk-margin-bottom">
+              <table class="uk-table uk-table-middle jobs-list">
+                <thead>
+                  <tr>
+                    <th>Validation Type</th>
+                    <th>Status</th>
+                    <th>Score</th>
+                    <th>Started</th>
+                    <th>Repository</th>
+                    <th>Guidelines</th>
+                    <th>Actions</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="el-item odd">
+                    <td class="uk-table-shrink"></td>
+                    <td class="uk-table-shrink"></td>
+                    <td class="uk-table-shrink"></td>
+                    <td class="uk-table-shrink"></td>
+                    <td class="uk-table-shrink"></td>
+                    <td class="uk-table-shrink"></td>
+                    <td class="uk-table-shrink"></td>
+                    <td class="uk-table-shrink"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div>
+          <ul class="uk-pagination">
+            <li class="uk-disabled">
+              <a class="disabled" href="#" disabled="">
+                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
+                </span>
+                Previous
+              </a>
+            </li>
+            <li class="uk-margin-auto-left uk-disabled">
+              <a class="disabled" href="#" disabled="">
+                Next
+                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="resultsPageLabel">page 1 of ?</div>
+        </div>
+      </div>
+      <div class="row"></div>
     </div>
   </div>
 </div>
