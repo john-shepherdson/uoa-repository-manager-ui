@@ -2,6 +2,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {AdminPgComponent} from "./adminPg.component";
 import {NgModule} from "@angular/core";
 import {AdminPgHelpTextsComponent} from "./adminPg-help-texts.component";
+import {AdminPgMetricsComponent} from './adminPg-metrics.component';
 
 const adminRoutes: Routes = [
   {
@@ -16,6 +17,10 @@ const adminRoutes: Routes = [
       {
         path: 'help-texts',
         component: AdminPgHelpTextsComponent
+      },
+      {
+        path: 'metrics',
+        component: AdminPgMetricsComponent
       }
     ]
   }

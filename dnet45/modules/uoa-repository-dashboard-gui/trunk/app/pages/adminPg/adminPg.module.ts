@@ -4,6 +4,7 @@ import {TabsModule} from "ngx-bootstrap";
 import {AdminPgComponent} from "./adminPg.component";
 import {AdminPgHelpTextsComponent} from "./adminPg-help-texts.component";
 import {AdminPgRouting} from "./adminPg.routing";
+import {AdminPgMetricsComponent} from './adminPg-metrics.component';
 
 @NgModule ({
   imports: [
@@ -13,7 +14,8 @@ import {AdminPgRouting} from "./adminPg.routing";
   ],
   declarations: [
     AdminPgComponent,
-    AdminPgHelpTextsComponent
+    AdminPgHelpTextsComponent,
+    AdminPgMetricsComponent
   ]
 })
 

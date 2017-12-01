@@ -68,7 +68,7 @@
               <div class="uk-panel inner" id="module-119">
                 <ul class="uk-subnav uk-subnav-line">
                   <li class="uk-active"><a
-                    href="/"><img
+                    href="/home"><img
                     class="uk-responsive-height"
                     src="http://dl119.madgik.di.uoa.gr/images/site_images/Home-icon.png"
                     alt="home"></a></li>
@@ -104,7 +104,7 @@
 
               <ul class="uk-navbar-nav">
                 <li class="uk-parent" routerLinkActive="active">
-                  <a routerLink="/home" [routerLinkActive]="['active']">
+                  <a [routerLink]="['home']" [routerLinkActive]="['active']">
                     Home
                   </a>
                 </li>
@@ -115,24 +115,22 @@
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a routerLink="/sources/register">Register</a></li>
-                          <li><a routerLink="/sources/update">Update</a></li>
+                          <li><a [routerLink]="['/sources','register']">Register</a></li>
+                          <li><a [routerLink]="['/sources', 'update']">Update</a></li>
                         </ul>
                       </div>
                     </div>
                   </div>
                 </li>
-                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
+                <li class="uk-parent" routerLinkActive="uk-active"><a href="#" class=""
                                                                             aria-expanded="false">Compatibility</a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
                        id="compatibilityMenu" (click)="onClick('compatibilityMenu')">
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a routerLink="/compatibility/validation"
-                                 routerLinkActive="uk-active">Validation</a></li>
-                          <li><a routerLink="/compatibility/monitor"
-                                 routerLinkActive="uk-active">Monitor</a></li>
+                          <li><a [routerLink]="['/compatibility','validation']">Validation</a></li>
+                          <li><a [routerLink]="['/compatibility','monitor']">Monitor</a></li>
                         </ul>
                       </div>
                     </div>
@@ -145,32 +143,27 @@
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a routerLink="/content/events"
-                                 routerLinkActive="uk-active">Events</a></li>
-                          <li><a routerLink="/content/notifications"
-                                 routerLinkActive="uk-active">Notifications</a></li>
+                          <li><a [routerLink]="['/content','events']">Events</a></li>
+                          <li><a [routerLink]="['/content','notifications']">Notifications</a></li>
                         </ul>
                       </div>
                     </div>
                   </div>
                 </li>
-                <li class="uk-parent" [routerLinkActive]="['uk-active']">
-                  <a routerLink="/metrics" routerLinkActive="uk-active">
+                <li class="uk-parent">
+                  <a [routerLink]="['/metrics']" [routerLinkActive]="['uk-active']">
                     Metrics
-                    <!--<img class="uk-responsive-height" src="./imgs/Icons/Home_24white.svg" alt="home">-->
                   </a>
                 </li>
                 <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
-                                                                            aria-expanded="false">Admin</a>
+                                          aria-expanded="false">Admin</a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
                        id="adminMenu" (click)="onClick('adminMenu')">
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a routerLink="/admin/help-texts"
-                                 routerLinkActive="uk-active">Help Texts</a></li>
-                          <li><a routerLink="/admin/metrics"
-                                 routerLinkActive="uk-active">Metrics</a></li>
+                          <li><a [routerLink]="['/admin','help-texts']">Help Texts</a></li>
+                          <li><a [routerLink]="['/admin','metrics']">Metrics</a></li>
                         </ul>
                       </div>
                     </div>
