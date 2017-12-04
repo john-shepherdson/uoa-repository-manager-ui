@@ -74,9 +74,7 @@
   </div>
 </div>
 
-<!--
-<confirmation-dialog #confirmEnablingModal [title]="'Confirmation'" [isModalShown]="isModalShown"
-                     [confirmActionButton]="'Yes, enable it'" (emmitObject)="confirmedEnabling($event)">
+<confirmation-dialog #confirmEnablingModal [title]="modalTitle" [isModalShown]="isModalShown"
+                     [confirmActionButton]="modalButton" (emmitObject)="confirmedEnabling($event)">
   Are you sure you want to enable metrics for this repository?
 </confirmation-dialog>
--->

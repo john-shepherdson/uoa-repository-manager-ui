@@ -45,7 +45,6 @@ import {AdminPgModule} from "./pages/adminPg/adminPg.module";
     TopMenuComponent,
     FooterComponent,
     HomeComponent,
-    ConfirmationDialogComponent,
   ],
   providers: [
 //    appRoutingProviders

@@ -10,17 +10,13 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 })
 export class ConfirmationDialogComponent {
 
-  @ViewChild('autoShownModal')
-  public autoShownModal:ModalDirective;
+  @ViewChild('autoShownModal') public autoShownModal:ModalDirective;
 
-  @Input()
-  public isModalShown:boolean = false;
+  @Input() public isModalShown:boolean = false;
 
-  @Input()
-  public title: string;
+  @Input() public title: string;
 
-  @Input()
-  public confirmActionButton: string;
+  @Input() public confirmActionButton: string;
 
   @Output() emmitObject: EventEmitter<any> = new EventEmitter();
 
