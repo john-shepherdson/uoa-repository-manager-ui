@@ -1,3 +1,7 @@
+/*
+*   !!! ADD REAL API ADDRESSES BEFORE PRODUCTION !!!!
+*/
+
 var webpack = require('webpack');
 var path = require('path');
 var webpackMerge = require('webpack-merge');
@@ -93,7 +97,7 @@ module.exports = function (env) {
       new webpack.DefinePlugin({
         "process.env": {
           PRODUCTION: JSON.stringify(false),
-          API_ENDPOINT: JSON.stringify(process.env.API_ENDPOINT || "http://localhost:8080/omtd-registry"),
+          API_ENDPOINT: JSON.stringify(process.env.API_ENDPOINT || "http://194.177.192.121:8380/uoa-repository-manager-service"),
           FAQ_ENDPOINT: JSON.stringify(process.env.FAQ_ENDPOINT || "http://83.212.101.85:5555/api/"),
           CONNECTOR_API_ENDPOINT: JSON.stringify(process.env.CONNECTOR_API_ENDPOINT || "http://localhost:8888/content-connector-service"),
           WORKFLOW_API_ENDPOINT: JSON.stringify(process.env.WORKFLOW_API_ENDPOINT || "https://dev.openminted.eu:8881"),

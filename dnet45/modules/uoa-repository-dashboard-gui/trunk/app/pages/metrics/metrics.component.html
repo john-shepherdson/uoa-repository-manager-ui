@@ -77,6 +77,11 @@
                   </div>
                 </div>
               </div>
+              <div>
+                <a *ngFor="let repo of reposOfUser" >
+                  <h5>_{{ repo.repositoryName }}</h5>
+                </a>
+              </div>
             </div>
           </div>
         </div>
