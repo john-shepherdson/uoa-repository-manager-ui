@@ -4,7 +4,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {JsonpModule} from '@angular/http';
+import {HttpModule, JsonpModule} from '@angular/http';
 
 import {TabsModule, ModalModule} from 'ngx-bootstrap';
 
@@ -28,7 +28,7 @@ import {RepositoryService} from "./services/repository.service";
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    HttpModule,
     JsonpModule,
     ModalModule.forRoot(),
 //    routing,

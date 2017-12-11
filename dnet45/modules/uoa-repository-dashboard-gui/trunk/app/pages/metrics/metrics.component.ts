@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RepositoryService} from "../../services/repository.service";
-import {PiwikInfo} from "../../domain/typeScriptClasses";
+import {PiwikInfo, Repository} from "../../domain/typeScriptClasses";
 
 @Component ({
   selector: 'app-metrics',
@@ -8,7 +8,7 @@ import {PiwikInfo} from "../../domain/typeScriptClasses";
 })
 
 export class MetricsComponent implements OnInit {
-  reposOfUser: PiwikInfo[];
+  reposOfUser: Repository[] = [];
 
   constructor(private repoService: RepositoryService) {}
 

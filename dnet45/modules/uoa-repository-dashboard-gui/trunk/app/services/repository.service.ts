@@ -10,36 +10,44 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators'
 
 import {PiwikInfo, Repository} from '../domain/typeScriptClasses';
 import {of} from "rxjs/observable/of";
+import 'rxjs/add/operator/map';
+import {Http, Response} from '@angular/http';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*' })
+  headers: new HttpHeaders().set('Content-Type', 'application/json')
 };
 
 @Injectable ()
 export class RepositoryService {
-  private apiUrl = process.env.API_ENDPOINT;
+  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';
 
-  constructor(private http: HttpClient){}
+  constructor(private http: Http){}
 
-  getRepositoriesOfUser (userEmail: string): Observable<PiwikInfo[]> {
-    console.log(`knocking on: ${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/10`);
-    return this.http.get<Repository[]>(`${this.apiUrl}/repositories/getRepositoryOfUser/${userEmail}/0/10`)
-      .pipe(
-        tap( _ => console.log(`got respositories of user with email" ${userEmail}`)),
-        map( (rep: Repository) => rep.piwikInfo),
-        catchError(this.handleError(`get repositories of user with email: ${userEmail}`))
-      );
+  getRepositoriesOfUser (userEmail: string): Observable<Repository[]> {
+    let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/10`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Repository[]>res.json())
+      .catch(this.handleError);
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      console.log(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    };
+  private handleError(error: Response | any) {
+    // In a real world app, we might use a remote logging infrastructure
+    // We'd also dig deeper into the error to get a better message
+    let errMsg = "";
+    console.log(error);
+    if (error instanceof Response) {
+      const body = error.text() || '';
+      //const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${body}`;
+    } else {
+      errMsg = (error.message) ? error.message :
+        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+      console.error(errMsg); // log to console instead
+    }
+    return Observable.throw(errMsg);
   }
 }
