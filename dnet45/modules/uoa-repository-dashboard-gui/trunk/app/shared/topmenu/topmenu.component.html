@@ -93,7 +93,7 @@
         <div class="uk-container uk-container-expand">
           <nav class="uk-navbar" uk-navbar="{&quot;align&quot;:&quot;left&quot;}">
             <div class="uk-navbar-left">
-              <a (click)="logintoggle()" class="uk-logo uk-navbar-item">
+              <a [routerLink]="['home']" class="uk-logo uk-navbar-item">
                 <img src="assets/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="uk-responsive-height">
               </a>
             </div>
@@ -169,26 +169,6 @@
                     </div>
                   </div>
                 </li>
-<!--
-                <li *ngIf="oAuthService.isUserLoggedIn" class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#"
-                                                                                                                class=""
-                                                                                                                aria-expanded="false">My
-                  Resources</a>
-                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="mySpace" (click)="onClick('mySpace')">
-                    <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-                      <div class="uk-first-column">
-                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/mySpace/corpora']" routerLinkActive="uk-active">My Corpora</a></li>
-                          <li><a [routerLink]="['/mySpace/services']" routerLinkActive="uk-active">My Services/Tools</a>
-                          </li>
-                          <li><a [routerLink]="['/mySpace/operations']" routerLinkActive="uk-active">My Operations</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
--->
               </ul>
             </div>
             <div class="uk-navbar-right">
@@ -196,27 +176,31 @@
                 <div id="btl">
 
                   <!-- Panel top -->
-                  <div class="btl-panel" style="float: right;">
+                  <div *ngIf="!isLoggedIn" class="btl-panel" style="float: right;">
                     <!-- Login button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" id="btl-panel-login"
                           class="btl-dropdown">
-                                  <a class="loginLink" href="/user/login"> SIGN IN   </a>
+                                  <a class="loginLink" (click)="login()" > SIGN IN   </a>
                                     </span>
                     |
                     <!-- Registration button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" class="btl-dropdown">
-                                  <a routerLinkActive="uk-active" routerLink="/user/register" class="loginLink">REGISTER</a>
+                                  <a (click)="register()" class="loginLink">REGISTER</a>
                     </span>
                   </div>
 
                   <!-- Panel top -->
-                  <div *ngIf="false" class="btl-panel" style="float: right;">
-                    <!-- Login button -->
+                  <div *ngIf="isLoggedIn" class="btl-panel" style="float: right;">
+                    <!-- User Name -->
+                    <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" id="btl-panel-loggedin"
+                          class="loginLink">
+                                  {{authService.userName}}   </span>
+                    |
+                    <!-- Logout button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" class="btl-dropdown">
-                                  <a routerLink="/pages/home" routerLinkActive="uk-active" class="loginLink" >SIGN OUT </a>
+                                  <a (click)="logout()" class="loginLink" >LOGOUT </a>
                                     </span>
                   </div>
-                  <!-- content dropdown/modal box -->
                 </div>
               </div>
             </div>
@@ -224,7 +208,7 @@
         </div>
       </div>
 
-      <!-- hidden="hidden" DOESN'T WORK! PROBABLY NOT NEEDED div ANYWAY! -->
+      <!-- hidden="hidden" DOESN'T WORK! -->
       <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" hidden="hidden"></div>
     </div>
 

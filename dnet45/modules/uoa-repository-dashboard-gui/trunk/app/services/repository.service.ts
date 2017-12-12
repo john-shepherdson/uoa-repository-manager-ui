@@ -22,9 +22,10 @@ const httpOptions = {
 
 @Injectable ()
 export class RepositoryService {
-  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';
+/*  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';*/
+  private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
 
-  constructor(private http: Http){}
+  constructor(private http: Http) { }
 
   getRepositoriesOfUser (userEmail: string): Observable<Repository[]> {
     let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/10`;

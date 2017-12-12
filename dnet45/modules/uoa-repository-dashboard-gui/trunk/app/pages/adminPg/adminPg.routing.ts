@@ -3,11 +3,13 @@ import {AdminPgComponent} from "./adminPg.component";
 import {NgModule} from "@angular/core";
 import {AdminPgHelpTextsComponent} from "./adminPg-help-texts.component";
 import {AdminPgMetricsComponent} from './adminPg-metrics.component';
+import {AuthGuardService} from '../../services/auth-guard.service';
 
 const adminRoutes: Routes = [
   {
     path: 'admin',
     component: AdminPgComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',

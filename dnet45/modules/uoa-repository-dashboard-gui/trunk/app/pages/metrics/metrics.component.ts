@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RepositoryService} from "../../services/repository.service";
 import {PiwikInfo, Repository} from "../../domain/typeScriptClasses";
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component ({
   selector: 'app-metrics',
@@ -10,7 +11,7 @@ import {PiwikInfo, Repository} from "../../domain/typeScriptClasses";
 export class MetricsComponent implements OnInit {
   reposOfUser: Repository[] = [];
 
-  constructor(private repoService: RepositoryService) {}
+  constructor(private repoService: RepositoryService, private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.getReposOfUser();

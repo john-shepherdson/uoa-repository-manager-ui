@@ -1,4 +1,4 @@
-<div *ngIf="!isLoggedIn">
+<div *ngIf="!authService.isLoggedIn">
 
   <div class="image-front-topbar uk-section-muted uk-light"
        uk-scrollspy="{&quot;target&quot;:&quot;[uk-scrollspy-class]&quot;,&quot;cls&quot;:&quot;uk-animation-slide-top&quot;,&quot;delay&quot;:false}"
@@ -35,8 +35,6 @@
       </div>
     </div>
   </div>
-
-  <div><button (click)="login()" style="background-color: transparent;"><i class="fa fa-snowflake-o" aria-hidden="true"></i></button></div>
 
   <div class="uk-section-default uk-section-overlap uk-section uk-section-xsmall uk-padding-remove-top"
        uk-scrollspy="{&quot;target&quot;:&quot;[uk-scrollspy-class]&quot;,&quot;cls&quot;:&quot;uk-animation-slide-top-medium&quot;,&quot;delay&quot;:false}">
@@ -131,7 +129,7 @@
   </div>
 </div>
 
-<div *ngIf="isLoggedIn" id="contentWrapper" class="tm-main uk-section uk-section-default" uk-height-viewport="expand: true" style="box-sizing: border-box;" >
+<div *ngIf="authService.isLoggedIn" id="contentWrapper" class="tm-main uk-section uk-section-default" uk-height-viewport="expand: true" style="box-sizing: border-box;" >
   <div>
     <div class="uk-container">
       <div class="uk-grid uk-grid-stack">
@@ -222,5 +220,4 @@
       </div>
     </div>
   </div>
-  <div><button (click)="logout()" style="background-color: transparent;"><i class="fa fa-snowflake-o" aria-hidden="true"></i></button></div>
 </div>

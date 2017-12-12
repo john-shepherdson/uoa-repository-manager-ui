@@ -2,7 +2,8 @@
  * Created by stefania on 7/5/16.
  */
 
-import {Component, ViewEncapsulation} from "@angular/core";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'top-menu',
@@ -10,24 +11,40 @@ import {Component, ViewEncapsulation} from "@angular/core";
   encapsulation: ViewEncapsulation.None
 })
 
-export class TopMenuComponent {
+export class TopMenuComponent implements OnInit {
   isLoggedIn: boolean;
 
-  constructor() {
-    this.isLoggedIn = true;
+  constructor(private authService: AuthenticationService) { }
+
+  ngOnInit(){
+    this.isLoggedIn = false;
   }
+
 
   onClick(id: string) {
     var el: HTMLElement = document.getElementById(id);
     el.classList.remove('uk-open');
   }
 
-  logintoggle(){
-    if( this.isLoggedIn ){
-      this.isLoggedIn = false;
-    } else {
+
+  login(){
+    if(!this.authService.isLoggedIn){
+      this.authService.login();
       this.isLoggedIn = true;
     }
+  }
+
+  logout(){
+    if(this.authService.isLoggedIn){
+      this.authService.logout();
+      this.isLoggedIn = false;
+    }
+  }
+
+  register(){
+    this.authService.register();
+    this.authService.login();
+    this.isLoggedIn = true;
   }
 
 

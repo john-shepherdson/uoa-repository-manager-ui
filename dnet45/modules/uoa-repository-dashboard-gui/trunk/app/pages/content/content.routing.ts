@@ -3,11 +3,13 @@ import {NgModule} from "@angular/core";
 import {ContentEventsComponent} from "./content-events.component";
 import {ContentComponent} from "./content.component";
 import {ContentNotificationsComponent} from "./content-notifications.component";
+import {AuthGuardService} from '../../services/auth-guard.service';
 
 const contentRoutes: Routes = [
   {
     path: 'content',
     component: ContentComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
