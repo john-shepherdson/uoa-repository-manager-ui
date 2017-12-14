@@ -7,14 +7,13 @@
 */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import {PiwikInfo, Repository} from '../domain/typeScriptClasses';
-import {of} from "rxjs/observable/of";
+import { Country, PiwikInfo, Repository } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
-import {Http, Response} from '@angular/http';
+import { Http, Response } from '@angular/http';
 
 const httpOptions = {
   headers: new HttpHeaders().set('Content-Type', 'application/json')
@@ -27,11 +26,27 @@ export class RepositoryService {
 
   constructor(private http: Http) { }
 
+  getRepositoriesOfCountry (country: string, mode: string): Observable<Repository[]> {
+    let url = `${this.apiUrl}/repository/getRepositoriesByCountry/${country}/${mode}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Repository[]>res.json())
+      .catch(this.handleError);
+  }
+
   getRepositoriesOfUser (userEmail: string): Observable<Repository[]> {
     let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/10`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Repository[]>res.json())
+      .catch(this.handleError);
+  }
+
+  getCountries (): Observable<Country[]> {
+    let url = `${this.apiUrl}/repository/getCountries`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Country[]>res.json())
       .catch(this.handleError);
   }
 

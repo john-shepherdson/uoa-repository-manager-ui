@@ -281,3 +281,10 @@ export interface Comparator<T> {
 export type Action = "CREATE" | "DELETE" | "UPDATE" | "MANAGE" | "RELEASE" | "CANCEL";
 
 export type ActionStatus = "DONE" | "ONGOING" | "FAILED" | "WAITING" | "ASSIGNED";
+
+
+/*ADDITIONAL CLASSES -- added by myrto --*/
+export class Country {
+  name: string;
+  code: string;
+}

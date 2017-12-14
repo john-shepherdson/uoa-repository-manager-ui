@@ -192,9 +192,9 @@
                   <!-- Panel top -->
                   <div *ngIf="isLoggedIn" class="btl-panel" style="float: right;">
                     <!-- User Name -->
-                    <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" id="btl-panel-loggedin"
-                          class="loginLink">
-                                  {{authService.userName}}   </span>
+                    <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" id="btl-panel-loggedin">
+                      <a class="loginLink" disabled="true">{{authService.userName}}   </a>
+                    </span>
                     |
                     <!-- Logout button -->
                     <span style="color: rgb(255, 255, 255); border: medium none rgb(255, 255, 255);" class="btl-dropdown">

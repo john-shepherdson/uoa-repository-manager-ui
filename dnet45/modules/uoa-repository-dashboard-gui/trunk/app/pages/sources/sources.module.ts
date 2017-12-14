@@ -1,11 +1,15 @@
-import {NgModule} from '@angular/core';
-import {SourcesRouting} from './sources.routing';
-import {SourcesComponent} from './sources.component';
-import {SourcesRegisterComponent} from './sources-register.component';
-import {CommonModule} from '@angular/common';
-import {TabsModule} from 'ngx-bootstrap';
-import {SourcesUpdateComponent} from "./sources-update.component";
-import {SourcesRegisterLiteratureComponent} from './sources-register/sources-register-literature.component';
+/*
+*  created by myrto
+*/
+
+import { NgModule } from '@angular/core';
+import { SourcesRouting } from './sources.routing';
+import { SourcesComponent } from './sources.component';
+import { SourcesRegisterComponent } from './sources-register.component';
+import { CommonModule } from '@angular/common';
+import { TabsModule } from 'ngx-bootstrap';
+import { SourcesUpdateComponent } from './sources-update.component';
+import { SRLiteratureComponent } from './sources-register/sr-literature.component';
 
 @NgModule ({
   imports: [
@@ -17,7 +21,7 @@ import {SourcesRegisterLiteratureComponent} from './sources-register/sources-reg
     SourcesComponent,
     SourcesRegisterComponent,
     SourcesUpdateComponent,
-    SourcesRegisterLiteratureComponent
+    SRLiteratureComponent
   ]
 })
 

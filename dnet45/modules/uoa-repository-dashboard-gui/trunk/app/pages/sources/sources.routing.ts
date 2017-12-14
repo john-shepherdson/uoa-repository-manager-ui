@@ -1,10 +1,14 @@
-import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {SourcesComponent} from './sources.component';
-import {SourcesRegisterComponent} from './sources-register.component';
-import {SourcesUpdateComponent} from "./sources-update.component";
-import {AuthGuardService} from '../../services/auth-guard.service';
-import {SourcesRegisterLiteratureComponent} from './sources-register/sources-register-literature.component';
+/*
+*  created by myrto
+*/
+
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { SourcesComponent } from './sources.component';
+import { SourcesRegisterComponent } from './sources-register.component';
+import { SourcesUpdateComponent } from './sources-update.component';
+import { AuthGuardService } from '../../services/auth-guard.service';
+import { SRLiteratureComponent } from './sources-register/sr-literature.component';
 
 const sourcesRoutes: Routes = [
   {
@@ -19,11 +23,17 @@ const sourcesRoutes: Routes = [
       },
       {
         path: 'register',
-        component: SourcesRegisterComponent,
-      },
-      {
-        path: 'register/literature',
-        component: SourcesRegisterLiteratureComponent
+        children: [
+          {
+            path: '',
+            component: SourcesRegisterComponent,
+            pathMatch: 'full'
+          },
+          {
+            path: 'literature',
+            component: SRLiteratureComponent
+          },
+        ]
       },
       {
         path: 'update',

@@ -1,4 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+/*
+*  created by myrto
+*/
+
+
+import { Component, OnInit } from '@angular/core';
 
 @Component ({
   selector: 'app-sources-register',

@@ -10,12 +10,22 @@ import {AuthenticationService} from '../../services/authentication.service';
 
 export class MetricsComponent implements OnInit {
   reposOfUser: Repository[] = [];
+  repos: string[] = [];
 
   constructor(private repoService: RepositoryService, private authService: AuthenticationService) {}
 
   ngOnInit() {
-    this.getReposOfUser();
-    if(this.reposOfUser) {
+    this.repos = [
+      'NULL',
+      'true',
+      'false',
+      'true',
+      'NULL',
+      'true',
+      'true',
+    ];
+//    this.getReposOfUser();
+    if(this.reposOfUser.length) {
       console.log(`counted ${this.reposOfUser.length} repositories`);
     } else {
       console.log('no repos pulled');

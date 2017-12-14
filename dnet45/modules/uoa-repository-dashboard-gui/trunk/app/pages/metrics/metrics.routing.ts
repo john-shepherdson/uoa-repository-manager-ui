@@ -11,7 +11,7 @@ import {AuthGuardService} from '../../services/auth-guard.service';
 const metricsRoutes: Routes = [
   {
     path: 'metrics',
-    canActivate: [AuthGuardService],
+//    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
