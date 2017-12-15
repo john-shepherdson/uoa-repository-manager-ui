@@ -1,0 +1,120 @@
+<div class="uk-grid uk-grid-stack">
+  <div class="uk-width-expand@m uk-first-column">
+    <div class="gwt-HTML uk-margin-medium-bottom">
+      <h1 class="uk-article-title">Register your datasource</h1>
+    </div>
+    <div class="wizard">
+      <div class="wizardBreadcrumbs">
+        <div class="steps clearfix">
+          <div class="step active">
+            <div class="gwt-HTML">
+              Select repository
+              <span></span>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              Enter Information
+              <span></span>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              Add Interfaces
+              <span></span>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              Finish
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div>
+          <div>
+            <div class="animated fadeInRight stepContent">
+              <div class="alert alert-danger" *ngIf="showAlert">
+                You need to select a repository first.
+              </div>
+              <div class="alert alert-info">
+                Please make sure your repository is registered in
+                <a target="_blank" href="http://www.opendoar.org">
+                  <i class="fa fa-external-link" style="margin-right:3px;"></i>
+                    OpenDOAR
+                </a>
+                . <br>
+                <b>Last Updated: </b>
+                <!-- WHERE WILL THIS DATE COME FROM??? -->
+                2017-12-11
+              </div>
+              <div>
+                <div class="form-group">
+                  <label class="control-label">Select repository's country</label>
+                  <select class="form-control" (change) ="getReposInCountry($event.target.value, 'opendoar')" >
+                    <option value="" disabled>-- none selected --</option>
+                    <option *ngFor="let country of countries" value="{{ country.name }}">{{ country.name }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Start typing in the name of your repository to narrow down the view</label>
+                  <input class="form-control" type="text"/>
+                </div>
+              </div>
+              <div *ngIf="hasSelectedCountry">
+                <div>
+                  <h2>OpenDOAR Repositories in {{ selectedCountry }}</h2>
+                </div>
+                <div class="alert alert-warning" *ngIf="noRepositories">No repositories found</div>
+                <div class="repositoriesRadioButtonForm" *ngIf="!noRepositories">
+                  <label class="btn btn-link" *ngFor="let repo of countryRepos" style="display: block; text-align: left;">
+                    <input type="radio" value="{{ repo.id }}" (change)="chooseRepository()">
+                    <span>
+                      {{ repo.description }}
+                      <a target="_blank" href="{{repo.websiteUrl }}">
+                        <i class="fa fa-external-link externalLink"></i>
+                      </a>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizardActions">
+        <button class="btn btn-grey-light" type="button" (click)="goToNextStep()">
+          Next
+          <i class="fa fa-angle-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="tm-sidebar uk-width-1-4@m">
+    <div>
+      <div class="uk-card uk-card-body uk-card-default sidemenu">
+        <h3 class="el-title uk-h3 uk-heading-bullet">Info</h3>
+        <p class="small">
+          Use the form on the right to add your repository or journal in OpenAIRE. If you want to find more information about this process
+          <!-- TARGET FILE MISSING! jsps/manuals/user-manual.pdf -->
+          <a target="_blank" href="#">click here</a>
+          .
+        </p>
+        <div class="alert alert-warning small">
+          The official repository/journal administrator (his/her email address being retrieved from the OAI-PMH verb
+          <b>Identify</b>
+          ) will be contacted and informed about registration request. So please make sure that you are either this person or have access to the email address, or that you have notified them.
+        </div>
+        <p class="small">
+          For any problems or questions please contact the
+          <a class="external" target="_blank" href="https://www.openaire.eu/support/helpdesk" >
+            OpenAIRE helpdesk
+          </a>
+          .
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
