@@ -7,7 +7,6 @@ import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog.comp
 })
 
 export class MetricsEnableComponent implements OnInit {
-  someid: string;
   modalTitle = "Confirmation";
   modalButton = "Yes, enable it";
   isModalShown: boolean;
@@ -19,17 +18,15 @@ export class MetricsEnableComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.someid = 'someid';
     this.isModalShown = false;
   }
 
   confirmEnabling() {
-    this.confirmEnablingModal.ids = [this.someid];
     this.confirmEnablingModal.showModal();
   }
 
-  confirmedEnabling(ids: string[]){
-    const id = ids[0];
-    console.log('received ' + id);
+  confirmedEnabling(){
+    console.log('enabled repo');
+
   }
 }

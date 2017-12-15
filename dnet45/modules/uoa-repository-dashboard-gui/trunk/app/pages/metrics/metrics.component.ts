@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {RepositoryService} from "../../services/repository.service";
-import {PiwikInfo, Repository} from "../../domain/typeScriptClasses";
-import {AuthenticationService} from '../../services/authentication.service';
+import { Component, OnInit } from '@angular/core';
+import { RepositoryService } from "../../services/repository.service";
+import { PiwikInfo, Repository } from "../../domain/typeScriptClasses";
 
 @Component ({
   selector: 'app-metrics',
@@ -12,7 +11,7 @@ export class MetricsComponent implements OnInit {
   reposOfUser: Repository[] = [];
   repos: string[] = [];
 
-  constructor(private repoService: RepositoryService, private authService: AuthenticationService) {}
+  constructor(private repoService: RepositoryService) {}
 
   ngOnInit() {
     this.repos = [
@@ -24,7 +23,7 @@ export class MetricsComponent implements OnInit {
       'true',
       'true',
     ];
-//    this.getReposOfUser();
+    this.getReposOfUser();
     if(this.reposOfUser.length) {
       console.log(`counted ${this.reposOfUser.length} repositories`);
     } else {
@@ -35,5 +34,15 @@ export class MetricsComponent implements OnInit {
   getReposOfUser(): void {
     this.repoService.getRepositoriesOfUser("ant.lebesis@gmail.com")
       .subscribe(repos => this.reposOfUser = repos);
+  }
+
+  goToValidationLink(repo: string) {
+    if(repo == 'true'){
+      return "/home";
+    } else if ( repo == 'false' ) {
+      return "instructions";
+    } else {
+      return "enable";
+    }
   }
 }

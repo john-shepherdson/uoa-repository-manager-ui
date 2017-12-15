@@ -32,59 +32,15 @@
                 </div>
               </div>
               <div>
-              <div class="uk-grid-large uk-grid-margin-large uk-grid repos-grid">
-<!--
-                  <div class="uk-width-expand@m uk-first-column">
+                <div class="uk-grid-large uk-grid-margin-large uk-grid repos-grid">
+                  <div *ngFor="let repo of repos" class="uk-width-1-2@m uk-first-column uk-margin-small-bottom">
                     <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack">
                       <div class="uk-first-column">
-                        <div class="gwt-HTML">
-                          <div class="el-item uk-panel uk-scrollspy-inview uk-animation-slide-top-medium" data-uk-scrollspy="" style="" >
-                            <div class="uk-child-width-expand uk-grid-medium uk-flex-middle uk-grid" uk-grid="">
-                              <div class="uk-width-1-3@m uk-first-column">
-                                <a class="el-link" [routerLink]="['enable']">
-                                  <img class="el-image uk-border-rounded" src="/assets/imgs/yourLogoHere.jpg" alt="">
-                                </a>
-                              </div>
-                              <div>
-                                <h3 class="el-title uk-margin uk-h5 uk-margin-remove-adjacent uk-margin-small-bottom">DSpace at NTUA</h3>
-                                <div class="uk-badge uk-badge-danger">not enabled</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="uk-width-expand@m uk-first-column">
-                    <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack">
-                      <div class="uk-first-column">
-                        <div class="gwt-HTML">
+                        <div>
                           <div class="el-item uk-panel uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
                             <div class="uk-child-width-expand uk-grid-medium uk-flex-middle uk-grid" uk-grid="">
                               <div class="uk-width-1-3@m uk-first-column">
-                                <a class="el-link" [routerLink]="['instructions']">
-                                  <img class="el-image uk-border-rounded" src="/assets/imgs/yourLogoHere.jpg" alt="">
-                                </a>
-                              </div>
-                              <div>
-                                <h3 class="el-title uk-margin uk-h5 uk-margin-remove-adjacent uk-margin-small-bottom">Pandektis</h3>
-                                <div class="uk-badge uk-badge-warning">enabling in progress</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
--->
-                  <div class="uk-width-expand@m uk-first-column">
-                    <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack" *ngFor="let repo of repos">
-                      <div class="uk-first-column">
-                        <div>
-                          <div class="el-item uk-panel uk-scrollspy-inview uk-animation-slide-top-medium" data-uk-scrollspy="">
-                            <div class="uk-child-width-expand uk-grid-medium uk-flex-middle uk-grid" uk-grid="">
-                              <div class="uk-width-1-3@m uk-first-column">
-                                <a class="el-link" [routerLink]="['enable']">
+                                <a class="el-link" [routerLink]="goToValidationLink(repo)">
                                   <img class="el-image uk-border-rounded" src="/assets/imgs/yourLogoHere.jpg" alt="">
                                 </a>
                               </div>
@@ -100,7 +56,6 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
