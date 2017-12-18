@@ -1,3 +1,6 @@
+/**
+ * Created by myrto on 11/27/17.
+ */
 import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from "../../services/repository.service";
 import { PiwikInfo, Repository } from "../../domain/typeScriptClasses";
@@ -9,26 +12,12 @@ import { PiwikInfo, Repository } from "../../domain/typeScriptClasses";
 
 export class MetricsComponent implements OnInit {
   reposOfUser: Repository[] = [];
-  repos: string[] = [];
 
   constructor(private repoService: RepositoryService) {}
 
   ngOnInit() {
-    this.repos = [
-      'NULL',
-      'true',
-      'false',
-      'true',
-      'NULL',
-      'true',
-      'true',
-    ];
     this.getReposOfUser();
-    if(this.reposOfUser.length) {
-      console.log(`counted ${this.reposOfUser.length} repositories`);
-    } else {
-      console.log('no repos pulled');
-    }
+    console.log(`counted ${this.reposOfUser.length} repositories`);
   }
 
   getReposOfUser(): void {
@@ -36,11 +25,13 @@ export class MetricsComponent implements OnInit {
       .subscribe(repos => this.reposOfUser = repos);
   }
 
-  goToValidationLink(repo: string) {
-    if(repo == 'true'){
-      return "/home";
-    } else if ( repo == 'false' ) {
-      return "instructions";
+  goToValidationLink(piwik: PiwikInfo) {
+    if(piwik){
+      if(piwik.validated === true){
+        return "/home";
+      } else if ( piwik.validated === false ) {
+        return "instructions";
+      }
     } else {
       return "enable";
     }

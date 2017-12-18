@@ -5,6 +5,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Country, Repository } from '../../../domain/typeScriptClasses';
 import { RepositoryService } from '../../../services/repository.service';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component ({
   selector:'app-sr-literature',
@@ -19,6 +22,8 @@ export class SRLiteratureComponent implements OnInit {
   noRepositories: boolean;
   hasSelectedRepo: boolean;
   showAlert: boolean;
+  showSpinner: boolean;
+  private searchString = new Subject<string>();
 
 
   constructor(private repoService:RepositoryService) {}
@@ -46,15 +51,23 @@ export class SRLiteratureComponent implements OnInit {
 
   getReposInCountry(country: string, mode: string){
     console.log(`I got ${country} and ${mode}`);
+    this.countryRepos = [];
+    this.noRepositories = false;
     this.hasSelectedCountry = true;
     this.selectedCountry = country;
-//    this.repoService.getRepositoriesOfCountry(country,mode).subscribe(repos => this.countryRepos = repos);
-    if(!this.countryRepos.length){
-      this.noRepositories = true;
-    }
+    this.showSpinner = true;
+    this.repoService.getRepositoriesOfCountry(country,mode).subscribe(
+      repos => this.countryRepos = repos,
+      error => console.log(error),
+      () => {
+        if (!this.countryRepos.length)
+          this.noRepositories = true;
+          this.showSpinner = false;
+      }
+    );
   }
 
-  chooseRepository(){
+  onChooseRepository(){
     this.hasSelectedRepo = true;
     this.showAlert = false;
   }
@@ -66,4 +79,19 @@ export class SRLiteratureComponent implements OnInit {
       //move to the next step
     }
   }
+
+  refreshSearch(term: string): void {
+    this.searchString.next(term);
+  }
+
+  searchRepo(): void {
+    this.searchString.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.countryRepos.filter(
+        repo => repo.officialName.includes(term)
+      ) )
+    );
+  }
+
 }

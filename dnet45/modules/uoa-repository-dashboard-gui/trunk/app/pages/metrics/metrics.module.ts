@@ -3,25 +3,22 @@
  */
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import {ModalModule, TabsModule} from "ngx-bootstrap";
 import { MetricsComponent } from "./metrics.component";
 import { MetricsEnableComponent } from './metrics-enable.component';
 import { MetricsInstructionsComponent } from './metrics-instructions.component';
 import { MetricsRouting } from './metrics.routing';
-import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule ({
   imports: [
     CommonModule,
-    TabsModule.forRoot(),
-    ModalModule.forRoot(),
-    MetricsRouting
+    MetricsRouting,
+    SharedModule
   ],
   declarations: [
     MetricsComponent,
     MetricsEnableComponent,
-    MetricsInstructionsComponent,
-    ConfirmationDialogComponent
+    MetricsInstructionsComponent
   ]
 })
 

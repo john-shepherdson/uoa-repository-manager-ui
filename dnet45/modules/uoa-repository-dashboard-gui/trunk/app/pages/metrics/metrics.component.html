@@ -33,22 +33,24 @@
               </div>
               <div>
                 <div class="uk-grid-large uk-grid-margin-large uk-grid repos-grid">
-                  <div *ngFor="let repo of repos" class="uk-width-1-2@m uk-first-column uk-margin-small-bottom">
+                  <div *ngFor="let repo of reposOfUser" class="uk-width-1-2@m uk-first-column uk-margin-small-bottom">
                     <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack">
                       <div class="uk-first-column">
                         <div>
                           <div class="el-item uk-panel uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
                             <div class="uk-child-width-expand uk-grid-medium uk-flex-middle uk-grid" uk-grid="">
                               <div class="uk-width-1-3@m uk-first-column">
-                                <a class="el-link" [routerLink]="goToValidationLink(repo)">
+                                <a class="el-link" [routerLink]="goToValidationLink(repo.piwikInfo)">
                                   <img class="el-image uk-border-rounded" src="/assets/imgs/yourLogoHere.jpg" alt="">
                                 </a>
                               </div>
                               <div>
-                                <h3 class="el-title uk-margin uk-h5 uk-margin-remove-adjacent uk-margin-small-bottom">{{ repo }}</h3>
-                                <div class="uk-badge uk-badge-danger" *ngIf="repo == 'NULL'">not enabled</div>
-                                <div class="uk-badge uk-badge-warning" *ngIf="repo == 'false'">enabling in progress</div>
-                                <div class="uk-badge uk-badge-success" *ngIf="repo == 'true'">enabled</div>
+                                <h3 class="el-title uk-margin uk-h5 uk-margin-remove-adjacent uk-margin-small-bottom">{{ repo.officialName }}</h3>
+                                <div class="uk-badge uk-badge-danger" *ngIf="!repo.piwikInfo">not enabled</div>
+                                <div *ngIf="repo.piwikInfo">
+                                  <div class="uk-badge uk-badge-warning" *ngIf="repo.piwikInfo.validated === false">enabling in progress</div>
+                                  <div class="uk-badge uk-badge-success" *ngIf="repo.piwikInfo.validated === true">enabled</div>
+                                </div>
                               </div>
                             </div>
                           </div>
