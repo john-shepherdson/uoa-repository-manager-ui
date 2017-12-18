@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog.component';
 
 @Component ({
   selector: 'metrics-enable',

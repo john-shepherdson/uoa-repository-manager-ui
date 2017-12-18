@@ -9,19 +9,21 @@ import { MetricsEnableComponent } from './metrics-enable.component';
 import { MetricsInstructionsComponent } from './metrics-instructions.component';
 import { MetricsRouting } from './metrics.routing';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog.component';
+import { SharedModule } from '../../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule ({
   imports: [
     CommonModule,
-    TabsModule.forRoot(),
-    ModalModule.forRoot(),
-    MetricsRouting
+    FormsModule,
+    MetricsRouting,
+    SharedModule
   ],
   declarations: [
     MetricsComponent,
     MetricsEnableComponent,
     MetricsInstructionsComponent,
-    ConfirmationDialogComponent
+//    ConfirmationDialogComponent
   ]
 })
 
