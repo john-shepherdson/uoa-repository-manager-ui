@@ -10,6 +10,7 @@ import {HttpModule, JsonpModule} from "@angular/http";
 import {ReadMoreComponent} from "./read-more.component";
 import {AsideHelpContentComponent, HelpContentComponent} from "./help-content.component";
 import {HelpContentService} from "../../services/help-content.service";
+import { RepositoryTilesComponent } from './repository-tiles.component';
 
 
 @NgModule({
@@ -24,12 +25,14 @@ import {HelpContentService} from "../../services/help-content.service";
   declarations: [
     ReadMoreComponent,
     HelpContentComponent,
-    AsideHelpContentComponent
+    AsideHelpContentComponent,
+    RepositoryTilesComponent
   ],
   exports: [
     ReadMoreComponent,
     HelpContentComponent,
-    AsideHelpContentComponent
+    AsideHelpContentComponent,
+    RepositoryTilesComponent
   ],
   providers: [
     HelpContentService

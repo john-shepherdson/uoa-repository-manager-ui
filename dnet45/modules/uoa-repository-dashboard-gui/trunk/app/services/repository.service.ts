@@ -50,6 +50,14 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
+  getPiwikInfo (id: string): Observable<PiwikInfo> {
+    let url = `${this.apiUrl}/piwik/getPiwikSiteForRepo/${id}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( piwik => <PiwikInfo>piwik.json() )
+      .catch(this.handleError);
+  }
+
   private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message

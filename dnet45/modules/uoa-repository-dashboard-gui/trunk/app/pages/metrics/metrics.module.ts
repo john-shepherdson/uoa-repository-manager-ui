@@ -7,13 +7,15 @@ import { MetricsComponent } from "./metrics.component";
 import { MetricsEnableComponent } from './metrics-enable.component';
 import { MetricsInstructionsComponent } from './metrics-instructions.component';
 import { MetricsRouting } from './metrics.routing';
+import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule ({
   imports: [
     CommonModule,
     MetricsRouting,
-    SharedModule
+    SharedModule,
+    ReusableComponentsModule
   ],
   declarations: [
     MetricsComponent,

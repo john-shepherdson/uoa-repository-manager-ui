@@ -1,5 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog.component';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { RepositoryService } from '../../services/repository.service';
+import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog.component';
 
 @Component ({
   selector: 'metrics-enable',
@@ -7,18 +9,28 @@ import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog.comp
 })
 
 export class MetricsEnableComponent implements OnInit {
+  @Input() id: string;
+
   modalTitle = "Confirmation";
   modalButton = "Yes, enable it";
   isModalShown: boolean;
 
   @ViewChild('confirmEnablingModal')
-  public confirmEnablingModal : ConfirmationDialogComponent;
+  public confirmEnablingModal: ConfirmationDialogComponent;
 
 
-  constructor() {}
+  constructor(
+    private route: ActivatedRoute,
+    private repoService: RepositoryService
+  ) {}
 
   ngOnInit() {
+    this.getId();
     this.isModalShown = false;
+  }
+
+  getId(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
   }
 
   confirmEnabling() {
@@ -27,6 +39,5 @@ export class MetricsEnableComponent implements OnInit {
 
   confirmedEnabling(){
     console.log('enabled repo');
-
   }
 }

@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
 import { Country, Repository } from '../../../domain/typeScriptClasses';
 import { RepositoryService } from '../../../services/repository.service';
 import { Subject } from 'rxjs/Subject';
+/*
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+*/
 
 @Component ({
   selector:'app-sr-literature',
@@ -60,9 +62,9 @@ export class SRLiteratureComponent implements OnInit {
       repos => this.countryRepos = repos,
       error => console.log(error),
       () => {
-        if (!this.countryRepos.length)
-          this.noRepositories = true;
+        if (!this.countryRepos.length) this.noRepositories = true;
           this.showSpinner = false;
+          this.showAlert = false;
       }
     );
   }
@@ -83,7 +85,7 @@ export class SRLiteratureComponent implements OnInit {
   refreshSearch(term: string): void {
     this.searchString.next(term);
   }
-
+/*
   searchRepo(): void {
     this.searchString.pipe(
       debounceTime(500),
@@ -92,6 +94,6 @@ export class SRLiteratureComponent implements OnInit {
         repo => repo.officialName.includes(term)
       ) )
     );
-  }
+  }*/
 
 }

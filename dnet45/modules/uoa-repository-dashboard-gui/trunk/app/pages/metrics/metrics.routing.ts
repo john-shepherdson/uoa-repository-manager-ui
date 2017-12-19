@@ -10,19 +10,25 @@ import { AuthGuardService } from '../../services/auth-guard.service';
 
 const metricsRoutes: Routes = [
   {
-    path: 'metrics',
-    canActivate: [AuthGuardService],
+    path: 'getImpact',
+//    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
         component: MetricsComponent,
       },
       {
-        path: 'enable',
+        path: 'enable/:id',
         component: MetricsEnableComponent
       },
+/*
       {
-        path: 'instructions',
+        path: 'show_metrics/:id',
+        component: MetricsShowComponent
+      },
+*/
+      {
+        path: 'instructions/:id',
         component: MetricsInstructionsComponent
       }
     ]

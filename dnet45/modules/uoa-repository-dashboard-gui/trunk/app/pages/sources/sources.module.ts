@@ -10,12 +10,14 @@ import { CommonModule } from '@angular/common';
 import { TabsModule } from 'ngx-bootstrap';
 import { SourcesUpdateComponent } from './sources-update.component';
 import { SRLiteratureComponent } from './sources-register/sr-literature.component';
+import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
-    SourcesRouting
+    SourcesRouting,
+    ReusableComponentsModule
   ],
   declarations: [
     SourcesComponent,

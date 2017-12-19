@@ -67,7 +67,10 @@
                 <div>
                   <h2>OpenDOAR Repositories in {{ selectedCountry }}</h2>
                 </div>
-                <div style="text-align: center;" *ngIf="showSpinner"><img src="/assets/imgs/loader-big.gif"></div>
+                <div style="text-align: center;" *ngIf="showSpinner">
+                  <span class="loading">Retrieving repositories for selected country</span><br>
+                  <img src="/assets/imgs/loader-big.gif">
+                </div>
                 <div class="alert alert-warning" *ngIf="noRepositories">No repositories found</div>
                 <div class="repositoriesRadioButtonForm" *ngIf="countryRepos">
                   <div class="form-group"

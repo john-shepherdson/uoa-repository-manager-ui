@@ -6,7 +6,11 @@ import {Component, OnInit} from "@angular/core";
 })
 
 export class SourcesUpdateComponent implements OnInit {
+  title: string = '';
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.title = 'Choose the Datasource you would like to manage';
+  }
 }
