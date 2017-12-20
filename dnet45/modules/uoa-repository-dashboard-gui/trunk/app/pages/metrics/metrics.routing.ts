@@ -7,6 +7,7 @@ import { MetricsComponent } from './metrics.component';
 import { MetricsEnableComponent } from './metrics-enable.component';
 import { MetricsInstructionsComponent } from './metrics-instructions.component';
 import { AuthGuardService } from '../../services/auth-guard.service';
+import { MetricsShowComponent } from './metrics-show.component';
 
 const metricsRoutes: Routes = [
   {
@@ -21,12 +22,10 @@ const metricsRoutes: Routes = [
         path: 'enable/:id',
         component: MetricsEnableComponent
       },
-/*
       {
         path: 'show_metrics/:id',
         component: MetricsShowComponent
       },
-*/
       {
         path: 'instructions/:id',
         component: MetricsInstructionsComponent

@@ -35,10 +35,11 @@ export class RepositoryService {
   }
 
   getRepositoriesOfUser (userEmail: string): Observable<Repository[]> {
-    let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/10`;
+    let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/100`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Repository[]>res.json())
+      .do(res => console.log(`counted ${res.length} repositories`))
       .catch(this.handleError);
   }
 

@@ -9,12 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class MetricsComponent implements OnInit {
-  title: string = '';
+  parent_id: string;
 
   constructor() {}
 
   ngOnInit() {
-    this.title = 'Choose the Datasource for which you would like to view or enable metrics';
+    this.parent_id = 'metrics';
   }
 
 }

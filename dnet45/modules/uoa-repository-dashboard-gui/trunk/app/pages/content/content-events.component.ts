@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import { RepositoryService } from '../../services/repository.service';
 
 @Component ({
   selector: 'app-content-events',
@@ -6,8 +7,11 @@ import {Component, OnInit} from "@angular/core";
 })
 
 export class ContentEventsComponent implements OnInit {
+  parent_id: string;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.parent_id = 'contentEvents';
+  }
 }

@@ -9,6 +9,7 @@ import { MetricsInstructionsComponent } from './metrics-instructions.component';
 import { MetricsRouting } from './metrics.routing';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { SharedModule } from '../../shared/shared.module';
+import { MetricsShowComponent } from './metrics-show.component';
 
 @NgModule ({
   imports: [
@@ -20,7 +21,8 @@ import { SharedModule } from '../../shared/shared.module';
   declarations: [
     MetricsComponent,
     MetricsEnableComponent,
-    MetricsInstructionsComponent
+    MetricsInstructionsComponent,
+    MetricsShowComponent
   ]
 })
 

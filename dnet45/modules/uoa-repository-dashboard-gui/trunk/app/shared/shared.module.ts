@@ -4,7 +4,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmationDialogComponent } from './confirmation-dialog.component';
+import { ConfirmationDialogComponent } from './reusablecomponents/confirmation-dialog.component';
 import { ModalModule, TabsModule } from 'ngx-bootstrap';
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RepositoryService } from '../../services/repository.service';
-import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 
 @Component ({
   selector: 'metrics-enable',

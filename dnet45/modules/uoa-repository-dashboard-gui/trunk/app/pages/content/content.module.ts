@@ -5,12 +5,14 @@ import {ContentComponent} from "./content.component";
 import {ContentRouting} from "./content.routing";
 import {ContentEventsComponent} from "./content-events.component";
 import {ContentNotificationsComponent} from "./content-notifications.component";
+import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
-    ContentRouting
+    ContentRouting,
+    ReusableComponentsModule
   ],
   declarations: [
     ContentComponent,
