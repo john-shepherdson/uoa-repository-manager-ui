@@ -6,17 +6,21 @@ import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule, JsonpModule } from "@angular/http";
+import { ModalModule, TabsModule } from 'ngx-bootstrap';
 
 import { ReadMoreComponent } from "./read-more.component";
 import { AsideHelpContentComponent, HelpContentComponent } from "./help-content.component";
 import { HelpContentService } from "../../services/help-content.service";
 import { RepositoryTilesComponent } from './repository-tiles.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 
 
 @NgModule({
   imports: [
     BrowserModule,
     CommonModule,
+    TabsModule.forRoot(),
+    ModalModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
@@ -26,12 +30,14 @@ import { RepositoryTilesComponent } from './repository-tiles.component';
     ReadMoreComponent,
     HelpContentComponent,
     AsideHelpContentComponent,
+    ConfirmationDialogComponent,
     RepositoryTilesComponent
   ],
   exports: [
     ReadMoreComponent,
     HelpContentComponent,
     AsideHelpContentComponent,
+    ConfirmationDialogComponent,
     RepositoryTilesComponent
   ],
   providers: [
