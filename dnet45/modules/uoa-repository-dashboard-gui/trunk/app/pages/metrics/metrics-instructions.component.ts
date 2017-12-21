@@ -2,7 +2,7 @@
  * Created by myrto on 11/24/17.
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PiwikInfo} from '../../domain/typeScriptClasses';
 import {RepositoryService} from '../../services/repository.service';
 import {ActivatedRoute} from '@angular/router';
@@ -13,7 +13,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 
 export class MetricsInstructionsComponent implements OnInit {
-  @Input() piwik: PiwikInfo;
+  piwik: PiwikInfo;
+  errorMessage: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +29,10 @@ export class MetricsInstructionsComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     this.repoService.getPiwikInfo(id).subscribe(
       piwik => this.piwik = piwik,
-      error => console.log(error)
+      error => {
+        console.log(error);
+        this.errorMessage = 'An error occured! The information about the site could not be retrieved';
+      }
     );
   }
 

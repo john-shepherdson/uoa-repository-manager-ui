@@ -9,7 +9,7 @@ import { RepositoryService } from '../../services/repository.service';
 })
 
 export class MetricsShowComponent implements OnInit {
-  @Input() piwik: PiwikInfo;
+  piwik: PiwikInfo;
 
   constructor(
     private route: ActivatedRoute,

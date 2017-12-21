@@ -6,6 +6,7 @@ import {ContentRouting} from "./content.routing";
 import {ContentEventsComponent} from "./content-events.component";
 import {ContentNotificationsComponent} from "./content-notifications.component";
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
+import { ContentEventsOfRepositoryComponent } from './content-events-of-repository.component';
 
 @NgModule ({
   imports: [
@@ -17,6 +18,7 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
   declarations: [
     ContentComponent,
     ContentEventsComponent,
+    ContentEventsOfRepositoryComponent,
     ContentNotificationsComponent
   ]
 })

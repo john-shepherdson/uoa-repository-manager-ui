@@ -12,7 +12,7 @@ import { MetricsShowComponent } from './metrics-show.component';
 const metricsRoutes: Routes = [
   {
     path: 'getImpact',
-//    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',

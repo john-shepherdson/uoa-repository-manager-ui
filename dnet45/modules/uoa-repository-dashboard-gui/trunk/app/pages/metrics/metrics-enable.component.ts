@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RepositoryService } from '../../services/repository.service';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 
 @Component ({
@@ -9,7 +8,7 @@ import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/con
 })
 
 export class MetricsEnableComponent implements OnInit {
-  @Input() id: string;
+  id: string;
 
   modalTitle = "Confirmation";
   modalButton = "Yes, enable it";
@@ -20,8 +19,7 @@ export class MetricsEnableComponent implements OnInit {
 
 
   constructor(
-    private route: ActivatedRoute,
-    private repoService: RepositoryService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {

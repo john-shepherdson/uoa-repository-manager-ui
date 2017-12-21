@@ -10,11 +10,11 @@ import { RepositoryService } from '../../services/repository.service';
 export class RepositoryTilesComponent implements OnInit {
   reposOfUser: Repository[] = [];
   showSpinner: boolean;
-  userEmail: string = 'ant.lebesis@gmail.com';
   layoutChoice: string;
   badgeCSS: string;
   badgeText: string;
   linkToNext: string;
+  errorMessage: string = '';
 
   @Input() parent: string = '';
 
@@ -27,7 +27,7 @@ export class RepositoryTilesComponent implements OnInit {
 
   getReposOfUser(): void {
     this.showSpinner = true;
-    this.repoService.getRepositoriesOfUser(this.userEmail)
+    this.repoService.getRepositoriesOfUser()
       .subscribe(
         repos => this.reposOfUser = repos.sort( function(a,b){
           if(a.officialName<b.officialName){
@@ -38,7 +38,11 @@ export class RepositoryTilesComponent implements OnInit {
             return 0;
           }
         } ),
-        error => console.log(error),
+        error => {
+          console.log(error);
+          this.showSpinner = false;
+          this.errorMessage = 'An error occured and the repositories could not be retrieved!';
+          },
         () => {
           this.showSpinner = false;
         }
@@ -51,10 +55,10 @@ export class RepositoryTilesComponent implements OnInit {
 
     } else if(this.parent=='contentEvents'){
       this.badgeCSS = 'el-meta uk-margin uk-text-meta';
-      this.badgeText = '(0 events)';
+      this.badgeText = '0';
       this.linkToNext = `/contact/events/${repo.officialName}`;
 
-    } else {
+    } else if(this.parent=='sourcesUpd') {
       this.linkToNext = '#';
     }
   }

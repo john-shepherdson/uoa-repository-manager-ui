@@ -1,9 +1,10 @@
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
-import {ContentEventsComponent} from "./content-events.component";
-import {ContentComponent} from "./content.component";
-import {ContentNotificationsComponent} from "./content-notifications.component";
-import {AuthGuardService} from '../../services/auth-guard.service';
+import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { ContentEventsComponent } from "./content-events.component";
+import { ContentComponent } from "./content.component";
+import { ContentNotificationsComponent } from "./content-notifications.component";
+import { AuthGuardService } from '../../services/auth-guard.service';
+import { ContentEventsOfRepositoryComponent } from './content-events-of-repository.component';
 
 const contentRoutes: Routes = [
   {
@@ -18,7 +19,17 @@ const contentRoutes: Routes = [
       },
       {
         path: 'events',
-        component: ContentEventsComponent
+        children: [
+          {
+            path: '',
+            component: ContentEventsComponent,
+            pathMatch: 'full'
+          },
+          {
+            path: ':name',
+            component: ContentEventsOfRepositoryComponent,
+          }
+        ]
       },
       {
         path: 'notifications',
@@ -26,7 +37,7 @@ const contentRoutes: Routes = [
       }
     ]
   }
-]
+];
 
 @NgModule ({
   imports: [RouterModule.forChild(contentRoutes)],

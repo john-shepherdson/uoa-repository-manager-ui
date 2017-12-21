@@ -16,6 +16,7 @@
       </div>
     </div>
     <div>
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
       <div style="text-align: center; margin-top: 100px;" *ngIf="showSpinner">
         <span>Retrieving repositories ...</span><br>
         <img src="/assets/imgs/loader-big.gif">
@@ -38,7 +39,11 @@
                     </div>
                     <div>
                       <h3 class="el-title uk-margin uk-h5 uk-margin-remove-adjacent uk-margin-small-bottom">{{ repo.officialName }}</h3>
-                      <div class="{{ badgeCSS }}">{{ badgeText }}</div>
+                      <div class="{{ badgeCSS }}">
+                        <span *ngIf="parent == 'contentEvents'">(</span>
+                        {{ badgeText }}
+                        <span *ngIf="parent == 'contentEvents'"> events)</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -78,7 +83,7 @@
                       <div class="{{ badgeCSS }}">{{ badgeText }}</div>
                     </td>
                     <td *ngIf="parent=='contentEvents'" class="uk-text-nowrap uk-table-shrink">
-                      0</td>
+                      {{ badgeText }}</td>
 
                     <!--SET ACTIONS-->
                     <td class="uk-text-nowrap uk-table-shrink">
@@ -86,6 +91,7 @@
                         <i *ngIf="parent !== 'sourcesUpdate'" class="fa fa-eye" aria-hidden="true"></i>
                         <i *ngIf="parent == 'sourcesUpdate'"class="fa fa-pencil" aria-hidden="true"></i>
                       </a>
+
                     </td>
                   </tr>
                 </tbody>

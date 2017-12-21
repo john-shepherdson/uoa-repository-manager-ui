@@ -11,7 +11,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Country, PiwikInfo, Repository } from '../domain/typeScriptClasses';
+import { Country, PiwikInfo, Repository, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response } from '@angular/http';
 
@@ -24,6 +24,8 @@ export class RepositoryService {
 /*  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';*/
   private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
 
+  userEmail: string = 'ant.lebesis@gmail.com';
+
   constructor(private http: Http) { }
 
   getRepositoriesOfCountry (country: string, mode: string): Observable<Repository[]> {
@@ -34,20 +36,12 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  getRepositoriesOfUser (userEmail: string): Observable<Repository[]> {
-    let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/100`;
+  getRepositoriesOfUser (): Observable<Repository[]> {
+    let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${this.userEmail}/0/100`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Repository[]>res.json())
       .do(res => console.log(`counted ${res.length} repositories`))
-      .catch(this.handleError);
-  }
-
-  getCountries (): Observable<Country[]> {
-    let url = `${this.apiUrl}/repository/getCountries`;
-    console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <Country[]>res.json())
       .catch(this.handleError);
   }
 
@@ -56,6 +50,22 @@ export class RepositoryService {
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( piwik => <PiwikInfo>piwik.json() )
+      .catch(this.handleError);
+  }
+
+  getTopicsForDataSource(name: string): Observable<Topic[]> {
+    let url = `${this.apiUrl}/broker/getTopicsForDatasource/${name}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Topic[]>res.json())
+      .catch(this.handleError);
+  }
+
+  getCountries (): Observable<Country[]> {
+    let url = `${this.apiUrl}/repository/getCountries`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Country[]>res.json())
       .catch(this.handleError);
   }
 

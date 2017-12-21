@@ -288,3 +288,8 @@ export class Country {
   name: string;
   code: string;
 }
+
+export class Topic {
+  size: number;
+  value: string;
+}

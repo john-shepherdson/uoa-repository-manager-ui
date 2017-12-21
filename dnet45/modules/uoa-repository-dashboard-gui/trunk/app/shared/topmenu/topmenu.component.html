@@ -103,7 +103,7 @@
             <div class="uk-navbar-center" *ngIf="isLoggedIn">
 
               <ul class="uk-navbar-nav">
-                <li class="uk-parent" routerLinkActive="active">
+                <li class="uk-parent" [routerLinkActive]="['uk-active']">
                   <a [routerLink]="['home']" [routerLinkActive]="['active']">
                     Home
                   </a>
@@ -122,7 +122,7 @@
                     </div>
                   </div>
                 </li>
-                <li class="uk-parent" routerLinkActive="uk-active"><a href="#" class=""
+                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
                                                                             aria-expanded="false">Compatibility</a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
                        id="compatibilityMenu" (click)="onClick('compatibilityMenu')">
