@@ -9,12 +9,13 @@ import { SourcesRegisterComponent } from './sources-register.component';
 import { SourcesUpdateComponent } from './sources-update.component';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { SRLiteratureComponent } from './sources-register/sr-literature.component';
+import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
 
 const sourcesRoutes: Routes = [
   {
     path: 'sources',
     component: SourcesComponent,
-    canActivate: [AuthGuardService],
+//    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
@@ -37,7 +38,16 @@ const sourcesRoutes: Routes = [
       },
       {
         path: 'update',
-        component: SourcesUpdateComponent
+        children: [
+          {
+            path: '',
+            component: SourcesUpdateComponent
+          },
+          {
+            path: 'repo',
+            component: SourcesUpdateRepoComponent
+          }
+        ]
       }
     ]
   }

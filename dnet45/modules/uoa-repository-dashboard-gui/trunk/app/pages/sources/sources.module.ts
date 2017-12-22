@@ -11,6 +11,7 @@ import { TabsModule } from 'ngx-bootstrap';
 import { SourcesUpdateComponent } from './sources-update.component';
 import { SRLiteratureComponent } from './sources-register/sr-literature.component';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
+import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
 
 @NgModule ({
   imports: [
@@ -23,7 +24,8 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
     SourcesComponent,
     SourcesRegisterComponent,
     SourcesUpdateComponent,
-    SRLiteratureComponent
+    SRLiteratureComponent,
+    SourcesUpdateRepoComponent
   ]
 })
 
