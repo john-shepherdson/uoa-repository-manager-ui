@@ -83,7 +83,8 @@ export class SRLiteratureComponent implements OnInit {
   }
 
   refreshSearch(term: string): void {
-    this.searchString.next(term);
+    /*this.searchString.next(term);*/
+    console.log(`read ${term}`)
   }
 /*
   searchRepo(): void {

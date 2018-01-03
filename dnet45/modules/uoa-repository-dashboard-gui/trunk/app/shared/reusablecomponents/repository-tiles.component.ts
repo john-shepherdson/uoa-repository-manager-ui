@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PiwikInfo, Repository } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { loadingReposMessage, reposRetrievalError } from '../../domain/shared-messages';
 
 @Component ({
   selector: 'repository-tiles',
@@ -14,11 +16,13 @@ export class RepositoryTilesComponent implements OnInit {
   badgeCSS: string;
   badgeText: string;
   linkToNext: string;
-  errorMessage: string = '';
+  errorMessage: string;
+  loadingMessage: string;
 
   @Input() parent: string = '';
 
-  constructor(private repoService: RepositoryService) {}
+  constructor(private authService: AuthenticationService,
+              private repoService: RepositoryService) {}
 
   ngOnInit() {
     this.getReposOfUser();
@@ -27,7 +31,8 @@ export class RepositoryTilesComponent implements OnInit {
 
   getReposOfUser(): void {
     this.showSpinner = true;
-    this.repoService.getRepositoriesOfUser()
+    this.loadingMessage = loadingReposMessage;
+    this.repoService.getRepositoriesOfUser(this.authService.getUserEmail())
       .subscribe(
         repos => this.reposOfUser = repos.sort( function(a,b){
           if(a.officialName<b.officialName){
@@ -41,10 +46,12 @@ export class RepositoryTilesComponent implements OnInit {
         error => {
           console.log(error);
           this.showSpinner = false;
-          this.errorMessage = 'An error occured and the repositories could not be retrieved!';
+          this.loadingMessage = '';
+          this.errorMessage = reposRetrievalError;
           },
         () => {
           this.showSpinner = false;
+          this.loadingMessage = '';
         }
       );
   }

@@ -7,6 +7,11 @@
       <div class="alert alert-danger" style="display:none;" aria-hidden="true"></div>
       <div class="uk-width-1-1@m uk-first-column uk-margin-medium-bottom">
         <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+          <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+          <div style="text-align: center; margin-top: 100px;" *ngIf="showSpinner">
+            <span>{{ loadingMessage }}</span><br>
+            <img src="/assets/imgs/loader-big.gif">
+          </div>
           <div>
             <table class="uk-table uk-table-striped uk-table-middle" style="font-size: 12px">
               <thead>
@@ -20,13 +25,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="el-item">
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-text-nowrap uk-table-shrink"></td>
-                  <td class="uk-text-nowrap uk-table-shrink"></td>
-                  <td class="uk-text-nowrap uk-table-shrink"></td>
-                  <td class="uk-text-nowrap uk-table-shrink"></td>
+                <tr class="el-item" *ngFor="let piwik of piwiks">
+                  <td class="uk-table-shrink">{{ piwik.repositoryName }}<br>(ID: {{ piwik.repositoryId }})</td>
+                  <td class="uk-table-shrink">ID: {{ piwik.siteId }}<br>Authentication Token: {{ piwik.authenticationToken }}</td>
+                  <td class="uk-text-nowrap uk-table-shrink">{{ piwik.creationDate | date : "yyyy-mm-dd" }}</td>
+                  <td class="uk-text-nowrap uk-table-shrink">{{ piwik.requestorName }}<br>{{ piwik.requestorEmail }}</td>
+                  <td class="uk-text-nowrap uk-table-shrink">
+                    <span *ngIf="piwik.validated">YES<br>on {{ piwik.validationDate | date : "yyyy-mm-dd" }}</span>
+                    <span *ngIf="!piwik.validated">NO</span>
+                  </td>
+                  <td class="uk-text-nowrap uk-table-shrink">
+                    <button id="{{ piwik.repositoryId }}" *ngIf="!piwik.validated" class="uk-button uk-button-primary validate" (click)="confirmApproval(piwik.repositoryId)">Validate</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -36,3 +46,8 @@
     </div>
   </div>
 </div>
+
+<confirmation-dialog #confirmApprovalModal [title]="modalTitle" [isModalShown]="isModalShown"
+                     [confirmActionButton]="modalButton" (emmitObject)="confirmedApproval($event)">
+  Are you sure you want to validate the selected piwik site(s)?
+</confirmation-dialog>

@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
+import { Repository } from '../domain/typeScriptClasses';
 
 @Injectable()
 export class AuthenticationService {
-  userName: string;
-  userEmail: string;
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = false;
+  userName: string = '';
+  userEmail: string = '';
 
   login(){
     this.isLoggedIn = true;
@@ -20,5 +21,9 @@ export class AuthenticationService {
 
   register(){
 
+  }
+
+  getUserEmail() {
+    return this.userEmail;
   }
 }

@@ -15,7 +15,7 @@ const sourcesRoutes: Routes = [
   {
     path: 'sources',
     component: SourcesComponent,
-//    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',

@@ -14,6 +14,7 @@ import { Observable } from 'rxjs/Observable';
 import { Country, PiwikInfo, Repository, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response } from '@angular/http';
+import { AuthenticationService } from './authentication.service';
 
 const httpOptions = {
   headers: new HttpHeaders().set('Content-Type', 'application/json')
@@ -24,11 +25,9 @@ export class RepositoryService {
 /*  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';*/
   private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
 
-  userEmail: string = 'ant.lebesis@gmail.com';
-
   constructor(private http: Http) { }
 
-  getRepositoriesOfCountry (country: string, mode: string): Observable<Repository[]> {
+  getRepositoriesOfCountry(country: string, mode: string): Observable<Repository[]> {
     let url = `${this.apiUrl}/repository/getRepositoriesByCountry/${country}/${mode}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
@@ -36,8 +35,8 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  getRepositoriesOfUser (): Observable<Repository[]> {
-    let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${this.userEmail}/0/100`;
+  getRepositoriesOfUser(userEmail: string): Observable<Repository[]> {
+    let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/100`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Repository[]>res.json())
@@ -45,7 +44,7 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  getPiwikInfo (id: string): Observable<PiwikInfo> {
+  getPiwikInfo(id: string): Observable<PiwikInfo> {
     let url = `${this.apiUrl}/piwik/getPiwikSiteForRepo/${id}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
@@ -61,11 +60,19 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  getCountries (): Observable<Country[]> {
+  getCountries(): Observable<Country[]> {
     let url = `${this.apiUrl}/repository/getCountries`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Country[]>res.json())
+      .catch(this.handleError);
+  }
+
+  getPiwikSitesForRepos(): Observable<PiwikInfo[]> {
+    let url = `${this.apiUrl}/piwik/getPiwikSitesForRepos`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <PiwikInfo[]>res.json())
       .catch(this.handleError);
   }
 
