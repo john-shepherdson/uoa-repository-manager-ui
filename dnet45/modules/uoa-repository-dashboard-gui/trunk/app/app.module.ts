@@ -19,7 +19,6 @@ import {SourcesModule} from './pages/sources/sources.module';
 import {CompatibilityModule} from './pages/compatibility/compatibility.module';
 import {ContentModule} from './pages/content/content.module';
 import {AdminPgModule} from './pages/adminPg/adminPg.module';
-import {HttpClientModule} from '@angular/common/http';
 import {RepositoryService} from "./services/repository.service";
 import {AuthenticationService} from './services/authentication.service';
 import {AuthGuardService} from './services/auth-guard.service';

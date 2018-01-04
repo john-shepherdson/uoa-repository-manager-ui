@@ -6,8 +6,14 @@ import {Component, OnInit} from "@angular/core";
 })
 
 export class AdminPgHelpTextsComponent implements OnInit {
-
+  ckeditorContent: string = "";
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ckeditorContent = `<p>My HTML</p>`;
+  }
+
+  onChange(event : any) {
+    console.log(this.ckeditorContent);
+  }
 }

@@ -10,7 +10,7 @@
         <div class="alert alert-success" style="display:none;" aria-hidden="true"></div>
         <div class="alert alert-warning" style="display:none;" aria-hidden="true"></div>
         <div>
-          <form target="GWTBootstrap3_AbstractForm_RepositoryManager_2" role="form">
+          <!--<form target="GWTBootstrap3_AbstractForm_RepositoryManager_2" role="form">-->
             <div class="form-group">
               <label class="control-label">Select help item</label>
               <select class="form-control">
@@ -19,9 +19,13 @@
             </div>
             <div class="form-group">
               <label class="control-label">Edit help text</label>
-              <div id="editor"></div>
+              <ckeditor
+                        [(ngModel)]="ckeditorContent"
+                        [readonly]="false"
+                        (change)="onChange($event)"
+                        debounce="500" ></ckeditor>
             </div>
-          </form>
+          <!--</form>-->
           <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
           <script>
             var editor = ace.edit("editor");
