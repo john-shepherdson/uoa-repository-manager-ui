@@ -12,11 +12,14 @@ import { SourcesUpdateComponent } from './sources-update.component';
 import { SRLiteratureComponent } from './sources-register/sr-literature.component';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
+import { FormsModule } from '@angular/forms';
+import { RepoFilter } from './sourcesPipes';
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
+    FormsModule,
     SourcesRouting,
     ReusableComponentsModule
   ],
@@ -25,7 +28,8 @@ import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
     SourcesRegisterComponent,
     SourcesUpdateComponent,
     SRLiteratureComponent,
-    SourcesUpdateRepoComponent
+    SourcesUpdateRepoComponent,
+    RepoFilter
   ]
 })
 

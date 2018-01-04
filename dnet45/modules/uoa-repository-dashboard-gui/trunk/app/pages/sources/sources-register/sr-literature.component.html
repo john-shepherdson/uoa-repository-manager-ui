@@ -1,13 +1,13 @@
 <div class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
-    <div class="gwt-HTML uk-margin-medium-bottom">
+    <div class="uk-margin-medium-bottom">
       <h1 class="uk-article-title">Register your datasource</h1>
     </div>
     <div class="wizard">
       <div class="wizardBreadcrumbs">
         <div class="steps clearfix">
           <div class="step active">
-            <div class="gwt-HTML">
+            <div>
               Select repository
               <span></span>
             </div>
@@ -36,8 +36,8 @@
         <div>
           <div>
             <div class="animated fadeInRight stepContent">
-              <div class="alert alert-danger" *ngIf="showAlert">
-                You need to select a repository first.
+              <div class="uk-alert uk-alert-danger" *ngIf="alertMessage">
+                {{ alertMessage }}
               </div>
               <div class="alert alert-info">
                 Please make sure your repository is registered in
@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group">
                   <label class="control-label">Start typing in the name of your repository to narrow down the view</label>
-                  <input #searchBox id="searchBox" class="form-control" type="text" (keyup)="refreshSearch($event.target.value)" />
+                  <input [(ngModel)]="searchBox" id="search" class="form-control" type="text" />
                 </div>
               </div>
               <div *ngIf="hasSelectedCountry">
@@ -68,13 +68,13 @@
                   <h2>OpenDOAR Repositories in {{ selectedCountry }}</h2>
                 </div>
                 <div style="text-align: center;" *ngIf="showSpinner">
-                  <span class="loading">Retrieving repositories for selected country</span><br>
+                  <span class="loading">{{ loadingMessage }}</span><br>
                   <img src="/assets/imgs/loader-big.gif">
                 </div>
-                <div class="alert alert-warning" *ngIf="noRepositories">No repositories found</div>
+                <div class="alert alert-warning" *ngIf="noRepositories">{{ noRepositories }}</div>
                 <div class="repositoriesRadioButtonForm" *ngIf="countryRepos">
                   <div class="form-group"
-                       *ngFor="let repo of countryRepos">
+                       *ngFor="let repo of countryRepos | repoFilter: searchBox">
                     <label class="btn btn-link" style="display: block; text-align: left;">
                       <input type="radio" value="{{ repo.id }}" name="repositories" (change)="onChooseRepository()" [disabled]="repo.registered">
                       <span>

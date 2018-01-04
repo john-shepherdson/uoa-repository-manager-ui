@@ -19,9 +19,15 @@
             </div>
             <div class="form-group">
               <label class="control-label">Edit help text</label>
-              <div></div>
+              <div id="editor"></div>
             </div>
           </form>
+          <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+          <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/javascript");
+          </script>
         </div>
       </div>
       <div class="helpAdminActionButtons">
