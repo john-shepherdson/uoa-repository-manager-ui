@@ -1,0 +1,38 @@
+    <div [formGroup]="updInterfaceGroup" class="uk-child-width-1-2@m">
+      <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="display:none;" aria-hidden="true"></div>
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="display:none;" aria-hidden="true"></div>
+      <form-inline [description]="baseUrlDesc" [valid]="updInterfaceGroup.valid">
+        <input class="uk-input" type="text" formControlName="baseUrl" placeholder="Not Identified [span class help-block]">
+      </form-inline>
+<!--
+        <div class="form-group">
+          <label class="control-label">Validation Set</label>
+          <div>
+            <label class="btn btn-link validationSetRadio disabled">
+              <input name="validationSet" value="on" tabindex="0" checked="" disabled="" type="radio">
+              <span>choose existing</span>
+            </label>
+          </div>
+          <select class="form-control" disabled="">
+            <option value="noneSelected">&#45;&#45; none selected &#45;&#45;</option>
+          </select>
+          <div>
+            <label class="btn btn-link validationSetRadio disabled">
+              <input name="validationSet" value="on" tabindex="0" checked="" disabled="" type="radio">
+              <span>or a custom one</span>
+            </label>
+          </div>
+          <input class="form-control" disabled="" type="text">
+        </div>
+        <div class="form-group">
+          <label class="control-label">Desired Compatibility Level (*)</label>
+          <select class="form-control">
+            <option value="noneSelected">&#45;&#45; none selected &#45;&#45;</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Current Compatibility Level</label>
+          <div>not available</div>
+        </div>
+-->
+    </div>

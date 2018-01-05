@@ -10,38 +10,27 @@
         <div class="alert alert-success" style="display:none;" aria-hidden="true"></div>
         <div class="alert alert-warning" style="display:none;" aria-hidden="true"></div>
         <div>
-          <!--<form target="GWTBootstrap3_AbstractForm_RepositoryManager_2" role="form">-->
-            <div class="form-group">
-              <label class="control-label">Select help item</label>
-              <select class="form-control">
-                <option value="none">None selected</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="control-label">Edit help text</label>
-              <ckeditor
-                        [(ngModel)]="ckeditorContent"
-                        [readonly]="false"
-                        (change)="onChange($event)"
-                        debounce="500" ></ckeditor>
-            </div>
-          <!--</form>-->
-          <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-          <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            editor.getSession().setMode("ace/mode/javascript");
-          </script>
+          <div class="form-group">
+            <label class="control-label">Select help item</label>
+            <select class="form-control">
+              <option value="none">None selected</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Edit help text</label>
+            <ckeditor [(ngModel)]="helpTextContent"
+                      [readonly]="false" ></ckeditor>
+          </div>
         </div>
       </div>
       <div class="helpAdminActionButtons">
-        <button class="btn btn-default uk-button-primary" type="button">Preview</button>
-        <button class="btn btn-default" type="button">Submit Changes</button>
+        <button class="btn btn-default uk-button-primary" type="button" (click)="showPreview()">Preview</button>
+        <button class="uk-button uk-button-default" type="button">Submit Changes</button>
       </div>
     </div>
   </div>
   <div class="tm-sidebar uk-width-1-4@m">
-    <div class="previewPanel"></div>
+    <div class="previewPanel" [innerHtml]="previewContent"></div>
     <div>
       <div class="gwt-HTML">
         <div class="uk-card uk-card-body uk-card-default sidemenu">
