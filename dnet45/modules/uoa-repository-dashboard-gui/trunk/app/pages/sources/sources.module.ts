@@ -14,6 +14,7 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
 import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RepoFilter } from './sourcesPipes';
+import { UpdateDatasourceInterfaceFormComponent } from './update-datasource-interface-form.component';
 
 @NgModule ({
   imports: [
@@ -30,6 +31,7 @@ import { RepoFilter } from './sourcesPipes';
     SourcesUpdateComponent,
     SRLiteratureComponent,
     SourcesUpdateRepoComponent,
+    UpdateDatasourceInterfaceFormComponent,
     RepoFilter
   ]
 })

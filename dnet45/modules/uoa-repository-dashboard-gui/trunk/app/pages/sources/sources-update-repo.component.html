@@ -105,24 +105,25 @@
             </div>
           </li>
           <li class="el-item">
-            <div class="uk-width-1-1@m uk-first-column">
-              <div class="interfacesForm uk-margin uk-grid-match uk-child-width-1-1 uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade">
-                <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade">
+            <div class="uk-grid">
+              <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade uk-width-1-2@m">
+                <div>
                   <div>
-                    <div>
-                      <h5>OpenDOAR Interface (non-removable)</h5>
-                    </div>
-                    <div class="interfaceActionsPanel">
-                      <a><i class="fa fa-save fa-lg" style=""></i></a>
-                    </div>
+                    <h5>OpenDOAR Interface (non-removable)</h5>
                   </div>
+                  <div class="interfaceActionsPanel">
+                    <a><i class="fa fa-save fa-lg" style=""></i></a>
+                  </div>
+                </div>
+                <div>
+                  <update-datasource-interface-form></update-datasource-interface-form>
                   <!-- SPACE FOR FORM GROUP -->
                 </div>
-                <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade">
-                  <div class="interface-box new" style="text-align: center">
-                    <a (click)="showInterfaceFormToggle()"><i class="fa fa-plus-square-o"></i></a>
-                    <span class="info">Add new Interface</span>
-                  </div>
+              </div>
+              <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade uk-width-1-2@m">
+                <div class="interface-box new" style="text-align: center">
+                  <a (click)="showInterfaceFormToggle()"><i class="fa fa-plus-square-o"></i></a>
+                  <span class="info">Add new Interface</span>
                 </div>
               </div>
             </div>

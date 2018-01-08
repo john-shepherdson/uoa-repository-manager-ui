@@ -14,3 +14,10 @@ export let baseUrlDesc = {
   mandatory: true,
   recommended: false
 };
+
+export let validationSetDesc = {
+  desc: 'Field to choose a validation set for the repository interface or create a new one',
+  label: 'Validation Set',
+  mandatory: true,
+  recommended: false
+};

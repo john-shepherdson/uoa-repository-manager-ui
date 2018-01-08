@@ -71,15 +71,15 @@
                   <span class="loading">{{ loadingMessage }}</span><br>
                   <img src="/assets/imgs/loader-big.gif">
                 </div>
-                <div class="alert alert-warning" *ngIf="noRepositories">{{ noRepositories }}</div>
+                <div class="uk-alert uk-alert-warning" *ngIf="noRepositories">{{ noRepositories }}</div>
                 <div class="repositoriesRadioButtonForm" *ngIf="countryRepos">
                   <div class="form-group"
                        *ngFor="let repo of countryRepos | repoFilter: searchBox">
-                    <label class="btn btn-link" style="display: block; text-align: left;">
+                    <label class="uk-button uk-button-link" style="display: block; text-align: left;">
                       <input type="radio" value="{{ repo.id }}" name="repositories" (change)="onChooseRepository()" [disabled]="repo.registered">
                       <span>
                         {{ repo.officialName }}
-                        <span class="label label-warning registeredLabel" *ngIf="repo.registered">Registered</span>
+                        <span class="uk-label uk-label-warning registeredLabel" *ngIf="repo.registered">Registered</span>
                         <a target="_blank" href="{{repo.websiteUrl }}">
                           <i class="fa fa-external-link externalLink"></i>
                         </a>

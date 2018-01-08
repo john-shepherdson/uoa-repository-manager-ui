@@ -1,38 +1,39 @@
-    <div [formGroup]="updInterfaceGroup" class="uk-child-width-1-2@m">
+    <div [formGroup]="parentGroup">
       <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="display:none;" aria-hidden="true"></div>
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="display:none;" aria-hidden="true"></div>
-      <form-inline [description]="baseUrlDesc" [valid]="updInterfaceGroup.valid">
-        <input class="uk-input" type="text" formControlName="baseUrl" placeholder="Not Identified [span class help-block]">
-      </form-inline>
-<!--
-        <div class="form-group">
-          <label class="control-label">Validation Set</label>
-          <div>
-            <label class="btn btn-link validationSetRadio disabled">
-              <input name="validationSet" value="on" tabindex="0" checked="" disabled="" type="radio">
-              <span>choose existing</span>
-            </label>
-          </div>
-          <select class="form-control" disabled="">
-            <option value="noneSelected">&#45;&#45; none selected &#45;&#45;</option>
+
+      <div class="uk-fieldset">
+        <label class="uk-form-controls-text control-label">Base URL (*)
+          <input type="text" class="uk-input" formControlName="baseUrl" disabled="">
+        </label>
+      </div>
+      <div class="uk-fieldset">
+        <label class="uk-form-controls-text control-label">Validation Set</label>
+        <div>
+          <label class="uk-button uk-button-link validationSetRadio disabled">
+            <input name="validationSet" value="select" formControlName="validationSet" type="radio" class="uk-radio">
+            <span>choose existing</span>
+          </label>
+          <select name="selectedValidationSet" class="uk-select" disabled="">
+            <option value="noneSelected">-- none selected --</option>
           </select>
-          <div>
-            <label class="btn btn-link validationSetRadio disabled">
-              <input name="validationSet" value="on" tabindex="0" checked="" disabled="" type="radio">
-              <span>or a custom one</span>
-            </label>
-          </div>
-          <input class="form-control" disabled="" type="text">
+          <label class="uk-button uk-button-link validationSetRadio disabled">
+            <input name="validationSet" value="custom" formControlname="validationSet" type="radio" class="uk-radio">
+            <span>or a custom one</span>
+          </label>
+          <input class="uk-input" disabled="" type="text">
         </div>
-        <div class="form-group">
-          <label class="control-label">Desired Compatibility Level (*)</label>
-          <select class="form-control">
-            <option value="noneSelected">&#45;&#45; none selected &#45;&#45;</option>
+      </div>
+      <div class="uk-fieldset">
+        <label class="uk-form-controls-select control-label">Desired Compatibility Level (*)
+          <select class="uk-select" name="compatibilityLevel" formControlname="compatibilityLevel">
+            <option value="">-- none selected --</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label class="control-label">Current Compatibility Level</label>
-          <div>not available</div>
-        </div>
--->
+        </label>
+      </div>
+      <div>
+        <label class="uk-form-controls-text control-label">Current Compatibility Level
+          <!-- SHOW CURRENT LEVEL -->
+        </label>
+      </div>
     </div>
