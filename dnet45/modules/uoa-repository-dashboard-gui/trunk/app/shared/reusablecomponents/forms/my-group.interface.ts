@@ -9,14 +9,12 @@ import {
   OnInit,
   SimpleChanges
 } from "@angular/core";
-
-import { Subject } from "rxjs/Subject";
 import { Description } from '../../../domain/oa-description';
+import { Subject } from "rxjs/Subject";
 
 /**
  * Created by stefanos on 15/5/2017.
  */
-
 
 @Component({
   template:``
@@ -51,7 +49,7 @@ export class MyGroup implements OnInit, AfterContentInit {
       if(typeof _ != 'undefined') {
         setTimeout( () => {
           (this.group as FormGroup).patchValue(_);
-        },1000)exit;
+        },1000);
       }
     });
   }
@@ -119,38 +117,38 @@ export class MyGroup implements OnInit, AfterContentInit {
 @Component({
   selector : 'form-inline',
   template : `
-  <ng-template #descTemplate>{{description.desc}}</ng-template>
-  <div class="uk-grid uk-form-horizontal">
+    <ng-template #descTemplate>{{description.desc}}</ng-template>
+    <div class="uk-grid uk-form-horizontal">
       <!--<label class="uk-width-1-5 uk-form-label" *ngIf="description.label!=null" [ngClass]="{'required' : description.mandatory==true}">-->
       <label class="uk-width-1-5" *ngIf="description.label!=null" [ngClass]="{'required' : description.mandatory==true}">
-          <!--<span *ngIf="description.mandatory==true && !valid"><i class="fa fa-star" style="color : red"></i></span>-->
-          <!--<span *ngIf="description.recommended==true"><i class="fa fa-star" style="color : green"></i></span>-->
-          {{description.label}}
-          <span *ngIf="params==='tooltip'"><i class="fa fa-info-circle" [tooltip]="descTemplate" container="body"></i></span>
+        <!--<span *ngIf="description.mandatory==true && !valid"><i class="fa fa-star" style="color : red"></i></span>-->
+        <!--<span *ngIf="description.recommended==true"><i class="fa fa-star" style="color : green"></i></span>-->
+        {{description.label}}
+        <!--<span *ngIf="params==='tooltip'"><i class="fa fa-info-circle" container="body"></i></span> uk-tooltip="{{descTemplate}}"-->
       </label>
       <!--<div class="uk-width-expand@m uk-form-controls" [ngClass]="{'has-error': !valid}">-->
       <div class="uk-width-expand\@m" [ngClass]="{'has-error': !valid}">
-          <ng-content></ng-content>
-          <div *ngIf="params==='inline'">
-              <i><small>{{description.desc}}</small></i>
-          </div>
+        <ng-content></ng-content>
+        <div *ngIf="params==='inline'">
+          <i><small>{{description.desc}}</small></i>
+        </div>
       </div>
-  </div>
+    </div>
   `
+
 })
 export class InlineFormWrapper implements OnChanges {
 
-  @Input() public description : Description = null;
+  @Input() public description: Description = null;
 
-  @Input() public params : string = 'inline';
+  @Input() public params: string = 'inline';
 
-  @Input() public width : number = 9;
+  @Input() public width: number = 9;
 
-  @Input() public valid : boolean = true;
+  @Input() public valid: boolean = true;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.valid)
       this.valid = <boolean>changes.valid.currentValue;
   }
-
 }

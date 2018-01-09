@@ -13,11 +13,19 @@ import { AsideHelpContentComponent, HelpContentComponent } from "./help-content.
 import { HelpContentService } from "../../services/help-content.service";
 import { RepositoryTilesComponent } from './repository-tiles.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
-import { MyGroup } from './forms/my-group.interface';
+import { InlineFormWrapper, MyGroup } from './forms/my-group.interface';
 import { MyArray, MyArrayInline, MyArrayWrapper, MyInlineArrayWrapper } from './forms/my-array.interface';
-import { MyChoice, MyChoiceComponents, MyChoiceWrapper } from './forms/my-choice.interface';
 import { MyFormDirective } from './forms/my-form.directive';
 
+const myGroups = [
+  MyGroup,
+  MyArray,
+  MyArrayWrapper,
+  MyArrayInline,
+  MyFormDirective,
+  MyInlineArrayWrapper,
+  InlineFormWrapper
+];
 
 @NgModule({
   imports: [
@@ -30,22 +38,20 @@ import { MyFormDirective } from './forms/my-form.directive';
     HttpModule,
     JsonpModule
   ],
+  entryComponents : [
+    MyArrayWrapper
+  ],
   declarations: [
     ReadMoreComponent,
     HelpContentComponent,
     AsideHelpContentComponent,
     ConfirmationDialogComponent,
     RepositoryTilesComponent,
-    MyGroup,
+    ...myGroups
 /*
-    MyInlineArrayWrapper,
-    MyArrayWrapper,
-    MyArray,
-    MyArrayInline,
     MyChoiceWrapper,
     MyChoice,
     MyChoiceComponents,
-    MyFormDirective
 */
   ],
   exports: [
@@ -54,7 +60,7 @@ import { MyFormDirective } from './forms/my-form.directive';
     AsideHelpContentComponent,
     ConfirmationDialogComponent,
     RepositoryTilesComponent,
-    MyGroup,
+    ...myGroups
   ],
   providers: [
     HelpContentService

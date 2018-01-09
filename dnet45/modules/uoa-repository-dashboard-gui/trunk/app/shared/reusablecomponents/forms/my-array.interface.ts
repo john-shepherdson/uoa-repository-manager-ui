@@ -25,8 +25,7 @@ import { Subject } from "rxjs/Subject";
             Add New {{description.label}}</a>
     </div>
 </div>
-`,
-  styleUrls : ['']
+`
 
 })
 export class MyArray extends MyGroup {
@@ -130,8 +129,7 @@ export class MyArray extends MyGroup {
             <i class="fa fa-plus" aria-hidden="true"></i> Add {{description.label}}
         </a>
     </form-inline>
-    `,
-  styleUrls : ['']
+    `
 
 })
 export class MyArrayInline extends MyArray {
@@ -160,8 +158,7 @@ export class MyArrayInline extends MyArray {
         </div>
         <ng-template my-form></ng-template>
     </div>
-`,
-  styleUrls : ['']
+`
 
 })
 export class MyArrayWrapper extends MyWrapper{
@@ -177,8 +174,7 @@ export class MyArrayWrapper extends MyWrapper{
     <a *ngIf="canDelete" class="remove-element uk-width-1-6" (click)="remove()"><i
             class="fa fa-times" aria-hidden="true"></i></a>
 </div>
-`,
-  styleUrls : ['']
+`
 
 })
 export class MyInlineArrayWrapper extends MyWrapper {

@@ -10,6 +10,7 @@ import { SourcesUpdateComponent } from './sources-update.component';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { SRLiteratureComponent } from './sources-register/sr-literature.component';
 import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
+import { SrDataComponent } from './sources-register/sr-data.component';
 
 const sourcesRoutes: Routes = [
   {
@@ -34,6 +35,10 @@ const sourcesRoutes: Routes = [
             path: 'literature',
             component: SRLiteratureComponent
           },
+          {
+            path: 'data',
+            component: SrDataComponent
+          }
         ]
       },
       {

@@ -1,6 +1,5 @@
 import { Component, Injector, Input } from '@angular/core';
 import { MyGroup } from '../../shared/reusablecomponents/forms/my-group.interface';
-import { baseUrlDesc, validationSetDesc, Description } from '../../domain/oa-description';
 import { FormGroup, Validators } from '@angular/forms';
 
 @Component ({
@@ -12,20 +11,29 @@ export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
   successMessage: string;
   errorMessage: string;
 
-  baseUrlDesc: Description = baseUrlDesc;
-  validationSetDesc: Description = validationSetDesc;
+  selectedValSet: string;
 
   readonly groupDefinition = {
-    baseUrl: this._fb.group({}),
-    validationSet: ['', Validators.required],
-    compatibilityLevel: ''
-  }
+    baseUrl: ['', Validators.required],
+    selectValidationSet: [''],
+    customValidationSet: ['']
+  };
 
-  constructor(private injector: Injector) {
-    super(injector);
-  }
 
   ngOnInit(){
-    this.generate();
+    super.ngOnInit();
+    console.log(this.group,this.parentGroup);
+    // this.getMyControl('customValidationSet').disable();
+  }
+
+
+  chooseValSet(existingValSet: boolean) {
+    // if(existingValSet) {
+    //   this.getMyControl('selectValidationSet').enable();
+    //   this.getMyControl('customValidationSet').disable();
+    // }  else {
+    //   this.getMyControl('selectValidationSet').disable();
+    //   this.getMyControl('customValidationSet').enable();
+    // }
   }
 }

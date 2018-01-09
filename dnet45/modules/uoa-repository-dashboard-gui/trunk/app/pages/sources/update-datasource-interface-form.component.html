@@ -1,4 +1,6 @@
-    <div [formGroup]="parentGroup">
+<div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade uk-width-1-1@m">
+  <div [formGroup]="group">
+
       <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="display:none;" aria-hidden="true"></div>
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="display:none;" aria-hidden="true"></div>
 
@@ -11,17 +13,21 @@
         <label class="uk-form-controls-text control-label">Validation Set</label>
         <div>
           <label class="uk-button uk-button-link validationSetRadio disabled">
-            <input name="validationSet" value="select" formControlName="validationSet" type="radio" class="uk-radio">
+            <input value="select" name="validationSet" type="radio" class="uk-radio" (change)="chooseValSet(true)">
             <span>choose existing</span>
           </label>
-          <select name="selectedValidationSet" class="uk-select" disabled="">
-            <option value="noneSelected">-- none selected --</option>
-          </select>
+          <div class="uk-margin">
+            <select formControlName="selectValidationSet" class="uk-select">
+              <option value="noneSelected">-- none selected --</option>
+            </select>
+          </div>
           <label class="uk-button uk-button-link validationSetRadio disabled">
-            <input name="validationSet" value="custom" formControlname="validationSet" type="radio" class="uk-radio">
+            <input value="custom" name="validationSet" type="radio" class="uk-radio" (change)="chooseValSet(false)">
             <span>or a custom one</span>
           </label>
-          <input class="uk-input" disabled="" type="text">
+          <div class="uk-margin">
+            <input formControlName="customValidationSet" class="uk-input" type="text">
+          </div>
         </div>
       </div>
       <div class="uk-fieldset">
@@ -37,3 +43,4 @@
         </label>
       </div>
     </div>
+</div>
