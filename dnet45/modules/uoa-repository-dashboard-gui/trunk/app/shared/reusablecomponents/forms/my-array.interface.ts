@@ -13,18 +13,17 @@ import { Subject } from "rxjs/Subject";
 @Component({
   selector : 'form-repeat',
   template : `
-<div [formGroup]="parentGroup">
-    <!--<div formArrayName="{{name}}">-->
-        <ng-template my-form></ng-template>
-    <!--</div>-->
-</div>
-<div class="uk-grid">
-    <div class="uk-width-1-5"></div>
-    <div class="uk-width-expand\@m">
-        <a class="add-new-element add-new-group" (click)="push()"><i class="fa fa-plus" aria-hidden="true"></i>
-            Add New {{description.label}}</a>
+  <div [formGroup]="parentGroup" class="uk-margin uk-grid-match uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade">
+      <!--<div formArrayName="{{name}}">-->
+          <ng-template my-form></ng-template>
+      <!--</div>-->
+  </div>
+  <div class="uk-margin uk-grid-match uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade">
+    <div class="interface-box new" style="text-align: center">
+        <a class="add-new-element add-new-group" (click)="push()"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
+          <span class="info">Add New {{ description.label }}</span></a>
     </div>
-</div>
+  </div>
 `
 
 })
@@ -145,6 +144,7 @@ export class MyArrayInline extends MyArray {
   selector : 'form-repeat-wrapper',
   template : `
     <div class="group">
+<!--
         <div class="uk-grid">
             <div class="uk-width-1-5"></div>
             <div class="uk-width-expand\@m">
@@ -156,7 +156,11 @@ export class MyArrayInline extends MyArray {
                 </label>
             </div>
         </div>
-        <ng-template my-form></ng-template>
+-->
+      <div class="interfaceActionsPanel" style="margin-left: 5px;">
+        <a (click)="remove()"><i class="fa fa-remove fa-lg"></i></a>
+      </div>
+      <ng-template my-form></ng-template>
     </div>
 `
 

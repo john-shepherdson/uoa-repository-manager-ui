@@ -21,3 +21,10 @@ export let validationSetDesc = {
   mandatory: true,
   recommended: false
 };
+
+export let  interfaceFormDesc = {
+  desc : 'form for adding new interfaces of the repository',
+  label : 'Interface',
+  mandatory: true,
+  recommended: false
+}

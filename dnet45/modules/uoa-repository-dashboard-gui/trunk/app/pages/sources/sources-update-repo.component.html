@@ -22,7 +22,7 @@
                     Basic information
                   </h4>
                 </div>
-                <div class="alert alert-warning">
+                <div class="uk-alert uk-alert-warning">
                   The following fields are completed by OpenDOAR.<br>
                   If you want to edit them, you can do it by using this
                   <a href="http://www.opendoar.org/suggest.php?rID=2893" target="_blank">OpenDOAR link</a>
@@ -105,27 +105,16 @@
             </div>
           </li>
           <li class="el-item">
-            <div class="uk-grid">
-              <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade uk-width-1-2@m">
-                <div>
-                  <div>
-                    <h5>OpenDOAR Interface (non-removable)</h5>
-                  </div>
-                  <div class="interfaceActionsPanel">
-                    <a><i class="fa fa-save fa-lg" style=""></i></a>
-                  </div>
-                </div>
+            <div class="uk-width-1-1@m uk-first-column">
+              <div class="interfacesForm">
                 <form [formGroup]="group">
                   <!--<update-datasource-interface-form #datasourceForm [name]="'myname'" [parentGroup]="group"></update-datasource-interface-form>-->
-                  <form-repeat [component]="updateDatasource" [parentGroup]="group" [description]="{label : 'ASd', desc : 'asdasd'}" [name]="'repeat'"></form-repeat>
-                  <!-- SPACE FOR FORM GROUP -->
+                  <form-repeat [component]="updateDatasource"
+                               [parentGroup]="group"
+                               [description]="interfaceFormDesc"
+                               [name]="'repeat'">
+                  </form-repeat>
                 </form>
-              </div>
-              <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade uk-width-1-2@m">
-                <div class="interface-box new" style="text-align: center">
-                  <a (click)="showInterfaceFormToggle()"><i class="fa fa-plus-square-o"></i></a>
-                  <span class="info">Add new Interface</span>
-                </div>
               </div>
             </div>
           </li>

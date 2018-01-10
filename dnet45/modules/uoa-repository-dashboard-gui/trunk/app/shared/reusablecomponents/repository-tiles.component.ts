@@ -66,7 +66,8 @@ export class RepositoryTilesComponent implements OnInit {
       this.linkToNext = `/contact/events/${repo.officialName}`;
 
     } else if(this.parent=='sourcesUpd') {
-      this.linkToNext = '#';
+      console.log("got repo id!!");
+      this.linkToNext = `/sources/update/${repo.id}`;
     }
   }
 
