@@ -22,7 +22,7 @@
                     Basic information
                   </h4>
                 </div>
-                <div class="uk-alert uk-alert-warning">
+                <div class="alert alert-warning">
                   The following fields are completed by OpenDOAR.<br>
                   If you want to edit them, you can do it by using this
                   <a href="http://www.opendoar.org/suggest.php?rID=2893" target="_blank">OpenDOAR link</a>
@@ -106,16 +106,14 @@
           </li>
           <li class="el-item">
             <div class="uk-width-1-1@m uk-first-column">
-              <div class="interfacesForm">
-                <form [formGroup]="group">
-                  <!--<update-datasource-interface-form #datasourceForm [name]="'myname'" [parentGroup]="group"></update-datasource-interface-form>-->
-                  <form-repeat [component]="updateDatasource"
-                               [parentGroup]="group"
-                               [description]="interfaceFormDesc"
-                               [name]="'repeat'">
-                  </form-repeat>
-                </form>
-              </div>
+              <form [formGroup]="group">
+                <!--<update-datasource-interface-form #datasourceForm [name]="'myname'" [parentGroup]="group"></update-datasource-interface-form>-->
+                <form-repeat [component]="updateDatasource"
+                             [parentGroup]="group"
+                             [description]="interfaceFormDesc"
+                             [name]="'repeat'">
+                </form-repeat>
+              </form>
             </div>
           </li>
         </ul>

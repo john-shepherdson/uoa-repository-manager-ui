@@ -23,25 +23,24 @@
       </div>
 
       <!--TILES VIEW-->
-      <div class="uk-grid-large uk-grid-margin-large uk-grid repos-grid" *ngIf="layoutChoice == 'tiles'">
+      <div class="uk-grid-large uk-grid-margin-large uk-grid repos-grid" *ngIf="tilesView">
         <div *ngFor="let repo of reposOfUser" class="uk-width-1-3@m uk-first-column uk-margin-small-bottom">
-          {{ setPropertiesForRepo(repo) }}
           <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack">
             <div class="uk-first-column">
               <div>
                 <div class="el-item uk-panel uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
                   <div class="uk-child-width-expand uk-grid-medium uk-flex-middle uk-grid" uk-grid="">
                     <div class="uk-width-1-3@m uk-first-column">
-                      <a class="el-link" href="{{ linkToNext }}">
+                      <a class="el-link" [routerLink]="[getLinkToNext(repo)]">
                         <img *ngIf="!repo.logoUrl" class="el-image uk-border-rounded" src="/assets/imgs/yourLogoHere.jpg" alt="">
                         <img *ngIf="repo.logoUrl" class="el-image uk-border-rounded" src="{{ repo.logoUrl }}" alt="">
                       </a>
                     </div>
                     <div>
                       <h3 class="el-title uk-margin uk-h5 uk-margin-remove-adjacent uk-margin-small-bottom">{{ repo.officialName }}</h3>
-                      <div class="{{ badgeCSS }}">
+                      <div class="{{ getBadgeCSS(repo) }}">
                         <span *ngIf="parent == 'contentEvents'">(</span>
-                        {{ badgeText }}
+                        {{ getBadgeText(repo) }}
                         <span *ngIf="parent == 'contentEvents'"> events)</span>
                       </div>
                     </div>
@@ -54,7 +53,7 @@
       </div>
 
       <!-- LIST VIEW -->
-      <div class="uk-grid-large uk-grid-margin-large uk-grid repos-list" *ngIf="layoutChoice == 'list'">
+      <div class="uk-grid-large uk-grid-margin-large uk-grid repos-list" *ngIf="!tilesView">
         <div class="uk-width-1-1@m uk-first-column">
           <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
             <div>
@@ -70,24 +69,23 @@
                 </thead>
                 <tbody>
                   <tr class="el-item" *ngFor="let repo of reposOfUser">
-                    {{ setPropertiesForRepo(repo) }}
                     <!-- SHARED FIELDS -->
                     <td class="uk-table-shrink">
-                      <img *ngIf="!repo.logoUrl" class="el-image uk-preserve-width" src="assets/imgs/yourLogoHere.jpg" alt="[Repo Logo]" style="height: 45px;">
                       <img *ngIf="repo.logoUrl" class="el-image uk-preserve-width" src="{{ repo.logoUrl }}" style="height: 45px;">
+                      <img *ngIf="!repo.logoUrl" class="el-image uk-preserve-width" src="assets/imgs/yourLogoHere.jpg" alt="[Repo Logo]" style="height: 45px;">
                     </td>
                     <td class="uk-text-nowrap uk-table-shrink">{{ repo.officialName }}</td>
 
                     <!-- SET STATUS OR EVENTS -->
-                    <td *ngIf="parent=='metrics'" class="uk-text-nowrap uk-table-shrink">
-                      <div class="{{ badgeCSS }}">{{ badgeText }}</div>
+                    <td *ngIf="parent == 'metrics'" class="uk-text-nowrap uk-table-shrink">
+                      <div class="{{ getBadgeCSS(repo) }}">{{ getBadgeText(repo) }}</div>
                     </td>
                     <td *ngIf="parent=='contentEvents'" class="uk-text-nowrap uk-table-shrink">
-                      {{ badgeText }}</td>
+                      {{ getBadgeText(repo) }}</td>
 
                     <!--SET ACTIONS-->
                     <td class="uk-text-nowrap uk-table-shrink">
-                      <a href="{{ linkToNext }}">
+                      <a [routerLink]="[getLinkToNext(repo)]">
                         <i *ngIf="parent !== 'sourcesUpdate'" class="fa fa-eye" aria-hidden="true"></i>
                         <i *ngIf="parent == 'sourcesUpdate'"class="fa fa-pencil" aria-hidden="true"></i>
                       </a>

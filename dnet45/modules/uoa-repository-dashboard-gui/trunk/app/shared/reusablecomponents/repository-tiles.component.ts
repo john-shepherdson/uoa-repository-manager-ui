@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PiwikInfo, Repository } from '../../domain/typeScriptClasses';
+import { Repository } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { loadingReposMessage, reposRetrievalError } from '../../domain/shared-messages';
@@ -12,10 +12,7 @@ import { loadingReposMessage, reposRetrievalError } from '../../domain/shared-me
 export class RepositoryTilesComponent implements OnInit {
   reposOfUser: Repository[] = [];
   showSpinner: boolean;
-  layoutChoice: string;
-  badgeCSS: string;
-  badgeText: string;
-  linkToNext: string;
+  tilesView: boolean;
   errorMessage: string;
   loadingMessage: string;
 
@@ -26,7 +23,7 @@ export class RepositoryTilesComponent implements OnInit {
 
   ngOnInit() {
     this.getReposOfUser();
-    this.layoutChoice = 'tiles';
+    this.tilesView = true;
   }
 
   getReposOfUser(): void {
@@ -56,45 +53,64 @@ export class RepositoryTilesComponent implements OnInit {
       );
   }
 
-  setPropertiesForRepo(repo: Repository): void {
-    if(this.parent=='metrics'){
-      this.goToValidationLink(repo.piwikInfo, repo.id);
-
+  getLinkToNext(repo): string {
+    if (this.parent == 'metrics') {
+      if (repo.piwikInfo) {
+        if (repo.piwikInfo.validated === true) {
+          return `show_metrics/${repo.id}`;
+        } else if (repo.piwikInfo.validated === false) {
+          return `instructions/${repo.id}`;
+        }
+      } else {
+        return `enable/${repo.id}`;
+      }
+    } else if(this.parent == 'sourcesUpdate'){
+      return repo.id;
     } else if(this.parent=='contentEvents'){
-      this.badgeCSS = 'el-meta uk-margin uk-text-meta';
-      this.badgeText = '0';
-      this.linkToNext = `/contact/events/${repo.officialName}`;
-
-    } else if(this.parent=='sourcesUpd') {
-      console.log("got repo id!!");
-      this.linkToNext = `/sources/update/${repo.id}`;
+      return repo.officialName;
     }
   }
 
-  goToValidationLink(piwik: PiwikInfo, id: string) {
-    if(piwik){
-      if(piwik.validated === true){
-        this.badgeCSS = 'uk-badge uk-badge-success';
-        this.badgeText = 'enabled';
-        this.linkToNext = `/getImpact/show_metrics/${id}`;
-
-      } else if ( piwik.validated === false ) {
-        this.badgeCSS = 'uk-badge uk-badge-warning';
-        this.badgeText = 'enabling in progress';
-        this.linkToNext = `/getImpact/instructions/${id}`;
+  getBadgeCSS(repo): string {
+    if (this.parent == 'metrics') {
+      if (repo.piwikInfo) {
+        if (repo.piwikInfo.validated === true) {
+          return 'uk-badge uk-badge-success';
+        } else if (repo.piwikInfo.validated === false) {
+          return 'uk-badge uk-badge-warning';
+        }
+      } else {
+        return 'uk-badge uk-badge-danger';
       }
-    } else {
-      this.badgeCSS = 'uk-badge uk-badge-danger';
-      this.badgeText = 'not enabled';
-      this.linkToNext = `/getImpact/enable/${id}`;
+    } else if (this.parent == 'sourcesUpdate') {
+      return repo.id;
+    } else if(this.parent=='contentEvents'){
+      return 'el-meta uk-margin uk-text-meta';
+    }
+  }
+
+  getBadgeText(repo): string {
+    if(this.parent=='metrics'){
+      if(repo.piwikInfo){
+        if(repo.piwikInfo.validated === true){
+          return 'enabled';
+        } else if ( repo.piwikInfo.validated === false ) {
+          return 'enabling in progress';
+        }
+      } else {
+        return 'not enabled';
+      }
+
+    } else if(this.parent=='contentEvents') {
+      return '0';
     }
   }
 
   showTiles(){
-    this.layoutChoice = 'tiles';
+    this.tilesView = true;
   }
 
   showList(){
-    this.layoutChoice = 'list';
+    this.tilesView = false;
   }
 }

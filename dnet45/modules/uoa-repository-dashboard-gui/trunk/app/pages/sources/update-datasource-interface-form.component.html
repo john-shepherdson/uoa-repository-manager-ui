@@ -1,4 +1,3 @@
-<div>
   <div>
     <div class="interfaceActionsPanel">
       <a (click)="saveInterface()"><i class="fa fa-save fa-lg"></i></a>
@@ -7,46 +6,46 @@
       <h5>OpenDOAR Interface (non-removable)</h5>
     </div>
   </div>
-  <div [formGroup]="group">
-    <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="display:none;" aria-hidden="true">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="display:none;" aria-hidden="true">{{ errorMessage }}</div>
-    <div class="uk-fieldset">
-      <label class="uk-form-controls-text control-label">Base URL (*)
-        <input type="text" class="uk-input" formControlName="baseUrl" disabled="">
-      </label>
-    </div>
-    <div class="uk-fieldset">
-      <label class="uk-form-controls-text control-label">Validation Set</label>
-      <div>
-        <label class="uk-button uk-button-link validationSetRadio disabled">
-          <input value="select" name="validationSet" type="radio" class="uk-radio" (change)="chooseValSet(true)">
-          <span>choose existing</span>
+  <div>
+    <div [formGroup]="group">
+      <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="display:none;" aria-hidden="true">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="display:none;" aria-hidden="true">{{ errorMessage }}</div>
+      <div class="uk-fieldset">
+        <label class="uk-form-controls-text control-label">Base OAI-PMH URL (*)
+          <input type="text" class="uk-input" formControlName="baseUrl" disabled="">
         </label>
-        <div class="uk-margin">
-          <select formControlName="selectValidationSet" class="uk-select">
-            <option value="noneSelected">-- none selected --</option>
-          </select>
-        </div>
-        <label class="uk-button uk-button-link validationSetRadio disabled">
-          <input value="custom" name="validationSet" type="radio" class="uk-radio" (change)="chooseValSet(false)">
-          <span>or a custom one</span>
-        </label>
-        <div class="uk-margin">
-          <input formControlName="customValidationSet" class="uk-input" type="text">
+      </div>
+      <div class="uk-fieldset">
+        <label class="uk-form-controls-text control-label">Validation Set</label>
+        <div>
+          <label class="uk-button uk-button-link validationSetRadio">
+            <input value="select" name="validationSet" type="radio" class="uk-radio" (change)="chooseValSet(true)">
+            <span>choose existing</span>
+          </label>
+          <div class="uk-margin">
+            <select formControlName="selectValidationSet" class="uk-select">
+              <option value="">-- none selected --</option>
+            </select>
+          </div>
+          <label class="uk-button uk-button-link validationSetRadio control-label">
+            <input value="custom" name="validationSet" type="radio" class="uk-radio" (change)="chooseValSet(false)">
+            <span>or a custom one</span>
+          </label>
+          <div class="uk-margin">
+            <input formControlName="customValidationSet" class="uk-input" type="text">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="uk-fieldset">
-      <label class="uk-form-controls-select control-label">Desired Compatibility Level (*)
-        <select class="uk-select" name="compatibilityLevel" formControlname="compatibilityLevel">
-          <option value="">-- none selected --</option>
-        </select>
-      </label>
-    </div>
-    <div>
-      <label class="uk-form-controls-text control-label">Current Compatibility Level
-        <!-- SHOW CURRENT LEVEL -->
-      </label>
+      <div class="uk-fieldset">
+        <label class="uk-form-controls-select control-label">Desired Compatibility Level (*)
+          <select class="uk-select" #compLvl name="compatibilityLevel" formControlname="compatibilityLevel">
+            <option value="">-- none selected --</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label class="uk-form-controls-text control-label">Current Compatibility Level</label>
+        <div *ngIf="compLvl.value == ''">not available</div>
+      </div>
     </div>
   </div>
-</div>

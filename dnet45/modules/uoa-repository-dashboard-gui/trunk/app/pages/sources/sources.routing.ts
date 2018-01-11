@@ -49,7 +49,7 @@ const sourcesRoutes: Routes = [
             component: SourcesUpdateComponent
           },
           {
-            path: 'repo',
+            path: ':repo',
             component: SourcesUpdateRepoComponent
           }
         ]

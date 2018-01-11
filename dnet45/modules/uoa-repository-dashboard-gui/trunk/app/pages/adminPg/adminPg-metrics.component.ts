@@ -34,51 +34,6 @@ export class AdminPgMetricsComponent implements OnInit {
 
   /* NEEDS TO CALL GET PIWIK INFO INSTEAD!! */
   getPiwiks(){
-    this.piwiks = [
-      {
-        'repositoryId': 'repo_id',
-        'openaireId': 'oa_id',
-        'repositoryName': 'the repo name',
-        'country': 'Greece',
-        'siteId': '123',
-        'authenticationToken': '32846584f571be9b57488bf4088f30ea',
-        'creationDate':  new Date(2018, 1, 3),
-        'requestorName': 'Bla blabla',
-        'requestorEmail': 'blabla@gmail.com',
-        'validated': false,
-        'validationDate':  new Date(2018, 1, 3),
-        'comment' : ''
-      },
-      {
-        'repositoryId': 'repo_id2',
-        'openaireId': 'oa_id2',
-        'repositoryName': 'the repo name2',
-        'country': 'Greece',
-        'siteId': '123',
-        'authenticationToken': '32846584f88f30easdfasdfa',
-        'creationDate':  new Date(2018, 1, 4),
-        'requestorName': 'Bla blabla',
-        'requestorEmail': 'blabla2@gmail.com',
-        'validated': true,
-        'validationDate':  new Date(2018, 1, 4),
-        'comment' : ''
-      },
-      {
-        'repositoryId': 'repo_id3',
-        'openaireId': 'oa_id',
-        'repositoryName': 'the repo name',
-        'country': 'Greece',
-        'siteId': '123',
-        'authenticationToken': '32846584f571be9b57488bf4088f30ea',
-        'creationDate': new Date(2018, 1, 3),
-        'requestorName': 'Bla blabla',
-        'requestorEmail': 'blabla2@gmail.com',
-        'validated': false,
-        'validationDate': new Date(2018, 1, 3),
-        'comment' : ''
-      }
-    ]
-/*
     this.showSpinner = true;
     this.loadingMessage = loadingReposMessage;
     this.repoService.getPiwikSitesForRepos()
@@ -103,7 +58,6 @@ export class AdminPgMetricsComponent implements OnInit {
           this.loadingMessage = '';
         }
       );
-*/
   }
 
   /*NOT SURE IF THESE PARAMETERS ARE THE CORRECT ONES*/

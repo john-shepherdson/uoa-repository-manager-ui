@@ -15,7 +15,6 @@ export class SourcesUpdateRepoComponent implements OnInit {
   updateDatasource : Type<any> = UpdateDatasourceInterfaceFormComponent;
 
   constructor(private fb: FormBuilder) {
-    this.group = fb.group({});
   }
 
   // use for the other tab
@@ -23,6 +22,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
   // datasourceForm : UpdateDatasourceInterfaceFormComponent;
 
   ngOnInit() {
+    this.group = this.fb.group({});
     // console.log("DATASOURCE",this.datasourceForm);
   }
 

@@ -10,26 +10,32 @@ import { Validators } from '@angular/forms';
 export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
   successMessage: string;
   errorMessage: string;
+  existingValSet: boolean;
 
   readonly groupDefinition = {
     baseUrl: ['', Validators.required],
     selectValidationSet: [''],
-    customValidationSet: ['']
+    customValidationSet: [''],
+    compatibilityLevel: ['', Validators.required]
   };
 
 
   ngOnInit(){
     super.ngOnInit();
     console.log(this.group,this.parentGroup);
+
+    this.existingValSet = true;
     this.getMyControl('customValidationSet').disable();
   }
 
 
   chooseValSet(existingValSet: boolean) {
      if(existingValSet) {
+       this.existingValSet = true;
        this.getMyControl('selectValidationSet').enable();
        this.getMyControl('customValidationSet').disable();
      }  else {
+       this.existingValSet = false;
        this.getMyControl('selectValidationSet').disable();
        this.getMyControl('customValidationSet').enable();
      }
@@ -37,9 +43,10 @@ export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
 
   saveInterface(){
     console.log("saved  something!");
-  }
-
-  removeInterface(){
-    console.log("removed  something!");
+    if (this.existingValSet){
+      console.log(this.getMyControl('selectValidationSet').value);
+    } else {
+      console.log(this.getMyControl('customValidationSet').value);
+    }
   }
 }

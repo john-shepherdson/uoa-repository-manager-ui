@@ -13,16 +13,16 @@ import { Subject } from "rxjs/Subject";
 @Component({
   selector : 'form-repeat',
   template : `
-  <div [formGroup]="parentGroup" class="uk-margin uk-grid-match uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade">
+  <div [formGroup]="parentGroup" class="interfacesForm uk-margin uk-grid-match uk-child-width-1-1 uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade">
       <!--<div formArrayName="{{name}}">-->
-          <ng-template my-form></ng-template>
+      <ng-template my-form></ng-template>
       <!--</div>-->
-  </div>
-  <div class="uk-margin uk-grid-match uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade">
-    <div class="interface-box new" style="text-align: center">
-        <a class="add-new-element add-new-group" (click)="push()"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
-          <span class="info">Add New {{ description.label }}</span></a>
-    </div>
+      <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade">
+        <div class="interface-box new" style="text-align: center">
+          <a class="add-new-element add-new-group" (click)="push()"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
+            <span class="info">Add New {{ description.label }}</span></a>
+        </div>
+      </div>
   </div>
 `
 
@@ -143,20 +143,7 @@ export class MyArrayInline extends MyArray {
 @Component({
   selector : 'form-repeat-wrapper',
   template : `
-    <div class="group">
-<!--
-        <div class="uk-grid">
-            <div class="uk-width-1-5"></div>
-            <div class="uk-width-expand\@m">
-                <label class="">
-                    {{description.label}}
-                    <a *ngIf="canDelete" class="remove-element" (click)="remove()">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                    </a>
-                </label>
-            </div>
-        </div>
--->
+    <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade">
       <div class="interfaceActionsPanel" style="margin-left: 5px;">
         <a (click)="remove()"><i class="fa fa-remove fa-lg"></i></a>
       </div>
