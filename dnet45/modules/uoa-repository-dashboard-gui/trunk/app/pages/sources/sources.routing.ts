@@ -16,7 +16,7 @@ const sourcesRoutes: Routes = [
   {
     path: 'sources',
     component: SourcesComponent,
-//    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
@@ -49,7 +49,7 @@ const sourcesRoutes: Routes = [
             component: SourcesUpdateComponent
           },
           {
-            path: ':repo',
+            path: ':id',
             component: SourcesUpdateRepoComponent
           }
         ]

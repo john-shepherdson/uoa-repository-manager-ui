@@ -29,10 +29,7 @@ export class MetricsInstructionsComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     this.repoService.getPiwikInfo(id).subscribe(
       piwik => this.piwik = piwik,
-      error => {
-        console.log(error);
-        this.errorMessage = 'An error occured! The information about the site could not be retrieved';
-      }
+      error => console.log(error)
     );
   }
 

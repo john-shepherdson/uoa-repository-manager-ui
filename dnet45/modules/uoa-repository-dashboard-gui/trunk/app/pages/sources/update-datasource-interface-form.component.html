@@ -10,42 +10,42 @@
     <div [formGroup]="group">
       <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="display:none;" aria-hidden="true">{{ successMessage }}</div>
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="display:none;" aria-hidden="true">{{ errorMessage }}</div>
-      <div class="uk-fieldset">
-        <label class="uk-form-controls-text control-label">Base OAI-PMH URL (*)
-          <input type="text" class="uk-input" formControlName="baseUrl" disabled="">
-        </label>
+      <div class="form-group has-success">
+        <label class="control-label" for="baseUrl">Base OAI-PMH URL (*)</label>
+        <span class="help-block inline" style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">
+          Identified
+        </span>
+        <input id="baseUrl" type="text" class="form-control" formControlName="baseUrl" value="">
       </div>
-      <div class="uk-fieldset">
-        <label class="uk-form-controls-text control-label">Validation Set</label>
+      <div class="form-group">
+        <label class="control-label">Validation Set</label>
         <div>
-          <label class="uk-button uk-button-link validationSetRadio">
-            <input value="select" name="validationSet" type="radio" class="uk-radio" (change)="chooseValSet(true)">
-            <span>choose existing</span>
+          <label class="uk-button validationSetRadio" for="selectValidationSet">
+            <input value="select" name="validationSet" type="radio" (change)="chooseValSet(true)">
+            <span>Choose existing</span>
           </label>
-          <div class="uk-margin">
-            <select formControlName="selectValidationSet" class="uk-select">
-              <option value="">-- none selected --</option>
-            </select>
-          </div>
-          <label class="uk-button uk-button-link validationSetRadio control-label">
-            <input value="custom" name="validationSet" type="radio" class="uk-radio" (change)="chooseValSet(false)">
+        </div>
+        <select id="selectValidationSet" formControlName="selectValidationSet" class="form-control" >
+          <option value="">-- none selected --</option>
+        </select>
+        <div>
+          <label class="uk-button validationSetRadio" for="customValidationSet">
+            <input value="custom" name="validationSet" type="radio" (change)="chooseValSet(false)">
             <span>or a custom one</span>
           </label>
-          <div class="uk-margin">
-            <input formControlName="customValidationSet" class="uk-input" type="text">
-          </div>
         </div>
+        <input id="customValidationSet" formControlName="customValidationSet" class="form-control" type="text">
       </div>
-      <div class="uk-fieldset">
-        <label class="uk-form-controls-select control-label">Desired Compatibility Level (*)
-          <select class="uk-select" #compLvl name="compatibilityLevel" formControlname="compatibilityLevel">
-            <option value="">-- none selected --</option>
-          </select>
-        </label>
+      <div class="form-group">
+        <label class="control-label" for="compLvl">Desired Compatibility Level (*)</label>
+        <select class="form-control" #compLvl id="compLvl" name="compatibilityLevel" formControlname="compatibilityLevel">
+          <option value="">-- none selected --</option>
+        </select>
       </div>
       <div>
         <label class="uk-form-controls-text control-label">Current Compatibility Level</label>
         <div *ngIf="compLvl.value == ''">not available</div>
+        <div *ngIf="compLvl.value" >{{ compLvl.value }}</div>
       </div>
     </div>
   </div>

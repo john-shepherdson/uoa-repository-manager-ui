@@ -13,10 +13,10 @@
           <div class="gwt-HTML uk-margin-medium-bottom">
             <h1 class="uk-article-title">Metrics Configuration & Software Details</h1>
           </div>
-          <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
           <div class="">
             <div>
-              <div class="">
+              <div *ngIf="piwik">
                 <p>
                   OpenAIRE’s usage statistic service uses the <i>Piwik Open Source Analytics platform</i> (piwik.org) to track usage activity. When <i>metrics</i>
                   are enabled for a repository, two unique identifiers are generated - a piwik-ID that associates the repository with its usage events in Piwik

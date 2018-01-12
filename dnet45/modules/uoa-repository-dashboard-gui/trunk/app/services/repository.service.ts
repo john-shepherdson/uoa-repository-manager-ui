@@ -11,7 +11,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Country, PiwikInfo, Repository, Topic } from '../domain/typeScriptClasses';
+import { Country, PiwikInfo, Repository, RepositoryInterface, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response } from '@angular/http';
 import { AuthenticationService } from './authentication.service';
@@ -41,6 +41,14 @@ export class RepositoryService {
     return this.http.get(url)
       .map( res => <Repository[]>res.json())
       .do(res => console.log(`counted ${res.length} repositories`))
+      .catch(this.handleError);
+  }
+
+  getRepositoryInterface(id: string): Observable<RepositoryInterface[]>{
+    let url = `${this.apiUrl}/repository/getRepositoryInterface/${id}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <RepositoryInterface[]>res.json())
       .catch(this.handleError);
   }
 
