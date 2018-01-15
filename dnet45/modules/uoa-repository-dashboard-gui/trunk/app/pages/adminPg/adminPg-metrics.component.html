@@ -8,11 +8,7 @@
       <div class="uk-width-1-1@m uk-first-column uk-margin-medium-bottom">
         <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
           <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-          <div style="text-align: center; margin-top: 100px;" *ngIf="showSpinner">
-            <span>{{ loadingMessage }}</span><br>
-            <img src="/assets/imgs/loader-big.gif">
-          </div>
-          <div>
+          <div *ngIf="!showSpinner">
             <table class="uk-table uk-table-striped uk-table-middle" style="font-size: 12px">
               <thead>
                 <tr>
@@ -40,6 +36,10 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div style="text-align: center; margin-top: 100px;" *ngIf="showSpinner">
+            <span>{{ loadingMessage }}</span><br>
+            <img src="/assets/imgs/loader-big.gif">
           </div>
         </div>
       </div>

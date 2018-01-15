@@ -1,10 +1,11 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UpdateDatasourceInterfaceFormComponent } from './update-datasource-interface-form.component';
-import { Description, interfaceFormDesc } from '../../domain/oa-description';
+import { Description, interfaceFormDesc, datasourceUpdateFormDesc } from '../../domain/oa-description';
 import { RepositoryInterface } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { ActivatedRoute } from '@angular/router';
+import { UpdateDatasourceFormComponent } from './update-datasource-form.component';
 
 
 @Component ({
@@ -18,51 +19,52 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
-  updateDatasource : Type<any> = UpdateDatasourceInterfaceFormComponent;
+  updateDatasourceInterfaces : Type<any> = UpdateDatasourceInterfaceFormComponent;
 
-  constructor(
-    private route: ActivatedRoute,
-    private repoService: RepositoryService,
-    private fb: FormBuilder) {}
+  interfaceDummyList = [
+    {
+      baseUrl: 'WWW.FDGLKSDJFGLKDJSF.GR',
+      selectValidationSet: 'blabla',
+      compatibilityLevel: 'moreblabla'
+    },
+    {
+      baseUrl: 'WWW.FDGLKSDJFGLKDJSfdgdfgF.GR',
+      selectValidationSet: 'blabla2',
+      compatibilityLevel: 'blabla1'
+    }
+  ];
+
+  updateGroup: FormGroup;
+  updateDatasource: Type<any> = UpdateDatasourceFormComponent;
+  datasourceUpdateFormDesc: Description = datasourceUpdateFormDesc;
+
 
   // use for the other tab
-  // @ViewChild('datasourceForm')
-  // datasourceForm : UpdateDatasourceInterfaceFormComponent;
+  /*
+    @ViewChild('datasourceForm')
+    datasourceForm : UpdateDatasourceInterfaceFormComponent;
+  */
+
+  constructor(
+    private fb: FormBuilder,
+    private repoService: RepositoryService,
+    private route: ActivatedRoute) {}
+
 
   ngOnInit() {
-    this.getRepoInterfaces();
     this.group = this.fb.group({});
-/*
-    this.group.patchValue(this.repoInterfaces);
-    this.group.markAsPristine();
-*/
+    this.updateGroup = this.fb.group({});
+
+    this.getRepoInterfaces();
     // console.log("DATASOURCE",this.datasourceForm);
   }
 
-  getRepoInterfaces(): void {
+  getRepoInterfaces() {
     let id = this.route.snapshot.paramMap.get('id');
     this.repoService.getRepositoryInterface(id).subscribe(
       interfaces => this.repoInterfaces = interfaces,
       error => console.log(error)
     );
-/*
-    this.repoService.getRepositoryInterface(id).subscribe(
-      interfaces => {
-        for(let intrf of interfaces){
-          this.repoInterfaces.push({baseUrl: intrf.baseUrl, selectValidationSet: intrf.accessSet, compatibilityLevel: intrf.desiredCompatibilityLevel});
-        }
-      },
-      error => console.log(error)
-    );
-*/
   }
 
-
-}
-
-
-export class RepositoryInterfaceSummary {
-  baseUrl: string;
-  selectValidationSet: string;
-  compatibilityLevel: string;
 }

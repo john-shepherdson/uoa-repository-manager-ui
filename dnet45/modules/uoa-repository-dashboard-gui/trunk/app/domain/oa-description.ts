@@ -22,9 +22,16 @@ export let validationSetDesc = {
   recommended: false
 };
 
-export let  interfaceFormDesc = {
+export let interfaceFormDesc = {
   desc : 'form for adding new interfaces of the repository',
   label : 'Interface',
+  mandatory: true,
+  recommended: false
+}
+
+export let datasourceUpdateFormDesc = {
+  desc : 'form form updating information on datasource',
+  label: 'Update Datasource',
   mandatory: true,
   recommended: false
 }

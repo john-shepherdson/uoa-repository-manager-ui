@@ -8,6 +8,7 @@ import { Validators } from '@angular/forms';
 })
 
 export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
+
   successMessage: string;
   errorMessage: string;
   existingValSet: boolean;
@@ -16,13 +17,18 @@ export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
     baseUrl: ['', Validators.required],
     selectValidationSet: [''],
     customValidationSet: [''],
-    compatibilityLevel: ['', Validators.required]
+    compatibilityLevel: ['', Validators.required],
   };
 
 
   ngOnInit(){
     super.ngOnInit();
     console.log(this.group,this.parentGroup);
+
+    if (this.data) {
+      this.patchData.next(this.data[0]);
+      this.data.splice(0,1);
+    }
 
     this.existingValSet = true;
     this.getMyControl('customValidationSet').disable();
@@ -41,12 +47,17 @@ export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
      }
   }
 
-  saveInterface(){
-    console.log("saved  something!");
-    if (this.existingValSet){
-      console.log(this.getMyControl('selectValidationSet').value);
-    } else {
-      console.log(this.getMyControl('customValidationSet').value);
+  saveInterface() {
+    if(this.group.valid) {
+      console.log("saved  something!");
+      if (this.existingValSet) {
+        console.log(this.getMyControl('selectValidationSet').value);
+      } else {
+        console.log(this.getMyControl('customValidationSet').value);
+      }
+      console.log(this.getMyControl('baseUrl').value);
+      console.log(this.getMyControl('compatibilityLevel').value);
     }
   }
+
 }

@@ -21,12 +21,14 @@
         <label class="control-label">Validation Set</label>
         <div>
           <label class="uk-button validationSetRadio" for="selectValidationSet">
-            <input value="select" name="validationSet" type="radio" (change)="chooseValSet(true)">
+            <input value="select" name="validationSet" type="radio" (change)="chooseValSet(true)" checked>
             <span>Choose existing</span>
           </label>
         </div>
         <select id="selectValidationSet" formControlName="selectValidationSet" class="form-control" >
           <option value="">-- none selected --</option>
+          <option value="blabla">I'm choosing blabla</option>
+          <option value="blabla2">blabla again</option>
         </select>
         <div>
           <label class="uk-button validationSetRadio" for="customValidationSet">
@@ -38,14 +40,16 @@
       </div>
       <div class="form-group">
         <label class="control-label" for="compLvl">Desired Compatibility Level (*)</label>
-        <select class="form-control" #compLvl id="compLvl" name="compatibilityLevel" formControlname="compatibilityLevel">
+        <select class="form-control" #compLvl id="compLvl" formControlName="compatibilityLevel">
           <option value="">-- none selected --</option>
+          <option value="moreblabla">blabla otra vez</option>
+          <option value="blabla1">another blabla option</option>
         </select>
       </div>
       <div>
         <label class="uk-form-controls-text control-label">Current Compatibility Level</label>
-        <div *ngIf="compLvl.value == ''">not available</div>
-        <div *ngIf="compLvl.value" >{{ compLvl.value }}</div>
+        <div *ngIf="compLvl == ''">not available</div>
+        <div *ngIf="compLvl != ''" >{{ compLvl.value }}</div>
       </div>
     </div>
   </div>
