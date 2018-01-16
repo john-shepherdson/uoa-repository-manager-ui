@@ -8,7 +8,6 @@ import { AfterViewInit, Directive, TemplateRef, ViewContainerRef } from "@angula
 })
 export class MyFormDirective implements AfterViewInit {
 
-
   constructor(public viewContainerRef: ViewContainerRef, public templateRef : TemplateRef<any>) {}
 
   ngAfterViewInit(): void {

@@ -111,6 +111,7 @@ export class MyArray extends MyGroup {
     return (value: {[key: string]: any}, {onlySelf, emitEvent}: {onlySelf?: boolean, emitEvent?: boolean} = {}) => {
       for (let i = (<FormArray>self.parentGroup.get(this.name as string)).length; i < Object.keys(value).length; i++) {
         self.createView();
+        console.log("ADDED NEW GROUP");
       }
       for (let i = 0; i < Object.keys(value).length; i++) {
         self.arrayData_[i].next(value[i]);

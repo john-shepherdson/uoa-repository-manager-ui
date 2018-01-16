@@ -117,22 +117,11 @@ export class MyGroup implements OnInit, AfterContentInit {
 @Component({
   selector : 'form-inline',
   template : `
-    <ng-template #descTemplate>{{description.desc}}</ng-template>
-    <div class="uk-grid uk-form-horizontal">
-      <!--<label class="uk-width-1-5 uk-form-label" *ngIf="description.label!=null" [ngClass]="{'required' : description.mandatory==true}">-->
-      <label class="uk-width-1-5" *ngIf="description.label!=null" [ngClass]="{'required' : description.mandatory==true}">
-        <!--<span *ngIf="description.mandatory==true && !valid"><i class="fa fa-star" style="color : red"></i></span>-->
-        <!--<span *ngIf="description.recommended==true"><i class="fa fa-star" style="color : green"></i></span>-->
+    <div class="form-group">
+      <label class="control-label" *ngIf="description.label != ''" [ngClass]="{'required' : description.mandatory==true}">
         {{description.label}}
-        <!--<span *ngIf="params==='tooltip'"><i class="fa fa-info-circle" container="body"></i></span> uk-tooltip="{{descTemplate}}"-->
       </label>
-      <!--<div class="uk-width-expand@m uk-form-controls" [ngClass]="{'has-error': !valid}">-->
-      <div class="uk-width-expand\@m" [ngClass]="{'has-error': !valid}">
-        <ng-content></ng-content>
-        <div *ngIf="params==='inline'">
-          <i><small>{{description.desc}}</small></i>
-        </div>
-      </div>
+      <ng-content></ng-content>
     </div>
   `
 

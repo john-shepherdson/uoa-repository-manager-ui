@@ -1,11 +1,28 @@
-import { Component, OnInit, Type, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, Type } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UpdateDatasourceInterfaceFormComponent } from './update-datasource-interface-form.component';
-import { Description, interfaceFormDesc, datasourceUpdateFormDesc } from '../../domain/oa-description';
-import { RepositoryInterface } from '../../domain/typeScriptClasses';
+import { Country, Repository, RepositoryInterface } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { ActivatedRoute } from '@angular/router';
-import { UpdateDatasourceFormComponent } from './update-datasource-form.component';
+import {
+  Description,
+  interfaceFormDesc,
+  softwarePlatformDesc,
+  platformNameDesc,
+  officialNameDesc,
+  repoDescriptionDesc,
+  countryDesc,
+  longtitudeDesc,
+  latitudeDesc,
+  websiteUrlDesc,
+  institutionNameDesc,
+  englishNameDesc,
+  logoUrlDesc,
+  timezoneDesc,
+  datasourceTypeDesc,
+  adminEmailDesc
+} from '../../domain/oa-description';
+
 
 
 @Component ({
@@ -15,6 +32,9 @@ import { UpdateDatasourceFormComponent } from './update-datasource-form.componen
 
 export class SourcesUpdateRepoComponent implements OnInit {
 
+  repoId = '';
+  selectedRepo: Repository;
+  countries: Country[];
   repoInterfaces: RepositoryInterface[] = [];
 
   group: FormGroup;
@@ -35,36 +55,132 @@ export class SourcesUpdateRepoComponent implements OnInit {
   ];
 
   updateGroup: FormGroup;
-  updateDatasource: Type<any> = UpdateDatasourceFormComponent;
-  datasourceUpdateFormDesc: Description = datasourceUpdateFormDesc;
+  readonly updateGroupDefinition = {
+    softwarePlatform : '',
+    platformName : '',
+    officialName : '',
+    repoDescription : '',
+    country : '',
+    longtitude : '',
+    latitude : '',
+    websiteUrl : '',
+    institutionName : '',
+    englishName: ['', Validators.required],
+    logoUrl: '',
+    timezone: ['', Validators.required],
+    datasourceType: ['', Validators.required],
+    adminEmail: ['', Validators.required]
+  };
+
+  softwarePlatformDesc : Description = softwarePlatformDesc;
+  platformNameDesc : Description = platformNameDesc;
+  officialNameDesc : Description = officialNameDesc;
+  repoDescriptionDesc : Description = repoDescriptionDesc;
+  countryDesc : Description = countryDesc;
+  longtitudeDesc : Description = longtitudeDesc;
+  latitudeDesc : Description = latitudeDesc;
+  websiteUrlDesc : Description = websiteUrlDesc;
+  institutionNameDesc : Description = institutionNameDesc;
+  englishNameDesc : Description = englishNameDesc;
+  logoUrlDesc : Description = logoUrlDesc;
+  timezoneDesc : Description = timezoneDesc;
+  datasourceTypeDesc : Description = datasourceTypeDesc;
+  adminEmailDesc : Description = adminEmailDesc;
 
 
-  // use for the other tab
-  /*
-    @ViewChild('datasourceForm')
-    datasourceForm : UpdateDatasourceInterfaceFormComponent;
-  */
-
-  constructor(
+  constructor (
     private fb: FormBuilder,
     private repoService: RepositoryService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute )
+  {}
 
 
   ngOnInit() {
-    this.group = this.fb.group({});
-    this.updateGroup = this.fb.group({});
+    this.readRepoId();
+    this.loadUpdateTab();
+    this.loadInterfacesTab();
 
-    this.getRepoInterfaces();
-    // console.log("DATASOURCE",this.datasourceForm);
+  }
+
+  readRepoId() {
+    this.repoId = this.route.snapshot.paramMap.get('id');
+  }
+
+  getRepo() {
+    this.repoService.getRepositoryById(this.repoId).subscribe(
+      repo => {
+        this.selectedRepo = repo;
+        if(this.selectedRepo) {
+          this.updateGroup.setValue({
+            softwarePlatform: '', //this.selectedRepo.WHICH FIELD ??
+            platformName: this.selectedRepo.typology,
+            officialName: this.selectedRepo.officialName,
+            repoDescription: this.selectedRepo.description,
+            country: this.selectedRepo.countryCode,
+            longtitude: this.selectedRepo.longitude,
+            latitude: this.selectedRepo.latitude,
+            websiteUrl: this.selectedRepo.websiteUrl,
+            institutionName: this.selectedRepo.organization,
+            englishName: this.selectedRepo.englishName,
+            logoUrl: this.selectedRepo.logoUrl,
+            timezone: this.selectedRepo.timezone,
+            datasourceType: this.selectedRepo.datasourceType,
+            adminEmail: this.selectedRepo.contactEmail
+          });
+        }
+        this.updateGroup.get('softwarePlatform').disable();
+        this.updateGroup.get('platformName').disable();
+        this.updateGroup.get('officialName').disable();
+        this.updateGroup.get('repoDescription').disable();
+        this.updateGroup.get('country').disable();
+        this.updateGroup.get('longtitude').disable();
+        this.updateGroup.get('latitude').disable();
+        this.updateGroup.get('websiteUrl').disable();
+        this.updateGroup.get('institutionName').disable();
+      },
+      error =>console.log(error)
+    )
   }
 
   getRepoInterfaces() {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.repoService.getRepositoryInterface(id).subscribe(
+    this.repoService.getRepositoryInterface(this.repoId).subscribe(
       interfaces => this.repoInterfaces = interfaces,
       error => console.log(error)
     );
+  }
+
+  getCountries() {
+    this.repoService.getCountries()
+      .subscribe(
+        countries => this.countries = countries.sort( function(a,b){
+          if(a.name<b.name){
+            return -1;
+          } else if(a.name>b.name){
+            return 1;
+          } else {
+            return 0;
+          }
+        } ),
+        error => console.log(error)
+      );
+  }
+
+  loadUpdateTab() {
+    this.updateGroup = this.fb.group(this.updateGroupDefinition);
+    this.getCountries();
+    this.getRepo();
+    //set initial values
+  }
+
+  loadInterfacesTab() {
+    this.getRepoInterfaces();
+    this.group = this.fb.group({});
+    /*
+        setTimeout(() => {
+          console.log("PATCHING");
+          this.group.patchValue(this.interfaceDummyList);
+        },1000);
+    */
   }
 
 }

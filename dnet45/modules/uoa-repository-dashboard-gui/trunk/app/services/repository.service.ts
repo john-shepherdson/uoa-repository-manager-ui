@@ -44,6 +44,16 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
+
+  getRepositoryById(id: string): Observable<Repository> {
+    let url = `${this.apiUrl}/repository/getRepositoryById/${id}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Repository>res.json())
+      .do(res => console.log(`got repository with name: ${res.officialName}`))
+      .catch(this.handleError);
+  }
+
   getRepositoryInterface(id: string): Observable<RepositoryInterface[]>{
     let url = `${this.apiUrl}/repository/getRepositoryInterface/${id}`;
     console.log(`knocking on: ${url}`);

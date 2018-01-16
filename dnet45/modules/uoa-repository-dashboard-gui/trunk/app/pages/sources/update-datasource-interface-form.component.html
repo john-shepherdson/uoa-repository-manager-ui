@@ -20,23 +20,23 @@
       <div class="form-group">
         <label class="control-label">Validation Set</label>
         <div>
-          <label class="uk-button validationSetRadio" for="selectValidationSet">
-            <input value="select" name="validationSet" type="radio" (change)="chooseValSet(true)" checked>
+          <label class="uk-button validationSetRadio" for="selectValidationSet{{index}}">
+            <input value="select" name="validationSet{{index}}" type="radio" (change)="chooseValSet(true)" checked>
             <span>Choose existing</span>
           </label>
         </div>
-        <select id="selectValidationSet" formControlName="selectValidationSet" class="form-control" >
+        <select id="selectValidationSet{{index}}" formControlName="selectValidationSet" class="form-control" >
           <option value="">-- none selected --</option>
           <option value="blabla">I'm choosing blabla</option>
           <option value="blabla2">blabla again</option>
         </select>
         <div>
-          <label class="uk-button validationSetRadio" for="customValidationSet">
-            <input value="custom" name="validationSet" type="radio" (change)="chooseValSet(false)">
+          <label class="uk-button validationSetRadio" for="customValidationSet{{index}}">
+            <input value="custom" name="validationSet{{index}}" type="radio" (change)="chooseValSet(false)">
             <span>or a custom one</span>
           </label>
         </div>
-        <input id="customValidationSet" formControlName="customValidationSet" class="form-control" type="text">
+        <input id="customValidationSet{{index}}" formControlName="customValidationSet" class="form-control" type="text">
       </div>
       <div class="form-group">
         <label class="control-label" for="compLvl">Desired Compatibility Level (*)</label>

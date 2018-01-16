@@ -55,7 +55,7 @@ export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
       } else {
         console.log(this.getMyControl('customValidationSet').value);
       }
-      console.log(this.getMyControl('baseUrl').value);
+      console.log(this.getMyControl('baseUrl').value + ' index: ' + this.index);
       console.log(this.getMyControl('compatibilityLevel').value);
     }
   }
