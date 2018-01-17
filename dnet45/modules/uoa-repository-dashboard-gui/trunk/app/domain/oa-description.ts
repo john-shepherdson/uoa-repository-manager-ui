@@ -13,15 +13,15 @@ export class Description {
 export let interfaceFormDesc = {
   desc : 'form for adding new interfaces of the repository',
   label : 'Interface',
-  mandatory: true,
-  recommended: false
+  mandatory : true,
+  recommended : false
 };
 
 
 /* Desription of the Datasource Update Form fields */
 export let softwarePlatformDesc = {
   desc : 'the software platform that the repository uses',
-  label: 'Software Platform (*)',
+  label : 'Software Platform (*)',
   mandatory: true,
   recommended: false
 };

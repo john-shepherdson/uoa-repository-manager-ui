@@ -144,7 +144,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
   getRepoInterfaces() {
     this.repoService.getRepositoryInterface(this.repoId).subscribe(
-      interfaces => this.repoInterfaces = interfaces,
+      interfaces => { this.repoInterfaces = interfaces; console.log(this.repoInterfaces.length)},
       error => console.log(error)
     );
   }
@@ -175,12 +175,18 @@ export class SourcesUpdateRepoComponent implements OnInit {
   loadInterfacesTab() {
     this.getRepoInterfaces();
     this.group = this.fb.group({});
-    /*
-        setTimeout(() => {
-          console.log("PATCHING");
-          this.group.patchValue(this.interfaceDummyList);
-        },1000);
-    */
+/*
+    setTimeout(() => {
+      console.log("PATCHING");
+      this.repoInterfaces.forEach(item => {
+        this.group.patchValue({
+          baseUrl : item.baseUrl,
+          selectValidationSet : item.accessSet,
+          compatibilityLevel : item.desiredCompatibilityLevel
+        });
+      });
+    },1000);
+*/
   }
 
 }

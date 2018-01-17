@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MyGroup } from '../../shared/reusablecomponents/forms/my-group.interface';
 import { Validators } from '@angular/forms';
+import { formErrorRequiredFields, formSuccessAddedInterface } from '../../domain/shared-messages';
 
 @Component ({
   selector: 'update-datasource-interface-form',
@@ -22,11 +23,23 @@ export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
 
 
   ngOnInit(){
+
     super.ngOnInit();
     console.log(this.group,this.parentGroup);
 
-    if (this.data) {
-      this.patchData.next(this.data[0]);
+    if (this.data.length) {
+/*
+      this.group.patchValue({
+        baseUrl : this.data[0].baseUrl,
+        selectValidationSet : this.data[0].accessSet,
+        compatibilityLevel : this.data[0].desiredCompatibilityLevel
+      });
+*/
+      this.patchData.next({
+        baseUrl : this.data[0].baseUrl,
+        selectValidationSet : this.data[0].accessSet,
+        compatibilityLevel : this.data[0].desiredCompatibilityLevel
+      });
       this.data.splice(0,1);
     }
 
@@ -49,14 +62,11 @@ export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
 
   saveInterface() {
     if(this.group.valid) {
-      console.log("saved  something!");
-      if (this.existingValSet) {
-        console.log(this.getMyControl('selectValidationSet').value);
-      } else {
-        console.log(this.getMyControl('customValidationSet').value);
-      }
-      console.log(this.getMyControl('baseUrl').value + ' index: ' + this.index);
-      console.log(this.getMyControl('compatibilityLevel').value);
+      this.successMessage = formSuccessAddedInterface;
+      this.errorMessage = '';
+    } else {
+      this.errorMessage = formErrorRequiredFields;
+      this.successMessage = '';
     }
   }
 

@@ -8,20 +8,20 @@
   </div>
   <div>
     <div [formGroup]="group">
-      <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="display:none;" aria-hidden="true">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="display:none;" aria-hidden="true">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
       <div class="form-group has-success">
         <label class="control-label" for="baseUrl">Base OAI-PMH URL (*)</label>
         <span class="help-block inline" style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">
           Identified
         </span>
-        <input id="baseUrl" type="text" class="form-control" formControlName="baseUrl" value="">
+        <input id="baseUrl" type="text" class="form-control" formControlName="baseUrl" required="true">
       </div>
       <div class="form-group">
         <label class="control-label">Validation Set</label>
         <div>
-          <label class="uk-button validationSetRadio" for="selectValidationSet{{index}}">
-            <input value="select" name="validationSet{{index}}" type="radio" (change)="chooseValSet(true)" checked>
+          <label class="uk-button validationSetRadio" for="selectRadio{{index}}">
+            <input id="selectRadio{{index}}" value="select" name="validationSet{{index}}" type="radio" (change)="chooseValSet(true)" checked>
             <span>Choose existing</span>
           </label>
         </div>
@@ -31,8 +31,8 @@
           <option value="blabla2">blabla again</option>
         </select>
         <div>
-          <label class="uk-button validationSetRadio" for="customValidationSet{{index}}">
-            <input value="custom" name="validationSet{{index}}" type="radio" (change)="chooseValSet(false)">
+          <label class="uk-button validationSetRadio" for="customRadio{{index}}">
+            <input id="customRadio{{index}}" value="custom" name="validationSet{{index}}" type="radio" (change)="chooseValSet(false)">
             <span>or a custom one</span>
           </label>
         </div>
@@ -49,7 +49,7 @@
       <div>
         <label class="uk-form-controls-text control-label">Current Compatibility Level</label>
         <div *ngIf="compLvl == ''">not available</div>
-        <div *ngIf="compLvl != ''" >{{ compLvl.value }}</div>
+        <div *ngIf="compLvl != ''">{{ compLvl.value }}</div>
       </div>
     </div>
   </div>
