@@ -22,6 +22,7 @@ import {
   datasourceTypeDesc,
   adminEmailDesc
 } from '../../domain/oa-description';
+import { formErrorRequiredFields, formSuccessUpdatedRepo } from '../../domain/shared-messages';
 
 
 
@@ -36,6 +37,9 @@ export class SourcesUpdateRepoComponent implements OnInit {
   selectedRepo: Repository;
   countries: Country[];
   repoInterfaces: RepositoryInterface[] = [];
+
+  errorMessage: string;
+  successMessage: string;
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
@@ -187,6 +191,16 @@ export class SourcesUpdateRepoComponent implements OnInit {
       });
     },1000);
 */
+  }
+
+  updateRepo(){
+    if(this.updateGroup.valid){
+      this.successMessage = formSuccessUpdatedRepo;
+      this.errorMessage = '';
+    } else {
+      this.errorMessage = formErrorRequiredFields;
+      this.successMessage = '';
+    }
   }
 
 }

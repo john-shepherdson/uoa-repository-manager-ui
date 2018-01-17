@@ -62,6 +62,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
     this.hasSelectedCountry = true;
     this.selectedCountry = country;
     this.showSpinner = true;
+    this.noRepositories = '';
     this.repoService.getRepositoriesOfCountry(country,this.mode).subscribe(
       repos => this.countryRepos = repos,
       error => console.log(error),

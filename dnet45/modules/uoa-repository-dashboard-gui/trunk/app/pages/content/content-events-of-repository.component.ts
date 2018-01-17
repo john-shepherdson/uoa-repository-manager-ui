@@ -28,7 +28,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
     let name = this.route.snapshot.paramMap.get('name');
     this.showSpinner = true;
     this.repoService.getTopicsForDataSource(name)
-      .subscribe(topics => this.repoTopics,
+      .subscribe(topics => this.repoTopics = topics,
         error => {
           console.log(error);
           this.errorMessage = 'An error occured';
