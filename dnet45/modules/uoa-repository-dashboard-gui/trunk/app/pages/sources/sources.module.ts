@@ -14,9 +14,10 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
 import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RepoFilter } from './sourcesPipes';
-import { UpdateDatasourceInterfaceFormComponent } from './update-datasource-interface-form.component';
+import { DatasourceInterfaceFormComponent } from './sources-forms/datasource-interface-form.component';
 import { SrDataComponent } from './sources-register/sr-data.component';
 import { RegisterDatasourceShareableComponent } from './sources-register/register-datasource-shareable.component';
+import { DatasourceInfoFormComponent } from './sources-forms/datasource-info-form.component';
 
 @NgModule ({
   imports: [
@@ -28,7 +29,7 @@ import { RegisterDatasourceShareableComponent } from './sources-register/registe
     ReusableComponentsModule
   ],
   entryComponents : [
-    UpdateDatasourceInterfaceFormComponent
+    DatasourceInterfaceFormComponent
   ],
   declarations: [
     SourcesComponent,
@@ -37,9 +38,10 @@ import { RegisterDatasourceShareableComponent } from './sources-register/registe
     SRLiteratureComponent,
     SrDataComponent,
     SourcesUpdateRepoComponent,
-    UpdateDatasourceInterfaceFormComponent,
+    DatasourceInterfaceFormComponent,
     RepoFilter,
-    RegisterDatasourceShareableComponent
+    RegisterDatasourceShareableComponent,
+    DatasourceInfoFormComponent
   ]
 })
 

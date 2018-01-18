@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RepositoryService } from '../../../services/repository.service';
 import {
   loadingReposMessage,
@@ -22,6 +22,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   alertMessage: string;
   showSpinner: boolean;
   loadingMessage: string = loadingReposMessage;
+  repoId: string;
 
   @Input()
   mode: string;
@@ -29,13 +30,15 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   @Input()
   repoSourceUrl: string;
 
+  @Output() emmitObject: EventEmitter<string> = new EventEmitter<string>();
+
+
   constructor(private repoService:RepositoryService) {}
 
   ngOnInit() {
     this.getCountries();
     this.hasSelectedCountry = false;
     this.selectedCountry = '';
-
   }
 
   getCountries(){
@@ -73,15 +76,16 @@ export class RegisterDatasourceShareableComponent implements OnInit {
     );
   }
 
-  onChooseRepository(){
+  onChooseRepository(id: string){
     this.hasSelectedRepo = true;
+    this.repoId = id;
   }
 
-  goToNextStep() {
+  public goToNextStep() {
     if(!this.hasSelectedRepo || this.noRepositories){
       this.alertMessage = noRepositoryChosenMsg;
     } else {
-      //move to the next step
+      this.emmitObject.emit(this.repoId);
     }
   }
 

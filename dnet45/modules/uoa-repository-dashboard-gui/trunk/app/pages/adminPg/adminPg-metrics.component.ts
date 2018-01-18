@@ -23,8 +23,7 @@ export class AdminPgMetricsComponent implements OnInit {
   @ViewChild('confirmApprovalModal')
   public confirmApprovalModal: ConfirmationDialogComponent;
 
-  constructor(private authService: AuthenticationService,
-              private repoService: RepositoryService) {}
+  constructor(private repoService: RepositoryService) {}
 
   ngOnInit() {
     this.getPiwiks();

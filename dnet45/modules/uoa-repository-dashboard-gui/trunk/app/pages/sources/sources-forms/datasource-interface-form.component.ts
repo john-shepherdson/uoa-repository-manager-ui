@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { MyGroup } from '../../shared/reusablecomponents/forms/my-group.interface';
+import { MyGroup } from '../../../shared/reusablecomponents/forms/my-group.interface';
 import { Validators } from '@angular/forms';
-import { formErrorRequiredFields, formSuccessAddedInterface } from '../../domain/shared-messages';
+import { formErrorRequiredFields, formSuccessAddedInterface } from '../../../domain/shared-messages';
 
 @Component ({
-  selector: 'update-datasource-interface-form',
-  templateUrl: 'update-datasource-interface-form.component.html'
+  selector: 'datasource-interface-form',
+  templateUrl: './datasource-interface-form.component.html'
 })
 
-export class UpdateDatasourceInterfaceFormComponent extends MyGroup {
+export class DatasourceInterfaceFormComponent extends MyGroup {
 
   successMessage: string;
   errorMessage: string;

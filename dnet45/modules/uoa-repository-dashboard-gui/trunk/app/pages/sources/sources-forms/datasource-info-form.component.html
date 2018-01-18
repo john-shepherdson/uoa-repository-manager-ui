@@ -1,0 +1,78 @@
+<form [formGroup]="updateGroup" *ngIf="selectedRepo">
+  <div>
+    <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
+      Basic information
+    </h4>
+  </div>
+  <div class="uk-alert uk-alert-warning">
+    The following fields are completed by OpenDOAR.<br>
+    If you want to edit them, you can do it by using this
+    <a href="http://www.opendoar.org/suggest.php?rID=2893" target="_blank">OpenDOAR link</a>
+  </div>
+  <form-inline [description]="softwarePlatformDesc">
+    <select formControlName="softwarePlatform" class="form-control">
+      <option value="" selected>[Other] (enter name below)</option>
+      <option value="1">platform 1</option>
+      <option value="2">platform 2</option>
+      <option value="3">platform 3</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="platformNameDesc">
+    <input formControlName="platformName" class="form-control" style="" type="text">
+  </form-inline>
+  <form-inline [description]="officialNameDesc" >
+    <input formControlName="officialName" class="form-control" style="" type="text">
+  </form-inline>
+  <form-inline [description]="repoDescriptionDesc">
+    <textarea formControlName="repoDescription" class="form-control"></textarea>
+  </form-inline>
+  <form-inline [description]="countryDesc">
+    <select formControlName="country" class="form-control">
+      <option value="">-- none selected --</option>
+      <option *ngFor="let country of countries" value="{{ country.code }}">{{ country.name }}</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="longtitudeDesc" >
+    <input formControlName="longtitude" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="latitudeDesc" >
+    <input formControlName="latitude" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="websiteUrlDesc">
+    <input formControlName="websiteUrl" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="institutionNameDesc">
+    <input formControlName="institutionName" class="form-control" type="text">
+  </form-inline>
+  <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
+      uk-scrollspy-class="">Extra Information</h4>
+  <form-inline [description]="englishNameDesc" [valid]="updateGroup.get('englishName').valid">
+    <input formControlName="englishName" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="logoUrlDesc" [valid]="updateGroup.get('logoUrl').valid">
+    <input formControlName="logoUrl" class="form-control" type="text">
+    <div class="comment fontItalic">
+      Please make sure that the maximum size of the uploaded image is width=360px, height=240px
+    </div>
+  </form-inline>
+  <form-inline [description]="timezoneDesc" [valid]="updateGroup.get('timezone').valid">
+    <select formControlName="timezone" class="form-control">
+      <option value="">-- none selected --</option>
+      <option value="{{ selectedRepo.timezone }}">{{ selectedRepo.timezone }}</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">
+    <select formControlName="datasourceType" class="form-control">
+      <option value="">-- none selected --</option>
+      <option value="{{ selectedRepo.datasourceType }}">{{ selectedRepo.datasourceType }}</option>
+    </select>
+  </form-inline>
+  <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
+      uk-scrollspy-class="">Administrator & contact information</h4>
+  <form-inline [description]="adminEmailDesc" [valid]="updateGroup.get('adminEmail').valid">
+    <input formControlName="adminEmail" class="form-control" type="text">
+  </form-inline>
+  <div class="form-group">
+    <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
+  </div>
+</form>

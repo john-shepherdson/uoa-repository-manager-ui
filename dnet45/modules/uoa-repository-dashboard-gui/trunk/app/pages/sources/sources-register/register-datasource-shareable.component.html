@@ -39,7 +39,7 @@
               <div class="uk-alert uk-alert-danger" *ngIf="alertMessage">
                 {{ alertMessage }}
               </div>
-              <div class="uk-alert uk-alert-info">
+              <div class="uk-alert uk-alert-primary">
                 Please make sure your repository is registered in
                 <a target="_blank" href="{{ repoSourceUrl }}">
                   <i class="fa fa-external-link" style="margin-right:3px;"></i>
@@ -76,7 +76,7 @@
                   <div class="form-group"
                        *ngFor="let repo of countryRepos | repoFilter: searchBox">
                     <label class="uk-button uk-button-link" style="display: block; text-align: left;">
-                      <input type="radio" value="{{ repo.id }}" name="repositories" (change)="onChooseRepository()" [disabled]="repo.registered">
+                      <input type="radio" value="{{ repo.id }}" name="repositories" (change)="onChooseRepository(repo.id)" [disabled]="repo.registered">
                       <span>
                         {{ repo.officialName }}
                         <span class="uk-label uk-label-warning registeredLabel" *ngIf="repo.registered">Registered</span>
@@ -110,7 +110,7 @@
           <a target="_blank" href="#">click here</a>
           .
         </p>
-        <div class="uk-alert uk-alert-warning small">
+        <div class="uk-alert uk-alert-default small">
           The official repository/journal administrator (his/her email address being retrieved from the OAI-PMH verb
           <b>Identify</b>
           ) will be contacted and informed about registration request. So please make sure that you are either this person or have access to the email address, or that you have notified them.
