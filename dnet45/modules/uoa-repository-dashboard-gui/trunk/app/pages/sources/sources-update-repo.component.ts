@@ -18,12 +18,12 @@ import {
 
 export class SourcesUpdateRepoComponent implements OnInit {
 
-  repoId = '';
+  repoId: string;
   repoInterfaces: RepositoryInterface[] = [];
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
-  updateDatasourceInterfaces : Type<any> = DatasourceInterfaceFormComponent;
+  updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
 
   constructor (
     private fb: FormBuilder,
@@ -40,6 +40,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
   readRepoId() {
     this.repoId = this.route.snapshot.paramMap.get('id');
+    console.log(this.repoId);
   }
 
 

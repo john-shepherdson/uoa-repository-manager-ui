@@ -17,11 +17,18 @@ export class SRLiteratureComponent implements OnInit {
   showForm: boolean;
   showInterfaces: boolean;
   showFinish: boolean;
+  step2: string = '';
+  step3: string = '';
+  step4: string = '';
 
   datasourceId: string;
 
   @ViewChild('datasourcesByCountry')
   public datasourcesByCountry: RegisterDatasourceShareableComponent;
+
+  @ViewChild('updateDatasource')
+  public updateDatasource: DatasourceInfoFormComponent;
+
 
   constructor() {}
 
@@ -30,10 +37,40 @@ export class SRLiteratureComponent implements OnInit {
 
   }
 
-  getDatasourceId(id: string){
-    this.datasourceId = id;
-    this.showRepositories = false;
-    this.showForm = true;
-    console.log(`got datasource with id ${this.datasourceId}`);
+  moveAStep(){
+    if(this.showRepositories) {
+      if (this.datasourcesByCountry.goToNextStep()) {
+        this.datasourceId = this.datasourcesByCountry.repoId;
+        this.showRepositories = false;
+        this.showForm = true;
+        this.step2 = 'active';
+        console.log(`got datasource with id ${this.datasourceId}`);
+      }
+    } else if(this.showForm) {
+      if (this.updateDatasource.updateRepo()){
+        this.showForm = false;
+        this.showInterfaces = true;
+        this.step3 = 'active';
+      }
+    } else if(this.showInterfaces) {
+
+    }
   }
+
+  moveBackAStep(){
+    if(this.showForm) {
+      this.showRepositories = true;
+      this.showForm = false;
+      this.step2 = '';
+    } else if(this.showInterfaces) {
+      this.showForm = true;
+      this.showInterfaces = false;
+      this.step3 = '';
+    } else if(this.showFinish) {
+      this.showInterfaces = true;
+      this.showFinish = false;
+      this.step4 = '';
+    }
+  }
+
 }

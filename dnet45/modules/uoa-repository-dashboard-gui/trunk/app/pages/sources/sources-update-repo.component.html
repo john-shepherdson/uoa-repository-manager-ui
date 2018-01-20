@@ -17,7 +17,7 @@
         </ul>
         <ul  class="uk-switcher">
           <li class="el-item">
-            <div>
+            <div *ngIf="repoId">
               <datasource-info-form [datasourceId]="repoId"></datasource-info-form>
             </div>
           </li>

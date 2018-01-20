@@ -54,7 +54,7 @@ export class DatasourceInfoFormComponent implements OnInit {
     logoUrl: '',
     timezone: ['', Validators.required],
     datasourceType: ['', Validators.required],
-    adminEmail: ['', Validators.required, Validators.email]
+    adminEmail: ['', [Validators.required, Validators.email]]
   };
 
   softwarePlatformDesc : Description = softwarePlatformDesc;
@@ -78,51 +78,52 @@ export class DatasourceInfoFormComponent implements OnInit {
   ) {}
 
   ngOnInit(){
-    this.loadUpdateTab();
+    this.loadForm();
   }
 
   getRepo() {
     this.showSpinner = true;
     this.loadingMessage = formInfoLoading;
+    if (this.datasourceId) {
+      this.repoService.getRepositoryById(this.datasourceId).subscribe(
+        repo => {
+          this.selectedRepo = repo;
+          if (this.selectedRepo) {
+            this.updateGroup.setValue({
+              softwarePlatform: '', //this.selectedRepo.WHICH FIELD ??
+              platformName: this.selectedRepo.typology,
+              officialName: this.selectedRepo.officialName,
+              repoDescription: this.selectedRepo.description,
+              country: this.selectedRepo.countryCode,
+              longtitude: this.selectedRepo.longitude,
+              latitude: this.selectedRepo.latitude,
+              websiteUrl: this.selectedRepo.websiteUrl,
+              institutionName: this.selectedRepo.organization,
+              englishName: this.selectedRepo.englishName,
+              logoUrl: this.selectedRepo.logoUrl,
+              timezone: this.selectedRepo.timezone,
+              datasourceType: this.selectedRepo.datasourceType,
+              adminEmail: this.selectedRepo.contactEmail
+            });
+          }
+          this.updateGroup.get('softwarePlatform').disable();
+          this.updateGroup.get('platformName').disable();
+          this.updateGroup.get('officialName').disable();
+          this.updateGroup.get('repoDescription').disable();
+          this.updateGroup.get('country').disable();
+          this.updateGroup.get('longtitude').disable();
+          this.updateGroup.get('latitude').disable();
+          this.updateGroup.get('websiteUrl').disable();
+          this.updateGroup.get('institutionName').disable();
 
-    this.repoService.getRepositoryById(this.datasourceId).subscribe(
-      repo => {
-       this.selectedRepo = repo;
-        if(this.selectedRepo) {
-          this.updateGroup.setValue({
-            softwarePlatform: '', //this.selectedRepo.WHICH FIELD ??
-            platformName: this.selectedRepo.typology,
-            officialName: this.selectedRepo.officialName,
-            repoDescription: this.selectedRepo.description,
-            country: this.selectedRepo.countryCode,
-            longtitude: this.selectedRepo.longitude,
-            latitude: this.selectedRepo.latitude,
-            websiteUrl: this.selectedRepo.websiteUrl,
-            institutionName: this.selectedRepo.organization,
-            englishName: this.selectedRepo.englishName,
-            logoUrl: this.selectedRepo.logoUrl,
-            timezone: this.selectedRepo.timezone,
-            datasourceType: this.selectedRepo.datasourceType,
-            adminEmail: this.selectedRepo.contactEmail
-          });
+          this.setUpSourceInfo();
+        },
+        error => console.log(error),
+        () => {
+          this.showSpinner = false;
         }
-        this.updateGroup.get('softwarePlatform').disable();
-        this.updateGroup.get('platformName').disable();
-        this.updateGroup.get('officialName').disable();
-        this.updateGroup.get('repoDescription').disable();
-        this.updateGroup.get('country').disable();
-        this.updateGroup.get('longtitude').disable();
-        this.updateGroup.get('latitude').disable();
-        this.updateGroup.get('websiteUrl').disable();
-        this.updateGroup.get('institutionName').disable();
-
-        this.setUpSourceInfo();
-      },
-      error =>console.log(error),
-      () => {
-        this.showSpinner = false;
-      }
-    )
+      );
+    }
   }
 
   setUpSourceInfo() {
@@ -142,19 +143,21 @@ export class DatasourceInfoFormComponent implements OnInit {
   }
 
 
-  loadUpdateTab() {
+  loadForm() {
     this.updateGroup = this.fb.group(this.updateGroupDefinition);
     this.getRepo();
   }
 
 
-  updateRepo() {
+  updateRepo(): boolean {
     if(this.updateGroup.valid){
       this.successMessage = formSuccessUpdatedRepo;
       this.errorMessage = '';
+      return true;
     } else {
       this.errorMessage = formErrorRequiredFields;
       this.successMessage = '';
+      return false;
     }
   }
 

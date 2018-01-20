@@ -30,9 +30,6 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   @Input()
   mode: string;
 
-  @Output() emmitObject: EventEmitter<string> = new EventEmitter<string>();
-
-
   constructor(private repoService:RepositoryService) {}
 
   ngOnInit() {
@@ -92,11 +89,12 @@ export class RegisterDatasourceShareableComponent implements OnInit {
     this.repoId = id;
   }
 
-  public goToNextStep() {
+  public goToNextStep(): boolean {
     if(!this.hasSelectedRepo || this.noRepositories){
       this.alertMessage = noRepositoryChosenMsg;
+      return false;
     } else {
-      this.emmitObject.emit(this.repoId);
+      return true;
     }
   }
 
