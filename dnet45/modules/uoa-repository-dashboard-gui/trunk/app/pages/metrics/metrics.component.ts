@@ -13,8 +13,6 @@ export class MetricsComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    this.parent_id = 'metrics';
-  }
+  ngOnInit() { }
 
 }

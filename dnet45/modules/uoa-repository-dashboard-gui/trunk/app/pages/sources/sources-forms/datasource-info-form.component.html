@@ -1,13 +1,19 @@
+<div style="text-align: center;" *ngIf="showSpinner">
+  <span class="loading">{{ loadingMessage }}</span><br>
+  <img src="/assets/imgs/loader-big.gif">
+</div>
 <form [formGroup]="updateGroup" *ngIf="selectedRepo">
   <div>
     <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
       Basic information
     </h4>
   </div>
+  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
   <div class="uk-alert uk-alert-warning">
-    The following fields are completed by OpenDOAR.<br>
+    The following fields are completed by {{ sourceTitle }}.<br>
     If you want to edit them, you can do it by using this
-    <a href="http://www.opendoar.org/suggest.php?rID=2893" target="_blank">OpenDOAR link</a>
+    <a href="{{ sourceLinkToRepo }}" target="_blank">{{ sourceTitle }} link</a>
   </div>
   <form-inline [description]="softwarePlatformDesc">
     <select formControlName="softwarePlatform" class="form-control">
@@ -29,7 +35,7 @@
   <form-inline [description]="countryDesc">
     <select formControlName="country" class="form-control">
       <option value="">-- none selected --</option>
-      <option *ngFor="let country of countries" value="{{ country.code }}">{{ country.name }}</option>
+      <option value="{{ selectedRepo.countryCode }}">{{ selectedRepo.countryName }}</option>
     </select>
   </form-inline>
   <form-inline [description]="longtitudeDesc" >

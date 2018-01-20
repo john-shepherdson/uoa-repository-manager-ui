@@ -1,7 +1,6 @@
 <register-datasource-shareable *ngIf="showRepositories"
                                #datasourcesByCountry
                                [mode]="'opendoar'"
-                               [repoSourceUrl]="'http://www.opendoar.org'"
                                (emmitObject)="getDatasourceId($event)"></register-datasource-shareable>
 
 <datasource-info-form *ngIf="showForm" [datasourceId]="datasourceId"></datasource-info-form>

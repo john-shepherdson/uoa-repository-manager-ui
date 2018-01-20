@@ -41,9 +41,9 @@
               </div>
               <div class="uk-alert uk-alert-primary">
                 Please make sure your repository is registered in
-                <a target="_blank" href="{{ repoSourceUrl }}">
+                <a target="_blank" href="{{ sourceUrl }}">
                   <i class="fa fa-external-link" style="margin-right:3px;"></i>
-                  {{ mode }}
+                  {{ sourceTitle }}
                 </a>
                 . <br>
                 <b>Last Updated: </b>
@@ -65,7 +65,7 @@
               </div>
               <div *ngIf="hasSelectedCountry">
                 <div>
-                  <h2>OpenDOAR Repositories in {{ selectedCountry }}</h2>
+                  <h2>{{ sourceTitle }} Repositories in {{ selectedCountry }}</h2>
                 </div>
                 <div style="text-align: center;" *ngIf="showSpinner">
                   <span class="loading">{{ loadingMessage }}</span><br>

@@ -1,1 +1,8 @@
-<register-datasource-shareable [mode]="'re3data'" [repoSourceUrl]="'http://www.re3data.org'"></register-datasource-shareable>
+<register-datasource-shareable *ngIf="showRepositories"
+                               #datasourcesByCountry
+                               [mode]="'re3data'"
+                               (emmitObject)="getDatasourceId($event)"></register-datasource-shareable>
+
+<datasource-info-form *ngIf="showForm" [datasourceId]="datasourceId"></datasource-info-form>
+<div *ngIf="showInterfaces"></div>
+<div *ngIf="showFinish"></div>

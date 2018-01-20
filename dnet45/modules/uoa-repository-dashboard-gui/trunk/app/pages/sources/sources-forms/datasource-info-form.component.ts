@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { formErrorRequiredFields, formSuccessUpdatedRepo } from '../../../domain/shared-messages';
+import { formErrorRequiredFields, formInfoLoading, formSuccessUpdatedRepo } from '../../../domain/shared-messages';
 import { RepositoryService } from "../../../services/repository.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, Repository } from '../../../domain/typeScriptClasses';
@@ -30,9 +30,12 @@ export class DatasourceInfoFormComponent implements OnInit {
 
   errorMessage: string;
   successMessage: string;
+  showSpinner: boolean;
+  loadingMessage: string;
+  sourceTitle: string;
+  sourceLinkToRepo: string;
 
   selectedRepo: Repository;
-  countries: Country[];
 
   @Input() datasourceId: string;
 
@@ -51,7 +54,7 @@ export class DatasourceInfoFormComponent implements OnInit {
     logoUrl: '',
     timezone: ['', Validators.required],
     datasourceType: ['', Validators.required],
-    adminEmail: ['', Validators.required]
+    adminEmail: ['', Validators.required, Validators.email]
   };
 
   softwarePlatformDesc : Description = softwarePlatformDesc;
@@ -79,9 +82,12 @@ export class DatasourceInfoFormComponent implements OnInit {
   }
 
   getRepo() {
+    this.showSpinner = true;
+    this.loadingMessage = formInfoLoading;
+
     this.repoService.getRepositoryById(this.datasourceId).subscribe(
       repo => {
-        this.selectedRepo = repo;
+       this.selectedRepo = repo;
         if(this.selectedRepo) {
           this.updateGroup.setValue({
             softwarePlatform: '', //this.selectedRepo.WHICH FIELD ??
@@ -109,35 +115,40 @@ export class DatasourceInfoFormComponent implements OnInit {
         this.updateGroup.get('latitude').disable();
         this.updateGroup.get('websiteUrl').disable();
         this.updateGroup.get('institutionName').disable();
+
+        this.setUpSourceInfo();
       },
-      error =>console.log(error)
+      error =>console.log(error),
+      () => {
+        this.showSpinner = false;
+      }
     )
   }
 
-  getCountries() {
-    this.repoService.getCountries()
-      .subscribe(
-        countries => this.countries = countries.sort( function(a,b){
-          if(a.name<b.name){
-            return -1;
-          } else if(a.name>b.name){
-            return 1;
-          } else {
-            return 0;
-          }
-        } ),
-        error => console.log(error)
-      );
+  setUpSourceInfo() {
+    let id: string;
+    let source: string;
+    id = this.selectedRepo.id.split("::").pop();
+    source = this.selectedRepo.id.split("_")[0];
+    console.log(source);
+
+    if(source == 'opendoar') {
+      this.sourceTitle = 'OpenDOAR';
+      this.sourceLinkToRepo = `http://www.opendoar.org/suggest.php?rID=${id}`;
+    } else if(source == 're3data') {
+      this.sourceTitle = 'Re3data';
+      this.sourceLinkToRepo = `http://service.re3data.org/repository/${id}`;
+    }
   }
+
 
   loadUpdateTab() {
     this.updateGroup = this.fb.group(this.updateGroupDefinition);
-    this.getCountries();
     this.getRepo();
   }
 
 
-  updateRepo(){
+  updateRepo() {
     if(this.updateGroup.valid){
       this.successMessage = formSuccessUpdatedRepo;
       this.errorMessage = '';

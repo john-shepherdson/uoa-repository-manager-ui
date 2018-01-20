@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RepositoryService } from '../../../services/repository.service';
 import {
   loadingReposMessage,
-  noRepositoriesMessage,
+  noRepositoriesFound,
   noRepositoryChosenMsg,
   noServiceMessage } from '../../../domain/shared-messages';
 import { Country, Repository } from '../../../domain/typeScriptClasses';
@@ -24,11 +24,11 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   loadingMessage: string = loadingReposMessage;
   repoId: string;
 
-  @Input()
-  mode: string;
+  sourceUrl: string;
+  sourceTitle: string;
 
   @Input()
-  repoSourceUrl: string;
+  mode: string;
 
   @Output() emmitObject: EventEmitter<string> = new EventEmitter<string>();
 
@@ -36,9 +36,20 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   constructor(private repoService:RepositoryService) {}
 
   ngOnInit() {
+    this.setUpSourceInfo();
     this.getCountries();
     this.hasSelectedCountry = false;
     this.selectedCountry = '';
+  }
+
+  setUpSourceInfo() {
+    if (this.mode == 'opendoar') {
+      this.sourceUrl = 'https://www.opendoar.org/';
+      this.sourceTitle = 'OpenDOAR';
+    } else if (this.mode == 're3data') {
+      this.sourceUrl = 'https://www.re3data.org/';
+      this.sourceTitle = 'Re3data';
+    }
   }
 
   getCountries(){
@@ -70,7 +81,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
       repos => this.countryRepos = repos,
       error => console.log(error),
       () => {
-        if (!this.countryRepos.length) this.noRepositories = noRepositoriesMessage;
+        if (!this.countryRepos.length) this.noRepositories = noRepositoriesFound;
         this.showSpinner = false;
       }
     );
