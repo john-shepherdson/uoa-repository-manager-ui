@@ -39,6 +39,8 @@ export class DatasourceInfoFormComponent implements OnInit {
 
   @Input() datasourceId: string;
 
+  @Input() showButton: boolean;
+
   updateGroup: FormGroup;
   readonly updateGroupDefinition = {
     softwarePlatform : '',

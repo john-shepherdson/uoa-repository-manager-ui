@@ -1,6 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { RegisterDatasourceShareableComponent } from './register-datasource-shareable.component';
 import { DatasourceInfoFormComponent } from '../sources-forms/datasource-info-form.component';
+import { RepositoryInterface } from '../../../domain/typeScriptClasses';
+import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
+import { Description, interfaceFormDesc } from '../../../domain/oa-description';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { RepositoryService } from '../../../services/repository.service';
 
 @Component ({
   selector: 'app-sr-data',
@@ -25,7 +30,14 @@ export class SrDataComponent implements OnInit {
   @ViewChild('updateDatasource')
   public updateDatasource: DatasourceInfoFormComponent;
 
-  constructor() {}
+  group: FormGroup;
+  interfaceFormDesc: Description = interfaceFormDesc;
+  updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
+  repoInterfaces: RepositoryInterface[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private repoService: RepositoryService) {}
 
   ngOnInit() {
     this.showRepositories=true;
@@ -45,6 +57,8 @@ export class SrDataComponent implements OnInit {
         this.showForm = false;
         this.showInterfaces = true;
         this.step3 = 'active';
+        this.group = this.fb.group({});
+        this.getRepoInterfaces();
       }
     } else if(this.showInterfaces) {
         this.showInterfaces = false;
@@ -68,4 +82,13 @@ export class SrDataComponent implements OnInit {
       this.step4 = '';
     }
   }
+
+
+  getRepoInterfaces() {
+    this.repoService.getRepositoryInterface(this.datasourceId).subscribe(
+      interfaces => { this.repoInterfaces = interfaces; console.log(this.repoInterfaces.length)},
+      error => console.log(error)
+    );
+  }
+
 }

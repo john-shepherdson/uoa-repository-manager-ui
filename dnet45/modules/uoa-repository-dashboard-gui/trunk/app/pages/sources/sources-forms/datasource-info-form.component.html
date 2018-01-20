@@ -78,7 +78,7 @@
   <form-inline [description]="adminEmailDesc" [valid]="updateGroup.get('adminEmail').valid">
     <input formControlName="adminEmail" class="form-control" type="text">
   </form-inline>
-  <div class="form-group">
+  <div *ngIf="showButton" class="form-group">
     <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
   </div>
 </form>

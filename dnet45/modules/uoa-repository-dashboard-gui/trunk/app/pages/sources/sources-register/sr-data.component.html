@@ -44,18 +44,44 @@
                                     #updateDatasource
                                     [datasourceId]="datasourceId"></datasource-info-form>
 
-              <div *ngIf="showInterfaces"></div>
-              <div *ngIf="showFinish"></div>
+              <div *ngIf="showInterfaces">
+                <form [formGroup]="group">
+                  <form-repeat [component]="updateDatasourceInterfaces"
+                               [parentGroup]="group"
+                               [description]="interfaceFormDesc"
+                               [name]="'repository-interfaces'"
+                               [data]="repoInterfaces">
+                  </form-repeat>
+                </form>
+              </div>
+              <div *ngIf="showFinish" class="row openAIRECompliantLogoDownload">
+                <div class="col-lg-12">
+                  <div class="col-md-12">
+                    <div class="gwt-HTML">
+                      <div class="openAIRECompliantLogo">
+                        <h2 class="openAIRECompliantLogoMessage">
+                          Congratulations! Your repository was successfully registered in OpenAIRE. You can download this logo to use in your site.
+                        </h2>
+                        <img src="assets/imgs/3_0ValidatedLogo.png" alt="OpenAireCompliant">
+                      </div>
+                    </div>
+                    <a>
+                      Download
+                      <i class="fa fa-download" style=""></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="wizardActions">
         <button *ngIf="!showRepositories" class="uk-button uk-button-grey-light" type="button" (click)="moveBackAStep()">
+          <i class="fa fa-angle-double-left"></i>
           Back
-          <i class="fa fa-angle-double-right"></i>
         </button>
-        <button class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
+        <button *ngIf="!showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
           Next
           <i class="fa fa-angle-double-right"></i>
         </button>
