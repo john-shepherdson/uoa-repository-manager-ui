@@ -1,5 +1,10 @@
+/*
+*  created by myrto 12/2017
+*/
 
 /* class copied from omtd-platform git repository */
+
+/* THE DESCRIPTION TEXTS PROBABLY NEED REVIEWING ! */
 
 export class Description {
   desc : string;
@@ -18,7 +23,7 @@ export let interfaceFormDesc = {
 };
 
 
-/* Desription of the Datasource Update Form fields */
+/* Desription of the Datasource Info Forms Fields */
 export let softwarePlatformDesc = {
   desc : 'the software platform that the repository uses',
   label : 'Software Platform (*)',
@@ -37,6 +42,27 @@ export let officialNameDesc = {
   desc : 'the official name of the repository',
   label : 'Official Name (*)',
   mandatory : true,
+  recommended : false
+};
+
+export let issnDesc = {
+  desc : 'the issn code of the datasource',
+  label : 'ISSN (*)',
+  mandatory : true,
+  recommended : false
+};
+
+export let eissnDesc = {
+  desc : 'the eissn code of the datasource',
+  label : 'EISSN',
+  mandatory : false,
+  recommended : false
+};
+
+export let lissnDesc = {
+  desc : 'the eissn code of the datasource',
+  label : 'LISSN',
+  mandatory : false,
   recommended : false
 };
 
@@ -106,6 +132,20 @@ export let timezoneDesc = {
 export let datasourceTypeDesc = {
   desc : 'the type of the datasource',
   label : 'Datasource Type (*)',
+  mandatory : true,
+  recommended : false
+};
+
+export let journalTypeDesc = {
+  desc : 'the type of the journal',
+  label : 'Journal Type (*)',
+  mandatory : true,
+  recommended : false
+};
+
+export let aggregatorTypeDesc = {
+  desc : 'the type of the aggregator',
+  label : 'Aggregator Type (*)',
   mandatory : true,
   recommended : false
 };

@@ -27,7 +27,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
     super.ngOnInit();
     console.log(this.group,this.parentGroup);
 
-    if (this.data.length) {
+    if (this.data && this.data.length) {
 /*
       this.group.patchValue({
         baseUrl : this.data[0].baseUrl,

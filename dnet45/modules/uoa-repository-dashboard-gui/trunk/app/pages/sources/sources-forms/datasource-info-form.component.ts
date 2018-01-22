@@ -3,6 +3,8 @@ import { formErrorRequiredFields, formInfoLoading, formSuccessUpdatedRepo } from
 import { RepositoryService } from "../../../services/repository.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, Repository } from '../../../domain/typeScriptClasses';
+import { typologies } from '../../../domain/typologies';
+import { timezones } from '../../../domain/timezones';
 import {
   Description,
   softwarePlatformDesc,
@@ -34,6 +36,9 @@ export class DatasourceInfoFormComponent implements OnInit {
   loadingMessage: string;
   sourceTitle: string;
   sourceLinkToRepo: string;
+  typologies = typologies;
+  timezones = timezones;
+  countries: Country[] = [];
 
   selectedRepo: Repository;
 
@@ -45,13 +50,13 @@ export class DatasourceInfoFormComponent implements OnInit {
   readonly updateGroupDefinition = {
     softwarePlatform : '',
     platformName : '',
-    officialName : '',
-    repoDescription : '',
-    country : '',
-    longtitude : '',
-    latitude : '',
-    websiteUrl : '',
-    institutionName : '',
+    officialName : ['', Validators.required],
+    repoDescription : ['', Validators.required],
+    country : ['', Validators.required],
+    longtitude : ['', Validators.required],
+    latitude : ['', Validators.required],
+    websiteUrl : ['', Validators.required],
+    institutionName : ['', Validators.required],
     englishName: ['', Validators.required],
     logoUrl: '',
     timezone: ['', Validators.required],

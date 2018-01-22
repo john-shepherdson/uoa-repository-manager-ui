@@ -9,7 +9,7 @@ import { SourcesRegisterComponent } from './sources-register.component';
 import { CommonModule } from '@angular/common';
 import { TabsModule } from 'ngx-bootstrap';
 import { SourcesUpdateComponent } from './sources-update.component';
-import { SRLiteratureComponent } from './sources-register/sr-literature.component';
+import { SrLiteratureComponent } from './sources-register/sr-literature.component';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +18,10 @@ import { DatasourceInterfaceFormComponent } from './sources-forms/datasource-int
 import { SrDataComponent } from './sources-register/sr-data.component';
 import { RegisterDatasourceShareableComponent } from './sources-register/register-datasource-shareable.component';
 import { DatasourceInfoFormComponent } from './sources-forms/datasource-info-form.component';
+import { SrJournalComponent } from './sources-register/sr-journal.component';
+import { SrAggregatorComponent } from './sources-register/sr-aggregator.component';
+import { JournalInfoFormComponent } from './sources-forms/journal-info-form.component';
+import { AggregatorInfoFormComponent } from './sources-forms/aggregator-info-form.component';
 
 @NgModule ({
   imports: [
@@ -35,13 +39,17 @@ import { DatasourceInfoFormComponent } from './sources-forms/datasource-info-for
     SourcesComponent,
     SourcesRegisterComponent,
     SourcesUpdateComponent,
-    SRLiteratureComponent,
+    SrLiteratureComponent,
     SrDataComponent,
+    SrJournalComponent,
+    SrAggregatorComponent,
     SourcesUpdateRepoComponent,
-    DatasourceInterfaceFormComponent,
     RepoFilter,
     RegisterDatasourceShareableComponent,
-    DatasourceInfoFormComponent
+    DatasourceInfoFormComponent,
+    DatasourceInterfaceFormComponent,
+    JournalInfoFormComponent,
+    AggregatorInfoFormComponent
   ]
 })
 

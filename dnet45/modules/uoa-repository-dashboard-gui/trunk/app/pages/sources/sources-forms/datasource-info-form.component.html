@@ -17,10 +17,8 @@
   </div>
   <form-inline [description]="softwarePlatformDesc">
     <select formControlName="softwarePlatform" class="form-control">
-      <option value="" selected>[Other] (enter name below)</option>
-      <option value="1">platform 1</option>
-      <option value="2">platform 2</option>
-      <option value="3">platform 3</option>
+<!--      <option value="" selected>[Other] (enter name below)</option>-->
+      <option *ngFor="let platform of typologies" value="{{ platform.value }}">{{ platform.name }}</option>
     </select>
   </form-inline>
   <form-inline [description]="platformNameDesc">
@@ -64,7 +62,7 @@
   <form-inline [description]="timezoneDesc" [valid]="updateGroup.get('timezone').valid">
     <select formControlName="timezone" class="form-control">
       <option value="">-- none selected --</option>
-      <option value="{{ selectedRepo.timezone }}">{{ selectedRepo.timezone }}</option>
+      <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.title }}</option>
     </select>
   </form-inline>
   <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">

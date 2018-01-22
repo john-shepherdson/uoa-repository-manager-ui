@@ -8,9 +8,11 @@ import { SourcesComponent } from './sources.component';
 import { SourcesRegisterComponent } from './sources-register.component';
 import { SourcesUpdateComponent } from './sources-update.component';
 import { AuthGuardService } from '../../services/auth-guard.service';
-import { SRLiteratureComponent } from './sources-register/sr-literature.component';
+import { SrLiteratureComponent } from './sources-register/sr-literature.component';
 import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
 import { SrDataComponent } from './sources-register/sr-data.component';
+import { SrJournalComponent } from './sources-register/sr-journal.component';
+import { SrAggregatorComponent } from './sources-register/sr-aggregator.component';
 
 const sourcesRoutes: Routes = [
   {
@@ -33,11 +35,19 @@ const sourcesRoutes: Routes = [
           },
           {
             path: 'literature',
-            component: SRLiteratureComponent
+            component: SrLiteratureComponent
           },
           {
             path: 'data',
             component: SrDataComponent
+          },
+          {
+            path: 'journal',
+            component: SrJournalComponent
+          },
+          {
+            path: 'aggregator',
+            component: SrAggregatorComponent
           }
         ]
       },

@@ -14,5 +14,6 @@ export const noRepositoryChosenMsg = 'You need to select a repository first!';
 export const formInfoLoading = 'Loading information';
 export const formErrorRequiredFields = 'You need to fill in all the fields with (*)';
 export const formSuccessUpdatedRepo = 'The datasource was updated successfully!';
+export const formSuccessRegisteredDatasource = 'The datasource was registered successfully';
 export const formSuccessAddedInterface = 'The interface was added successfully!';
 export const formSuccessUpdatedInterface = 'The interface was updated successfully!';

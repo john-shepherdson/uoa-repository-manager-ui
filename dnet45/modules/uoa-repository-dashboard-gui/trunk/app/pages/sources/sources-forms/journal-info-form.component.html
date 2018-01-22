@@ -1,0 +1,98 @@
+<form [formGroup]="group">
+  <div>
+    <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
+      Basic information
+    </h4>
+  </div>
+  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+  <form-inline [description]="softwarePlatformDesc" [valid]="group.get('softwarePlatform').valid">
+    <select formControlName="softwarePlatform" class="form-control">
+      <option *ngFor="let platform of typologies" value="{{ platform.value }}">{{ platform.name }}</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="platformNameDesc" [valid]="group.get('platformName').valid">
+    <input formControlName="platformName" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="officialNameDesc"  [valid]="group.get('officialName').valid">
+    <input formControlName="officialName" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="issnDesc" [valid]="group.get('issn').valid">
+    <span *ngIf="group.get('issn').invalid && group.get('issn').touched && group.get('issn').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn length has to be 8 characters</span>
+    <input formControlName="issn" class="form-control" type="text" (focus)="group.get('issn').markAsUntouched()" (blur)="group.get('issn').updateValueAndValidity()">
+  </form-inline>
+  <form-inline [description]="eissnDesc" [valid]="group.get('eissn').valid">
+    <span *ngIf="group.get('eissn').invalid && group.get('eissn').touched && group.get('eissn').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn length has to be 8 characters</span>
+    <input formControlName="eissn"class="form-control" type="text" (focus)="group.get('eissn').markAsUntouched()" (blur)="group.get('eissn').updateValueAndValidity()">
+  </form-inline>
+  <form-inline [description]="lissnDesc" [valid]="group.get('lissn').valid">
+    <span *ngIf="group.get('lissn').invalid && group.get('lissn').touched && group.get('lissn').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn length has to be 8 characters</span>
+    <input formControlName="lissn"class="form-control" type="text" (focus)="group.get('lissn').markAsUntouched()" (blur)="group.get('lissn').updateValueAndValidity()">
+  </form-inline>
+  <form-inline [description]="repoDescriptionDesc" [valid]="group.get('repoDescription').valid">
+    <textarea formControlName="repoDescription" class="form-control"></textarea>
+  </form-inline>
+  <form-inline [description]="countryDesc" [valid]="group.get('country').valid">
+    <select formControlName="country" class="form-control">
+      <option value="">-- none selected --</option>
+      <option *ngFor="let country of countries" value="{{ country.code }}">{{ country.name }}</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="longtitudeDesc" [valid]="group.get('longtitude').valid">
+    <span *ngIf="group.get('longtitude').invalid && group.get('longtitude').touched && group.get('longtitude').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Invalid Longtitude</span>
+    <input formControlName="longtitude" class="form-control" type="text" (focus)="group.get('longtitude').markAsUntouched()" (blur)="group.get('longtitude').updateValueAndValidity()">
+  </form-inline>
+  <form-inline [description]="latitudeDesc" [valid]="group.get('latitude').valid">
+    <span *ngIf="group.get('latitude').invalid && group.get('latitude').touched && group.get('latitude').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Invalid Latitude</span>
+    <input formControlName="latitude" class="form-control" type="text" (focus)="group.get('latitude').markAsUntouched()" (blur)="group.get('latitude').updateValueAndValidity()">
+  </form-inline>
+  <form-inline [description]="websiteUrlDesc" [valid]="group.get('websiteUrl').valid">
+    <input formControlName="websiteUrl" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="institutionNameDesc" [valid]="group.get('institutionName').valid">
+    <input formControlName="institutionName" class="form-control" type="text">
+  </form-inline>
+  <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
+      uk-scrollspy-class="">Extra Information</h4>
+  <form-inline [description]="englishNameDesc" [valid]="group.get('englishName').valid">
+    <input formControlName="englishName" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="logoUrlDesc" [valid]="group.get('logoUrl').valid">
+    <input formControlName="logoUrl" class="form-control" type="text">
+    <div class="comment fontItalic">
+      Please make sure that the maximum size of the uploaded image is width=360px, height=240px
+    </div>
+  </form-inline>
+  <form-inline [description]="timezoneDesc" [valid]="group.get('timezone').valid">
+    <select formControlName="timezone" class="form-control">
+      <option value="">-- none selected --</option>
+      <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.title }}</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="journalTypeDesc" [valid]="group.get('journalType').valid">
+    <select formControlName="journalType" class="form-control">
+      <option value="">-- none selected --</option>
+      <option value="Journal">Journal</option>
+      <option value="Journal Aggregator/Publisher">Journal Aggregator/Publisher</option>
+    </select>
+
+  </form-inline>
+  <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
+      uk-scrollspy-class="">Administrator & contact information</h4>
+  <form-inline [description]="adminEmailDesc" [valid]="group.get('adminEmail').valid">
+    <input formControlName="adminEmail" class="form-control" type="text">
+  </form-inline>
+  <div *ngIf="showButton" class="form-group">
+    <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
+  </div>
+</form>

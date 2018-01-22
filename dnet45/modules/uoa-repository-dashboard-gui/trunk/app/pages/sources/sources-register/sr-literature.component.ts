@@ -16,7 +16,7 @@ import { RepositoryService } from '../../../services/repository.service';
   templateUrl: 'sr-literature.component.html'
 })
 
-export class SRLiteratureComponent implements OnInit {
+export class SrLiteratureComponent implements OnInit {
   showRepositories: boolean;
   showForm: boolean;
   showInterfaces: boolean;
