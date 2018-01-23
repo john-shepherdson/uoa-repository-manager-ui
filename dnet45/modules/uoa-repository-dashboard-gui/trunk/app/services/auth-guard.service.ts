@@ -13,7 +13,7 @@ export class AuthGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
     if (this.authenticationService.isLoggedIn) { return true; }
-      //if (getCookie('name') != null) return true;
+    //if (getCookie('name') != null) return true;
     // Store the attempted URL for redirecting
     sessionStorage.setItem("state.location",state.url);
     // Navigate to the login page

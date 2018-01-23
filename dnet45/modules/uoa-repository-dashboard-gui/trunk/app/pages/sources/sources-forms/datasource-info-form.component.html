@@ -36,11 +36,17 @@
       <option value="{{ selectedRepo.countryCode }}">{{ selectedRepo.countryName }}</option>
     </select>
   </form-inline>
-  <form-inline [description]="longtitudeDesc" >
-    <input formControlName="longtitude" class="form-control" type="text">
+  <form-inline [description]="longtitudeDesc" [valid]="updateGroup.get('longtitude').valid">
+    <span *ngIf="updateGroup.get('longtitude').invalid && updateGroup.get('longtitude').touched && updateGroup.get('longtitude').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Invalid Longtitude</span>
+    <input formControlName="longtitude" class="form-control" type="number" step="0.05" (focus)="updateGroup.get('longtitude').markAsUntouched()" (blur)="updateGroup.get('longtitude').updateValueAndValidity()">
   </form-inline>
-  <form-inline [description]="latitudeDesc" >
-    <input formControlName="latitude" class="form-control" type="text">
+  <form-inline [description]="latitudeDesc" [valid]="updateGroup.get('latitude').valid">
+    <span *ngIf="updateGroup.get('latitude').invalid && updateGroup.get('latitude').touched && updateGroup.get('latitude').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Invalid Latitude</span>
+    <input formControlName="latitude" class="form-control" type="number" step="0.05" (focus)="updateGroup.get('latitude').markAsUntouched()" (blur)="updateGroup.get('latitude').updateValueAndValidity()">
   </form-inline>
   <form-inline [description]="websiteUrlDesc">
     <input formControlName="websiteUrl" class="form-control" type="text">

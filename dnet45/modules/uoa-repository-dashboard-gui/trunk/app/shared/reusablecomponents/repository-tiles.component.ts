@@ -56,7 +56,7 @@ export class RepositoryTilesComponent implements OnInit {
       );
   }
 
-  getLinkToNext(repo): string {
+  getLinkToNext(repo: Repository): string {
     if (this.parent == 'metrics') {
       if (repo.piwikInfo) {
         if (repo.piwikInfo.validated === true) {
@@ -67,14 +67,14 @@ export class RepositoryTilesComponent implements OnInit {
       } else {
         return `enable/${repo.id}`;
       }
-    } else if(this.parent == 'sourcesUpdate'){
+    } else if(this.parent == 'sourcesUpdate' || this.parent == 'compatibilityMonitor'){
       return repo.id;
-    } else if(this.parent=='contentEvents'){
+    } else if(this.parent == 'contentEvents') {
       return repo.officialName;
     }
   }
 
-  getBadgeCSS(repo): string {
+  getBadgeCSS(repo: Repository): string {
     if (this.parent == 'metrics') {
       if (repo.piwikInfo) {
         if (repo.piwikInfo.validated === true) {
@@ -85,14 +85,12 @@ export class RepositoryTilesComponent implements OnInit {
       } else {
         return 'uk-badge uk-badge-danger';
       }
-    } else if (this.parent == 'sourcesUpdate') {
-      return repo.id;
     } else if(this.parent=='contentEvents'){
       return 'el-meta uk-margin uk-text-meta';
     }
   }
 
-  getBadgeText(repo): string {
+  getBadgeText(repo: Repository): string {
     if(this.parent=='metrics'){
       if(repo.piwikInfo){
         if(repo.piwikInfo.validated === true){
@@ -105,8 +103,12 @@ export class RepositoryTilesComponent implements OnInit {
       }
 
     } else if(this.parent=='contentEvents') {
-      return '0';
+      return this.getRepoEvents(repo);
     }
+  }
+
+  getRepoEvents(repo: Repository): string {
+    return '0';
   }
 
   showTiles(){

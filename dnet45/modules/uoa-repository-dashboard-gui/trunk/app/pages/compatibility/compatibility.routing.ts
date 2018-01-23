@@ -2,28 +2,54 @@ import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 
 import {CompatibilityComponent} from "./compatibility.component";
-import {CompatibilityValidationComponent} from "./compatibility-validation.component";
+import {CompatibilityValidateComponent} from "./compatibility-validate.component";
 import {CompatibilityMonitorComponent} from "./compatibility-monitor.component";
 import {AuthGuardService} from '../../services/auth-guard.service';
+import { CompatibilityValidationHistoryComponent } from './compatibility-validation-history.component';
+import { CompatibilityMonitorRepoComponent } from './compatibility-monitor-repo.component';
+import { CompatibilityValidateTypeComponent } from './compatibility-validate-type.component';
 
 const compatibilityRoutes: Routes = [
   {
     path: 'compatibility',
     component: CompatibilityComponent,
-    canActivate: [AuthGuardService],
+//    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
-        redirectTo: '/validation',
+        redirectTo: '/validate',
         pathMatch: 'full'
       },
       {
-        path: 'validation',
-        component: CompatibilityValidationComponent
+        path: 'validate',
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: CompatibilityValidateComponent
+          },
+          {
+            path: ':type',
+            component: CompatibilityValidateTypeComponent
+          }
+        ]
+      },
+      {
+        path: 'browseHistory',
+        component: CompatibilityValidationHistoryComponent
       },
       {
         path: 'monitor',
-        component: CompatibilityMonitorComponent
+        children: [
+          {
+            path: '',
+            component: CompatibilityMonitorComponent
+          },
+          {
+            path: ':id',
+            component: CompatibilityMonitorRepoComponent
+          }
+        ]
       }
     ]
   }

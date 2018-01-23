@@ -64,7 +64,6 @@
                     <th class="uk-text-nowrap">Name</th>
                     <th *ngIf="parent == 'metrics'" class="uk-text-nowrap">Status</th>
                     <th *ngIf="parent == 'contentEvents'" class="uk-text-nowrap"># of Events</th>
-                    <th class="uk-text-nowrap">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -74,22 +73,16 @@
                       <img *ngIf="repo.logoUrl" class="el-image uk-preserve-width" src="{{ repo.logoUrl }}" style="height: 45px;">
                       <img *ngIf="!repo.logoUrl" class="el-image uk-preserve-width" src="assets/imgs/yourLogoHere.jpg" alt="[Repo Logo]" style="height: 45px;">
                     </td>
-                    <td class="uk-text-nowrap uk-table-shrink">{{ repo.officialName }}</td>
+                    <td class="uk-text-nowrap uk-table-shrink">
+                      <a [routerLink]="[getLinkToNext(repo)]">{{ repo.officialName }}</a>
+                    </td>
 
                     <!-- SET STATUS OR EVENTS -->
                     <td *ngIf="parent == 'metrics'" class="uk-text-nowrap uk-table-shrink">
                       <div class="{{ getBadgeCSS(repo) }}">{{ getBadgeText(repo) }}</div>
                     </td>
                     <td *ngIf="parent=='contentEvents'" class="uk-text-nowrap uk-table-shrink">
-                      {{ getBadgeText(repo) }}</td>
-
-                    <!--SET ACTIONS-->
-                    <td class="uk-text-nowrap uk-table-shrink">
-                      <a [routerLink]="[getLinkToNext(repo)]">
-                        <i *ngIf="parent !== 'sourcesUpdate'" class="fa fa-eye" aria-hidden="true"></i>
-                        <i *ngIf="parent == 'sourcesUpdate'"class="fa fa-pencil" aria-hidden="true"></i>
-                      </a>
-
+                      {{ getBadgeText(repo) }}
                     </td>
                   </tr>
                 </tbody>

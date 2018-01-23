@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import { Repository } from '../domain/typeScriptClasses';
 
 @Injectable()
 export class AuthenticationService {

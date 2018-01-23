@@ -6,11 +6,8 @@ import {Component, OnInit} from "@angular/core";
 })
 
 export class CompatibilityMonitorComponent implements OnInit {
-  jobTypes: string[];
 
   constructor() {}
 
-  ngOnInit() {
-    this.jobTypes = ["Compatibility Test","Registration Request","Workflow Request"];
-  }
+  ngOnInit() {}
 }

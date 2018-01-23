@@ -2,10 +2,10 @@ import {Component, OnInit} from "@angular/core";
 
 @Component ({
   selector: 'app-compatibility-validation',
-  templateUrl: 'compatibility-validation.component.html'
+  templateUrl: 'compatibility-validate.component.html'
 })
 
-export class CompatibilityValidationComponent implements OnInit {
+export class CompatibilityValidateComponent implements OnInit {
 
   constructor() {}
 

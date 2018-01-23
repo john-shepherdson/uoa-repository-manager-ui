@@ -44,12 +44,12 @@ import { AggregatorInfoFormComponent } from './sources-forms/aggregator-info-for
     SrJournalComponent,
     SrAggregatorComponent,
     SourcesUpdateRepoComponent,
-    RepoFilter,
     RegisterDatasourceShareableComponent,
     DatasourceInfoFormComponent,
     DatasourceInterfaceFormComponent,
     JournalInfoFormComponent,
-    AggregatorInfoFormComponent
+    AggregatorInfoFormComponent,
+    RepoFilter                           //a pipe that searches for string in repository name
   ]
 })
 

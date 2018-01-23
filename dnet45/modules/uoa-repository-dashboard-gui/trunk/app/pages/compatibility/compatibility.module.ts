@@ -2,20 +2,28 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TabsModule} from "ngx-bootstrap";
 import {CompatibilityComponent} from "./compatibility.component";
-import {CompatibilityValidationComponent} from "./compatibility-validation.component";
+import {CompatibilityValidateComponent} from "./compatibility-validate.component";
 import {CompatibilityRouting} from "./compatibility.routing";
 import {CompatibilityMonitorComponent} from "./compatibility-monitor.component";
+import { CompatibilityValidationHistoryComponent } from './compatibility-validation-history.component';
+import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
+import { CompatibilityMonitorRepoComponent } from './compatibility-monitor-repo.component';
+import { CompatibilityValidateTypeComponent } from './compatibility-validate-type.component';
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
-    CompatibilityRouting
+    CompatibilityRouting,
+    ReusableComponentsModule
   ],
   declarations: [
     CompatibilityComponent,
-    CompatibilityValidationComponent,
-    CompatibilityMonitorComponent
+    CompatibilityValidateComponent,
+    CompatibilityValidationHistoryComponent,
+    CompatibilityMonitorComponent,
+    CompatibilityMonitorRepoComponent,
+    CompatibilityValidateTypeComponent
   ]
 })
 

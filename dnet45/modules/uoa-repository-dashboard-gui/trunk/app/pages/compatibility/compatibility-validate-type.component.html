@@ -1,0 +1,106 @@
+<div class="uk-grid uk-grid-stack">
+  <div class="uk-width-expand@m uk-first-column">
+    <div class="uk-margin-medium-bottom">
+      <h1 class="uk-article-title">Register your datasource</h1>
+    </div>
+    <div class="wizard">
+      <div class="wizardBreadcrumbs">
+        <div class="steps clearfix">
+          <div class="step active">
+            <div>
+              Select datasource
+              <span></span>
+            </div>
+          </div>
+          <div class="step {{step2}}">
+            <div>
+              Select guidlines
+              <span></span>
+            </div>
+          </div>
+          <div class="step {{step3}}">
+            <div>
+              Select parameters
+              <span></span>
+            </div>
+          </div>
+          <div class="step {{step4}}">
+            <div>
+              Finish
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div>
+          <div class="animated fadeInRight stepContent">
+            <div *ngIf="showDatasource">
+              <div>
+                Select Datasource
+              </div>
+            </div>
+            <div *ngIf="showGuidelines">
+              <div>
+                Select Guidlines
+              </div>
+            </div>
+            <div *ngIf="showParameters">
+              <div>
+                Select Parameters
+              </div>
+            </div>
+            <div *ngIf="showFinish">
+              <div>
+                <div class="success">
+                  <i class="fa fa-check-circle" style=""></i>
+                  <h3>Validation has begun successfully!</h3>
+                </div>
+                <div class="uk-alert uk-alert-primary marginTop20 textAlignCenter">
+                  You will be notified by email with the results of the compatibility test.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizardActions">
+        <button *ngIf="!showDatasource && !showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveBackAStep()">
+          <i class="fa fa-angle-double-left"></i>
+          Back
+        </button>
+        <button *ngIf="!showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
+          <span *ngIf="!showParameters">Next</span>
+          <span *ngIf="showParameters" class="uk-link">Finish</span>
+          <i class="fa fa-angle-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="tm-sidebar uk-width-1-4@m">
+    <div>
+      <div class="uk-card uk-card-body uk-card-default sidemenu">
+        <h3 class="el-title uk-h3 uk-heading-bullet">Info</h3>
+        <p class="small">
+          Use the form on the right to add your repository or journal in OpenAIRE. If you want to find more information about this process
+          <!-- TARGET FILE MISSING! jsps/manuals/user-manual.pdf -->
+          <a target="_blank" href="#">click here</a>
+          .
+        </p>
+        <div class="uk-alert uk-alert-default small">
+          The official repository/journal administrator (his/her email address being retrieved from the OAI-PMH verb
+          <b>Identify</b>
+          ) will be contacted and informed about registration request. So please make sure that you are either this person or have access to the email address, or that you have notified them.
+        </div>
+        <p class="small">
+          For any problems or questions please contact the
+          <a class="external" target="_blank" href="https://www.openaire.eu/support/helpdesk" >
+            OpenAIRE helpdesk
+          </a>
+          .
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
