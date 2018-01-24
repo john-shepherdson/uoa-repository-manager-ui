@@ -9,11 +9,14 @@ import { CompatibilityValidationHistoryComponent } from './compatibility-validat
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { CompatibilityMonitorRepoComponent } from './compatibility-monitor-repo.component';
 import { CompatibilityValidateTypeComponent } from './compatibility-validate-type.component';
+import { CompatibilityValidateStep1Component } from './compatibility-validate-forms/compatibility-validate-step1.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
+    ReactiveFormsModule,
     CompatibilityRouting,
     ReusableComponentsModule
   ],
@@ -23,7 +26,8 @@ import { CompatibilityValidateTypeComponent } from './compatibility-validate-typ
     CompatibilityValidationHistoryComponent,
     CompatibilityMonitorComponent,
     CompatibilityMonitorRepoComponent,
-    CompatibilityValidateTypeComponent
+    CompatibilityValidateTypeComponent,
+    CompatibilityValidateStep1Component
   ]
 })
 

@@ -22,6 +22,7 @@ import {AdminPgModule} from './pages/adminPg/adminPg.module';
 import {RepositoryService} from "./services/repository.service";
 import {AuthenticationService} from './services/authentication.service';
 import {AuthGuardService} from './services/auth-guard.service';
+import { ValidatorService } from './services/validator.service';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {AuthGuardService} from './services/auth-guard.service';
   providers: [
 //    appRoutingProviders
     RepositoryService,
+    ValidatorService,
     AuthGuardService,
     AuthenticationService
   ],

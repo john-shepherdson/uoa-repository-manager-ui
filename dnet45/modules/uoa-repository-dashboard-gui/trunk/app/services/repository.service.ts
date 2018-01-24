@@ -11,7 +11,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Country, PiwikInfo, Repository, RepositoryInterface, Topic } from '../domain/typeScriptClasses';
+import { Country, PiwikInfo, Repository, RepositoryInterface, Timezone, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response } from '@angular/http';
 import { AuthenticationService } from './authentication.service';
@@ -59,6 +59,22 @@ export class RepositoryService {
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <RepositoryInterface[]>res.json())
+      .catch(this.handleError);
+  }
+
+  getUrlsOfUserRepos(userEmail: string): Observable<string[]>{
+    let url = `${this.apiUrl}/repository/getUrlsOfUserRepos/${userEmail}/0/100/`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <string[]>res.json())
+      .catch(this.handleError);
+  }
+
+  getTimezones(): Observable<Timezone[]>{
+    let url = `${this.apiUrl}/repository/getTimezones`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Timezone[]>res.json())
       .catch(this.handleError);
   }
 

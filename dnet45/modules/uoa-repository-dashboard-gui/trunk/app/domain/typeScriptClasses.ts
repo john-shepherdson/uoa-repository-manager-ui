@@ -293,3 +293,8 @@ export class Topic {
   size: number;
   value: string;
 }
+
+export class Timezone {
+  name: string;
+  offset: number;
+}

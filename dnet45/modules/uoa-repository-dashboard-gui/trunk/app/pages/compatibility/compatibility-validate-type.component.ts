@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CompatibilityValidateStep1Component } from './compatibility-validate-forms/compatibility-validate-step1.component';
+import { RepositoryService } from '../../services/repository.service';
+import { Repository } from '../../domain/typeScriptClasses';
+import { AuthenticationService } from '../../services/authentication.service';
+import {
+  loadingReposMessage, loadingUserRepoInfo, loadingUserRepoInfoEmpty,
+  loadingUserRepoInfoError
+} from '../../domain/shared-messages';
 
 @Component ({
   selector: 'compatibility-validate-literature',
@@ -16,11 +24,20 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   step3: string = '';
   step4: string = '';
 
-  constructor(private route: ActivatedRoute) {}
+  baseUrlList: string[] = [];
+  errorMessage: string;
+  loadingMessage: string;
+  showSpinner: boolean;
+
+  @ViewChild('step1ChooseBaseUrl') step1ChooseBaseUrl : CompatibilityValidateStep1Component;
+
+  constructor(private route: ActivatedRoute,
+              private authService: AuthenticationService,
+              private repoService: RepositoryService) {}
 
   ngOnInit() {
     this.readType();
-    this.showDatasource = true;
+    this.getBaseUrlList();
   }
 
   readType() {
@@ -30,9 +47,11 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   moveAStep(){
     if (this.showDatasource) {
-      this.showGuidelines = true;
-      this.showDatasource = false;
-      this.step2 = 'active';
+      if(this.step1ChooseBaseUrl.goToNext()) {
+        this.showGuidelines = true;
+        this.showDatasource = false;
+        this.step2 = 'active';
+      }
     } else if (this.showGuidelines) {
       this.showParameters = true;
       this.showGuidelines = false;
@@ -58,6 +77,36 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       this.showFinish = false;
       this.step4 = '';
     }
+  }
+
+  /* retrieves the baseUrl list for the registered repositories of the user */
+  getBaseUrlList(): void {
+    this.showSpinner = true;
+    this.loadingMessage = loadingUserRepoInfo;
+//    this.repoService.getUrlsOfUserRepos(this.authService.getUserEmail()) RESTORE AFTER FINISH!!
+    this.repoService.getUrlsOfUserRepos('ant.lebesis@gmail.com')
+      .subscribe(
+        repos => this.baseUrlList = repos.sort( function(a , b){
+          if(a < b ){
+            return -1;
+          } else if(a > b ){
+            return 1;
+          } else {
+            return 0;
+          }
+        }),
+        error => {
+          console.log(error);
+          this.showSpinner = false;
+          this.loadingMessage = '';
+          this.errorMessage = loadingUserRepoInfoError;
+        },
+        () => {
+          this.showSpinner = false;
+          this.loadingMessage = '';
+          this.showDatasource = true;
+        }
+      );
   }
 
 }

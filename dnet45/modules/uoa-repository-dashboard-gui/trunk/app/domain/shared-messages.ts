@@ -1,6 +1,11 @@
 
-/* Service Down Messages */
+/* Service Down Message */
 export const noServiceMessage = 'The service is not available at the moment!';
+
+/* User Info Messages */
+export const loadingUserRepoInfo = "Loading information on registered repositories";
+export const loadingUserRepoInfoError = "Failed to load information on your registered repositories";
+export const loadingUserRepoInfoEmpty = "You have not yet registered any repository";
 
 
 /* Loading Repositories Messages */
@@ -10,10 +15,18 @@ export const noRepositoriesRegistered = 'No Datasources are registered under you
 export const loadingReposMessage = 'Retrieving repositories ...';
 export const noRepositoryChosenMsg = 'You need to select a repository first!';
 
-/* Forms evaluation Messages */
+/* Loading Topics Messages */
+export const loadingTopics = 'Loading topics for your datasource';
+export const loadingTopicsError = 'Failed to load the topics for your datasource';
+
+/* Forms validation Messages */
 export const formInfoLoading = 'Loading information';
 export const formErrorRequiredFields = 'You need to fill in all the fields with (*)';
 export const formSuccessUpdatedRepo = 'The datasource was updated successfully!';
 export const formSuccessRegisteredDatasource = 'The datasource was registered successfully';
 export const formSuccessAddedInterface = 'The interface was added successfully!';
 export const formSuccessUpdatedInterface = 'The interface was updated successfully!';
+
+/* Forms validation Messages-details */
+export const didntChooseBaseUrl = 'You need to select a base URL';
+export const invalidCustomBaseUrl = 'The url you entered is not valid';

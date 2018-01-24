@@ -31,7 +31,6 @@ export class AdminPgMetricsComponent implements OnInit {
   }
 
 
-  /* NEEDS TO CALL GET PIWIK INFO INSTEAD!! */
   getPiwiks(){
     this.showSpinner = true;
     this.loadingMessage = loadingReposMessage;

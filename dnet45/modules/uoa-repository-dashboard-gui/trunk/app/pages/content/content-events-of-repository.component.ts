@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from '../../services/repository.service';
 import { Topic } from '../../domain/typeScriptClasses';
 import { ActivatedRoute } from '@angular/router';
+import { loadingTopicsError } from '../../domain/shared-messages';
 
 @Component ({
   selector: 'content-events-of-repository',
@@ -31,7 +32,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
       .subscribe(topics => this.repoTopics = topics,
         error => {
           console.log(error);
-          this.errorMessage = 'An error occured';
+          this.errorMessage = loadingTopicsError;
           this.showSpinner = false;
         },
         () => {
