@@ -38,7 +38,7 @@ export class CompatibilityValidateStep1Component implements OnInit {
     }
   }
 
-  goToNext() {
+  submitForm() {
     if ( this.group.get('selectBaseUrl').value || this.group.get('customBaseUrl').value ) {
       let response: boolean;
       if (this.group.get('customBaseUrl').value ) {

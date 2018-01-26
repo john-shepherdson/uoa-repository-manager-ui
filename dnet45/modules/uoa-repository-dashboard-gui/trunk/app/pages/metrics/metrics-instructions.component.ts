@@ -4,8 +4,8 @@
 
 import {Component, OnInit} from '@angular/core';
 import {PiwikInfo} from '../../domain/typeScriptClasses';
-import {RepositoryService} from '../../services/repository.service';
 import {ActivatedRoute} from '@angular/router';
+import { PiwikService } from '../../services/piwik.service';
 
 @Component ({
   selector: 'app-metrics-instructions',
@@ -18,7 +18,7 @@ export class MetricsInstructionsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private repoService: RepositoryService
+    private piwikService: PiwikService
   ) {}
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class MetricsInstructionsComponent implements OnInit {
 
   getPiwik(): void {
     let id = this.route.snapshot.paramMap.get('id');
-    this.repoService.getPiwikInfo(id).subscribe(
+    this.piwikService.getPiwikInfo(id).subscribe(
       piwik => this.piwik = piwik,
       error => console.log(error)
     );

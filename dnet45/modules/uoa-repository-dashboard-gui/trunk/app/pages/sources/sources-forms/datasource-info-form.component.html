@@ -33,7 +33,7 @@
   <form-inline [description]="countryDesc">
     <select formControlName="country" class="form-control">
       <option value="">-- none selected --</option>
-      <option value="{{ selectedRepo.countryCode }}">{{ selectedRepo.countryName }}</option>
+      <option *ngFor="let country of countries" value="{{country.code}}">{{ country.name }}</option>
     </select>
   </form-inline>
   <form-inline [description]="longtitudeDesc" [valid]="updateGroup.get('longtitude').valid">

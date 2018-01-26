@@ -47,7 +47,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   moveAStep(){
     if (this.showDatasource) {
-      if(this.step1ChooseBaseUrl.goToNext()) {
+      if(this.step1ChooseBaseUrl.submitForm()) {
         this.showGuidelines = true;
         this.showDatasource = false;
         this.step2 = 'active';

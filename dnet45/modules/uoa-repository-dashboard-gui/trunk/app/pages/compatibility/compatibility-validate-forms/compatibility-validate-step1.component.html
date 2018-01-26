@@ -16,8 +16,5 @@
       <span>or enter new</span>
     </label>
   </div>
-  <span *ngIf="group.get('customBaseUrl').invalid && group.get('customBaseUrl').touched && group.get('customBaseUrl').dirty"
-        class="help-block inline"
-        style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">The url is not valid</span>
-  <input id="customBaseUrl" formControlName="customBaseUrl" class="form-control" type="text" (focus)="group.get('customBaseUrl').markAsUntouched()" (blur)="group.get('customBaseUrl').updateValueAndValidity()">
+  <input id="customBaseUrl" formControlName="customBaseUrl" class="form-control" type="text">
 </div>

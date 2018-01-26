@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RepositoryService } from '../../services/repository.service';
+import { PiwikService } from '../../services/piwik.service';
 import { PiwikInfo } from '../../domain/typeScriptClasses';
-import { AuthenticationService } from '../../services/authentication.service';
 import { loadingReposMessage, reposRetrievalError } from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 
@@ -23,7 +22,7 @@ export class AdminPgMetricsComponent implements OnInit {
   @ViewChild('confirmApprovalModal')
   public confirmApprovalModal: ConfirmationDialogComponent;
 
-  constructor(private repoService: RepositoryService) {}
+  constructor(private piwikService: PiwikService) {}
 
   ngOnInit() {
     this.getPiwiks();
@@ -34,7 +33,7 @@ export class AdminPgMetricsComponent implements OnInit {
   getPiwiks(){
     this.showSpinner = true;
     this.loadingMessage = loadingReposMessage;
-    this.repoService.getPiwikSitesForRepos()
+    this.piwikService.getPiwikSitesForRepos()
       .subscribe(
         piwiks => this.piwiks = piwiks.sort( function(a,b){
           if(a.repositoryName<b.repositoryName){

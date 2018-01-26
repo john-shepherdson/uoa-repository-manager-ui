@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { MyGroup } from '../../../shared/reusablecomponents/forms/my-group.interface';
 import { Validators } from '@angular/forms';
-import { formErrorRequiredFields, formSuccessAddedInterface } from '../../../domain/shared-messages';
+import {
+  formErrorRequiredFields, formSuccessAddedInterface,
+  invalidCustomBaseUrl
+} from '../../../domain/shared-messages';
+import { ValidatorService } from '../../../services/validator.service';
 
 @Component ({
   selector: 'datasource-interface-form',
@@ -21,6 +25,9 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
     compatibilityLevel: ['', Validators.required],
   };
 
+  constructor(injector: Injector, private valService: ValidatorService){
+    super(injector);
+  }
 
   ngOnInit(){
 
@@ -62,8 +69,18 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
 
   saveInterface() {
     if(this.group.valid) {
-      this.successMessage = formSuccessAddedInterface;
-      this.errorMessage = '';
+      let response: boolean;
+      this.valService.identifyRepository(this.group.get('baseUrl').value).subscribe(
+        res => response = res,
+        error => console.log(error)
+      );
+      if ( response ) {
+        this.successMessage = formSuccessAddedInterface;
+        this.errorMessage = '';
+      } else {
+        this.errorMessage = invalidCustomBaseUrl;
+        this.successMessage = '';
+      }
     } else {
       this.errorMessage = formErrorRequiredFields;
       this.successMessage = '';

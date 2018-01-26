@@ -11,10 +11,9 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Country, PiwikInfo, Repository, RepositoryInterface, Timezone, Topic } from '../domain/typeScriptClasses';
+import { Country, Repository, RepositoryInterface, Timezone, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response } from '@angular/http';
-import { AuthenticationService } from './authentication.service';
 
 const httpOptions = {
   headers: new HttpHeaders().set('Content-Type', 'application/json')
@@ -78,14 +77,6 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  getPiwikInfo(id: string): Observable<PiwikInfo> {
-    let url = `${this.apiUrl}/piwik/getPiwikSiteForRepo/${id}`;
-    console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( piwik => <PiwikInfo>piwik.json() )
-      .catch(this.handleError);
-  }
-
   getTopicsForDataSource(name: string): Observable<Topic[]> {
     let url = `${this.apiUrl}/broker/getTopicsForDatasource/${name}`;
     console.log(`knocking on: ${url}`);
@@ -99,14 +90,6 @@ export class RepositoryService {
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Country[]>res.json())
-      .catch(this.handleError);
-  }
-
-  getPiwikSitesForRepos(): Observable<PiwikInfo[]> {
-    let url = `${this.apiUrl}/piwik/getPiwikSitesForRepos`;
-    console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <PiwikInfo[]>res.json())
       .catch(this.handleError);
   }
 
