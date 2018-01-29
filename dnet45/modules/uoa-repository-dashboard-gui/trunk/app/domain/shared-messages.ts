@@ -22,6 +22,7 @@ export const loadingTopicsError = 'Failed to load the topics for your datasource
 /* Forms validation Messages */
 export const formInfoLoading = 'Loading information';
 export const formErrorRequiredFields = 'You need to fill in all the fields with (*)';
+export const formErrorInvalidFields = 'There are invalid fields';
 export const formSuccessUpdatedRepo = 'The datasource was updated successfully!';
 export const formSuccessRegisteredDatasource = 'The datasource was registered successfully';
 export const formSuccessAddedInterface = 'The interface was added successfully!';

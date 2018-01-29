@@ -39,34 +39,32 @@ export class CompatibilityValidateStep1Component implements OnInit {
   }
 
   submitForm() {
-    if ( this.group.get('selectBaseUrl').value || this.group.get('customBaseUrl').value ) {
-      let response: boolean;
-      if (this.group.get('customBaseUrl').value ) {
-        this.valService.identifyRepository(this.group.get('customBaseUrl').value).subscribe(
-          res => response = res,
-          error => console.log(error)
-        );
-        if ( response ) {
-          this.chosenUrl = this.group.get('customBaseUrl').value;
-          console.log('added new baseUrl!');
-          return true;
-        } else {
-          if (this.group.get('selectBaseUrl').value) {
-            this.chosenUrl = this.group.get('selectBaseUrl').value;
-            return true;
-          } else {
-            this.errorMessage = invalidCustomBaseUrl;
-          }
-        }
-      } else {
+    let response: boolean;
+    if (this.group.get('selectBaseUrl').enabled){
+      if ( this.group.get('selectBaseUrl').value) {
         this.chosenUrl = this.group.get('selectBaseUrl').value;
         console.log('selected baseUrl!');
-        return true;
+      } else {
+        this.errorMessage = didntChooseBaseUrl;
       }
-    } else {
-      console.log('something went wrong');
-      this.errorMessage = didntChooseBaseUrl;
+    } else if (this.group.get('customBaseUrl').enabled) {
+      if ( this.group.get('customBaseUrl').value ) {
+        console.log(`looking for ${this.group.get('customBaseUrl').value}`);
+        this.valService.identifyRepository(this.group.get('customBaseUrl').value).subscribe(
+          res => response = res,
+          error =>  console.log(error),
+          () => {
+            if ( response ) {
+              this.chosenUrl = this.group.get('customBaseUrl').value;
+              console.log('added new baseUrl!');
+            } else {
+              this.errorMessage = invalidCustomBaseUrl;
+            }
+          }
+        );
+      } else {
+        this.errorMessage = didntChooseBaseUrl;
+      }
     }
-    return false;
   }
 }

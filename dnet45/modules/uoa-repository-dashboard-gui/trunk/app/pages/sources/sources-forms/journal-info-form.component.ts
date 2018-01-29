@@ -3,7 +3,10 @@
 */
 
 import { Component, OnInit } from '@angular/core';
-import { formErrorRequiredFields, formSuccessRegisteredDatasource, noServiceMessage } from '../../../domain/shared-messages';
+import {
+  formErrorInvalidFields, formErrorRequiredFields, formSuccessRegisteredDatasource,
+  noServiceMessage
+} from '../../../domain/shared-messages';
 import { RepositoryService } from "../../../services/repository.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, Repository } from '../../../domain/typeScriptClasses';
@@ -29,6 +32,7 @@ import {
   journalTypeDesc,
   adminEmailDesc
 } from '../../../domain/oa-description';
+import { ValidatorService } from '../../../services/validator.service';
 
 @Component ({
   selector: 'journal-info-form',
@@ -85,7 +89,8 @@ export class JournalInfoFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private repoService: RepositoryService
+    private repoService: RepositoryService,
+    private valService: ValidatorService
   ) {}
 
   ngOnInit() {
@@ -113,12 +118,20 @@ export class JournalInfoFormComponent implements OnInit {
 
   registerDatasource(): boolean {
     if(this.group.valid){
-      this.successMessage = formSuccessRegisteredDatasource;
-      this.errorMessage = '';
-      return true;
+      let response: boolean;
+      this.valService.identifyRepository(this.group.get('websiteUrl').value).subscribe(
+        res => response = res,
+        error => console.log(error)
+      );
+      if (response) {
+        this.successMessage = formSuccessRegisteredDatasource;
+        this.errorMessage = '';
+        return true;
+      } else {
+        this.errorMessage = formErrorInvalidFields;
+      }
     } else {
       this.errorMessage = formErrorRequiredFields;
-      this.successMessage = '';
       return false;
     }
   }

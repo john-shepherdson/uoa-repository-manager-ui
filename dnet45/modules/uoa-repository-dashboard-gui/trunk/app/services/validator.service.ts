@@ -25,10 +25,10 @@ export class ValidatorService {
 
   /* returns true if there is a repository containing the identifier */
   identifyRepository(identifier: string): Observable<boolean> {
-    let url = `${this.apiUrl}/validator/identifyRepository/${identifier}`;
+    let url = `${this.apiUrl}/validator/identifyRepository/{url}?url=${identifier}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
-      .map(res => console.log(res))
+      .map(res => <boolean>res.json())
       .catch(this.handleError);
   }
 

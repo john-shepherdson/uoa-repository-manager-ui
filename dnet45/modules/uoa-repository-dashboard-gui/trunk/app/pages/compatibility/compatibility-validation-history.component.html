@@ -20,8 +20,7 @@
           </div>
         </div>
         <div class="uk-margin-bottom uk-width-1-1 filters">
-          <div class="links uk-inline"></div>
-          <div class="show-options uk-inline" style="float: left;">
+          <div class="links uk-inline">
             <div class="filterLabel" style="display: inline;">Filter validation jobs:</div>
             <a class="active" href="#">All jobs (0)</a>
             <a href="#">successfull (0)</a>
@@ -31,8 +30,8 @@
           <div class="show-options uk-inline" style="float: right;">
             <div class="filterLabel" style="display: inline;">Jobs per page:</div>
             <div class="inlineBlock">
-              <select class="form-control">
-                <option value="10">10</option>
+              <select #itemsPerPage class="form-control" (change)="getItemsPerPage(itemsPerPage.value)">
+                <option value="10" selected>10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
@@ -45,17 +44,17 @@
         <div>
           <ul class="uk-pagination">
             <li class="uk-disabled">
-              <a class="disabled" href="#" disabled="">
-                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+              <a class="disabled" href="#" >
+                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous>
                   <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
                 </span>
                 Previous
               </a>
             </li>
             <li class="uk-margin-auto-left uk-disabled">
-              <a class="disabled" href="#" disabled="">
+              <a class="disabled" href="#" >
                 Next
-                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next>
                   <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
                 </span>
               </a>
@@ -66,30 +65,30 @@
         <div>
           <div>
             <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-top uk-margin-bottom">
-              <table class="uk-table uk-table-middle jobs-list">
+              <table class="uk-table uk-table-stripped uk-table-middle jobs-list">
                 <thead>
                 <tr>
+                  <th>Repository</th>
                   <th>Validation Type</th>
                   <th>Status</th>
                   <th>Score</th>
                   <th>Started</th>
-                  <th>Repository</th>
                   <th>Guidelines</th>
                   <th>Actions</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="el-item odd">
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-table-shrink"></td>
-                  <td class="uk-table-shrink"></td>
-                </tr>
+                  <tr *ngFor="let job of jobsOfUser">
+                    <td>{{ job.repository }}</td>
+                    <td>{{ job.validation[0].type }}<br>{{ job.validation[1].type }}</td>
+                    <td>{{ job.validation[0].status }}<br>{{ job.validation[1].status }}</td>
+                    <td>{{ job.validation[0].score }}<br>{{ job.validation[1].score }}</td>
+                    <td>{{ job.started }}</td>
+                    <td>{{ job.guidelines }}</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -98,15 +97,15 @@
         <div>
           <ul class="uk-pagination">
             <li class="uk-disabled">
-              <a class="disabled" href="#" disabled="">
-                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+              <a class="disabled" href="#" >
+                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous>
                   <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
                 </span>
                 Previous
               </a>
             </li>
             <li class="uk-margin-auto-left uk-disabled">
-              <a class="disabled" href="#" disabled="">
+              <a class="disabled" href="#" >
                 Next
                 <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
                   <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
