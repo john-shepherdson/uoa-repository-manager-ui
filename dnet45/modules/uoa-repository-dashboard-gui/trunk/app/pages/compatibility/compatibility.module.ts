@@ -1,6 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TabsModule} from "ngx-bootstrap";
+import { ReactiveFormsModule } from '@angular/forms';
 import {CompatibilityComponent} from "./compatibility.component";
 import {CompatibilityValidateComponent} from "./compatibility-validate.component";
 import {CompatibilityRouting} from "./compatibility.routing";
@@ -10,7 +11,7 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
 import { CompatibilityMonitorRepoComponent } from './compatibility-monitor-repo.component';
 import { CompatibilityValidateTypeComponent } from './compatibility-validate-type.component';
 import { CompatibilityValidateStep1Component } from './compatibility-validate-forms/compatibility-validate-step1.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CompatibilityValidateStep2Component } from './compatibility-validate-forms/compatibility-validate-step2.component';
 
 @NgModule ({
   imports: [
@@ -27,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CompatibilityMonitorComponent,
     CompatibilityMonitorRepoComponent,
     CompatibilityValidateTypeComponent,
-    CompatibilityValidateStep1Component
+    CompatibilityValidateStep1Component,
+    CompatibilityValidateStep2Component
   ]
 })
 

@@ -1,0 +1,26 @@
+<div *ngIf="ruleSets" class="form-group">
+  <div *ngFor="let set of ruleSets; let set_index = index">
+    <label class="btn btn-link" for="ruleSet{{ set_index }}">
+      <input id="ruleSet{{ set_index }}" #ruleSet value="{{ set.id }}" name="ruleSet" type="radio" (change)="getCurrentRuleSets(set_index)" [checked]="set_index === 0">
+      <span>{{ set.name }}</span>
+    </label>
+  </div>
+  <div class="uk-grid">
+    <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column">
+      <div *ngFor="let content of currentContentRules; let content_index = index" class="margin10">
+        <label class="btn btn-link" for="rule{{ content.id }}">
+          <input id="rule{{ content.id }}" value="{{ content.id }}" name="contentRules_{{content_index}}" type="checkbox" (change)="toggleChooseContentRule($event, content_index)" checked>
+          <span>{{ content.name }}</span>
+        </label>
+      </div>
+    </div>
+    <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column">
+      <div *ngFor="let usage of currentUsageRules; let usage_index = index" class="margin10">
+        <label class="btn btn-link" for="rule{{ usage_index }}">
+          <input id="rule{{ usage_index }}" value="{{ usage.id }}" name="usageRules_{{usage_index}}" type="checkbox" (change)="toggleChooseUsageRule(usage_index)" [checked]="true">
+          <span>{{ usage.name }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

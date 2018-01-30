@@ -298,3 +298,35 @@ export class Timezone {
   name: string;
   offset: number;
 }
+
+
+export class RuleSet {
+  contentRules: Rule[];
+  contentRulesIds: number[];
+  description: string;
+  guidelinesAcronym: string;
+  id: number;
+  name: string;
+  shortName: string;
+  usageRules: Rule[];
+  usageRulesIds: number[];
+  visibility: string[];
+}
+
+export class CustomProperties {
+  properties: RuleSet[];
+}
+
+export class Rule {
+    configuration: CustomProperties;
+    description: string;
+    entity_type: string;
+    for_cris: boolean;
+    id: number;
+    job_type: string;
+    mandatory: boolean;
+    name: string;
+    provider_information: string;
+    type: string;
+    weight: number;
+}

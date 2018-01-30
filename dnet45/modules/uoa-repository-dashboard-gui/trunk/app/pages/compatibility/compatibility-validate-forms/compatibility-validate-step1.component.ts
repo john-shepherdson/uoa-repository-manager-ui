@@ -13,8 +13,8 @@ export class CompatibilityValidateStep1Component implements OnInit {
   errorMessage: string;
 
   chosenUrl: string;
+  identifiedUrl: boolean;
 
-  @Input() type: string;
   @Input() baseUrlList: string[];
 
   constructor(private fb: FormBuilder,
@@ -38,32 +38,41 @@ export class CompatibilityValidateStep1Component implements OnInit {
     }
   }
 
+
+  identifyUrl() {
+    if (this.group.get('customBaseUrl').value) {
+      console.log(`looking for ${this.group.get('customBaseUrl').value}`);
+      this.valService.identifyRepository(this.group.get('customBaseUrl').value).subscribe(
+        res => this.identifiedUrl = res,
+        error =>  console.log(error)
+      );
+    }
+  }
+
   submitForm() {
     let response: boolean;
     if (this.group.get('selectBaseUrl').enabled){
       if ( this.group.get('selectBaseUrl').value) {
         this.chosenUrl = this.group.get('selectBaseUrl').value;
         console.log('selected baseUrl!');
+        return true;
       } else {
         this.errorMessage = didntChooseBaseUrl;
+        return false;
       }
     } else if (this.group.get('customBaseUrl').enabled) {
       if ( this.group.get('customBaseUrl').value ) {
-        console.log(`looking for ${this.group.get('customBaseUrl').value}`);
-        this.valService.identifyRepository(this.group.get('customBaseUrl').value).subscribe(
-          res => response = res,
-          error =>  console.log(error),
-          () => {
-            if ( response ) {
-              this.chosenUrl = this.group.get('customBaseUrl').value;
-              console.log('added new baseUrl!');
-            } else {
-              this.errorMessage = invalidCustomBaseUrl;
-            }
-          }
-        );
+        if (this.identifiedUrl) {
+          this.chosenUrl = this.group.get('customBaseUrl').value;
+          console.log('added new baseUrl!');
+          return true;
+        } else {
+          this.errorMessage = invalidCustomBaseUrl;
+          return false;
+        }
       } else {
         this.errorMessage = didntChooseBaseUrl;
+        return false;
       }
     }
   }

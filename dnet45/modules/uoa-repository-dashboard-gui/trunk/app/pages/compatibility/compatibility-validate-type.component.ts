@@ -2,12 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompatibilityValidateStep1Component } from './compatibility-validate-forms/compatibility-validate-step1.component';
 import { RepositoryService } from '../../services/repository.service';
-import { Repository } from '../../domain/typeScriptClasses';
+import { Repository, RuleSet } from '../../domain/typeScriptClasses';
 import { AuthenticationService } from '../../services/authentication.service';
 import {
-  loadingReposMessage, loadingUserRepoInfo, loadingUserRepoInfoEmpty,
-  loadingUserRepoInfoError
+  loadingReposMessage, loadingRuleSets, loadingRuleSetsError, loadingUserRepoInfo, loadingUserRepoInfoEmpty,
+  loadingUserRepoInfoError, noRuleSets
 } from '../../domain/shared-messages';
+import { ValidatorService } from '../../services/validator.service';
+import { CompatibilityValidateStep2Component } from './compatibility-validate-forms/compatibility-validate-step2.component';
 
 @Component ({
   selector: 'compatibility-validate-literature',
@@ -16,24 +18,30 @@ import {
 
 export class CompatibilityValidateTypeComponent implements OnInit {
   type: string = '';
+
   showDatasource: boolean;
   showGuidelines: boolean;
   showParameters: boolean;
   showFinish: boolean;
+
   step2: string = '';
   step3: string = '';
   step4: string = '';
 
   baseUrlList: string[] = [];
+  ruleSets: RuleSet[] = [];
+
   errorMessage: string;
   loadingMessage: string;
   showSpinner: boolean;
 
   @ViewChild('step1ChooseBaseUrl') step1ChooseBaseUrl : CompatibilityValidateStep1Component;
+  @ViewChild('step2ChooseGuidelines') step2ChooseGuidelines : CompatibilityValidateStep2Component;
 
   constructor(private route: ActivatedRoute,
               private authService: AuthenticationService,
-              private repoService: RepositoryService) {}
+              private repoService: RepositoryService,
+              private valService: ValidatorService) {}
 
   ngOnInit() {
     this.readType();
@@ -47,11 +55,8 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   moveAStep(){
     if (this.showDatasource) {
-      this.step1ChooseBaseUrl.submitForm();
-      if (this.step1ChooseBaseUrl.chosenUrl) {
-        this.showGuidelines = true;
-        this.showDatasource = false;
-        this.step2 = 'active';
+      if (this.step1ChooseBaseUrl.submitForm()) {
+        this.getRuleSetsForType();
       }
     } else if (this.showGuidelines) {
       this.showParameters = true;
@@ -64,7 +69,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
     }
   }
 
-  moveBackAStep(){
+  moveBackAStep () {
     if (this.showGuidelines) {
       this.showDatasource = true;
       this.showGuidelines = false;
@@ -110,4 +115,28 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       );
   }
 
+  getRuleSetsForType() {
+    this.showSpinner = true;
+    this.loadingMessage = loadingRuleSets;
+    this.valService.getRuleSets(this.type)
+      .subscribe(
+        rules => this.ruleSets = rules,
+        error => {
+          this.showSpinner = false;
+          this.loadingMessage = '';
+          this.errorMessage = loadingRuleSetsError;
+        },
+        () => {
+          this.showSpinner = false;
+          this.loadingMessage = '';
+          this.showDatasource = false;
+          this.step2 = 'active';
+          if (this.ruleSets.length) {
+            this.showGuidelines = true;
+          } else {
+            this.errorMessage = noRuleSets;
+          }
+        }
+      );
+  }
 }

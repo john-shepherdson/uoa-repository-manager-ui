@@ -10,6 +10,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { RuleSet } from '../domain/typeScriptClasses';
 
 const httpOptions = {
   headers: new HttpHeaders().set('Content-Type', 'application/json')
@@ -23,6 +24,16 @@ export class ValidatorService {
 
   constructor(private http: Http) { }
 
+  /* returns array of sets of rules according to mode (literature, data, cris) */
+  getRuleSets(mode: string): Observable<RuleSet[]> {
+    let url = `${this.apiUrl}/validator/getRuleSets/${mode}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map(res => <RuleSet[]>res.json())
+      .catch(this.handleError);
+  }
+
+
   /* returns true if there is a repository containing the identifier */
   identifyRepository(identifier: string): Observable<boolean> {
     let url = `${this.apiUrl}/validator/identifyRepository/{url}?url=${identifier}`;
@@ -31,6 +42,7 @@ export class ValidatorService {
       .map(res => <boolean>res.json())
       .catch(this.handleError);
   }
+
 
   /* from omtd project */
   private handleError(error: Response | any) {

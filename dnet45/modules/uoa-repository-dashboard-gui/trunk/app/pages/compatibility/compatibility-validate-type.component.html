@@ -42,13 +42,12 @@
             </div>
             <div *ngIf="showDatasource">
               <compatibility-validate-step1 #step1ChooseBaseUrl
-                                            [type]="type"
                                             [baseUrlList]="baseUrlList"></compatibility-validate-step1>
             </div>
             <div *ngIf="showGuidelines">
-              <div>
-                Select Guidlines
-              </div>
+              <compatibility-validate-step2 #step2ChooseGuidelines
+                                            [ruleSets]="ruleSets">
+              </compatibility-validate-step2>
             </div>
             <div *ngIf="showParameters">
               <div>
