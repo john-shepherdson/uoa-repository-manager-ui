@@ -1,5 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { formErrorRequiredFields, formInfoLoading, formSuccessUpdatedRepo } from '../../../domain/shared-messages';
+import {
+  formErrorRequiredFields,
+  formErrorWasntSaved,
+  formInfoLoading,
+  formSuccessUpdatedRepo,
+  noServiceMessage
+} from '../../../domain/shared-messages';
 import { RepositoryService } from "../../../services/repository.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, Repository } from '../../../domain/typeScriptClasses';
@@ -36,11 +42,17 @@ export class DatasourceInfoFormComponent implements OnInit {
   loadingMessage: string;
   sourceTitle: string;
   sourceLinkToRepo: string;
+
   typologies = typologies;
   timezones = timezones;
   countries: Country[] = [];
+  datasourceClasses: Map<string,string> = new Map<string,string>();
+  classCodes: string[] = [];
 
   selectedRepo: Repository;
+  id: string;
+  source: string;
+
 
   @Input() datasourceId: string;
 
@@ -109,7 +121,7 @@ export class DatasourceInfoFormComponent implements OnInit {
               englishName: this.selectedRepo.englishName,
               logoUrl: this.selectedRepo.logoUrl,
               timezone: this.selectedRepo.timezone,
-              datasourceType: this.selectedRepo.datasourceType,
+              datasourceType: this.selectedRepo.datasourceClass,
               adminEmail: this.selectedRepo.contactEmail
             });
           }
@@ -124,28 +136,28 @@ export class DatasourceInfoFormComponent implements OnInit {
           this.updateGroup.get('institutionName').disable();
 
           this.setUpSourceInfo();
+          this.getDatasourceClasses();
         },
         error => console.log(error),
         () => {
           this.showSpinner = false;
+          this.getCountries();
         }
       );
     }
   }
 
   setUpSourceInfo() {
-    let id: string;
-    let source: string;
-    id = this.selectedRepo.id.split("::").pop();
-    source = this.selectedRepo.id.split("_")[0];
-    console.log(source);
+    this.id = this.selectedRepo.id.split("::").pop();
+    this.source = this.selectedRepo.id.split("_")[0];
+    console.log(this.source);
 
-    if(source == 'opendoar') {
+    if(this.source == 'opendoar') {
       this.sourceTitle = 'OpenDOAR';
-      this.sourceLinkToRepo = `http://www.opendoar.org/suggest.php?rID=${id}`;
-    } else if(source == 're3data') {
+      this.sourceLinkToRepo = `http://www.opendoar.org/suggest.php?rID=${this.id}`;
+    } else if(this.source == 're3data') {
       this.sourceTitle = 'Re3data';
-      this.sourceLinkToRepo = `http://service.re3data.org/repository/${id}`;
+      this.sourceLinkToRepo = `http://service.re3data.org/repository/${this.id}`;
     }
   }
 
@@ -158,14 +170,69 @@ export class DatasourceInfoFormComponent implements OnInit {
 
   updateRepo(): boolean {
     if(this.updateGroup.valid){
-      this.successMessage = formSuccessUpdatedRepo;
-      this.errorMessage = '';
-      return true;
+/*
+        if (!this.updateEnglishName()) {
+          return false;
+        }
+*/
+        this.successMessage = formSuccessUpdatedRepo;
+        this.errorMessage = '';
+        return true;
     } else {
       this.errorMessage = formErrorRequiredFields;
       this.successMessage = '';
       return false;
     }
+  }
+
+  getCountries(){
+    this.repoService.getCountries()
+      .subscribe(
+        countries => this.countries = countries.sort( function(a,b){
+          if(a.name<b.name){
+            return -1;
+          } else if(a.name>b.name){
+            return 1;
+          } else {
+            return 0;
+          }
+        } ),
+        error => {
+          this.errorMessage = noServiceMessage;
+          console.log(error);
+        });
+  }
+
+  getDatasourceClasses() {
+    this.repoService.getDatasourceClasses(this.source).subscribe(
+      classes => this.datasourceClasses = classes,
+      error => {
+        this.errorMessage = noServiceMessage;
+        console.log(error);
+      },
+      () => {
+        for (let key in this.datasourceClasses){
+          this.classCodes.push(key);
+/*          console.log(`${key} -> ${this.datasourceClasses[key]}`);*/
+        }
+      }
+    );
+  }
+
+  updateEnglishName(){
+    let status: boolean;
+    this.repoService.updateEnglishName(this.selectedRepo.id,this.updateGroup.get('englishName').value).subscribe(
+      response => {
+        console.log(response);
+        status = true;
+      },
+      error => {
+        console.log(error);
+        this.errorMessage = formErrorWasntSaved;
+        status = false;
+      }
+    );
+    return status;
   }
 
 }

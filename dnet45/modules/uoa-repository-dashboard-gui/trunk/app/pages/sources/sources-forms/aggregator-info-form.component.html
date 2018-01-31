@@ -64,10 +64,7 @@
   <form-inline [description]="aggregatorTypeDesc" [valid]="group.get('aggregatorType').valid">
     <select formControlName="aggregatorType" class="form-control">
       <option value="">-- none selected --</option>
-      <option value="aggregator::pubsrepository::institutional">Institutional Repository Aggregator</option>
-      <option value="aggregator::pubsrepository::journals">Journal Aggregator/Publisher</option>
-      <option value="aggregator::datarepository">Data Repository Aggregator</option>
-      <option value="aggregator::pubsrepository::unknown">Publication Repository Aggregator</option>
+      <option *ngFor="let key of classCodes" value="{{key}}">{{ aggregatorClasses[key] }}</option>
     </select>
 
   </form-inline>

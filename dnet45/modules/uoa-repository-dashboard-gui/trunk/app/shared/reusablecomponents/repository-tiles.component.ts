@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Repository } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { loadingReposMessage, noRepositoriesRegistered, reposRetrievalError } from '../../domain/shared-messages';
+import { loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError } from '../../domain/shared-messages';
 
 @Component ({
   selector: 'repository-tiles',
@@ -50,7 +50,7 @@ export class RepositoryTilesComponent implements OnInit {
           this.showSpinner = false;
           this.loadingMessage = '';
           if (!this.reposOfUser.length) {
-            this.errorMessage = noRepositoriesRegistered;
+            this.errorMessage = loadingUserRepoInfoEmpty;
           }
         }
       );

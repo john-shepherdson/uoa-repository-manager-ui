@@ -5,11 +5,12 @@ import { RepositoryService } from '../../services/repository.service';
 import { Repository, RuleSet } from '../../domain/typeScriptClasses';
 import { AuthenticationService } from '../../services/authentication.service';
 import {
-  loadingReposMessage, loadingRuleSets, loadingRuleSetsError, loadingUserRepoInfo, loadingUserRepoInfoEmpty,
-  loadingUserRepoInfoError, noRuleSets
+  loadingReposMessage, loadingRuleSets, loadingRuleSetsError,
+  loadingUserRepoInfoError, loadingValSets, loadingValSetsError, noRuleSets
 } from '../../domain/shared-messages';
 import { ValidatorService } from '../../services/validator.service';
 import { CompatibilityValidateStep2Component } from './compatibility-validate-forms/compatibility-validate-step2.component';
+import { CompatibilityValidateStep3Component } from './compatibility-validate-forms/compatibility-validate-step3.component';
 
 @Component ({
   selector: 'compatibility-validate-literature',
@@ -29,7 +30,9 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   step4: string = '';
 
   baseUrlList: string[] = [];
+  chosenUrl: string;
   ruleSets: RuleSet[] = [];
+  valSets: string[] = [];
 
   errorMessage: string;
   loadingMessage: string;
@@ -37,6 +40,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   @ViewChild('step1ChooseBaseUrl') step1ChooseBaseUrl : CompatibilityValidateStep1Component;
   @ViewChild('step2ChooseGuidelines') step2ChooseGuidelines : CompatibilityValidateStep2Component;
+  @ViewChild('step3ChooseParameters') step3ChooseParameters : CompatibilityValidateStep3Component;
 
   constructor(private route: ActivatedRoute,
               private authService: AuthenticationService,
@@ -56,9 +60,11 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   moveAStep(){
     if (this.showDatasource) {
       if (this.step1ChooseBaseUrl.submitForm()) {
+        this.chosenUrl = this.step1ChooseBaseUrl.chosenUrl;
         this.getRuleSetsForType();
       }
     } else if (this.showGuidelines) {
+      this.getValidationSets();
       this.showParameters = true;
       this.showGuidelines = false;
       this.step3 = 'active';
@@ -88,7 +94,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   /* retrieves the baseUrl list for the registered repositories of the user */
   getBaseUrlList(): void {
     this.showSpinner = true;
-    this.loadingMessage = loadingUserRepoInfo;
+    this.loadingMessage = loadingReposMessage;
 //    this.repoService.getUrlsOfUserRepos(this.authService.getUserEmail()) RESTORE AFTER FINISH!!
     this.repoService.getUrlsOfUserRepos('ant.lebesis@gmail.com')
       .subscribe(
@@ -136,6 +142,27 @@ export class CompatibilityValidateTypeComponent implements OnInit {
           } else {
             this.errorMessage = noRuleSets;
           }
+        }
+      );
+  }
+
+  getValidationSets() {
+    this.showGuidelines = false;
+    this.showSpinner = true;
+    this.loadingMessage = loadingValSets;
+    this.valService.getSetsOfRepository(this.chosenUrl)
+      .subscribe(
+        sets => this.valSets = sets,
+        error => {
+          this.showSpinner = false;
+          this.loadingMessage = '';
+          this.errorMessage = loadingValSetsError
+        },
+        () => {
+          this.showSpinner = false;
+          this.loadingMessage = '';
+          this.step2 = 'active';
+          this.showParameters = true;
         }
       );
   }

@@ -74,7 +74,7 @@
   <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">
     <select formControlName="datasourceType" class="form-control">
       <option value="">-- none selected --</option>
-      <option value="{{ selectedRepo.datasourceType }}">{{ selectedRepo.datasourceType }}</option>
+      <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
     </select>
   </form-inline>
   <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"

@@ -35,9 +35,14 @@ import {
 export class AggregatorInfoFormComponent implements OnInit {
   errorMessage: string;
   successMessage: string;
+  showSpinner: boolean;
+  loadingMessage: string;
+
   typologies = typologies;
   timezones = timezones;
   countries: Country[] = [];
+  datasourceClasses: Map<string,string> = new Map<string,string>();
+  classCodes: string[] = [];
 
   newDatasource: Repository;
 
@@ -81,8 +86,13 @@ export class AggregatorInfoFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadForm();
+  }
+
+  loadForm(){
     this.group = this.fb.group(this.groupDefinition);
     this.getCountries();
+    this.getDatasourceClasses();
   }
 
   getCountries(){
@@ -103,6 +113,21 @@ export class AggregatorInfoFormComponent implements OnInit {
         });
   }
 
+  getDatasourceClasses() {
+    this.repoService.getDatasourceClasses('aggregator').subscribe(
+      classes => this.datasourceClasses = classes,
+      error => {
+        this.errorMessage = noServiceMessage;
+        console.log(error);
+      },
+      () => {
+        for (let key in this.datasourceClasses){
+          this.classCodes.push(key);
+        }
+      }
+    );
+  }
+
   registerDatasource(): boolean {
     if(this.group.valid){
       this.successMessage = formSuccessRegisteredDatasource;
@@ -114,5 +139,4 @@ export class AggregatorInfoFormComponent implements OnInit {
       return false;
     }
   }
-
 }

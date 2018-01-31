@@ -1,9 +1,14 @@
 <div class="uk-grid uk-grid-stack">
-  <div class="uk-width-expand@m uk-first-column">
+  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+  <div style="text-align: center; margin-top: 100px;" *ngIf="showSpinner">
+    <span>{{ loadingMessage }}</span><br>
+    <img src="/assets/imgs/loader-big.gif">
+  </div>
+  <div *ngIf="repo" class="uk-width-expand@m uk-first-column">
     <div class="gwt-HTML uk-margin-medium-bottom">
-      <h1 class="uk-article-title">Aggregation history for {{ repoId }}</h1>
+      <h1 class="uk-article-title">Aggregation history for {{ repo.officialName }}</h1>
     </div>
-    <div class="">
+    <div>
       <div class="uk-alert uk-alert-danger" style="display: none;" aria-hidden="true"></div>
       <div>There is no aggregation history for this repository at the moment</div>
     </div>

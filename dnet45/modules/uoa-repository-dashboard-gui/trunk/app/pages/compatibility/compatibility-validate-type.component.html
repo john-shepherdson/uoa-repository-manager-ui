@@ -50,15 +50,15 @@
               </compatibility-validate-step2>
             </div>
             <div *ngIf="showParameters">
-              <div>
-                Select Parameters
-              </div>
+              <compatibility-validate-step3 #step3ChooseParameters
+                                            [valSets]="valSets">
+              </compatibility-validate-step3>
             </div>
             <div *ngIf="showFinish">
               <div>
                 <div class="success">
                   <i class="fa fa-check-circle" style=""></i>
-                  <h3>Validation has begun successfully!</h3>
+                  <h3>Validation has begun</h3>
                 </div>
                 <div class="uk-alert uk-alert-primary marginTop20 textAlignCenter">
                   You will be notified by email with the results of the compatibility test.
@@ -105,7 +105,20 @@
         </p>
       </div>
     </div>
-    <div *ngIf="showParameters">parameters</div>
+    <div *ngIf="showParameters">
+      <div class="uk-card uk-card-body uk-card-default sidemenu">
+        <h3 class="el-title uk-h3 uk-heading-bullet">Select parameters</h3>
+        <p class="small">
+          You may define an upper limit on the # of records tested. This is highly recommended for first time users, or when re-checking after the implementation of automated changes.
+        </p>
+        <p class="small">
+          Select one of the repository's/journal's exposed sets.
+        </p>
+        <p class="small">
+          You may also group your results by a specific field. This is quite useful when validating an aggregator and you know in advance which is the field that distinguished among data sources.
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 

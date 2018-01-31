@@ -82,8 +82,7 @@
   <form-inline [description]="journalTypeDesc" [valid]="group.get('journalType').valid">
     <select formControlName="journalType" class="form-control">
       <option value="">-- none selected --</option>
-      <option value="Journal">Journal</option>
-      <option value="Journal Aggregator/Publisher">Journal Aggregator/Publisher</option>
+      <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
     </select>
 
   </form-inline>

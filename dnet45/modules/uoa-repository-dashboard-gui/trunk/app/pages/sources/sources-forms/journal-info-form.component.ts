@@ -42,9 +42,14 @@ import { ValidatorService } from '../../../services/validator.service';
 export class JournalInfoFormComponent implements OnInit {
   errorMessage: string;
   successMessage: string;
+  showSpinner: boolean;
+  loadingMessage: string;
+
   typologies = typologies;
   timezones = timezones;
   countries: Country[] = [];
+  datasourceClasses: Map<string,string> = new Map<string,string>();
+  classCodes: string[] = [];
 
   newDatasource: Repository;
 
@@ -89,13 +94,17 @@ export class JournalInfoFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private repoService: RepositoryService,
-    private valService: ValidatorService
+    private repoService: RepositoryService
   ) {}
 
   ngOnInit() {
+    this.loadForm();
+  }
+
+  loadForm(){
     this.group = this.fb.group(this.groupDefinition);
     this.getCountries();
+    this.getDatasourceClasses();
   }
 
   getCountries(){
@@ -116,20 +125,26 @@ export class JournalInfoFormComponent implements OnInit {
         });
   }
 
+  getDatasourceClasses() {
+    this.repoService.getDatasourceClasses('journal').subscribe(
+      classes => this.datasourceClasses = classes,
+      error => {
+        this.errorMessage = noServiceMessage;
+        console.log(error);
+      },
+      () => {
+        for (let key in this.datasourceClasses){
+          this.classCodes.push(key);
+        }
+      }
+    );
+  }
+
   registerDatasource(): boolean {
     if(this.group.valid){
-      let response: boolean;
-      this.valService.identifyRepository(this.group.get('websiteUrl').value).subscribe(
-        res => response = res,
-        error => console.log(error)
-      );
-      if (response) {
         this.successMessage = formSuccessRegisteredDatasource;
         this.errorMessage = '';
         return true;
-      } else {
-        this.errorMessage = formErrorInvalidFields;
-      }
     } else {
       this.errorMessage = formErrorRequiredFields;
       return false;

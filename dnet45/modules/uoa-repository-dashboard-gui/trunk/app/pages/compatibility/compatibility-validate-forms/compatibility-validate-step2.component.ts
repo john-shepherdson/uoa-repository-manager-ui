@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 
 export class CompatibilityValidateStep2Component implements OnInit {
 
+  showRules: boolean;
   currentContentRules: Rule[] = [];
   currentUsageRules: Rule[] = [];
 
@@ -18,6 +19,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.showRules = false;
     if ( this.ruleSets.length ) {
       this.getCurrentRuleSets(0);
     }
@@ -36,13 +38,27 @@ export class CompatibilityValidateStep2Component implements OnInit {
     this.currentUsageRules = current[index].usageRules;
   }
 
+  toggleSelectAllContentRules() {}
+
+  toggleSelectAllUsageRules() {}
+
   toggleChooseContentRule(e: any, id: number) {
     if(e.target.checked) {
       console.log(this.currentContentRules[id].name);
     }
   }
 
-  toggleChooseUsageRule(id: number) {
-    console.log(this.currentUsageRules[id].name);
+  toggleChooseUsageRule(e: any, id: number) {
+    if (e.target.checked) {
+      console.log(this.currentUsageRules[id].name);
+    }
+  }
+
+  toggleShowRules() {
+    if (this.showRules) {
+      this.showRules = false;
+    } else {
+      this.showRules = true;
+    }
   }
 }

@@ -34,6 +34,15 @@ export class ValidatorService {
   }
 
 
+  getSetsOfRepository(baseUrl: string): Observable<string[]> {
+    let url = `${this.apiUrl}/validator/getSetsOfRepository?url=${baseUrl}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map(res => <string[]>res.json())
+      .catch(this.handleError);
+  }
+
+
   /* returns true if there is a repository containing the identifier */
   identifyRepository(identifier: string): Observable<boolean> {
     let url = `${this.apiUrl}/validator/identifyRepository/{url}?url=${identifier}`;

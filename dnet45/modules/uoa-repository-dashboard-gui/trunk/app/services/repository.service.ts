@@ -13,11 +13,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { Country, Repository, RepositoryInterface, Timezone, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-const httpOptions = {
-  headers: new HttpHeaders().set('Content-Type', 'application/json')
-};
+let headers = new Headers({ 'Content-Type': 'application/json' });
+let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class RepositoryService {
@@ -93,6 +92,100 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
+
+  getCompatibilityClasses (mode: string): Observable<Map<string,string>> {
+    let url = `${this.apiUrl}/repository/getCompatibilityClasses/${mode}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Map<string,string>>res.json())
+      .catch(this.handleError);
+  }
+
+  getDatasourceClasses(mode: string): Observable<Map<string,string>>{
+    let url = `${this.apiUrl}/repository/getDatasourceClasses/${mode}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Map<string,string>>res.json())
+      .catch(this.handleError);
+  }
+
+
+  updateEnglishName(id: string, englishname: string): Observable<string>{
+    let url = `${this.apiUrl}/repository/updateEnglishName`;
+    console.log(`knocking on: ${url}`);
+    let body = JSON.stringify({
+      id : id,
+      englishname: englishname
+    });
+    console.log(`sending ${body}`);
+    httpOptions.withCredentials = true;
+
+    return this.http.post(url,body,httpOptions)
+      .map( res => <string>res.json())
+      .catch(this.handleError).share();
+  }
+
+  updateLongtitude(id: string, longtitude: string): Observable<string>{
+    let url = `${this.apiUrl}/repository/updateLongtitude`;
+    console.log(`knocking on: ${url}`);
+    let body = JSON.stringify({
+      id : id,
+      logntitude: longtitude
+    });
+    console.log(`sending ${body}`);
+    httpOptions.withCredentials = true;
+
+    return this.http.post(url,body,httpOptions)
+      .map( res => <string>res.json())
+      .catch(this.handleError).share();
+  }
+
+  updateLatitude(id: string, latitude: string): Observable<string>{
+    let url = `${this.apiUrl}/repository/updateLatitude`;
+    console.log(`knocking on: ${url}`);
+    let body = JSON.stringify({
+      id : id,
+      latitude: latitude
+    });
+    console.log(`sending ${body}`);
+    httpOptions.withCredentials = true;
+
+    return this.http.post(url,body,httpOptions)
+      .map( res => <string>res.json())
+      .catch(this.handleError).share();
+  }
+
+  updateLogoUrl(id: string, logoUrl: string): Observable<string>{
+    let url = `${this.apiUrl}/repository/updateLogoUrl`;
+    console.log(`knocking on: ${url}`);
+    let body = JSON.stringify({
+      id : id,
+      logoUrl: logoUrl
+    });
+    console.log(`sending ${body}`);
+    httpOptions.withCredentials = true;
+
+    return this.http.post(url, body, httpOptions)
+      .map( res => <string>res.json())
+      .catch(this.handleError).share();
+  }
+
+  updateTimezone(id: string, timezone: string): Observable<string>{
+    let url = `${this.apiUrl}/repository/updateTimezone`;
+    console.log(`knocking on: ${url}`);
+    let body = JSON.stringify({
+      id : id,
+      timezone: timezone
+    });
+    console.log(`sending ${body}`);
+    httpOptions.withCredentials = true;
+
+    return this.http.post(url, body, httpOptions)
+      .map( res => <string>res.json())
+      .catch(this.handleError).share();
+  }
+
+
   private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
@@ -102,6 +195,7 @@ export class RepositoryService {
       const body = error.text() || '';
       //const err = body.error || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${body}`;
+      console.log(errMsg);
     } else {
       errMsg = (error.message) ? error.message :
         error.status ? `${error.status} - ${error.statusText}` : 'Server error';
@@ -109,4 +203,5 @@ export class RepositoryService {
     }
     return Observable.throw(errMsg);
   }
+
 }
