@@ -24,7 +24,8 @@
         </div>
         <div *ngFor="let content of currentContentRules; let content_index = index" class="checkbox">
           <label class="uk-link-muted small" for="contentRules_{{ content_index }}">
-            <input id="contentRules_{{ content_index }}" value="{{ content.id }}" title="{{content.description}}" name="contentRules_{{content_index}}" type="checkbox" (change)="toggleChooseContentRule($event, content_index)" checked>            <span>{{ content.name }}</span>
+            <input id="contentRules_{{ content_index }}" value="{{ content.id }}" title="{{content.description}}" name="contentRules_{{content_index}}" type="checkbox" (change)="toggleChooseContentRule($event, content_index)" checked>
+            <span>{{ content.name }}</span>
           </label>
         </div>
       </div>

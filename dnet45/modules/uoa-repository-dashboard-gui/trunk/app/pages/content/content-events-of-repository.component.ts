@@ -3,6 +3,7 @@ import { RepositoryService } from '../../services/repository.service';
 import { Topic } from '../../domain/typeScriptClasses';
 import { ActivatedRoute } from '@angular/router';
 import { loadingTopicsError } from '../../domain/shared-messages';
+import { BrokerService } from '../../services/broker.service';
 
 @Component ({
   selector: 'content-events-of-repository',
@@ -18,7 +19,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private repoService: RepositoryService
+    private brokerService: BrokerService
   ) {}
 
   ngOnInit() {
@@ -28,7 +29,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
   getTopics(): void {
     let name = this.route.snapshot.paramMap.get('name');
     this.showSpinner = true;
-    this.repoService.getTopicsForDataSource(name)
+    this.brokerService.getTopicsForDataSource(name)
       .subscribe(
         topics => {
           this.repoTopics = topics;

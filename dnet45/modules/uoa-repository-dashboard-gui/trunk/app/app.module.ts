@@ -24,6 +24,8 @@ import {AuthenticationService} from './services/authentication.service';
 import {AuthGuardService} from './services/auth-guard.service';
 import { ValidatorService } from './services/validator.service';
 import { PiwikService } from './services/piwik.service';
+import { BrokerService } from './services/broker.service';
+import { MonitorService } from './services/monitor.service';
 
 
 @NgModule({
@@ -52,6 +54,8 @@ import { PiwikService } from './services/piwik.service';
   ],
   providers: [
 //    appRoutingProviders
+    BrokerService,
+    MonitorService,
     PiwikService,
     RepositoryService,
     ValidatorService,

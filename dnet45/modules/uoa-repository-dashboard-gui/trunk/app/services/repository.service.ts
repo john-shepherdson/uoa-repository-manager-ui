@@ -76,14 +76,6 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  getTopicsForDataSource(name: string): Observable<Topic[]> {
-    let url = `${this.apiUrl}/broker/getTopicsForDatasource/${name}`;
-    console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <Topic[]>res.json())
-      .catch(this.handleError);
-  }
-
   getCountries(): Observable<Country[]> {
     let url = `${this.apiUrl}/repository/getCountries`;
     console.log(`knocking on: ${url}`);
