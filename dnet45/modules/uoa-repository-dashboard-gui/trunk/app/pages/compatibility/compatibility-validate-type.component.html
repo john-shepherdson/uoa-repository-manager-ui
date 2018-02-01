@@ -42,7 +42,8 @@
             </div>
             <div *ngIf="showDatasource">
               <compatibility-validate-step1 #step1ChooseBaseUrl
-                                            [baseUrlList]="baseUrlList"></compatibility-validate-step1>
+                                            [baseUrlList]="baseUrlList"
+                                            (emmitObject)="getChosenUrl($event)"></compatibility-validate-step1>
             </div>
             <div *ngIf="showGuidelines">
               <compatibility-validate-step2 #step2ChooseGuidelines

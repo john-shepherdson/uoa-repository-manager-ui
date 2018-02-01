@@ -29,14 +29,15 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
     let name = this.route.snapshot.paramMap.get('name');
     this.showSpinner = true;
     this.repoService.getTopicsForDataSource(name)
-      .subscribe(topics => this.repoTopics = topics,
+      .subscribe(
+        topics => {
+          this.repoTopics = topics;
+          if(!this.repoTopics.length) this.noDatasources=true;
+          this.showSpinner = false;
+        },
         error => {
           console.log(error);
           this.errorMessage = loadingTopicsError;
-          this.showSpinner = false;
-        },
-        () => {
-          if(!this.repoTopics.length) this.noDatasources=true;
           this.showSpinner = false;
         }
       );

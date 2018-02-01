@@ -58,10 +58,12 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   }
 
   moveAStep(){
+    let stepValidation: boolean;
     if (this.showDatasource) {
-      if (this.step1ChooseBaseUrl.submitForm()) {
-        this.chosenUrl = this.step1ChooseBaseUrl.chosenUrl;
+      stepValidation = this.step1ChooseBaseUrl.submitForm();
+      if (stepValidation) {
         this.getRuleSetsForType();
+        console.log(`The chosenUrl is: ${this.chosenUrl} !!`);
       }
     } else if (this.showGuidelines) {
       this.getValidationSets();
@@ -165,5 +167,9 @@ export class CompatibilityValidateTypeComponent implements OnInit {
           this.showParameters = true;
         }
       );
+  }
+
+  getChosenUrl(url: string) {
+    this.chosenUrl = url;
   }
 }

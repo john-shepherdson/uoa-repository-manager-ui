@@ -6,16 +6,16 @@
       <h5>OpenDOAR Interface (non-removable)</h5>
     </div>
   </div>
-  <div>
+  <div *ngIf="group">
     <div [formGroup]="group">
       <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
       <div class="form-group has-success">
         <label class="control-label" for="baseUrl">Base OAI-PMH URL (*)</label>
-        <span class="help-block inline" style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">
+        <span *ngIf="identifiedBaseUrl" class="help-block inline" style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">
           Identified
         </span>
-        <input id="baseUrl" type="text" class="form-control" formControlName="baseUrl" required="true">
+        <input id="baseUrl" type="text" class="form-control" formControlName="baseUrl" required="true" (blur)="identifyBaseUrl()">
       </div>
       <div class="form-group">
         <label class="control-label">Validation Set</label>
@@ -26,9 +26,8 @@
           </label>
         </div>
         <select id="selectValidationSet{{index}}" formControlName="selectValidationSet" class="form-control" >
-          <option value="">-- none selected --</option>
-          <option value="blabla">I'm choosing blabla</option>
-          <option value="blabla2">blabla again</option>
+          <option value="" selected>-- none selected --</option>
+          <option *ngFor="let set of valSets" value="{{set}}">{{set}}</option>
         </select>
         <div>
           <label class="uk-button validationSetRadio" for="customRadio{{index}}">
@@ -41,9 +40,8 @@
       <div class="form-group">
         <label class="control-label" for="compLvl">Desired Compatibility Level (*)</label>
         <select class="form-control" #compLvl id="compLvl" formControlName="compatibilityLevel">
-          <option value="">-- none selected --</option>
-          <option value="moreblabla">blabla otra vez</option>
-          <option value="blabla1">another blabla option</option>
+          <option value="" selected>-- none selected --</option>
+          <option *ngFor="let key of classCodes" value="{{key}}">{{compClasses[key]}}</option>
         </select>
       </div>
       <div>
