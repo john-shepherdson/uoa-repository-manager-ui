@@ -13,7 +13,7 @@ const compatibilityRoutes: Routes = [
   {
     path: 'compatibility',
     component: CompatibilityComponent,
-    canActivate: [AuthGuardService],
+//    canActivate: [AuthGuardService],
     children: [
       {
         path: '',

@@ -1,9 +1,9 @@
 <div class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
-    <div class="gwt-HTML uk-margin-medium-bottom">
+    <div class="uk-margin-medium-bottom">
       <h1 class="uk-article-title">Browse validation history</h1>
     </div>
-    <div class="">
+    <div>
       <div class="uk-alert uk-alert-danger" style="display: none;" aria-hidden="true"></div>
       <div class="uk-alert uk-alert-success" style="display: none;" aria-hidden="true"></div>
       <div class="uk-alert uk-alert-warning" style="display: none;" aria-hidden="true"></div>
@@ -22,10 +22,10 @@
         <div class="uk-margin-bottom uk-width-1-1 filters">
           <div class="links uk-inline">
             <div class="filterLabel" style="display: inline;">Filter validation jobs:</div>
-            <a class="active" href="#">All jobs (0)</a>
-            <a href="#">successfull (0)</a>
-            <a href="#">failed (0)</a>
-            <a href="#">ongoing (0)</a>
+            <a class="uk-active" (click)="filterJobs('all')">All jobs (0)</a>
+            <a class="uk-active" (click)="filterJobs('successfull')">successfull (0)</a>
+            <a class="uk-active" (click)="filterJobs('failed')">failed (0)</a>
+            <a class="uk-active" (click)="filterJobs('ongoing')">ongoing (0)</a>
           </div>
           <div class="show-options uk-inline" style="float: right;">
             <div class="filterLabel" style="display: inline;">Jobs per page:</div>
@@ -43,29 +43,29 @@
       <div class="contentAndPagerPanel">
         <div>
           <ul class="uk-pagination">
-            <li class="uk-disabled">
-              <a class="disabled" href="#" >
-                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous>
+            <li>
+              <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
+                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
                   <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
                 </span>
                 Previous
               </a>
             </li>
-            <li class="uk-margin-auto-left uk-disabled">
-              <a class="disabled" href="#" >
+            <li class="uk-margin-auto-left">
+              <a class="uk-link uk-link-muted" (click)="goToNextPage()">
                 Next
-                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next>
+                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
                   <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
                 </span>
               </a>
             </li>
           </ul>
-          <div class="resultsPageLabel">page 1 of ?</div>
+          <div class="resultsPageLabel">page {{ currentPage }} of {{ totalPages }}</div>
         </div>
         <div>
           <div>
             <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-top uk-margin-bottom">
-              <table class="uk-table uk-table-stripped uk-table-middle jobs-list">
+              <table class="uk-table uk-table-middle jobs-list">
                 <thead>
                 <tr>
                   <th>Repository</th>
@@ -79,16 +79,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let job of jobsOfUser">
-                    <td>{{ job.repository }}</td>
-                    <td>{{ job.validation[0].type }}<br>{{ job.validation[1].type }}</td>
-                    <td>{{ job.validation[0].status }}<br>{{ job.validation[1].status }}</td>
-                    <td>{{ job.validation[0].score }}<br>{{ job.validation[1].score }}</td>
-                    <td>{{ job.started }}</td>
-                    <td>{{ job.guidelines }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                    <tr *ngFor="let job of jobsOfUser">
+                      <td class="uk-table-shrink">{{ job.repository }}</td>
+                      <td class="uk-table-shrink">{{ job.validation[0].type }}<br>{{ job.validation[1].type }}</td>
+                      <td class="uk-table-shrink">{{ job.validation[0].status }}<br>{{ job.validation[1].status }}</td>
+                      <td class="uk-table-shrink">{{ job.validation[0].score }}<br>{{ job.validation[1].score }}</td>
+                      <td class="uk-table-shrink">{{ job.started }}</td>
+                      <td class="uk-table-shrink">{{ job.guidelines }}</td>
+                      <td class="uk-table-shrink"></td>
+                      <td class="uk-table-shrink"></td>
+                    </tr>
                 </tbody>
               </table>
             </div>
@@ -96,16 +96,16 @@
         </div>
         <div>
           <ul class="uk-pagination">
-            <li class="uk-disabled">
-              <a class="disabled" href="#" >
-                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous>
+            <li>
+              <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
+                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
                   <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
                 </span>
                 Previous
               </a>
             </li>
-            <li class="uk-margin-auto-left uk-disabled">
-              <a class="disabled" href="#" >
+            <li class="uk-margin-auto-left">
+              <a class="uk-link uk-link-muted" (click)="goToNextPage()">
                 Next
                 <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
                   <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
@@ -113,7 +113,7 @@
               </a>
             </li>
           </ul>
-          <div class="resultsPageLabel">page 1 of ?</div>
+          <div class="resultsPageLabel">page {{ currentPage }} of {{ totalPages }}</div>
         </div>
       </div>
       <div class="row"></div>
