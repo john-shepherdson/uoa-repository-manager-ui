@@ -65,29 +65,48 @@
         <div>
           <div>
             <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-top uk-margin-bottom">
-              <table class="uk-table uk-table-middle jobs-list">
+              <table class="uk-table uk-table-middle uk-table-striped" style="vertical-align: top !important;">
                 <thead>
-                <tr>
-                  <th>Repository</th>
-                  <th>Validation Type</th>
-                  <th>Status</th>
-                  <th>Score</th>
-                  <th>Started</th>
-                  <th>Guidelines</th>
-                  <th>Actions</th>
-                  <th></th>
-                </tr>
+                  <tr>
+                    <th>Repository</th>
+                    <th>Validation Type</th>
+                    <th>Status</th>
+                    <th>Score</th>
+                    <th>Started</th>
+                    <th>Guidelines</th>
+                    <th>Actions</th>
+                    <th></th>
+                  </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let job of jobsOfUser">
-                      <td class="uk-table-shrink">{{ job.repository }}</td>
-                      <td class="uk-table-shrink">{{ job.validation[0].type }}<br>{{ job.validation[1].type }}</td>
-                      <td class="uk-table-shrink">{{ job.validation[0].status }}<br>{{ job.validation[1].status }}</td>
-                      <td class="uk-table-shrink">{{ job.validation[0].score }}<br>{{ job.validation[1].score }}</td>
-                      <td class="uk-table-shrink">{{ job.started }}</td>
-                      <td class="uk-table-shrink">{{ job.guidelines }}</td>
-                      <td class="uk-table-shrink"></td>
-                      <td class="uk-table-shrink"></td>
+                    <tr class="el-item" *ngFor="let job of jobsOfUser">
+                      <td class="uk-table-shrink" style="vertical-align: top !important;">
+                        <div class="el-title">{{ job.repository }}</div>
+                      </td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">{{ job.validation[0].type }}</div>
+                        <div class="el-title">{{ job.validation[1].type }}</div>
+                      </td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">{{ job.validation[0].status }}</div>
+                        <div class="el-title">{{ job.validation[1].status }}</div>
+                      </td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">{{ job.validation[0].score }}</div>
+                        <div class="el-title">{{ job.validation[1].score }}</div>
+                      </td>
+                      <td class="uk-table-shrink" style="vertical-align: top !important;">
+                        <div class="el-title">{{ job.started }}</div>
+                      </td>
+                      <td class="uk-table-shrink" style="vertical-align: top !important;">
+                        <div class="el-title">{{ job.guidelines }}</div>
+                      </td>
+                      <td class="uk-table-shrink" style="vertical-align: top !important;">
+                        <div class="el-link actions"></div>
+                      </td>
+                      <td class="uk-table-shrink" style="vertical-align: top !important;">
+                        <div></div>
+                      </td>
                     </tr>
                 </tbody>
               </table>
