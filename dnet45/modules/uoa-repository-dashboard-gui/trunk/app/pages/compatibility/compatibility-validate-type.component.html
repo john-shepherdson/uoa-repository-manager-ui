@@ -52,7 +52,8 @@
             </div>
             <div *ngIf="showParameters">
               <compatibility-validate-step3 #step3ChooseParameters
-                                            [valSets]="valSets">
+                                            [valSets]="chosenInterface.sets"
+                                            (emmitObject)="getParameters($event)">
               </compatibility-validate-step3>
             </div>
             <div *ngIf="showFinish">

@@ -10,7 +10,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { RuleSet } from '../domain/typeScriptClasses';
+import { InterfaceInformation, RuleSet } from '../domain/typeScriptClasses';
 
 const httpOptions = {
   headers: new HttpHeaders().set('Content-Type', 'application/json')
@@ -43,17 +43,25 @@ export class ValidatorService {
   }
 
 
-  /* returns true if there is a repository containing the identifier */
-  identifyRepository(identifier: string): Observable<boolean> {
-    let url = `${this.apiUrl}/validator/identifyRepository/${identifier}`;
+  /* returns true if there is a repository containing the baseUrl */
+  identifyRepository(baseUrl: string): Observable<boolean> {
+    let url = `${this.apiUrl}/validator/identifyRepository/${baseUrl}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map(res => <boolean>res.json())
       .catch(this.handleError);
   }
 
+  getInterfaceInformation(baseUrl: string): Observable<InterfaceInformation> {
+    let url = `${this.apiUrl}/validator/getInterfaceInformation/${baseUrl}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map(res => <InterfaceInformation>res.json())
+      .catch(this.handleError);
+  }
 
-  /* from omtd project */
+
+/* from omtd project */
   private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message

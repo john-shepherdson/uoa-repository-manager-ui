@@ -4,6 +4,8 @@ import { jobTypes } from '../../domain/job-types';
 
 /*DELETE ME LATER*/
 import { jobsOfUser } from '../../domain/dummyLists';
+import { MonitorService } from '../../services/monitor.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component ({
   selector: 'app-compatibility-validation-history',
@@ -19,8 +21,10 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
   currentPage: number;
   totalPages: number;
   currentFilter: string;
+  chosenJobType: string;
 
-  constructor() {}
+  constructor(private authService: AuthenticationService,
+              private monitorService: MonitorService) {}
 
   ngOnInit() {
     this.loadTable();
@@ -35,6 +39,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     this.itemsPerPage = 10;
     this.currentPage = 1;
     this.currentFilter = 'all';
+    this.chosenJobType = '';
   }
 
 
@@ -64,4 +69,21 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     }
   }
 
+/* WAITING FOR API !
+  getJobs() {
+    this.monitorService.getJobsOfUser(this.authService.getUserEmail(),
+                                      this.chosenJobType,
+                                      this.currentPage,
+                                      this.itemsPerPage,
+                                     null,
+                                     null,
+                                      this.currentFilter,
+                                     true).subscribe(
+      jobs => this.jobsOfUser = jobs,
+      error => console.log(error)
+    );
+  }
+*/
+
 }
+

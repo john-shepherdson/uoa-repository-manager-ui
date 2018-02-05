@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Topic } from '../domain/typeScriptClasses';
+import { AdvQueryObject, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
@@ -23,6 +23,18 @@ export class BrokerService {
   private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
 
   constructor(private http: Http) { }
+
+  updateEnglishName(query: AdvQueryObject): Observable<string>{
+    let url = `${this.apiUrl}/broker/advancedShowEvents/0/100`;
+    console.log(`knocking on: ${url}`);
+    let body = JSON.stringify(query);
+    console.log(`sending ${body}`);
+    httpOptions.withCredentials = true;
+
+    return this.http.post(url,body,httpOptions)
+      .map( res => <string>res.json())
+      .catch(this.handleError).share();
+  }
 
 
   getTopicsForDataSource(name: string): Observable<Topic[]> {

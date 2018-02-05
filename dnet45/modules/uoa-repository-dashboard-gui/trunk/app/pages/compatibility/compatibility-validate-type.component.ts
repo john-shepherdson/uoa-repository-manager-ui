@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompatibilityValidateStep1Component } from './compatibility-validate-forms/compatibility-validate-step1.component';
 import { RepositoryService } from '../../services/repository.service';
-import { Repository, RuleSet } from '../../domain/typeScriptClasses';
+import { InterfaceInformation, Repository, RuleSet } from '../../domain/typeScriptClasses';
 import { AuthenticationService } from '../../services/authentication.service';
 import {
   loadingReposMessage, loadingRuleSets, loadingRuleSetsError,
@@ -33,6 +33,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   chosenUrl: string;
   ruleSets: RuleSet[] = [];
   valSets: string[] = [];
+  chosenInterface: InterfaceInformation;
 
   errorMessage: string;
   loadingMessage: string;
@@ -57,7 +58,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
     console.log(this.type);
   }
 
-  moveAStep(){
+  moveAStep() {
     let stepValidation: boolean;
     if (this.showDatasource) {
       stepValidation = this.step1ChooseBaseUrl.submitForm();
@@ -66,11 +67,13 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         console.log(`The chosenUrl is: ${this.chosenUrl} !!`);
       }
     } else if (this.showGuidelines) {
-      this.getValidationSets();
+      this.getInterfaceInfo();
       this.showParameters = true;
       this.showGuidelines = false;
       this.step3 = 'active';
     } else if (this.showParameters) {
+      this.step3ChooseParameters.submitChanges();
+      //save all changes
       this.showFinish = true;
       this.showParameters = false;
       this.step4 = 'active';
@@ -94,7 +97,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   }
 
   /* retrieves the baseUrl list for the registered repositories of the user */
-  getBaseUrlList(): void {
+  getBaseUrlList() {
     this.showSpinner = true;
     this.loadingMessage = loadingReposMessage;
 //    this.repoService.getUrlsOfUserRepos(this.authService.getUserEmail()) RESTORE AFTER FINISH!!
@@ -148,6 +151,13 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       );
   }
 
+  getInterfaceInfo() {
+    this.valService.getInterfaceInformation(this.chosenUrl).subscribe(
+      info => this.chosenInterface = info,
+      error => console.log(error)
+    );
+  }
+
   getValidationSets() {
     this.showGuidelines = false;
     this.showSpinner = true;
@@ -172,4 +182,10 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   getChosenUrl(url: string) {
     this.chosenUrl = url;
   }
+
+  getParameters(params: string[]) {
+    // no of records = params[0]
+    // xpath = params[1]
+  }
+
 }

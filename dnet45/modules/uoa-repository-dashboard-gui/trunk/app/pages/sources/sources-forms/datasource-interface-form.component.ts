@@ -3,11 +3,12 @@ import { MyGroup } from '../../../shared/reusablecomponents/forms/my-group.inter
 import { Validators } from '@angular/forms';
 import {
   formErrorRequiredFields, formSuccessAddedInterface,
-  invalidCustomBaseUrl, loadingValSetsError, noServiceMessage
+  invalidCustomBaseUrl, noServiceMessage
 } from '../../../domain/shared-messages';
 import { ValidatorService } from '../../../services/validator.service';
 import { ActivatedRoute } from '@angular/router';
 import { RepositoryService } from '../../../services/repository.service';
+import { InterfaceInformation } from '../../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'datasource-interface-form',
@@ -22,8 +23,8 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   mode: string;
 
   identifiedBaseUrl: boolean;
-  valSets: string[] = [];
   existingValSet: boolean;
+  interfaceInfo: InterfaceInformation;
 
   compClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
@@ -60,7 +61,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
 /*          selectValidationSet: this.data[0].accessSet,  [ IS THIS THE CORRECT FIELD ?????]*/
           compatibilityLevel: this.data[0].desiredCompatibilityLevel
         });
-        this.identifyBaseUrl(this.data[0].baseUrl);
+        this.getInterfaceInfo(this.data[0].baseUrl);
         this.getCompatibilityClasses();
         this.data.splice(0, 1);
       }
@@ -68,7 +69,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
       this.existingValSet = true;
       this.getMyControl('customValidationSet').disable();
     }, 1500);
-}
+  }
 
   chooseValSet(existingValSet: boolean) {
      if(existingValSet) {
@@ -85,18 +86,19 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   saveInterface() {
     if (this.group.valid) {
       if (this.identifiedBaseUrl) {
+        let baseUrl = this.getMyControl('baseUrl').value;
+        let valset: string;
+        if (this.getMyControl('selectValidationSet').enabled ) {
+          valset = this.getMyControl('selectValidationSet').value;
+        } else {
+          valset = this.getMyControl('customValidationSet').value;
+        }
+        let compLvl = this.getMyControl('compatibilityLevel').value;
+        // save/update interface
         this.successMessage = formSuccessAddedInterface;
         this.errorMessage = '';
       } else {
-        let response: boolean;
-        response = this.identifyBaseUrl(this.group.get('baseUrl').value);
-        if (response) {
-          this.successMessage = formSuccessAddedInterface;
-          this.errorMessage = '';
-        } else {
-          this.errorMessage = invalidCustomBaseUrl;
-          this.successMessage = '';
-        }
+        this.errorMessage = invalidCustomBaseUrl;
       }
     } else {
       this.errorMessage = formErrorRequiredFields;
@@ -104,33 +106,31 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
     }
   }
 
-  identifyBaseUrl(url: string) {
-    let response: boolean;
-    this.valService.identifyRepository(url).subscribe(
-      res => {
-        response = res;
-        if (response) {
-          this.getValidationSets(url);
+  getInterfaceInfo(baseUrl: string) {
+    this.valService.getInterfaceInformation(baseUrl).subscribe(
+      info => {
+        this.interfaceInfo = info;
+        if (this.interfaceInfo) {
           this.identifiedBaseUrl = true;
+          this.errorMessage = '';
+        } else {
+          this.errorMessage = invalidCustomBaseUrl;
         }
+
       },
       error => {
         console.log(error);
-        response = false;
+        this.identifiedBaseUrl = false;
+        this.errorMessage = noServiceMessage;
       }
     );
-    return response;
   }
 
-  getValidationSets(url: string) {
-    if (url) {
-      this.valService.getSetsOfRepository(url)
-        .subscribe(
-          sets => this.valSets = sets,
-          error => {
-            this.errorMessage = loadingValSetsError
-          }
-        );
+  getMode() {
+    if (this.route.snapshot.paramMap.get('id')) {
+      this.mode = this.route.snapshot.paramMap.get('id').split("_")[0];
+    } else {
+      this.mode = this.route.snapshot.url[0].path;
     }
   }
 
@@ -149,12 +149,5 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
     );
   }
 
-  getMode() {
-    if (this.route.snapshot.paramMap.get('id')) {
-      this.mode = this.route.snapshot.paramMap.get('id').split("_")[0];
-    } else {
-      this.mode = this.route.snapshot.url[0].path;
-    }
-  }
 
 }

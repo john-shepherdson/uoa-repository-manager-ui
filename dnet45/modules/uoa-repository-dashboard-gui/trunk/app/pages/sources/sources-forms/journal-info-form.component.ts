@@ -4,7 +4,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import {
-  formErrorInvalidFields, formErrorRequiredFields, formSuccessRegisteredDatasource,
+  formErrorInvalidFields, formErrorRequiredFields, formErrorWasntSaved, formSuccessRegisteredDatasource,
   noServiceMessage
 } from '../../../domain/shared-messages';
 import { RepositoryService } from "../../../services/repository.service";
@@ -149,6 +149,23 @@ export class JournalInfoFormComponent implements OnInit {
       this.errorMessage = formErrorRequiredFields;
       return false;
     }
+  }
+
+  updateEnglishName(id: string, name: string) {
+    let status: boolean;
+    this.repoService.updateEnglishName(id,name).subscribe(
+      response => {
+        console.log(`answered ${response}`);
+        status = true;
+      },
+      error => {
+        console.log(error);
+        this.errorMessage = formErrorWasntSaved;
+        status = false;
+      }
+    );
+    console.log(status);
+    return status;
   }
 
 

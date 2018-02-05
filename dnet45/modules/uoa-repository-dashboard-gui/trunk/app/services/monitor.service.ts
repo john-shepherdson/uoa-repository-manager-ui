@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { InterfaceInformation, JobsOfUser } from "../domain/typeScriptClasses";
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
@@ -22,6 +23,22 @@ export class MonitorService {
   private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
 
   constructor(private http: Http) { }
+
+  getJobsOfUser(userEmail: string,
+                jobType:string,
+                offset: number,
+                limit: number,
+                dateFrom: string,
+                dateTo: string,
+                validationStatus: string,
+                includeJobsTotal: boolean) : Observable<JobsOfUser> {
+    let url = `${this.apiUrl}/monitor/identifyRepository/${userEmail}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+    .map(res => <InterfaceInformation>res.json())
+    .catch(this.handleError);
+  }
+
 
   private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure

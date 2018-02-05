@@ -103,17 +103,19 @@ export class RepositoryService {
 
 
   updateEnglishName(id: string, englishname: string): Observable<string>{
-    let url = `${this.apiUrl}/repository/updateEnglishName`;
+    let url = `${this.apiUrl}/repository/updateEnglishName?id=${id}&officialName=DSpace&englishname=${englishname}`;
     console.log(`knocking on: ${url}`);
-    let body = JSON.stringify({
+/*    let body = JSON.stringify({
       id : id,
       englishname: englishname
     });
-    console.log(`sending ${body}`);
-    httpOptions.withCredentials = true;
-
-    return this.http.post(url,body,httpOptions)
-      .map( res => <string>res.json())
+    console.log(`sending ${body}`);*/
+//    httpOptions.withCredentials = true;
+    return this.http.post(url,httpOptions)
+      .map( res => {
+        console.log(`responded ${res.statusText}`);
+        return res.statusText;
+      })
       .catch(this.handleError).share();
   }
 
@@ -182,6 +184,7 @@ export class RepositoryService {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     let errMsg = "";
+    console.log('E R R O R !!');
     console.log(error);
     if (error instanceof Response) {
       const body = error.text() || '';

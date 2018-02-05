@@ -1,7 +1,7 @@
-<div *ngIf="ruleSets" class="form-group">
+<div *ngIf="ruleSets" [formGroup]="group" class="form-group">
   <div *ngFor="let set of ruleSets; let set_index = index">
     <label class="btn btn-link" for="ruleSet{{ set_index }}">
-      <input id="ruleSet{{ set_index }}" #ruleSet value="{{ set.id }}" name="ruleSet" type="radio" (change)="getCurrentRuleSets(set_index)" [checked]="set_index === 0">
+      <input id="ruleSet{{ set_index }}" #ruleSet value="{{ set.id }}" formControlName="ruleSet" name="ruleSet" type="radio" (change)="getCurrentRuleSets(set_index)" [checked]="set_index === 0">
       <span>{{ set.name }}</span>
     </label>
   </div>
@@ -14,7 +14,7 @@
       Show Content and Usage Rules</span>
   </button>
   <div *ngIf="showRules" class="uk-grid uk-animation-fade">
-    <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column">
+    <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column" formArrayName="contentRules">
       <div class="margin10">
         <div class="checkbox selectAll">
           <label>
@@ -22,15 +22,21 @@
             <span>Select / Deselect All Content Rules</span>
           </label>
         </div>
-        <div *ngFor="let content of currentContentRules; let content_index = index" class="checkbox">
-          <label class="uk-link-muted small" for="contentRules_{{ content_index }}">
-            <input id="contentRules_{{ content_index }}" value="{{ content.id }}" title="{{content.description}}" name="contentRules_{{content_index}}" type="checkbox" (change)="toggleChooseContentRule($event, content_index)" checked>
-            <span>{{ content.name }}</span>
-          </label>
+        <div *ngFor="let content of group.controls.contentRules.controls; let content_index = index" class="checkbox">
+          <div [formGroupName]="content_index">
+            <label class="uk-link-muted small" for="contentRules_{{ content_index }}">
+              <input id="contentRules_{{ content_index }}"
+                     value="{{ contentRules[content_index].id }}"
+                     title="{{ contentRules[content_index].description }}"
+                     formControlName="rule"
+                     type="checkbox" >
+              <span>{{ contentRules[content_index].name }}</span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
-    <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column">
+    <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column" formArrayName="usageRules">
       <div class="margin10">
         <div class="checkbox selectAll">
           <label>
@@ -38,11 +44,17 @@
             <span>Select / Deselect All Usage Rules</span>
           </label>
         </div>
-        <div *ngFor="let usage of currentUsageRules; let usage_index = index" class="checkbox">
-          <label class="uk-link-muted small" for="usageRules_{{ usage_index }}">
-            <input id="usageRules_{{ usage_index }}" value="{{ usage.id }}" title="{{usage.description}}" name="usageRules_{{usage_index}}" type="checkbox" (change)="toggleChooseUsageRule($event, usage_index)" checked>
-            <span>{{ usage.name }}</span>
-          </label>
+        <div *ngFor="let usage of group.controls.usageRules.controls; let usage_index = index" class="checkbox">
+          <div [formGroupName]="usage_index">
+            <label class="uk-link-muted small" for="usageRules_{{ usage_index }}">
+              <input id="usageRules_{{ usage_index }}"
+                     value="{{ usageRules[usage_index].id }}"
+                     title="{{ usageRules[usage_index].description }}"
+                     formControlName="rule"
+                     type="checkbox" >
+              <span>{{ usageRules[usage_index].name }}</span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
