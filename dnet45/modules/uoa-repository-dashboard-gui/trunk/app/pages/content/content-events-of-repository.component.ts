@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from '../../services/repository.service';
 import { Topic } from '../../domain/typeScriptClasses';
 import { ActivatedRoute } from '@angular/router';
-import { loadingTopicsError } from '../../domain/shared-messages';
+import { loadingTopics, loadingTopicsError } from '../../domain/shared-messages';
 import { BrokerService } from '../../services/broker.service';
 
 @Component ({
@@ -16,6 +16,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
   noDatasources: boolean;
   showSpinner: boolean;
   errorMessage: string;
+  loadingMessage: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,17 +30,17 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
   getTopics(): void {
     let name = this.route.snapshot.paramMap.get('name');
     this.showSpinner = true;
+    this.loadingMessage = loadingTopics;
     this.brokerService.getTopicsForDataSource(name)
       .subscribe(
         topics => {
           this.repoTopics = topics;
           if(!this.repoTopics.length) this.noDatasources=true;
-          this.showSpinner = false;
         },
-        error => {
-          console.log(error);
-          this.errorMessage = loadingTopicsError;
+        error => console.log(error),
+        () => {
           this.showSpinner = false;
+          this.loadingMessage = '';
         }
       );
   }

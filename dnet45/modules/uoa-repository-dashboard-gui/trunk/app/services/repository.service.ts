@@ -105,16 +105,11 @@ export class RepositoryService {
   updateEnglishName(id: string, englishname: string): Observable<string>{
     let url = `${this.apiUrl}/repository/updateEnglishName?id=${id}&officialName=DSpace&englishname=${englishname}`;
     console.log(`knocking on: ${url}`);
-/*    let body = JSON.stringify({
-      id : id,
-      englishname: englishname
-    });
-    console.log(`sending ${body}`);*/
-//    httpOptions.withCredentials = true;
+    httpOptions.withCredentials = true;
     return this.http.post(url,httpOptions)
       .map( res => {
         console.log(`responded ${res.statusText}`);
-        return res.statusText;
+        return res.status.toString();
       })
       .catch(this.handleError).share();
   }
