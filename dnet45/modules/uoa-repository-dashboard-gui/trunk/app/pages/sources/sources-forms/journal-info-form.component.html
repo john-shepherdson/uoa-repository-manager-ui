@@ -65,7 +65,7 @@
   <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
       uk-scrollspy-class="">Extra Information</h4>
   <form-inline [description]="englishNameDesc" [valid]="group.get('englishName').valid">
-    <input formControlName="englishName" class="form-control" type="text" (blur)="updateEnglishName('opendoar____::1168',group.get('englishName').value )">
+    <input formControlName="englishName" class="form-control" type="text" >
   </form-inline>
   <form-inline [description]="logoUrlDesc" [valid]="group.get('logoUrl').valid">
     <input formControlName="logoUrl" class="form-control" type="text">

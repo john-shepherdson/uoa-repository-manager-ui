@@ -12,6 +12,8 @@ export class CompatibilityValidateStep2Component implements OnInit {
   showRules: boolean;
   currentContentRules: Rule[] = [];
   currentUsageRules: Rule[] = [];
+  selectedAllContentRules: boolean;
+  selectedAllUsageRules: boolean;
 
   group: FormGroup;
 
@@ -21,6 +23,9 @@ export class CompatibilityValidateStep2Component implements OnInit {
 
   ngOnInit() {
     this.showRules = false;
+    this.selectedAllContentRules = true;
+    this.selectedAllUsageRules = true;
+
     if ( this.ruleSets.length ) {
       this.getCurrentRuleSets(0);
     }
@@ -53,16 +58,27 @@ export class CompatibilityValidateStep2Component implements OnInit {
 
   getRulesLists() {
     let contentRules = <FormArray>this.group.controls['contentRules'];
-    for ( var i = 0; i<this.currentContentRules.length; i++ ) {
+    for ( let i = 0; i<this.currentContentRules.length-1; i++ ) {
       contentRules.push(this.initRules());
     }
     let usageRules = <FormArray>this.group.controls['usageRules'];
-    for ( i = 0; i<this.currentUsageRules.length; i++ ) {
+    for ( let i = 0; i<this.currentUsageRules.length-1; i++ ) {
       usageRules.push(this.initRules());
     }
   }
 
-  toggleSelectAllContentRules() {}
+  toggleSelectAllContentRules() {
+    console.log('trying!!!!!!!');
+    let contentRules = <FormArray>this.group.controls['contentRules'];
+    if (this.selectedAllContentRules) {
+      this.selectedAllContentRules = false;
+      contentRules.controls.map(x => x.patchValue(true));
+    } else {
+      this.selectedAllContentRules = true;
+      contentRules.controls.map(x => x.patchValue(true));
+    }
+
+  }
 
   toggleSelectAllUsageRules() {}
 

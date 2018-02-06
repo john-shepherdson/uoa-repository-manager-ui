@@ -26,11 +26,11 @@
           <div [formGroupName]="content_index">
             <label class="uk-link-muted small" for="contentRules_{{ content_index }}">
               <input id="contentRules_{{ content_index }}"
-                     value="{{ contentRules[content_index].id }}"
-                     title="{{ contentRules[content_index].description }}"
+                     value="{{ currentContentRules[content_index].id }}"
+                     title="{{ currentContentRules[content_index].description }}"
                      formControlName="rule"
                      type="checkbox" >
-              <span>{{ contentRules[content_index].name }}</span>
+              <span>{{ currentContentRules[content_index].name }}</span>
             </label>
           </div>
         </div>
@@ -48,11 +48,11 @@
           <div [formGroupName]="usage_index">
             <label class="uk-link-muted small" for="usageRules_{{ usage_index }}">
               <input id="usageRules_{{ usage_index }}"
-                     value="{{ usageRules[usage_index].id }}"
-                     title="{{ usageRules[usage_index].description }}"
+                     value="{{ currentUsageRules[usage_index].id }}"
+                     title="{{ currentUsageRules[usage_index].description }}"
                      formControlName="rule"
                      type="checkbox" >
-              <span>{{ usageRules[usage_index].name }}</span>
+              <span>{{ currentUsageRules[usage_index].name }}</span>
             </label>
           </div>
         </div>
