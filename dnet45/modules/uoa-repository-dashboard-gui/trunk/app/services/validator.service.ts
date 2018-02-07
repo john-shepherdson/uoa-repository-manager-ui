@@ -45,7 +45,8 @@ export class ValidatorService {
 
   /* returns true if there is a repository containing the baseUrl */
   identifyRepository(baseUrl: string): Observable<boolean> {
-    let url = `${this.apiUrl}/validator/identifyRepository/${baseUrl}`;
+    let param = encodeURIComponent(baseUrl);
+    let url = `${this.apiUrl}/validator/identifyRepository/${param}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map(res => <boolean>res.json())
@@ -53,7 +54,8 @@ export class ValidatorService {
   }
 
   getInterfaceInformation(baseUrl: string): Observable<InterfaceInformation> {
-    let url = `${this.apiUrl}/validator/getInterfaceInformation/${baseUrl}`;
+    let param = encodeURIComponent(baseUrl);
+    let url = `${this.apiUrl}/validator/getInterfaceInformation/${param}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map(res => <InterfaceInformation>res.json())

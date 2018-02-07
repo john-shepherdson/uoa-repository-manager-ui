@@ -47,8 +47,7 @@ export class CompatibilityValidateStep3Component implements OnInit {
 
   submitChanges(){
     if (this.group.valid) {
-      let valset: string;
-      let emitted: string [];
+      let emitted: string [] = [];
       if ( this.group.get('noOfRecordsInput').enabled ) {
         emitted.push(this.group.get('noOfRecordsInput').value);
       } else {

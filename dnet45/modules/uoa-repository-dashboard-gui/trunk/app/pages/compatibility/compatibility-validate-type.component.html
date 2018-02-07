@@ -36,7 +36,7 @@
         <div>
           <div class="animated fadeInRight stepContent">
             <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-            <div *ngIf="showSpinner" style="text-align: center; margin-top: 100px;">
+            <div *ngIf="showSpinner" style="text-align: center; padding-top: 100px; color: rgb(47, 64, 80); font-weight: bold;">
               <span>{{ loadingMessage }}</span><br>
               <img src="/assets/imgs/loader-big.gif">
             </div>
@@ -52,7 +52,7 @@
             </div>
             <div *ngIf="showParameters">
               <compatibility-validate-step3 #step3ChooseParameters
-                                            [valSets]="chosenInterface.sets"
+                                            [valSets]="valSets"
                                             (emmitObject)="getParameters($event)">
               </compatibility-validate-step3>
             </div>

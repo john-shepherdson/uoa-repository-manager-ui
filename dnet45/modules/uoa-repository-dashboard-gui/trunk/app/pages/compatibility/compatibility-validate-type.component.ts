@@ -67,7 +67,9 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         console.log(`The chosenUrl is: ${this.chosenUrl} !!`);
       }
     } else if (this.showGuidelines) {
+      this.step2ChooseGuidelines.saveChanges();
       this.getInterfaceInfo();
+      //this.getValidationSets();
       this.showParameters = true;
       this.showGuidelines = false;
       this.step3 = 'active';
@@ -152,22 +154,35 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   }
 
   getInterfaceInfo() {
+    this.showSpinner = true;
+    this.loadingMessage = loadingValSets;
     this.valService.getInterfaceInformation(this.chosenUrl).subscribe(
       info => this.chosenInterface = info,
-      error => console.log(error)
+      error => {
+        console.log(error);
+        this.showSpinner = false;
+        this.loadingMessage = '';
+        this.errorMessage = loadingValSetsError;
+      },
+      () => {
+        this.showSpinner = false;
+        this.loadingMessage = '';
+        this.step3 = 'active';
+        this.showParameters = true;
+        if (this.chosenInterface) {
+          this.valSets = this.chosenInterface.sets;
+        }
+      }
     );
   }
 
   getValidationSets() {
-    this.showGuidelines = false;
     this.showSpinner = true;
     this.loadingMessage = loadingValSets;
     this.valService.getSetsOfRepository(this.chosenUrl)
       .subscribe(
         sets => this.valSets = sets,
         error => {
-          this.showSpinner = false;
-          this.loadingMessage = '';
           this.errorMessage = loadingValSetsError
         },
         () => {

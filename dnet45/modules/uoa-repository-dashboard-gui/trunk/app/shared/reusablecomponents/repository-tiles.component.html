@@ -17,7 +17,7 @@
     </div>
     <div>
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-      <div style="text-align: center; margin-top: 100px;" *ngIf="showSpinner">
+      <div *ngIf="showSpinner" style="text-align: center; padding-top: 100px; color: rgb(47, 64, 80); font-weight: bold;">
         <span>{{ loadingMessage }}</span><br>
         <img src="/assets/imgs/loader-big.gif">
       </div>

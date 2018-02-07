@@ -73,13 +73,20 @@ export class RegisterDatasourceShareableComponent implements OnInit {
     this.hasSelectedCountry = true;
     this.selectedCountry = country;
     this.showSpinner = true;
+    this.loadingMessage = loadingReposMessage;
     this.noRepositories = '';
     this.repoService.getRepositoriesOfCountry(country,this.mode).subscribe(
       repos => this.countryRepos = repos,
-      error => console.log(error),
+      error => {
+        console.log(error);
+        this.showSpinner = false;
+        this.loadingMessage = '';
+        this.alertMessage = noServiceMessage;
+      },
       () => {
         if (!this.countryRepos.length) this.noRepositories = noRepositoriesFound;
         this.showSpinner = false;
+        this.loadingMessage = '';
       }
     );
   }

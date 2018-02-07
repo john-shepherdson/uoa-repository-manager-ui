@@ -1,7 +1,13 @@
 <div *ngIf="ruleSets" [formGroup]="group" class="form-group">
   <div *ngFor="let set of ruleSets; let set_index = index">
-    <label class="btn btn-link" for="ruleSet{{ set_index }}">
-      <input id="ruleSet{{ set_index }}" #ruleSet value="{{ set.id }}" formControlName="ruleSet" name="ruleSet" type="radio" (change)="getCurrentRuleSets(set_index)" [checked]="set_index === 0">
+    <label class="btn btn-link" for="ruleSet_{{ set_index }}">
+      <input id="ruleSet_{{ set_index }}"
+             value="{{ set.id }}"
+             formControlName="ruleSet"
+             name="ruleSet"
+             type="radio"
+             (change)="refreshLists()"
+             [checked]="set_index == 0">
       <span>{{ set.name }}</span>
     </label>
   </div>
