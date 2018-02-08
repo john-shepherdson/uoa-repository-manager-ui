@@ -58,6 +58,7 @@ export class CompatibilityValidateStep1Component implements OnInit {
       if ( this.group.get('selectBaseUrl').value) {
         this.emmitObject.emit(this.group.get('selectBaseUrl').value);
         console.log('selected baseUrl!');
+        this.errorMessage = '';
         return true;
       } else {
         this.errorMessage = didntChooseBaseUrl;
@@ -68,6 +69,7 @@ export class CompatibilityValidateStep1Component implements OnInit {
         if (this.identifiedUrl) {
           this.emmitObject.emit(this.group.get('customBaseUrl').value);
           console.log('added new baseUrl!');
+          this.errorMessage = '';
           return true;
         } else {
           this.errorMessage = invalidCustomBaseUrl;

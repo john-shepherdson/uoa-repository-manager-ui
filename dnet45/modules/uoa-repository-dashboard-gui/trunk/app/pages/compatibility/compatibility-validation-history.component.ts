@@ -6,6 +6,7 @@ import { jobTypes } from '../../domain/job-types';
 import { jobsOfUser } from '../../domain/dummyLists';
 import { MonitorService } from '../../services/monitor.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { JobsOfUser } from '../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'app-compatibility-validation-history',
@@ -15,7 +16,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 
 export class CompatibilityValidationHistoryComponent  implements OnInit {
   jobTypes: string[];
-  jobsOfUser = jobsOfUser;
+  jobsOfUser: JobsOfUser;
 
   itemsPerPage: number;
   currentPage: number;
@@ -32,14 +33,27 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
 
   loadTable() {
     //call API and get all jobs:
-    this.jobTypes = jobTypes;
-    this.totalPages = 10;
+    this.monitorService.getJobsOfUser('ant.lebesis@gmail.com',
+                                      'Compatibility Test',
+                                      '0',
+                                      '10',
+                                      '2018-02-01',
+                                      '2018-02-28',
+                                      'successful',
+                                      true).subscribe(
+      jobs => {this.jobsOfUser = jobs; console.log(jobs); console.log(this.jobsOfUser);},
+      error => console.log(error.status),
+      () => {
+        this.jobTypes = jobTypes;
+        this.totalPages = 10;
 
-    //initialize
-    this.itemsPerPage = 10;
-    this.currentPage = 1;
-    this.currentFilter = 'all';
-    this.chosenJobType = '';
+        //initialize
+        this.itemsPerPage = 10;
+        this.currentPage = 1;
+        this.currentFilter = 'all';
+        this.chosenJobType = '';
+      }
+    );
   }
 
 

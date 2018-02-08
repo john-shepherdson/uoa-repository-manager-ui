@@ -11,7 +11,6 @@ import { loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError } fr
 
 export class RepositoryTilesComponent implements OnInit {
   reposOfUser: Repository[] = [];
-  showSpinner: boolean;
   tilesView: boolean;
   errorMessage: string;
   loadingMessage: string;
@@ -27,7 +26,6 @@ export class RepositoryTilesComponent implements OnInit {
   }
 
   getReposOfUser(): void {
-    this.showSpinner = true;
     this.loadingMessage = loadingReposMessage;
     this.repoService.getRepositoriesOfUser(this.authService.getUserEmail())
       .subscribe(
@@ -42,12 +40,10 @@ export class RepositoryTilesComponent implements OnInit {
         } ),
         error => {
           console.log(error);
-          this.showSpinner = false;
           this.loadingMessage = '';
           this.errorMessage = reposRetrievalError;
           },
         () => {
-          this.showSpinner = false;
           this.loadingMessage = '';
           if (!this.reposOfUser.length) {
             this.errorMessage = loadingUserRepoInfoEmpty;
@@ -108,6 +104,7 @@ export class RepositoryTilesComponent implements OnInit {
   }
 
   getRepoEvents(repo: Repository): string {
+    //return repo.events
     return '0';
   }
 

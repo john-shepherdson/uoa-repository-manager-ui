@@ -20,13 +20,21 @@ export const loadingRuleSets = 'Retrieving sets of rules ...';
 export const loadingRuleSetsError = 'The rule sets can not be retrieved at the moment';
 export const noRuleSets = 'No rule sets were found';
 
+
 /* Loading Rules Messages */
 export const loadingValSets = 'Retrieving validation sets ...';
 export const loadingValSetsError = 'The validation sets can not be retrieved at the moment';
 
+
 /* Loading Topics Messages */
 export const loadingTopics = 'Loading topics for your datasource';
 export const loadingTopicsError = 'Failed to load the topics for your datasource';
+
+
+/* Loading Metrics Messages */
+export const loadingMetrics = 'Loading diagrams ...'
+export const loadingMetricsError = 'Failed to load the piwik site of your repository';
+
 
 /* Forms validation Messages */
 export const formInfoLoading = 'Loading information';

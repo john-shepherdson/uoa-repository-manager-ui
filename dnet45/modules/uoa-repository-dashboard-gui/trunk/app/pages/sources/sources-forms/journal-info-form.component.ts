@@ -42,7 +42,6 @@ import { ValidatorService } from '../../../services/validator.service';
 export class JournalInfoFormComponent implements OnInit {
   errorMessage: string;
   successMessage: string;
-  showSpinner: boolean;
   loadingMessage: string;
 
   typologies = typologies;

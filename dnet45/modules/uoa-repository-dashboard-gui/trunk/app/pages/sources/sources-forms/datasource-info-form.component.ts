@@ -38,7 +38,6 @@ export class DatasourceInfoFormComponent implements OnInit {
 
   errorMessage: string;
   successMessage: string;
-  showSpinner: boolean;
   loadingMessage: string;
   sourceTitle: string;
   sourceLinkToRepo: string;
@@ -101,7 +100,6 @@ export class DatasourceInfoFormComponent implements OnInit {
   }
 
   getRepo() {
-    this.showSpinner = true;
     this.loadingMessage = formInfoLoading;
     if (this.datasourceId) {
       this.repoService.getRepositoryById(this.datasourceId).subscribe(
@@ -138,10 +136,13 @@ export class DatasourceInfoFormComponent implements OnInit {
           this.setUpSourceInfo();
           this.getDatasourceClasses();
         },
-        error => console.log(error),
+        error => {
+          console.log(error);
+          this.loadingMessage = '';
+        },
         () => {
-          this.showSpinner = false;
           this.getCountries();
+          this.loadingMessage = '';
         }
       );
     }

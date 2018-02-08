@@ -10,7 +10,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { InterfaceInformation, RuleSet } from '../domain/typeScriptClasses';
+import { InterfaceInformation, JobsOfUser, RuleSet, StoredJob } from '../domain/typeScriptClasses';
 
 const httpOptions = {
   headers: new HttpHeaders().set('Content-Type', 'application/json')
@@ -42,6 +42,19 @@ export class ValidatorService {
       .catch(this.handleError);
   }
 
+  getStoredJobsNew(userEmail: string,
+                   jobType:string,
+                   offset: string,
+                   limit: string,
+                   dateFrom: string,
+                   dateTo: string,
+                   validationStatus: string): Observable<StoredJob[]> {
+    let url = `${this.apiUrl}/validator/getStoredJobsNew?user=${userEmail}&jobType=${encodeURIComponent(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map(res => {<StoredJob[]>res.json(); console.log(res)})
+      .catch(this.handleError);
+  }
 
   /* returns true if there is a repository containing the baseUrl */
   identifyRepository(baseUrl: string): Observable<boolean> {
@@ -68,6 +81,7 @@ export class ValidatorService {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     let errMsg = "";
+    console.log('E R R O R !!!');
     console.log(error);
     if (error instanceof Response) {
       const body = error.text() || '';

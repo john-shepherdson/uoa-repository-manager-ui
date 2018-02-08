@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { formErrorRequiredFields } from '../../../domain/shared-messages';
 
 @Component ({
   selector: 'compatibility-validate-step3',
@@ -8,7 +9,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 export class CompatibilityValidateStep3Component implements OnInit {
   errorMessage: string;
-  currentNoOfRecords: number;
 
   @Input() valSets: string[];
   @Output() emmitObject: EventEmitter<any> = new EventEmitter();
@@ -20,13 +20,12 @@ export class CompatibilityValidateStep3Component implements OnInit {
   ngOnInit () {
     this.group = this.fb.group({
       noOfRecordsInput : '',
-      selectValSet : '',
+      selectValSet : ['',Validators.required],
       xpathInput : ''
     });
-    this.currentNoOfRecords = 10;
+    this.group.get('noOfRecordsInput').setValue(10);
     this.group.get('noOfRecordsInput').disable();
     this.group.get('xpathInput').disable();
-
   }
 
   chooseAll(all: boolean) {
@@ -45,9 +44,11 @@ export class CompatibilityValidateStep3Component implements OnInit {
     }
   }
 
-  submitChanges(){
+  submitChanges() {
     if (this.group.valid) {
+      this.errorMessage = '';
       let emitted: string [] = [];
+      emitted.push(this.group.get('selectValSet').value);
       if ( this.group.get('noOfRecordsInput').enabled ) {
         emitted.push(this.group.get('noOfRecordsInput').value);
       } else {
@@ -58,6 +59,11 @@ export class CompatibilityValidateStep3Component implements OnInit {
       } else {
         emitted.push('');
       }
+
+      this.emmitObject.emit(emitted);
+
+    } else {
+      this.errorMessage = formErrorRequiredFields;
     }
   }
 }

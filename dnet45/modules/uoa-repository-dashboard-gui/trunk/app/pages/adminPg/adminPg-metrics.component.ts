@@ -11,7 +11,6 @@ import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/con
 
 export class AdminPgMetricsComponent implements OnInit {
   piwiks: PiwikInfo[] = [];
-  showSpinner: boolean;
   errorMessage: string;
   loadingMessage: string;
 
@@ -31,7 +30,6 @@ export class AdminPgMetricsComponent implements OnInit {
 
 
   getPiwiks(){
-    this.showSpinner = true;
     this.loadingMessage = loadingReposMessage;
     this.piwikService.getPiwikSitesForRepos()
       .subscribe(
@@ -46,12 +44,10 @@ export class AdminPgMetricsComponent implements OnInit {
         } ),
         error => {
           console.log(error);
-          this.showSpinner = false;
           this.loadingMessage = '';
           this.errorMessage = reposRetrievalError;
         },
         () => {
-          this.showSpinner = false;
           this.loadingMessage = '';
         }
       );

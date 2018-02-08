@@ -17,11 +17,12 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   hasSelectedCountry: boolean;
   selectedCountry: string;
   countryRepos: Repository[] = [];
-  noRepositories: string;
   hasSelectedRepo: boolean;
+
+  noRepositories: string;
   alertMessage: string;
-  showSpinner: boolean;
   loadingMessage: string = loadingReposMessage;
+
   repoId: string;
 
   sourceUrl: string;
@@ -69,26 +70,32 @@ export class RegisterDatasourceShareableComponent implements OnInit {
 
   getReposInCountry(country: string){
     console.log(`I got ${country} and ${this.mode}`);
-    this.countryRepos = [];
-    this.hasSelectedCountry = true;
     this.selectedCountry = country;
-    this.showSpinner = true;
-    this.loadingMessage = loadingReposMessage;
-    this.noRepositories = '';
-    this.repoService.getRepositoriesOfCountry(country,this.mode).subscribe(
-      repos => this.countryRepos = repos,
-      error => {
-        console.log(error);
-        this.showSpinner = false;
-        this.loadingMessage = '';
-        this.alertMessage = noServiceMessage;
-      },
-      () => {
-        if (!this.countryRepos.length) this.noRepositories = noRepositoriesFound;
-        this.showSpinner = false;
-        this.loadingMessage = '';
-      }
-    );
+
+    setTimeout( () => {
+      this.countryRepos = [];
+      this.hasSelectedCountry = true;
+      this.loadingMessage = loadingReposMessage;
+      this.noRepositories = '';
+      this.repoService.getRepositoriesOfCountry(country, this.mode).subscribe(
+        repos => this.countryRepos = repos,
+        error => {
+          console.log(error.statusText);
+          this.loadingMessage = '';
+          this.alertMessage = noServiceMessage;
+        },
+        () => {
+          if (!this.countryRepos.length) {
+            this.noRepositories = noRepositoriesFound;
+            this.countryRepos = [];
+          } else {
+            this.noRepositories = '';
+          }
+          this.loadingMessage = '';
+          this.alertMessage = '';
+        }
+      );
+    }, 500 );
   }
 
   onChooseRepository(id: string){

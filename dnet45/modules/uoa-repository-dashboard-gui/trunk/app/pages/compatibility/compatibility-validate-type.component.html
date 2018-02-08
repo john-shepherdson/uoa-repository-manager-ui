@@ -36,9 +36,11 @@
         <div>
           <div class="animated fadeInRight stepContent">
             <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-            <div *ngIf="showSpinner" style="text-align: center; padding-top: 100px; color: rgb(47, 64, 80); font-weight: bold;">
-              <span>{{ loadingMessage }}</span><br>
-              <img src="/assets/imgs/loader-big.gif">
+            <div *ngIf="loadingMessage" class="loading-big">
+              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                {{ loadingMessage }}
+              </div>
+              <div class="whiteFilm"></div>
             </div>
             <div *ngIf="showDatasource">
               <compatibility-validate-step1 #step1ChooseBaseUrl

@@ -60,6 +60,8 @@ export class CompatibilityValidateStep2Component implements OnInit {
     }
     this.currentContentRules = this.ruleSets[index].contentRules;
     this.currentUsageRules = this.ruleSets[index].usageRules;
+    console.log(`contentRules length: ${this.currentContentRules.length}`);
+    console.log(`  usageRules length: ${this.currentUsageRules.length}`);
   }
 
   /* inputs the Rule Lists into the FormArrays */
@@ -129,6 +131,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
 
   saveChanges() {
     let index: number;
+
     for (let i=0; i< this.ruleSets.length; i++ ) {
       if (this.ruleSets[i].id == this.group.get('ruleSet').value) {
         index = i;
@@ -140,7 +143,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
     console.log('selected contentRules:');
     for (let i=0; i< this.ruleSets[index].contentRules.length; i++ ) {
       if (contentRules.at(i).get('rule').value) {
-        console.log(`${i}, ${this.ruleSets[index].contentRules[i].id}: ${this.ruleSets[index].contentRules[i].name}`);
+        console.log(`${i},\t${this.ruleSets[index].contentRules[i].id}:\t${this.ruleSets[index].contentRules[i].name}`);
       }
     }
     console.log('----------------------------');
@@ -148,7 +151,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
     console.log('selected usageRules:');
     for (let i=0; i< this.ruleSets[index].usageRules.length; i++ ) {
       if (usageRules.at(i).get('rule').value) {
-        console.log(`${i}, ${this.ruleSets[index].usageRules[i].id}: ${this.ruleSets[index].usageRules[i].name}`);
+        console.log(`${i},\t${this.ruleSets[index].usageRules[i].id}:\t${this.ruleSets[index].usageRules[i].name}`);
       }
     }
 

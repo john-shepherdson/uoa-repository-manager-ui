@@ -26,17 +26,28 @@ export class MonitorService {
 
   getJobsOfUser(userEmail: string,
                 jobType:string,
-                offset: number,
-                limit: number,
+                offset: string,
+                limit: string,
                 dateFrom: string,
                 dateTo: string,
                 validationStatus: string,
-                includeJobsTotal: boolean) : Observable<JobsOfUser> {
-    let url = `${this.apiUrl}/monitor/identifyRepository/${userEmail}`;
+                includeJobsTotal): Observable<JobsOfUser> {
+    let url = `${this.apiUrl}/monitor/getJobsOfUser?user=${userEmail}&jobType=${encodeURIComponent(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
     console.log(`knocking on: ${url}`);
+    let body = JSON.stringify({
+      userEmail: userEmail,
+      jobType: jobType,
+      offset: offset,
+      limit: limit,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      validationStatus: validationStatus,
+      includeJobsTotal: includeJobsTotal
+    });
+
     return this.http.get(url)
-    .map(res => <InterfaceInformation>res.json())
-    .catch(this.handleError);
+      .map(res => <JobsOfUser>res.json() )
+      .catch(this.handleError);
   }
 
 
@@ -44,6 +55,7 @@ export class MonitorService {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     let errMsg = "";
+    console.log(`E R R O R !!!`);
     console.log(error);
     if (error instanceof Response) {
       const body = error.text() || '';

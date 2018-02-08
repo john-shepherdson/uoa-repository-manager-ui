@@ -30,14 +30,17 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   step4: string = '';
 
   baseUrlList: string[] = [];
-  chosenUrl: string;
   ruleSets: RuleSet[] = [];
   valSets: string[] = [];
   chosenInterface: InterfaceInformation;
 
+  chosenUrl: string;
+  chosenValSet: string;
+  noOfRecords: number;
+  xPath: string;
+
   errorMessage: string;
   loadingMessage: string;
-  showSpinner: boolean;
 
   @ViewChild('step1ChooseBaseUrl') step1ChooseBaseUrl : CompatibilityValidateStep1Component;
   @ViewChild('step2ChooseGuidelines') step2ChooseGuidelines : CompatibilityValidateStep2Component;
@@ -87,20 +90,17 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       this.showDatasource = true;
       this.showGuidelines = false;
       this.step2 = '';
+      this.errorMessage = '';
     } else if (this.showParameters) {
       this.step3 = '';
       this.showGuidelines = true;
       this.showParameters = false;
-    } else if (this.showFinish) {
-      this.showParameters = true;
-      this.showFinish = false;
-      this.step4 = '';
+      this.errorMessage = '';
     }
   }
 
   /* retrieves the baseUrl list for the registered repositories of the user */
   getBaseUrlList() {
-    this.showSpinner = true;
     this.loadingMessage = loadingReposMessage;
 //    this.repoService.getUrlsOfUserRepos(this.authService.getUserEmail()) RESTORE AFTER FINISH!!
     this.repoService.getUrlsOfUserRepos('ant.lebesis@gmail.com')
@@ -116,12 +116,10 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         }),
         error => {
           console.log(error);
-          this.showSpinner = false;
           this.loadingMessage = '';
           this.errorMessage = loadingUserRepoInfoError;
         },
         () => {
-          this.showSpinner = false;
           this.loadingMessage = '';
           this.showDatasource = true;
         }
@@ -129,18 +127,15 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   }
 
   getRuleSetsForType() {
-    this.showSpinner = true;
     this.loadingMessage = loadingRuleSets;
     this.valService.getRuleSets(this.type)
       .subscribe(
         rules => this.ruleSets = rules,
         error => {
-          this.showSpinner = false;
           this.loadingMessage = '';
           this.errorMessage = loadingRuleSetsError;
         },
         () => {
-          this.showSpinner = false;
           this.loadingMessage = '';
           this.showDatasource = false;
           this.step2 = 'active';
@@ -154,18 +149,15 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   }
 
   getInterfaceInfo() {
-    this.showSpinner = true;
     this.loadingMessage = loadingValSets;
     this.valService.getInterfaceInformation(this.chosenUrl).subscribe(
       info => this.chosenInterface = info,
       error => {
         console.log(error);
-        this.showSpinner = false;
         this.loadingMessage = '';
         this.errorMessage = loadingValSetsError;
       },
       () => {
-        this.showSpinner = false;
         this.loadingMessage = '';
         this.step3 = 'active';
         this.showParameters = true;
@@ -177,7 +169,6 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   }
 
   getValidationSets() {
-    this.showSpinner = true;
     this.loadingMessage = loadingValSets;
     this.valService.getSetsOfRepository(this.chosenUrl)
       .subscribe(
@@ -186,7 +177,6 @@ export class CompatibilityValidateTypeComponent implements OnInit {
           this.errorMessage = loadingValSetsError
         },
         () => {
-          this.showSpinner = false;
           this.loadingMessage = '';
           this.step2 = 'active';
           this.showParameters = true;
@@ -198,9 +188,43 @@ export class CompatibilityValidateTypeComponent implements OnInit {
     this.chosenUrl = url;
   }
 
-  getParameters(params: string[]) {
-    // no of records = params[0]
-    // xpath = params[1]
+  getParameters (params: string[]) {
+    this.chosenValSet = params[0];
+    if (params[1]) {
+      this.noOfRecords = +params[1];
+    }
+    if (params[2]) {
+      this.xPath = params[2];
+    }
+  }
+
+  submitForValidation(){
+    /*
+    * selectedCrisEntities  string[]
+    * selectedContentRules number[]
+    * selectedUsageRules number[]
+    *
+    * validationSet
+    * records
+    * groupByXpath
+    *
+    * adminEmails string[]
+    * officialName
+    * baseUrl
+    * userEmail
+    * datasourceId
+    * interfaceId
+    * desiredCompatibilityLevel
+    * activationId
+    * repoType
+    * interfaceIdOld
+    * metadataPrefix
+    *
+    * registration boolean
+    * updateExisting boolean
+    * cris boolean
+    * crisReferentialChecks boolean
+    */
   }
 
 }

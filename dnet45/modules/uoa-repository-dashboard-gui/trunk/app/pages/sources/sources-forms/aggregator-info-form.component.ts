@@ -35,7 +35,6 @@ import {
 export class AggregatorInfoFormComponent implements OnInit {
   errorMessage: string;
   successMessage: string;
-  showSpinner: boolean;
   loadingMessage: string;
 
   typologies = typologies;

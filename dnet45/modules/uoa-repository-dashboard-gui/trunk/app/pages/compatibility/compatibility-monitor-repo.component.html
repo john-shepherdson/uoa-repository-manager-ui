@@ -1,8 +1,10 @@
 <div class="uk-grid uk-grid-stack">
   <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-  <div style="text-align: center; margin-top: 100px;" *ngIf="showSpinner">
-    <span>{{ loadingMessage }}</span><br>
-    <img src="/assets/imgs/loader-big.gif">
+  <div *ngIf="loadingMessage" class="loading-big">
+    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+      {{ loadingMessage }}
+    </div>
+    <div class="whiteFilm"></div>
   </div>
   <div *ngIf="repo" class="uk-width-expand@m uk-first-column">
     <div class="gwt-HTML uk-margin-medium-bottom">

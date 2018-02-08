@@ -10,7 +10,6 @@ import { loadingRepoError, loadingRepoMessage } from '../../domain/shared-messag
 })
 
 export class CompatibilityMonitorRepoComponent implements OnInit {
-  showSpinner: boolean;
   loadingMessage: string;
   errorMessage: string;
 
@@ -31,13 +30,11 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
 
   getRepo(){
     if (this.repoId) {
-      this.showSpinner = true;
       this.loadingMessage = loadingRepoMessage;
       this.repoService.getRepositoryById(this.repoId).subscribe(
         repo => this.repo = repo,
         error => console.log(error),
         () => {
-          this.showSpinner = false;
           this.loadingMessage = '';
           if(!this.repo){
             this.errorMessage = loadingRepoError;

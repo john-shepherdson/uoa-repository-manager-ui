@@ -14,7 +14,6 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
 
   repoTopics: Topic[] = [];
   noDatasources: boolean;
-  showSpinner: boolean;
   errorMessage: string;
   loadingMessage: string;
 
@@ -29,7 +28,6 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
 
   getTopics(): void {
     let name = this.route.snapshot.paramMap.get('name');
-    this.showSpinner = true;
     this.loadingMessage = loadingTopics;
     this.brokerService.getTopicsForDataSource(name)
       .subscribe(
@@ -39,7 +37,6 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
         },
         error => console.log(error),
         () => {
-          this.showSpinner = false;
           this.loadingMessage = '';
         }
       );

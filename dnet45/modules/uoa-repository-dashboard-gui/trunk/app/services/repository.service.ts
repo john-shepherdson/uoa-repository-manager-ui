@@ -11,7 +11,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Country, Repository, RepositoryInterface, Timezone, Topic } from '../domain/typeScriptClasses';
+import { Country, MetricsInfo, Repository, RepositoryInterface, Timezone, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
@@ -102,7 +102,15 @@ export class RepositoryService {
   }
 
 
-  updateEnglishName(id: string, englishname: string): Observable<string>{
+  getMetricsInfoForRepository (repoId: string): Observable<MetricsInfo> {
+    let url = `${this.apiUrl}/repository/getMetricsInfoForRepository/${repoId}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <MetricsInfo>res.json())
+      .catch(this.handleError);
+  }
+
+updateEnglishName(id: string, englishname: string): Observable<string>{
     let url = `${this.apiUrl}/repository/updateEnglishName?id=${id}&officialName=DSpace&englishname=${englishname}`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;

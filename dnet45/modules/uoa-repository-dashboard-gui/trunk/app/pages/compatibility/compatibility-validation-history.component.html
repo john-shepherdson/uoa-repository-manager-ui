@@ -23,7 +23,7 @@
           <div class="links uk-inline">
             <div class="filterLabel" style="display: inline;">Filter validation jobs:</div>
             <a class="uk-active" (click)="filterJobs('all')">All jobs (0)</a>
-            <a class="uk-active" (click)="filterJobs('successfull')">successfull (0)</a>
+            <a class="uk-active" (click)="filterJobs('successful')">successful (0)</a>
             <a class="uk-active" (click)="filterJobs('failed')">failed (0)</a>
             <a class="uk-active" (click)="filterJobs('ongoing')">ongoing (0)</a>
           </div>
@@ -78,8 +78,8 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody> <!-- WILL BE let job of jobsOfUser.jobs -->
-                    <tr class="el-item" *ngFor="let job of jobsOfUser">
+                <tbody *ngIf="jobsOfUser"> <!-- WILL BE let job of jobsOfUser.jobs -->
+                    <tr class="el-item" *ngFor="let job of jobsOfUser.jobs">
                       <td class="uk-table-shrink" style="vertical-align: top !important;">
                         <div class="el-title">{{ job.repository }}</div>
                       </td>

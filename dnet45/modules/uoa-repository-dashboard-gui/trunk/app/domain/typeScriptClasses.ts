@@ -559,7 +559,7 @@ export class InterfaceInformation {
   adminEmails: string[];
 }
 
-export class JobsOfUser {
+export class JobsOfUser implements IsSerializable {
   totalJobs: number;
   totalJobsSuccessful: number;
   totalJobsFailed: number;
@@ -568,3 +568,17 @@ export class JobsOfUser {
   jobs: StoredJob[];
 }
 
+export class MetricsNumbers implements IsSerializable {
+  downloads: string[];
+  pageViews: string;
+  total_downloads: string;
+  total_openaire_downloads: string;
+  total_openaire_views: string;
+  total_views: string;
+  views: string[];
+}
+
+export class MetricsInfo {
+  diagramsBaseURL: string;
+  metricsNumbers: MetricsNumbers;
+}
