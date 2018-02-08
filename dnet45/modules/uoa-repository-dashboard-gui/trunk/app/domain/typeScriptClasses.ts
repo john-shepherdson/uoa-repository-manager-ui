@@ -552,7 +552,7 @@ export class Timezone {
   offset: number;
 }
 
-export class InterfaceInformation {
+export class InterfaceInformation implements IsSerializable {
 
   identified: boolean;
   sets: string[];
@@ -578,7 +578,7 @@ export class MetricsNumbers implements IsSerializable {
   views: string[];
 }
 
-export class MetricsInfo {
+export class MetricsInfo implements IsSerializable {
   diagramsBaseURL: string;
   metricsNumbers: MetricsNumbers;
 }

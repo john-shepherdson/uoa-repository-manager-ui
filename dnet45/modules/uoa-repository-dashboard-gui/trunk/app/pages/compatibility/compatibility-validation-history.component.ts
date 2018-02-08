@@ -6,7 +6,8 @@ import { jobTypes } from '../../domain/job-types';
 import { jobsOfUser } from '../../domain/dummyLists';
 import { MonitorService } from '../../services/monitor.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { JobsOfUser } from '../../domain/typeScriptClasses';
+import { JobsOfUser, StoredJob } from '../../domain/typeScriptClasses';
+import { ValidatorService } from '../../services/validator.service';
 
 @Component ({
   selector: 'app-compatibility-validation-history',
@@ -17,6 +18,7 @@ import { JobsOfUser } from '../../domain/typeScriptClasses';
 export class CompatibilityValidationHistoryComponent  implements OnInit {
   jobTypes: string[];
   jobsOfUser: JobsOfUser;
+  jobs: StoredJob[];
 
   itemsPerPage: number;
   currentPage: number;
@@ -25,7 +27,8 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
   chosenJobType: string;
 
   constructor(private authService: AuthenticationService,
-              private monitorService: MonitorService) {}
+              private monitorService: MonitorService,
+              private valService: ValidatorService) {}
 
   ngOnInit() {
     this.loadTable();
@@ -52,6 +55,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
         this.currentPage = 1;
         this.currentFilter = 'all';
         this.chosenJobType = '';
+        this.storedJobs();
       }
     );
   }
@@ -83,6 +87,22 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     }
   }
 
+  storedJobs () {
+    this.valService.getStoredJobsNew('ant.lebesis@gmail.com',
+      'Compatibility Test',
+      '0',
+      '10',
+      '2018-02-01',
+      '2018-02-28',
+      'successful').subscribe(
+      jobs => this.jobs = jobs,
+      error => console.log(error.status),
+      () => {
+        console.log('Also hit getStoredJobsNew and got:');
+        console.log(this.jobs);
+      }
+    );
+  }
 /* WAITING FOR API !
   getJobs() {
     this.monitorService.getJobsOfUser(this.authService.getUserEmail(),

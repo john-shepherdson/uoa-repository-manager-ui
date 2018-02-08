@@ -1,4 +1,4 @@
-<div class="uk-grid uk-grid-stack">
+<div *ngIf="jobsOfUser" class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
     <div class="uk-margin-medium-bottom">
       <h1 class="uk-article-title">Browse validation history</h1>
@@ -63,7 +63,7 @@
           <div class="resultsPageLabel">page {{ currentPage }} of {{ totalPages }}</div>
         </div>
         <div>
-          <div>
+          <div *ngIf="jobsOfUser.jobs">
             <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-top uk-margin-bottom">
               <table class="uk-table uk-table-middle uk-table-striped" style="vertical-align: top !important;">
                 <thead>
@@ -78,7 +78,7 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody *ngIf="jobsOfUser"> <!-- WILL BE let job of jobsOfUser.jobs -->
+                <tbody> <!-- WILL BE let job of jobsOfUser.jobs -->
                     <tr class="el-item" *ngFor="let job of jobsOfUser.jobs">
                       <td class="uk-table-shrink" style="vertical-align: top !important;">
                         <div class="el-title">{{ job.repository }}</div>

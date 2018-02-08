@@ -52,7 +52,7 @@ export class ValidatorService {
     let url = `${this.apiUrl}/validator/getStoredJobsNew?user=${userEmail}&jobType=${encodeURIComponent(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
-      .map(res => {<StoredJob[]>res.json(); console.log(res)})
+      .map(res => <StoredJob[]>res.json())
       .catch(this.handleError);
   }
 
