@@ -8,6 +8,7 @@ import {AuthGuardService} from '../../services/auth-guard.service';
 import { CompatibilityValidationHistoryComponent } from './compatibility-validation-history.component';
 import { CompatibilityMonitorRepoComponent } from './compatibility-monitor-repo.component';
 import { CompatibilityValidateTypeComponent } from './compatibility-validate-type.component';
+import { CompatibilityValidationResultsComponent } from './compatibility-validation-results.component';
 
 const compatibilityRoutes: Routes = [
   {
@@ -36,7 +37,16 @@ const compatibilityRoutes: Routes = [
       },
       {
         path: 'browseHistory',
-        component: CompatibilityValidationHistoryComponent
+        children: [
+          {
+            path: '',
+            component: CompatibilityValidationHistoryComponent
+          },
+          {
+            path: ':id',
+            component: CompatibilityValidationResultsComponent
+          }
+        ]
       },
       {
         path: 'monitor',

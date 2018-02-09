@@ -190,12 +190,8 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   getParameters (params: string[]) {
     this.chosenValSet = params[0];
-    if (params[1]) {
-      this.noOfRecords = +params[1];
-    }
-    if (params[2]) {
-      this.xPath = params[2];
-    }
+    this.noOfRecords = +params[1];
+    this.xPath = params[2];
   }
 
   submitForValidation(){

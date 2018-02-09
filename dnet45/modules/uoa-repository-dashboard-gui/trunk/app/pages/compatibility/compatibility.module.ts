@@ -13,6 +13,7 @@ import { CompatibilityValidateTypeComponent } from './compatibility-validate-typ
 import { CompatibilityValidateStep1Component } from './compatibility-validate-forms/compatibility-validate-step1.component';
 import { CompatibilityValidateStep2Component } from './compatibility-validate-forms/compatibility-validate-step2.component';
 import { CompatibilityValidateStep3Component } from './compatibility-validate-forms/compatibility-validate-step3.component';
+import { CompatibilityValidationResultsComponent } from './compatibility-validation-results.component';
 
 @NgModule ({
   imports: [
@@ -26,6 +27,7 @@ import { CompatibilityValidateStep3Component } from './compatibility-validate-fo
     CompatibilityComponent,
     CompatibilityValidateComponent,
     CompatibilityValidationHistoryComponent,
+    CompatibilityValidationResultsComponent,
     CompatibilityMonitorComponent,
     CompatibilityMonitorRepoComponent,
     CompatibilityValidateTypeComponent,

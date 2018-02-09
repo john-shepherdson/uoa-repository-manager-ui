@@ -48,12 +48,15 @@ export class CompatibilityValidateStep3Component implements OnInit {
     if (this.group.valid) {
       this.errorMessage = '';
       let emitted: string [] = [];
+
       emitted.push(this.group.get('selectValSet').value);
+
       if ( this.group.get('noOfRecordsInput').enabled ) {
         emitted.push(this.group.get('noOfRecordsInput').value);
       } else {
-        emitted.push('0')
+        emitted.push('');
       }
+
       if ( this.group.get('xpathInput').enabled ) {
         emitted.push(this.group.get('xpathInput').value);
       } else {

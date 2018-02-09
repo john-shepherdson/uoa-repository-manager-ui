@@ -6,15 +6,14 @@
 *  !!! USING TEMPORARY API ADDRESS AND USER
 */
 
-import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { InterfaceInformation, JobsOfUser, RuleSet, StoredJob } from '../domain/typeScriptClasses';
 
-const httpOptions = {
-  headers: new HttpHeaders().set('Content-Type', 'application/json')
-};
+
+let headers = new Headers({ 'Content-Type': 'application/json' });
+let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class ValidatorService {
@@ -28,7 +27,7 @@ export class ValidatorService {
   getRuleSets(mode: string): Observable<RuleSet[]> {
     let url = `${this.apiUrl}/validator/getRuleSets/${mode}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    return this.http.get(url,httpOptions)
       .map(res => <RuleSet[]>res.json())
       .catch(this.handleError);
   }
@@ -37,7 +36,7 @@ export class ValidatorService {
   getSetsOfRepository(baseUrl: string): Observable<string[]> {
     let url = `${this.apiUrl}/validator/getSetsOfRepository?url=${baseUrl}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    return this.http.get(url,httpOptions)
       .map(res => <string[]>res.json())
       .catch(this.handleError);
   }
@@ -51,7 +50,7 @@ export class ValidatorService {
                    validationStatus: string): Observable<StoredJob[]> {
     let url = `${this.apiUrl}/validator/getStoredJobsNew?user=${userEmail}&jobType=${encodeURIComponent(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    return this.http.get(url,httpOptions)
       .map(res => <StoredJob[]>res.json())
       .catch(this.handleError);
   }
@@ -61,7 +60,7 @@ export class ValidatorService {
     let param = encodeURIComponent(baseUrl);
     let url = `${this.apiUrl}/validator/identifyRepository/${param}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    return this.http.get(url,httpOptions)
       .map(res => <boolean>res.json())
       .catch(this.handleError);
   }
@@ -70,8 +69,21 @@ export class ValidatorService {
     let param = encodeURIComponent(baseUrl);
     let url = `${this.apiUrl}/validator/getInterfaceInformation/${param}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    return this.http.get(url,httpOptions)
       .map(res => <InterfaceInformation>res.json())
+      .catch(this.handleError);
+  }
+
+  reSubmitJobForValidation(id: string): Observable<string> {
+    let url = `${this.apiUrl}/validator/reSubmitJobForValidation/?jobId=${id}`;
+    console.log(`knocking on: ${url}`);
+
+    httpOptions.withCredentials = true;
+    return this.http.post(url,httpOptions)
+      .map(res => {
+        console.log(`responded ${res.status}`);
+        return res.status.toString();
+      })
       .catch(this.handleError);
   }
 

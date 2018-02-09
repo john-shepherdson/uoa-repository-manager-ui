@@ -21,9 +21,14 @@ export const loadingRuleSetsError = 'The rule sets can not be retrieved at the m
 export const noRuleSets = 'No rule sets were found';
 
 
-/* Loading Rules Messages */
+/* Loading Validation Sets Messages */
 export const loadingValSets = 'Retrieving validation sets ...';
 export const loadingValSetsError = 'The validation sets can not be retrieved at the moment';
+
+/* Jobs of User */
+export const loadingUserJobs = 'Retrieving job results ...';
+export const loadingUserJobsError = 'Your job results can not be retrieved at the moment';
+export const noUserJobsFound = 'No stored jobs found';
 
 
 /* Loading Topics Messages */
@@ -32,7 +37,7 @@ export const loadingTopicsError = 'Failed to load the topics for your datasource
 
 
 /* Loading Metrics Messages */
-export const loadingMetrics = 'Loading diagrams ...'
+export const loadingMetrics = 'Loading diagrams ...';
 export const loadingMetricsError = 'Failed to load the piwik site of your repository';
 
 

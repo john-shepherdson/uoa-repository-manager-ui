@@ -8,6 +8,8 @@ import { MonitorService } from '../../services/monitor.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { JobsOfUser, StoredJob } from '../../domain/typeScriptClasses';
 import { ValidatorService } from '../../services/validator.service';
+import { loadingUserJobs, loadingUserJobsError, noUserJobsFound } from '../../domain/shared-messages';
+import { stat } from 'fs';
 
 @Component ({
   selector: 'app-compatibility-validation-history',
@@ -16,6 +18,13 @@ import { ValidatorService } from '../../services/validator.service';
 
 
 export class CompatibilityValidationHistoryComponent  implements OnInit {
+  userEmail: string;
+  loadingMessage: string;
+  errorMessage: string;
+  infoMessage: string;
+  successMessage: string;
+  failureMessage: string;
+
   jobTypes: string[];
   jobsOfUser: JobsOfUser;
   jobs: StoredJob[];
@@ -35,55 +44,44 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
   }
 
   loadTable() {
-    //call API and get all jobs:
-    this.monitorService.getJobsOfUser('ant.lebesis@gmail.com',
-                                      'Compatibility Test',
-                                      '0',
-                                      '10',
-                                      '2018-02-01',
-                                      '2018-02-28',
-                                      'successful',
-                                      true).subscribe(
-      jobs => {this.jobsOfUser = jobs; console.log(jobs); console.log(this.jobsOfUser);},
-      error => console.log(error.status),
-      () => {
-        this.jobTypes = jobTypes;
-        this.totalPages = 10;
+    //initialize
+    // RESTORE IN THE END this.userEmail = this.authService.getUserEmail();
+    this.userEmail = 'ant.lebesis@gmail.com';
+    this.jobTypes = jobTypes;
+    this.itemsPerPage = 10;
+    this.currentPage = 1;
+    this.currentFilter = 'all';
+    this.chosenJobType = 'Compatibility Test';
 
-        //initialize
-        this.itemsPerPage = 10;
-        this.currentPage = 1;
-        this.currentFilter = 'all';
-        this.chosenJobType = '';
-        this.storedJobs();
-      }
-    );
+    //call API and get all jobs:
+    this.getJobs();
   }
 
 
   filterJobs(filter: string){
     this.currentFilter = filter;
     console.log(`requesting ${this.currentFilter} jobs`);
-    //call api to get filtered jobs
+    this.getJobs();
   }
 
   getItemsPerPage(num: number){
     this.itemsPerPage = num;
+    this.getJobs();
   }
 
   goToNextPage(){
     if(this.currentPage < this.totalPages) {
-      //get page current-1 from the API
-      //on success current--
-      console.log(`Get me page ${this.currentPage + 1}!`);
+      this.currentPage++;
+      console.log(`Get me page ${this.currentPage}!`);
+      this.getJobs();
     }
   }
 
   goToPreviousPage(){
     if(this.currentPage > 1) {
-      //get page current-1 from the API
-      //on success current--
-      console.log(`Get me page ${this.currentPage - 1}!`);
+      this.currentPage--;
+      console.log(`Get me page ${this.currentPage}!`);
+      this.getJobs();
     }
   }
 
@@ -103,21 +101,62 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
       }
     );
   }
-/* WAITING FOR API !
+
   getJobs() {
-    this.monitorService.getJobsOfUser(this.authService.getUserEmail(),
-                                      this.chosenJobType,
-                                      this.currentPage,
-                                      this.itemsPerPage,
-                                     null,
-                                     null,
-                                      this.currentFilter,
-                                     true).subscribe(
-      jobs => this.jobsOfUser = jobs,
-      error => console.log(error)
+    this.loadingMessage = loadingUserJobs;
+    this.errorMessage = '';
+    this.infoMessage = '';
+    this.successMessage = '';
+    this.failureMessage = '';
+    setTimeout( () => {
+      this.monitorService.getJobsOfUser(this.userEmail,
+                                        this.chosenJobType,
+                                        (this.currentPage-1).toString(),
+                                        this.itemsPerPage.toString(),
+                                        '',
+                                        '',
+                                        this.currentFilter,
+                                        true).subscribe(
+        jobs => this.jobsOfUser = jobs,
+        error => {
+          console.log(`The API returned ${error.status}`);
+          this.errorMessage = loadingUserJobsError;
+        },
+        () => {
+          this.totalPages = Math.ceil(this.jobsOfUser.totalJobs / this.itemsPerPage);
+          this.loadingMessage = '';
+          this.errorMessage = '';
+          if (!this.totalPages) {
+            this.infoMessage = noUserJobsFound;
+          }
+          if (!this.jobsOfUser.jobs) {
+            this.errorMessage = loadingUserJobsError;
+          }
+        }
+      );
+    },500);
+  }
+
+  getResultImage(status: string) {
+    let assets = 'assets/imgs';
+    if (status == 'successful') {
+      return `${assets}/icon_colours-check.jpg`;
+    } else if (status == 'failed') {
+      return `${assets}/icon_colours-x.jpg`;
+    } else {
+      return `${assets}/icon_colours-question.jpg`;
+    }
+  }
+
+  resubmitJob (id: string) {
+    this.valService.reSubmitJobForValidation(id).subscribe(
+      res => this.successMessage = `The job with id ${id} was successfully resubmitted`,
+      error => {
+        this.failureMessage = `Could not resubmit the job with id ${id}`;
+        console.log(error);
+      }
     );
   }
-*/
 
 }
 
