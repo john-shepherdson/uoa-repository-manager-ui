@@ -1,1 +1,205 @@
-validation results for job {{ jobId }}
+<div class="uk-grid uk-grid-stack">
+  <div class="uk-width-expand@m uk-first-column">
+    <div class="uk-margin-medium-bottom">
+      <h1 class="uk-article-title">Validation results for</h1>
+    </div>
+    <div>
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+      <div *ngIf="loadingMessage" class="loading-big">
+        <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+          {{ loadingMessage }}
+        </div>
+        <div class="whiteFilm"></div>
+      </div>
+      <div *ngIf="jobSummary">
+        <div>
+          <div>
+            <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
+                uk-scrollspy-class=""><span>{{jobSummary.baseUrl}}</span></h4>
+            <div class="uk-margin-small">by {{jobSummary.userEmail}}</div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <hr class="uk-scrollspy-inview uk-animation-slide-bottom-small" uk-scrollspy-class="">
+            <div>
+              <span>{{ jobSummary.jobType }}</span>
+              |
+              <span>{{ jobSummary.guidelinesShortName }}</span>
+              |
+              <span>Validation set: {{ jobSummary.validationSet }}</span>
+            </div>
+            <div>
+              <span>Started: {{ jobSummary.started }}</span>
+              ,
+              <span>Ended: {{ jobSummary.ended }}</span>
+              ,
+              <span>Duration: {{ jobSummary.duration }}</span>
+            </div>
+            <div style="font-size: 120%;">
+              <span>Records tested: {{ jobSummary.recordsTested }}</span>
+            </div>
+            <div>
+              <span class="uk-label uk-margin-right">Score for content: {{ jobSummary.contentJobScore }}</span>
+              <span class="uk-label">Score for usage: {{ jobSummary.usageJobScore }}</span>
+            </div>
+            <hr class="uk-scrollspy-inview uk-animation-slide-bottom-small" uk-scrollspy-class="">
+          </div>
+        </div>
+        <div>
+          <ul class="uk-margin el-nav uk-tab" uk-switcher="connect: .uk-switcher">
+            <li routerLinkActive="uk-active">
+              <a href="#">for Content</a>
+            </li>
+            <li routerLinkActive="uk-active">
+              <a href="#">for Usage</a>
+            </li>
+          </ul>
+          <ul class="uk-switcher">
+            <li class="el-item">
+              <div class="uk-grid-margin uk-grid uk-grid-stack">
+                <div class="uk-width-1-1@m uk-first-column">
+                  <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                    <div *ngIf="noContent" class="uk-alert">{{ noContent }}</div>
+                    <div>
+                      <table class="uk-table uk-table-striped uk-table-middle rules-table">
+                        <thead>
+                          <tr>
+                            <th>Rule Name</th>
+                            <th class="uk-text-nowrap">Rule Description</th>
+                            <th class="uk-text-nowrap">Rule Weight</th>
+                            <th class="uk-text-nowrap"># of records</th>
+                            <th class="uk-text-nowrap">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let contentRule of contentResults" class="el-item">
+                            <td class="uk-table-shrink">
+                              <div class="el-title">{{ contentRule.name }}</div>
+                            </td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title" [innerHtml]="contentRule.description">
+                              </div>
+                            </td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title">{{ contentRule.weight }}</div>
+                            </td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title">{{ contentRule.successes }}</div>
+                            </td>
+                            <td class="uk-table-shrink">
+                              <div *ngIf="!contentRule.hasErrors" class="el-title">
+                                <span uk-icon="icon: check" style="color: #4b991f" class="uk-icon">
+                                  <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" icon="check" ratio="1">
+                                    <polyline fill="none" stroke="#000" stroke-width="1.1" points="4,10 8,15 17,4"></polyline>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div *ngIf="contentRule.hasErrors && contentRule.mandatory">
+                                <span uk-icon="icon: close" style="color: #cd242b" class="uk-icon">
+                                  <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" icon="close" ratio="1">
+                                    <path fill="none" stroke="#000" stroke-width="1.06" d="M16,16 L4,4"></path>
+                                    <path fill="none" stroke="#000" stroke-width="1.06" d="M16,4 L4,16"></path>
+                                  </svg>
+                                </span>
+                                <a class="errorlink viewErrors uk-display-block" (click)="viewErrors(contentRule)"><span>View Errors</span></a>
+                              </div>
+                              <div *ngIf="contentRule.hasErrors && !contentRule.mandatory">
+                                <span uk-icon="icon: warning" style="color: #e9d60d" class="uk-icon">
+                                  <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" icon="warning" ratio="1">
+                                    <circle cx="10" cy="14" r="1"></circle>
+                                    <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"></circle>
+                                    <path d="M10.97,7.72 C10.85,9.54 10.56,11.29 10.56,11.29 C10.51,11.87 10.27,12 9.99,12 C9.69,12 9.49,11.87 9.43,11.29 C9.43,11.29 9.16,9.54 9.03,7.72 C8.96,6.54 9.03,6 9.03,6 C9.03,5.45 9.46,5.02 9.99,5 C10.53,5.01 10.97,5.44 10.97,6 C10.97,6 11.04,6.54 10.97,7.72 L10.97,7.72 Z"></path>
+                                  </svg>
+                                </span>
+                                <a class="warninglink viewErrors uk-display-block" (click)="viewErrors(contentRule)"><span>View Warnings</span></a>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="el-item">
+              <div class="uk-grid-margin uk-grid uk-grid-stack">
+                <div class="uk-width-1-1@m uk-first-column">
+                  <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                    <div *ngIf="noUsage" class="uk-alert">{{ noUsage }}</div>
+                    <div>
+                      <table class="uk-table uk-table-striped uk-table-middle rules-table">
+                        <thead>
+                        <tr>
+                          <th>Rule Name</th>
+                          <th class="uk-text-nowrap">Rule Description</th>
+                          <th class="uk-text-nowrap">Rule Weight</th>
+                          <th class="uk-text-nowrap"># of records</th>
+                          <th class="uk-text-nowrap">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let usageRule of usageResults" class="el-item">
+                          <td class="uk-table-shrink">
+                            <div class="el-title">{{ usageRule.name }}</div>
+                          </td>
+                          <td class="uk-table-shrink">
+                            <div class="el-title" [innerHtml]="usageRule.description">
+                            </div>
+                          </td>
+                          <td class="uk-table-shrink">
+                            <div class="el-title">{{ usageRule.weight }}</div>
+                          </td>
+                          <td class="uk-table-shrink">
+                            <div class="el-title">{{ usageRule.successes }}</div>
+                          </td>
+                          <td class="uk-table-shrink">
+                            <div *ngIf="!usageRule.hasErrors" class="el-title">
+                                <span uk-icon="icon: check" style="color: #4b991f" class="uk-icon">
+                                  <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" icon="check" ratio="1">
+                                    <polyline fill="none" stroke="#000" stroke-width="1.1" points="4,10 8,15 17,4"></polyline>
+                                  </svg>
+                                </span>
+                            </div>
+                            <div *ngIf="usageRule.hasErrors && usageRule.mandatory">
+                                <span uk-icon="icon: close" style="color: #cd242b" class="uk-icon">
+                                  <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" icon="close" ratio="1">
+                                    <path fill="none" stroke="#000" stroke-width="1.06" d="M16,16 L4,4"></path>
+                                    <path fill="none" stroke="#000" stroke-width="1.06" d="M16,4 L4,16"></path>
+                                  </svg>
+                                </span>
+                              <a class="errorlink viewErrors uk-display-block" (click)="viewErrors(usageRule)"><span>View Errors</span></a>
+                            </div>
+                            <div *ngIf="usageRule.hasErrors && !usageRule.mandatory">
+                                <span uk-icon="icon: warning" style="color: #e9d60d" class="uk-icon">
+                                  <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" icon="warning" ratio="1">
+                                    <circle cx="10" cy="14" r="1"></circle>
+                                    <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"></circle>
+                                    <path d="M10.97,7.72 C10.85,9.54 10.56,11.29 10.56,11.29 C10.51,11.87 10.27,12 9.99,12 C9.69,12 9.49,11.87 9.43,11.29 C9.43,11.29 9.16,9.54 9.03,7.72 C8.96,6.54 9.03,6 9.03,6 C9.03,5.45 9.46,5.02 9.99,5 C10.53,5.01 10.97,5.44 10.97,6 C10.97,6 11.04,6.54 10.97,7.72 L10.97,7.72 Z"></path>
+                                  </svg>
+                                </span>
+                              <a class="warninglink viewErrors uk-display-block" (click)="viewErrors(usageRule)"><span>View Warnings</span></a>
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-dialog #checkErrors [title]="modalTitle" [isModalShown]="false" [hideModalButton]="'OK'">
+  <div>
+    <p>See the list of errors found for this specific rule</p>
+    <a *ngFor="let er of currentErrors" class="uk-display-block" target="_blank" href="{{ linkToError(er) }}">{{ er }}</a>
+  </div>
+</confirmation-dialog>

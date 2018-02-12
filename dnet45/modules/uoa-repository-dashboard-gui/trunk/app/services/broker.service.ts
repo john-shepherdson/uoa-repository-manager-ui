@@ -19,12 +19,12 @@ let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class BrokerService {
-  /*  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service'; */
-  private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
+  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';
+  /*private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';*/
 
   constructor(private http: Http) { }
 
-  updateEnglishName(query: AdvQueryObject): Observable<string>{
+  advancedShowEvents(query: AdvQueryObject): Observable<string>{
     let url = `${this.apiUrl}/broker/advancedShowEvents/0/100`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify(query);

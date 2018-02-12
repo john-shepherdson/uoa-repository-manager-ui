@@ -51,12 +51,17 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     this.itemsPerPage = 10;
     this.currentPage = 1;
     this.currentFilter = 'all';
-    this.chosenJobType = 'Compatibility Test';
+    this.chosenJobType = '';
 
     //call API and get all jobs:
     this.getJobs();
   }
 
+
+  getJobType(type: string) {
+    this.chosenJobType = type;
+    this.getJobs();
+  }
 
   filterJobs(filter: string){
     this.currentFilter = filter;
@@ -125,12 +130,8 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
         () => {
           this.totalPages = Math.ceil(this.jobsOfUser.totalJobs / this.itemsPerPage);
           this.loadingMessage = '';
-          this.errorMessage = '';
-          if (!this.totalPages) {
+          if (!this.totalPages || !this.jobsOfUser.jobs) {
             this.infoMessage = noUserJobsFound;
-          }
-          if (!this.jobsOfUser.jobs) {
-            this.errorMessage = loadingUserJobsError;
           }
         }
       );

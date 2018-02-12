@@ -19,6 +19,8 @@ export const loadingRepoError = 'The repository can not be retrieved at the mome
 export const loadingRuleSets = 'Retrieving sets of rules ...';
 export const loadingRuleSetsError = 'The rule sets can not be retrieved at the moment';
 export const noRuleSets = 'No rule sets were found';
+export const noContentRulesResults = 'No content rules were tested';
+export const noUsageRulesResults = 'No usage rules were tested';
 
 
 /* Loading Validation Sets Messages */
@@ -29,6 +31,8 @@ export const loadingValSetsError = 'The validation sets can not be retrieved at 
 export const loadingUserJobs = 'Retrieving job results ...';
 export const loadingUserJobsError = 'Your job results can not be retrieved at the moment';
 export const noUserJobsFound = 'No stored jobs found';
+export const loadingJobSummary = 'Retrieving job summary ...';
+export const loadingJobSummaryError = 'The job summary can not be retrieved at the moment';
 
 
 /* Loading Topics Messages */

@@ -18,6 +18,8 @@ export class ConfirmationDialogComponent {
 
   @Input() public confirmActionButton: string;
 
+  @Input() public hideModalButton:string = 'Cancel';
+
   @Output() emmitObject: EventEmitter<any> = new EventEmitter();
 
   private _ids: string[] = [];

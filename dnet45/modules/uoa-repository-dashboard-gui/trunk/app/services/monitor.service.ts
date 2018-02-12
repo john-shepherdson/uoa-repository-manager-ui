@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { InterfaceInformation, JobsOfUser } from "../domain/typeScriptClasses";
+import { InterfaceInformation, JobsOfUser, StoredJob } from "../domain/typeScriptClasses";
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
@@ -24,6 +24,14 @@ export class MonitorService {
 
   constructor(private http: Http) { }
 
+  getJobSummary(jobId: string, groupBy: string): Observable<StoredJob> {
+    let url = `${this.apiUrl}/monitor/getJobSummary?jobId=${jobId}&groupBy=${groupBy}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map(res => <StoredJob>res.json() )
+      .catch(this.handleError);
+  }
+
   getJobsOfUser(userEmail: string,
                 jobType:string,
                 offset: string,
@@ -32,7 +40,12 @@ export class MonitorService {
                 dateTo: string,
                 validationStatus: string,
                 includeJobsTotal): Observable<JobsOfUser> {
-    let url = `${this.apiUrl}/monitor/getJobsOfUser?user=${userEmail}&jobType=${encodeURIComponent(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
+    let url = `${this.apiUrl}/monitor/getJobsOfUser?user=${userEmail}`;
+    if (jobType != '') {
+      url = `${url}&jobType=${encodeURIComponent(jobType)}&offset=${offset}&limit=${limit}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
+    } else {
+      url = `${url}&offset=${offset}&limit=${limit}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
+    }
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
       userEmail: userEmail,

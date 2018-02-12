@@ -160,19 +160,6 @@
                     Metrics
                   </a>
                 </li>
-                <li class="uk-parent"><a href="#" class="" aria-expanded="false">Admin</a>
-                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="adminMenu" (click)="onClick('adminMenu')">
-                    <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-                      <div class="uk-first-column">
-                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/admin','help-texts']">Help Texts</a></li>
-                          <li><a [routerLink]="['/admin','metrics']">Metrics</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="uk-navbar-right">
@@ -194,20 +181,17 @@
               <ul *ngIf="isLoggedIn" class="uk-navbar-nav">
                 <li class="uk-parent">
                   <a class="loginLink" aria-expanded="false">
-                    <span class="uk-margin-small-right uk-icon">
-                      <svg height="20" ratio="1" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="9.9" cy="6.4" fill="none" r="4.4" stroke="#000" stroke-width="1.1"></circle>
-                        <path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>
-                      </svg>
-                    </span>
                     {{authService.userName}}
                   </a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="logoutMenu" (click)="onClick('logoutMenu')">
+                       id="userMenu" (click)="onClick('userMenu')">
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a (click)="logout()" class="loginLink">Log out</a></li>
+                          <li class="uk-nav-header" style="display: block;">Admin</li>
+                          <li style="display: block"><a [routerLink]="['/admin','help-texts']">Help Texts</a></li>
+                          <li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin','metrics']">Metrics</a></li>
+                          <li><a class="logoutLink loginLink" (click)="logout()">Log out</a></li>
                         </ul>
                       </div>
                     </div>

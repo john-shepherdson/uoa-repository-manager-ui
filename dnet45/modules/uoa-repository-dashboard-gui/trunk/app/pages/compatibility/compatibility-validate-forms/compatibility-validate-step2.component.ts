@@ -61,7 +61,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
     this.currentContentRules = this.ruleSets[index].contentRules;
     this.currentUsageRules = this.ruleSets[index].usageRules;
     console.log(`contentRules length: ${this.currentContentRules.length}`);
-    console.log(`  usageRules length: ${this.currentUsageRules.length}`);
+    console.log(`usageRules length: ${this.currentUsageRules.length}`);
   }
 
   /* inputs the Rule Lists into the FormArrays */

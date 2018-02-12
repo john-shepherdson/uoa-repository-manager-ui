@@ -1,19 +1,21 @@
-<div *ngIf="jobsOfUser" class="uk-grid uk-grid-stack">
+<div class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
     <div class="uk-margin-medium-bottom">
       <h1 class="uk-article-title">Previous validations</h1>
     </div>
-    <div>
+    <div *ngIf="jobsOfUser">
       <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
       <div *ngIf="failureMessage" class="uk-alert uk-alert-danger">{{ failureMessage }}</div>
+      <div *ngIf="infoMessage" class="uk-alert uk-alert-warning">{{ infoMessage }}</div>
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
       <div class="uk-grid page-controls">
         <div class="uk-margin-bottom uk-width-1-1 filters">
           <div class="links">
             <div class="filterLabel">Filter by job type:</div>
             <div class="inlineBlock">
-              <select class="form-control">
+              <select class="form-control" #selectType (change)="getJobType(selectType.value)">
                 <option value="noneSelected">--none selected--</option>
-                <option *ngFor="let type of jobTypes" value="{{type}}" [selected]="type === chosenJobType">{{type}}</option>
+                <option *ngFor="let type of jobTypes" value="{{type}}">{{type}}</option>
               </select>
             </div>
           </div>
@@ -21,10 +23,18 @@
         <div class="uk-margin-bottom uk-width-1-1 filters">
           <div class="links uk-inline">
             <div class="filterLabel" style="display: inline;">Filter validation jobs:</div>
-            <a class="uk-active" (click)="filterJobs('all')">All jobs ({{this.jobsOfUser.totalJobs}})</a>
-            <a class="uk-active" (click)="filterJobs('successful')">successful ({{this.jobsOfUser.totalJobsSuccessful}})</a>
-            <a class="uk-active" (click)="filterJobs('failed')">failed ({{this.jobsOfUser.totalJobsFailed}})</a>
-            <a class="uk-active" (click)="filterJobs('ongoing')">ongoing ({{this.jobsOfUser.totalJobsOngoing}})</a>
+            <a class="uk-active"
+               [class.active]="currentFilter==='all'"
+               (click)="filterJobs('all')">All jobs ({{this.jobsOfUser.totalJobs}})</a>
+            <a class="uk-active"
+               [class.active]="currentFilter==='successful'"
+               (click)="filterJobs('successful')">successful ({{this.jobsOfUser.totalJobsSuccessful}})</a>
+            <a class="uk-active"
+               [class.active]="currentFilter==='failed'"
+               (click)="filterJobs('failed')">failed ({{this.jobsOfUser.totalJobsFailed}})</a>
+            <a class="uk-active"
+               [class.active]="currentFilter==='ongoing'"
+               (click)="filterJobs('ongoing')">ongoing ({{this.jobsOfUser.totalJobsOngoing}})</a>
           </div>
           <div class="show-options uk-inline" style="float: right;">
             <div class="filterLabel" style="display: inline;">Jobs per page:</div>
@@ -40,6 +50,12 @@
         </div>
       </div>
       <div class="contentAndPagerPanel">
+        <div *ngIf="loadingMessage" class="loading-big">
+          <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+            {{ loadingMessage }}
+          </div>
+          <div class="whiteFilm"></div>
+        </div>
         <div>
           <ul class="uk-pagination">
             <li>
@@ -77,30 +93,19 @@
                     <th></th>
                   </tr>
                 </thead>
-                <div *ngIf="infoMessage" class="uk-alert">{{ infoMessage }}</div>
-                <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-                <div *ngIf="loadingMessage" class="loading-big">
-                  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-                    {{ loadingMessage }}
-                  </div>
-                  <div class="whiteFilm"></div>
-                </div>
                 <tbody *ngIf="jobsOfUser.jobs">
                     <tr class="el-item" *ngFor="let job of jobsOfUser.jobs">
                       <td class="uk-table-shrink" style="vertical-align: top !important;">
                         <div class="el-title">{{ job.baseUrl }}</div>
                       </td>
                       <td class="uk-table-shrink">
-                        <div class="el-title">{{ job.validationType }}</div>
-                        <div class="el-title">{{ job.validationType }}</div>
+                        <div class="el-title">OAI Content<br>OAI Usage</div>
                       </td>
                       <td class="uk-table-shrink">
-                        <div class="el-title">{{ job.contentJobStatus }}</div>
-                        <div class="el-title">{{ job.usageJobStatus }}</div>
+                        <div class="el-title">{{ job.contentJobStatus }}<br>{{ job.usageJobStatus }}</div>
                       </td>
                       <td class="uk-table-shrink">
-                        <div class="el-title">{{ job.contentJobScore }}</div>
-                        <div class="el-title">{{ job.usageJobScore }}</div>
+                        <div class="el-title">{{ job.contentJobScore }}<br>{{ job.usageJobScore }}</div>
                       </td>
                       <td class="uk-table-shrink" style="vertical-align: top !important;">
                         <div class="el-title">{{ job.started }}</div>
@@ -111,15 +116,15 @@
                       <td class="uk-table-shrink" style="vertical-align: top !important;">
                         <div class="el-link actions">
                           <div class="viewDetailsLinkWrapper">
-                            <a class="viewDetails" [routerLink]="[job.id]">View Results <i class="fa fa-angle-right"></i></a>
+                            <a class="viewDetails" [routerLink]="[job.id]">View Results<i class="fa fa-angle-right"></i></a>
                           </div>
                           <div>
-                            <a class="resubmitJob" (click)="resubmitJob(job.id)">Resubmit Job <i class="fa fa-repeat"></i></a>
+                            <a class="resubmitJob" (click)="resubmitJob(job.id)">Resubmit Job<i class="fa fa-repeat"></i></a>
                           </div>
                         </div>
                       </td>
                       <td class="uk-table-shrink" style="vertical-align: top !important;">
-                        <img src="{{ getResultImage(job.validationStatus) }}" height="20" width="20">
+                        <img src="{{ getResultImage(job.validationStatus) }}" width="20" height="20">
                       </td>
                     </tr>
                 </tbody>

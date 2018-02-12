@@ -20,7 +20,7 @@ export class CompatibilityValidateStep3Component implements OnInit {
   ngOnInit () {
     this.group = this.fb.group({
       noOfRecordsInput : '',
-      selectValSet : ['',Validators.required],
+      selectValSet : [''],
       xpathInput : ''
     });
     this.group.get('noOfRecordsInput').setValue(10);
@@ -49,7 +49,11 @@ export class CompatibilityValidateStep3Component implements OnInit {
       this.errorMessage = '';
       let emitted: string [] = [];
 
-      emitted.push(this.group.get('selectValSet').value);
+      if ( this.group.get('selectValSet').value) {
+        emitted.push(this.group.get('selectValSet').value);
+      } else {
+        emitted.push('');
+      }
 
       if ( this.group.get('noOfRecordsInput').enabled ) {
         emitted.push(this.group.get('noOfRecordsInput').value);
@@ -62,7 +66,6 @@ export class CompatibilityValidateStep3Component implements OnInit {
       } else {
         emitted.push('');
       }
-
       this.emmitObject.emit(emitted);
 
     } else {
