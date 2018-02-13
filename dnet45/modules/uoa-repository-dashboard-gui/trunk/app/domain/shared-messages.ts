@@ -2,17 +2,15 @@
 /* Service Down Message */
 export const noServiceMessage = 'The service is not available at the moment.';
 
-/* User Info Messages */
+/* Loading Repositories Messages */
 export const loadingUserRepoInfoError = "Failed to load information on your registered repositories";
 export const loadingUserRepoInfoEmpty = "You have not yet registered any repositories";
-
-/* Loading Repositories Messages */
 export const reposRetrievalError = 'The repositories can not be retrieved at the moment';
 export const noRepositoriesFound = 'No Datasources were found';
 export const loadingReposMessage = 'Retrieving repositories ...';
 export const noRepositoryChosenMsg = 'You need to select a repository first.';
-export const loadingRepoMessage = 'Retrieving repository ...';
-export const loadingRepoError = 'The repository can not be retrieved at the momen...';
+export const loadingRepoMessage = 'Retrieving repository information ...';
+export const loadingRepoError = 'System error retrieving repository info';
 
 
 /* Loading Rules Messages */
@@ -36,18 +34,22 @@ export const loadingJobSummaryError = 'The job summary can not be retrieved at t
 
 
 /* Loading Topics Messages */
-export const loadingTopics = 'Loading topics for your datasource';
+export const loadingTopics = 'Loading topics for your datasource...';
 export const loadingTopicsError = 'Failed to load the topics for your datasource';
+export const noTopicsFound = 'No topics were found for this datasource';
 
 
-/* Loading Metrics Messages */
+/* Piwik Messages */
 export const loadingMetrics = 'Loading diagrams ...';
-export const loadingMetricsError = 'Failed to load the piwik site of your repository';
+export const loadingMetricsError = 'Failed to load the metrics for this repository';
+export const enablingMetrics = 'Enabling metrics for this repository...';
+export const enabledMetricsSuccess = 'The metrics for this repository were enabled';
+export const enabledMetricsError = 'System error enabling metrics for this repository.';
 
 
 /* Forms validation Messages */
 export const formInfoLoading = 'Loading information';
-export const formErrorRequiredFields = 'You need to fill in all the fields with (*)';
+export const formErrorRequiredFields = 'All the fields marked with (*) are mandatory';
 export const formErrorInvalidFields = 'There are invalid fields';
 export const formErrorWasntSaved = 'There was a problem with the form submission';
 export const formSuccessUpdatedRepo = 'The datasource was updated successfully.';

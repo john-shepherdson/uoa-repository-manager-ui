@@ -13,7 +13,15 @@
           <div class="gwt-HTML uk-margin-medium-bottom">
             <h1 class="uk-article-title">Metrics</h1>
           </div>
-          <div class="">
+          <div>
+            <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+            <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+            <div *ngIf="loadingMessage" class="loading-big">
+              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                {{ loadingMessage }}
+              </div>
+              <div class="whiteFilm"></div>
+            </div>
             <div>
               <div class="gwt-HTML">
                 <h4>You don't have metrics enabled for this repository yet. Would you like to enable them?</h4>

@@ -3,19 +3,22 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class AuthenticationService {
   isLoggedIn: boolean = false;
-  userName: string = '';
-  userEmail: string = '';
+  username: string;
+  userEmail: string;
+  userFullName: string;
 
   login(){
     this.isLoggedIn = true;
-    this.userName = 'Antonis Lempesis';
+    this.username = 'antleb';
     this.userEmail = 'ant.lebesis@gmail.com';
+    this.userFullName = 'Antonis Lempesis';
   }
 
   logout(){
     this.isLoggedIn = false;
-    this.userName = '';
+    this.username = '';
     this.userEmail = '';
+    this.userFullName = '';
   }
 
   register(){

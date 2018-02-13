@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from '../../services/repository.service';
-import { Topic } from '../../domain/typeScriptClasses';
+import { BrowseEntry, Term } from '../../domain/typeScriptClasses';
 import { ActivatedRoute } from '@angular/router';
-import { loadingTopics, loadingTopicsError } from '../../domain/shared-messages';
+import { loadingTopics, loadingTopicsError, noTopicsFound } from '../../domain/shared-messages';
 import { BrokerService } from '../../services/broker.service';
 
 @Component ({
@@ -12,8 +12,8 @@ import { BrokerService } from '../../services/broker.service';
 
 export class ContentEventsOfRepositoryComponent implements OnInit {
 
-  repoTopics: Topic[] = [];
-  noDatasources: boolean;
+  repoTopics: BrowseEntry[] = [];
+  noDatasources: string;
   errorMessage: string;
   loadingMessage: string;
 
@@ -33,9 +33,12 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
       .subscribe(
         topics => {
           this.repoTopics = topics;
-          if(!this.repoTopics.length) this.noDatasources=true;
+          if(!this.repoTopics.length) this.noDatasources=noTopicsFound;
         },
-        error => console.log(error),
+        error => {
+          console.log(error);
+          this.errorMessage = loadingTopicsError;
+        },
         () => {
           this.loadingMessage = '';
         }

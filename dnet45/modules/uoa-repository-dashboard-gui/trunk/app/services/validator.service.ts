@@ -9,7 +9,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { InterfaceInformation, JobsOfUser, RuleSet, StoredJob } from '../domain/typeScriptClasses';
+import { InterfaceInformation, RuleSet, StoredJob } from '../domain/typeScriptClasses';
+import { apiUrl } from '../domain/tempAPI';
 
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -18,8 +19,7 @@ let httpOptions = new RequestOptions({ headers: headers });
 @Injectable ()
 export class ValidatorService {
 
-  /*  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';*/
-  private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
+  private apiUrl = apiUrl;
 
   constructor(private http: Http) { }
 
@@ -48,7 +48,7 @@ export class ValidatorService {
                    dateFrom: string,
                    dateTo: string,
                    validationStatus: string): Observable<StoredJob[]> {
-    let url = `${this.apiUrl}/validator/getStoredJobsNew?user=${userEmail}&jobType=${encodeURIComponent(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
+    let url = `${this.apiUrl}/validator/getStoredJobsNew?user=${userEmail}&jobType=${encodeURI(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <StoredJob[]>res.json())
@@ -57,7 +57,7 @@ export class ValidatorService {
 
   /* returns true if there is a repository containing the baseUrl */
   identifyRepository(baseUrl: string): Observable<boolean> {
-    let param = encodeURIComponent(baseUrl);
+    let param = encodeURI(baseUrl);
     let url = `${this.apiUrl}/validator/identifyRepository/${param}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
@@ -66,7 +66,7 @@ export class ValidatorService {
   }
 
   getInterfaceInformation(baseUrl: string): Observable<InterfaceInformation> {
-    let param = encodeURIComponent(baseUrl);
+    let param = encodeURI(baseUrl);
     let url = `${this.apiUrl}/validator/getInterfaceInformation/${param}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)

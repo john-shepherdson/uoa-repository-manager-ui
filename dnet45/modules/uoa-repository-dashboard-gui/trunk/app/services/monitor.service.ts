@@ -13,14 +13,14 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { InterfaceInformation, JobsOfUser, StoredJob } from "../domain/typeScriptClasses";
+import { apiUrl } from '../domain/tempAPI';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class MonitorService {
-  /*  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service'; */
-  private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
+  private apiUrl = apiUrl;
 
   constructor(private http: Http) { }
 
@@ -42,7 +42,7 @@ export class MonitorService {
                 includeJobsTotal): Observable<JobsOfUser> {
     let url = `${this.apiUrl}/monitor/getJobsOfUser?user=${userEmail}`;
     if (jobType != '') {
-      url = `${url}&jobType=${encodeURIComponent(jobType)}&offset=${offset}&limit=${limit}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
+      url = `${url}&jobType=${encodeURI(jobType)}&offset=${offset}&limit=${limit}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
     } else {
       url = `${url}&offset=${offset}&limit=${limit}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
     }

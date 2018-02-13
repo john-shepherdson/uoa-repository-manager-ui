@@ -7,24 +7,30 @@
 */
 
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
-
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { PiwikInfo } from '../domain/typeScriptClasses';
-import 'rxjs/add/operator/map';
-import { Http, Response } from '@angular/http';
+import { apiUrl } from '../domain/tempAPI';
 
-const httpOptions = {
-  headers: new HttpHeaders().set('Content-Type', 'application/json')
-};
+
+const headers = new Headers({ 'Content-Type': 'application/json' });
+const httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class PiwikService {
-  /*  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';*/
-  private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
+  private apiUrl = apiUrl;
 
   constructor(private http: Http) { }
+
+  getOpenaireId(id: string): Observable<string> {
+    let url = `${this.apiUrl}/piwik/getOpenaireId/${id}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( oaId => <string>oaId.json() )
+      .catch(this.handleError);
+  }
 
   getPiwikInfo(id: string): Observable<PiwikInfo> {
     let url = `${this.apiUrl}/piwik/getPiwikSiteForRepo/${id}`;
@@ -42,10 +48,34 @@ export class PiwikService {
       .catch(this.handleError);
   }
 
+  savePiwikInfo(repositoryId: string,
+                openaireId: string,
+                repositoryName: string,
+                country: string,
+                requestorName: string,
+                requestorEmail: string): Observable<string>{
+    let url = `${this.apiUrl}/piwik/savePiwikInfo?repositoryId=${repositoryId} \ 
+               &openaireId=${openaireId} \ 
+               &repositoryName=${repositoryName} \
+               &country=${country} \
+               &requestorName=${requestorName} \
+               &requestorEmail=${requestorEmail}`;
+    console.log(`knocking on: ${url}`);
+
+    httpOptions.withCredentials = true;
+    return this.http.post(url,httpOptions)
+      .map( res => {
+        console.log(`responded ${res.statusText}`);
+        return res.status.toString();
+      })
+      .catch(this.handleError).share();
+  }
+
   private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     let errMsg = "";
+    console.log('E R R O R !!!');
     console.log(error);
     if (error instanceof Response) {
       const body = error.text() || '';
@@ -58,4 +88,6 @@ export class PiwikService {
     }
     return Observable.throw(errMsg);
   }
+
+
 }

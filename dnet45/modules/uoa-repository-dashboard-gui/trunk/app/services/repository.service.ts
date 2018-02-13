@@ -7,21 +7,19 @@
 */
 
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
-
 import { Observable } from 'rxjs/Observable';
-
-import { Country, MetricsInfo, Repository, RepositoryInterface, Timezone, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+
+import { Country, MetricsInfo, Repository, RepositoryInterface, Timezone } from '../domain/typeScriptClasses';
+import { apiUrl } from '../domain/tempAPI';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class RepositoryService {
-/*  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service'; */
-  private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';
+  private apiUrl = apiUrl;
 
   constructor(private http: Http) { }
 
@@ -110,7 +108,7 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-updateEnglishName(id: string, englishname: string): Observable<string>{
+  updateEnglishName(id: string, englishname: string): Observable<string>{
     let url = `${this.apiUrl}/repository/updateEnglishName?id=${id}&officialName=DSpace&englishname=${englishname}`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;

@@ -45,8 +45,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
 
   loadTable() {
     //initialize
-    // RESTORE IN THE END this.userEmail = this.authService.getUserEmail();
-    this.userEmail = 'ant.lebesis@gmail.com';
+    this.userEmail = this.authService.getUserEmail();
     this.jobTypes = jobTypes;
     this.itemsPerPage = 10;
     this.currentPage = 1;

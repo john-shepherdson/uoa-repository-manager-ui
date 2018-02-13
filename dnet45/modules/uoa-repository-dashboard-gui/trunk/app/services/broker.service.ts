@@ -7,43 +7,101 @@
 */
 
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs/Observable';
-
-import { AdvQueryObject, Topic } from '../domain/typeScriptClasses';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+
+import {
+  AdvQueryObject, BrowseEntry, EventsPage, Repository, SimpleSubscriptionDesc, Subscription,
+  Term
+} from '../domain/typeScriptClasses';
+import { apiUrl } from '../domain/tempAPI';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class BrokerService {
-  private apiUrl = 'http://195.134.66.230:8380/uoa-repository-manager-service';
-  /*private apiUrl = 'http://194.177.192.121:8380/uoa-repository-manager-service';*/
+  private apiUrl = apiUrl + '/broker/';
 
   constructor(private http: Http) { }
 
   advancedShowEvents(query: AdvQueryObject): Observable<string>{
-    let url = `${this.apiUrl}/broker/advancedShowEvents/0/100`;
+    let url = `${this.apiUrl}advancedShowEvents/0/100`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify(query);
     console.log(`sending ${body}`);
-    httpOptions.withCredentials = true;
 
+    httpOptions.withCredentials = true;
     return this.http.post(url,body,httpOptions)
       .map( res => <string>res.json())
       .catch(this.handleError).share();
   }
 
+  getDatasourcesOfUser(userEmail: string): Observable<Repository[]> {
+    let url = `${this.apiUrl}getDatasourcesOfUser?user=${userEmail}&includeShared=true&includeByOthers=true`;
+    console.log(`knocking on: ${url}`);
 
-  getTopicsForDataSource(name: string): Observable<Topic[]> {
-    let url = `${this.apiUrl}/broker/getTopicsForDatasource/${name}`;
-  console.log(`knocking on: ${url}`);
-  return this.http.get(url)
-    .map( res => <Topic[]>res.json())
-    .catch(this.handleError);
+    httpOptions.withCredentials = true;
+    return this.http.post(url,httpOptions)
+      .map( res => <Repository[]>res.json())
+      .catch(this.handleError).share();
   }
+
+  getDnetTopics(): Observable<Map<string,Term>> {
+    let url = `${this.apiUrl}getDnetTopics`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Map<string,Term>>res.json())
+      .catch(this.handleError);
+  }
+
+  getNotificationsBySubscriptionId(subId: string, page: number): Observable<EventsPage> {
+    let url = `${this.apiUrl}getNotificationsBySubscriptionId/${subId}/${page}/100`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <EventsPage>res.json())
+      .catch(this.handleError);
+  }
+
+  getSimpleSubscriptionsOfUser(userEmail: string): Observable<Map<string,SimpleSubscriptionDesc>> {
+    let url = `${this.apiUrl}getSimpleSubscriptionsOfUser/{userEmail}?userEmail=${userEmail}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Map<string,SimpleSubscriptionDesc>>res.json())
+      .catch(this.handleError);
+  }
+
+  getSubscription(subId: string): Observable<Subscription> {
+    let url = `${this.apiUrl}getSubscription/${subId}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Subscription>res.json())
+      .catch(this.handleError);
+  }
+
+/*
+  NOT WORKING AND PROBABLY NOT NEEDED
+  getSubscriptionsOfUser(userEmail) {}
+*/
+
+  getTopicsForDataSource(name: string): Observable<BrowseEntry[]> {
+    let url = `${this.apiUrl}/broker/getTopicsForDatasource/${name}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <BrowseEntry[]>res.json())
+      .catch(this.handleError);
+  }
+
+/* NOT WORKING AND PROBABLY NOT NEEDED
+  showEvents(repoName: string, topic: string, page: number): Observable<EventsPage> {
+    let url = `${this.apiUrl}showEvents/{datasourceName}/{topic}/{page}?datasourceName=${repoName}&topic=${topic}&page=${page}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <EventsPage>res.json())
+      .catch(this.handleError);
+  }
+*/
 
   private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure

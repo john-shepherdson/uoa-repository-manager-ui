@@ -1,6 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
+import { PiwikService } from '../../services/piwik.service';
+import { RepositoryService } from '../../services/repository.service';
+import { Repository } from '../../domain/typeScriptClasses';
+import {
+  enabledMetricsError, enabledMetricsSuccess, enablingMetrics, loadingRepoError,
+  loadingRepoMessage
+} from '../../domain/shared-messages';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component ({
   selector: 'metrics-enable',
@@ -8,7 +16,12 @@ import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/con
 })
 
 export class MetricsEnableComponent implements OnInit {
-  id: string;
+  successMessage: string;
+  errorMessage: string;
+  loadingMessage: string;
+
+  repo: Repository;
+  oaId: string;
 
   modalTitle = "Confirmation";
   modalButton = "Yes, enable it";
@@ -19,23 +32,68 @@ export class MetricsEnableComponent implements OnInit {
 
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthenticationService,
+    private piwikService: PiwikService,
+    private repoService: RepositoryService
   ) {}
 
   ngOnInit() {
-    this.getId();
+    this.getRepo();
     this.isModalShown = false;
   }
 
-  getId(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
+  getRepo(): void {
+    let id = this.route.snapshot.paramMap.get('id');
+    this.loadingMessage = loadingRepoMessage;
+    this.repoService.getRepositoryById(id).subscribe(
+      repo => {
+        this.repo = repo;
+        if (this.repo) {
+          this.getOAid();
+        }
+      },
+      error => {
+        console.log(error);
+        this.errorMessage = loadingRepoError;
+        this.loadingMessage = '';
+      }
+    );
+  }
+
+  getOAid () {
+    this.piwikService.getOpenaireId(this.repo.id).subscribe(
+      id => this.oaId = id,
+      error => console.log(error)
+    );
   }
 
   confirmEnabling() {
-    this.confirmEnablingModal.showModal();
+    if (this.repo) {
+      this.confirmEnablingModal.showModal();
+    }
   }
 
-  confirmedEnabling(){
-    console.log('enabled repo');
+  confirmedEnabling() {
+    if (this.repo) {
+      this.loadingMessage = enablingMetrics;
+      this.piwikService.savePiwikInfo(this.repo.id,
+        this.oaId,
+        this.repo.officialName,
+        this.repo.countryName,
+        this.authService.userFullName,
+        this.authService.userEmail).subscribe(
+        response => {
+          console.log(`answered ${response}`);
+          this.successMessage = enabledMetricsSuccess;
+          this.loadingMessage = '';
+        },
+        error => {
+          console.log(error);
+          this.errorMessage = enabledMetricsError;
+          this.loadingMessage = '';
+        }
+      );
+    }
   }
 }

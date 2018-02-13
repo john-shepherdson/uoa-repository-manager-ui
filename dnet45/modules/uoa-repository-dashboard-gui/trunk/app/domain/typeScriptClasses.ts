@@ -542,9 +542,11 @@ export class Country {
   code: string;
 }
 
-export class Topic {
-  size: number;
-  value: string;
+export class Term implements IsSerializable {
+  englishName: string;
+  nativeName: string;
+  encoding: string;
+  code: string;
 }
 
 export class Timezone {
@@ -570,7 +572,7 @@ export class JobsOfUser implements IsSerializable {
 
 export class MetricsNumbers implements IsSerializable {
   downloads: string[];
-  pageViews: string;
+  pageviews: string;
   total_downloads: string;
   total_openaire_downloads: string;
   total_openaire_views: string;
