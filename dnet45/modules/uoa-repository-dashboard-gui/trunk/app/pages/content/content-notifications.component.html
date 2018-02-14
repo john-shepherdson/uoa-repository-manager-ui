@@ -4,8 +4,44 @@
       <h1 class="uk-article-title">Enrich Your Content - Browse Subscriptions</h1>
     </div>
     <div class="">
-      <div class="uk-alert uk-alert-danger" style="display: none;" aria-hidden="true"></div>
-      <div>No subscriptions found for your account</div>
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+      <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{successMessage}}</div>
+      <div *ngIf="loadingMessage" class="loading-big">
+        <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+        <div class="whiteFilm"></div>
+      </div>
+      <div *ngIf="noSubscriptions" class="uk-alert">{{noSubscriptions}}</div>
+    </div>
+    <div *ngIf="subscrOfUser">
+      <div *ngFor="let key of subKeys">
+        <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium uk-scrollspy-class=">
+          <span>{{ key }}</span>
+        </h4>
+        <table class="uk-table uk-table-striped uk-table-middle">
+          <thead>
+            <tr>
+              <th>Topic</th>
+              <th class="uk-text-nowrap"># of notifications</th>
+              <th class="uk-text-nowrap">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="el-item">
+              <td class="uk-table-shrink">
+                <div class="el-title">{{ subscrOfUser[key]['topic'] }}</div>
+              </td>
+              <td class="uk-text-nowrap uk-table-shrink">
+                <div class="el-title">{{ subscrOfUser[key]['count'] }}</div>
+              </td>
+              <td class="uk-text-nowrap uk-table-shrink">
+                <a class="el-link" (click)="deleteSubscription(subscrOfUser[key]['id'])">
+                  <i class="fa fa-remove" aria-hidden="true"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

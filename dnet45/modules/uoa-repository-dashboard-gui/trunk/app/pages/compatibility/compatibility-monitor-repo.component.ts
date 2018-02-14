@@ -14,6 +14,7 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
   errorMessage: string;
 
   repoId: string = '';
+  repoName: string = '';
   repo: Repository;
 
   constructor(private route: ActivatedRoute,
@@ -26,17 +27,26 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
 
   readRepoId() {
     this.repoId = this.route.snapshot.paramMap.get('id');
+    this.repoName = `repository with id \'${this.repoId}\'`;
   }
 
   getRepo(){
     if (this.repoId) {
       this.loadingMessage = loadingRepoMessage;
       this.repoService.getRepositoryById(this.repoId).subscribe(
-        repo => this.repo = repo,
-        error => console.log(error),
+        repo => {
+          this.repo = repo;
+        },
+        error => {
+          console.log(error);
+          this.loadingMessage = '';
+          this.errorMessage = loadingRepoError;
+        },
         () => {
           this.loadingMessage = '';
-          if(!this.repo){
+          if (this.repo) {
+            this.repoName = this.repo.officialName;
+          } else {
             this.errorMessage = loadingRepoError;
           }
         }

@@ -1,4 +1,11 @@
 import {Component, OnInit} from "@angular/core";
+import { SimpleSubscriptionDesc } from '../../domain/typeScriptClasses';
+import { AuthenticationService } from '../../services/authentication.service';
+import { BrokerService } from '../../services/broker.service';
+import {
+  deletingSubscription, deletingSubscriptionError, deletingSubscriptionSuccess, loadingSubscriptions, noServiceMessage,
+  noSubscriptionsFound
+} from '../../domain/shared-messages';
 
 @Component ({
   selector: 'app-content-notifications',
@@ -6,8 +13,58 @@ import {Component, OnInit} from "@angular/core";
 })
 
 export class ContentNotificationsComponent implements OnInit {
+  errorMessage: string;
+  successMessage: string;
+  loadingMessage: string;
+  noSubscriptions: string;
 
-  constructor() {}
+  subscrOfUser: Map<string,SimpleSubscriptionDesc> = new Map<string,SimpleSubscriptionDesc>();
+  subKeys: string[] = [];
 
-  ngOnInit() {}
+  constructor(private authService: AuthenticationService,
+              private brokerService: BrokerService) {}
+
+  ngOnInit() {
+    this.getSubscriptions();
+  }
+
+  getSubscriptions() {
+    this.loadingMessage = loadingSubscriptions;
+    this.brokerService.getSimpleSubscriptionsOfUser(this.authService.userEmail).subscribe(
+      subscrs => this.subscrOfUser = subscrs,
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = noServiceMessage;
+      },
+      () => {
+        this.loadingMessage = '';
+        if (this.subscrOfUser.size) {
+          this.subKeys = Array.from(this.subscrOfUser.keys());
+        } else {
+          this.noSubscriptions = noSubscriptionsFound;
+        }
+      }
+    );
+  }
+
+  deleteSubscription(key: string) {
+    this.loadingMessage = deletingSubscription;
+    this.successMessage = '';
+    this.errorMessage = '';
+    this.brokerService.unsubscribe(key).subscribe(
+      response => console.log(`unsubscribe responded with ${response}`),
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = deletingSubscriptionError;
+      },
+      () => {
+        this.loadingMessage = '';
+        this.successMessage = deletingSubscriptionSuccess;
+      }
+
+    );
+  }
+
 }

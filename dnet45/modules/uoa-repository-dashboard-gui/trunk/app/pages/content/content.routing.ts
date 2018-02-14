@@ -5,12 +5,13 @@ import { ContentComponent } from "./content.component";
 import { ContentNotificationsComponent } from "./content-notifications.component";
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { ContentEventsOfRepositoryComponent } from './content-events-of-repository.component';
+import { ContentEventsOfRepoEventslistComponent } from './content-events-of-repo-eventslist.component';
 
 const contentRoutes: Routes = [
   {
     path: 'content',
     component: ContentComponent,
-    canActivate: [AuthGuardService],
+//    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
@@ -19,21 +20,19 @@ const contentRoutes: Routes = [
       },
       {
         path: 'events',
-        children: [
-          {
-            path: '',
-            component: ContentEventsComponent,
-            pathMatch: 'full'
-          },
-          {
-            path: ':name',
-            component: ContentEventsOfRepositoryComponent,
-          }
-        ]
+        component: ContentEventsComponent,
+      },
+      {
+        path: 'events/:name',
+        component: ContentEventsOfRepositoryComponent,
+      },
+      {
+        path: 'events/:name/:topic',
+        component: ContentEventsOfRepoEventslistComponent,
       },
       {
         path: 'notifications',
-        component: ContentNotificationsComponent
+        component: ContentNotificationsComponent,
       }
     ]
   }

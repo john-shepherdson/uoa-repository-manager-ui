@@ -23,43 +23,27 @@ const compatibilityRoutes: Routes = [
       },
       {
         path: 'validate',
-        children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            component: CompatibilityValidateComponent
-          },
-          {
-            path: ':type',
-            component: CompatibilityValidateTypeComponent
-          }
-        ]
+        component: CompatibilityValidateComponent
+      },
+      {
+        path: 'validate/:type',
+        component: CompatibilityValidateTypeComponent
       },
       {
         path: 'browseHistory',
-        children: [
-          {
-            path: '',
-            component: CompatibilityValidationHistoryComponent
-          },
-          {
-            path: ':id',
-            component: CompatibilityValidationResultsComponent
-          }
-        ]
+        component: CompatibilityValidationHistoryComponent
+      },
+      {
+        path: 'browseHistory/:id',
+        component: CompatibilityValidationResultsComponent
       },
       {
         path: 'monitor',
-        children: [
-          {
-            path: '',
-            component: CompatibilityMonitorComponent
-          },
-          {
-            path: ':id',
-            component: CompatibilityMonitorRepoComponent
-          }
-        ]
+        component: CompatibilityMonitorComponent
+      },
+      {
+        path: 'monitor/:id',
+        component: CompatibilityMonitorRepoComponent
       }
     ]
   }

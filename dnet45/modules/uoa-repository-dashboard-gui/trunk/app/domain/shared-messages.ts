@@ -34,10 +34,22 @@ export const loadingJobSummaryError = 'The job summary can not be retrieved at t
 
 
 /* Loading Topics Messages */
-export const loadingTopics = 'Loading topics for your datasource...';
+export const loadingTopics = 'Retrieving topics for the datasource...';
 export const loadingTopicsError = 'Failed to load the topics for your datasource';
 export const noTopicsFound = 'No topics were found for this datasource';
 
+/* Loading Events Messages */
+export const loadingEvents = 'Retrieving events for topic ...';
+export const loadingEventsError = 'Failed to retrieve events';
+export const noEventsForTopic = 'No events were found for this topic';
+export const noEventsWithParams = 'No events were found with the given parameters';
+
+/* Loading Subscriptions Messages */
+export const loadingSubscriptions = 'Retrieving subscriptions ...';
+export const noSubscriptionsFound = 'No subscriptions found for your account';
+export const deletingSubscription = 'Deleting subscription ...';
+export const deletingSubscriptionError = 'Failed to delete your subscription';
+export const deletingSubscriptionSuccess = 'The subscription was deleted successfully';
 
 /* Piwik Messages */
 export const loadingMetrics = 'Loading diagrams ...';

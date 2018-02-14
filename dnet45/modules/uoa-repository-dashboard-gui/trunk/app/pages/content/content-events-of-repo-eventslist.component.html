@@ -1,0 +1,232 @@
+<div class="uk-grid uk-grid-stack">
+  <div class="uk-width-expand@m uk-first-column">
+    <div class="uk-margin-medium-bottom">
+      <h1 class="uk-article-title">{{ repoName }}</h1>
+      <div class="uk-text uk-text-small uk-text-secondary">{{ topic }}</div>
+    </div>
+    <div>
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+      <div *ngIf="loadingMessage" class="loading-big">
+        <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+        <div class="whiteFilm"></div>
+      </div>
+      <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
+      <div *ngIf="eventsPage" class="events-results">
+        <div class="numberOfEventsLabel">
+          <span>Showing 1-10 of 1572 results</span>
+          <span class="uk-float-right">
+            <button id="subscribe" type="button" class="uk-button uk-button-primary uk-button-small">Subscribe to these events</button>
+          </span>
+        </div>
+        <div>
+          <ul class="uk-pagination">
+            <li>
+              <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
+                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
+                </span>
+                Previous
+              </a>
+            </li>
+            <li class="uk-margin-auto-left">
+              <a class="uk-link uk-link-muted" (click)="goToNextPage()">
+                Next
+                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="resultsPageLabel">page 1 of 158</div>
+        </div>
+        <div class="events-list">
+          <div class="uk-card uk-card-default well uk-scrollspy-inview uk-animation-slide-top-medium">
+            <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+              <div class="uk-width-1-1@m uk-first-column">
+                <p class="text-right"><span class="uk-label">Trust: 1</span></p>
+                <div *ngFor="let event of eventsPage.values" class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                  <table class="uk-table uk-table-striped uk-table-middle">
+                    <tbody>
+                    <tr class="el-item">
+                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">ID</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">oai:nemertes:10889/2732</div>
+                      </td>
+                    </tr>
+                    <tr class="el-item">
+                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Title(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title"><span>Πρωτεΐνες με φωσφορική....</span></div>
+                      </td>
+                    </tr>
+                    <tr class="el-item">
+                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Author(s)</strong></td>
+                      <td class="uk-table-shrink"><div class="el-title"><span>Ζέρβας, Χρήστος</span></div></td>
+                    </tr><tr class="el-item">
+                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">PID(s)</strong></td>
+                      <td class="uk-table-shrink"><div class="el-title"></div></td>
+                    </tr>
+                    <tr class="el-item"><td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
+                      <td class="uk-table-shrink"><div class="el-title"><span>-</span></div></td>
+                    </tr>
+                    <tr class="el-item">
+                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
+                      <td class="uk-table-shrink"><div class="el-title"></div></td>
+                    </tr>
+                    <tr class="el-item">
+                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Subject(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title"><span>Βιοχημεία</span>, <span>Ένζυμα</span>, ...</div>
+                      </td>
+                    </tr>
+                    <tr class="el-item">
+                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Publication date</strong></td>
+                      <td class="uk-table-shrink"><div class="el-title">1997-01-01</div></td>
+                    </tr>
+                    <tr class="el-item success">
+                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Rights</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                          <span>OPEN&nbsp;&nbsp;<b>Nemertes</b><br>
+                          <a href="http://hdl.handle.net/10889/2732" target="_blank">http://hdl.handle.net/10889/2732</a>&nbsp;&nbsp;</span><br>
+                          <span>OPEN&nbsp;&nbsp;<b>Nemertes</b><br><a href="http://hdl.handle.net/10889/2767" target="_blank">http://hdl.handle.net/10889/2767</a>&nbsp;&nbsp;</span>
+                          <span>
+                            <span class="uk-label uk-label-success">added</span>
+                            <span class="pull-right"><b>from: </b>
+                              <a href="http://hdl.handle.net/10889/2732" target="_blank">Nemertes</a>
+                              <span> (ID: oai:nemertes:10889/2767)</span>
+                            </span>
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <ul class="uk-pagination">
+            <li>
+              <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
+                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
+                </span>
+                Previous
+              </a>
+            </li>
+            <li class="uk-margin-auto-left">
+              <a class="uk-link uk-link-muted" (click)="goToNextPage()">
+                Next
+                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="resultsPageLabel">page 1 of 158</div>
+        </div>
+    </div>
+  </div>
+  <div class="tm-sidebar uk-width-1-4@m">
+    <div class="enrichContentAdvancedSearch uk-card uk-card-body uk-card-default sidemenu">
+      <div>
+        <h6 class="uk-h6 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
+          <span>Tweak and refine events</span>
+        </h6>
+      </div>
+      <form role="form" class="uk-form-horizontal">
+        <form role="form" class="uk-form-horizontal">
+          <div class="form-group">
+            <label class="control-label">Trust</label>
+            <div class="slider slider-horizontal" id="">
+              <div class="slider-track">
+                <div class="slider-track-low" style="left: 0px; width: 0%;"></div>
+                <div class="slider-selection" style="left: 0%; width: 100%;"></div>
+                <div class="slider-track-high" style="right: 0px; width: 0%;"></div>
+              </div>
+              <div class="tooltip tooltip-main top" role="presentation" style="left: 50%; margin-left: -38px;">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner">Range: [0, 1]</div>
+              </div>
+              <div class="tooltip tooltip-min top" role="presentation" style="left: 0%; margin-left: 0px; display: none;">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner">Range: [undefined, undefined]</div>
+              </div>
+              <div class="tooltip tooltip-max top" role="presentation" style="left: 100%; margin-left: 0px; display: none;">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner">Range: [undefined, undefined]</div>
+              </div>
+              <div class="slider-handle min-slider-handle round" role="slider" aria-valuemin="0" aria-valuemax="1" style="left: 0%;" aria-valuenow="0" tabindex="0"></div>
+              <div class="slider-handle max-slider-handle round" role="slider" aria-valuemin="0" aria-valuemax="1" style="left: 100%;" aria-valuenow="1" tabindex="0"></div>
+            </div>
+            <input data-slider-range="true" data-slider-min="0" data-slider-max="1" data-slider-value="[0, 1]"
+                   data-slider-enabled="true" data-slider-step="0.01" style="display: none;" data-value="0,1"
+                   value="0,1" type="text">
+          </div>
+        </form>
+        <div>
+          <form role="form" class="uk-form-horizontal">
+            <div class="form-group">
+              <label class="control-label">Title</label>
+              <div>
+                <div><input class="form-control inlineBlock" type="text">
+                  <a href="javascript:;" class="inlineBlock deleteIcon"><i class="fa fa-remove" style=""></i> </a>
+                </div>
+                <a href="javascript:;"><i class="fa fa-plus" style=""></i> Add another</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div>
+          <form target="GWTBootstrap3_AbstractForm_RepositoryManager_4" role="form" class="uk-form-horizontal">
+            <div class="form-group">
+              <label class="control-label">Author</label>
+              <div>
+                <div>
+                  <input class="form-control inlineBlock" type="text">
+                  <a class="inlineBlock deleteIcon"><i class="fa fa-remove" style=""></i> </a>
+                </div>
+                <a><i class="fa fa-plus" style=""></i> Add another</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div>
+          <form role="form" class="uk-form-horizontal">
+            <div class="form-group">
+              <label class="control-label">Subject</label>
+              <div>
+                <div>
+                  <input class="form-control inlineBlock" type="text">
+                  <a class="inlineBlock deleteIcon"><i class="fa fa-remove" style=""></i> </a>
+                </div><a><i class="fa fa-plus" style=""></i> Add another</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div>
+          <form role="form" class="uk-form-horizontal">
+            <div class="form-group">
+              <label class="control-label">Date</label>
+              <div><div style="position: relative;">
+                <input class="form-control inlineBlock fromDate" placeholder="From" data-date-format="mm/dd/yyyy" type="text">
+                <input class="form-control inlineBlock toDate" placeholder="To" data-date-format="mm/dd/yyyy" type="text">
+                <a class="inlineBlock deleteIcon"><i class="fa fa-remove" style=""></i> </a></div>
+                <a><i class="fa fa-plus" style=""></i> Add another</a>
+              </div></div>
+          </form>
+        </div>
+        <form role="form" class="form-horizontal">
+          <div class="form-group">
+            <div class="actionButtons">
+              <button type="button" (click)="getEventsPage()" class="btn btn-primary advancedSearch">Apply</button>
+              <button type="reset" (click)="initQuery()" class="btn btn-default clearCriteria">Clear</button>
+            </div>
+          </div>
+        </form>
+      </form>
+    </div>
+</div>

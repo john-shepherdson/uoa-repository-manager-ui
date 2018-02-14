@@ -37,7 +37,7 @@ export class RepositoryTilesComponent implements OnInit {
           } else {
             return 0;
           }
-        } ),
+        }),
         error => {
           console.log(error);
           this.loadingMessage = '';

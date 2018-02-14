@@ -60,6 +60,7 @@ export class CompatibilityValidationResultsComponent implements OnInit {
       error => {
         console.log(error);
         this.errorMessage = loadingJobSummaryError;
+        this.loadingMessage = '';
       },
       () => {
         this.loadingMessage = '';

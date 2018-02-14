@@ -7,6 +7,7 @@ import {ContentEventsComponent} from "./content-events.component";
 import {ContentNotificationsComponent} from "./content-notifications.component";
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { ContentEventsOfRepositoryComponent } from './content-events-of-repository.component';
+import { ContentEventsOfRepoEventslistComponent } from './content-events-of-repo-eventslist.component';
 
 @NgModule ({
   imports: [
@@ -19,6 +20,7 @@ import { ContentEventsOfRepositoryComponent } from './content-events-of-reposito
     ContentComponent,
     ContentEventsComponent,
     ContentEventsOfRepositoryComponent,
+    ContentEventsOfRepoEventslistComponent,
     ContentNotificationsComponent
   ]
 })
