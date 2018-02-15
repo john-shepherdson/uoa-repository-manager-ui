@@ -16,6 +16,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   eventsPageInitialized = false;
 
   topic = '';
+  correctTopic = '';
   repoName = '';
 
   advanceSearch: AdvQueryObject;
@@ -27,19 +28,20 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   ngOnInit () {
     this.getParams();
     this.initQuery();
-    this.getEventsPage();
+    this.getEventsPage(0);
   }
 
 
   getParams() {
     this.topic = this.route.snapshot.paramMap.get('topic');
+    this.getCorrectTopic();
     this.repoName = this.route.snapshot.paramMap.get('name');
   }
 
   initQuery() {
     this.advanceSearch = {
       datasource: this.repoName,
-      topic: '',
+      topic: this.correctTopic,
       titles: [],
       subjects: [],
       authors: [],
@@ -49,11 +51,17 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     };
   }
 
-  getEventsPage() {
+  updateQuery() {
+    //update advanceSearch
+  }
+
+  refreshQuery() {}
+
+  getEventsPage(page: number) {
     this.noEvents = '';
     this.errorMessage = '';
     this. loadingMessage = loadingEvents;
-    this.brokerService.advancedShowEvents(this.advanceSearch).subscribe(
+    this.brokerService.advancedShowEvents(page,this.advanceSearch).subscribe(
       page => this.eventsPage = page,
       error => {
         this.loadingMessage = '';
@@ -61,7 +69,8 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        if(!this.eventsPage.totalPages) {
+        console.log(this.eventsPage);
+        if(!this.eventsPage.total) {
           if (!this.eventsPageInitialized)
             this.noEvents = noEventsForTopic;
           else
@@ -72,5 +81,26 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     );
   }
 
+  getCorrectTopic() {
+    let temp = this.topic.split('|');
+    this.correctTopic = temp[0];
+    for (let i=1; i<temp.length; i++){
+      this.correctTopic += `/${temp[i]}`;
+    }
+  }
+
+  goToNextPage(){
+    if(this.eventsPage.currPage < this.eventsPage.totalPages) {
+      console.log(`Get me page ${this.eventsPage.currPage+1}!`);
+      this.getEventsPage(this.eventsPage.currPage+1);
+    }
+  }
+
+  goToPreviousPage(){
+    if(this.eventsPage.currPage > 0) {
+      console.log(`Get me page ${this.eventsPage.currPage-1}!`);
+      this.getEventsPage(this.eventsPage.currPage-1);
+    }
+  }
 
 }

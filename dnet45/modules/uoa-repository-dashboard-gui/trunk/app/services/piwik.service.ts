@@ -20,9 +20,18 @@ const httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class PiwikService {
-  private apiUrl = apiUrl;
+  private apiUrl = `${apiUrl}/piwik/`;
 
   constructor(private http: Http) { }
+
+
+  approvePiwikSite(repositoryId: string): Observable<string> {
+    let url = `${this.apiUrl}/piwik/approvePiwikSite/${repositoryId}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map(res => res.status.toString())
+      .catch(this.handleError);
+  }
 
   getOpenaireId(id: string): Observable<string> {
     let url = `${this.apiUrl}/piwik/getOpenaireId/${id}`;

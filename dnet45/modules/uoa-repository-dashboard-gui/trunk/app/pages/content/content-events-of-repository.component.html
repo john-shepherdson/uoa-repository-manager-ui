@@ -3,7 +3,7 @@
     <div class="uk-margin-medium-bottom">
       <h1 class="uk-article-title">Enrichments for {{ repoName }}</h1>
     </div>
-    <a (click)="getParams(chosenEvent)">PUSH ME</a>
+    <a (click)="goToEventsList(chosenEvent)">PUSH ME</a>
     <div>
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
       <div *ngIf="loadingMessage" class="loading-big">
@@ -26,9 +26,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="el-item" *ngFor="let moreTopic of missingList">
+                  <tr class="el-item" *ngFor="let moreTopic of moreList">
                     <td class="uk-table-shrink uk-width-4-5">
-                      <a (click)="getParams(moreTopic.value)" class="el-link">{{ moreTopic.value }}</a>
+                      <a (click)="goToEventsList(moreTopic.value)" class="el-link">{{ moreTopic.value }}</a>
                       <div class="uk-text uk-text-meta">{{ topics[moreTopic.value]['englishName'] }}</div>
                     </td>
                     <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
@@ -64,7 +64,7 @@
                 <tbody>
                   <tr class="el-item" *ngFor="let missingTopic of missingList">
                     <td class="uk-table-shrink uk-width-4-5">
-                      <a [routerLink]="" class="el-link">{{ missingTopic.value }}</a>
+                      <a (click)="goToEventsList(missingTopic.value)" class="el-link">{{ missingTopic.value }}</a>
                       <div class="uk-text uk-text-meta">{{ topics[missingTopic.value]['englishName'] }}</div>
                     </td>
                     <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">

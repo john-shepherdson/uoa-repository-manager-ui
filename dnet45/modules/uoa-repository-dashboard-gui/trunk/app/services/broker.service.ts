@@ -26,11 +26,11 @@ export class BrokerService {
 
   constructor(private http: Http) { }
 
-  advancedShowEvents(query: AdvQueryObject): Observable<EventsPage>{
-    let url = `${this.apiUrl}advancedShowEvents/0/100`;
+  advancedShowEvents(page: number,searchParams: AdvQueryObject): Observable<EventsPage>{
+    let url = `${this.apiUrl}advancedShowEvents/${page}/10`;
     console.log(`knocking on: ${url}`);
-    let body = JSON.stringify(query);
-    console.log(`sending ${body}`);
+    let body = searchParams;
+    console.log(`sending ${JSON.stringify(body)}`);
     httpOptions.withCredentials = true;
     return this.http.post(url,body,httpOptions)
       .map( res => <EventsPage>res.json())
@@ -64,7 +64,7 @@ export class BrokerService {
   }
 
   getSimpleSubscriptionsOfUser(userEmail: string): Observable<Map<string,SimpleSubscriptionDesc>> {
-    let url = `${this.apiUrl}getSimpleSubscriptionsOfUser/{userEmail}?userEmail=${userEmail}`;
+    let url = `${this.apiUrl}getSimpleSubscriptionsOfUser/${userEmail}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Map<string,SimpleSubscriptionDesc>>res.json())

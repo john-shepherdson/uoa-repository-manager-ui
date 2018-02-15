@@ -39,9 +39,12 @@ export class ContentNotificationsComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        if (this.subscrOfUser.size) {
-          this.subKeys = Array.from(this.subscrOfUser.keys());
-        } else {
+        console.log(JSON.stringify(this.subscrOfUser));
+        for (let key in this.subscrOfUser){
+          this.subKeys.push(key);
+          console.log(key);
+        }
+        if (!this.subKeys.length) {
           this.noSubscriptions = noSubscriptionsFound;
         }
       }

@@ -80,14 +80,13 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        if (this.topics.size){
-          this.getRepoTopics();
-        }
+        console.log(this.topics);
+        this.getRepoTopics();
       }
     );
   }
 
-  getParams(topic: string) {
+  goToEventsList(topic: string) {
     let temp = topic.split('/');
     let chosenTopic = temp[0];
     for (let i=1; i<temp.length; i++){

@@ -31,6 +31,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
 
   itemsPerPage: number;
   currentPage: number;
+  currentTotalJobs: number;
   totalPages: number;
   currentFilter: string;
   chosenJobType: string;
@@ -59,17 +60,20 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
 
   getJobType(type: string) {
     this.chosenJobType = type;
+    this.currentPage =1;
     this.getJobs();
   }
 
   filterJobs(filter: string){
     this.currentFilter = filter;
+    this.currentPage = 1;
     console.log(`requesting ${this.currentFilter} jobs`);
     this.getJobs();
   }
 
   getItemsPerPage(num: number){
     this.itemsPerPage = num;
+    this.currentPage =1;
     this.getJobs();
   }
 
@@ -127,7 +131,16 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
           this.errorMessage = loadingUserJobsError;
         },
         () => {
-          this.totalPages = Math.ceil(this.jobsOfUser.totalJobs / this.itemsPerPage);
+          if (this.currentFilter == 'all') {
+            this.currentTotalJobs = this.jobsOfUser.totalJobs;
+          } else if (this.currentFilter == 'successful') {
+            this.currentTotalJobs = this.jobsOfUser.totalJobsSuccessful;
+          } else if (this.currentFilter == 'failed') {
+            this.currentTotalJobs = this.jobsOfUser.totalJobsFailed;
+          } else {
+            this.currentTotalJobs = this.jobsOfUser.totalJobsOngoing;
+          }
+          this.totalPages = Math.ceil(this.currentTotalJobs / this.itemsPerPage);
           this.loadingMessage = '';
           if (!this.totalPages || !this.jobsOfUser.jobs) {
             this.infoMessage = noUserJobsFound;
@@ -137,14 +150,15 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     },500);
   }
 
-  getResultImage(status: string) {
-    let assets = 'assets/imgs';
-    if (status == 'successful') {
-      return `${assets}/icon_colours-check.jpg`;
-    } else if (status == 'failed') {
-      return `${assets}/icon_colours-x.jpg`;
+  getResultImage(ended: string, error: string) {
+    if (!ended) {
+      return `../../../assets/imgs/icon_colours-question.jpg`;
     } else {
-      return `${assets}/icon_colours-question.jpg`;
+      if (error == 'no errors') {
+        return `../../../assets/imgs/icon_colours-check.jpg`;
+      } else {
+        return `../../../assets/imgs/icon_colours-x.jpg`;
+      }
     }
   }
 
@@ -156,6 +170,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
         console.log(error);
       }
     );
+    this.getJobs();
   }
 
 }

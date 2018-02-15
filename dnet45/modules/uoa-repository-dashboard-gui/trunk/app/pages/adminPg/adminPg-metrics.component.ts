@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PiwikService } from '../../services/piwik.service';
 import { PiwikInfo } from '../../domain/typeScriptClasses';
-import { loadingReposMessage, reposRetrievalError } from '../../domain/shared-messages';
+import {
+  enabledMetricsError, enablingMetrics, loadingReposMessage,
+  reposRetrievalError
+} from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 
 @Component ({
@@ -61,7 +64,25 @@ export class AdminPgMetricsComponent implements OnInit {
 
   confirmedApproval(ids: string[]){
     let id = ids[0];
-    console.log(`approved validation of piwik for repo with id: ${id}`);
+    console.log(`approving validation of piwik for repo with id: ${id}`);
+    this.approvePiwik(id);
+  }
+
+  approvePiwik(id: string) {
+    this.loadingMessage = enablingMetrics;
+    this.errorMessage = '';
+    this.piwikService.approvePiwikSite(id).subscribe(
+      response => console.log(`approvePiwikSite responded: ${response}`),
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = enabledMetricsError;
+      },
+      () => {
+        this.loadingMessage = '';
+        this.errorMessage = '';
+      }
+    );
   }
 
 }

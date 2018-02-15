@@ -94,7 +94,7 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody *ngIf="jobsOfUser.jobs">
+                <tbody *ngIf="jobsOfUser && jobsOfUser.jobs">
                     <tr class="el-item" *ngFor="let job of jobsOfUser.jobs">
                       <td class="uk-table-shrink" style="vertical-align: top !important;">
                         <div class="el-title">{{ job.baseUrl }}</div>
@@ -125,7 +125,7 @@
                         </div>
                       </td>
                       <td class="uk-table-shrink" style="vertical-align: top !important;">
-                        <img src="{{ getResultImage(job.validationStatus) }}" width="20" height="20">
+                        <img src="{{ getResultImage(job.ended,job.error) }}" width="20" height="20">
                       </td>
                     </tr>
                 </tbody>

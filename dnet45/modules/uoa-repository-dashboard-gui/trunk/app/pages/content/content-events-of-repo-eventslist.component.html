@@ -13,7 +13,7 @@
       <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
       <div *ngIf="eventsPage" class="events-results">
         <div class="numberOfEventsLabel">
-          <span>Showing 1-10 of 1572 results</span>
+          <span>Showing {{(eventsPage.currPage*10)+1 }}-{{(eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>
           <span class="uk-float-right">
             <button id="subscribe" type="button" class="uk-button uk-button-primary uk-button-small">Subscribe to these events</button>
           </span>
@@ -37,69 +37,73 @@
               </a>
             </li>
           </ul>
-          <div class="resultsPageLabel">page 1 of 158</div>
+          <div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>
         </div>
-        <div class="events-list">
+        <div *ngFor="let event of eventsPage.values" class="events-list">
           <div class="uk-card uk-card-default well uk-scrollspy-inview uk-animation-slide-top-medium">
             <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
               <div class="uk-width-1-1@m uk-first-column">
-                <p class="text-right"><span class="uk-label">Trust: 1</span></p>
-                <div *ngFor="let event of eventsPage.values" class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                <p class="text-right"><span class="uk-label">Trust: {{ event.trust }}</span></p>
+                <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
                   <table class="uk-table uk-table-striped uk-table-middle">
                     <tbody>
-                    <tr class="el-item">
-                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">ID</strong></td>
-                      <td class="uk-table-shrink">
-                        <div class="el-title">oai:nemertes:10889/2732</div>
-                      </td>
-                    </tr>
-                    <tr class="el-item">
-                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Title(s)</strong></td>
-                      <td class="uk-table-shrink">
-                        <div class="el-title"><span>Πρωτεΐνες με φωσφορική....</span></div>
-                      </td>
-                    </tr>
-                    <tr class="el-item">
-                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Author(s)</strong></td>
-                      <td class="uk-table-shrink"><div class="el-title"><span>Ζέρβας, Χρήστος</span></div></td>
-                    </tr><tr class="el-item">
-                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">PID(s)</strong></td>
-                      <td class="uk-table-shrink"><div class="el-title"></div></td>
-                    </tr>
-                    <tr class="el-item"><td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
-                      <td class="uk-table-shrink"><div class="el-title"><span>-</span></div></td>
-                    </tr>
-                    <tr class="el-item">
-                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
-                      <td class="uk-table-shrink"><div class="el-title"></div></td>
-                    </tr>
-                    <tr class="el-item">
-                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Subject(s)</strong></td>
-                      <td class="uk-table-shrink">
-                        <div class="el-title"><span>Βιοχημεία</span>, <span>Ένζυμα</span>, ...</div>
-                      </td>
-                    </tr>
-                    <tr class="el-item">
-                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Publication date</strong></td>
-                      <td class="uk-table-shrink"><div class="el-title">1997-01-01</div></td>
-                    </tr>
-                    <tr class="el-item success">
-                      <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Rights</strong></td>
-                      <td class="uk-table-shrink">
-                        <div class="el-title">
-                          <span>OPEN&nbsp;&nbsp;<b>Nemertes</b><br>
-                          <a href="http://hdl.handle.net/10889/2732" target="_blank">http://hdl.handle.net/10889/2732</a>&nbsp;&nbsp;</span><br>
-                          <span>OPEN&nbsp;&nbsp;<b>Nemertes</b><br><a href="http://hdl.handle.net/10889/2767" target="_blank">http://hdl.handle.net/10889/2767</a>&nbsp;&nbsp;</span>
-                          <span>
-                            <span class="uk-label uk-label-success">added</span>
-                            <span class="pull-right"><b>from: </b>
-                              <a href="http://hdl.handle.net/10889/2732" target="_blank">Nemertes</a>
-                              <span> (ID: oai:nemertes:10889/2767)</span>
+                      <tr class="el-item">
+                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">ID</strong></td>
+                        <td class="uk-table-shrink">
+                          <div class="el-title">{{ event.publication.originalId }}</div>
+                        </td>
+                      </tr>
+                      <tr class="el-item">
+                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Title(s)</strong></td>
+                        <td class="uk-table-shrink">
+                          <div class="el-title">
+                            <span *ngFor="let t of event.publication.titles">{{ t }}</span></div>
+                        </td>
+                      </tr>
+                      <tr class="el-item">
+                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Author(s)</strong></td>
+                        <td class="uk-table-shrink">
+                          <div class="el-title"><span *ngFor="let auth of event.publication.creators">{{ auth }}</span>&nbsp;&nbsp;</div>
+                        </td>
+                      </tr><tr class="el-item">
+                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">PID(s)</strong></td>
+                        <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let pid of event.publication.pids">({{ pid.type }}) {{ pid.value }}</span></div></td>
+                      </tr>
+                      <tr class="el-item"><td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
+                        <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let abs of event.publication.abstracts">{{ abs }}</span></div></td>
+                      </tr>
+                      <tr class="el-item">
+                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
+                        <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let rel of event.publication.externalReferences">{{ rel.name }}, </span></div></td>
+                      </tr>
+                      <tr class="el-item">
+                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Subject(s)</strong></td>
+                        <td class="uk-table-shrink">
+                          <div class="el-title"><span *ngFor="let subj of event.publication.subjects">{{ subj }},&nbsp;</span></div>
+                        </td>
+                      </tr>
+                      <tr class="el-item">
+                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Publication date</strong></td>
+                        <td class="uk-table-shrink"><div class="el-title">{{ event.publication.publicationdate }}</div></td>
+                      </tr>
+                      <tr class="el-item success">
+                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Rights</strong></td>
+                        <td class="uk-table-shrink">
+                          <div class="el-title">
+                            <span *ngFor="let l of event.publication.instances">{{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b><br>
+                              <a href="{{ l.url }}" target="_blank">{{ l.url }}</a>
                             </span>
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
+                            <br>
+                            <span class="pull-right">
+                              <span class="uk-label uk-label-success">added</span>&nbsp;&nbsp;
+                              <span><b>from: </b>
+                                <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                <span> ({{ event.provenance.id }})</span>
+                              </span>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -126,8 +130,9 @@
               </a>
             </li>
           </ul>
-          <div class="resultsPageLabel">page 1 of 158</div>
+          <div class="resultsPageLabel">page {{ eventsPage.currPage }} of {{ eventsPage.totalPages }}</div>
         </div>
+      </div>
     </div>
   </div>
   <div class="tm-sidebar uk-width-1-4@m">
@@ -142,7 +147,7 @@
           <div class="form-group">
             <label class="control-label">Trust</label>
             <div class="slider slider-horizontal" id="">
-              <div class="slider-track">
+              <div class="ui-slider slider-track">
                 <div class="slider-track-low" style="left: 0px; width: 0%;"></div>
                 <div class="slider-selection" style="left: 0%; width: 100%;"></div>
                 <div class="slider-track-high" style="right: 0px; width: 0%;"></div>
@@ -229,4 +234,5 @@
         </form>
       </form>
     </div>
+  </div>
 </div>
