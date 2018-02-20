@@ -208,20 +208,21 @@
             <a (click)="addControl('eventSubjects', subjectDefinition)"><i class="fa fa-plus"></i> Add another</a>
           </div>
         </div>
-<!--
         <div>
-          <form role="form" class="uk-form-horizontal">
+          <div class="uk-form-horizontal">
             <div class="form-group">
-              <label class="control-label">Date</label>
-              <div><div style="position: relative;">
-                <input class="form-control inlineBlock fromDate" placeholder="From" data-date-format="mm/dd/yyyy" type="text">
-                <input class="form-control inlineBlock toDate" placeholder="To" data-date-format="mm/dd/yyyy" type="text">
-                <a class="inlineBlock deleteIcon"><i class="fa fa-remove" style=""></i> </a></div>
-                <a><i class="fa fa-plus" style=""></i> Add another</a>
-              </div></div>
-          </form>
+              <label class="control-label" style="display: block;">Date</label>
+              <div formArrayName="eventDateRanges" *ngFor="let date of group.controls.eventDateRanges.controls; let date_index = index">
+                <div class="uk-form" style="position: relative;" [formGroupName]=date_index>
+                  <input class="form-control inlineBlock dateFrom" style="width:88%;" title="From" type="date" formControlName=dateFrom>
+                  <input class="form-control inlineBlock dateTo" style="width:88%;" placeholder="To" type="date" formControlName=dateTo>
+                  <a class="inlineBlock deleteIcon" (click)="removeControl('eventDateRanges',date_index)"><i class="fa fa-remove" style=""></i></a>
+                </div>
+              </div>
+              <a (click)="addControl('eventDateRanges', dateRangeDefinition)"><i class="fa fa-plus"></i> Add another</a>
+            </div>
+          </div>
         </div>
--->
         <div role="form" class="form-horizontal">
           <div class="form-group">
             <div class="actionButtons">

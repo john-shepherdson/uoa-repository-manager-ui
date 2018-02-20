@@ -27,11 +27,13 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   readonly titleDefinition = { eventTitle: [''] };
   readonly authorDefinition = { eventAuthor: [''] };
   readonly subjectDefinition = { eventSubject: [''] };
+  readonly dateRangeDefinition = { dateFrom: '', dateTo: '' };
   readonly groupDefinition = {
     trustRange: Range,
     eventTitles: this.fb.array([this.initControl(this.titleDefinition)]),
     eventAuthors: this.fb.array([this.initControl(this.authorDefinition)]),
-    eventSubjects: this.fb.array([this.initControl(this.subjectDefinition)])
+    eventSubjects: this.fb.array([this.initControl(this.subjectDefinition)]),
+    eventDateRanges: this.fb.array([this.initControl(this.dateRangeDefinition)])
   };
 
   constructor (private route: ActivatedRoute,
@@ -95,6 +97,10 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     controlArray = <FormArray>this.group.controls['eventSubjects'];
     controlArray.controls = [];
     controlArray.push(this.initControl(this.subjectDefinition));
+
+    controlArray = <FormArray>this.group.controls['eventDateRanges'];
+    controlArray.controls = [];
+    controlArray.push(this.initControl(this.dateRangeDefinition));
   }
 
   updateQuery() {
@@ -120,7 +126,13 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
         this.advanceSearch.subjects.push(controlArray.at(i).get('eventSubject').value);
       }
     }
-
+    controlArray = <FormArray>this.group.controls['eventDateRanges'];
+    for (i=0; i<controlArray.length; i++) {
+      if (controlArray.at(i).get('dateFrom').value && controlArray.at(i).get('dateTo').value) {
+        this.advanceSearch.dates.push( {min:controlArray.at(i).get('dateFrom').value,max:controlArray.at(i).get('dateTo').value} );
+      }
+    }
+    console.log(this.advanceSearch);
     this.getEventsPage(0);
   }
 
