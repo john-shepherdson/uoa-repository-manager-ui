@@ -32,7 +32,6 @@ export const typologies = [
   { value: 'VTOAI', name: 'VTOAI' },
   { value: 'WEKO', name: 'WEKO' },
   { value: 'XooNIps', name: 'XooNIps' },
-  { value: '', name: '------------------------'},
   { value: 'OJS', name: 'OJS' },
   { value: 'HyperJournal', name: 'HyperJournal' },
   { value: 'ePubTk', name: 'ePubTk' },

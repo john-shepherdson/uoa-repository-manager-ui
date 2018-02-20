@@ -124,10 +124,10 @@ export class MyArray extends MyGroup {
   selector : 'form-repeat-inline',
   template : `
     <form-inline [description]="description" [valid]="valid">
-        <ng-template my-form></ng-template>
-        <a class="add-new-element" (click)="push()">
-            <i class="fa fa-plus" aria-hidden="true"></i> Add {{description.label}}
-        </a>
+      <ng-template my-form></ng-template>
+      <a class="add-new-element" (click)="push()">
+          <i class="fa fa-plus" aria-hidden="true"></i> Add another
+      </a>
     </form-inline>
     `
 

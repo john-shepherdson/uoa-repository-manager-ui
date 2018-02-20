@@ -8,12 +8,15 @@ import {ContentNotificationsComponent} from "./content-notifications.component";
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { ContentEventsOfRepositoryComponent } from './content-events-of-repository.component';
 import { ContentEventsOfRepoEventslistComponent } from './content-events-of-repo-eventslist.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
     ContentRouting,
+//    FormsModule,
+    ReactiveFormsModule,
     ReusableComponentsModule
   ],
   declarations: [

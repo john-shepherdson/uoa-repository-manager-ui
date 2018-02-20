@@ -38,11 +38,11 @@ export class CompatibilityValidateStep2Component implements OnInit {
     }
   }
 
-  /* creates a control of the Rules FormArray */
+  /* creates a formGroup of the Rules FormArray */
   initRules() {
     return this.fb.group({
       rule : [true]
-    })
+    });
   }
 
   /* returns Rules for selected RuleSet */

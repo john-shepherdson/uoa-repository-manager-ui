@@ -107,8 +107,8 @@ export class DatasourceInfoFormComponent implements OnInit {
           this.selectedRepo = repo;
           if (this.selectedRepo) {
             this.updateGroup.setValue({
-              softwarePlatform: '', //this.selectedRepo.WHICH FIELD ??
-              platformName: this.selectedRepo.typology,
+              softwarePlatform: this.selectedRepo.typology,
+              platformName: '',
               officialName: this.selectedRepo.officialName,
               repoDescription: this.selectedRepo.description,
               country: this.selectedRepo.countryCode,
@@ -122,16 +122,10 @@ export class DatasourceInfoFormComponent implements OnInit {
               datasourceType: this.selectedRepo.datasourceClass,
               adminEmail: this.selectedRepo.contactEmail
             });
+            if (this.updateGroup.get('softwarePlatform').value == '') {
+              this.updateGroup.setValue({platformName: this.selectedRepo.typology});
+            }
           }
-          this.updateGroup.get('softwarePlatform').disable();
-          this.updateGroup.get('platformName').disable();
-          this.updateGroup.get('officialName').disable();
-          this.updateGroup.get('repoDescription').disable();
-          this.updateGroup.get('country').disable();
-          this.updateGroup.get('longtitude').disable();
-          this.updateGroup.get('latitude').disable();
-          this.updateGroup.get('websiteUrl').disable();
-          this.updateGroup.get('institutionName').disable();
 
           this.setUpSourceInfo();
           this.getDatasourceClasses();
@@ -214,7 +208,6 @@ export class DatasourceInfoFormComponent implements OnInit {
       () => {
         for (let key in this.datasourceClasses){
           this.classCodes.push(key);
-/*          console.log(`${key} -> ${this.datasourceClasses[key]}`);*/
         }
       }
     );

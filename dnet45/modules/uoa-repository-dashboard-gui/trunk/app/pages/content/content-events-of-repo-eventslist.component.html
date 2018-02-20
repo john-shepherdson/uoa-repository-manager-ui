@@ -135,15 +135,15 @@
       </div>
     </div>
   </div>
-  <div class="tm-sidebar uk-width-1-4@m">
+  <div [formGroup]="group" class="tm-sidebar uk-width-1-4@m">
     <div class="enrichContentAdvancedSearch uk-card uk-card-body uk-card-default sidemenu">
       <div>
         <h6 class="uk-h6 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
           <span>Tweak and refine events</span>
         </h6>
       </div>
-      <form role="form" class="uk-form-horizontal">
-        <form role="form" class="uk-form-horizontal">
+      <div role="form" class="uk-form-horizontal">
+        <div class="uk-form-horizontal">
           <div class="form-group">
             <label class="control-label">Trust</label>
             <div class="slider slider-horizontal" id="">
@@ -167,51 +167,48 @@
               <div class="slider-handle min-slider-handle round" role="slider" aria-valuemin="0" aria-valuemax="1" style="left: 0%;" aria-valuenow="0" tabindex="0"></div>
               <div class="slider-handle max-slider-handle round" role="slider" aria-valuemin="0" aria-valuemax="1" style="left: 100%;" aria-valuenow="1" tabindex="0"></div>
             </div>
-            <input data-slider-range="true" data-slider-min="0" data-slider-max="1" data-slider-value="[0, 1]"
-                   data-slider-enabled="true" data-slider-step="0.01" style="display: none;" data-value="0,1"
-                   value="0,1" type="text">
+            <input data-slider-range="true" data-slider-min="0" data-slider-max="1" data-slider-value=""
+                   data-slider-enabled="true" data-slider-step="0.01" style="display: none;" data-value=""
+                   value="" type="text" formControlName="trustRange">
           </div>
-        </form>
-        <div>
-          <form role="form" class="uk-form-horizontal">
-            <div class="form-group">
-              <label class="control-label">Title</label>
-              <div>
-                <div><input class="form-control inlineBlock" type="text">
-                  <a href="javascript:;" class="inlineBlock deleteIcon"><i class="fa fa-remove" style=""></i> </a>
-                </div>
-                <a href="javascript:;"><i class="fa fa-plus" style=""></i> Add another</a>
+        </div>
+        <div class="uk-form-horizontal">
+          <div class="form-group">
+            <label class="control-label" style="display: block;">Title</label>
+            <div formArrayName="eventTitles" *ngFor="let title of group.controls.eventTitles.controls; let title_index = index">
+              <div [formGroupName]="title_index">
+                <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventTitle">
+                <a class="inlineBlock deleteIcon" (click)="removeControl('eventTitles',title_index)"><i class="fa fa-remove"></i></a>
               </div>
             </div>
-          </form>
+            <a (click)="addControl('eventTitles',titleDefinition)"><i class="fa fa-plus"></i> Add another</a>
+          </div>
         </div>
-        <div>
-          <form target="GWTBootstrap3_AbstractForm_RepositoryManager_4" role="form" class="uk-form-horizontal">
-            <div class="form-group">
-              <label class="control-label">Author</label>
-              <div>
-                <div>
-                  <input class="form-control inlineBlock" type="text">
-                  <a class="inlineBlock deleteIcon"><i class="fa fa-remove" style=""></i> </a>
-                </div>
-                <a><i class="fa fa-plus" style=""></i> Add another</a>
+        <div class="uk-form-horizontal">
+          <div class="form-group">
+            <label class="control-label" style="display: block;">Author</label>
+            <div formArrayName="eventAuthors" *ngFor="let author of group.controls.eventAuthors.controls; let author_index = index">
+              <div [formGroupName]="author_index">
+                <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventAuthor">
+                <a class="inlineBlock deleteIcon" (click)="removeControl('eventAuthors',author_index)"><i class="fa fa-remove"></i></a>
               </div>
             </div>
-          </form>
+            <a (click)="addControl('eventAuthors', authorDefinition)"><i class="fa fa-plus"></i> Add another</a>
+          </div>
         </div>
-        <div>
-          <form role="form" class="uk-form-horizontal">
-            <div class="form-group">
-              <label class="control-label">Subject</label>
-              <div>
-                <div>
-                  <input class="form-control inlineBlock" type="text">
-                  <a class="inlineBlock deleteIcon"><i class="fa fa-remove" style=""></i> </a>
-                </div><a><i class="fa fa-plus" style=""></i> Add another</a>
+        <div class="uk-form-horizontal">
+          <div class="form-group">
+            <label class="control-label" style="display: block;">Subject</label>
+            <div formArrayName="eventSubjects" *ngFor="let subject of group.controls.eventSubjects.controls; let subject_index = index">
+              <div [formGroupName]="subject_index">
+                <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventSubject">
+                <a class="inlineBlock deleteIcon" (click)="removeControl('eventSubjects', subject_index)"><i class="fa fa-remove"></i></a>
               </div>
             </div>
-          </form>
+            <a (click)="addControl('eventSubjects', subjectDefinition)"><i class="fa fa-plus"></i> Add another</a>
+          </div>
         </div>
+<!--
         <div>
           <form role="form" class="uk-form-horizontal">
             <div class="form-group">
@@ -224,15 +221,16 @@
               </div></div>
           </form>
         </div>
-        <form role="form" class="form-horizontal">
+-->
+        <div role="form" class="form-horizontal">
           <div class="form-group">
             <div class="actionButtons">
-              <button type="button" (click)="getEventsPage()" class="btn btn-primary advancedSearch">Apply</button>
-              <button type="reset" (click)="initQuery()" class="btn btn-default clearCriteria">Clear</button>
+              <button type="button" (click)="updateQuery()" class="uk-button uk-button-primary advancedSearch">Apply</button>
+              <button type="reset" (click)="clearForm()" class="uk-button uk-button-default clearCriteria">Clear</button>
             </div>
           </div>
-        </form>
-      </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>
