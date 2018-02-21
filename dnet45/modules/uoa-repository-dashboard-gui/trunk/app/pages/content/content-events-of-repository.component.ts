@@ -50,7 +50,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
         },
         () => {
           this.loadingMessage = '';
-          if(!this.repoTopics.length){
+          if(this.repoTopics.length == 0){
             this.noTopics=noTopicsFound;
           } else {
             for(let browseEntry of this.repoTopics) {

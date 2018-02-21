@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AdvQueryObject, EventsPage } from '../../domain/typeScriptClasses';
+import { AdvQueryObject, EventsPage, NotificationFrequency, NotificationMode } from '../../domain/typeScriptClasses';
 import { BrokerService } from '../../services/broker.service';
-import { loadingEvents, noEventsForTopic, noEventsWithParams, noServiceMessage } from '../../domain/shared-messages';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  loadingEvents, noEventsForTopic, noEventsWithParams, noServiceMessage, subscribingChooseFrequency,
+  subscribingToEvents,
+  subscribingToEventsError, subscribingToeventsSuccess
+} from '../../domain/shared-messages';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 
 @Component ({
   selector: 'app-content-events-of-repo-eventslist',
@@ -13,6 +19,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 export class ContentEventsOfRepoEventslistComponent implements OnInit {
   errorMessage: string;
   loadingMessage: string;
+  successMessage: string;
   noEvents: string;
   eventsPageInitialized = false;
 
@@ -29,18 +36,28 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   readonly subjectDefinition = { eventSubject: [''] };
   readonly dateRangeDefinition = { dateFrom: '', dateTo: '' };
   readonly groupDefinition = {
-    trustRange: Range,
+    trustMin: [+''],
+    trustMax: [+''],
     eventTitles: this.fb.array([this.initControl(this.titleDefinition)]),
     eventAuthors: this.fb.array([this.initControl(this.authorDefinition)]),
     eventSubjects: this.fb.array([this.initControl(this.subjectDefinition)]),
     eventDateRanges: this.fb.array([this.initControl(this.dateRangeDefinition)])
   };
 
+  frequencyChoice: string;
+  userEmail: string;
+  modalErrorMessage: string;
+
+  @ViewChild('subscribeToEventsModal')
+  public subscribeToEventsModal: ConfirmationDialogComponent;
+
   constructor (private route: ActivatedRoute,
                private fb: FormBuilder,
-               private brokerService: BrokerService) {}
+               private brokerService: BrokerService,
+               private authService: AuthenticationService) {}
 
   ngOnInit () {
+    this.userEmail = this.authService.userEmail;
     this.getParams();
     this.initQuery();
     this.initForm();
@@ -67,7 +84,9 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   }
 
   initForm() {
-    this.group = this.fb.group( this.groupDefinition );
+    this.group = this.fb.group( this.groupDefinition, { validator: checkMinMax } );
+    this.group.get('trustMin').setValue(0);
+    this.group.get('trustMax').setValue(1);
   }
 
   initControl(definition: any) {
@@ -101,44 +120,59 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     controlArray = <FormArray>this.group.controls['eventDateRanges'];
     controlArray.controls = [];
     controlArray.push(this.initControl(this.dateRangeDefinition));
+
+    this.group.get('trustMin').setValue(0);
+    this.group.get('trustMax').setValue(1);
+
+    this.initQuery();
+    this.getEventsPage(0);
   }
 
   updateQuery() {
     let i: number;
     let controlArray: FormArray;
 
-    this.initQuery();
-    controlArray = <FormArray>this.group.controls['eventTitles'];
-    for (i=0; i<controlArray.length; i++) {
-      if (controlArray.at(i).get('eventTitle').value) {
-        this.advanceSearch.titles.push(controlArray.at(i).get('eventTitle').value);
+    if ( this.group.valid ) {
+      this.initQuery();
+      this.advanceSearch.trust.min = this.group.get('trustMin').value;
+      this.advanceSearch.trust.max = this.group.get('trustMax').value;
+
+      controlArray = <FormArray>this.group.controls['eventTitles'];
+      for (i = 0; i < controlArray.length; i++) {
+        if (controlArray.at(i).get('eventTitle').value) {
+          this.advanceSearch.titles.push(controlArray.at(i).get('eventTitle').value);
+        }
       }
-    }
-    controlArray = <FormArray>this.group.controls['eventAuthors'];
-    for (i=0; i<controlArray.length; i++) {
-      if (controlArray.at(i).get('eventAuthor').value) {
-        this.advanceSearch.authors.push(controlArray.at(i).get('eventAuthor').value);
+      controlArray = <FormArray>this.group.controls['eventAuthors'];
+      for (i = 0; i < controlArray.length; i++) {
+        if (controlArray.at(i).get('eventAuthor').value) {
+          this.advanceSearch.authors.push(controlArray.at(i).get('eventAuthor').value);
+        }
       }
-    }
-    controlArray = <FormArray>this.group.controls['eventSubjects'];
-    for (i=0; i<controlArray.length; i++) {
-      if (controlArray.at(i).get('eventSubject').value) {
-        this.advanceSearch.subjects.push(controlArray.at(i).get('eventSubject').value);
+      controlArray = <FormArray>this.group.controls['eventSubjects'];
+      for (i = 0; i < controlArray.length; i++) {
+        if (controlArray.at(i).get('eventSubject').value) {
+          this.advanceSearch.subjects.push(controlArray.at(i).get('eventSubject').value);
+        }
       }
-    }
-    controlArray = <FormArray>this.group.controls['eventDateRanges'];
-    for (i=0; i<controlArray.length; i++) {
-      if (controlArray.at(i).get('dateFrom').value && controlArray.at(i).get('dateTo').value) {
-        this.advanceSearch.dates.push( {min:controlArray.at(i).get('dateFrom').value,max:controlArray.at(i).get('dateTo').value} );
+      controlArray = <FormArray>this.group.controls['eventDateRanges'];
+      for (i = 0; i < controlArray.length; i++) {
+        if (controlArray.at(i).get('dateFrom').value && controlArray.at(i).get('dateTo').value) {
+          this.advanceSearch.dates.push({
+            min: controlArray.at(i).get('dateFrom').value,
+            max: controlArray.at(i).get('dateTo').value
+          });
+        }
       }
+      console.log(this.advanceSearch);
+      this.getEventsPage(0);
     }
-    console.log(this.advanceSearch);
-    this.getEventsPage(0);
   }
 
   getEventsPage(page: number) {
     this.noEvents = '';
     this.errorMessage = '';
+    this.successMessage = '';
     this. loadingMessage = loadingEvents;
     this.brokerService.advancedShowEvents(page,this.advanceSearch).subscribe(
       page => this.eventsPage = page,
@@ -156,7 +190,6 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
             this.noEvents = noEventsWithParams;
         }
         this.eventsPageInitialized = true;
-        this.clearForm();
       }
     );
   }
@@ -185,4 +218,54 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     }
   }
 
+  showSubscriptionModal() {
+    if (this.advanceSearch && this.eventsPage) {
+      this.subscribeToEventsModal.confirmed = false;
+      this.subscribeToEventsModal.showModal();
+    }
+  }
+
+  choseFrequency(freq: string) {
+    this.frequencyChoice = freq;
+  }
+
+  subscribeToEvents() {
+    this.modalErrorMessage = '';
+    if (this.frequencyChoice) {
+      this.subscribeToEventsModal.confirmed = true;
+      let freq = <NotificationFrequency>this.frequencyChoice;
+      let mod: NotificationMode = "EMAIL";
+      let sub = {
+        subscriber: this.userEmail,
+        frequency: freq,
+        mode: mod,
+        query: this.advanceSearch
+      };
+      this.errorMessage = '';
+      this.successMessage = '';
+      console.log(JSON.stringify(sub));
+      this.loadingMessage = subscribingToEvents;
+      this.brokerService.subscribeToEvent(sub).subscribe(
+        response => console.log(`subscribeToEvents responded ${response}`),
+        error => {
+          this.errorMessage = subscribingToEventsError;
+          this.loadingMessage = '';
+        },
+        () => {
+          this.loadingMessage = '';
+          this.successMessage = subscribingToeventsSuccess;
+        }
+      );
+    } else {
+      this.modalErrorMessage = subscribingChooseFrequency;
+    }
+  }
+
+}
+
+export function checkMinMax(c: AbstractControl) {
+  if( c.get('trustMin').value > c.get('trustMax').value ){
+    return 'invalid';
+  }
+  return null;
 }

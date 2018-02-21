@@ -24,7 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContentEventsComponent,
     ContentEventsOfRepositoryComponent,
     ContentEventsOfRepoEventslistComponent,
-    ContentNotificationsComponent
+    ContentNotificationsComponent,
   ]
 })
 

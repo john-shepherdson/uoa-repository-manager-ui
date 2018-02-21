@@ -64,7 +64,7 @@ export class BrokerService {
   }
 
   getSimpleSubscriptionsOfUser(userEmail: string): Observable<Map<string,SimpleSubscriptionDesc>> {
-    let url = `${this.apiUrl}getSimpleSubscriptionsOfUser/${userEmail}`;
+    let url = `${this.apiUrl}getSimpleSubscriptionsOfUser/${userEmail}/`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Map<string,SimpleSubscriptionDesc>>res.json())

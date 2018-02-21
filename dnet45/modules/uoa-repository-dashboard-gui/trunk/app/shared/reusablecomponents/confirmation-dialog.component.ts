@@ -14,6 +14,8 @@ export class ConfirmationDialogComponent {
 
   @Input() public isModalShown:boolean = false;
 
+  @Input() public confirmed:boolean = true;
+
   @Input() public title: string;
 
   @Input() public confirmActionButton: string;
@@ -42,6 +44,8 @@ export class ConfirmationDialogComponent {
 
   public confirmedAction() {
     this.emmitObject.emit(this._ids);
-    this.hideModal();
+    if(this.confirmed) {
+      this.hideModal();
+    }
   }
 }

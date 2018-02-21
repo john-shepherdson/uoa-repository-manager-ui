@@ -34,7 +34,7 @@ export class ValidatorService {
 
 
   getSetsOfRepository(baseUrl: string): Observable<string[]> {
-    let url = `${this.apiUrl}/validator/getSetsOfRepository?url=${baseUrl}`;
+    let url = `${this.apiUrl}/validator/getSetsOfRepository?url=${encodeURIComponent(baseUrl)}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <string[]>res.json())

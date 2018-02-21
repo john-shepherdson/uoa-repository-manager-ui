@@ -26,15 +26,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="el-item">
+            <tr *ngFor="let sub of subscrOfUser[key]" class="el-item">
               <td class="uk-table-shrink">
-                <div class="el-title">{{ subscrOfUser[key]['topic'] }}</div>
+                <div class="el-title">{{ sub.topic }}</div>
               </td>
               <td class="uk-text-nowrap uk-table-shrink">
-                <div class="el-title">{{ subscrOfUser[key]['count'] }}</div>
+                <div class="el-title">{{ sub.count }}</div>
               </td>
               <td class="uk-text-nowrap uk-table-shrink">
-                <a class="el-link" (click)="deleteSubscription(subscrOfUser[key]['id'])">
+                <a class="el-link" (click)="deleteSubscription(sub.id)">
                   <i class="fa fa-remove" aria-hidden="true"></i>
                 </a>
               </td>

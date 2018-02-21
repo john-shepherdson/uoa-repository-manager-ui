@@ -58,7 +58,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
   /*NOT SURE IF THESE PARAMETERS ARE THE CORRECT ONES*/
   confirmApproval(repoId: string) {
-    this.confirmApprovalModal.ids = [repoId];
+    this.confirmApprovalModal.ids.push(repoId);
     this.confirmApprovalModal.showModal();
   }
 

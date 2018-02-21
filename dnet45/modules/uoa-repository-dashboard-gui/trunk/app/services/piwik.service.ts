@@ -26,7 +26,7 @@ export class PiwikService {
 
 
   approvePiwikSite(repositoryId: string): Observable<string> {
-    let url = `${this.apiUrl}/piwik/approvePiwikSite/${repositoryId}`;
+    let url = `${this.apiUrl}approvePiwikSite/${repositoryId}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map(res => res.status.toString())
@@ -34,7 +34,7 @@ export class PiwikService {
   }
 
   getOpenaireId(id: string): Observable<string> {
-    let url = `${this.apiUrl}/piwik/getOpenaireId/${id}`;
+    let url = `${this.apiUrl}getOpenaireId/${id}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( oaId => <string>oaId.json() )
@@ -42,7 +42,7 @@ export class PiwikService {
   }
 
   getPiwikInfo(id: string): Observable<PiwikInfo> {
-    let url = `${this.apiUrl}/piwik/getPiwikSiteForRepo/${id}`;
+    let url = `${this.apiUrl}getPiwikSiteForRepo/${id}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( piwik => <PiwikInfo>piwik.json() )
@@ -50,7 +50,7 @@ export class PiwikService {
   }
 
   getPiwikSitesForRepos(): Observable<PiwikInfo[]> {
-    let url = `${this.apiUrl}/piwik/getPiwikSitesForRepos`;
+    let url = `${this.apiUrl}getPiwikSitesForRepos`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <PiwikInfo[]>res.json())
@@ -63,7 +63,7 @@ export class PiwikService {
                 country: string,
                 requestorName: string,
                 requestorEmail: string): Observable<string>{
-    let url = `${this.apiUrl}/piwik/savePiwikInfo?repositoryId=${repositoryId} \ 
+    let url = `${this.apiUrl}savePiwikInfo?repositoryId=${repositoryId} \ 
                &openaireId=${openaireId} \ 
                &repositoryName=${repositoryName} \
                &country=${country} \

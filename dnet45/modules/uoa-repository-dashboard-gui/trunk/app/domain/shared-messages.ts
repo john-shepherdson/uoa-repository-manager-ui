@@ -50,6 +50,10 @@ export const noSubscriptionsFound = 'No subscriptions found for your account';
 export const deletingSubscription = 'Deleting subscription ...';
 export const deletingSubscriptionError = 'Failed to delete your subscription';
 export const deletingSubscriptionSuccess = 'The subscription was deleted successfully';
+export const subscribingToEvents = 'Subscribing to events ...';
+export const subscribingToEventsError = 'Failed to subscribe you to the chosen events';
+export const subscribingToeventsSuccess = 'The subscription was submitted successfully';
+export const subscribingChooseFrequency = 'Please choose a frequency for the notifications';
 
 /* Piwik Messages */
 export const loadingMetrics = 'Loading diagrams ...';

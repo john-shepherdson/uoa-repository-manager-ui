@@ -6,16 +6,17 @@
     </div>
     <div>
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+      <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{successMessage}}</div>
       <div *ngIf="loadingMessage" class="loading-big">
         <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
         <div class="whiteFilm"></div>
       </div>
       <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-      <div *ngIf="eventsPage" class="events-results">
+      <div *ngIf="eventsPage.totalPages" class="events-results">
         <div class="numberOfEventsLabel">
           <span>Showing {{(eventsPage.currPage*10)+1 }}-{{(eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>
           <span class="uk-float-right">
-            <button id="subscribe" type="button" class="uk-button uk-button-primary uk-button-small">Subscribe to these events</button>
+            <button id="subscribe" type="button" class="uk-button uk-button-primary uk-button-small" (click)="showSubscriptionModal()">Subscribe to these events</button>
           </span>
         </div>
         <div>
@@ -57,13 +58,13 @@
                         <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Title(s)</strong></td>
                         <td class="uk-table-shrink">
                           <div class="el-title">
-                            <span *ngFor="let t of event.publication.titles">{{ t }}</span></div>
+                            <span *ngFor="let t of event.publication.titles">{{ t }};&nbsp;&nbsp;</span></div>
                         </td>
                       </tr>
                       <tr class="el-item">
                         <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Author(s)</strong></td>
                         <td class="uk-table-shrink">
-                          <div class="el-title"><span *ngFor="let auth of event.publication.creators">{{ auth }}</span>&nbsp;&nbsp;</div>
+                          <div class="el-title"><span *ngFor="let auth of event.publication.creators">{{ auth }};&nbsp;&nbsp;</span></div>
                         </td>
                       </tr><tr class="el-item">
                         <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">PID(s)</strong></td>
@@ -74,12 +75,12 @@
                       </tr>
                       <tr class="el-item">
                         <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
-                        <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let rel of event.publication.externalReferences">{{ rel.name }}, </span></div></td>
+                        <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let rel of event.publication.externalReferences">{{ rel.name }}; </span></div></td>
                       </tr>
                       <tr class="el-item">
                         <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Subject(s)</strong></td>
                         <td class="uk-table-shrink">
-                          <div class="el-title"><span *ngFor="let subj of event.publication.subjects">{{ subj }},&nbsp;</span></div>
+                          <div class="el-title"><span *ngFor="let subj of event.publication.subjects">{{ subj }};&nbsp;</span></div>
                         </td>
                       </tr>
                       <tr class="el-item">
@@ -130,7 +131,7 @@
               </a>
             </li>
           </ul>
-          <div class="resultsPageLabel">page {{ eventsPage.currPage }} of {{ eventsPage.totalPages }}</div>
+          <div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>
         </div>
       </div>
     </div>
@@ -145,31 +146,9 @@
       <div role="form" class="uk-form-horizontal">
         <div class="uk-form-horizontal">
           <div class="form-group">
-            <label class="control-label">Trust</label>
-            <div class="slider slider-horizontal" id="">
-              <div class="ui-slider slider-track">
-                <div class="slider-track-low" style="left: 0px; width: 0%;"></div>
-                <div class="slider-selection" style="left: 0%; width: 100%;"></div>
-                <div class="slider-track-high" style="right: 0px; width: 0%;"></div>
-              </div>
-              <div class="tooltip tooltip-main top" role="presentation" style="left: 50%; margin-left: -38px;">
-                <div class="tooltip-arrow"></div>
-                <div class="tooltip-inner">Range: [0, 1]</div>
-              </div>
-              <div class="tooltip tooltip-min top" role="presentation" style="left: 0%; margin-left: 0px; display: none;">
-                <div class="tooltip-arrow"></div>
-                <div class="tooltip-inner">Range: [undefined, undefined]</div>
-              </div>
-              <div class="tooltip tooltip-max top" role="presentation" style="left: 100%; margin-left: 0px; display: none;">
-                <div class="tooltip-arrow"></div>
-                <div class="tooltip-inner">Range: [undefined, undefined]</div>
-              </div>
-              <div class="slider-handle min-slider-handle round" role="slider" aria-valuemin="0" aria-valuemax="1" style="left: 0%;" aria-valuenow="0" tabindex="0"></div>
-              <div class="slider-handle max-slider-handle round" role="slider" aria-valuemin="0" aria-valuemax="1" style="left: 100%;" aria-valuenow="1" tabindex="0"></div>
-            </div>
-            <input data-slider-range="true" data-slider-min="0" data-slider-max="1" data-slider-value=""
-                   data-slider-enabled="true" data-slider-step="0.01" style="display: none;" data-value=""
-                   value="" type="text" formControlName="trustRange">
+            <label class="control-label">Trust [{{group.get('trustMin').value}} - {{group.get('trustMax').value}}]</label><br>
+            <input type="range" min="0" max="1" step="0.05" formControlName="trustMin" class="uk-range"/>
+            <input type="range" min="0" max="1" step="0.05" formControlName="trustMax" class="uk-range"/>
           </div>
         </div>
         <div class="uk-form-horizontal">
@@ -213,11 +192,21 @@
             <div class="form-group">
               <label class="control-label" style="display: block;">Date</label>
               <div formArrayName="eventDateRanges" *ngFor="let date of group.controls.eventDateRanges.controls; let date_index = index">
-                <div class="uk-form" style="position: relative;" [formGroupName]=date_index>
-                  <input class="form-control inlineBlock dateFrom" style="width:88%;" title="From" type="date" formControlName=dateFrom>
-                  <input class="form-control inlineBlock dateTo" style="width:88%;" placeholder="To" type="date" formControlName=dateTo>
+                <form class="uk-form" style="position: relative;" [formGroupName]=date_index>
+                  <input class="form-control inlineBlock dateFrom" style="width:88%;"
+                         placeholder="From"
+                         type="text"
+                         onfocus="(this.type='date')"
+                         data-uk-datepicker="{format: 'mm/dd/yyyy'}"
+                         formControlName=dateFrom>
+                  <input class="form-control inlineBlock dateTo" style="width:88%;"
+                         placeholder="To"
+                         type="text"
+                         onfocus="(this.type='date')"
+                         data-uk-datepicker="{format: 'mm/dd/yyyy'}"
+                         formControlName=dateTo>
                   <a class="inlineBlock deleteIcon" (click)="removeControl('eventDateRanges',date_index)"><i class="fa fa-remove" style=""></i></a>
-                </div>
+                </form>
               </div>
               <a (click)="addControl('eventDateRanges', dateRangeDefinition)"><i class="fa fa-plus"></i> Add another</a>
             </div>
@@ -235,3 +224,44 @@
     </div>
   </div>
 </div>
+
+<confirmation-dialog #subscribeToEventsModal [title]="'Create subscription for'" [isModalShown]="isModalShown"
+                     [confirmActionButton]="'Subscribe'" (emmitObject)="subscribeToEvents($event)">
+  <div *ngIf="eventsPage">
+    <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{ modalErrorMessage }}</div>
+    <div>
+      <h4 class="uk-h4">{{ eventsPage.datasource }}</h4>
+      <div class="uk-text uk-text-small uk-text-secondary">{{ eventsPage.topic }}</div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="control-label">Email</label>
+        <div>{{ userEmail }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Frequency (*)</label>
+        <select class="form-control" #selectFreq (change)="choseFrequency(selectFreq.value)">
+          <option value="">-- none selected --</option>
+          <option value="never">never</option>
+          <option value="realtime">realtime</option>
+          <option value="daily">daily</option>
+          <option value="weekly">weekly</option>
+          <option value="monthly">monthly</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Options</label>
+        <div>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td>Trust</td>
+                <td>[{{advanceSearch.trust.min}}, {{advanceSearch.trust.max}}]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</confirmation-dialog>

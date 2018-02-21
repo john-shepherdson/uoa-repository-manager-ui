@@ -9,7 +9,7 @@
             <ng-content></ng-content>
           </div>
           <div class="uk-text-right">
-            <button (click)="hideModal()" class="btn btn-default" type="button">{{ hideModalButton }}</button>
+            <button (click)="hideModal()" class="uk-button uk-button-default" type="button">{{ hideModalButton }}</button>
             <button *ngIf="confirmActionButton" (click)="confirmedAction()" class="uk-button uk-button-primary" type="button">{{confirmActionButton}}</button>
           </div>
         </div>
