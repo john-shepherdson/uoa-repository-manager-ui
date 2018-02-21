@@ -192,7 +192,7 @@
             <div class="form-group">
               <label class="control-label" style="display: block;">Date</label>
               <div formArrayName="eventDateRanges" *ngFor="let date of group.controls.eventDateRanges.controls; let date_index = index">
-                <form class="uk-form" style="position: relative;" [formGroupName]=date_index>
+                <div class="uk-form" style="position: relative;" [formGroupName]=date_index>
                   <input class="form-control inlineBlock dateFrom" style="width:88%;"
                          placeholder="From"
                          type="text"
@@ -206,7 +206,7 @@
                          data-uk-datepicker="{format: 'mm/dd/yyyy'}"
                          formControlName=dateTo>
                   <a class="inlineBlock deleteIcon" (click)="removeControl('eventDateRanges',date_index)"><i class="fa fa-remove" style=""></i></a>
-                </form>
+                </div>
               </div>
               <a (click)="addControl('eventDateRanges', dateRangeDefinition)"><i class="fa fa-plus"></i> Add another</a>
             </div>

@@ -49,13 +49,15 @@ export class MetricsEnableComponent implements OnInit {
     this.repoService.getRepositoryById(id).subscribe(
       repo => {
         this.repo = repo;
-        if (this.repo) {
-          this.getOAid();
-        }
       },
       error => {
         console.log(error);
         this.errorMessage = loadingRepoError;
+        this.loadingMessage = '';
+      }, () => {
+        if (this.repo) {
+          this.getOAid();
+        }
         this.loadingMessage = '';
       }
     );
@@ -63,8 +65,8 @@ export class MetricsEnableComponent implements OnInit {
 
   getOAid () {
     this.piwikService.getOpenaireId(this.repo.id).subscribe(
-      id => this.oaId = id,
-      error => console.log(error)
+      id => {this.oaId = id._body.toString(); console.log(this.oaId);},
+      error => console.log(`ERROR is ${error}`)
     );
   }
 

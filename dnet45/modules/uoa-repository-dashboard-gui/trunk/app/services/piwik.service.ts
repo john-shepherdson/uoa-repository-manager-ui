@@ -33,11 +33,11 @@ export class PiwikService {
       .catch(this.handleError);
   }
 
-  getOpenaireId(id: string): Observable<string> {
+  getOpenaireId(id: string) {
     let url = `${this.apiUrl}getOpenaireId/${id}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
-      .map( oaId => <string>oaId.json() )
+      .map( oaId => oaId )
       .catch(this.handleError);
   }
 
