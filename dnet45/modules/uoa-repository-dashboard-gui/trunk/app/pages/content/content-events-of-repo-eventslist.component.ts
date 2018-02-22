@@ -174,16 +174,17 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
     this. loadingMessage = loadingEvents;
-    this.brokerService.advancedShowEvents(page,this.advanceSearch).subscribe(
-      page => this.eventsPage = page,
+    this.brokerService.advancedShowEvents(page,10,this.advanceSearch).subscribe(
+      events => this.eventsPage = events,
       error => {
         this.loadingMessage = '';
         this.errorMessage = noServiceMessage;
+        console.log(error);
       },
       () => {
         this.loadingMessage = '';
         console.log(this.eventsPage);
-        if(!this.eventsPage.total) {
+        if (!this.eventsPage.total) {
           if (!this.eventsPageInitialized)
             this.noEvents = noEventsForTopic;
           else
@@ -265,6 +266,13 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
 
 export function checkMinMax(c: AbstractControl) {
   if( c.get('trustMin').value > c.get('trustMax').value ){
+    return 'invalid';
+  }
+  return null;
+}
+
+export function checkDates(c: AbstractControl) {
+  if( c.get('dateFrom').value > c.get('dateTo').value ) {
     return 'invalid';
   }
   return null;

@@ -33,11 +33,11 @@ export class PiwikService {
       .catch(this.handleError);
   }
 
-  getOpenaireId(id: string) {
+  getOpenaireId(id: string): Observable<string> {
     let url = `${this.apiUrl}getOpenaireId/${id}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
-      .map( oaId => oaId )
+      .map( oaId => oaId['_body'].toString() )
       .catch(this.handleError);
   }
 
@@ -57,22 +57,11 @@ export class PiwikService {
       .catch(this.handleError);
   }
 
-  savePiwikInfo(repositoryId: string,
-                openaireId: string,
-                repositoryName: string,
-                country: string,
-                requestorName: string,
-                requestorEmail: string): Observable<string>{
-    let url = `${this.apiUrl}savePiwikInfo?repositoryId=${repositoryId} \ 
-               &openaireId=${openaireId} \ 
-               &repositoryName=${repositoryName} \
-               &country=${country} \
-               &requestorName=${requestorName} \
-               &requestorEmail=${requestorEmail}`;
+  savePiwikInfo(piwik: PiwikInfo): Observable<string>{
+    let url = `${this.apiUrl}savePiwikInfo`;
     console.log(`knocking on: ${url}`);
-
     httpOptions.withCredentials = true;
-    return this.http.post(url,httpOptions)
+    return this.http.post(url,piwik,httpOptions)
       .map( res => {
         console.log(`responded ${res.statusText}`);
         return res.status.toString();

@@ -12,9 +12,9 @@
         <div class="whiteFilm"></div>
       </div>
       <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-      <div *ngIf="eventsPage.totalPages" class="events-results">
+      <div *ngIf="eventsPage && eventsPage.totalPages" class="events-results">
         <div class="numberOfEventsLabel">
-          <span>Showing {{(eventsPage.currPage*10)+1 }}-{{(eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>
+          <span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>
           <span class="uk-float-right">
             <button id="subscribe" type="button" class="uk-button uk-button-primary uk-button-small" (click)="showSubscriptionModal()">Subscribe to these events</button>
           </span>

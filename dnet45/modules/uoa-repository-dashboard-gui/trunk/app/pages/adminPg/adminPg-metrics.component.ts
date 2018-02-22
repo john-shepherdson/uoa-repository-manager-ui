@@ -32,7 +32,7 @@ export class AdminPgMetricsComponent implements OnInit {
   }
 
 
-  getPiwiks(){
+  getPiwiks() {
     this.loadingMessage = loadingReposMessage;
     this.piwikService.getPiwikSitesForRepos()
       .subscribe(
@@ -58,7 +58,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
   /*NOT SURE IF THESE PARAMETERS ARE THE CORRECT ONES*/
   confirmApproval(repoId: string) {
-    this.confirmApprovalModal.ids.push(repoId);
+    this.confirmApprovalModal.ids = [repoId];
     this.confirmApprovalModal.showModal();
   }
 
@@ -81,6 +81,7 @@ export class AdminPgMetricsComponent implements OnInit {
       () => {
         this.loadingMessage = '';
         this.errorMessage = '';
+        this.getPiwiks();
       }
     );
   }

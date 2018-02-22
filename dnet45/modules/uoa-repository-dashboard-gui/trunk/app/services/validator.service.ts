@@ -9,7 +9,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { InterfaceInformation, RuleSet, StoredJob } from '../domain/typeScriptClasses';
+import { InterfaceInformation, JobForValidation, RuleSet, StoredJob } from '../domain/typeScriptClasses';
 import { apiUrl } from '../domain/tempAPI';
 
 
@@ -19,13 +19,13 @@ let httpOptions = new RequestOptions({ headers: headers });
 @Injectable ()
 export class ValidatorService {
 
-  private apiUrl = apiUrl;
+  private apiUrl = apiUrl + '/validator/';
 
   constructor(private http: Http) { }
 
   /* returns array of sets of rules according to mode (literature, data, cris) */
   getRuleSets(mode: string): Observable<RuleSet[]> {
-    let url = `${this.apiUrl}/validator/getRuleSets/${mode}`;
+    let url = `${this.apiUrl}getRuleSets/${mode}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <RuleSet[]>res.json())
@@ -34,7 +34,7 @@ export class ValidatorService {
 
 
   getSetsOfRepository(baseUrl: string): Observable<string[]> {
-    let url = `${this.apiUrl}/validator/getSetsOfRepository?url=${encodeURIComponent(baseUrl)}`;
+    let url = `${this.apiUrl}getSetsOfRepository?url=${encodeURIComponent(baseUrl)}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <string[]>res.json())
@@ -48,7 +48,7 @@ export class ValidatorService {
                    dateFrom: string,
                    dateTo: string,
                    validationStatus: string): Observable<StoredJob[]> {
-    let url = `${this.apiUrl}/validator/getStoredJobsNew?user=${userEmail}&jobType=${encodeURI(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
+    let url = `${this.apiUrl}getStoredJobsNew?user=${userEmail}&jobType=${encodeURI(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <StoredJob[]>res.json())
@@ -57,8 +57,7 @@ export class ValidatorService {
 
   /* returns true if there is a repository containing the baseUrl */
   identifyRepository(baseUrl: string): Observable<boolean> {
-    let param = encodeURI(baseUrl);
-    let url = `${this.apiUrl}/validator/identifyRepository/${param}`;
+    let url = `${this.apiUrl}identifyRepository?baseUrl=${encodeURIComponent(baseUrl)}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <boolean>res.json())
@@ -66,8 +65,7 @@ export class ValidatorService {
   }
 
   getInterfaceInformation(baseUrl: string): Observable<InterfaceInformation> {
-    let param = encodeURI(baseUrl);
-    let url = `${this.apiUrl}/validator/getInterfaceInformation/${param}`;
+    let url = `${this.apiUrl}getInterfaceInformation?baseUrl=${encodeURIComponent(baseUrl)}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <InterfaceInformation>res.json())
@@ -75,11 +73,24 @@ export class ValidatorService {
   }
 
   reSubmitJobForValidation(id: string): Observable<string> {
-    let url = `${this.apiUrl}/validator/reSubmitJobForValidation/?jobId=${id}`;
+    let url = `${this.apiUrl}reSubmitJobForValidation/${id}`;
     console.log(`knocking on: ${url}`);
 
     httpOptions.withCredentials = true;
     return this.http.post(url,httpOptions)
+      .map(res => {
+        console.log(`responded ${res.status}`);
+        return res.status.toString();
+      })
+      .catch(this.handleError);
+  }
+
+  submitJobForValidation(job: JobForValidation): Observable<string> {
+    let url = `${this.apiUrl}submitJobForValidation`;
+    console.log(`knocking on: ${url}`);
+    let body = JSON.stringify(job);
+    httpOptions.withCredentials = true;
+    return this.http.post(url,body,httpOptions)
       .map(res => {
         console.log(`responded ${res.status}`);
         return res.status.toString();

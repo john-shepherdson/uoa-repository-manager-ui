@@ -26,8 +26,8 @@ export class BrokerService {
 
   constructor(private http: Http) { }
 
-  advancedShowEvents(page: number,searchParams: AdvQueryObject): Observable<EventsPage>{
-    let url = `${this.apiUrl}advancedShowEvents/${page}/10`;
+  advancedShowEvents(page: number,size: number,searchParams: AdvQueryObject): Observable<EventsPage>{
+    let url = `${this.apiUrl}advancedShowEvents/${page}/${size}`;
     console.log(`knocking on: ${url}`);
     let body = searchParams;
     console.log(`sending ${JSON.stringify(body)}`);
@@ -55,8 +55,8 @@ export class BrokerService {
       .catch(this.handleError);
   }
 
-  getNotificationsBySubscriptionId(subId: string, page: number): Observable<EventsPage> {
-    let url = `${this.apiUrl}getNotificationsBySubscriptionId/${subId}/${page}/100`;
+  getNotificationsBySubscriptionId(subId: string, page: number, size: number): Observable<EventsPage> {
+    let url = `${this.apiUrl}getNotificationsBySubscriptionId/${subId}/${page}/${size}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <EventsPage>res.json())
@@ -79,10 +79,13 @@ export class BrokerService {
       .catch(this.handleError);
   }
 
-/*
-  NOT WORKING AND PROBABLY NOT NEEDED
-  getSubscriptionsOfUser(userEmail): Observable<Subscription[]> {}
-*/
+  getSubscriptionsOfUser(userEmail: string): Observable<Map<string, Subscription>> {
+    let url = `${this.apiUrl}getSubscriptionsOfUser/${userEmail}/`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Map<string,Subscription>>res.json())
+      .catch(this.handleError);
+  }
 
   getTopicsForDataSource(name: string): Observable<BrowseEntry[]> {
     let url = `${this.apiUrl}getTopicsForDatasource/${name}`;
@@ -106,10 +109,9 @@ export class BrokerService {
   subscribeToEvent(sub: OpenaireSubscription): Observable<string>{
     let url = `${this.apiUrl}subscribe`;
     console.log(`knocking on: ${url}`);
-    let body = JSON.stringify(sub);
     httpOptions.withCredentials = true;
-    return this.http.post(url,body,httpOptions)
-      .map( res => res.json())
+    return this.http.post(url,sub,httpOptions)
+      .map( res => res.status.toString())
       .catch(this.handleError);
   }
 

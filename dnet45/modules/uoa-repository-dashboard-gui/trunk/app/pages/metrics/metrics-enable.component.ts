@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 import { PiwikService } from '../../services/piwik.service';
 import { RepositoryService } from '../../services/repository.service';
-import { Repository } from '../../domain/typeScriptClasses';
+import { PiwikInfo, Repository } from '../../domain/typeScriptClasses';
 import {
   enabledMetricsError, enabledMetricsSuccess, enablingMetrics, loadingRepoError,
   loadingRepoMessage
@@ -65,7 +65,9 @@ export class MetricsEnableComponent implements OnInit {
 
   getOAid () {
     this.piwikService.getOpenaireId(this.repo.id).subscribe(
-      id => {this.oaId = id._body.toString(); console.log(this.oaId);},
+      id => {
+        this.oaId = id;
+        console.log(this.oaId);},
       error => console.log(`ERROR is ${error}`)
     );
   }
@@ -79,12 +81,21 @@ export class MetricsEnableComponent implements OnInit {
   confirmedEnabling() {
     if (this.repo) {
       this.loadingMessage = enablingMetrics;
-      this.piwikService.savePiwikInfo(this.repo.id,
-        this.oaId,
-        this.repo.officialName,
-        this.repo.countryName,
-        this.authService.userFullName,
-        this.authService.userEmail).subscribe(
+      let piwik: PiwikInfo = {
+        repositoryId: this.repo.id,
+        openaireId: this.oaId,
+        repositoryName: this.repo.officialName,
+        country: this.repo.countryName,
+        siteId: '',
+        authenticationToken: '',
+        creationDate: null,
+        requestorName: this.authService.userFullName,
+        requestorEmail: this.authService.userEmail,
+        validated: false,
+        validationDate: null,
+        comment: ''
+      };
+      this.piwikService.savePiwikInfo(piwik).subscribe(
         response => {
           console.log(`answered ${response}`);
           this.successMessage = enabledMetricsSuccess;
@@ -94,6 +105,7 @@ export class MetricsEnableComponent implements OnInit {
           console.log(error);
           this.errorMessage = enabledMetricsError;
           this.loadingMessage = '';
+          this.getRepo();
         }
       );
     }

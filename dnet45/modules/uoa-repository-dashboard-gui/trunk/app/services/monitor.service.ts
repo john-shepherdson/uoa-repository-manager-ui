@@ -20,12 +20,12 @@ let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class MonitorService {
-  private apiUrl = apiUrl;
+  private apiUrl = apiUrl + '/monitor/';
 
   constructor(private http: Http) { }
 
   getJobSummary(jobId: string, groupBy: string): Observable<StoredJob> {
-    let url = `${this.apiUrl}/monitor/getJobSummary?jobId=${jobId}&groupBy=${groupBy}`;
+    let url = `${this.apiUrl}getJobSummary?jobId=${jobId}&groupBy=${groupBy}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map(res => <StoredJob>res.json() )
@@ -40,7 +40,7 @@ export class MonitorService {
                 dateTo: string,
                 validationStatus: string,
                 includeJobsTotal): Observable<JobsOfUser> {
-    let url = `${this.apiUrl}/monitor/getJobsOfUser?user=${userEmail}`;
+    let url = `${this.apiUrl}getJobsOfUser?user=${userEmail}`;
     if (jobType != '') {
       url = `${url}&jobType=${encodeURI(jobType)}&offset=${offset}&limit=${limit}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
     } else {

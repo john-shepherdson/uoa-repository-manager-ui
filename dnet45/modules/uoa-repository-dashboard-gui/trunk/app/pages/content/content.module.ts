@@ -9,13 +9,13 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
 import { ContentEventsOfRepositoryComponent } from './content-events-of-repository.component';
 import { ContentEventsOfRepoEventslistComponent } from './content-events-of-repo-eventslist.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ContentNotificationsOfSubscriptionComponent } from './content-notifications-of-subscription.component';
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
     ContentRouting,
-//    FormsModule,
     ReactiveFormsModule,
     ReusableComponentsModule
   ],
@@ -25,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContentEventsOfRepositoryComponent,
     ContentEventsOfRepoEventslistComponent,
     ContentNotificationsComponent,
+    ContentNotificationsOfSubscriptionComponent
   ]
 })
 

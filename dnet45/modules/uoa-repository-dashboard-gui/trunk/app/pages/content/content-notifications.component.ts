@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import { SimpleSubscriptionDesc } from '../../domain/typeScriptClasses';
+import { SimpleSubscriptionDesc, Subscription } from '../../domain/typeScriptClasses';
 import { AuthenticationService } from '../../services/authentication.service';
 import { BrokerService } from '../../services/broker.service';
 import {
@@ -39,7 +39,6 @@ export class ContentNotificationsComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        console.log(JSON.stringify(this.subscrOfUser));
         for (let key in this.subscrOfUser){
           this.subKeys.push(key);
           console.log(key);

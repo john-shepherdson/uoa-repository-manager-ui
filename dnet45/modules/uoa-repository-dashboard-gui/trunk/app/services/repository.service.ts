@@ -19,12 +19,12 @@ let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class RepositoryService {
-  private apiUrl = apiUrl;
+  private apiUrl = apiUrl + '/repository/';
 
   constructor(private http: Http) { }
 
   getRepositoriesOfCountry(country: string, mode: string): Observable<Repository[]> {
-    let url = `${this.apiUrl}/repository/getRepositoriesByCountry/${country}/${mode}`;
+    let url = `${this.apiUrl}getRepositoriesByCountry/${country}/${mode}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Repository[]>res.json())
@@ -32,7 +32,7 @@ export class RepositoryService {
   }
 
   getRepositoriesOfUser(userEmail: string): Observable<Repository[]> {
-    let url = `${this.apiUrl}/repository/getRepositoriesOfUser/${userEmail}/0/100`;
+    let url = `${this.apiUrl}getRepositoriesOfUser/${userEmail}/0/100`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Repository[]>res.json())
@@ -42,7 +42,7 @@ export class RepositoryService {
 
 
   getRepositoryById(id: string): Observable<Repository> {
-    let url = `${this.apiUrl}/repository/getRepositoryById/${id}`;
+    let url = `${this.apiUrl}getRepositoryById/${id}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Repository>res.json())
@@ -51,7 +51,7 @@ export class RepositoryService {
   }
 
   getRepositoryInterface(id: string): Observable<RepositoryInterface[]>{
-    let url = `${this.apiUrl}/repository/getRepositoryInterface/${id}`;
+    let url = `${this.apiUrl}getRepositoryInterface/${id}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <RepositoryInterface[]>res.json())
@@ -59,7 +59,7 @@ export class RepositoryService {
   }
 
   getUrlsOfUserRepos(userEmail: string): Observable<string[]>{
-    let url = `${this.apiUrl}/repository/getUrlsOfUserRepos/${userEmail}/0/100/`;
+    let url = `${this.apiUrl}getUrlsOfUserRepos/${userEmail}/0/100/`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <string[]>res.json())
@@ -67,15 +67,23 @@ export class RepositoryService {
   }
 
   getTimezones(): Observable<Timezone[]>{
-    let url = `${this.apiUrl}/repository/getTimezones`;
+    let url = `${this.apiUrl}getTimezones`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Timezone[]>res.json())
       .catch(this.handleError);
   }
 
+  getTypologies(): Observable<string[]>{
+    let url = `${this.apiUrl}getTypologies`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <string[]>res.json())
+      .catch(this.handleError);
+  }
+
   getCountries(): Observable<Country[]> {
-    let url = `${this.apiUrl}/repository/getCountries`;
+    let url = `${this.apiUrl}getCountries`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Country[]>res.json())
@@ -84,7 +92,7 @@ export class RepositoryService {
 
 
   getCompatibilityClasses (mode: string): Observable<Map<string,string>> {
-    let url = `${this.apiUrl}/repository/getCompatibilityClasses/${mode}`;
+    let url = `${this.apiUrl}getCompatibilityClasses/${mode}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Map<string,string>>res.json())
@@ -92,7 +100,7 @@ export class RepositoryService {
   }
 
   getDatasourceClasses(mode: string): Observable<Map<string,string>>{
-    let url = `${this.apiUrl}/repository/getDatasourceClasses/${mode}`;
+    let url = `${this.apiUrl}getDatasourceClasses/${mode}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Map<string,string>>res.json())
@@ -101,7 +109,7 @@ export class RepositoryService {
 
 
   getMetricsInfoForRepository (repoId: string): Observable<MetricsInfo> {
-    let url = `${this.apiUrl}/repository/getMetricsInfoForRepository/${repoId}`;
+    let url = `${this.apiUrl}getMetricsInfoForRepository/${repoId}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <MetricsInfo>res.json())
@@ -109,7 +117,7 @@ export class RepositoryService {
   }
 
   updateEnglishName(id: string, englishname: string): Observable<string>{
-    let url = `${this.apiUrl}/repository/updateEnglishName?id=${id}&officialName=DSpace&englishname=${englishname}`;
+    let url = `${this.apiUrl}updateEnglishName?id=${id}&officialName=DSpace&englishname=${englishname}`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;
     return this.http.post(url,httpOptions)
@@ -121,7 +129,7 @@ export class RepositoryService {
   }
 
   updateLongtitude(id: string, longtitude: string): Observable<string>{
-    let url = `${this.apiUrl}/repository/updateLongtitude`;
+    let url = `${this.apiUrl}updateLongtitude`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
       id : id,
@@ -136,7 +144,7 @@ export class RepositoryService {
   }
 
   updateLatitude(id: string, latitude: string): Observable<string>{
-    let url = `${this.apiUrl}/repository/updateLatitude`;
+    let url = `${this.apiUrl}updateLatitude`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
       id : id,
@@ -151,7 +159,7 @@ export class RepositoryService {
   }
 
   updateLogoUrl(id: string, logoUrl: string): Observable<string>{
-    let url = `${this.apiUrl}/repository/updateLogoUrl`;
+    let url = `${this.apiUrl}updateLogoUrl`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
       id : id,
@@ -166,7 +174,7 @@ export class RepositoryService {
   }
 
   updateTimezone(id: string, timezone: string): Observable<string>{
-    let url = `${this.apiUrl}/repository/updateTimezone`;
+    let url = `${this.apiUrl}updateTimezone`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
       id : id,

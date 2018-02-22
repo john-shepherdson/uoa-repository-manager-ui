@@ -470,6 +470,8 @@ export class SimpleSubscriptionDesc implements IsSerializable {
     datasource: string;
     topic: string;
     count: number;
+    creationDate: Date;
+    lastNotificationDate: Date;
 }
 
 export class Subscription implements IsSerializable {
@@ -478,6 +480,7 @@ export class Subscription implements IsSerializable {
     topic: string;
     frequency: NotificationFrequency;
     mode: NotificationMode;
+    creationDate: Date;
     lastNotificationDate: Date;
     conditions: string;
     conditionsAsList: MapConditions[];

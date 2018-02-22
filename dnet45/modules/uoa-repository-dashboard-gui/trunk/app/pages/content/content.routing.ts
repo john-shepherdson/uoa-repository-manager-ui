@@ -6,6 +6,7 @@ import { ContentNotificationsComponent } from "./content-notifications.component
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { ContentEventsOfRepositoryComponent } from './content-events-of-repository.component';
 import { ContentEventsOfRepoEventslistComponent } from './content-events-of-repo-eventslist.component';
+import { ContentNotificationsOfSubscriptionComponent } from './content-notifications-of-subscription.component';
 
 const contentRoutes: Routes = [
   {
@@ -33,6 +34,10 @@ const contentRoutes: Routes = [
       {
         path: 'notifications',
         component: ContentNotificationsComponent,
+      },
+      {
+        path: 'notifications/:id',
+        component: ContentNotificationsOfSubscriptionComponent,
       }
     ]
   }
