@@ -32,7 +32,6 @@
           <div [formGroupName]="content_index">
             <label class="uk-link-muted small" for="contentRules_{{ content_index }}">
               <input id="contentRules_{{ content_index }}"
-                     value="{{ currentContentRules[content_index].id }}"
                      title="{{ currentContentRules[content_index].description }}"
                      formControlName="rule"
                      type="checkbox" >

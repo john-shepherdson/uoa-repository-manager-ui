@@ -12,14 +12,11 @@ export class CompatibilityValidateStep1Component implements OnInit {
   group: FormGroup;
   errorMessage: string;
 
-  identifiedUrl: boolean;
-
   @Input() baseUrlList: string[];
 
-  @Output() emmitObject: EventEmitter<any> = new EventEmitter();
+  @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
-  constructor(private fb: FormBuilder,
-              private valService: ValidatorService) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.group = this.fb.group({
@@ -39,25 +36,11 @@ export class CompatibilityValidateStep1Component implements OnInit {
     }
   }
 
-
-  identifyUrl() {
-    if (this.group.get('customBaseUrl').value) {
-      console.log(`looking for ${this.group.get('customBaseUrl').value}`);
-      this.valService.identifyRepository(this.group.get('customBaseUrl').value).subscribe(
-        res => {
-          this.identifiedUrl = res;
-          console.log(this.identifiedUrl);
-        },
-        error =>  console.log(error)
-      );
-    }
-  }
-
   submitForm() {
     if (this.group.get('selectBaseUrl').enabled){
       if ( this.group.get('selectBaseUrl').value) {
-        this.emmitObject.emit(this.group.get('selectBaseUrl').value);
-        console.log('selected baseUrl!');
+        this.emitObject.emit(this.group.get('selectBaseUrl').value);
+        console.log(`selected baseUrl!`);
         this.errorMessage = '';
         return true;
       } else {
@@ -66,15 +49,10 @@ export class CompatibilityValidateStep1Component implements OnInit {
       }
     } else if (this.group.get('customBaseUrl').enabled) {
       if ( this.group.get('customBaseUrl').value ) {
-        if (this.identifiedUrl) {
-          this.emmitObject.emit(this.group.get('customBaseUrl').value);
-          console.log('added new baseUrl!');
-          this.errorMessage = '';
-          return true;
-        } else {
-          this.errorMessage = invalidCustomBaseUrl;
-          return false;
-        }
+        this.emitObject.emit(this.group.get('customBaseUrl').value);
+        console.log('added new baseUrl!');
+        this.errorMessage = '';
+        return true;
       } else {
         this.errorMessage = didntChooseBaseUrl;
         return false;

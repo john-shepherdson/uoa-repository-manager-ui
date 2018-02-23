@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Rule, RuleSet } from '../../../domain/typeScriptClasses';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -18,6 +18,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
   group: FormGroup;
 
   @Input() ruleSets: RuleSet[];
+  @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
   constructor(private fb: FormBuilder) {}
 
@@ -122,14 +123,12 @@ export class CompatibilityValidateStep2Component implements OnInit {
   }
 
   toggleShowRules() {
-    if (this.showRules) {
-      this.showRules = false;
-    } else {
-      this.showRules = true;
-    }
+    this.showRules = !this.showRules;
+    return this.showRules;
   }
 
   saveChanges() {
+    let emitted: any[] = [];
     let index: number;
 
     for (let i=0; i< this.ruleSets.length; i++ ) {
@@ -138,23 +137,24 @@ export class CompatibilityValidateStep2Component implements OnInit {
         break;
       }
     }
-    console.log(`selected ruleSet: ${this.ruleSets[index].id}: ${this.ruleSets[index].name}`);
+    console.log(`saving the selected rules`);
     let contentRules = <FormArray>this.group.controls['contentRules'];
-    console.log('selected contentRules:');
+    let selectedContent: number[] = [];
     for (let i=0; i< this.ruleSets[index].contentRules.length; i++ ) {
       if (contentRules.at(i).get('rule').value) {
-        console.log(`${i},\t${this.ruleSets[index].contentRules[i].id}:\t${this.ruleSets[index].contentRules[i].name}`);
+        selectedContent.push(this.ruleSets[index].contentRules[i].id);
       }
     }
-    console.log('----------------------------');
+    emitted.push(selectedContent);
+    let selectedUsage: number[] = [];
     let usageRules = <FormArray>this.group.controls['usageRules'];
-    console.log('selected usageRules:');
     for (let i=0; i< this.ruleSets[index].usageRules.length; i++ ) {
       if (usageRules.at(i).get('rule').value) {
-        console.log(`${i},\t${this.ruleSets[index].usageRules[i].id}:\t${this.ruleSets[index].usageRules[i].name}`);
+        selectedUsage.push(this.ruleSets[index].usageRules[i].id);
       }
     }
-
+    emitted.push(selectedUsage);
+    this.emitObject.emit(emitted);
   }
 
 }

@@ -45,18 +45,24 @@
             <div *ngIf="showDatasource">
               <compatibility-validate-step1 #step1ChooseBaseUrl
                                             [baseUrlList]="baseUrlList"
-                                            (emmitObject)="getChosenUrl($event)"></compatibility-validate-step1>
+                                            (emitObject)="getChosenUrl($event)"></compatibility-validate-step1>
             </div>
             <div *ngIf="showGuidelines">
               <compatibility-validate-step2 #step2ChooseGuidelines
-                                            [ruleSets]="ruleSets">
+                                            [ruleSets]="ruleSets"
+                                            (emitObject)="getChosenRules($event)">
               </compatibility-validate-step2>
             </div>
             <div *ngIf="showParameters">
               <compatibility-validate-step3 #step3ChooseParameters
                                             [valSets]="valSets"
-                                            (emmitObject)="getParameters($event)">
+                                            (emitObject)="getChosenParameters($event)">
               </compatibility-validate-step3>
+            </div>
+            <div *ngIf="showCrisEntities">
+              <compatibility-validate-step3-cris #step3ChooseCrisEntities
+                                                 (emitObject)="getChosenCrisEntities($event)">
+              </compatibility-validate-step3-cris>
             </div>
             <div *ngIf="showFinish">
               <div>

@@ -22,7 +22,7 @@ export class ConfirmationDialogComponent {
 
   @Input() public hideModalButton:string = 'Cancel';
 
-  @Output() emmitObject: EventEmitter<any> = new EventEmitter();
+  @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
   private _ids: string[] = [];
 
@@ -43,7 +43,7 @@ export class ConfirmationDialogComponent {
   }
 
   public confirmedAction() {
-    this.emmitObject.emit(this._ids);
+    this.emitObject.emit(this._ids);
     if(this.confirmed) {
       this.hideModal();
     }

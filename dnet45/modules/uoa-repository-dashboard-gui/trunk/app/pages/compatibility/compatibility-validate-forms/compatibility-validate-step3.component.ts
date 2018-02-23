@@ -11,7 +11,7 @@ export class CompatibilityValidateStep3Component implements OnInit {
   errorMessage: string;
 
   @Input() valSets: string[];
-  @Output() emmitObject: EventEmitter<any> = new EventEmitter();
+  @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
   group: FormGroup;
 
@@ -66,7 +66,7 @@ export class CompatibilityValidateStep3Component implements OnInit {
       } else {
         emitted.push('');
       }
-      this.emmitObject.emit(emitted);
+      this.emitObject.emit(emitted);
 
     } else {
       this.errorMessage = formErrorRequiredFields;

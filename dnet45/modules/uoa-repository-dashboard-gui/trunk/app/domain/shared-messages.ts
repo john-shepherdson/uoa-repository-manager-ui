@@ -12,7 +12,6 @@ export const noRepositoryChosenMsg = 'You need to select a repository first.';
 export const loadingRepoMessage = 'Retrieving repository information ...';
 export const loadingRepoError = 'System error retrieving repository info';
 
-
 /* Loading Rules Messages */
 export const loadingRuleSets = 'Retrieving sets of rules ...';
 export const loadingRuleSetsError = 'The rule sets can not be retrieved at the moment';
@@ -73,6 +72,7 @@ export const formSuccessRegisteredDatasource = 'The datasource was registered su
 export const formSuccessAddedInterface = 'The interface was added successfully.';
 export const formSuccessUpdatedInterface = 'The interface was updated successfully.';
 
-/* Forms validation Messages-details */
+/* BaseUrl validation Messages */
 export const didntChooseBaseUrl = 'You need to select a base URL';
 export const invalidCustomBaseUrl = 'The url you entered is not valid';
+export const identifyingUrl = "Identifying Url ...";

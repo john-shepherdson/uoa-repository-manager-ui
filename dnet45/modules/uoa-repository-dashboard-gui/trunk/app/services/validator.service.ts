@@ -34,7 +34,7 @@ export class ValidatorService {
 
 
   getSetsOfRepository(baseUrl: string): Observable<string[]> {
-    let url = `${this.apiUrl}getSetsOfRepository?url=${encodeURIComponent(baseUrl)}`;
+    let url = `${this.apiUrl}getSetsOfRepository?url=${baseUrl}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <string[]>res.json())
@@ -57,7 +57,7 @@ export class ValidatorService {
 
   /* returns true if there is a repository containing the baseUrl */
   identifyRepository(baseUrl: string): Observable<boolean> {
-    let url = `${this.apiUrl}identifyRepository?baseUrl=${encodeURIComponent(baseUrl)}`;
+    let url = `${this.apiUrl}identifyRepository?url=${baseUrl}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url,httpOptions)
       .map(res => <boolean>res.json())
