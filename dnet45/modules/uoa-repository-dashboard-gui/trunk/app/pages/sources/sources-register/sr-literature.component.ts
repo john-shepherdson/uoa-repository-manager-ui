@@ -51,7 +51,6 @@ export class SrLiteratureComponent implements OnInit {
   moveAStep(){
     if(this.showRepositories) {
       if (this.datasourcesByCountry.goToNextStep()) {
-        this.datasourceId = this.datasourcesByCountry.repoId;
         this.showRepositories = false;
         this.showForm = true;
         this.step2 = 'active';
@@ -59,11 +58,8 @@ export class SrLiteratureComponent implements OnInit {
       }
     } else if(this.showForm) {
       if (this.updateDatasource.updateRepo()){
-        this.showForm = false;
-        this.showInterfaces = true;
-        this.step3 = 'active';
-        this.group = this.fb.group({});
         this.getRepoInterfaces();
+        this.group = this.fb.group({});
       }
     } else if(this.showInterfaces) {
         this.showInterfaces = false;
@@ -88,10 +84,22 @@ export class SrLiteratureComponent implements OnInit {
     }
   }
 
+  getRepoId(emitedId: string) {
+    this.datasourceId = emitedId;
+  }
+
   getRepoInterfaces() {
     this.repoService.getRepositoryInterface(this.datasourceId).subscribe(
-      interfaces => { this.repoInterfaces = interfaces; console.log(this.repoInterfaces.length)},
-      error => console.log(error)
+      interfaces => {
+        this.repoInterfaces = interfaces;
+        console.log(this.repoInterfaces.length);
+      },
+      error => console.log(error),
+      () => {
+        this.showForm = false;
+        this.showInterfaces = true;
+        this.step3 = 'active';
+      }
     );
   }
 }

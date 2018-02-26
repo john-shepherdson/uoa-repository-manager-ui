@@ -4,11 +4,17 @@
       <h1 class="uk-article-title">Previous validations</h1>
     </div>
     <a [routerLink]="'bla'">PUSH ME</a>
+    <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+    <div *ngIf="failureMessage" class="uk-alert uk-alert-danger">{{ failureMessage }}</div>
+    <div *ngIf="infoMessage" class="uk-alert uk-alert-warning">{{ infoMessage }}</div>
+    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="loadingMessage" class="loading-big">
+      <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+        {{ loadingMessage }}
+      </div>
+      <div class="whiteFilm"></div>
+    </div>
     <div *ngIf="jobsOfUser">
-      <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
-      <div *ngIf="failureMessage" class="uk-alert uk-alert-danger">{{ failureMessage }}</div>
-      <div *ngIf="infoMessage" class="uk-alert uk-alert-warning">{{ infoMessage }}</div>
-      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
       <div class="uk-grid page-controls">
         <div class="uk-margin-bottom uk-width-1-1 filters">
           <div class="links">
@@ -51,12 +57,6 @@
         </div>
       </div>
       <div class="contentAndPagerPanel">
-        <div *ngIf="loadingMessage" class="loading-big">
-          <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-            {{ loadingMessage }}
-          </div>
-          <div class="whiteFilm"></div>
-        </div>
         <div>
           <ul class="uk-pagination">
             <li>
@@ -76,7 +76,7 @@
               </a>
             </li>
           </ul>
-          <div class="resultsPageLabel">page {{ currentPage }} of {{ totalPages }}</div>
+          <div class="resultsPageLabel">page {{ currentPage+1 }} of {{ totalPages }}</div>
         </div>
         <div>
           <div>
@@ -152,7 +152,7 @@
               </a>
             </li>
           </ul>
-          <div class="resultsPageLabel">page {{ currentPage }} of {{ totalPages }}</div>
+          <div class="resultsPageLabel">page {{ currentPage+1 }} of {{ totalPages }}</div>
         </div>
       </div>
       <div class="row"></div>

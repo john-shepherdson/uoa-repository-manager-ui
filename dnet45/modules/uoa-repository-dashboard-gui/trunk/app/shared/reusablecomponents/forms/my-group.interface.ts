@@ -49,7 +49,7 @@ export class MyGroup implements OnInit, AfterContentInit {
       if(typeof _ != 'undefined') {
         setTimeout( () => {
           (this.group as FormGroup).patchValue(_);
-        },1000);
+        },500);
       }
     });
   }

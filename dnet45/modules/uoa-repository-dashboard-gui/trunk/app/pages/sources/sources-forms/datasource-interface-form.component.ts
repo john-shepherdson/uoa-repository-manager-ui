@@ -1,6 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { MyGroup } from '../../../shared/reusablecomponents/forms/my-group.interface';
-import { Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import {
   formErrorRequiredFields, formSuccessAddedInterface,
   invalidCustomBaseUrl, noServiceMessage
@@ -25,6 +25,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   identifiedBaseUrl: boolean;
   existingValSet: boolean;
   interfaceInfo: InterfaceInformation;
+  valset: string[] = [];
 
   compClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
@@ -33,7 +34,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
     baseUrl: ['', Validators.required],
     selectValidationSet: [''],
     customValidationSet: [''],
-    compatibilityLevel: ['', Validators.required],
+    compatibilityLevel: ['', Validators.required]
   };
 
   constructor(injector: Injector,
@@ -44,31 +45,28 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   }
 
   ngOnInit() {
+    this.getCompatibilityClasses();
 
-    setTimeout(() => {
+    setTimeout( () => {
+      /*if (this.data && this.data.length) {
+        this.parentGroup.patchValue({
+            baseUrl: this.data[0].baseUrl,
+            selectValidationSet: '',
+            customValidationSet: '',
+          compatibilityLevel:this.data[0].desiredCompatibilityLevel
+          }
+        );
+        this.data.splice(0,1);
+      }*/
       super.ngOnInit();
-      this.getMode();
-
       console.log(this.group, this.parentGroup);
-      if (this.data && this.data.length) {
-/*          this.group.patchValue({
-            baseUrl : this.data[0].baseUrl,
-            selectValidationSet : this.data[0].accessSet,
-            compatibilityLevel : this.data[0].desiredCompatibilityLevel
-          });*/
-        this.patchData.next({
-          baseUrl: this.data[0].baseUrl,
-/*          selectValidationSet: this.data[0].accessSet,  [ IS THIS THE CORRECT FIELD ?????]*/
-          compatibilityLevel: this.data[0].desiredCompatibilityLevel
-        });
-        this.getInterfaceInfo(this.data[0].baseUrl);
-        this.getCompatibilityClasses();
-        this.data.splice(0, 1);
-      }
 
+      if (this.getMyControl('baseUrl').value) {
+        this.getInterfaceInfo(this.data[0].baseUrl);
+      }
       this.existingValSet = true;
       this.getMyControl('customValidationSet').disable();
-    }, 1500);
+    },500);
   }
 
   chooseValSet(existingValSet: boolean) {
@@ -107,23 +105,27 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   }
 
   getInterfaceInfo(baseUrl: string) {
-    this.valService.getInterfaceInformation(baseUrl).subscribe(
-      info => {
-        this.interfaceInfo = info;
-        if (this.interfaceInfo) {
-          this.identifiedBaseUrl = true;
-          this.errorMessage = '';
-        } else {
-          this.errorMessage = invalidCustomBaseUrl;
+    if(this.group && this.group.get('baseUrl').value) {
+      this.valService.getInterfaceInformation(baseUrl).subscribe(
+        info => this.interfaceInfo = info,
+        error => {
+          console.log(error);
+          this.identifiedBaseUrl = false;
+          this.errorMessage = noServiceMessage;
+        },
+        () => {
+          if (this.interfaceInfo && this.interfaceInfo.identified) {
+            this.identifiedBaseUrl = true;
+            this.errorMessage = '';
+          } else {
+            this.errorMessage = invalidCustomBaseUrl;
+          }
+          if (this.interfaceInfo.sets && this.interfaceInfo.sets.length) {
+            this.valset = this.interfaceInfo.sets;
+          }
         }
-
-      },
-      error => {
-        console.log(error);
-        this.identifiedBaseUrl = false;
-        this.errorMessage = noServiceMessage;
-      }
-    );
+      );
+    }
   }
 
   getMode() {
@@ -135,6 +137,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   }
 
   getCompatibilityClasses() {
+    this.getMode();
     this.repoService.getCompatibilityClasses(this.mode).subscribe(
       classes => {
         this.compClasses = classes;

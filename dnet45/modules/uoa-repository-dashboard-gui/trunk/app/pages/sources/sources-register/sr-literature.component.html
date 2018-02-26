@@ -38,7 +38,8 @@
             <div>
               <register-datasource-shareable *ngIf="showRepositories"
                                        #datasourcesByCountry
-                                       [mode]="'opendoar'"></register-datasource-shareable>
+                                       [mode]="'opendoar'"
+                                       (emitRepoId)="getRepoId($event)"></register-datasource-shareable>
 
               <datasource-info-form *ngIf="showForm"
                                     #updateDatasource

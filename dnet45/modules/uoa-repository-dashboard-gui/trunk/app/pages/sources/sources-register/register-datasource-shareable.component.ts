@@ -28,8 +28,9 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   sourceUrl: string;
   sourceTitle: string;
 
-  @Input()
-  mode: string;
+  @Input() mode: string;
+
+  @Output() emitRepoId: EventEmitter<string> = new EventEmitter();
 
   constructor(private repoService:RepositoryService) {}
 
@@ -108,6 +109,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
       this.alertMessage = noRepositoryChosenMsg;
       return false;
     } else {
+      this.emitRepoId.emit(this.repoId);
       return true;
     }
   }

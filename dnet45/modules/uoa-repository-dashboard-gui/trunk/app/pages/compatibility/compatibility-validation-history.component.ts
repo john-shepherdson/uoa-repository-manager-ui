@@ -10,6 +10,7 @@ import { JobsOfUser, StoredJob } from '../../domain/typeScriptClasses';
 import { ValidatorService } from '../../services/validator.service';
 import { loadingUserJobs, loadingUserJobsError, noUserJobsFound } from '../../domain/shared-messages';
 import { stat } from 'fs';
+import { URLParameter } from '../../domain/url-parameter';
 
 @Component ({
   selector: 'app-compatibility-validation-history',
@@ -49,7 +50,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     this.userEmail = this.authService.getUserEmail();
     this.jobTypes = jobTypes;
     this.itemsPerPage = 10;
-    this.currentPage = 1;
+    this.currentPage = 0;
     this.currentFilter = 'all';
     this.chosenJobType = '';
 
@@ -60,20 +61,20 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
 
   getJobType(type: string) {
     this.chosenJobType = type;
-    this.currentPage =1;
+    this.currentPage = 0;
     this.getJobs();
   }
 
   filterJobs(filter: string){
     this.currentFilter = filter;
-    this.currentPage = 1;
+    this.currentPage = 0;
     console.log(`requesting ${this.currentFilter} jobs`);
     this.getJobs();
   }
 
   getItemsPerPage(num: number){
     this.itemsPerPage = num;
-    this.currentPage =1;
+    this.currentPage = 0;
     this.getJobs();
   }
 
@@ -86,7 +87,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
   }
 
   goToPreviousPage(){
-    if(this.currentPage > 1) {
+    if(this.currentPage > 0) {
       this.currentPage--;
       console.log(`Get me page ${this.currentPage}!`);
       this.getJobs();
@@ -116,38 +117,40 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     this.infoMessage = '';
     this.successMessage = '';
     this.failureMessage = '';
-    setTimeout( () => {
-      this.monitorService.getJobsOfUser(this.userEmail,
-                                        this.chosenJobType,
-                                        (this.currentPage-1).toString(),
-                                        this.itemsPerPage.toString(),
-                                        '',
-                                        '',
-                                        this.currentFilter,
-                                        true).subscribe(
-        jobs => this.jobsOfUser = jobs,
-        error => {
-          console.log(`The API returned ${error.status}`);
-          this.errorMessage = loadingUserJobsError;
-        },
-        () => {
-          if (this.currentFilter == 'all') {
-            this.currentTotalJobs = this.jobsOfUser.totalJobs;
-          } else if (this.currentFilter == 'successful') {
-            this.currentTotalJobs = this.jobsOfUser.totalJobsSuccessful;
-          } else if (this.currentFilter == 'failed') {
-            this.currentTotalJobs = this.jobsOfUser.totalJobsFailed;
-          } else {
-            this.currentTotalJobs = this.jobsOfUser.totalJobsOngoing;
-          }
-          this.totalPages = Math.ceil(this.currentTotalJobs / this.itemsPerPage);
-          this.loadingMessage = '';
-          if (!this.totalPages || !this.jobsOfUser.jobs) {
-            this.infoMessage = noUserJobsFound;
-          }
+    let params: URLParameter[] = [];
+    params.push({key: 'user', value: [this.userEmail]});
+    if ( this.chosenJobType ) {
+      params.push({key: 'jobType', value: [this.chosenJobType]});
+    }
+    params.push({key: 'offset', value: [this.currentPage.toString()]});
+    params.push({key: 'limit', value: [this.itemsPerPage.toString()]});
+    /*  can also add dateFrom and dateTo if needed */
+    params.push({key: 'validationStatus', value: [this.currentFilter]});
+    params.push({key: 'includeJobsTotal', value: ['true']});
+    this.monitorService.getJobsOfUser(params).subscribe(
+      jobs => this.jobsOfUser = jobs,
+      error => {
+        console.log(`The API returned ${error.status}`);
+        this.errorMessage = loadingUserJobsError;
+      },
+      () => {
+        if (this.currentFilter == 'all') {
+          this.currentTotalJobs = this.jobsOfUser.totalJobs;
+        } else if (this.currentFilter == 'successful') {
+          this.currentTotalJobs = this.jobsOfUser.totalJobsSuccessful;
+        } else if (this.currentFilter == 'failed') {
+          this.currentTotalJobs = this.jobsOfUser.totalJobsFailed;
+        } else {
+          this.currentTotalJobs = this.jobsOfUser.totalJobsOngoing;
         }
-      );
-    },500);
+        this.totalPages = Math.ceil(this.currentTotalJobs / this.itemsPerPage);
+        this.loadingMessage = '';
+        if (!this.totalPages || !this.jobsOfUser.jobs) {
+          this.infoMessage = noUserJobsFound;
+          this.currentPage = -1;
+        }
+      }
+    );
   }
 
   getResultImage(ended: string, error: string) {

@@ -14,6 +14,7 @@ import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { InterfaceInformation, JobsOfUser, StoredJob } from "../domain/typeScriptClasses";
 import { apiUrl } from '../domain/tempAPI';
+import { URLParameter } from '../domain/url-parameter';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
@@ -32,32 +33,16 @@ export class MonitorService {
       .catch(this.handleError);
   }
 
-  getJobsOfUser(userEmail: string,
-                jobType:string,
-                offset: string,
-                limit: string,
-                dateFrom: string,
-                dateTo: string,
-                validationStatus: string,
-                includeJobsTotal): Observable<JobsOfUser> {
-    let url = `${this.apiUrl}getJobsOfUser?user=${userEmail}`;
-    if (jobType != '') {
-      url = `${url}&jobType=${encodeURI(jobType)}&offset=${offset}&limit=${limit}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
-    } else {
-      url = `${url}&offset=${offset}&limit=${limit}&validationStatus=${validationStatus}&includeJobsTotal=${includeJobsTotal}`;
+  getJobsOfUser(params: URLParameter[]): Observable<JobsOfUser> {
+    let url = `${this.apiUrl}getJobsOfUser`;
+    for (let param of params) {
+      if (param.key == 'user'){
+        url += `?${param.key}=${param.value[0]}`;
+      } else {
+        url += `&${param.key}=${param.value[0]}`;
+      }
     }
     console.log(`knocking on: ${url}`);
-    let body = JSON.stringify({
-      userEmail: userEmail,
-      jobType: jobType,
-      offset: offset,
-      limit: limit,
-      dateFrom: dateFrom,
-      dateTo: dateTo,
-      validationStatus: validationStatus,
-      includeJobsTotal: includeJobsTotal
-    });
-
     return this.http.get(url)
       .map(res => <JobsOfUser>res.json() )
       .catch(this.handleError);

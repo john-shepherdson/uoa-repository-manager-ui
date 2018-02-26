@@ -13,7 +13,7 @@ import { Subject } from "rxjs/Subject";
 @Component({
   selector : 'form-repeat',
   template : `
-  <div [formGroup]="parentGroup" class="interfacesForm uk-margin uk-grid-match uk-child-width-1-1 uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade">
+    <div [formGroup]="parentGroup" class="interfacesForm uk-margin uk-grid-match uk-child-width-1-1 uk-child-width-1-2@m uk-grid-small uk-grid uk-scrollspy-inview uk-animation-fade">
       <!--<div formArrayName="{{name}}">-->
       <ng-template my-form></ng-template>
       <!--</div>-->
@@ -23,8 +23,8 @@ import { Subject } from "rxjs/Subject";
             <span class="info">Add New {{ description.label }}</span></a>
         </div>
       </div>
-  </div>
-`
+    </div>
+  `
 
 })
 export class MyArray extends MyGroup {
@@ -126,10 +126,10 @@ export class MyArray extends MyGroup {
     <form-inline [description]="description" [valid]="valid">
       <ng-template my-form></ng-template>
       <a class="add-new-element" (click)="push()">
-          <i class="fa fa-plus" aria-hidden="true"></i> Add another
+        <i class="fa fa-plus" aria-hidden="true"></i> Add another
       </a>
     </form-inline>
-    `
+  `
 
 })
 export class MyArrayInline extends MyArray {
@@ -150,7 +150,7 @@ export class MyArrayInline extends MyArray {
       </div>
       <ng-template my-form></ng-template>
     </div>
-`
+  `
 
 })
 export class MyArrayWrapper extends MyWrapper{
@@ -159,14 +159,14 @@ export class MyArrayWrapper extends MyWrapper{
 @Component({
   selector : 'form-inline-repeat-wrapper',
   template : `
-<div class="uk-grid uk-margin">
-    <div class="uk-width-5-6">
+    <div class="uk-grid uk-margin">
+      <div class="uk-width-5-6">
         <ng-template my-form></ng-template>
+      </div>
+      <a *ngIf="canDelete" class="remove-element uk-width-1-6" (click)="remove()"><i
+        class="fa fa-times" aria-hidden="true"></i></a>
     </div>
-    <a *ngIf="canDelete" class="remove-element uk-width-1-6" (click)="remove()"><i
-            class="fa fa-times" aria-hidden="true"></i></a>
-</div>
-`
+  `
 
 })
 export class MyInlineArrayWrapper extends MyWrapper {

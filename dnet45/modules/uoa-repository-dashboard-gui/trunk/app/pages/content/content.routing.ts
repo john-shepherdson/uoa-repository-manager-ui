@@ -12,7 +12,7 @@ const contentRoutes: Routes = [
   {
     path: 'content',
     component: ContentComponent,
-//    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',

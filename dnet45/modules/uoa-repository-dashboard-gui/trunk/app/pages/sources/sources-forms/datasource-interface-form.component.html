@@ -27,7 +27,7 @@
         </div>
         <select id="selectValidationSet{{index}}" formControlName="selectValidationSet" class="form-control" >
           <option value="" selected>-- none selected --</option>
-          <option *ngFor="let set of interfaceInfo.sets" value="{{set}}">{{set}}</option>
+          <option *ngFor="let set of valset" value="{{set}}">{{set}}</option>
         </select>
         <div>
           <label class="uk-button validationSetRadio" for="customRadio{{index}}">
