@@ -29,6 +29,26 @@
   <form-inline [description]="officialNameDesc" >
     <input formControlName="officialName" class="form-control" style="" type="text">
   </form-inline>
+  <div *ngIf="isJournal">
+    <form-inline [description]="issnDesc" [valid]="group.get('issn').valid">
+      <span *ngIf="group.get('issn').invalid && group.get('issn').touched && group.get('issn').dirty"
+            class="help-block inline"
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn length has to be 8 characters</span>
+      <input formControlName="issn" class="form-control" type="text" (focus)="group.get('issn').markAsUntouched()" (blur)="group.get('issn').updateValueAndValidity()">
+    </form-inline>
+    <form-inline [description]="eissnDesc" [valid]="group.get('eissn').valid">
+      <span *ngIf="group.get('eissn').invalid && group.get('eissn').touched && group.get('eissn').dirty"
+            class="help-block inline"
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn length has to be 8 characters</span>
+      <input formControlName="eissn"class="form-control" type="text" (focus)="group.get('eissn').markAsUntouched()" (blur)="group.get('eissn').updateValueAndValidity()">
+    </form-inline>
+    <form-inline [description]="lissnDesc" [valid]="group.get('lissn').valid">
+      <span *ngIf="group.get('lissn').invalid && group.get('lissn').touched && group.get('lissn').dirty"
+            class="help-block inline"
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn length has to be 8 characters</span>
+      <input formControlName="lissn"class="form-control" type="text" (focus)="group.get('lissn').markAsUntouched()" (blur)="group.get('lissn').updateValueAndValidity()">
+    </form-inline>
+  </div>
   <form-inline [description]="repoDescriptionDesc">
     <textarea formControlName="repoDescription" class="form-control"></textarea>
   </form-inline>

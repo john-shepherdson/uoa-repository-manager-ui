@@ -27,6 +27,8 @@ export class MyGroup implements OnInit, AfterContentInit {
 
   @Input() public data : any = null;
 
+  @Input() public otherData: any[];
+
   public patchData : Subject<any> = new Subject();
 
   @Input() public required : boolean = false;

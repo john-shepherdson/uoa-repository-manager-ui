@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, OnDestroy } from '@angular/core';
 import { MyGroup } from '../../../shared/reusablecomponents/forms/my-group.interface';
 import { FormBuilder, Validators } from '@angular/forms';
 import {
@@ -8,14 +8,14 @@ import {
 import { ValidatorService } from '../../../services/validator.service';
 import { ActivatedRoute } from '@angular/router';
 import { RepositoryService } from '../../../services/repository.service';
-import { InterfaceInformation } from '../../../domain/typeScriptClasses';
+import { InterfaceInformation, RepositoryInterface } from '../../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'datasource-interface-form',
   templateUrl: './datasource-interface-form.component.html'
 })
 
-export class DatasourceInterfaceFormComponent extends MyGroup {
+export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestroy {
 
   successMessage: string;
   errorMessage: string;
@@ -25,6 +25,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   identifiedBaseUrl: boolean;
   existingValSet: boolean;
   interfaceInfo: InterfaceInformation;
+  currentInterface: RepositoryInterface;
   valset: string[] = [];
 
   compClasses: Map<string,string> = new Map<string,string>();
@@ -45,28 +46,24 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   }
 
   ngOnInit() {
-    this.getCompatibilityClasses();
-
-    setTimeout( () => {
-      /*if (this.data && this.data.length) {
-        this.parentGroup.patchValue({
+      this.getCompatibilityClasses();
+      console.log(`other data is: ${JSON.stringify(this.otherData)}`);
+      if (this.data && this.data.length) {
+        this.currentInterface = this.data[0];
+        this.patchData.next({
             baseUrl: this.data[0].baseUrl,
             selectValidationSet: '',
             customValidationSet: '',
           compatibilityLevel:this.data[0].desiredCompatibilityLevel
           }
         );
+        this.getInterfaceInfo(this.data[0].baseUrl);
         this.data.splice(0,1);
-      }*/
+      }
       super.ngOnInit();
       console.log(this.group, this.parentGroup);
-
-      if (this.getMyControl('baseUrl').value) {
-        this.getInterfaceInfo(this.data[0].baseUrl);
-      }
       this.existingValSet = true;
       this.getMyControl('customValidationSet').disable();
-    },500);
   }
 
   chooseValSet(existingValSet: boolean) {
@@ -92,9 +89,49 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
           valset = this.getMyControl('customValidationSet').value;
         }
         let compLvl = this.getMyControl('compatibilityLevel').value;
-        // save/update interface
-        this.successMessage = formSuccessAddedInterface;
-        this.errorMessage = '';
+
+        if (this.currentInterface) {
+          this.currentInterface.baseUrl = baseUrl;
+          //this.currentInterface.accessSet = this.valset; CHECK IF THIS IS THE CORRECT FIELD
+          this.currentInterface.desiredCompatibilityLevel = compLvl;
+          /*update Interface*/
+
+        } else {
+          let currentInterface: RepositoryInterface = {
+            desiredCompatibilityLevel: compLvl,
+            complianceName: 'UNKNOWN',
+            upgradeToV3: '',
+            deleteApi: false,
+            accessSet: valset,
+            accessFormat: '',
+            metadataIdentifierPath: '',
+            lastCollectionDate: '',
+            nextScheduledExecution: '',
+            status: '',
+            collectedFrom: '',
+            id: '',
+            typology: '',
+            compliance: '',
+            contentDescription: '',
+            accessProtocol: '',
+            baseUrl: '',
+            active: false,
+            removable: false,
+            accessParams: {},
+            extraFields: {}
+          };
+          this.repoService.addInterface(this.otherData[1], this.otherData[0], currentInterface).subscribe(
+            addedInterface => {
+              console.log(`addInterface responded ${addedInterface}`);
+              this.currentInterface = addedInterface;
+            },
+            error => console.log(error),
+            () => {
+              this.successMessage = formSuccessAddedInterface;
+              this.errorMessage = '';
+            }
+          );
+        }
       } else {
         this.errorMessage = invalidCustomBaseUrl;
       }
@@ -105,24 +142,25 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
   }
 
   getInterfaceInfo(baseUrl: string) {
-    if(this.group && this.group.get('baseUrl').value) {
+    if(baseUrl) {
       this.valService.getInterfaceInformation(baseUrl).subscribe(
-        info => this.interfaceInfo = info,
-        error => {
-          console.log(error);
-          this.identifiedBaseUrl = false;
-          this.errorMessage = noServiceMessage;
-        },
-        () => {
-          if (this.interfaceInfo && this.interfaceInfo.identified) {
+        info => {
+          this.interfaceInfo = info;
+          if (this.interfaceInfo.identified) {
             this.identifiedBaseUrl = true;
             this.errorMessage = '';
           } else {
             this.errorMessage = invalidCustomBaseUrl;
           }
-          if (this.interfaceInfo.sets && this.interfaceInfo.sets.length) {
+          if (this.interfaceInfo.sets) {
             this.valset = this.interfaceInfo.sets;
+            console.log(this.valset);
           }
+        },
+        error => {
+          console.log(error);
+          this.identifiedBaseUrl = false;
+          this.errorMessage = noServiceMessage;
         }
       );
     }
@@ -150,6 +188,18 @@ export class DatasourceInterfaceFormComponent extends MyGroup {
         console.log(error);
       }
     );
+  }
+
+  ngOnDestroy() {
+    if (this.currentInterface) {
+/*      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
+        response => console.log(`deleteInterface responded: ${response}`),
+        error => console.log(error)
+      );*/
+      console.log(`deleting ${this.currentInterface.id}`);
+    } else {
+      console.log(`deleting empty interface form`);
+    }
   }
 
 

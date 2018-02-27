@@ -61,6 +61,7 @@ export class MyArray extends MyGroup {
     (<MyGroup>componentView.instance).index = this.viewContainerRef.length;
     (<MyGroup>componentView.instance).required = this.required;
     (<MyGroup>componentView.instance).data = this.data;
+    (<MyGroup>componentView.instance).otherData = this.otherData;
     this.arrayData_.push((<MyGroup>componentView.instance).patchData);
     (<MyGroup>componentView.instance).description = this.description;
     let arrayGroup = (<MyGroup>componentView.instance).generate();
@@ -86,6 +87,7 @@ export class MyArray extends MyGroup {
     ((this.parentGroup as FormArray).controls[this.name]).push(arrayGroup);
 
     this.viewContainerRef.insert(wrapperView.hostView);
+    console.log("ADDED NEW GROUP IN CREATEVIEW");
   }
 
   remove(i : number) : void {
@@ -96,8 +98,18 @@ export class MyArray extends MyGroup {
     // super.ngOnInit();
     this.viewContainerRef = this.formComponents.viewContainerRef;
     (<FormGroup>this.parentGroup).addControl(<string>this.name, this._fb.array([]));
+/*    (<FormGroup>this.parentGroup).addControl(<string>this.name, this._fb.array([]));
     !this.initEmpty && this.createView();
-    this.parentGroup.get(this.name as string).patchValue = this.patchValue();
+    this.parentGroup.get(this.name as string).patchValue = this.patchValue();*/
+    if (this.data) {
+      for (let i=0; i<this.data.length; i++ ) {
+        !this.initEmpty && this.createView();
+        this.parentGroup.get(this.name as string).patchValue = this.patchValue();
+      }
+    } else {
+      !this.initEmpty && this.createView();
+      this.parentGroup.get(this.name as string).patchValue = this.patchValue();
+    }
 
   }
 

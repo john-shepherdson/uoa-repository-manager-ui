@@ -2,7 +2,7 @@
     <div class="interfaceActionsPanel">
       <a (click)="saveInterface()"><i class="fa fa-save fa-lg"></i></a>
     </div>
-    <div>
+    <div *ngIf="currentInterface">
       <h5>OpenDOAR Interface (non-removable)</h5>
     </div>
   </div>

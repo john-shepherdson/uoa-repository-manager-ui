@@ -37,6 +37,7 @@ export class SrLiteratureComponent implements OnInit {
   interfaceFormDesc: Description = interfaceFormDesc;
   updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
   repoInterfaces: RepositoryInterface[] = [];
+  exportedData: string[] = [];
 
 
   constructor(
@@ -58,8 +59,12 @@ export class SrLiteratureComponent implements OnInit {
       }
     } else if(this.showForm) {
       if (this.updateDatasource.updateRepo()){
-        this.getRepoInterfaces();
-        this.group = this.fb.group({});
+        setTimeout( () => {
+          this.exportedData.push(this.datasourceId);
+          this.exportedData.push('opendoar');
+          this.getRepoInterfaces();
+          this.group = this.fb.group({});
+        }, 500 );
       }
     } else if(this.showInterfaces) {
         this.showInterfaces = false;

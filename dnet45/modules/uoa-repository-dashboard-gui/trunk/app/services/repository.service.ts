@@ -23,6 +23,35 @@ export class RepositoryService {
 
   constructor(private http: Http) { }
 
+  addInterface(datatype: string, repoId: string, newInterface: RepositoryInterface): Observable<RepositoryInterface> {
+    let url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}`;
+    console.log(`knocking on: ${url}`);
+    console.log(`sending ${JSON.stringify(newInterface)}`);
+    httpOptions.withCredentials = true;
+    return this.http.post(url,newInterface,httpOptions)
+      .map( res => <RepositoryInterface>res.json())
+      .catch(this.handleError);
+  }
+
+  addRepository(datatype: string, newRepository: Repository): Observable<Repository> {
+    let url = `${this.apiUrl}addRepository?datatype=${datatype}`;
+    console.log(`knocking on: ${url}`);
+    console.log(`sending ${JSON.stringify(newRepository)}`);
+    httpOptions.withCredentials = true;
+    return this.http.post(url,newRepository,httpOptions)
+      .map( res => <Repository>res.json())
+      .catch(this.handleError);
+  }
+
+  deleteInterface(id: string): Observable<string> {
+    let url = `${this.apiUrl}deleteInterface/${id}`;
+    console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
+    return this.http.delete(url,httpOptions)
+      .map( res => res.status.toString() )
+      .catch(this.handleError);
+  }
+
   getRepositoriesOfCountry(country: string, mode: string): Observable<Repository[]> {
     let url = `${this.apiUrl}getRepositoriesByCountry/${country}/${mode}`;
     console.log(`knocking on: ${url}`);

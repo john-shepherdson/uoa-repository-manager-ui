@@ -21,10 +21,12 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
   repoId: string;
   repoInterfaces: RepositoryInterface[] = [];
+  loadInterfaces: boolean;
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
   updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
+  exportedData: string[];
 
   constructor (
     private fb: FormBuilder,
@@ -35,7 +37,8 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
   ngOnInit() {
     this.readRepoId();
-    this.loadInterfacesTab();
+    this.group = this.fb.group({});
+    this.getRepoInterfaces();
   }
 
   readRepoId() {
@@ -50,15 +53,18 @@ export class SourcesUpdateRepoComponent implements OnInit {
         this.repoInterfaces = interfaces;
         console.log(`the number of interfaces for ${this.repoId} is ${this.repoInterfaces.length}`);
       },
-      error => console.log(error)
+      error => console.log(error),
+      () => this.loadInterfaces = true
     );
   }
 
+  getExportedData(data: string[]) {
+    this.exportedData = data;
+  }
+
   loadInterfacesTab() {
-    this.getRepoInterfaces();
-    this.group = this.fb.group({});
-    setTimeout(() => {
-      console.log("PATCHING");
+      this.getRepoInterfaces();
+/*      console.log("PATCHING");
       let patched = [];
       this.repoInterfaces.forEach(item => {
         patched.push({
@@ -68,8 +74,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
         });
       });
       this.group.patchValue(patched);
-      console.log(`PATCHED: ${JSON.stringify(patched)}`);
-    },500);
+      console.log(`PATCHED: ${JSON.stringify(patched)}`);*/
   }
 
 

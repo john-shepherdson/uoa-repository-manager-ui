@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   formErrorRequiredFields,
   formErrorWasntSaved,
@@ -56,6 +56,8 @@ export class DatasourceInfoFormComponent implements OnInit {
   @Input() datasourceId: string;
 
   @Input() showButton: boolean;
+
+  @Output() emittedInfo: EventEmitter<string[]> = new EventEmitter();
 
   updateGroup: FormGroup;
   readonly updateGroupDefinition = {
@@ -137,23 +139,14 @@ export class DatasourceInfoFormComponent implements OnInit {
         () => {
           this.getCountries();
           this.loadingMessage = '';
+          this.emittedInfo.emit([this.selectedRepo.id,this.selectedRepo.datasourceType]);
         }
       );
     }
   }
 
   setUpSourceInfo() {
-    this.id = this.selectedRepo.id.split("::").pop();
-    this.source = this.selectedRepo.id.split("_")[0];
-    console.log(this.source);
-
-    if(this.source == 'opendoar') {
-      this.sourceTitle = 'OpenDOAR';
-      this.sourceLinkToRepo = `http://www.opendoar.org/suggest.php?rID=${this.id}`;
-    } else if(this.source == 're3data') {
-      this.sourceTitle = 'Re3data';
-      this.sourceLinkToRepo = `http://service.re3data.org/repository/${this.id}`;
-    }
+    this.source = this.selectedRepo.datasourceType;
   }
 
 
