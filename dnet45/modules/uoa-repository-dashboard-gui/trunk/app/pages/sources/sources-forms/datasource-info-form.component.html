@@ -4,32 +4,30 @@
   </div>
   <div class="whiteFilm"></div>
 </div>
-<form [formGroup]="updateGroup" *ngIf="selectedRepo">
+<div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+<form *ngIf="selectedRepo" [formGroup]="updateGroup">
   <div>
     <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
       Basic information
     </h4>
   </div>
-  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-  <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
-  <div class="uk-alert uk-alert-warning">
-    The following fields are completed by {{ sourceTitle }}.<br>
-    If you want to edit them, you can do it by using this
-    <a href="{{ sourceLinkToRepo }}" target="_blank">{{ sourceTitle }} link</a>
-  </div>
   <form-inline [description]="softwarePlatformDesc">
     <select formControlName="softwarePlatform" class="form-control">
-<!--      <option value="" selected>[Other] (enter name below)</option>-->
+<!--      <option value="" selected>[Other] (enter name below)</option> RESTORE AFTER getTypologies begins to work-->
       <option *ngFor="let platform of typologies" value="{{ platform.value }}">{{ platform.name }}</option>
     </select>
   </form-inline>
   <form-inline [description]="platformNameDesc">
+    <span *ngIf="group.get('platformName').touched && group.get('platformName').value"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">This value will be used as the platform for your repository</span>
     <input formControlName="platformName" class="form-control" style="" type="text">
   </form-inline>
   <form-inline [description]="officialNameDesc" >
     <input formControlName="officialName" class="form-control" style="" type="text">
   </form-inline>
-  <div *ngIf="isJournal">
+  <div *ngIf="selectedRepo.datasourceType == 'journal'">
     <form-inline [description]="issnDesc" [valid]="group.get('issn').valid">
       <span *ngIf="group.get('issn').invalid && group.get('issn').touched && group.get('issn').dirty"
             class="help-block inline"
@@ -55,7 +53,7 @@
   <form-inline [description]="countryDesc">
     <select formControlName="country" class="form-control">
       <option value="">-- none selected --</option>
-      <option *ngFor="let country of countries" value="{{country.code}}">{{ country.name }}</option>
+      <option *ngFor="let country of countries" value="{{country.code}}" title="{{country.name}}">{{ country.name }}</option>
     </select>
   </form-inline>
   <form-inline [description]="longtitudeDesc" [valid]="updateGroup.get('longtitude').valid">

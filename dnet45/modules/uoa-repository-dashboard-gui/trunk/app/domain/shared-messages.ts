@@ -64,6 +64,7 @@ export const enabledMetricsError = 'System error enabling metrics for this repos
 
 /* Forms validation Messages */
 export const formInfoLoading = 'Loading information';
+export const formSubmitting = 'Saving changes ...';
 export const formErrorRequiredFields = 'All the fields marked with (*) are mandatory';
 export const formErrorInvalidFields = 'There are invalid fields';
 export const formErrorWasntSaved = 'There was a problem with the form submission';

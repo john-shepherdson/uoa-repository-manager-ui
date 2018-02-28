@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
 import { RepositoryService } from '../../../services/repository.service';
+import { Repository } from '../../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'app-sr-journal',
@@ -17,8 +18,6 @@ export class SrJournalComponent implements OnInit {
   step2: string = '';
   step3: string = '';
 
-  datasourceId: string;
-
   @ViewChild ('registerJournal')
   registerJournal: JournalInfoFormComponent;
 
@@ -26,10 +25,10 @@ export class SrJournalComponent implements OnInit {
   interfaceFormDesc: Description = interfaceFormDesc;
   addDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
 
+  repo: Repository;
 
   constructor(
-    private fb: FormBuilder,
-    private repoService: RepositoryService) {}
+    private fb: FormBuilder) {}
 
   ngOnInit() {
     this.showForm = true;
@@ -60,6 +59,10 @@ export class SrJournalComponent implements OnInit {
       this.showFinish = false;
       this.step3 = '';
     }
+  }
+
+  getCurrentRepo(repo: Repository) {
+    this.repo = repo;
   }
 
 }

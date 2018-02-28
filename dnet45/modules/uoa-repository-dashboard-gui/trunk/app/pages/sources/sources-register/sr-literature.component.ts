@@ -3,7 +3,7 @@
 */
 
 import { Component, OnInit, Type, ViewChild } from '@angular/core';
-import { RepositoryInterface } from '../../../domain/typeScriptClasses';
+import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { DatasourceInfoFormComponent } from '../sources-forms/datasource-info-form.component';
 import { RegisterDatasourceShareableComponent } from './register-datasource-shareable.component';
 import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
@@ -26,6 +26,7 @@ export class SrLiteratureComponent implements OnInit {
   step4: string = '';
 
   datasourceId: string;
+  repo: Repository;
 
   @ViewChild('datasourcesByCountry')
   public datasourcesByCountry: RegisterDatasourceShareableComponent;
@@ -37,7 +38,6 @@ export class SrLiteratureComponent implements OnInit {
   interfaceFormDesc: Description = interfaceFormDesc;
   updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
   repoInterfaces: RepositoryInterface[] = [];
-  exportedData: string[] = [];
 
 
   constructor(
@@ -60,8 +60,6 @@ export class SrLiteratureComponent implements OnInit {
     } else if(this.showForm) {
       if (this.updateDatasource.updateRepo()){
         setTimeout( () => {
-          this.exportedData.push(this.datasourceId);
-          this.exportedData.push('opendoar');
           this.getRepoInterfaces();
           this.group = this.fb.group({});
         }, 500 );
@@ -91,6 +89,10 @@ export class SrLiteratureComponent implements OnInit {
 
   getRepoId(emitedId: string) {
     this.datasourceId = emitedId;
+  }
+
+  getCurrentRepo(repo: Repository) {
+    this.repo = repo;
   }
 
   getRepoInterfaces() {

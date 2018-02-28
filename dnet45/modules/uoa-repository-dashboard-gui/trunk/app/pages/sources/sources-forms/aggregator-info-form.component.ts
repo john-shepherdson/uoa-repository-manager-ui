@@ -2,7 +2,7 @@
 *  created by myrto on 1/22/2018
 */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { formErrorRequiredFields, formSuccessRegisteredDatasource, noServiceMessage } from '../../../domain/shared-messages';
 import { RepositoryService } from "../../../services/repository.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -26,6 +26,7 @@ import {
   aggregatorTypeDesc,
   adminEmailDesc
 } from '../../../domain/oa-description';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component ({
   selector: 'aggregator-info-form',
@@ -43,12 +44,11 @@ export class AggregatorInfoFormComponent implements OnInit {
   datasourceClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
 
-  newDatasource: Repository;
+  @Output() emittedInfo: EventEmitter<Repository> = new EventEmitter();
 
   group: FormGroup;
   readonly groupDefinition = {
     softwarePlatform : '',
-    platformName : '',
     officialName : ['', Validators.required],
     repoDescription : ['', Validators.required],
     country : ['', Validators.required],
@@ -64,7 +64,6 @@ export class AggregatorInfoFormComponent implements OnInit {
   };
 
   softwarePlatformDesc : Description = softwarePlatformDesc;
-  platformNameDesc : Description = platformNameDesc;
   officialNameDesc : Description = officialNameDesc;
   repoDescriptionDesc : Description = repoDescriptionDesc;
   countryDesc : Description = countryDesc;
@@ -81,7 +80,8 @@ export class AggregatorInfoFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private repoService: RepositoryService
+    private repoService: RepositoryService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -129,13 +129,44 @@ export class AggregatorInfoFormComponent implements OnInit {
 
   registerDatasource(): boolean {
     if(this.group.valid){
+      let newRepo = this.createNewRepository();
+      this.repoService.addRepository('aggregator', newRepo).subscribe(
+        response => console.log(`${JSON.stringify(response)}`),
+        error => console.log(error)
+      );
       this.successMessage = formSuccessRegisteredDatasource;
       this.errorMessage = '';
       return true;
     } else {
       this.errorMessage = formErrorRequiredFields;
-      this.successMessage = '';
       return false;
     }
   }
+
+  createNewRepository(): Repository {
+    let newRepo: Repository = new Repository();
+    newRepo.dateOfCreation = new Date(Date.now());
+    newRepo.officialName = this.group.get('officialName').value;
+    newRepo.englishName = this.group.get('englishName').value;
+    newRepo.websiteUrl = this.group.get('websiteUrl').value;
+    newRepo.logoUrl = this.group.get('logoUrl').value;
+    newRepo.contactEmail = this.group.get('adminEmail').value;
+    newRepo.countryName = this.countries.filter(x => x.code == this.group.get('country').value)[0].name;
+    newRepo.countryCode = this.group.get('country').value;
+    newRepo.organization = this.group.get('institutionName').value;
+    newRepo.latitude = this.group.get('latitude').value;
+    newRepo.longitude = this.group.get('longtitude').value;
+    newRepo.timezone = this.group.get('timezone').value;
+    newRepo.datasourceClass = this.group.get('journalType').value;
+    newRepo.typology = this.group.get('softwarePlatform').value;
+    newRepo.description = this.group.get('repoDescription').value;
+    newRepo.registeredBy = this.authService.userEmail;
+    newRepo.datasourceType = 'aggregator';
+    newRepo.registered = true;
+
+    this.emittedInfo.emit(newRepo);
+
+    return newRepo;
+  }
+
 }

@@ -6,6 +6,12 @@
       <h5>OpenDOAR Interface (non-removable)</h5>
     </div>
   </div>
+  <div *ngIf="loadingMessage" class="loading-big">
+    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+      {{ loadingMessage }}
+    </div>
+    <div class="whiteFilm"></div>
+  </div>
   <div *ngIf="group">
     <div [formGroup]="group">
       <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
@@ -27,7 +33,7 @@
         </div>
         <select id="selectValidationSet{{index}}" formControlName="selectValidationSet" class="form-control" >
           <option value="" selected>-- none selected --</option>
-          <option *ngFor="let set of valset" value="{{set}}">{{set}}</option>
+          <option *ngFor="let set of valsetList" value="{{set}}">{{set}}</option>
         </select>
         <div>
           <label class="uk-button validationSetRadio" for="customRadio{{index}}">

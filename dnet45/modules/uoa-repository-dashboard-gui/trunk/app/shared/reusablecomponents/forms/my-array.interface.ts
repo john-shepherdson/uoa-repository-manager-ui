@@ -101,7 +101,7 @@ export class MyArray extends MyGroup {
 /*    (<FormGroup>this.parentGroup).addControl(<string>this.name, this._fb.array([]));
     !this.initEmpty && this.createView();
     this.parentGroup.get(this.name as string).patchValue = this.patchValue();*/
-    if (this.data) {
+    if (this.data && this.data.length) {
       for (let i=0; i<this.data.length; i++ ) {
         !this.initEmpty && this.createView();
         this.parentGroup.get(this.name as string).patchValue = this.patchValue();

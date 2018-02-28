@@ -52,11 +52,11 @@ export class Hint {
 }
 
 export class DriverResource implements Serializable {
-    resourceId: string;
-    resourceUri: string;
-    resourceKind: string;
-    resourceType: string;
-    dateOfCreation: Date;
+    resourceId: string = null;
+    resourceUri: string = null;
+    resourceKind: string = null;
+    resourceType: string = null;
+    dateOfCreation: Date = null;
 }
 
 export class MDFormatDataStructure extends DriverResource {
@@ -80,77 +80,77 @@ export class PiwikInfo implements IsSerializable {
 }
 
 export class Repository extends DriverResource implements IsSerializable {
-    id: string;
-    officialName: string;
-    englishName: string;
-    websiteUrl: string;
-    logoUrl: string;
-    contactEmail: string;
-    countryName: string;
-    countryCode: string;
-    organization: string;
-    latitude: number;
-    longitude: number;
-    timezone: number;
-    namespacePrefix: string;
-    odNumberOfItems: string;
-    odNumberOfItemsDate: string;
-    odPolicies: string;
-    odLanguages: string;
-    odContentTypes: string;
-    collectedFrom: string;
-    inferred: boolean;
-    deletedByInference: boolean;
-    trust: number;
-    inferenceProvenance: string;
-    dateOfValidation: Date;
-    datasourceClass: string;
-    provenanceActionClass: string;
-    dateOfCollection: Date;
-    typology: string;
-    activationId: string;
-    mergehomonyms: boolean;
-    description: string;
-    releaseStartDate: Date;
-    releaseEndDate: Date;
-    missionStatementUrl: string;
-    dataProvider: boolean;
-    serviceProvider: boolean;
-    databaseAccessType: string;
-    dataUploadType: string;
-    databaseAccessRestriction: string;
-    dataUploadRestriction: string;
-    versioning: boolean;
-    citationGuidelineUrl: string;
-    qualityManagementKind: string;
-    pidSystems: string;
-    certificates: string;
-    aggregator: string;
-    issn: string;
-    eissn: string;
-    lissn: string;
-    interfaces: RepositoryInterface[];
-    availableDiskSpace: string;
-    securityParameters: string;
-    protocol: string;
-    registeredBy: string;
-    datasourceType: string;
-    datasourceAggregatorId: string;
-    datasourceOriginalIdValue: string;
-    datasourceOriginalIdProvenance: string;
-    datasourceAggregated: boolean;
-    datasourceComplianceDegreeValue: string;
-    datasourceComplianceDegreeEncoding: string;
-    numberOfObjects: number;
-    maxSizeOfDatastructure: number;
-    maxNumberOfDataStructures: number;
-    registered: boolean;
-    extraFields: { [index: string]: string };
-    piwikInfo: PiwikInfo;
-    environments: string[];
-    registrationDate: Date;
-    verified: boolean;
-    dataCollectionTypes: DataCollectionType[];
+    id: string = null;
+    officialName: string = null;
+    englishName: string = null;
+    websiteUrl: string = null;
+    logoUrl: string = null;
+    contactEmail: string = null;
+    countryName: string = null;
+    countryCode: string = null;
+    organization: string = null;
+    latitude: number = null;
+    longitude: number = null;
+    timezone: number = null;
+    namespacePrefix: string = null;
+    odNumberOfItems: string = null;
+    odNumberOfItemsDate: string = null;
+    odPolicies: string = null;
+    odLanguages: string = null;
+    odContentTypes: string = null;
+    collectedFrom: string = null;
+    inferred: boolean = null;
+    deletedByInference: boolean = null;
+    trust: number = 0;
+    inferenceProvenance: string = null;
+    dateOfValidation: Date = null;
+    datasourceClass: string = null;
+    provenanceActionClass: string = null;
+    dateOfCollection: Date = null;
+    typology: string = null;
+    activationId: string = null;
+    mergehomonyms: boolean = null;
+    description: string = null;
+    releaseStartDate: Date = null;
+    releaseEndDate: Date = null;
+    missionStatementUrl: string = null;
+    dataProvider: boolean = null;
+    serviceProvider: boolean = null;
+    databaseAccessType: string = null;
+    dataUploadType: string = null;
+    databaseAccessRestriction: string = null;
+    dataUploadRestriction: string = null;
+    versioning: boolean = null;
+    citationGuidelineUrl: string = null;
+    qualityManagementKind: string = null;
+    pidSystems: string = null;
+    certificates: string = null;
+    aggregator: string = null;
+    issn: string = null;
+    eissn: string = null;
+    lissn: string = null;
+    interfaces: RepositoryInterface[] = [];
+    availableDiskSpace: string = null;
+    securityParameters: string = null;
+    protocol: string = 'oai';
+    registeredBy: string = null;
+    datasourceType: string = null;
+    datasourceAggregatorId: string = null;
+    datasourceOriginalIdValue: string = null;
+    datasourceOriginalIdProvenance: string = null;
+    datasourceAggregated: boolean = false;
+    datasourceComplianceDegreeValue: string = null;
+    datasourceComplianceDegreeEncoding: string = null;
+    numberOfObjects: number = null;
+    maxSizeOfDatastructure: number = null;
+    maxNumberOfDataStructures: number = null;
+    registered: boolean = null;
+    extraFields: { [index: string]: string } = null;
+    piwikInfo: PiwikInfo = null;
+    environments: string[] = null;
+    registrationDate: Date = null;
+    verified: boolean = false;
+    dataCollectionTypes: DataCollectionType[] = [];
 }
 
 export class RepositoryAccessProtocol {
@@ -177,27 +177,27 @@ export class RepositoryComparator implements Comparator<Repository> {
 }
 
 export class RepositoryInterface implements Serializable, IsSerializable {
-    desiredCompatibilityLevel: string;
-    complianceName: string;
-    upgradeToV3: string;
-    deleteApi: boolean;
-    accessSet: string;
-    accessFormat: string;
-    metadataIdentifierPath: string;
-    lastCollectionDate: string;
-    nextScheduledExecution: string;
-    status: string;
-    collectedFrom: string;
-    id: string;
-    typology: string;
-    compliance: string;
-    contentDescription: string;
-    accessProtocol: string;
-    baseUrl: string;
-    active: boolean;
-    removable: boolean;
-    accessParams: { [index: string]: string };
-    extraFields: { [index: string]: string };
+    desiredCompatibilityLevel: string = '';
+    complianceName: string = null;
+    upgradeToV3: string = '';
+    deleteApi: boolean = false;
+    accessSet: string = '';
+    accessFormat: string = '';
+    metadataIdentifierPath: string = '';
+    lastCollectionDate: string = '';
+    nextScheduledExecution: string = '';
+    status: string = '';
+    collectedFrom: string = '';
+    id: string = '';
+    typology: string = '';
+    compliance: string = 'UNKNOWN';
+    contentDescription: string = '';
+    accessProtocol: string = 'oai';
+    baseUrl: string = '';
+    active: boolean = false;
+    removable: boolean = false;
+    accessParams: { [index: string]: string } = {};
+    extraFields: { [index: string]: string } = {};
 }
 
 export class SearchCriteriaImpl implements SearchCriteria {

@@ -11,9 +11,6 @@
       <option *ngFor="let platform of typologies" value="{{ platform.value }}">{{ platform.name }}</option>
     </select>
   </form-inline>
-  <form-inline [description]="platformNameDesc" [valid]="group.get('platformName').valid">
-    <input formControlName="platformName" class="form-control" type="text">
-  </form-inline>
   <form-inline [description]="officialNameDesc"  [valid]="group.get('officialName').valid">
     <input formControlName="officialName" class="form-control" type="text">
   </form-inline>

@@ -2,13 +2,13 @@ import { Component, Injector, OnDestroy } from '@angular/core';
 import { MyGroup } from '../../../shared/reusablecomponents/forms/my-group.interface';
 import { FormBuilder, Validators } from '@angular/forms';
 import {
-  formErrorRequiredFields, formSuccessAddedInterface,
+  formErrorRequiredFields, formErrorWasntSaved, formSubmitting, formSuccessAddedInterface, formSuccessUpdatedInterface,
   invalidCustomBaseUrl, noServiceMessage
 } from '../../../domain/shared-messages';
 import { ValidatorService } from '../../../services/validator.service';
 import { ActivatedRoute } from '@angular/router';
 import { RepositoryService } from '../../../services/repository.service';
-import { InterfaceInformation, RepositoryInterface } from '../../../domain/typeScriptClasses';
+import { InterfaceInformation, Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'datasource-interface-form',
@@ -17,16 +17,17 @@ import { InterfaceInformation, RepositoryInterface } from '../../../domain/typeS
 
 export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestroy {
 
+  loadingMessage: string;
   successMessage: string;
   errorMessage: string;
 
-  mode: string;
+  currentRepository: Repository;
 
   identifiedBaseUrl: boolean;
   existingValSet: boolean;
   interfaceInfo: InterfaceInformation;
   currentInterface: RepositoryInterface;
-  valset: string[] = [];
+  valsetList: string[] = [];
 
   compClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
@@ -40,12 +41,12 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
 
   constructor(injector: Injector,
               private valService: ValidatorService,
-              private repoService: RepositoryService,
-              private route: ActivatedRoute){
+              private repoService: RepositoryService){
     super(injector);
   }
 
   ngOnInit() {
+      this.currentRepository = <Repository>this.otherData;
       this.getCompatibilityClasses();
       console.log(`other data is: ${JSON.stringify(this.otherData)}`);
       if (this.data && this.data.length) {
@@ -79,11 +80,13 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   saveInterface() {
+    this.errorMessage = '';
+    this.successMessage = '';
     if (this.group.valid) {
       if (this.identifiedBaseUrl) {
         let baseUrl = this.getMyControl('baseUrl').value;
-        let valset: string;
-        if (this.getMyControl('selectValidationSet').enabled ) {
+        let valset: string = '';
+        if (this.getMyControl('selectValidationSet').enabled) {
           valset = this.getMyControl('selectValidationSet').value;
         } else {
           valset = this.getMyControl('customValidationSet').value;
@@ -91,46 +94,9 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         let compLvl = this.getMyControl('compatibilityLevel').value;
 
         if (this.currentInterface) {
-          this.currentInterface.baseUrl = baseUrl;
-          //this.currentInterface.accessSet = this.valset; CHECK IF THIS IS THE CORRECT FIELD
-          this.currentInterface.desiredCompatibilityLevel = compLvl;
-          /*update Interface*/
-
+          this.updateCurrent(baseUrl,valset,compLvl);
         } else {
-          let currentInterface: RepositoryInterface = {
-            desiredCompatibilityLevel: compLvl,
-            complianceName: 'UNKNOWN',
-            upgradeToV3: '',
-            deleteApi: false,
-            accessSet: valset,
-            accessFormat: '',
-            metadataIdentifierPath: '',
-            lastCollectionDate: '',
-            nextScheduledExecution: '',
-            status: '',
-            collectedFrom: '',
-            id: '',
-            typology: '',
-            compliance: '',
-            contentDescription: '',
-            accessProtocol: '',
-            baseUrl: '',
-            active: false,
-            removable: false,
-            accessParams: {},
-            extraFields: {}
-          };
-          this.repoService.addInterface(this.otherData[1], this.otherData[0], currentInterface).subscribe(
-            addedInterface => {
-              console.log(`addInterface responded ${addedInterface}`);
-              this.currentInterface = addedInterface;
-            },
-            error => console.log(error),
-            () => {
-              this.successMessage = formSuccessAddedInterface;
-              this.errorMessage = '';
-            }
-          );
+          this.addCurrent(baseUrl,valset,compLvl);
         }
       } else {
         this.errorMessage = invalidCustomBaseUrl;
@@ -153,8 +119,8 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
             this.errorMessage = invalidCustomBaseUrl;
           }
           if (this.interfaceInfo.sets) {
-            this.valset = this.interfaceInfo.sets;
-            console.log(this.valset);
+            this.valsetList = this.interfaceInfo.sets;
+            console.log(this.valsetList);
           }
         },
         error => {
@@ -166,17 +132,8 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     }
   }
 
-  getMode() {
-    if (this.route.snapshot.paramMap.get('id')) {
-      this.mode = this.route.snapshot.paramMap.get('id').split("_")[0];
-    } else {
-      this.mode = this.route.snapshot.url[0].path;
-    }
-  }
-
   getCompatibilityClasses() {
-    this.getMode();
-    this.repoService.getCompatibilityClasses(this.mode).subscribe(
+    this.repoService.getCompatibilityClasses(this.currentRepository.datasourceType).subscribe(
       classes => {
         this.compClasses = classes;
         for (let key in this.compClasses){
@@ -190,12 +147,68 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     );
   }
 
+  updateCurrent (baseUrl: string, valset: string, compLvl: string) {
+    this.successMessage = '';
+    this.errorMessage = '';
+    this.loadingMessage = formSubmitting;
+    this.currentInterface.baseUrl = baseUrl;
+    this.currentInterface.accessSet = valset;
+    this.currentInterface.desiredCompatibilityLevel = compLvl;
+    this.currentInterface.typology = this.currentRepository.datasourceClass;
+    this.repoService.updateInterface(this.currentInterface).subscribe(
+      response => {
+        console.log(`updateRepository responded ${response}`);
+        this.loadingMessage = '';
+        if (response == '200') {
+          this.successMessage = formSuccessUpdatedInterface;
+        } else {
+          this.errorMessage = formErrorWasntSaved;
+        }
+      },
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = formErrorWasntSaved;
+      }
+    );
+  }
+
+  addCurrent (baseUrl: string, valset: string, compLvl: string) {
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.loadingMessage = formSubmitting;
+    this.currentInterface = new RepositoryInterface();
+    this.currentInterface.baseUrl = baseUrl;
+    this.currentInterface.accessSet = valset;
+    this.currentInterface.desiredCompatibilityLevel = compLvl;
+    this.currentInterface.typology = this.currentRepository.datasourceClass;
+    this.repoService.addInterface(this.currentRepository.datasourceType, this.currentRepository.id, this.currentInterface).subscribe(
+      addedInterface => {
+        console.log(`addInterface responded ${addedInterface}`);
+        this.currentInterface = addedInterface;
+      },
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = formErrorWasntSaved;
+      },
+      () => {
+        this.loadingMessage = '';
+        if (this.currentInterface.id) {
+          this.successMessage = formSuccessAddedInterface;
+        } else {
+          this.errorMessage = formErrorWasntSaved;
+        }
+      }
+    );
+  }
+
   ngOnDestroy() {
     if (this.currentInterface) {
-/*      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
+      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
         response => console.log(`deleteInterface responded: ${response}`),
         error => console.log(error)
-      );*/
+      );
       console.log(`deleting ${this.currentInterface.id}`);
     } else {
       console.log(`deleting empty interface form`);

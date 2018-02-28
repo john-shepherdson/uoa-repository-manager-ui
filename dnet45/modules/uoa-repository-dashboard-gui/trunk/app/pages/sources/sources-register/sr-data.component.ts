@@ -1,7 +1,7 @@
 import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { RegisterDatasourceShareableComponent } from './register-datasource-shareable.component';
 import { DatasourceInfoFormComponent } from '../sources-forms/datasource-info-form.component';
-import { RepositoryInterface } from '../../../domain/typeScriptClasses';
+import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
 import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -23,6 +23,7 @@ export class SrDataComponent implements OnInit {
   step4: string = '';
 
   datasourceId: string;
+  repo: Repository;
 
   @ViewChild('datasourcesByCountry')
   public datasourcesByCountry: RegisterDatasourceShareableComponent;
@@ -46,7 +47,6 @@ export class SrDataComponent implements OnInit {
   moveAStep(){
     if(this.showRepositories) {
       if (this.datasourcesByCountry.goToNextStep()) {
-        this.datasourceId = this.datasourcesByCountry.repoId;
         this.showRepositories = false;
         this.showForm = true;
         this.step2 = 'active';
@@ -83,6 +83,14 @@ export class SrDataComponent implements OnInit {
     }
   }
 
+
+  getRepoId(emitedId: string) {
+    this.datasourceId = emitedId;
+  }
+
+  getCurrentRepo(repo: Repository) {
+    this.repo = repo;
+  }
 
   getRepoInterfaces() {
     this.repoService.getRepositoryInterface(this.datasourceId).subscribe(

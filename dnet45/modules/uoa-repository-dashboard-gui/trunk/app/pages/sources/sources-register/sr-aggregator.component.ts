@@ -3,7 +3,7 @@ import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-in
 import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AggregatorInfoFormComponent } from '../sources-forms/aggregator-info-form.component';
-import { RepositoryService } from '../../../services/repository.service';
+import { Repository } from '../../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'sr-aggregator',
@@ -17,7 +17,7 @@ export class SrAggregatorComponent implements OnInit {
   step2: string = '';
   step3: string = '';
 
-  datasourceId: string;
+  repo: Repository;
 
   @ViewChild ('registerAggregator')
   registerAggregator: AggregatorInfoFormComponent;
@@ -27,8 +27,7 @@ export class SrAggregatorComponent implements OnInit {
   addDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
 
   constructor(
-    private fb: FormBuilder,
-    private repoService: RepositoryService) {}
+    private fb: FormBuilder) {}
 
   ngOnInit() {
     this.showForm = true;
@@ -61,4 +60,7 @@ export class SrAggregatorComponent implements OnInit {
     }
   }
 
+  getCurrentRepo(repo: Repository) {
+    this.repo = repo;
+  }
 }

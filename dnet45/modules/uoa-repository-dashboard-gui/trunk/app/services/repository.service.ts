@@ -33,6 +33,25 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
+  updateInterface(interfaceInfo: RepositoryInterface): Observable<string> {
+    let url = `${this.apiUrl}updateInterface`;
+    console.log(`knocking on: ${url}`);
+    console.log(`sending ${JSON.stringify(interfaceInfo)}`);
+    httpOptions.withCredentials = true;
+    return this.http.post(url,interfaceInfo,httpOptions)
+      .map( res => res.status.toString())
+      .catch(this.handleError);
+  }
+
+  deleteInterface(id: string): Observable<string> {
+    let url = `${this.apiUrl}deleteInterface/${id}`;
+    console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
+    return this.http.delete(url,httpOptions)
+      .map( res => res.status.toString() )
+      .catch(this.handleError);
+  }
+
   addRepository(datatype: string, newRepository: Repository): Observable<Repository> {
     let url = `${this.apiUrl}addRepository?datatype=${datatype}`;
     console.log(`knocking on: ${url}`);
@@ -43,12 +62,13 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  deleteInterface(id: string): Observable<string> {
-    let url = `${this.apiUrl}deleteInterface/${id}`;
+  updateRepository(repoInfo: Repository): Observable<string> {
+    let url = `${this.apiUrl}updateRepository`;
     console.log(`knocking on: ${url}`);
+    console.log(`sending ${JSON.stringify(repoInfo)}`);
     httpOptions.withCredentials = true;
-    return this.http.delete(url,httpOptions)
-      .map( res => res.status.toString() )
+    return this.http.post(url,repoInfo,httpOptions)
+      .map( res => res.status.toString())
       .catch(this.handleError);
   }
 

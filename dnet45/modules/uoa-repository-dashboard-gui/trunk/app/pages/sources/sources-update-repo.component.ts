@@ -1,14 +1,13 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DatasourceInterfaceFormComponent } from './sources-forms/datasource-interface-form.component';
-import { RepositoryInterface } from '../../domain/typeScriptClasses';
+import { Repository, RepositoryInterface } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { ActivatedRoute } from '@angular/router';
 import {
   Description,
   interfaceFormDesc,
 } from '../../domain/oa-description';
-import { Subject } from 'rxjs/Subject';
 
 
 
@@ -20,13 +19,13 @@ import { Subject } from 'rxjs/Subject';
 export class SourcesUpdateRepoComponent implements OnInit {
 
   repoId: string;
+  repo: Repository;
   repoInterfaces: RepositoryInterface[] = [];
   loadInterfaces: boolean;
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
   updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
-  exportedData: string[];
 
   constructor (
     private fb: FormBuilder,
@@ -58,23 +57,8 @@ export class SourcesUpdateRepoComponent implements OnInit {
     );
   }
 
-  getExportedData(data: string[]) {
-    this.exportedData = data;
-  }
-
-  loadInterfacesTab() {
-      this.getRepoInterfaces();
-/*      console.log("PATCHING");
-      let patched = [];
-      this.repoInterfaces.forEach(item => {
-        patched.push({
-          baseUrl : item.baseUrl,
-          selectValidationSet : item.accessSet,
-          compatibilityLevel : item.desiredCompatibilityLevel
-        });
-      });
-      this.group.patchValue(patched);
-      console.log(`PATCHED: ${JSON.stringify(patched)}`);*/
+  getCurrentRepo(repo: Repository) {
+    this.repo = repo;
   }
 
 

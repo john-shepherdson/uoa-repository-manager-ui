@@ -31,14 +31,16 @@
           <div class="animated fadeInRight stepContent">
             <div>
               <journal-info-form *ngIf="showForm"
-                                    #registerJournal></journal-info-form>
+                                 #registerJournal
+                                 (emittedInfo)="getCurrentRepo($event)"></journal-info-form>
 
-              <div *ngIf="showInterfaces">
+              <div *ngIf="showInterfaces && repo">
                 <form [formGroup]="group">
                   <form-repeat [component]="addDatasourceInterfaces"
                                [parentGroup]="group"
                                [description]="interfaceFormDesc"
-                               [name]="'repository-interfaces'">
+                               [name]="'repository-interfaces'"
+                               [otherData]="repo">
                   </form-repeat>
                 </form>
               </div>

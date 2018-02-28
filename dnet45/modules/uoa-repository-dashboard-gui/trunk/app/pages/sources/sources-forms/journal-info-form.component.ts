@@ -2,7 +2,7 @@
 *  created by myrto on 1/22/2018
 */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   formErrorInvalidFields, formErrorRequiredFields, formErrorWasntSaved, formSuccessRegisteredDatasource,
   noServiceMessage
@@ -15,7 +15,6 @@ import { timezones } from '../../../domain/timezones';
 import {
   Description,
   softwarePlatformDesc,
-  platformNameDesc,
   officialNameDesc,
   issnDesc,
   eissnDesc,
@@ -33,6 +32,7 @@ import {
   adminEmailDesc
 } from '../../../domain/oa-description';
 import { ValidatorService } from '../../../services/validator.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component ({
   selector: 'journal-info-form',
@@ -50,12 +50,11 @@ export class JournalInfoFormComponent implements OnInit {
   datasourceClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
 
-  newDatasource: Repository;
+  @Output() emittedInfo: EventEmitter<Repository> = new EventEmitter();
 
   group: FormGroup;
   readonly groupDefinition = {
     softwarePlatform : '',
-    platformName : '',
     officialName : ['', Validators.required],
     issn : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
     eissn : ['', [Validators.minLength(8), Validators.maxLength(8)]],
@@ -74,7 +73,6 @@ export class JournalInfoFormComponent implements OnInit {
   };
 
   softwarePlatformDesc : Description = softwarePlatformDesc;
-  platformNameDesc : Description = platformNameDesc;
   officialNameDesc : Description = officialNameDesc;
   issnDesc : Description = issnDesc;
   eissnDesc : Description = eissnDesc;
@@ -93,7 +91,8 @@ export class JournalInfoFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private repoService: RepositoryService
+    private repoService: RepositoryService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -141,85 +140,7 @@ export class JournalInfoFormComponent implements OnInit {
 
   registerDatasource(): boolean {
     if(this.group.valid){
-      let newRepo: Repository = {
-        id: '',
-        officialName: this.group.get('officialName').value,
-        englishName: this.group.get('englishName').value,
-        websiteUrl: this.group.get('websiteUrl').value,
-        logoUrl: this.group.get('logoUrl').value,
-        contactEmail: this.group.get('adminEmail').value,
-        countryName: this.group.get('country').value,
-        countryCode: null, //this.group.get('officialName').value,
-        organization: null,
-        latitude: this.group.get('latitude').value,
-        longitude: this.group.get('longtitude').value,
-        timezone: this.group.get('timezone').value,
-        namespacePrefix: '',
-        odNumberOfItems: '',
-        odNumberOfItemsDate: null,
-        odPolicies: '',
-        odLanguages: '',
-        odContentTypes: '',
-        collectedFrom: '',
-        inferred: null,
-        deletedByInference: null,
-        trust: 0,
-        inferenceProvenance: '',
-        dateOfValidation: null,
-        datasourceClass: this.group.get('journalType').value,
-        provenanceActionClass: '',
-        dateOfCollection: null,
-        typology: this.group.get('softwarePlatform').value,
-        activationId: '',
-        mergehomonyms: null,
-        description: this.group.get('repoDescription').value,
-        releaseStartDate: null,
-        releaseEndDate: null,
-        missionStatementUrl: '',
-        dataProvider: null,
-        serviceProvider: null,
-        databaseAccessType: '',
-        dataUploadType: '',
-        databaseAccessRestriction: '',
-        dataUploadRestriction: '',
-        versioning: null,
-        citationGuidelineUrl: '',
-        qualityManagementKind: '',
-        pidSystems: '',
-        certificates: '',
-        aggregator: '',
-        issn: this.group.get('issn').value,
-        eissn: this.group.get('eissn').value,
-        lissn: this.group.get('lissn').value,
-        interfaces: [],
-        availableDiskSpace: '',
-        securityParameters: '',
-        protocol: 'oai',
-        registeredBy: 'ant.lebesis@gmail.com',
-        datasourceType: 'journal',
-        datasourceAggregatorId: null,
-        datasourceOriginalIdValue: null,
-        datasourceOriginalIdProvenance: '',
-        datasourceAggregated: false,
-        datasourceComplianceDegreeValue: '',
-        datasourceComplianceDegreeEncoding: '',
-        numberOfObjects: 0,
-        maxSizeOfDatastructure: 0,
-        maxNumberOfDataStructures: 0,
-        registered: true,
-        extraFields: {  },
-        piwikInfo: null,
-        environments: [],
-        registrationDate: null,
-        verified: false,
-        dataCollectionTypes: [],
-        resourceId: '',
-        resourceUri: '',
-        resourceKind: '',
-        resourceType: '',
-        dateOfCreation: null,
-
-    };
+      let newRepo = this.createNewRepository();
       this.repoService.addRepository('journal',newRepo).subscribe(
         response => console.log(`${JSON.stringify(response)}`),
         error => console.log(error)
@@ -248,6 +169,35 @@ export class JournalInfoFormComponent implements OnInit {
     );
     console.log(status);
     return status;
+  }
+
+  createNewRepository(): Repository {
+    let newRepo: Repository = new Repository();
+    newRepo.dateOfCreation = new Date(Date.now());
+    newRepo.officialName = this.group.get('officialName').value;
+    newRepo.englishName = this.group.get('englishName').value;
+    newRepo.websiteUrl = this.group.get('websiteUrl').value;
+    newRepo.logoUrl = this.group.get('logoUrl').value;
+    newRepo.contactEmail = this.group.get('adminEmail').value;
+    newRepo.countryName = this.countries.filter(x => x.code == this.group.get('country').value)[0].name;
+    newRepo.countryCode = this.group.get('country').value;
+    newRepo.organization = this.group.get('institutionName').value;
+    newRepo.latitude = this.group.get('latitude').value;
+    newRepo.longitude = this.group.get('longtitude').value;
+    newRepo.timezone = this.group.get('timezone').value;
+    newRepo.datasourceClass = this.group.get('journalType').value;
+    newRepo.typology = this.group.get('softwarePlatform').value;
+    newRepo.description = this.group.get('repoDescription').value;
+    newRepo.issn = this.group.get('issn').value;
+    newRepo.eissn = this.group.get('eissn').value;
+    newRepo.lissn = this.group.get('lissn').value;
+    newRepo.registeredBy = this.authService.userEmail;
+    newRepo.datasourceType = 'journal';
+    newRepo.registered = true;
+
+    this.emittedInfo.emit(newRepo);
+
+    return newRepo;
   }
 
 
