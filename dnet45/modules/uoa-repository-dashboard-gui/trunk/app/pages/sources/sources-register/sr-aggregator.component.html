@@ -30,9 +30,9 @@
         <div>
           <div class="animated fadeInRight stepContent">
             <div>
-              <aggregator-info-form *ngIf="showForm"
+              <datasource-create-form *ngIf="showForm"
                                     #registerAggregator
-                                    (emittedInfo)="getCurrentRepo($event)"></aggregator-info-form>
+                                    (emittedInfo)="getCurrentRepo($event)"></datasource-create-form>
 
               <div *ngIf="showInterfaces && repo">
                 <form [formGroup]="group">

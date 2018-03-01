@@ -17,11 +17,10 @@ import { RepoFilter } from './sourcesPipes';
 import { DatasourceInterfaceFormComponent } from './sources-forms/datasource-interface-form.component';
 import { SrDataComponent } from './sources-register/sr-data.component';
 import { RegisterDatasourceShareableComponent } from './sources-register/register-datasource-shareable.component';
-import { DatasourceInfoFormComponent } from './sources-forms/datasource-info-form.component';
+import { DatasourceUpdateFormComponent } from './sources-forms/datasource-update-form.component';
 import { SrJournalComponent } from './sources-register/sr-journal.component';
 import { SrAggregatorComponent } from './sources-register/sr-aggregator.component';
-import { JournalInfoFormComponent } from './sources-forms/journal-info-form.component';
-import { AggregatorInfoFormComponent } from './sources-forms/aggregator-info-form.component';
+import { DatasourceCreateFormComponent } from './sources-forms/datasource-create-form.component';
 
 @NgModule ({
   imports: [
@@ -45,10 +44,9 @@ import { AggregatorInfoFormComponent } from './sources-forms/aggregator-info-for
     SrAggregatorComponent,
     SourcesUpdateRepoComponent,
     RegisterDatasourceShareableComponent,
-    DatasourceInfoFormComponent,
+    DatasourceUpdateFormComponent,
+    DatasourceCreateFormComponent,
     DatasourceInterfaceFormComponent,
-    JournalInfoFormComponent,
-    AggregatorInfoFormComponent,
     RepoFilter                           //a pipe that searches for string in repository name
   ]
 })

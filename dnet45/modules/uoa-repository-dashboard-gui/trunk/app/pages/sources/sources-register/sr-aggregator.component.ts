@@ -2,8 +2,8 @@ import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
 import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AggregatorInfoFormComponent } from '../sources-forms/aggregator-info-form.component';
 import { Repository } from '../../../domain/typeScriptClasses';
+import { DatasourceCreateFormComponent } from '../sources-forms/datasource-create-form.component';
 
 @Component ({
   selector: 'sr-aggregator',
@@ -20,7 +20,7 @@ export class SrAggregatorComponent implements OnInit {
   repo: Repository;
 
   @ViewChild ('registerAggregator')
-  registerAggregator: AggregatorInfoFormComponent;
+  registerAggregator: DatasourceCreateFormComponent;
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import {
   formErrorRequiredFields,
   formErrorWasntSaved,
@@ -28,13 +28,14 @@ import {
   datasourceTypeDesc,
   adminEmailDesc, lissnDesc, eissnDesc, issnDesc
 } from '../../../domain/oa-description';
+import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
 
 @Component ({
-  selector: 'datasource-info-form',
-  templateUrl: './datasource-info-form.component.html'
+  selector: 'datasource-update-form',
+  templateUrl: './datasource-update-form.component.html'
 })
 
-export class DatasourceInfoFormComponent implements OnInit {
+export class DatasourceUpdateFormComponent implements OnInit {
 
   errorMessage: string;
   successMessage: string;
@@ -46,15 +47,17 @@ export class DatasourceInfoFormComponent implements OnInit {
   datasourceClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
 
-  selectedRepo: Repository;
-  id: string;
+  @ViewChild('updateLogoUrlModal')
+  public updateLogoUrlModal: ConfirmationDialogComponent;
+  urlToEmit: string;
 
+  @Output() emittedUrl: EventEmitter<string> = new EventEmitter();
 
-  @Input() datasourceId: string;
-
-  @Input() showButton: boolean;
+  @Input() selectedRepo: Repository;
 
   @Output() emittedInfo: EventEmitter<Repository> = new EventEmitter();
+
+  @Input() showButton: boolean;
 
   updateGroup: FormGroup;
   readonly updateGroupDefinition = {
@@ -66,8 +69,8 @@ export class DatasourceInfoFormComponent implements OnInit {
     lissn : ['', [Validators.minLength(8), Validators.maxLength(8)]],
     repoDescription : ['', Validators.required],
     country : ['', Validators.required],
-    longtitude : ['', [Validators.required, Validators.maxLength(9), Validators.min(-180), Validators.max(180)] ],
-    latitude : ['', [Validators.required, Validators.maxLength(9), Validators.min(-90), Validators.max(90)] ],
+    longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
+    latitude : ['', [Validators.required, Validators.min(-90), Validators.max(90)] ],
     websiteUrl : ['', Validators.required],
     institutionName : ['', Validators.required],
     englishName: ['', Validators.required],
@@ -106,30 +109,9 @@ export class DatasourceInfoFormComponent implements OnInit {
 
   loadForm() {
     this.updateGroup = this.fb.group(this.updateGroupDefinition, {validator: checkPlatform});
-    this.getRepo();
-  }
-
-  getRepo() {
-    this.loadingMessage = formInfoLoading;
-    if (this.datasourceId) {
-      this.repoService.getRepositoryById(this.datasourceId).subscribe(
-        repo => {
-          this.selectedRepo = repo;
-        },
-        error => {
-          console.log(error);
-          this.loadingMessage = '';
-          this.errorMessage = loadingRepoError;
-        },
-        () => {
-          this.setupUpdateForm();
-          this.getDatasourceClasses();
-          this.getCountries();
-          this.emittedInfo.emit(this.selectedRepo);
-          this.loadingMessage = '';
-        }
-      );
-    }
+    this.setupUpdateForm();
+    this.getDatasourceClasses();
+    this.getCountries();
   }
 
   setupUpdateForm(){
@@ -138,6 +120,9 @@ export class DatasourceInfoFormComponent implements OnInit {
         softwarePlatform: this.selectedRepo.typology,
         platformName: '',
         officialName: this.selectedRepo.officialName,
+        issn: '',
+        eissn: '',
+        lissn: '',
         repoDescription: this.selectedRepo.description,
         country: this.selectedRepo.countryCode,
         longtitude: this.selectedRepo.longitude,
@@ -150,8 +135,11 @@ export class DatasourceInfoFormComponent implements OnInit {
         datasourceType: this.selectedRepo.datasourceClass,
         adminEmail: this.selectedRepo.contactEmail
       });
-      if (this.updateGroup.get('softwarePlatform').value == '') {
-        this.updateGroup.setValue({platformName: this.selectedRepo.typology});
+      if (!this.updateGroup.get('softwarePlatform').value) {
+        this.updateGroup.setValue({
+          softwarePlatform: '',
+          platformName: this.selectedRepo.typology
+        });
       }
       if (this.selectedRepo.datasourceType == 'journal') {
         this.updateGroup.setValue({
@@ -198,8 +186,8 @@ export class DatasourceInfoFormComponent implements OnInit {
 
   updateRepo(): boolean {
     let result: boolean;
+
     this.errorMessage = '';
-    this.loadingMessage = '';
     this.successMessage = '';
 
     if (this.updateGroup.valid) {
@@ -210,26 +198,25 @@ export class DatasourceInfoFormComponent implements OnInit {
         this.repoService.updateRepository(this.selectedRepo).subscribe(
           response => {
             console.log(`updateRepository responded: ${response}`);
-            if (response == '200') {
-              result = true;
-            } else {
-              result = false;
-            }
+            result = (response == '200');
           },
           error => {
             console.log(error);
+            this.loadingMessage = '';
             this.errorMessage = formErrorWasntSaved;
+            result = false;
           },
           () => {
             this.loadingMessage = '';
             if (result) {
-              this.successMessage = formSuccessUpdatedRepo;
               this.emittedInfo.emit(this.selectedRepo);
+              this.successMessage = formSuccessUpdatedRepo;
             } else {
               this.errorMessage = formErrorWasntSaved;
             }
           }
         );
+        result = true;
       } else {
         this.errorMessage = formErrorRequiredFields;
         result = false;
@@ -267,20 +254,20 @@ export class DatasourceInfoFormComponent implements OnInit {
     }
   }
 
-  updateEnglishName() {
-    let status: boolean;
-    this.repoService.updateEnglishName(this.selectedRepo.id,this.updateGroup.get('englishName').value).subscribe(
-      response => {
-        console.log(response);
-        status = true;
-      },
-      error => {
-        console.log(error);
-        this.errorMessage = formErrorWasntSaved;
-        status = false;
-      }
-    );
-    return status;
+  changeLogoUrl(logoUrl: string) {
+    this.urlToEmit = logoUrl;
+  }
+
+  updateLogoUrl(logoUrl: string){
+    this.updateLogoUrlModal.ids = [logoUrl];
+    this.updateLogoUrlModal.showModal();
+  }
+
+  updatedLogoUrl() {
+    if (this.urlToEmit) {
+      this.updateGroup.setValue({logoUrl: this.urlToEmit});
+      this.emittedUrl.emit(this.urlToEmit);
+    }
   }
 
 }

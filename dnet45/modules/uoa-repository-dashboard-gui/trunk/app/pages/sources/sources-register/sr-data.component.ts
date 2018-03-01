@@ -1,19 +1,26 @@
+/*
+*  created by myrto on 12/12/2017
+*/
+
 import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { RegisterDatasourceShareableComponent } from './register-datasource-shareable.component';
-import { DatasourceInfoFormComponent } from '../sources-forms/datasource-info-form.component';
+import { DatasourceUpdateFormComponent } from '../sources-forms/datasource-update-form.component';
 import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
 import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RepositoryService } from '../../../services/repository.service';
+import { formInfoLoading, loadingRepoError } from '../../../domain/shared-messages';
 
 @Component ({
   selector: 'app-sr-data',
   templateUrl: 'sr-data.component.html'
 })
 
-
 export class SrDataComponent implements OnInit {
+  loadingMessage: string;
+  errorMessage: string;
+
   showRepositories: boolean;
   showForm: boolean;
   showInterfaces: boolean;
@@ -29,7 +36,7 @@ export class SrDataComponent implements OnInit {
   public datasourcesByCountry: RegisterDatasourceShareableComponent;
 
   @ViewChild('updateDatasource')
-  public updateDatasource: DatasourceInfoFormComponent;
+  public updateDatasource: DatasourceUpdateFormComponent;
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
@@ -54,9 +61,6 @@ export class SrDataComponent implements OnInit {
       }
     } else if(this.showForm) {
       if (this.updateDatasource.updateRepo()){
-        this.showForm = false;
-        this.showInterfaces = true;
-        this.step3 = 'active';
         this.group = this.fb.group({});
         this.getRepoInterfaces();
       }
@@ -83,19 +87,42 @@ export class SrDataComponent implements OnInit {
     }
   }
 
-
   getRepoId(emitedId: string) {
     this.datasourceId = emitedId;
+    this.getRepo();
   }
 
-  getCurrentRepo(repo: Repository) {
-    this.repo = repo;
+  getRepo() {
+    this.loadingMessage = formInfoLoading;
+    if (this.datasourceId) {
+      this.repoService.getRepositoryById(this.datasourceId).subscribe(
+        repo => {
+          this.repo = repo;
+        },
+        error => {
+          console.log(error);
+          this.loadingMessage = '';
+          this.errorMessage = loadingRepoError;
+        },
+        () => {
+          this.loadingMessage = '';
+        }
+      );
+    }
   }
 
   getRepoInterfaces() {
     this.repoService.getRepositoryInterface(this.datasourceId).subscribe(
-      interfaces => { this.repoInterfaces = interfaces; console.log(this.repoInterfaces.length)},
-      error => console.log(error)
+      interfaces => {
+        this.repoInterfaces = interfaces;
+        console.log(this.repoInterfaces.length);
+      },
+      error => console.log(error),
+      () => {
+        this.showForm = false;
+        this.showInterfaces = true;
+        this.step3 = 'active';
+      }
     );
   }
 

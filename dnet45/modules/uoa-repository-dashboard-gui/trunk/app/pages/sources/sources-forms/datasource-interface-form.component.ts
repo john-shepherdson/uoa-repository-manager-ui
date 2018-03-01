@@ -204,11 +204,11 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   ngOnDestroy() {
-    if (this.currentInterface) {
-      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
+    if (this.currentInterface && this.toBeDeleted) {
+/*      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
         response => console.log(`deleteInterface responded: ${response}`),
         error => console.log(error)
-      );
+      );*/
       console.log(`deleting ${this.currentInterface.id}`);
     } else {
       console.log(`deleting empty interface form`);

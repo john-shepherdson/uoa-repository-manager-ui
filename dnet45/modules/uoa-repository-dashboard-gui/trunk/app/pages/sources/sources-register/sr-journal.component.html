@@ -30,9 +30,9 @@
         <div>
           <div class="animated fadeInRight stepContent">
             <div>
-              <journal-info-form *ngIf="showForm"
+              <datasource-create-form *ngIf="showForm"
                                  #registerJournal
-                                 (emittedInfo)="getCurrentRepo($event)"></journal-info-form>
+                                 (emittedInfo)="getCurrentRepo($event)"></datasource-create-form>
 
               <div *ngIf="showInterfaces && repo">
                 <form [formGroup]="group">

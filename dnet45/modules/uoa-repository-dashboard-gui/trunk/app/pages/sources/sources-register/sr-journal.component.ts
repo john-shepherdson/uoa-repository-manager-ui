@@ -1,10 +1,9 @@
 import { Component, OnInit, Type, ViewChild } from '@angular/core';
-import { JournalInfoFormComponent } from '../sources-forms/journal-info-form.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
-import { RepositoryService } from '../../../services/repository.service';
 import { Repository } from '../../../domain/typeScriptClasses';
+import { DatasourceCreateFormComponent } from '../sources-forms/datasource-create-form.component';
 
 @Component ({
   selector: 'app-sr-journal',
@@ -19,7 +18,7 @@ export class SrJournalComponent implements OnInit {
   step3: string = '';
 
   @ViewChild ('registerJournal')
-  registerJournal: JournalInfoFormComponent;
+  registerJournal: DatasourceCreateFormComponent;
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;

@@ -29,6 +29,8 @@ export class MyGroup implements OnInit, AfterContentInit {
 
   @Input() public otherData: any;
 
+  @Input() public toBeDeleted: boolean;
+
   public patchData : Subject<any> = new Subject();
 
   @Input() public required : boolean = false;

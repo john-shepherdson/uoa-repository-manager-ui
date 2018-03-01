@@ -1,11 +1,23 @@
 <div class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
-    <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-    <div class="uk-margin-medium-bottom">
-      <h1 class="uk-article-title">Update your datasource</h1>
+    <div *ngIf="loadingMessage" class="loading-big">
+      <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+        {{ loadingMessage }}
+      </div>
+      <div class="whiteFilm"></div>
     </div>
-    <div class="">
+    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="repo" class="uk-margin-medium-bottom">
+      <h1 class="uk-article-title">
+        <a id="updateLogoURL" (click)="datasourceUpdateForm.updateLogoUrl(repo.logoUrl)">
+<!--        <a id="updateLogoURL">-->
+          <img *ngIf="!logoURL" src="/assets/imgs/yourLogoHere.jpg" style="margin-right: 15px; margin-top:-8px" width="60">
+          <img *ngIf="logoURL" src="{{ logoURL }}" style="margin-right: 15px; margin-top:-8px" width="60">
+        </a>
+        {{ repo.officialName }}
+      </h1>
+    </div>
+    <div>
       <div>
         <ul class="uk-margin el-nav uk-tab" uk-switcher="connect: .uk-switcher">
           <li routerLinkActive="uk-active">
@@ -17,14 +29,15 @@
         </ul>
         <ul class="uk-switcher">
           <li class="el-item">
-            <div *ngIf="repoId">
-              <datasource-info-form [datasourceId]="repoId"
-                                    [showButton]=true
-                                    (emittedInfo)="getCurrentRepo($event)"></datasource-info-form>
+            <div *ngIf="repo">
+              <datasource-update-form #datasourceUpdateForm
+                                      [selectedRepo]="repo"
+                                      [showButton]=true
+                                      (emittedUrl)="getNewLogoUrl($event)"></datasource-update-form>
             </div>
           </li>
           <li class="el-item">
-            <div *ngIf="repoInterfaces && repo" class="uk-width-1-1@m uk-first-column">
+            <div *ngIf="repo && repoInterfaces" class="uk-width-1-1@m uk-first-column">
               <form [formGroup]="group">
                 <form-repeat [component]="updateDatasourceInterfaces"
                              [parentGroup]="group"
@@ -48,7 +61,7 @@
           <!--Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.-->
 
         <!--</p>-->
-        <pre>{{group.value | json}}</pre>
+<!--        <pre>{{group.value | json}}</pre>-->
       </div>
     </div>
   </div>

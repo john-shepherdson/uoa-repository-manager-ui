@@ -78,6 +78,7 @@ export class MyArray extends MyGroup {
         console.log(this.viewContainerRef.get(0));
         ((this.parentGroup as FormArray).controls[this.name].at(0).corpus((<MyGroup>componentView.instance).generate().value));
       } else {
+        (<MyGroup>componentView.instance).toBeDeleted = true;
         this.remove(index);
         (this.parentGroup as FormArray).controls[this.name].removeAt(index-1);
         this.arrayData_.splice(index-1,1);

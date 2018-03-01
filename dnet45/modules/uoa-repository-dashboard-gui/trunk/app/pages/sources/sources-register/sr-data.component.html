@@ -14,13 +14,13 @@
           </div>
           <div class="step {{step2}}">
             <div>
-              Enter Information
+              Enter information
               <span></span>
             </div>
           </div>
           <div class="step {{step3}}">
             <div>
-              Add Interfaces
+              Add interfaces
               <span></span>
             </div>
           </div>
@@ -37,16 +37,22 @@
           <div class="animated fadeInRight stepContent">
             <div>
               <register-datasource-shareable *ngIf="showRepositories"
-                                         #datasourcesByCountry
-                                         [mode]="'re3data'"
-                                         (emitRepoId)="getRepoId($event)"></register-datasource-shareable>
+                                             #datasourcesByCountry
+                                             [mode]="'re3data'"
+                                             (emitRepoId)="getRepoId($event)"></register-datasource-shareable>
 
-              <datasource-info-form *ngIf="showForm"
+              <datasource-update-form *ngIf="showForm && repo"
                                     #updateDatasource
-                                    [datasourceId]="datasourceId"
-                                    (emittedInfo)="getCurrentRepo($event)"></datasource-info-form>
+                                    [selectedRepo]="repo"></datasource-update-form>
 
-              <div *ngIf="showInterfaces && repo && repoInterfaces">
+              <div *ngIf="loadingMessage" class="loading-big">
+                <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                  {{ loadingMessage }}
+                </div>
+                <div class="whiteFilm"></div>
+              </div>
+              <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+              <div *ngIf="showInterfaces && repoInterfaces">
                 <form [formGroup]="group">
                   <form-repeat [component]="updateDatasourceInterfaces"
                                [parentGroup]="group"
