@@ -11,6 +11,9 @@ export const loadingReposMessage = 'Retrieving repositories ...';
 export const noRepositoryChosenMsg = 'You need to select a repository first.';
 export const loadingRepoMessage = 'Retrieving repository information ...';
 export const loadingRepoError = 'System error retrieving repository info';
+export const loadingAggregationHistory = 'Retrieving aggregation history ...';
+export const loadingAggregationHistoryError = 'System error retrieving repository aggregation history.';
+export const noAggregationHistory = 'There is no aggregation history for this repository at the moment';
 
 /* Loading Rules Messages */
 export const loadingRuleSets = 'Retrieving sets of rules ...';
@@ -67,7 +70,7 @@ export const formInfoLoading = 'Loading information';
 export const formSubmitting = 'Saving changes ...';
 export const formErrorRequiredFields = 'All the fields marked with (*) are mandatory';
 export const formErrorInvalidFields = 'There are invalid fields';
-export const formErrorWasntSaved = 'There was a problem with the form submission';
+export const formErrorWasntSaved = 'The form could not be submitted';
 export const formSuccessUpdatedRepo = 'The datasource was updated successfully.';
 export const formSuccessRegisteredDatasource = 'The datasource was registered successfully';
 export const formSuccessAddedInterface = 'The interface was added successfully.';

@@ -9,7 +9,7 @@ import {
 } from '../../../domain/shared-messages';
 import { RepositoryService } from "../../../services/repository.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Country, Repository } from '../../../domain/typeScriptClasses';
+import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
 import { typologies } from '../../../domain/typologies';
 import { timezones } from '../../../domain/timezones';
 import {
@@ -29,6 +29,7 @@ import {
   logoUrlDesc,
   timezoneDesc,
   journalTypeDesc,
+  aggregatorTypeDesc,
   adminEmailDesc
 } from '../../../domain/oa-description';
 import { ValidatorService } from '../../../services/validator.service';
@@ -45,8 +46,8 @@ export class DatasourceCreateFormComponent implements OnInit {
   successMessage: string;
   loadingMessage: string;
 
-  typologies = typologies;
-  timezones = timezones;
+  typologies: Typology[] = [];
+  timezones: Timezone[] = [];
   countries: Country[] = [];
   datasourceClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
@@ -71,7 +72,7 @@ export class DatasourceCreateFormComponent implements OnInit {
     englishName: ['', Validators.required],
     logoUrl: '',
     timezone: ['', Validators.required],
-    journalType: ['', Validators.required],
+    datasourceType: ['', Validators.required],
     adminEmail: ['', [Validators.required, Validators.email] ]
   };
 
@@ -89,7 +90,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   englishNameDesc : Description = englishNameDesc;
   logoUrlDesc : Description = logoUrlDesc;
   timezoneDesc : Description = timezoneDesc;
-  journalTypeDesc : Description = journalTypeDesc;
+  datasourceTypeDesc : Description;
   adminEmailDesc : Description = adminEmailDesc;
 
   constructor(
@@ -105,8 +106,15 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   loadForm(){
     this.mode = this.route.snapshot.url[0].path.toString();
+    if (this.mode == 'journal') {
+      this.datasourceTypeDesc = journalTypeDesc;
+    } else if (this.mode == 'aggregator') {
+      this.datasourceTypeDesc = aggregatorTypeDesc;
+    }
     console.log(this.mode);
     this.group = this.fb.group(this.groupDefinition);
+    this.getTypologies();
+    this.getTimezones();
     this.getCountries();
     this.getDatasourceClasses();
   }
@@ -141,6 +149,20 @@ export class DatasourceCreateFormComponent implements OnInit {
           this.classCodes.push(key);
         }
       }
+    );
+  }
+
+  getTypologies() {
+    this.repoService.getTypologies().subscribe(
+      types => this.typologies = types,
+      error => console.log(error)
+    );
+  }
+
+  getTimezones() {
+    this.repoService.getTimezones().subscribe(
+      zones => this.timezones = zones,
+      error => console.log(error)
     );
   }
 
@@ -202,7 +224,7 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.latitude = this.group.get('latitude').value;
     newRepo.longitude = this.group.get('longtitude').value;
     newRepo.timezone = this.group.get('timezone').value;
-    newRepo.datasourceClass = this.group.get('journalType').value;
+    newRepo.datasourceClass = this.group.get('datasourceType').value;
     newRepo.typology = this.group.get('softwarePlatform').value;
     newRepo.description = this.group.get('repoDescription').value;
     newRepo.issn = this.group.get('issn').value;

@@ -81,11 +81,11 @@
   <form-inline [description]="timezoneDesc" [valid]="group.get('timezone').valid">
     <select formControlName="timezone" class="form-control">
       <option value="">-- none selected --</option>
-      <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.title }}</option>
+      <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.name }}</option>
     </select>
   </form-inline>
-  <form-inline [description]="journalTypeDesc" [valid]="group.get('journalType').valid">
-    <select formControlName="journalType" class="form-control">
+  <form-inline [description]="datasourceTypeDesc" [valid]="group.get('datasourceType').valid">
+    <select formControlName="datasourceType" class="form-control">
       <option value="">-- none selected --</option>
       <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
     </select>

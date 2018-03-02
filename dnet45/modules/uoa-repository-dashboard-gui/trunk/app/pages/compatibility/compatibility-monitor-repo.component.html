@@ -12,7 +12,10 @@
         <div class="whiteFilm"></div>
       </div>
       <div class="uk-alert uk-alert-danger" style="display: none;" aria-hidden="true"></div>
-      <div>There is no aggregation history for this repository at the moment</div>
+      <div *ngIf="noAggregations">{{ noHistory }}</div>
+      <div *ngIf="aggregations && !this.aggregations.aggregationHistory">
+        The aggregation History will be displayed here!
+      </div>
     </div>
   </div>
 </div>

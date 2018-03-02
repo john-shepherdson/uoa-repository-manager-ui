@@ -82,7 +82,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
         console.log(error);
         this.loadingMessage = '';
         this.errorMessage = loadingRepoError;
-      }
+      }, () => this.loadingMessage = ''
     );
   }
 

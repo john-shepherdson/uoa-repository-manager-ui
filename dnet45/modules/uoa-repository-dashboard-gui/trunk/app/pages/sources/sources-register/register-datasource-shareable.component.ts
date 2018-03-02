@@ -73,30 +73,32 @@ export class RegisterDatasourceShareableComponent implements OnInit {
     console.log(`I got ${country} and ${this.mode}`);
     this.selectedCountry = country;
 
-    setTimeout( () => {
-      this.countryRepos = [];
-      this.hasSelectedCountry = true;
-      this.loadingMessage = loadingReposMessage;
-      this.noRepositories = '';
-      this.repoService.getRepositoriesOfCountry(country, this.mode).subscribe(
-        repos => this.countryRepos = repos,
-        error => {
-          console.log(error.statusText);
-          this.loadingMessage = '';
-          this.alertMessage = noServiceMessage;
-        },
-        () => {
-          if (!this.countryRepos.length) {
-            this.noRepositories = noRepositoriesFound;
-            this.countryRepos = [];
-          } else {
-            this.noRepositories = '';
+    this.countryRepos = [];
+    this.hasSelectedCountry = false;
+    this.loadingMessage = loadingReposMessage;
+    this.noRepositories = '';
+    this.repoService.getRepositoriesOfCountry(country, this.mode).subscribe(
+      repos => this.countryRepos = repos,
+      error => {
+        console.log(error.statusText);
+        this.loadingMessage = '';
+        this.alertMessage = noServiceMessage;
+      },
+      () => {
+        if (!this.countryRepos.length) {
+          this.noRepositories = noRepositoriesFound;
+          this.countryRepos = [];
+        } else {
+          this.noRepositories = '';
+          if (this.selectedCountry == country) {
+            /* to make sure that the correct set of repositories is displayed - in case of consequent country selections */
+            this.hasSelectedCountry = true;
           }
-          this.loadingMessage = '';
-          this.alertMessage = '';
         }
-      );
-    }, 500 );
+        this.loadingMessage = '';
+        this.alertMessage = '';
+      }
+    );
   }
 
   onChooseRepository(id: string){

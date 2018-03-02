@@ -587,3 +587,21 @@ export class MetricsInfo implements IsSerializable {
   diagramsBaseURL: string;
   metricsNumbers: MetricsNumbers;
 }
+
+export class Typology {
+  value: string;
+  name: string;
+}
+
+export class AggregationDetails implements IsSerializable {
+  aggregationStage: string;
+  date: Date;
+  numberOfRecords: number;
+  collectionMode: string;
+}
+
+export class Aggregations implements IsSerializable {
+  aggregationHistory: AggregationDetails[];
+  lastCollection: AggregationDetails[];
+  lastTransformation: AggregationDetails[];
+}

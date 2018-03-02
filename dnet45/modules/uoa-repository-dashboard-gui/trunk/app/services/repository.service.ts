@@ -11,8 +11,13 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import { Country, MetricsInfo, Repository, RepositoryInterface, Timezone } from '../domain/typeScriptClasses';
+import {
+  Aggregations, Country, MetricsInfo, Repository, RepositoryInterface, Timezone,
+  Typology
+} from '../domain/typeScriptClasses';
 import { apiUrl } from '../domain/tempAPI';
+import { timezones } from '../domain/timezones';
+import { typologies } from '../domain/typologies';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
@@ -107,6 +112,7 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
+
   getUrlsOfUserRepos(userEmail: string): Observable<string[]>{
     let url = `${this.apiUrl}getUrlsOfUserRepos/${userEmail}/0/100/`;
     console.log(`knocking on: ${url}`);
@@ -115,20 +121,30 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  getTimezones(): Observable<Timezone[]>{
-    let url = `${this.apiUrl}getTimezones`;
+  getRepositoryAggregations(id: string): Observable<Aggregations>{
+    let url = `${this.apiUrl}getRepositoryAggregations/${id}`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
-      .map( res => <Timezone[]>res.json())
+      .map(res => <Aggregations>res.json())
       .catch(this.handleError);
   }
 
-  getTypologies(): Observable<string[]>{
-    let url = `${this.apiUrl}getTypologies`;
+getTimezones(): Observable<Timezone[]>{
+/*    let url = `${this.apiUrl}getTimezones`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => <Timezone[]>res.json())
+      .catch(this.handleError);*/
+    return Observable.of(<Timezone[]>timezones);
+  }
+
+  getTypologies(): Observable<Typology[]>{
+/*    let url = `${this.apiUrl}getTypologies`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <string[]>res.json())
-      .catch(this.handleError);
+      .catch(this.handleError);*/
+    return Observable.of(<Typology[]>typologies);
   }
 
   getCountries(): Observable<Country[]> {

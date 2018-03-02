@@ -88,7 +88,7 @@
   <form-inline [description]="timezoneDesc" [valid]="updateGroup.get('timezone').valid">
     <select formControlName="timezone" class="form-control">
       <option value="">-- none selected --</option>
-      <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.title }}</option>
+      <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.name }}</option>
     </select>
   </form-inline>
   <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">
@@ -109,5 +109,5 @@
 
 <confirmation-dialog #updateLogoUrlModal [title]="'Update Logo URL'" [isModalShown]="isModalShown"
                      [confirmActionButton]="'Update'" (emitObject)="updatedLogoUrl($event)">
-  <input type="text" #logoURLinput name="logoUrl" placeholder="Logo URL" class="form-control" value="{{ selectedRepo.logoUrl }}" (change)="changeLogoUrl(logoURLinput.value)">
+  <input type="text" #logoURLinput name="logoUrl" placeholder="Logo URL" class="form-control" value="{{ updateGroup.get('logoUrl').value }}" (change)="changeLogoUrl(logoURLinput.value)">
 </confirmation-dialog>

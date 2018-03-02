@@ -3,13 +3,11 @@ import { jobTypes } from '../../domain/job-types';
 
 
 /*DELETE ME LATER*/
-import { jobsOfUser } from '../../domain/dummyLists';
 import { MonitorService } from '../../services/monitor.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { JobsOfUser, StoredJob } from '../../domain/typeScriptClasses';
 import { ValidatorService } from '../../services/validator.service';
 import { loadingUserJobs, loadingUserJobsError, noUserJobsFound } from '../../domain/shared-messages';
-import { stat } from 'fs';
 import { URLParameter } from '../../domain/url-parameter';
 
 @Component ({
@@ -122,7 +120,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     if ( this.chosenJobType ) {
       params.push({key: 'jobType', value: [this.chosenJobType]});
     }
-    params.push({key: 'offset', value: [this.currentPage.toString()]});
+    params.push({key: 'offset', value: [( (this.currentPage)*this.itemsPerPage).toString()]});
     params.push({key: 'limit', value: [this.itemsPerPage.toString()]});
     /*  can also add dateFrom and dateTo if needed */
     params.push({key: 'validationStatus', value: [this.currentFilter]});

@@ -122,8 +122,8 @@ export class MyGroup implements OnInit, AfterContentInit {
   selector : 'form-inline',
   template : `
     <div class="form-group">
-      <label class="control-label" *ngIf="description.label != ''" [ngClass]="{'required' : description.mandatory==true}">
-        {{description.label}}
+      <label class="control-label" *ngIf="description.label != ''" [ngClass]="{'required' : description.mandatory==true}" title="{{ description.desc }}">
+        {{ description.label }}
       </label>
       <ng-content></ng-content>
     </div>

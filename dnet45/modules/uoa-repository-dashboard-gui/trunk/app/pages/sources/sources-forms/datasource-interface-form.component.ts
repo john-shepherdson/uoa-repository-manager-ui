@@ -2,13 +2,18 @@ import { Component, Injector, OnDestroy } from '@angular/core';
 import { MyGroup } from '../../../shared/reusablecomponents/forms/my-group.interface';
 import { FormBuilder, Validators } from '@angular/forms';
 import {
-  formErrorRequiredFields, formErrorWasntSaved, formSubmitting, formSuccessAddedInterface, formSuccessUpdatedInterface,
+  formErrorRequiredFields, formErrorWasntSaved, formInfoLoading, formSubmitting, formSuccessAddedInterface,
+  formSuccessUpdatedInterface,
   invalidCustomBaseUrl, noServiceMessage
 } from '../../../domain/shared-messages';
 import { ValidatorService } from '../../../services/validator.service';
 import { ActivatedRoute } from '@angular/router';
 import { RepositoryService } from '../../../services/repository.service';
 import { InterfaceInformation, Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
+import {
+  baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description,
+  existingValSetDesc
+} from '../../../domain/oa-description';
 
 @Component ({
   selector: 'datasource-interface-form',
@@ -22,6 +27,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   errorMessage: string;
 
   currentRepository: Repository;
+  isNew: boolean;
 
   identifiedBaseUrl: boolean;
   existingValSet: boolean;
@@ -38,6 +44,10 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     customValidationSet: [''],
     compatibilityLevel: ['', Validators.required]
   };
+  baseUrlDesc: Description = baseUrlDesc;
+  existingValSetDesc: Description = existingValSetDesc;
+  customValSetDesc: Description = customValSetDesc;
+  compatibilityLevelDesc: Description = compatibilityLevelDesc;
 
   constructor(injector: Injector,
               private valService: ValidatorService,
@@ -46,25 +56,25 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   ngOnInit() {
-      this.currentRepository = <Repository>this.otherData;
-      this.getCompatibilityClasses();
-      console.log(`other data is: ${JSON.stringify(this.otherData)}`);
-      if (this.data && this.data.length) {
-        this.currentInterface = this.data[0];
-        this.patchData.next({
-            baseUrl: this.data[0].baseUrl,
-            selectValidationSet: '',
-            customValidationSet: '',
+    this.currentRepository = <Repository>this.otherData;
+    this.getCompatibilityClasses();
+    console.log(`other data is: ${JSON.stringify(this.otherData)}`);
+    if (this.data && this.data.length) {
+      this.currentInterface = this.data[0];
+      this.patchData.next({
+          baseUrl: this.data[0].baseUrl,
+          selectValidationSet: '',
+          customValidationSet: '',
           compatibilityLevel:this.data[0].desiredCompatibilityLevel
-          }
-        );
-        this.getInterfaceInfo(this.data[0].baseUrl);
-        this.data.splice(0,1);
-      }
-      super.ngOnInit();
-      console.log(this.group, this.parentGroup);
-      this.existingValSet = true;
-      this.getMyControl('customValidationSet').disable();
+      });
+      this.getMyControl('baseUrl').disable();
+      this.getInterfaceInfo(this.data[0].baseUrl);
+      this.data.splice(0,1);
+    }
+    super.ngOnInit();
+    console.log(this.group, this.parentGroup);
+    this.existingValSet = true;
+    this.getMyControl('customValidationSet').disable();
   }
 
   chooseValSet(existingValSet: boolean) {
@@ -82,7 +92,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   saveInterface() {
     this.errorMessage = '';
     this.successMessage = '';
-    if (this.group.valid) {
+    if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
       if (this.identifiedBaseUrl) {
         let baseUrl = this.getMyControl('baseUrl').value;
         let valset: string = '';
@@ -108,13 +118,15 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   getInterfaceInfo(baseUrl: string) {
+    this.successMessage = '';
+    this.errorMessage = '';
+    this.loadingMessage = formInfoLoading;
     if(baseUrl) {
       this.valService.getInterfaceInformation(baseUrl).subscribe(
         info => {
           this.interfaceInfo = info;
           if (this.interfaceInfo.identified) {
             this.identifiedBaseUrl = true;
-            this.errorMessage = '';
           } else {
             this.errorMessage = invalidCustomBaseUrl;
           }
@@ -125,9 +137,11 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         },
         error => {
           console.log(error);
+          this.loadingMessage = '';
           this.identifiedBaseUrl = false;
           this.errorMessage = noServiceMessage;
-        }
+        },
+        () => this.loadingMessage = ''
       );
     }
   }
@@ -158,7 +172,6 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.repoService.updateInterface(this.currentInterface).subscribe(
       response => {
         console.log(`updateRepository responded ${response}`);
-        this.loadingMessage = '';
         if (response == '200') {
           this.successMessage = formSuccessUpdatedInterface;
         } else {
@@ -169,7 +182,8 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         console.log(error);
         this.loadingMessage = '';
         this.errorMessage = formErrorWasntSaved;
-      }
+      },
+      () => this.loadingMessage = ''
     );
   }
 
@@ -196,6 +210,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         this.loadingMessage = '';
         if (this.currentInterface.id) {
           this.successMessage = formSuccessAddedInterface;
+          this.isNew = true
         } else {
           this.errorMessage = formErrorWasntSaved;
         }
@@ -204,7 +219,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   ngOnDestroy() {
-    if (this.currentInterface && this.toBeDeleted) {
+    if (this.currentInterface && this.currentInterface.id && this.toBeDeleted) {
 /*      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
         response => console.log(`deleteInterface responded: ${response}`),
         error => console.log(error)
@@ -215,5 +230,6 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     }
   }
 
+  remove
 
 }

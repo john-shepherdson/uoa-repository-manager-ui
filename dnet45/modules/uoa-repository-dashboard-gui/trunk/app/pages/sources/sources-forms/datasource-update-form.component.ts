@@ -2,15 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import {
   formErrorRequiredFields,
   formErrorWasntSaved,
-  formInfoLoading, formSubmitting,
-  formSuccessUpdatedRepo, loadingRepoError,
+  formSubmitting,
+  formSuccessUpdatedRepo,
   noServiceMessage
 } from '../../../domain/shared-messages';
 import { RepositoryService } from "../../../services/repository.service";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Country, Repository } from '../../../domain/typeScriptClasses';
-import { typologies } from '../../../domain/typologies';
-import { timezones } from '../../../domain/timezones';
+import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
 import {
   Description,
   softwarePlatformDesc,
@@ -26,6 +24,8 @@ import {
   logoUrlDesc,
   timezoneDesc,
   datasourceTypeDesc,
+  journalTypeDesc,
+  aggregatorTypeDesc,
   adminEmailDesc, lissnDesc, eissnDesc, issnDesc
 } from '../../../domain/oa-description';
 import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
@@ -41,21 +41,22 @@ export class DatasourceUpdateFormComponent implements OnInit {
   successMessage: string;
   loadingMessage: string;
 
-  typologies = typologies;
-  timezones = timezones;
+  typologies: Typology[] = [];
+  timezones: Timezone[] = [];
   countries: Country[] = [];
   datasourceClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
 
   @ViewChild('updateLogoUrlModal')
   public updateLogoUrlModal: ConfirmationDialogComponent;
-  urlToEmit: string;
 
+  /* in sources/update emits the new logUrl */
   @Output() emittedUrl: EventEmitter<string> = new EventEmitter();
 
-  @Input() selectedRepo: Repository;
-
+  /*  in sources/register (of literature or data repository) emits the updated repository */
   @Output() emittedInfo: EventEmitter<Repository> = new EventEmitter();
+
+  @Input() selectedRepo: Repository;
 
   @Input() showButton: boolean;
 
@@ -95,7 +96,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   englishNameDesc : Description = englishNameDesc;
   logoUrlDesc : Description = logoUrlDesc;
   timezoneDesc : Description = timezoneDesc;
-  datasourceTypeDesc : Description = datasourceTypeDesc;
+  datasourceTypeDesc : Description;
   adminEmailDesc : Description = adminEmailDesc;
 
   constructor(
@@ -112,10 +113,19 @@ export class DatasourceUpdateFormComponent implements OnInit {
     this.setupUpdateForm();
     this.getDatasourceClasses();
     this.getCountries();
+    this.getTypologies();
+    this.getTimezones();
   }
 
   setupUpdateForm(){
     if (this.selectedRepo) {
+      if (this.selectedRepo.datasourceType == 'journal') {
+        this.datasourceTypeDesc = journalTypeDesc;
+      } else if (this.selectedRepo.datasourceType == 'aggregator') {
+        this.datasourceTypeDesc = aggregatorTypeDesc;
+      } else {
+        this.datasourceTypeDesc = datasourceTypeDesc;
+      }
       this.updateGroup.setValue({
         softwarePlatform: this.selectedRepo.typology,
         platformName: '',
@@ -135,18 +145,14 @@ export class DatasourceUpdateFormComponent implements OnInit {
         datasourceType: this.selectedRepo.datasourceClass,
         adminEmail: this.selectedRepo.contactEmail
       });
-      if (!this.updateGroup.get('softwarePlatform').value) {
-        this.updateGroup.setValue({
-          softwarePlatform: '',
-          platformName: this.selectedRepo.typology
-        });
+      if ( this.typologies.filter(x => x.value == this.updateGroup.get('softwarePlatform').value) == [] ) {
+        this.updateGroup.get('softwarePlatform').setValue('');
+        this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
       if (this.selectedRepo.datasourceType == 'journal') {
-        this.updateGroup.setValue({
-          issn: this.selectedRepo.issn,
-          eissn: this.selectedRepo.eissn,
-          lissn: this.selectedRepo.lissn
-        });
+        this.updateGroup.get('issn').setValue(this.selectedRepo.issn);
+          this.updateGroup.get('eissn').setValue(this.selectedRepo.eissn);
+        this.updateGroup.get('lissn').setValue(this.selectedRepo.lissn);
       }
     }
   }
@@ -184,6 +190,20 @@ export class DatasourceUpdateFormComponent implements OnInit {
     );
   }
 
+  getTypologies() {
+    this.repoService.getTypologies().subscribe(
+      types => this.typologies = types,
+      error => console.log(error)
+    );
+  }
+
+  getTimezones() {
+    this.repoService.getTimezones().subscribe(
+      zones => this.timezones = zones,
+      error => console.log(error)
+    );
+  }
+
   updateRepo(): boolean {
     let result: boolean;
 
@@ -193,7 +213,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
     if (this.updateGroup.valid) {
       if ( this.selectedRepo.datasourceType != 'journal' || this.updateGroup.get('issn').value ) {
         this.refreshSelectedRepo();
-        this.loadingMessage = formSubmitting;
+/*        this.loadingMessage = formSubmitting;
         this.errorMessage = '';
         this.repoService.updateRepository(this.selectedRepo).subscribe(
           response => {
@@ -215,7 +235,9 @@ export class DatasourceUpdateFormComponent implements OnInit {
               this.errorMessage = formErrorWasntSaved;
             }
           }
-        );
+        );*/
+
+        this.emittedInfo.emit(this.selectedRepo); /* DELETE ME LATER !!! */
         result = true;
       } else {
         this.errorMessage = formErrorRequiredFields;
@@ -255,7 +277,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   changeLogoUrl(logoUrl: string) {
-    this.urlToEmit = logoUrl;
+    this.updateGroup.get('logoUrl').setValue(logoUrl);
   }
 
   updateLogoUrl(logoUrl: string){
@@ -264,10 +286,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   updatedLogoUrl() {
-    if (this.urlToEmit) {
-      this.updateGroup.setValue({logoUrl: this.urlToEmit});
-      this.emittedUrl.emit(this.urlToEmit);
-    }
+    this.emittedUrl.emit(this.updateGroup.get('logoUrl').value);
   }
 
 }

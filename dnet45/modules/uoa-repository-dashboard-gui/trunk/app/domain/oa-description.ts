@@ -156,3 +156,31 @@ export let adminEmailDesc = {
   mandatory : true,
   recommended : false
 };
+
+export let baseUrlDesc = {
+  desc : 'The baseUrl of the interface',
+  label : 'Base URL',
+  mandatory : true,
+  recommended : false
+};
+
+export let existingValSetDesc = {
+  desc : 'A list of existing validation sets',
+  label : 'Available validation sets',
+  mandatory : false,
+  recommended : false
+};
+
+export let customValSetDesc = {
+  desc : 'Custom validation set',
+  label : 'Custom validation set',
+  mandatory : false,
+  recommended : false
+};
+
+export let compatibilityLevelDesc = {
+  desc : 'A list of compatibility level choices',
+  label : 'Desired Compatibility Level',
+  mandatory : true,
+  recommended : false
+};

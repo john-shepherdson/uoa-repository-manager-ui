@@ -10,14 +10,13 @@
     <div *ngIf="repo" class="uk-margin-medium-bottom">
       <h1 class="uk-article-title">
         <a id="updateLogoURL" (click)="datasourceUpdateForm.updateLogoUrl(repo.logoUrl)">
-<!--        <a id="updateLogoURL">-->
           <img *ngIf="!logoURL" src="/assets/imgs/yourLogoHere.jpg" style="margin-right: 15px; margin-top:-8px" width="60">
           <img *ngIf="logoURL" src="{{ logoURL }}" style="margin-right: 15px; margin-top:-8px" width="60">
         </a>
         {{ repo.officialName }}
       </h1>
     </div>
-    <div>
+    <div *ngIf="repo">
       <div>
         <ul class="uk-margin el-nav uk-tab" uk-switcher="connect: .uk-switcher">
           <li routerLinkActive="uk-active">
@@ -29,7 +28,7 @@
         </ul>
         <ul class="uk-switcher">
           <li class="el-item">
-            <div *ngIf="repo">
+            <div>
               <datasource-update-form #datasourceUpdateForm
                                       [selectedRepo]="repo"
                                       [showButton]=true
@@ -55,13 +54,12 @@
   </div>
   <div class="tm-sidebar uk-width-1-4@m">
     <div>
-      <div class="uk-card uk-card-body uk-card-default sidemenu">
-        <h3 class="el-title uk-h3 uk-heading-bullet">Info / Help</h3>
-        <!--<p class="small">-->
-          <!--Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.-->
-
-        <!--</p>-->
-<!--        <pre>{{group.value | json}}</pre>-->
+      <div class="uk-card uk-card-body uk-card-default sidemenu"><h3>Info / Help</h3>
+        <p>You have access to edit&nbsp;the following repository listed on the left.&nbsp;Fields marked with * are mandatory.
+          &nbsp;Hover over each field to find more information about it.</p>
+        <p>The official repository administrator (his/her email address being retrieved from the OAI-PMH verb Identify) will be contacted and informed about the update request.
+          So please make sure that you are either this person or have access to the email address, or that you have notified them.</p>
+        <p>For any problems or questions please contact the <a href="https://www.openaire.eu/support/helpdesk" target="_blank">OpenAIRE helpdesk</a>.</p>
       </div>
     </div>
   </div>

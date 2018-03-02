@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Repository } from '../../domain/typeScriptClasses';
+import { Aggregations, Repository } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
-import { loadingRepoError, loadingRepoMessage } from '../../domain/shared-messages';
+import {
+  loadingAggregationHistory,
+  loadingAggregationHistoryError,
+  loadingRepoError,
+  loadingRepoMessage,
+  noAggregationHistory
+} from '../../domain/shared-messages';
 
 @Component ({
   selector: 'app-compatibility-monitor-repo',
@@ -12,10 +18,13 @@ import { loadingRepoError, loadingRepoMessage } from '../../domain/shared-messag
 export class CompatibilityMonitorRepoComponent implements OnInit {
   loadingMessage: string;
   errorMessage: string;
+  noAggregations: string;
 
   repoId: string = '';
   repoName: string = '';
   repo: Repository;
+
+  aggregations: Aggregations;
 
   constructor(private route: ActivatedRoute,
               private repoService: RepositoryService) {}
@@ -46,11 +55,29 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
           this.loadingMessage = '';
           if (this.repo) {
             this.repoName = this.repo.officialName;
+            this.getAggregationHistory();
           } else {
             this.errorMessage = loadingRepoError;
           }
         }
       );
     }
+  }
+
+  getAggregationHistory() {
+    this.loadingMessage = loadingAggregationHistory;
+    this.repoService.getRepositoryAggregations(this.repo.id).subscribe(
+      aggr => this.aggregations = aggr,
+      error => {
+        this.loadingMessage = '';
+        this.errorMessage = loadingAggregationHistoryError;
+      },
+      () => {
+        this.loadingMessage = '';
+        if (this.aggregations && !this.aggregations.aggregationHistory.length) {
+          this.noAggregations = noAggregationHistory;
+        }
+      }
+    );
   }
 }
