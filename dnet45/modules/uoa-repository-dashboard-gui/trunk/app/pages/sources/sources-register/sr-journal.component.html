@@ -34,8 +34,8 @@
                                  #registerJournal
                                  (emittedInfo)="getCurrentRepo($event)"></datasource-create-form>
 
-              <div *ngIf="showInterfaces && repo">
-                <form [formGroup]="group">
+              <div *ngIf="showInterfaces">
+                <form *ngIf="repo" [formGroup]="group">
                   <form-repeat [component]="addDatasourceInterfaces"
                                [parentGroup]="group"
                                [description]="interfaceFormDesc"

@@ -60,9 +60,9 @@ export class DatasourceCreateFormComponent implements OnInit {
   readonly groupDefinition = {
     softwarePlatform : '',
     officialName : ['', Validators.required],
-    issn : ['', [Validators.minLength(8), Validators.maxLength(8)]],
-    eissn : ['', [Validators.minLength(8), Validators.maxLength(8)]],
-    lissn : ['', [Validators.minLength(8), Validators.maxLength(8)]],
+    issn : ['', Validators.minLength(8)],
+    eissn : ['', Validators.minLength(8)],
+    lissn : ['', Validators.minLength(8)],
     repoDescription : ['', Validators.required],
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
@@ -182,6 +182,7 @@ export class DatasourceCreateFormComponent implements OnInit {
             console.log(`addRepository responded:\n${JSON.stringify(response)}`);
             if (response) {
               result = true;
+              this.emittedInfo.emit(response);
             }
           },
           error => {
@@ -194,7 +195,6 @@ export class DatasourceCreateFormComponent implements OnInit {
             this.loadingMessage = '';
             if (result) {
               this.successMessage = formSuccessRegisteredDatasource;
-              this.emittedInfo.emit(newRepo);
             } else {
               this.errorMessage = formErrorWasntSaved;
             }

@@ -67,12 +67,14 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
           customValidationSet: '',
           compatibilityLevel:this.data[0].desiredCompatibilityLevel
       });
-      this.getMyControl('baseUrl').disable();
       this.getInterfaceInfo(this.data[0].baseUrl);
       this.data.splice(0,1);
     }
     super.ngOnInit();
     console.log(this.group, this.parentGroup);
+    if (this.currentInterface) {
+      this.getMyControl('baseUrl').disable();
+    }
     this.existingValSet = true;
     this.getMyControl('customValidationSet').disable();
   }

@@ -35,12 +35,15 @@ export class SrJournalComponent implements OnInit {
 
   moveAStep(){
     if (this.showForm) {
-      if (this.registerJournal.registerDatasource()){
-        this.showForm = false;
-        this.showInterfaces = true;
-        this.step2 = 'active';
-        this.group = this.fb.group({});
-      }
+      setTimeout( () => {
+        if(this.registerJournal.registerDatasource()){
+          console.log(`REGISTERED!`);
+          this.showForm = false;
+          this.showInterfaces = true;
+          this.step2 = 'active';
+          this.group = this.fb.group({});
+        }
+      }, 500);
     } else if (this.showInterfaces) {
       this.showInterfaces = false;
       this.showFinish = true;

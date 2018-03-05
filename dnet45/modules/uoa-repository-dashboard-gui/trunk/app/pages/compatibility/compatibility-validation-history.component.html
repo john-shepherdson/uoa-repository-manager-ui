@@ -5,7 +5,6 @@
     </div>
     <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
     <div *ngIf="failureMessage" class="uk-alert uk-alert-danger">{{ failureMessage }}</div>
-    <div *ngIf="infoMessage" class="uk-alert uk-alert-warning">{{ infoMessage }}</div>
     <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
     <div *ngIf="loadingMessage" class="loading-big">
       <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
@@ -93,6 +92,7 @@
                     <th></th>
                   </tr>
                 </thead>
+                <div *ngIf="infoMessage" class="uk-alert">{{ infoMessage }}</div>
                 <tbody *ngIf="jobsOfUser && jobsOfUser.jobs">
                     <tr class="el-item" *ngFor="let job of jobsOfUser.jobs">
                       <td class="uk-table-shrink" style="vertical-align: top !important;">

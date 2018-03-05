@@ -16,7 +16,7 @@ export class Description {
 
 /* Description of the repository interface repeating form */
 export let interfaceFormDesc = {
-  desc : 'form for adding new interfaces of the repository',
+  desc : 'Form for updating or creating new interfaces for your repository/journal',
   label : 'Interface',
   mandatory : true,
   recommended : false
@@ -25,161 +25,161 @@ export let interfaceFormDesc = {
 
 /* Desription of the Datasource Info Forms Fields */
 export let softwarePlatformDesc = {
-  desc : 'the software platform that the repository uses',
+  desc : 'The typology used by your repository/journal.\nIf you use a typology not found in the drop-down list,\nyou can enter a custom name in the field below.',
   label : 'Software Platform (*)',
   mandatory: true,
   recommended: false
 };
 
 export let platformNameDesc = {
-  desc : 'the name of the software platform that the repository uses',
+  desc : 'The typology used by your repository/journal.\nIf you use a typology not found in the above drop-down list,\nyou can enter a custom name here.',
   label : '',
   mandatory: true,
   recommended: false
 };
 
 export let officialNameDesc = {
-  desc : 'the official name of the repository',
+  desc : 'Your repository\'s/journal\'s official name.',
   label : 'Official Name (*)',
   mandatory : true,
   recommended : false
 };
 
 export let issnDesc = {
-  desc : 'the issn code of the datasource',
+  desc : 'Input your journal\'s issn (www.issn.org)',
   label : 'ISSN (*)',
   mandatory : true,
   recommended : false
 };
 
 export let eissnDesc = {
-  desc : 'the eissn code of the datasource',
+  desc : 'Input your journal\'s eissn, if it has one (www.issn.org)',
   label : 'EISSN',
   mandatory : false,
   recommended : false
 };
 
 export let lissnDesc = {
-  desc : 'the eissn code of the datasource',
+  desc : 'Input your journal\'s lissn, if it has one (www.issn.org)',
   label : 'LISSN',
   mandatory : false,
   recommended : false
 };
 
 export let repoDescriptionDesc = {
-  desc : 'a description for the repository',
+  desc : 'A description of your repository/journal',
   label : 'Description (*)',
   mandatory : true,
   recommended : false
 };
 
 export let countryDesc = {
-  desc : 'the name of a country',
+  desc : 'The country where your repository/journal is located',
   label : 'Country (*)',
   mandatory : true,
   recommended : false
 };
 
 export let longtitudeDesc = {
-  desc : 'longtitude of the repository position',
+  desc : 'The (approximate) longtitude of your repository/journal\'s location',
   label : 'Longtitude (*)',
   mandatory : true,
   recommended : false
 };
 
 export let latitudeDesc = {
-  desc : 'latitude of the repository position',
+  desc : 'The (approximate) latitude of your repository/journal\'s location',
   label : 'Latitude (*)',
   mandatory : true,
   recommended : false
 };
 
 export let websiteUrlDesc = {
-  desc : 'the repository\'s web address',
+  desc : 'The main page of your repository/journal\'s website',
   label : 'Entry URL (*)',
   mandatory : true,
   recommended : false
 };
 
 export let institutionNameDesc = {
-  desc : 'the name of the institution that the repository belongs to',
+  desc : 'The institution that your repository belongs to',
   label : 'Institution (*)',
   mandatory : true,
   recommended : false
 };
 
 export let englishNameDesc = {
-  desc : 'the name of the repository in english',
+  desc : 'Your repository/journal\'s name in english',
   label : 'English Name (*)',
   mandatory : true,
   recommended : false
 };
 
 export let logoUrlDesc = {
-  desc : 'the url of a logo for the repository',
+  desc : 'A link to an image file containing your repository/journal\'s logo',
   label : 'Logo URL',
   mandatory : false,
   recommended : false
 };
 
 export let timezoneDesc = {
-  desc : 'timezone of the repository country',
+  desc : 'The timezone of the area where your repository/ journal is located',
   label : 'Timezone (*)',
   mandatory : true,
   recommended : false
 };
 
 export let datasourceTypeDesc = {
-  desc : 'the type of the datasource',
+  desc : 'The type of your repository',
   label : 'Datasource Type (*)',
   mandatory : true,
   recommended : false
 };
 
 export let journalTypeDesc = {
-  desc : 'the type of the journal',
+  desc : 'The type of your journal',
   label : 'Journal Type (*)',
   mandatory : true,
   recommended : false
 };
 
 export let aggregatorTypeDesc = {
-  desc : 'the type of the aggregator',
+  desc : 'The type of your aggregator',
   label : 'Aggregator Type (*)',
   mandatory : true,
   recommended : false
 };
 
 export let adminEmailDesc = {
-  desc : 'the email address of the datasource administrator',
+  desc : 'The email address of the repository/journal\'s administrator',
   label : 'Admin Email (*)',
   mandatory : true,
   recommended : false
 };
 
 export let baseUrlDesc = {
-  desc : 'The baseUrl of the interface',
+  desc : 'The url that handles the external OAI-PMH requests for the repository/journal.\nIf you are not sure about the base URL of the repository/journal you want to register,\nplease contact the repository/journal\s administrator.',
   label : 'Base URL',
   mandatory : true,
   recommended : false
 };
 
 export let existingValSetDesc = {
-  desc : 'A list of existing validation sets',
+  desc : 'The main set that contains EC or other funder records and will be used for validation.\nIf you are using the OJS plugin make sure to specify it correctly.',
   label : 'Available validation sets',
   mandatory : false,
   recommended : false
 };
 
 export let customValSetDesc = {
-  desc : 'Custom validation set',
+  desc : 'If the validation set you want to use is not in the drop list above, enter a custom one here.',
   label : 'Custom validation set',
   mandatory : false,
   recommended : false
 };
 
 export let compatibilityLevelDesc = {
-  desc : 'A list of compatibility level choices',
+  desc : 'Choose your desired compatibility level from the list',
   label : 'Desired Compatibility Level',
   mandatory : true,
   recommended : false
