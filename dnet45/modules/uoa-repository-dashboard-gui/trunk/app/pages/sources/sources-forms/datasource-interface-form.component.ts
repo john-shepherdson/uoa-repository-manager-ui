@@ -27,7 +27,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   errorMessage: string;
 
   currentRepository: Repository;
-  isNew: boolean;
+  oldInterface: boolean;
 
   identifiedBaseUrl: boolean;
   existingValSet: boolean;
@@ -69,7 +69,10 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       });
       this.getInterfaceInfo(this.data[0].baseUrl);
       this.data.splice(0,1);
+      this.oldInterface = true;
     }
+
+    /* initializes MyGroup parent component and the FormGroup */
     super.ngOnInit();
     console.log(this.group, this.parentGroup);
     if (this.currentInterface) {
@@ -89,34 +92,6 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
        this.getMyControl('selectValidationSet').disable();
        this.getMyControl('customValidationSet').enable();
      }
-  }
-
-  saveInterface() {
-    this.errorMessage = '';
-    this.successMessage = '';
-    if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
-      if (this.identifiedBaseUrl) {
-        let baseUrl = this.getMyControl('baseUrl').value;
-        let valset: string = '';
-        if (this.getMyControl('selectValidationSet').enabled) {
-          valset = this.getMyControl('selectValidationSet').value;
-        } else {
-          valset = this.getMyControl('customValidationSet').value;
-        }
-        let compLvl = this.getMyControl('compatibilityLevel').value;
-
-        if (this.currentInterface) {
-          this.updateCurrent(baseUrl,valset,compLvl);
-        } else {
-          this.addCurrent(baseUrl,valset,compLvl);
-        }
-      } else {
-        this.errorMessage = invalidCustomBaseUrl;
-      }
-    } else {
-      this.errorMessage = formErrorRequiredFields;
-      this.successMessage = '';
-    }
   }
 
   getInterfaceInfo(baseUrl: string) {
@@ -161,6 +136,34 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         console.log(error);
       }
     );
+  }
+
+  saveInterface() {
+    this.errorMessage = '';
+    this.successMessage = '';
+    if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
+      if (this.identifiedBaseUrl) {
+        let baseUrl = this.getMyControl('baseUrl').value;
+        let valset: string = '';
+        if (this.getMyControl('selectValidationSet').enabled) {
+          valset = this.getMyControl('selectValidationSet').value;
+        } else {
+          valset = this.getMyControl('customValidationSet').value;
+        }
+        let compLvl = this.getMyControl('compatibilityLevel').value;
+
+        if (this.currentInterface) {
+          this.updateCurrent(baseUrl,valset,compLvl);
+        } else {
+          this.addCurrent(baseUrl,valset,compLvl);
+        }
+      } else {
+        this.errorMessage = invalidCustomBaseUrl;
+      }
+    } else {
+      this.errorMessage = formErrorRequiredFields;
+      this.successMessage = '';
+    }
   }
 
   updateCurrent (baseUrl: string, valset: string, compLvl: string) {
@@ -212,7 +215,6 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         this.loadingMessage = '';
         if (this.currentInterface.id) {
           this.successMessage = formSuccessAddedInterface;
-          this.isNew = true
         } else {
           this.errorMessage = formErrorWasntSaved;
         }
@@ -231,7 +233,5 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       console.log(`deleting empty interface form`);
     }
   }
-
-  remove
 
 }

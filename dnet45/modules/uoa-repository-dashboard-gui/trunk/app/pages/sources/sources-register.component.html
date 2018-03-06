@@ -1,4 +1,4 @@
-<div class="uk-grid uk-grid-stack">
+<div class="uk-grid-margin uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
     <div class="uk-margin-medium-bottom">
       <h1 class="uk-article-title">Register your datasource</h1>
@@ -86,7 +86,7 @@
       </div>
     </div>
   </div>
-  <div class="tm-sidebar uk-width-1-4@m">
+  <!--<div class="tm-sidebar uk-width-1-4@m uk-first-column">
     <div class="gwt-HTML">
       <div class="uk-card uk-card-body uk-card-default sidemenu">
         <h3>Info / Help</h3>
@@ -106,5 +106,8 @@
         </p>
       </div>
     </div>
-  </div>
+  </div>-->
+  <aside-help-content #rightHelperContent [position]="'right'"
+                      [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+  </aside-help-content>
 </div>

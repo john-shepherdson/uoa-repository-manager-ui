@@ -97,13 +97,13 @@
       </div>
     </div>
   </div>
-  <div class="tm-sidebar uk-width-1-4@m">
+  <!--<div class="tm-sidebar uk-width-1-4@m">
     <div>
       <div class="uk-card uk-card-body uk-card-default sidemenu">
         <h3>Info</h3>
         <p class="small">
           Use the form on the left to add your repository or journal in OpenAIRE. If you want to find more information about this process
-          <!-- TARGET FILE MISSING! jsps/manuals/user-manual.pdf -->
+          &lt;!&ndash; TARGET FILE MISSING! jsps/manuals/user-manual.pdf &ndash;&gt;
           <a target="_blank" href="#">click here</a>
           .
         </p>
@@ -120,5 +120,8 @@
         </p>
       </div>
     </div>
-  </div>
+  </div>-->
+  <aside-help-content #rightHelperContent [position]="'right'"
+                      [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+  </aside-help-content>
 </div>

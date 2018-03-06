@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-  <div class="tm-sidebar uk-width-1-4@m">
+<!--  <div class="tm-sidebar uk-width-1-4@m">
     <div>
       <div class="uk-card uk-card-body uk-card-default sidemenu"><h3>Info / Help</h3>
         <p>You have access to edit&nbsp;the following repository listed on the left.&nbsp;Fields marked with * are mandatory.
@@ -62,5 +62,8 @@
         <p>For any problems or questions please contact the <a href="https://www.openaire.eu/support/helpdesk" target="_blank">OpenAIRE helpdesk</a>.</p>
       </div>
     </div>
-  </div>
+  </div>-->
+  <aside-help-content #rightHelperContent [position]="'right'"
+                      [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+  </aside-help-content>
 </div>

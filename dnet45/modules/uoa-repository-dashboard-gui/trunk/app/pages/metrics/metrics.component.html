@@ -16,7 +16,7 @@
           <a [routerLink]="'instructions/opendoar____::1255'">PUSH ME!</a>
           <repository-tiles [parent]="'metrics'"></repository-tiles>
         </div>
-        <div class="tm-sidebar uk-width-1-4@m">
+        <!--<div class="tm-sidebar uk-width-1-4@m">
           <div>
             <div class="uk-card uk-card-body uk-card-default sidemenu">
               <h3>Info</h3>
@@ -41,7 +41,10 @@
               </p>
             </div>
           </div>
-        </div>
+        </div>-->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
       </div>
     </div>
   </div>

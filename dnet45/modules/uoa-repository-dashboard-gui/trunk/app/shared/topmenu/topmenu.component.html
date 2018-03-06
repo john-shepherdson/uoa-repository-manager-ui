@@ -181,6 +181,12 @@
               <ul *ngIf="isLoggedIn" class="uk-navbar-nav">
                 <li class="uk-parent">
                   <a class="loginLink" aria-expanded="false">
+                    <span class="uk-margin-small-right uk-icon">
+                      <svg height="20" ratio="1" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9.9" cy="6.4" fill="none" r="4.4" stroke="#000" stroke-width="1.1"></circle>
+                        <path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>
+                      </svg>
+                    </span>
                     {{authService.userFullName}}
                   </a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
