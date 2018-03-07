@@ -1,0 +1,51 @@
+<div id="contentWrapper"
+     class="tm-main uk-section uk-section-default"
+     uk-height-viewport="expand: true"
+     style="box-sizing: border-box;" >
+
+  <!-- MARGIN-TOP  -->
+  <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="true"></div>
+
+  <div>
+    <div class="uk-container">
+      <div class="uk-grid uk-grid-stack">
+        <div class="uk-width-expand@m uk-first-column">
+          <div class="uk-margin-medium-bottom">
+            <h1 class="uk-article-title">Metrics</h1>
+          </div>
+          <a [routerLink]="'instructions/opendoar____::1255'">PUSH ME!</a>
+          <repository-tiles [parent]="'metrics'"></repository-tiles>
+        </div>
+        <!--<div class="tm-sidebar uk-width-1-4@m">
+          <div>
+            <div class="uk-card uk-card-body uk-card-default sidemenu">
+              <h3>Info</h3>
+              <p>
+                Usage Statistics about items and content providers support the assessment of their popularity and use. They are an important complement to other kinds of metrics.
+              </p>
+              <p>
+                OpenAIRE Usage Statistics aims to gather usage events
+              </p>
+              <ul>
+                <li>metadata views</li>
+                <li>downloads</li>
+              </ul>
+              <p>
+                of items from participating content providers.
+              </p>
+              <p>
+                By utilizing open standards and protocols reliable, consolidated and comparable usage reports are generated that are conformant to the
+                <a href="https://www.projectcounter.org/code-of-practice-sections/general-information/">
+                  COUNTER Code of Practice
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>-->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+      </div>
+    </div>
+  </div>
+</div>

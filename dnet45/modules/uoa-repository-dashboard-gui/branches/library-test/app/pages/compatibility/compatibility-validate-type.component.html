@@ -1,0 +1,134 @@
+<div class="uk-grid uk-grid-stack">
+  <div class="uk-width-expand@m uk-first-column">
+    <div class="uk-margin-medium-bottom">
+      <h1 class="uk-article-title">Run compatibility test</h1>
+    </div>
+    <div class="wizard">
+      <div class="wizardBreadcrumbs">
+        <div class="steps clearfix">
+          <div class="step active">
+            <div>
+              Select datasource
+              <span></span>
+            </div>
+          </div>
+          <div class="step {{step2}}">
+            <div>
+              Select guidlines
+              <span></span>
+            </div>
+          </div>
+          <div class="step {{step3}}">
+            <div>
+              Select parameters
+              <span></span>
+            </div>
+          </div>
+          <div class="step {{step4}}">
+            <div>
+              Finish
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div>
+          <div class="animated fadeInRight stepContent">
+            <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+            <div *ngIf="loadingMessage" class="loading-big">
+              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                {{ loadingMessage }}
+              </div>
+              <div class="whiteFilm"></div>
+            </div>
+            <div *ngIf="showDatasource">
+              <compatibility-validate-step1 #step1ChooseBaseUrl
+                                            [baseUrlList]="baseUrlList"
+                                            (emitObject)="getChosenUrl($event)"></compatibility-validate-step1>
+            </div>
+            <div *ngIf="showGuidelines">
+              <compatibility-validate-step2 #step2ChooseGuidelines
+                                            [ruleSets]="ruleSets"
+                                            (emitObject)="getChosenRules($event)">
+              </compatibility-validate-step2>
+            </div>
+            <div *ngIf="showParameters">
+              <compatibility-validate-step3 #step3ChooseParameters
+                                            [valSets]="valSets"
+                                            (emitObject)="getChosenParameters($event)">
+              </compatibility-validate-step3>
+            </div>
+            <div *ngIf="showCrisEntities">
+              <compatibility-validate-step3-cris #step3ChooseCrisEntities
+                                                 (emitObject)="getChosenCrisEntities($event)">
+              </compatibility-validate-step3-cris>
+            </div>
+            <div *ngIf="showFinish">
+              <div>
+                <div class="success">
+                  <i class="fa fa-check-circle" style=""></i>
+                  <h3>Validation has begun</h3>
+                </div>
+                <div class="uk-alert uk-alert-primary marginTop20 textAlignCenter">
+                  You will be notified by email with the results of the compatibility test.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizardActions">
+        <button *ngIf="!showDatasource && !showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveBackAStep()">
+          <i class="fa fa-angle-double-left"></i>
+          Back
+        </button>
+        <button *ngIf="!showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
+          <span *ngIf="!showParameters">Next</span>
+          <span *ngIf="showParameters" class="uk-link">Finish</span>
+          <i class="fa fa-angle-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="tm-sidebar uk-width-1-4@m">
+    <div *ngIf="showDatasource">
+      <div class="uk-card uk-card-body uk-card-default sidemenu">
+        <h3 class="el-title uk-h3 uk-heading-bullet">Select repository/journal</h3>
+        <p class="small">
+          Select from the list, or enter the base OAI URL of the repository/journal. The repository's/journal's published sets are exposed in a later stage and you may select one for the compatibility tests.
+        </p>
+      </div>
+    </div>
+    <div *ngIf="showGuidelines">
+      <div class="uk-card uk-card-body uk-card-default sidemenu">
+        <h3 class="el-title uk-h3 uk-heading-bullet">Select guidelines</h3>
+        <p class="small">
+          You may apply two types of compatibility tests on your repository:
+        </p>
+        <ul class="small">
+          <li>Content: specific to the content/format of the dc fields</li>
+          <li>Usage: specific to the implementation of OAI-PMH</li>
+        </ul>
+        <p class="small">
+          You may select from a predifined set of rules (OpenAIRE for Literature Repositories, OpenAIRE for Data Archives) or customize them according to your needs.
+        </p>
+      </div>
+    </div>
+    <div *ngIf="showParameters">
+      <div class="uk-card uk-card-body uk-card-default sidemenu">
+        <h3 class="el-title uk-h3 uk-heading-bullet">Select parameters</h3>
+        <p class="small">
+          You may define an upper limit on the # of records tested. This is highly recommended for first time users, or when re-checking after the implementation of automated changes.
+        </p>
+        <p class="small">
+          Select one of the repository's/journal's exposed sets.
+        </p>
+        <p class="small">
+          You may also group your results by a specific field. This is quite useful when validating an aggregator and you know in advance which is the field that distinguished among data sources.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+

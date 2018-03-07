@@ -1,0 +1,129 @@
+/*
+*  created by myrto on 12/12/2017
+*/
+
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
+import { RegisterDatasourceShareableComponent } from './register-datasource-shareable.component';
+import { DatasourceUpdateFormComponent } from '../sources-forms/datasource-update-form.component';
+import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
+import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
+import { Description, interfaceFormDesc } from '../../../domain/oa-description';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { RepositoryService } from '../../../services/repository.service';
+import { formInfoLoading, loadingRepoError } from '../../../domain/shared-messages';
+
+@Component ({
+  selector: 'app-sr-data',
+  templateUrl: 'sr-data.component.html'
+})
+
+export class SrDataComponent implements OnInit {
+  loadingMessage: string;
+  errorMessage: string;
+
+  showRepositories: boolean;
+  showForm: boolean;
+  showInterfaces: boolean;
+  showFinish: boolean;
+  step2: string = '';
+  step3: string = '';
+  step4: string = '';
+
+  datasourceId: string;
+  repo: Repository;
+
+  @ViewChild('datasourcesByCountry')
+  public datasourcesByCountry: RegisterDatasourceShareableComponent;
+
+  @ViewChild('updateDatasource')
+  public updateDatasource: DatasourceUpdateFormComponent;
+
+  group: FormGroup;
+  interfaceFormDesc: Description = interfaceFormDesc;
+  updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
+  repoInterfaces: RepositoryInterface[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private repoService: RepositoryService) {}
+
+  ngOnInit() {
+    this.showRepositories=true;
+  }
+
+  moveAStep(){
+    if(this.showRepositories) {
+      if (this.datasourcesByCountry.goToNextStep()) {
+        this.showRepositories = false;
+        this.showForm = true;
+        this.step2 = 'active';
+        console.log(`got datasource with id ${this.datasourceId}`);
+      }
+    } else if(this.showForm) {
+      if (this.updateDatasource.updateRepo()){
+        this.group = this.fb.group({});
+        this.getRepoInterfaces();
+      }
+    } else if(this.showInterfaces) {
+        this.showInterfaces = false;
+        this.showFinish = true;
+        this.step4 = 'active';
+    }
+  }
+
+  moveBackAStep(){
+    if(this.showForm) {
+      this.showRepositories = true;
+      this.showForm = false;
+      this.step2 = '';
+    } else if(this.showInterfaces) {
+      this.showForm = true;
+      this.showInterfaces = false;
+      this.step3 = '';
+    } else if(this.showFinish) {
+      this.showInterfaces = true;
+      this.showFinish = false;
+      this.step4 = '';
+    }
+  }
+
+  getRepoId(emitedId: string) {
+    this.datasourceId = emitedId;
+    this.getRepo();
+  }
+
+  getRepo() {
+    this.loadingMessage = formInfoLoading;
+    if (this.datasourceId) {
+      this.repoService.getRepositoryById(this.datasourceId).subscribe(
+        repo => {
+          this.repo = repo;
+        },
+        error => {
+          console.log(error);
+          this.loadingMessage = '';
+          this.errorMessage = loadingRepoError;
+        },
+        () => {
+          this.loadingMessage = '';
+        }
+      );
+    }
+  }
+
+  getRepoInterfaces() {
+    this.repoService.getRepositoryInterface(this.datasourceId).subscribe(
+      interfaces => {
+        this.repoInterfaces = interfaces;
+        console.log(this.repoInterfaces.length);
+      },
+      error => console.log(error),
+      () => {
+        this.showForm = false;
+        this.showInterfaces = true;
+        this.step3 = 'active';
+      }
+    );
+  }
+
+}

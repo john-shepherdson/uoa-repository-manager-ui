@@ -1,0 +1,35 @@
+<div id="login">
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>
+        <img src="assets/imgs/OA_JOIN_B.png" alt="OpenAIRE" class="" width="100%">
+      </div>
+      <h3>Welcome to OpenAIRE's Repository Manager</h3>
+
+      <p>This service uses the same sign-in mechanism as the OpenAIRE portal so you can use the same
+        credentials.</p>
+
+      <p>Login in. To see it in action.</p>
+
+      <div id="login_form">
+    <!-- <form id="login_form" method="post" action="ccsadmin/login"> -->
+        <form class="m-t" method="post"  target="GWTBootstrap3_AbstractForm_RepositoryManager_2">
+          <div class="uk-alert uk-alert-success" style="display:none;" aria-hidden="true"></div>
+          <div class="uk-alert uk-alert-danger" style="display:none;" aria-hidden="true"></div>
+
+          <div class="form-group">
+            <input id="creds_username" class="form-control" name="username" required="" type="text" placeholder="Username / Email"/>
+          </div>
+          <div class="form-group">
+            <input id="creds_password" class="form-control" name="password" type="password" required="" placeholder="Password"/>
+          </div>
+          <button class="uk-button uk-button-primary block full-width m-b" type="submit">Login</button>
+          <a href="/"><small>Forgot password?</small></a>
+          <p class="text-muted text-center"><small>Do not have an account?</small></p>
+          <a class="uk-button uk-button-sm uk-button-white uk-button-block" href="/user/register">Create an account</a>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

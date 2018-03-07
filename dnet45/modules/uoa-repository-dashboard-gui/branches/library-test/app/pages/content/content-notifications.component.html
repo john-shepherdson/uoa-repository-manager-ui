@@ -1,0 +1,57 @@
+<div class="uk-grid uk-grid-stack">
+  <div class="uk-width-expand@m uk-first-column">
+    <div class="gwt-HTML uk-margin-medium-bottom">
+      <h1 class="uk-article-title">Enrich Your Content - Browse Subscriptions</h1>
+    </div>
+    <div class="">
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+      <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{successMessage}}</div>
+      <div *ngIf="loadingMessage" class="loading-big">
+        <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+        <div class="whiteFilm"></div>
+      </div>
+      <div *ngIf="noSubscriptions" class="uk-alert">{{noSubscriptions}}</div>
+    </div>
+    <div *ngIf="subscrOfUser">
+      <div *ngFor="let key of subKeys">
+        <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium uk-scrollspy-class=">
+          <span>{{ key }}</span>
+        </h4>
+        <table class="uk-table uk-table-striped uk-table-middle">
+          <thead>
+            <tr>
+              <th>Topic</th>
+              <th>Creation Date</th>
+              <th>Last Notification Date</th>
+              <th class="uk-text-nowrap"># of notifications</th>
+              <th class="uk-text-nowrap">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sub of subscrOfUser[key]" class="el-item">
+              <td class="uk-table-shrink">
+                <a [routerLink]="sub.id">
+                  <div class="el-title">{{ sub.topic }}</div>
+                </a>
+              </td>
+              <td class="uk-table-shrink">
+                <div class="el-title">{{ sub.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</div>
+              </td>
+              <td class="uk-table-shrink">
+                <div class="el-title">{{ sub.lastNotificationDate }}</div>
+              </td>
+              <td class="uk-text-nowrap uk-table-shrink">
+                <div class="el-title">{{ sub.count }}</div>
+              </td>
+              <td class="uk-text-nowrap uk-table-shrink">
+                <a class="el-link" (click)="deleteSubscription(sub.id)">
+                  <i class="fa fa-remove" aria-hidden="true"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

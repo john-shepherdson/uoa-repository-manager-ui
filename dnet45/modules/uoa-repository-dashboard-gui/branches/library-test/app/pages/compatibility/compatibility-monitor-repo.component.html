@@ -1,0 +1,21 @@
+<div class="uk-grid uk-grid-stack">
+  <div class="uk-width-expand@m uk-first-column">
+    <div class="gwt-HTML uk-margin-medium-bottom">
+      <h1 class="uk-article-title">Aggregation history for {{ repoName }}</h1>
+    </div>
+    <div>
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+      <div *ngIf="loadingMessage" class="loading-big">
+        <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+          {{ loadingMessage }}
+        </div>
+        <div class="whiteFilm"></div>
+      </div>
+      <div class="uk-alert uk-alert-danger" style="display: none;" aria-hidden="true"></div>
+      <div *ngIf="noAggregations">{{ noHistory }}</div>
+      <div *ngIf="aggregations && !this.aggregations.aggregationHistory">
+        The aggregation History will be displayed here!
+      </div>
+    </div>
+  </div>
+</div>
