@@ -10,6 +10,7 @@ import { ContentEventsOfRepositoryComponent } from './content-events-of-reposito
 import { ContentEventsOfRepoEventslistComponent } from './content-events-of-repo-eventslist.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentNotificationsOfSubscriptionComponent } from './content-notifications-of-subscription.component';
+import {ComponentLibraryModule} from "component-library";
 
 @NgModule ({
   imports: [
@@ -17,7 +18,8 @@ import { ContentNotificationsOfSubscriptionComponent } from './content-notificat
     TabsModule.forRoot(),
     ContentRouting,
     ReactiveFormsModule,
-    ReusableComponentsModule
+    ReusableComponentsModule,
+    ComponentLibraryModule
   ],
   declarations: [
     ContentComponent,

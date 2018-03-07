@@ -10,13 +10,15 @@ import { MetricsRouting } from './metrics.routing';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { MetricsShowComponent } from './metrics-show.component';
 import { TabsModule } from 'ngx-bootstrap';
+import {ComponentLibraryModule} from "component-library";
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
     MetricsRouting,
-    ReusableComponentsModule
+    ReusableComponentsModule,
+    ComponentLibraryModule
   ],
   declarations: [
     MetricsComponent,

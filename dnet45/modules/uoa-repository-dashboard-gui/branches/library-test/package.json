@@ -27,6 +27,7 @@
     "angular-oauth2-oidc": "^1.0.20",
     "bootstrap": "^3.3.7",
     "bootstrap-slider": "^10.0.0",
+    "component-library": "file:../component-library-0.0.0.tgz",
     "core-js": "^2.5.3",
     "ie-shim": "^0.1.0",
     "ng2-ckeditor": "^1.2.0",

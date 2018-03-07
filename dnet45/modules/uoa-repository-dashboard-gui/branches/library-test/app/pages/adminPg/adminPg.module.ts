@@ -9,6 +9,7 @@ import {AdminPgRouting} from "./adminPg.routing";
 import {AdminPgMetricsComponent} from './adminPg-metrics.component';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { FormsModule } from '@angular/forms';
+import {ComponentLibraryModule} from "component-library";
 
 @NgModule ({
   imports: [
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     CKEditorModule,
     AdminPgRouting,
-    ReusableComponentsModule
+    ReusableComponentsModule,
+    ComponentLibraryModule
   ],
   declarations: [
     AdminPgComponent,

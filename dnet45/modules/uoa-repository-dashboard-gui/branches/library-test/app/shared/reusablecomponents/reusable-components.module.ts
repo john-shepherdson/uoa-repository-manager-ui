@@ -44,9 +44,9 @@ const myGroups = [
     MyArrayWrapper
   ],
   declarations: [
-    ReadMoreComponent,
+/*    ReadMoreComponent,
     HelpContentComponent,
-    AsideHelpContentComponent,
+    AsideHelpContentComponent,*/
     ConfirmationDialogComponent,
     RepositoryTilesComponent,
     ...myGroups
@@ -57,15 +57,15 @@ const myGroups = [
 */
   ],
   exports: [
-    ReadMoreComponent,
+/*    ReadMoreComponent,
     HelpContentComponent,
-    AsideHelpContentComponent,
+    AsideHelpContentComponent,*/
     ConfirmationDialogComponent,
     RepositoryTilesComponent,
     ...myGroups
   ],
   providers: [
-    HelpContentService
+/*    HelpContentService*/
   ],
 })
 

@@ -21,6 +21,7 @@ import { DatasourceUpdateFormComponent } from './sources-forms/datasource-update
 import { SrJournalComponent } from './sources-register/sr-journal.component';
 import { SrAggregatorComponent } from './sources-register/sr-aggregator.component';
 import { DatasourceCreateFormComponent } from './sources-forms/datasource-create-form.component';
+import {ComponentLibraryModule} from "component-library";
 
 @NgModule ({
   imports: [
@@ -29,7 +30,8 @@ import { DatasourceCreateFormComponent } from './sources-forms/datasource-create
     FormsModule,
     ReactiveFormsModule,
     SourcesRouting,
-    ReusableComponentsModule
+    ReusableComponentsModule,
+    ComponentLibraryModule
   ],
   entryComponents : [
     DatasourceInterfaceFormComponent
