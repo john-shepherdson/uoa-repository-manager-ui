@@ -212,7 +212,6 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   createNewRepository(): Repository {
     let newRepo: Repository = new Repository();
-    newRepo.dateOfCreation = new Date(Date.now());
     newRepo.officialName = this.group.get('officialName').value;
     newRepo.englishName = this.group.get('englishName').value;
     newRepo.websiteUrl = this.group.get('websiteUrl').value;
@@ -232,6 +231,8 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.lissn = this.group.get('lissn').value;
     newRepo.registeredBy = this.authService.userEmail;
     newRepo.datasourceType = this.mode;
+
+    newRepo.dateOfCreation = new Date(Date.now()); //is this correct ?????
     newRepo.registered = true;
 
     return newRepo;

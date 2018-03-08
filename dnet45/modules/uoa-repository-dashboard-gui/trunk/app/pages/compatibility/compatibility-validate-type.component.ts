@@ -38,6 +38,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   chosenUrl: string;
   identifiedUrl: boolean;
+  chosenGuidelinesAcronym: string;
   chosenContentRules: number[];
   chosenUsageRules: number[];
   chosenValSet: string;
@@ -212,8 +213,9 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   }
 
   getChosenRules(rules: any[]) {
-    this.chosenContentRules = rules[0];
-    this.chosenUsageRules = rules[1];
+    this.chosenGuidelinesAcronym = rules[0];
+    this.chosenContentRules = rules[1];
+    this.chosenUsageRules = rules[2];
   }
 
   getChosenParameters (params: string[]) {
@@ -243,6 +245,9 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       selectedContentRules: this.chosenContentRules,
       selectedUsageRules: this.chosenUsageRules,
 
+      desiredCompatibilityLevel: this.chosenGuidelinesAcronym,
+      baseUrl: this.chosenUrl,
+
       validationSet: this.chosenValSet,
       records: this.noOfRecords,
       groupByXpath: this.xPath,
@@ -250,19 +255,18 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       cris: isCris,
       crisReferentialChecks: this.crisRefIntegrity,
 
+      userEmail: this.authService.userEmail,
+
       adminEmails: [],
       officialName: '',
-      baseUrl: '',
-      userEmail: '',
       datasourceId: '',
       interfaceId: '',
-      desiredCompatibilityLevel: '',
       activationId: '',
       repoType: '',
       interfaceIdOld: '',
       metadataPrefix: '',
 
-      registration: null,
+      registration: false,
       updateExisting: null
     }
   }

@@ -52,11 +52,11 @@ export class Hint {
 }
 
 export class DriverResource implements Serializable {
-    resourceId: string = null;
-    resourceUri: string = null;
-    resourceKind: string = null;
-    resourceType: string = null;
-    dateOfCreation: Date = null;
+    resourceId: string;
+    resourceUri: string;
+    resourceKind: string;
+    resourceType: string;
+    dateOfCreation: Date;
 }
 
 export class MDFormatDataStructure extends DriverResource {
@@ -79,7 +79,7 @@ export class PiwikInfo implements IsSerializable {
     comment: string;
 }
 
-export class Repository extends DriverResource implements IsSerializable {
+/*export class Repository extends DriverResource implements IsSerializable {
     id: string = null;
     officialName: string = null;
     englishName: string = '';
@@ -151,6 +151,80 @@ export class Repository extends DriverResource implements IsSerializable {
     registrationDate: Date = null;
     verified: boolean = false;
     dataCollectionTypes: DataCollectionType[] = [];
+}*/
+
+export class Repository extends DriverResource implements IsSerializable {
+  id: string;
+  officialName: string;
+  englishName: string;
+  websiteUrl: string;
+  logoUrl: string;
+  contactEmail: string;
+  countryName: string;
+  countryCode: string;
+  organization: string;
+  latitude: number;
+  longitude: number;
+  timezone: number;
+  namespacePrefix: string;
+  odNumberOfItems: string;
+  odNumberOfItemsDate: string;
+  odPolicies: string;
+  odLanguages: string;
+  odContentTypes: string;
+  collectedFrom: string;
+  inferred: boolean;
+  deletedByInference: boolean;
+  trust: number;
+  inferenceProvenance: string;
+  dateOfValidation: Date;
+  datasourceClass: string;
+  provenanceActionClass: string;
+  dateOfCollection: Date;
+  typology: string;
+  activationId: string;
+  mergehomonyms: boolean;
+  description: string;
+  releaseStartDate: Date;
+  releaseEndDate: Date;
+  missionStatementUrl: string;
+  dataProvider: boolean;
+  serviceProvider: boolean;
+  databaseAccessType: string;
+  dataUploadType: string;
+  databaseAccessRestriction: string;
+  dataUploadRestriction: string;
+  versioning: boolean;
+  citationGuidelineUrl: string;
+  qualityManagementKind: string;
+  pidSystems: string;
+  certificates: string;
+  aggregator: string;
+  issn: string;
+  eissn: string;
+  lissn: string;
+  interfaces: RepositoryInterface[];
+  availableDiskSpace: string;
+  securityParameters: string;
+  protocol: string;
+  registeredBy: string;
+  datasourceType: string;
+  datasourceAggregatorId: string;
+  datasourceOriginalIdValue: string;
+  datasourceOriginalIdProvenance: string;
+  datasourceAggregated: boolean;
+  datasourceComplianceDegreeValue: string;
+  datasourceComplianceDegreeEncoding: string;
+  numberOfObjects: number;
+  maxSizeOfDatastructure: number;
+  maxNumberOfDataStructures: number;
+  registered: boolean;
+  extraFields: { [index: string]: string };
+  piwikInfo: PiwikInfo;
+  environments: string[];
+  registrationDate: Date;
+  verified: boolean;
+  dataCollectionTypes: DataCollectionType[];
 }
 
 export class RepositoryAccessProtocol {
@@ -176,7 +250,7 @@ export class RepositoryBlackboardMessage {
 export class RepositoryComparator implements Comparator<Repository> {
 }
 
-export class RepositoryInterface implements Serializable, IsSerializable {
+/*export class RepositoryInterface implements Serializable, IsSerializable {
     desiredCompatibilityLevel: string = '';
     complianceName: string = null;
     upgradeToV3: string = '';
@@ -198,6 +272,30 @@ export class RepositoryInterface implements Serializable, IsSerializable {
     removable: boolean = false;
     accessParams: { [index: string]: string } = {};
     extraFields: { [index: string]: string } = {};
+}*/
+
+export class RepositoryInterface implements Serializable, IsSerializable {
+  desiredCompatibilityLevel: string;
+  complianceName: string;
+  upgradeToV3: string;
+  deleteApi: boolean;
+  accessSet: string;
+  accessFormat: string;
+  metadataIdentifierPath: string;
+  lastCollectionDate: string;
+  nextScheduledExecution: string;
+  status: string;
+  collectedFrom: string;
+  id: string;
+  typology: string;
+  compliance: string;
+  contentDescription: string;
+  accessProtocol: string;
+  baseUrl: string;
+  active: boolean;
+  removable: boolean;
+  accessParams: { [index: string]: string };
+  extraFields: { [index: string]: string };
 }
 
 export class SearchCriteriaImpl implements SearchCriteria {

@@ -137,6 +137,9 @@ export class CompatibilityValidateStep2Component implements OnInit {
         break;
       }
     }
+
+    emitted.push(this.ruleSets[index].guidelinesAcronym);
+
     console.log(`saving the selected rules`);
     let contentRules = <FormArray>this.group.controls['contentRules'];
     let selectedContent: number[] = [];

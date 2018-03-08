@@ -149,10 +149,19 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('softwarePlatform').setValue('');
         this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
+      this.updateGroup.get('officialName').disable();
+      this.updateGroup.get('country').disable();
+      this.updateGroup.get('longtitude').disable(); // MAYBE NOT DISABLED
+      this.updateGroup.get('latitude').disable();   // MAYBE NOT DISABLED
+      this.updateGroup.get('websiteUrl').disable();
+      this.updateGroup.get('institutionName').disable();
       if (this.selectedRepo.datasourceType == 'journal') {
         this.updateGroup.get('issn').setValue(this.selectedRepo.issn);
-          this.updateGroup.get('eissn').setValue(this.selectedRepo.eissn);
+        this.updateGroup.get('issn').disable();
+        this.updateGroup.get('eissn').setValue(this.selectedRepo.eissn);
+        this.updateGroup.get('eissn').disable();
         this.updateGroup.get('lissn').setValue(this.selectedRepo.lissn);
+        this.updateGroup.get('lissn').disable();
       }
     }
   }
