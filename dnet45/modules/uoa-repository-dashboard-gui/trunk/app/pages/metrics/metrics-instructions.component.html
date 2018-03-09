@@ -1,9 +1,94 @@
+<div class="uk-section-default uk-section uk-section-small uk-padding-remove-bottom" style="min-height: 325px">
+
+  <!-- MARGIN-TOP  -->
+  <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="true"></div>
+  <div class="uk-container">
+
+    <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+      <div class="uk-width-1-1@m uk-first-column">
+
+        <h1 class="uk-h2">Metrics Configuration & Software Details</h1>
+
+        <!-- TOP HELP CONTENT -->
+<!--        <help-content #topHelperContent [position]="'top'"
+                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>-->
+
+        <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
+          <div class="uk-grid">
+
+            <!-- LEFT HELP CONTENT -->
+<!--            <aside-help-content #leftHelperContent [position]="'left'"
+                                [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+            </aside-help-content>-->
+
+            <!-- MIDDLE -->
+            <div class=" uk-width-expand@m">
+
+              <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+              <div *ngIf="piwik">
+                <p>
+                  OpenAIRE’s usage statistic service uses the <i>Piwik Open Source Analytics platform</i> (piwik.org) to track usage activity. When <i>metrics</i>
+                  are enabled for a repository, two unique identifiers are generated - a piwik-ID that associates the repository with its usage events in Piwik
+                  and an authentication-ID that allows to track usage activity on the Piwik platform. Metadata views and item downloads are tracked and automatically sent to Piwik. Statistics are generated using the COUNTER Code of practice directives.
+                </p>
+                <p>
+                  OpenAIRE's usage statistics service tracking code exploits Piwik’s API. In order to make the tracking of usage events from repositories more robust, it was necessary to implement repository platform specific patches and plugins starting with DSpace and EPrints. The code is maintained on Github:
+                </p>
+                <ul>
+                  <li>as a patch for various versions of DSpace
+                    (<a href="https://github.com/openaire/OpenAIRE-Piwik-DSpace">https://github.com/dimitrispie/OpenAIRE-Piwik-DSpace</a>)</li>
+                  <li>as an Eprints plugin for version 3
+                    (<a href="https://github.com/openaire/EPrints-OAPiwik">https://github.com/dimitrispie/EPrints-OAPiwik</a>)</li>
+                </ul>
+                <p>
+                  To configure your repository to allow tracking in Piwik platform, please change the configuration files with the following parameters and values, generated for your site:
+                </p>
+                <dl class="uk-description-list">
+                  <dt>PiwikID</dt>
+                  <dd>{{ piwik.siteId }}</dd>
+                  <dt>AuthenticationToken</dt>
+                  <dd>{{ piwik.authenticationToken }}</dd>
+                </dl>
+                <p>
+                  Details for the configuration files are given in the README of the tracking code.
+                </p>
+                <div class="uk-alert uk-alert-info">
+                  <strong>NOTE</strong>
+                  - You will be informed by e-mail that the installation of the tracking code has been validated and when the usage statistics will be available.
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT HELP CONTENT -->
+            <aside-help-content #rightHelperContent [position]="'right'"
+                                [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+            </aside-help-content>
+
+          </div>
+        </div>
+
+
+        <!-- BOTTOM HELP CONTENT -->
+        <help-content #bottomHelperContent [position]="'bottom'"
+                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--   *** OLD HTML ***
+
 <div id="contentWrapper"
      class="tm-main uk-section uk-section-default"
      uk-height-viewport="expand: true"
      style="box-sizing: border-box;" >
 
-  <!-- MARGIN-TOP  -->
+  &lt;!&ndash; MARGIN-TOP  &ndash;&gt;
   <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="true"></div>
 
   <div>
@@ -13,9 +98,9 @@
           <div class="gwt-HTML uk-margin-medium-bottom">
             <h1 class="uk-article-title">Metrics Configuration & Software Details</h1>
           </div>
-          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
           <div class="">
             <div>
+              <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
               <div *ngIf="piwik">
                 <p>
                   OpenAIRE’s usage statistic service uses the <i>Piwik Open Source Analytics platform</i> (piwik.org) to track usage activity. When <i>metrics</i>
@@ -51,14 +136,14 @@
             </div>
           </div>
         </div>
-        <!--<div class="tm-sidebar uk-width-1-4@m">
+        &lt;!&ndash;<div class="tm-sidebar uk-width-1-4@m">
           <div>
             <div class="uk-card uk-card-body uk-card-default sidemenu">
               <h3>Info / Tracking setup</h3>
               <p></p>
             </div>
           </div>
-        </div>-->
+        </div>&ndash;&gt;
         <aside-help-content #rightHelperContent [position]="'right'"
                             [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
         </aside-help-content>
@@ -66,3 +151,4 @@
     </div>
   </div>
 </div>
+-->

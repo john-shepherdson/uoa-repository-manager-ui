@@ -62,6 +62,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   ngOnInit() {
     this.readType();
+    this.showDatasource = true;
     this.getBaseUrlList();
   }
 
@@ -91,7 +92,6 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         },
         () => {
           this.loadingMessage = '';
-          this.showDatasource = true;
         }
       );
   }

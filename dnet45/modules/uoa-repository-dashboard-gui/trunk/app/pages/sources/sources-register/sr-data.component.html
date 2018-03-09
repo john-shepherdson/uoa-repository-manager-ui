@@ -1,3 +1,140 @@
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+  <div class="uk-width-1-1@m uk-first-column">
+
+    <h1 class="uk-h2">Register your datasource</h1>
+
+    <!-- TOP HELP CONTENT -->
+<!--    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>-->
+
+    <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
+      <div class="uk-grid">
+
+        <!-- LEFT HELP CONTENT -->
+<!--        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>-->
+
+        <!-- MIDDLE -->
+        <div class=" uk-width-expand@m">
+
+          <div class="wizard">
+            <div class="wizardBreadcrumbs">
+              <div class="steps clearfix">
+                <div class="step active">
+                  <div>
+                    Select repository
+                    <span></span>
+                  </div>
+                </div>
+                <div class="step {{step2}}">
+                  <div>
+                    Enter information
+                    <span></span>
+                  </div>
+                </div>
+                <div class="step {{step3}}">
+                  <div>
+                    Add interfaces
+                    <span></span>
+                  </div>
+                </div>
+                <div class="step {{step4}}">
+                  <div>
+                    Finish
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="animated fadeInRight stepContent">
+                  <div>
+                    <register-datasource-shareable *ngIf="showRepositories"
+                                                   #datasourcesByCountry
+                                                   [mode]="'re3data'"
+                                                   (emitRepoId)="getRepoId($event)"></register-datasource-shareable>
+
+                    <datasource-update-form *ngIf="showForm && repo"
+                                            #updateDatasource
+                                            [selectedRepo]="repo"></datasource-update-form>
+
+                    <div *ngIf="loadingMessage" class="loading-big">
+                      <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                        {{ loadingMessage }}
+                      </div>
+                      <div class="whiteFilm"></div>
+                    </div>
+                    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+                    <div *ngIf="showInterfaces && repoInterfaces">
+                      <form [formGroup]="group">
+                        <form-repeat [component]="updateDatasourceInterfaces"
+                                     [parentGroup]="group"
+                                     [description]="interfaceFormDesc"
+                                     [name]="'repository-interfaces'"
+                                     [data]="repoInterfaces"
+                                     [otherData]="repo">
+                        </form-repeat>
+                      </form>
+                    </div>
+                    <div *ngIf="showFinish" class="row openAIRECompliantLogoDownload">
+                      <div class="col-lg-12">
+                        <div class="col-md-12">
+                          <div class="gwt-HTML">
+                            <div class="openAIRECompliantLogo">
+                              <h2 class="openAIRECompliantLogoMessage">
+                                Congratulations! Your repository was successfully registered in OpenAIRE. You can download this logo to use in your site.
+                              </h2>
+                              <img src="assets/imgs/3_0ValidatedLogo.png" alt="OpenAireCompliant">
+                            </div>
+                          </div>
+                          <a>
+                            Download
+                            <i class="fa fa-download" style=""></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wizardActions">
+              <button *ngIf="!showRepositories" class="uk-button uk-button-grey-light" type="button" (click)="moveBackAStep()">
+                <i class="fa fa-angle-double-left"></i>
+                Back
+              </button>
+              <button *ngIf="!showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
+                Next
+                <i class="fa fa-angle-double-right"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT HELP CONTENT -->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+      </div>
+    </div>
+
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+
+  </div>
+</div>
+
+<!--   *** OLD HTML ***
+
 <div class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
     <div class="uk-margin-medium-bottom">
@@ -97,7 +234,7 @@
       </div>
     </div>
   </div>
-<!--  <div class="tm-sidebar uk-width-1-4@m">
+  <div class="tm-sidebar uk-width-1-4@m">
     <div>
       <div class="uk-card uk-card-body uk-card-default sidemenu">
         <h3 class="el-title uk-h3 uk-heading-bullet">Info</h3>
@@ -121,8 +258,6 @@
         </p>
       </div>
     </div>
-  </div>-->
-  <aside-help-content #rightHelperContent [position]="'right'"
-                      [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-  </aside-help-content>
+  </div>
 </div>
+-->

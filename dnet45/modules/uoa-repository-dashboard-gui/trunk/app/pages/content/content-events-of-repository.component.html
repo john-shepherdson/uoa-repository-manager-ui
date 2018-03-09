@@ -1,3 +1,129 @@
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+  <div class="uk-width-1-1@m uk-first-column">
+
+    <h1 class="uk-h2">Enrichments for {{ repoName }}</h1>
+
+    <!-- TOP HELP CONTENT -->
+<!--    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>-->
+
+    <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
+      <div class="uk-grid">
+
+        <!-- LEFT HELP CONTENT -->
+<!--        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>-->
+
+        <!-- MIDDLE -->
+        <div class=" uk-width-expand@m">
+
+          <div>
+            <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+            <div *ngIf="loadingMessage" class="loading-big">
+              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+              <div class="whiteFilm"></div>
+            </div>
+            <div *ngIf="noTopics" class="uk-alert">{{ noTopics }}</div>
+            <div *ngIf="repoTopics.length > 0" class="uk-grid-margin uk-grid uk-grid-stack repos-list">
+              <div class="uk-width-1-2@m uk-first-column">
+                <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                  <div>
+                    <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
+                      <span>More</span>
+                    </h4>
+                    <table class="uk-table uk-table-striped uk-table-middle">
+                      <thead>
+                      <tr>
+                        <th>Events that may enrich {{ repoName }} content</th>
+                        <th class="uk-text-nowrap"># of events</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr class="el-item" *ngFor="let moreTopic of moreList">
+                        <td class="uk-table-shrink uk-width-4-5">
+                          <a (click)="goToEventsList(moreTopic.value)" class="el-link">{{ moreTopic.value }}</a>
+                          <div class="uk-text uk-text-meta">{{ topics[moreTopic.value]['englishName'] }}</div>
+                        </td>
+                        <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
+                          <div class="el-title">{{ moreTopic.size }}</div>
+                        </td>
+                      </tr>
+                      <tr class="el-item footers">
+                        <td class="uk-text-nowrap uk-table-shrink uk-width-4-5">
+                          <div class="el-title">Total</div>
+                        </td>
+                        <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
+                          <div class="el-title">{{ totalMore }}</div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="uk-width-1-2@m uk-first-column">
+                <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                  <div>
+                    <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
+                      <span>Missing</span>
+                    </h4>
+                    <table class="uk-table uk-table-striped uk-table-middle">
+                      <thead>
+                      <tr>
+                        <th>Events that may enrich {{ repoName }} content</th>
+                        <th class="uk-text-nowrap"># of events</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr class="el-item" *ngFor="let missingTopic of missingList">
+                        <td class="uk-table-shrink uk-width-4-5">
+                          <a (click)="goToEventsList(missingTopic.value)" class="el-link">{{ missingTopic.value }}</a>
+                          <div class="uk-text uk-text-meta">{{ topics[missingTopic.value]['englishName'] }}</div>
+                        </td>
+                        <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
+                          <div class="el-title">{{ missingTopic.size }}</div>
+                        </td>
+                      </tr>
+                      <tr class="el-item footers">
+                        <td class="uk-text-nowrap uk-table-shrink uk-width-4-5">
+                          <div class="el-title">Total</div>
+                        </td>
+                        <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
+                          <div class="el-title">{{ totalMissing }}</div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT HELP CONTENT -->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+      </div>
+    </div>
+
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+
+  </div>
+</div>
+
+<!--  *** OLD HTML ***
+
 <div class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
     <div class="uk-margin-medium-bottom">
@@ -87,3 +213,4 @@
     </div>
   </div>
 </div>
+-->

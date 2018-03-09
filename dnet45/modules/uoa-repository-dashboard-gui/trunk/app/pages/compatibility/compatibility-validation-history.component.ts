@@ -92,6 +92,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     }
   }
 
+
   storedJobs () {
     this.valService.getStoredJobsNew('ant.lebesis@gmail.com',
       'Compatibility Test',
@@ -129,6 +130,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
       jobs => this.jobsOfUser = jobs,
       error => {
         console.log(`The API returned ${error.status}`);
+        this.loadingMessage = '';
         this.errorMessage = loadingUserJobsError;
       },
       () => {

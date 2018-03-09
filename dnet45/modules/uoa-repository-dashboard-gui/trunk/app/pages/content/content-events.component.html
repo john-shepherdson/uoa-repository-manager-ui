@@ -1,3 +1,49 @@
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+  <div class="uk-width-1-1@m uk-first-column">
+
+    <h1 class="uk-h2">Enrich Your Content - Browse Events</h1>
+
+    <!-- TOP HELP CONTENT -->
+<!--    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>-->
+
+    <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
+      <div class="uk-grid">
+
+        <!-- LEFT HELP CONTENT -->
+<!--        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>-->
+
+        <!-- MIDDLE -->
+        <div class=" uk-width-expand@m">
+
+          <a [routerLink]="'Nemertes'">PUSH ME!</a>
+          <repository-tiles [parent]="'contentEvents'"></repository-tiles>
+
+        </div>
+
+        <!-- RIGHT HELP CONTENT -->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+      </div>
+    </div>
+
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+
+  </div>
+</div>
+
+<!--   *** OLD HTML ***
+
 <div class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
     <div class="uk-margin-medium-bottom">
@@ -7,3 +53,4 @@
     <repository-tiles [parent]="'contentEvents'"></repository-tiles>
   </div>
 </div>
+-->

@@ -1,3 +1,121 @@
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+  <div class="uk-width-1-1@m uk-first-column">
+
+    <h1 class="uk-h2">Register your datasource</h1>
+
+    <!-- TOP HELP CONTENT -->
+<!--    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>-->
+
+    <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
+      <div class="uk-grid">
+
+        <!-- LEFT HELP CONTENT -->
+<!--        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>-->
+
+        <!-- MIDDLE -->
+        <div class=" uk-width-expand@m">
+
+          <div class="wizard">
+            <div class="wizardBreadcrumbs">
+              <div class="steps clearfix">
+                <div class="step active">
+                  <div>
+                    Enter Information
+                    <span></span>
+                  </div>
+                </div>
+                <div class="step {{step2}}">
+                  <div>
+                    Add Interfaces
+                    <span></span>
+                  </div>
+                </div>
+                <div class="step {{step3}}">
+                  <div>
+                    Finish
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="animated fadeInRight stepContent">
+                  <div>
+                    <datasource-create-form *ngIf="showForm"
+                                            #registerJournal
+                                            (emittedInfo)="getCurrentRepo($event)"></datasource-create-form>
+
+                    <div *ngIf="showInterfaces">
+                      <form *ngIf="repo" [formGroup]="group">
+                        <form-repeat [component]="addDatasourceInterfaces"
+                                     [parentGroup]="group"
+                                     [description]="interfaceFormDesc"
+                                     [name]="'repository-interfaces'"
+                                     [otherData]="repo">
+                        </form-repeat>
+                      </form>
+                    </div>
+                    <div *ngIf="showFinish" class="row openAIRECompliantLogoDownload">
+                      <div class="col-lg-12">
+                        <div class="col-md-12">
+                          <div class="gwt-HTML">
+                            <div class="openAIRECompliantLogo">
+                              <h2 class="openAIRECompliantLogoMessage">
+                                Congratulations! Your repository was successfully registered in OpenAIRE. You can download this logo to use in your site.
+                              </h2>
+                              <img src="assets/imgs/3_0ValidatedLogo.png" alt="OpenAireCompliant">
+                            </div>
+                          </div>
+                          <a>
+                            Download
+                            <i class="fa fa-download" style=""></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wizardActions">
+              <button *ngIf="!showForm" class="uk-button uk-button-grey-light" type="button" (click)="moveBackAStep()">
+                <i class="fa fa-angle-double-left"></i>
+                Back
+              </button>
+              <button *ngIf="!showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
+                Next
+                <i class="fa fa-angle-double-right"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT HELP CONTENT -->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+      </div>
+    </div>
+
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+
+  </div>
+</div>
+
+<!--  *** OLD HTML ***
+
 <div class="uk-grid uk-grid-stack">
   <div class="uk-width-expand@m uk-first-column">
     <div class="uk-margin-medium-bottom">
@@ -78,7 +196,7 @@
       </div>
     </div>
   </div>
-<!--  <div class="tm-sidebar uk-width-1-4@m">
+  <div class="tm-sidebar uk-width-1-4@m">
     <div>
       <div class="uk-card uk-card-body uk-card-default sidemenu">
         <h3 class="el-title uk-h3 uk-heading-bullet">Info</h3>
@@ -102,8 +220,7 @@
         </p>
       </div>
     </div>
-  </div>-->
-  <aside-help-content #rightHelperContent [position]="'right'"
-                      [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-  </aside-help-content>
+  </div>
+
 </div>
+-->

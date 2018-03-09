@@ -75,9 +75,12 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     /* initializes MyGroup parent component and the FormGroup */
     super.ngOnInit();
     console.log(this.group, this.parentGroup);
+
+/*  NOT ANYMORE
     if (this.currentInterface) {
       this.getMyControl('baseUrl').disable();
     }
+*/
     this.existingValSet = true;
     this.getMyControl('customValidationSet').disable();
   }
@@ -98,7 +101,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.successMessage = '';
     this.errorMessage = '';
     this.loadingMessage = formInfoLoading;
-    if(baseUrl) {
+    if (baseUrl) {
       this.valService.getInterfaceInformation(baseUrl).subscribe(
         info => {
           this.interfaceInfo = info;
