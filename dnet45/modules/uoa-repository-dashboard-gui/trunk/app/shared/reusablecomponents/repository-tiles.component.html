@@ -2,10 +2,10 @@
   <div class="uk-width-1-1 uk-grid">
     <div class="uk-width-1-1 uk-first-column uk-margin-bottom">
       <div class="uk-float-right">
-        <a class="grid-view active" (click)="showTiles()">
+        <a class="grid-view" [class.active]="tilesView" (click)="toggleTiles()">
           <i class="fa fa-th"></i>
         </a>
-        <a class="grid-view" (click)="showList()">
+        <a class="grid-view"  [class.active]="!tilesView" (click)="toggleTiles()">
           <i class="fa fa-th-list"></i>
         </a>
       </div>
@@ -25,7 +25,7 @@
       </div>
 
       <!--TILES VIEW-->
-      <div *ngIf="tilesView" class="uk-grid-large uk-grid-margin-large uk-grid repos-grid">
+      <div *ngIf="tilesView && reposOfUser.length" class="uk-grid-large uk-grid-margin-large uk-grid repos-grid">
         <div *ngFor="let repo of reposOfUser" class="uk-width-expand@m uk-first-column">
           <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack">
             <div class="uk-first-column">
@@ -55,7 +55,7 @@
       </div>
 
       <!-- LIST VIEW -->
-      <div class="uk-grid-large uk-grid-margin-large uk-grid repos-list" *ngIf="!tilesView">
+      <div *ngIf="!tilesView && reposOfUser.length" class="uk-grid-large uk-grid-margin-large uk-grid repos-list">
         <div class="uk-width-1-1@m uk-first-column">
           <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
             <div>

@@ -126,4 +126,8 @@ export class SrDataComponent implements OnInit {
     );
   }
 
+  downloadLogo() {
+    window.open("../../../assets/imgs/3_0ValidatedLogo.png","_blank", "enabledstatus=0,toolbar=0,menubar=0,location=0");
+  }
+
 }

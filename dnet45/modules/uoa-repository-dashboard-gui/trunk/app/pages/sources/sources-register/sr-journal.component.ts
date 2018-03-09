@@ -67,4 +67,8 @@ export class SrJournalComponent implements OnInit {
     this.repo = repo;
   }
 
+  downloadLogo() {
+    window.open("../../../assets/imgs/3_0ValidatedLogo.png","_blank", "enabledstatus=0,toolbar=0,menubar=0,location=0");
+  }
+
 }

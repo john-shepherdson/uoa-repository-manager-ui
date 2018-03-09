@@ -108,11 +108,8 @@ export class RepositoryTilesComponent implements OnInit {
     return '0';
   }
 
-  showTiles(){
-    this.tilesView = true;
+  toggleTiles(){
+    this.tilesView = !this.tilesView;
   }
 
-  showList(){
-    this.tilesView = false;
-  }
 }

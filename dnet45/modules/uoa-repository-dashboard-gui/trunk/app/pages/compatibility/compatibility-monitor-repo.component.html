@@ -26,8 +26,7 @@
             </div>
             <div class="whiteFilm"></div>
           </div>
-          <div class="uk-alert uk-alert-danger" style="display: none;" aria-hidden="true"></div>
-          <div *ngIf="noAggregations">{{ noHistory }}</div>
+          <div *ngIf="noAggregations">{{ noAggregations }}</div>
           <div *ngIf="aggregations && !noAggregations">
             <div class="uk-width-1-1@m">
               <div class="section md-bg-blue-grey-700">
