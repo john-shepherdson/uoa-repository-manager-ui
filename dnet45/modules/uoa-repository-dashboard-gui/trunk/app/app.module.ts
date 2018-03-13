@@ -26,6 +26,8 @@ import { ValidatorService } from './services/validator.service';
 import { PiwikService } from './services/piwik.service';
 import { BrokerService } from './services/broker.service';
 import { MonitorService } from './services/monitor.service';
+import { ReusableComponentsModule } from './shared/reusablecomponents/reusable-components.module';
+import { HelpContentService } from './services/help-content.service';
 
 
 @NgModule({

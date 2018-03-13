@@ -14,7 +14,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 export class TopMenuComponent implements OnInit {
   isLoggedIn: boolean;
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(public authService: AuthenticationService) { }
 
   ngOnInit(){
     this.isLoggedIn = false;
@@ -28,10 +28,7 @@ export class TopMenuComponent implements OnInit {
 
 
   login(){
-    if(!this.authService.isLoggedIn){
-      this.authService.login();
-      this.isLoggedIn = true;
-    }
+    this.authService.loginWithState();
   }
 
   logout(){
@@ -42,8 +39,7 @@ export class TopMenuComponent implements OnInit {
   }
 
   register(){
-    this.authService.register();
-    this.authService.login();
+    this.authService.loginWithState();
     this.isLoggedIn = true;
   }
 

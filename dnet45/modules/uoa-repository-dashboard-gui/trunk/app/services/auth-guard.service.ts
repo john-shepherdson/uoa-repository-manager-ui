@@ -2,24 +2,27 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
+import { getCookie } from '../domain/utils';
+import { loginUrl } from "../domain/tempAPI";
 
 @Injectable ()
 export class AuthGuardService implements CanActivate {
 
-  private oidc_endpoint : string = process.env.OIDC_ENDPOINT;
+//  private oidc_endpoint : string = process.env.OIDC_ENDPOINT;
+  private loginUrl : string = loginUrl;
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
     if (this.authenticationService.isLoggedIn) { return true; }
-    //if (getCookie('name') != null) return true;
+
+    if (getCookie('currentUser') != null) {return true;}
+
     // Store the attempted URL for redirecting
     sessionStorage.setItem("state.location",state.url);
     // Navigate to the login page
-    //window.location.href = this.oidc_endpoint;
-
-    window.location.href = '/home';
+    window.location.href = this.loginUrl;
 
     return false;
   }

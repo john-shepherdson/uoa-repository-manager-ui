@@ -5,14 +5,16 @@
 
 import { Component, OnInit } from '@angular/core';
 
-@Component ({
+@Component({
   selector: 'app-sources-register',
   templateUrl: 'sources-register.component.html'
 })
 
 export class SourcesRegisterComponent implements OnInit {
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }

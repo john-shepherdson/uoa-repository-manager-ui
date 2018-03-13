@@ -27,7 +27,7 @@
             <div class="whiteFilm"></div>
           </div>
           <div *ngIf="noAggregations">{{ noAggregations }}</div>
-          <div *ngIf="aggregations && !noAggregations">
+          <div *ngIf="aggregations && aggregations.aggregationHistory && !noAggregations">
             <div class="uk-width-1-1@m">
               <div class="section md-bg-blue-grey-700">
                 <div class="uk-container uk-container-center">

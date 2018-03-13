@@ -119,7 +119,7 @@
                     <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                       <div class="uk-first-column">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/sources','register']">Register</a></li>
+                          <li><a [routerLink]="['/sources','register']" id="registerLink">Register</a></li>
                           <li><a [routerLink]="['/sources', 'update']">Update</a></li>
                         </ul>
                       </div>
@@ -164,7 +164,7 @@
             </div>
             <div class="uk-navbar-right">
 
-              <ul *ngIf="!isLoggedIn" class="uk-navbar-nav">
+              <ul *ngIf="!authService.isLoggedIn" class="uk-navbar-nav">
                 <li class="uk-parent">
                   <a class="loginLink" (click)="login()">
                     <span class="uk-margin-small-right uk-icon">
@@ -178,7 +178,7 @@
                 </li>
               </ul>
 
-              <ul *ngIf="isLoggedIn" class="uk-navbar-nav">
+              <ul *ngIf="authService.isLoggedIn" class="uk-navbar-nav">
                 <li class="uk-parent">
                   <a class="loginLink" aria-expanded="false">
                     <span class="uk-margin-small-right uk-icon">
@@ -187,7 +187,7 @@
                         <path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>
                       </svg>
                     </span>
-                    {{authService.userFullName}}
+                    {{authService.getLoggedInUser()}}
                   </a>
                   <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
                        id="userMenu" (click)="onClick('userMenu')">

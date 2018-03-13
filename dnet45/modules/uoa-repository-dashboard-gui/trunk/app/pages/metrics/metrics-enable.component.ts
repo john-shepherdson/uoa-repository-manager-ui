@@ -20,6 +20,8 @@ export class MetricsEnableComponent implements OnInit {
   errorMessage: string;
   loadingMessage: string;
 
+  readonly analyticsUrl = 'https://analytics.openaire.eu/addsite.php?';
+  readonly authenticationToken = "32846584f571be9b57488bf4088f30ea";  /* THE ACTUAL TOKEN WILL BE NEEDED EVENTUALLY!! */
   repo: Repository;
   oaId: string;
 
@@ -86,8 +88,8 @@ export class MetricsEnableComponent implements OnInit {
         openaireId: this.oaId,
         repositoryName: this.repo.officialName,
         country: this.repo.countryName,
-        siteId: '',
-        authenticationToken: '',
+        siteId: `${this.analyticsUrl}siteName=${this.repo.officialName}&url=${this.repo.websiteUrl}`,
+        authenticationToken: this.authenticationToken,
         creationDate: null,
         requestorName: this.authService.userFullName,
         requestorEmail: this.authService.userEmail,

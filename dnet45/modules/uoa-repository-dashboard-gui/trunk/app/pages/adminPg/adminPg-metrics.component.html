@@ -17,7 +17,7 @@
         </aside-help-content>-->
 
         <!-- MIDDLE -->
-        <div class=" uk-width-expand@m">
+        <div class="uk-width-expand@m">
 
           <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
           <div *ngIf="loadingMessage" class="loading-big">
@@ -26,8 +26,8 @@
             </div>
             <div class="whiteFilm"></div>
           </div>
-          <div *ngIf="piwiks.length">
-            <table class="uk-table uk-table-striped uk-table-middle" style="font-size: 12px">
+          <div *ngIf="piwiks.length" c>
+            <table class="uk-table uk-table-striped uk-table-middle" style="font-size: 12px;">
               <thead>
               <tr>
                 <th class="uk-text-nowrap">Repository</th>
@@ -40,7 +40,9 @@
               </thead>
               <tbody>
               <tr class="el-item" *ngFor="let piwik of piwiks">
-                <td class="uk-table-shrink">{{ piwik.repositoryName }}<br>(ID: {{ piwik.repositoryId }})</td>
+                <td class="uk-table-shrink">
+                  {{ piwik.repositoryName }}<br>(ID: {{ piwik.repositoryId }})
+                </td>
                 <td class="uk-table-shrink">ID: {{ piwik.siteId }}<br>Authentication Token: {{ piwik.authenticationToken }}</td>
                 <td class="uk-text-nowrap uk-table-shrink">{{ piwik.creationDate | date : "yyyy-mm-dd" }}</td>
                 <td class="uk-text-nowrap uk-table-shrink">{{ piwik.requestorName }}<br>{{ piwik.requestorEmail }}</td>
@@ -49,7 +51,10 @@
                   <span *ngIf="!piwik.validated">NO</span>
                 </td>
                 <td class="uk-text-nowrap uk-table-shrink">
-                  <button id="{{ piwik.repositoryId }}" *ngIf="!piwik.validated" class="uk-button uk-button-primary validate" (click)="confirmApproval(piwik.repositoryId)">Validate</button>
+                  <button id="{{ piwik.repositoryId }}"
+                          *ngIf="!piwik.validated"
+                          class="uk-button uk-button-primary validate"
+                          (click)="confirmApproval(piwik.repositoryId)">Validate</button>
                 </td>
               </tr>
               </tbody>

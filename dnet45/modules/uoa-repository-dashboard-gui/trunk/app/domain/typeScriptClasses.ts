@@ -703,3 +703,23 @@ export class Aggregations implements IsSerializable {
   lastCollection: AggregationDetails[];
   lastTransformation: AggregationDetails[];
 }
+
+/*  OLD USER CLASS
+export class User {
+  id: number;
+  name: string;
+  surname: string;
+  username: string;
+  email: string;
+  password: string;
+  joinDate: Date;
+  affiliation: string;
+  roles: [string];
+}*/
+
+
+export class User {
+  name: string;
+  email: string;
+  role: string;
+}

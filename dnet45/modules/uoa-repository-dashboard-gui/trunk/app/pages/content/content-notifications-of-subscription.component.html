@@ -26,7 +26,7 @@
             <div class="whiteFilm"></div>
           </div>
           <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-          <div *ngIf="eventsPage && eventsPage.totalPages" class="events-results">
+          <div *ngIf="!noEvents && eventsPage && eventsPage.totalPages" class="events-results">
             <div class="numberOfEventsLabel">
               <span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>
             </div>
