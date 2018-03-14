@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router,private authService: AuthenticationService) {
     // URL of the SPA to redirect the user to after login
-    this.authService.redirectUrl = window.location.origin + "/home";
+    this.authService.redirectUrl = "/home";
 
 /*    // The SPA's id. The SPA is registerd with this id at the auth-server
     this.authService.clientId = "dfd9f71e-2d7e-41a7-a9c5-bc27cc815868";

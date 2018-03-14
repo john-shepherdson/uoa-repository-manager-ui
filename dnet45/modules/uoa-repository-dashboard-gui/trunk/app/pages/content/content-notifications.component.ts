@@ -39,7 +39,7 @@ export class ContentNotificationsComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        for (let key in this.subscrOfUser){
+        for (let key in this.subscrOfUser) {
           this.subKeys.push(key);
           console.log(key);
         }

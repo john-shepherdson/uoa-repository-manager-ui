@@ -11,11 +11,12 @@ export class AuthGuardService implements CanActivate {
 //  private oidc_endpoint : string = process.env.OIDC_ENDPOINT;
   private loginUrl : string = loginUrl;
 
+
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    if (this.authenticationService.isLoggedIn) { return true; }
+    if (this.authenticationService.getIsUserLoggedIn()) { return true; }
 
     if (getCookie('currentUser') != null) {return true;}
 

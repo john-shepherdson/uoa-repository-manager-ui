@@ -9,7 +9,7 @@
     "deploy:server": "docker rm -f uoa-repository-dashboard-gui && docker run --name uoa-repository-dashboard-gui -d -p 80:80 uoa-repository-dashboard-gui",
     "deploy:complete": "npm run build:docker && npm run deploy:server",
     "watch": "npm run build -- --watch",
-    "server": "webpack-dev-server --inline --progress --port 3000 --content-base .",
+    "server": "webpack-dev-server --inline --progress --port 3000 --host 195.134.66.230 --content-base .",
     "start": "npm run server",
     "stats": "webpack --progress -p --profile --env.release=true --json > stats.json"
   },
@@ -25,6 +25,7 @@
     "@angular/upgrade": "~4.4.3",
     "angular-in-memory-web-api": "~0.3.2",
     "angular-oauth2-oidc": "^1.0.20",
+    "angular2-cookie": "^1.2.6",
     "bootstrap": "^3.3.7",
     "bootstrap-slider": "^10.0.0",
     "core-js": "^2.5.3",

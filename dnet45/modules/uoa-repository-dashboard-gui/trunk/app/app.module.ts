@@ -28,6 +28,7 @@ import { BrokerService } from './services/broker.service';
 import { MonitorService } from './services/monitor.service';
 import { ReusableComponentsModule } from './shared/reusablecomponents/reusable-components.module';
 import { HelpContentService } from './services/help-content.service';
+import {CookieService} from "angular2-cookie/core";
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { HelpContentService } from './services/help-content.service';
     RepositoryService,
     ValidatorService,
     AuthGuardService,
-    AuthenticationService
+    AuthenticationService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

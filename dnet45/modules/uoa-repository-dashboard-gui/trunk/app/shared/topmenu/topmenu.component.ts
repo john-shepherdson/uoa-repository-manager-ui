@@ -43,5 +43,7 @@ export class TopMenuComponent implements OnInit {
     this.isLoggedIn = true;
   }
 
-
+  getUserName() {
+    return this.authService.getUserName();
+  }
 }
