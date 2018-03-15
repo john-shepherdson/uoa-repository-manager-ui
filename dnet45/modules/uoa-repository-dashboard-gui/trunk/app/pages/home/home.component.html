@@ -1,4 +1,4 @@
-<div *ngIf="!authService.isLoggedIn">
+<div *ngIf="!getIsUserLoggedIn()">
   <div class="image-front-topbar  uk-section-default"
        uk-scrollspy="{&quot;target&quot;:&quot;[uk-scrollspy-class]&quot;,&quot;cls&quot;:&quot;uk-animation-fade&quot;,&quot;delay&quot;:false}" tm-header-transparent="light">
     <div style="background-image: url('../../../assets/imgs/provide_2.jpg'); background-color: rgb(255, 255, 255); box-sizing: border-box; min-height: calc(-101.35px + 100vh);" class="uk-background-norepeat uk-background-cover uk-background-top-center uk-background-fixed uk-section uk-padding-remove-bottom uk-flex uk-flex-middle" uk-height-viewport="offset-top: true;offset-bottom: 20">
@@ -217,7 +217,7 @@
 
 </div>
 
-<div *ngIf="authService.isLoggedIn" id="contentWrapper" class="tm-main uk-section uk-section-default" uk-height-viewport="expand: true" style="box-sizing: border-box;" >
+<div *ngIf="getIsUserLoggedIn()" id="contentWrapper" class="tm-main uk-section uk-section-default" uk-height-viewport="expand: true" style="box-sizing: border-box;" >
 
   <div>
     <div class="uk-container">

@@ -229,7 +229,7 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.issn = this.group.get('issn').value;
     newRepo.eissn = this.group.get('eissn').value;
     newRepo.lissn = this.group.get('lissn').value;
-    newRepo.registeredBy = this.authService.userEmail;
+    newRepo.registeredBy = this.authService.getUserEmail();
     newRepo.datasourceType = this.mode;
 
     newRepo.dateOfCreation = new Date(Date.now()); //is this correct ?????

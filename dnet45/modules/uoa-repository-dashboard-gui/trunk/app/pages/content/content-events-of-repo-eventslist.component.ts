@@ -57,7 +57,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
                private authService: AuthenticationService) {}
 
   ngOnInit () {
-    this.userEmail = this.authService.userEmail;
+    this.userEmail = this.authService.getUserEmail();
     this.getParams();
     this.initQuery();
     this.initForm();

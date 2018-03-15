@@ -255,7 +255,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       cris: isCris,
       crisReferentialChecks: this.crisRefIntegrity,
 
-      userEmail: this.authService.userEmail,
+      userEmail: this.authService.getUserEmail(),
 
       adminEmails: [],
       officialName: '',

@@ -12,13 +12,10 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 
 export class TopMenuComponent implements OnInit {
-  isLoggedIn: boolean;
 
   constructor(public authService: AuthenticationService) { }
 
-  ngOnInit(){
-    this.isLoggedIn = false;
-  }
+  ngOnInit() {}
 
 
   onClick(id: string) {
@@ -32,18 +29,20 @@ export class TopMenuComponent implements OnInit {
   }
 
   logout(){
-    if(this.authService.isLoggedIn){
+    if(this.getIsUserLoggedIn()){
       this.authService.logout();
-      this.isLoggedIn = false;
     }
   }
 
   register(){
     this.authService.loginWithState();
-    this.isLoggedIn = true;
   }
 
   getUserName() {
     return this.authService.getUserName();
+  }
+
+  getIsUserLoggedIn() {
+    return this.authService.getIsUserLoggedIn();
   }
 }

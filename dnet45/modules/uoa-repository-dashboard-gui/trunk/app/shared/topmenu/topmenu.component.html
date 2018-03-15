@@ -104,7 +104,7 @@
 
             <!-- THERE WAS COMMENTED SCRIPT HERE - CHECK REPOSITORYMANAGER.HTML -->
 
-            <div class="uk-navbar-center" *ngIf="isLoggedIn">
+            <div class="uk-navbar-center" *ngIf="getIsUserLoggedIn()">
 
               <ul class="uk-navbar-nav">
                 <li class="uk-parent" [routerLinkActive]="['uk-active']">
@@ -164,7 +164,7 @@
             </div>
             <div class="uk-navbar-right">
 
-              <ul *ngIf="!authService.isLoggedIn" class="uk-navbar-nav">
+              <ul *ngIf="!getIsUserLoggedIn()" class="uk-navbar-nav">
                 <li class="uk-parent">
                   <a class="loginLink" (click)="login()">
                     <span class="uk-margin-small-right uk-icon">
@@ -178,7 +178,7 @@
                 </li>
               </ul>
 
-              <ul *ngIf="authService.isLoggedIn" class="uk-navbar-nav">
+              <ul *ngIf="getIsUserLoggedIn()" class="uk-navbar-nav">
                 <li class="uk-parent">
                   <a class="loginLink" aria-expanded="false">
                     <span class="uk-margin-small-right uk-icon">

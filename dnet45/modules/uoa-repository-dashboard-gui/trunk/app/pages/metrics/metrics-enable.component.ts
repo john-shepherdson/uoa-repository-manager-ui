@@ -91,8 +91,8 @@ export class MetricsEnableComponent implements OnInit {
         siteId: `${this.analyticsUrl}siteName=${this.repo.officialName}&url=${this.repo.websiteUrl}`,
         authenticationToken: this.authenticationToken,
         creationDate: null,
-        requestorName: this.authService.userFullName,
-        requestorEmail: this.authService.userEmail,
+        requestorName: this.authService.getUserName(),
+        requestorEmail: this.authService.getUserEmail(),
         validated: false,
         validationDate: null,
         comment: ''

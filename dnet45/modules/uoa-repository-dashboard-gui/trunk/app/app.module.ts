@@ -1,34 +1,31 @@
 /**
  * Created by stefania on 10/3/16.
  */
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule, JsonpModule} from '@angular/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule, JsonpModule } from '@angular/http';
 
-import {TabsModule, ModalModule} from 'ngx-bootstrap';
+import { TabsModule, ModalModule } from 'ngx-bootstrap';
 
-import {AppRouting} from './app.routing';
-import {AppComponent} from './app.component';
-import {UserModule} from './user/user.module';
-import {HomeComponent} from './pages/home/home.component';
-import {TopMenuComponent} from './shared/topmenu/topmenu.component';
-import {FooterComponent} from './shared/footer/footer.component';
-import {MetricsModule} from './pages/metrics/metrics.module';
-import {SourcesModule} from './pages/sources/sources.module';
-import {CompatibilityModule} from './pages/compatibility/compatibility.module';
-import {ContentModule} from './pages/content/content.module';
-import {AdminPgModule} from './pages/adminPg/adminPg.module';
-import {RepositoryService} from "./services/repository.service";
-import {AuthenticationService} from './services/authentication.service';
-import {AuthGuardService} from './services/auth-guard.service';
+import { AppRouting } from './app.routing';
+import { AppComponent } from './app.component';
+import { UserModule } from './user/user.module';
+import { HomeComponent } from './pages/home/home.component';
+import { TopMenuComponent } from './shared/topmenu/topmenu.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { MetricsModule } from './pages/metrics/metrics.module';
+import { SourcesModule } from './pages/sources/sources.module';
+import { CompatibilityModule } from './pages/compatibility/compatibility.module';
+import { ContentModule } from './pages/content/content.module';
+import { AdminPgModule } from './pages/adminPg/adminPg.module';
+import { RepositoryService } from "./services/repository.service";
+import { AuthenticationService } from './services/authentication.service';
+import { AuthGuardService } from './services/auth-guard.service';
 import { ValidatorService } from './services/validator.service';
 import { PiwikService } from './services/piwik.service';
 import { BrokerService } from './services/broker.service';
 import { MonitorService } from './services/monitor.service';
-import { ReusableComponentsModule } from './shared/reusablecomponents/reusable-components.module';
-import { HelpContentService } from './services/help-content.service';
-import {CookieService} from "angular2-cookie/core";
 
 
 @NgModule({
@@ -63,11 +60,9 @@ import {CookieService} from "angular2-cookie/core";
     RepositoryService,
     ValidatorService,
     AuthGuardService,
-    AuthenticationService,
-    CookieService
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })
 
-export class AppModule {
-}
+export class AppModule {}

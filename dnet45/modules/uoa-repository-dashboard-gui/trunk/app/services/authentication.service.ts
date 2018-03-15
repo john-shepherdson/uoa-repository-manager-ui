@@ -4,15 +4,13 @@ import { apiUrl, loginUrl } from '../domain/tempAPI';
 import { deleteCookie, getCookie } from '../domain/utils';
 import { Http } from '@angular/http';
 import { User } from '../domain/typeScriptClasses';
-import {CookieService} from "angular2-cookie/core";
 
 @Injectable()
 export class AuthenticationService {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private http: Http,
-              private _cookie: CookieService) {}
+              private http: Http) {}
 
   private loginUrl : string = loginUrl;
   private apiUrl : string = apiUrl;
@@ -34,24 +32,17 @@ export class AuthenticationService {
     window.location.href = this.loginUrl;
   }
 
-  login(user: User){
-    localStorage.setItem('user', JSON.stringify(user));
-    this.isLoggedIn = true;
-    this.userEmail = localStorage.getItem('email');
-    this.userFullName = localStorage.getItem('name');
-    this.userRole = localStorage.getItem('role');
-  }
-
-  logout(){
+  public logout(){
     deleteCookie('currentUser');
     sessionStorage.removeItem('name');
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('role');
+    this.isLoggedIn = false;
     this.router.navigate(['/home']);
+    window.location.replace(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.router.url}`);
   }
 
   public tryLogin() {
-
     if(getCookie('currentUser')) {
       console.log(`I got the cookie!`);
       this.http.get(this.apiUrl + '/user/login',{ withCredentials: true }).subscribe(
@@ -87,23 +78,23 @@ export class AuthenticationService {
     }
   }
 
-    public getIsUserLoggedIn() {
-      return this.isLoggedIn;
-    }
+  public getIsUserLoggedIn() {
+    return this.isLoggedIn;
+  }
 
-    public getUserName() {
-      if (this.isLoggedIn)
-        return sessionStorage.getItem('name');
-    }
+  public getUserName() {
+    if (this.isLoggedIn)
+      return sessionStorage.getItem('name');
+  }
 
-    public getUserEmail() {
-      if (this.isLoggedIn)
-        return sessionStorage.getItem('email');
-    }
+  public getUserEmail() {
+    if (this.isLoggedIn)
+      return sessionStorage.getItem('email');
+  }
 
-    public getUserRole() {
-      if (this.isLoggedIn)
-        return sessionStorage.getItem('role');
-    }
+  public getUserRole() {
+    if (this.isLoggedIn)
+      return sessionStorage.getItem('role');
+  }
 
 }
