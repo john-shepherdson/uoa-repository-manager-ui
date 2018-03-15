@@ -55,7 +55,8 @@
                     <register-datasource-shareable *ngIf="showRepositories"
                                                    #datasourcesByCountry
                                                    [mode]="'opendoar'"
-                                                   (emitRepoId)="getRepoId($event)"></register-datasource-shareable>
+                                                   (emitRepoId)="getRepoId($event)"
+                                                   (promptNext)="goToStep2($event)"></register-datasource-shareable>
 
                     <datasource-update-form *ngIf="showForm && repo"
                                             #updateDatasource

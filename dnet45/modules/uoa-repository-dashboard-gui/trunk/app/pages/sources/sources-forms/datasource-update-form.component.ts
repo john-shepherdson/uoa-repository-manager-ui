@@ -222,7 +222,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
     if (this.updateGroup.valid) {
       if ( this.selectedRepo.datasourceType != 'journal' || this.updateGroup.get('issn').value ) {
         this.refreshSelectedRepo();
-/*        this.loadingMessage = formSubmitting;
+        this.loadingMessage = formSubmitting;
         this.errorMessage = '';
         this.repoService.updateRepository(this.selectedRepo).subscribe(
           response => {
@@ -244,10 +244,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
               this.errorMessage = formErrorWasntSaved;
             }
           }
-        );*/
-
-        this.emittedInfo.emit(this.selectedRepo); /* DELETE ME LATER !!! */
-        result = true;
+        );
       } else {
         this.errorMessage = formErrorRequiredFields;
         result = false;

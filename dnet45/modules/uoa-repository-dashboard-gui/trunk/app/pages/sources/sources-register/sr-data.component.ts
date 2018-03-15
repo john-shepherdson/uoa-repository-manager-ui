@@ -87,6 +87,12 @@ export class SrDataComponent implements OnInit {
     }
   }
 
+  goToStep2(emitted: boolean) {
+    if (emitted) {
+      this.moveAStep();
+    }
+  }
+
   getRepoId(emitedId: string) {
     this.datasourceId = emitedId;
     this.getRepo();

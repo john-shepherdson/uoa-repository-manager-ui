@@ -1,9 +1,8 @@
 import {Injectable} from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
-import { apiUrl, loginUrl } from '../domain/tempAPI';
+import {ActivatedRoute, Router} from '@angular/router';
+import {apiUrl, appBaseUrl, loginUrl} from '../domain/tempAPI';
 import { deleteCookie, getCookie } from '../domain/utils';
 import { Http } from '@angular/http';
-import { User } from '../domain/typeScriptClasses';
 
 @Injectable()
 export class AuthenticationService {
@@ -38,7 +37,10 @@ export class AuthenticationService {
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('role');
     this.isLoggedIn = false;
-    this.router.navigate(['/home']);
+    const baseUrl = appBaseUrl;
+    console.log('logging out, going to:');
+    console.log(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo='${this.router.url}'`);
+    /*this.router.navigateByUrl(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo='${baseUrl}'`);*/
     window.location.replace(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.router.url}`);
   }
 
@@ -46,7 +48,9 @@ export class AuthenticationService {
     if(getCookie('currentUser')) {
       console.log(`I got the cookie!`);
       this.http.get(this.apiUrl + '/user/login',{ withCredentials: true }).subscribe(
-        userInfo => {console.log("User is still logged in")},
+        userInfo => {
+          console.log("User is still logged in")
+        },
         () => {sessionStorage.removeItem('name');sessionStorage.removeItem('email');deleteCookie('name');sessionStorage.removeItem('role');},
         () => {
           if(!sessionStorage.getItem('name')) {
@@ -64,6 +68,7 @@ export class AuthenticationService {
                 sessionStorage.removeItem('role');
                 deleteCookie('currentUser');
               }, () => {
+                console.log(`isLoggedIn is true`);
                 this.isLoggedIn = true;
               }
             );
@@ -73,6 +78,7 @@ export class AuthenticationService {
             sessionStorage.removeItem("state.location");
             this.router.navigateByUrl(state);
           }
+          this.isLoggedIn = true;
         }
       );
     }

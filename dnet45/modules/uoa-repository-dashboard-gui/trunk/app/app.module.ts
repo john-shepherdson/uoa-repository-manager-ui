@@ -10,7 +10,6 @@ import { TabsModule, ModalModule } from 'ngx-bootstrap';
 
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
-import { UserModule } from './user/user.module';
 import { HomeComponent } from './pages/home/home.component';
 import { TopMenuComponent } from './shared/topmenu/topmenu.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -43,8 +42,7 @@ import { MonitorService } from './services/monitor.service';
     SourcesModule,
     CompatibilityModule,
     ContentModule,
-    AdminPgModule,
-    UserModule
+    AdminPgModule
   ],
   declarations: [
     AppComponent,

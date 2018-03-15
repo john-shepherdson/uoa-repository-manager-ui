@@ -41,16 +41,22 @@
                 <div class="repositoriesRadioButtonForm" *ngIf="countryRepos">
                   <div class="form-group"
                        *ngFor="let repo of countryRepos | repoFilter: searchBox">
-                    <label class="uk-button uk-button-default uk-link-muted" style="display: block; text-align: left;">
-                      <input type="radio" value="{{ repo.id }}" name="repositories" (change)="onChooseRepository(repo.id)" [disabled]="repo.registered">
+                    <label for="{{ repo.id }}"
+                           class="uk-button uk-button-default uk-link-muted"
+                           style="display: block; text-align: left;">
+                      <input type="radio" value="{{ repo.id }}" id="{{ repo.id }}" name="repositories" (change)="onChooseRepository(repo.id)" [disabled]="repo.registered">
                       <span>
                         {{ repo.officialName }}
                         <span *ngIf="repo.registered" class="uk-label uk-label-warning registeredLabel">Registered</span>
                         <a target="_blank" href="{{repo.websiteUrl }}" [ngStyle]="">
                           <i class="fa fa-external-link externalLink"></i>
                         </a>
-                        <button class="uk-float-right uk-vertical-align-middle">NEXT</button>
                       </span>
+                      <div *ngIf="repoId == repo.id" class="uk-float-right uk-vertical-align-middle">
+                        <button class="uk-button uk-button-default uk-button-small uk-border-rounded"
+                                style="border-color: grey;"
+                                (click)="pushedNext()">NEXT</button>
+                      </div>
                     </label>
                   </div>
                 </div>

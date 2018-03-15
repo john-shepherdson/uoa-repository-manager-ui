@@ -31,6 +31,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   @Input() mode: string;
 
   @Output() emitRepoId: EventEmitter<string> = new EventEmitter();
+  @Output() promptNext: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private repoService:RepositoryService) {}
 
@@ -70,40 +71,49 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   }
 
   getReposInCountry(country: string){
-    console.log(`I got ${country} and ${this.mode}`);
-    this.selectedCountry = country;
-
-    this.countryRepos = [];
-    this.hasSelectedCountry = false;
-    this.loadingMessage = loadingReposMessage;
-    this.noRepositories = '';
-    this.repoService.getRepositoriesOfCountry(country, this.mode).subscribe(
-      repos => this.countryRepos = repos,
-      error => {
-        console.log(error.statusText);
-        this.loadingMessage = '';
-        this.alertMessage = noServiceMessage;
-      },
-      () => {
-        if (!this.countryRepos.length) {
-          this.noRepositories = noRepositoriesFound;
+    setTimeout( () => {
+      console.log(`I got ${country} and ${this.mode}`);
+      this.countryRepos = [];
+      this.selectedCountry = country;
+      this.hasSelectedCountry = false;
+      this.loadingMessage = loadingReposMessage;
+      this.noRepositories = '';
+      this.repoService.getRepositoriesOfCountry(country, this.mode).subscribe(
+        repos => {
+          this.countryRepos = repos;
+        },
+        error => {
+          console.log(error.statusText);
+          this.loadingMessage = '';
+          this.alertMessage = noServiceMessage;
           this.countryRepos = [];
-        } else {
-          this.noRepositories = '';
-          if (this.selectedCountry == country) {
-            /* to make sure that the correct set of repositories is displayed - in case of consequent country selections */
-            this.hasSelectedCountry = true;
+        },
+        () => {
+          if (!this.countryRepos.length) {
+            this.noRepositories = noRepositoriesFound;
+          } else {
+            this.noRepositories = '';
+            if (this.selectedCountry == country) {
+              /* to make sure that the correct set of repositories is displayed - in case of consequent country selections */
+              this.hasSelectedCountry = true;
+            } else {
+              this.countryRepos = [];
+            }
           }
+          this.loadingMessage = '';
+          this.alertMessage = '';
         }
-        this.loadingMessage = '';
-        this.alertMessage = '';
-      }
-    );
+      );
+    }, 500);
   }
 
   onChooseRepository(id: string){
     this.hasSelectedRepo = true;
     this.repoId = id;
+  }
+
+  pushedNext() {
+    this.promptNext.emit(true);
   }
 
   public goToNextStep(): boolean {

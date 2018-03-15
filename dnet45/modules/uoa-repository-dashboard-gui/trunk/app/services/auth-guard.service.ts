@@ -22,8 +22,10 @@ export class AuthGuardService implements CanActivate {
 
     // Store the attempted URL for redirecting
     sessionStorage.setItem("state.location",state.url);
+
     // Navigate to the login page
     window.location.href = this.loginUrl;
+    /*this.router.navigate(['/home']);*/
 
     return false;
   }
