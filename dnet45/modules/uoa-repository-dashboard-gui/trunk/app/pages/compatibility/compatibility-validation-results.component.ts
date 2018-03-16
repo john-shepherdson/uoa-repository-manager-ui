@@ -16,6 +16,7 @@ import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/con
 export class CompatibilityValidationResultsComponent implements OnInit {
   errorMessage: string;
   loadingMessage: string;
+  noRulesTested: string;
   noContent: string;
   noUsage: string;
 
@@ -45,7 +46,7 @@ export class CompatibilityValidationResultsComponent implements OnInit {
     this.monitorService.getJobSummary(id,'all').subscribe(
       job => {
         this.jobSummary = job;
-        if (this.jobSummary.resultEntries.length) {
+        if (this.jobSummary.resultEntries && this.jobSummary.resultEntries.length) {
           this.jobSummary.resultEntries.forEach(
             entry => {
               if (entry.type == 'content') {

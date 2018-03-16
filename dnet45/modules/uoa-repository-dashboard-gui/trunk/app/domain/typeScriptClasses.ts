@@ -703,3 +703,10 @@ export class Aggregations implements IsSerializable {
   lastCollection: AggregationDetails[];
   lastTransformation: AggregationDetails[];
 }
+
+export class UserInfo implements  IsSerializable {
+  sub: string;
+  role: string[];
+  name: string;
+  email: string;
+}

@@ -33,6 +33,8 @@ export const loadingUserJobsError = 'Your job results can not be retrieved at th
 export const noUserJobsFound = 'No stored jobs found';
 export const loadingJobSummary = 'Retrieving job summary ...';
 export const loadingJobSummaryError = 'The job summary can not be retrieved at the moment';
+export const submittingJob = 'Submitting the new job';
+export const submittingJobError = 'The job could not be submitted';
 
 
 /* Loading Topics Messages */

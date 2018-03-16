@@ -11,6 +11,7 @@ import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RepositoryService } from '../../../services/repository.service';
 import { formInfoLoading, loadingRepoError } from '../../../domain/shared-messages';
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component ({
   selector: 'app-sr-data',
@@ -32,6 +33,13 @@ export class SrDataComponent implements OnInit {
   datasourceId: string;
   repo: Repository;
 
+  /* queryParams is used to change the queryParams without refreshing the page
+   * This was needed for Help Service [which sends back info according to the current router.url]
+   * the param that is used is 'step' and the values are: 'selectDatasource','basicInformation','interfaces','finish'
+   */
+  queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+
+
   @ViewChild('datasourcesByCountry')
   public datasourcesByCountry: RegisterDatasourceShareableComponent;
 
@@ -45,15 +53,19 @@ export class SrDataComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
     private repoService: RepositoryService) {}
 
   ngOnInit() {
+    this.setQueryParam('selectDatasource');
     this.showRepositories=true;
   }
 
   moveAStep(){
     if(this.showRepositories) {
       if (this.datasourcesByCountry.goToNextStep()) {
+        this.setQueryParam('basicInformation');
         this.showRepositories = false;
         this.showForm = true;
         this.step2 = 'active';
@@ -65,6 +77,7 @@ export class SrDataComponent implements OnInit {
         this.getRepoInterfaces();
       }
     } else if(this.showInterfaces) {
+        this.setQueryParam('finish');
         this.showInterfaces = false;
         this.showFinish = true;
         this.step4 = 'active';
@@ -73,14 +86,17 @@ export class SrDataComponent implements OnInit {
 
   moveBackAStep(){
     if(this.showForm) {
+      this.setQueryParam('baseUrl');
       this.showRepositories = true;
       this.showForm = false;
       this.step2 = '';
     } else if(this.showInterfaces) {
+      this.setQueryParam('basicInformation');
       this.showForm = true;
       this.showInterfaces = false;
       this.step3 = '';
     } else if(this.showFinish) {
+      this.setQueryParam('interfaces');
       this.showInterfaces = true;
       this.showFinish = false;
       this.step4 = '';
@@ -125,6 +141,7 @@ export class SrDataComponent implements OnInit {
       },
       error => console.log(error),
       () => {
+        this.setQueryParam('interfaces');
         this.showForm = false;
         this.showInterfaces = true;
         this.step3 = 'active';
@@ -134,6 +151,12 @@ export class SrDataComponent implements OnInit {
 
   downloadLogo() {
     window.open("../../../assets/imgs/3_0ValidatedLogo.png","_blank", "enabledstatus=0,toolbar=0,menubar=0,location=0");
+  }
+
+  setQueryParam(value: string) {
+    // set param for step
+    this.queryParams['step'] = value;
+    this.router.navigate([], { relativeTo: this.route, queryParams: this.queryParams });
   }
 
 }

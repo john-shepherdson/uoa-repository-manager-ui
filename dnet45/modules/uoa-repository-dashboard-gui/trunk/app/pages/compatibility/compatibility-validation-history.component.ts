@@ -153,15 +153,14 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     );
   }
 
-  getResultImage(ended: string, error: string) {
-    if (!ended) {
+  getResultImage(status: string) {
+    console.log(`status is ${status}`);
+    if (status == 'ongoing') {
       return `../../../assets/imgs/icon_colours-question.jpg`;
-    } else {
-      if (error == 'no errors') {
+    } else if (status == 'successful') {
         return `../../../assets/imgs/icon_colours-check.jpg`;
-      } else {
-        return `../../../assets/imgs/icon_colours-x.jpg`;
-      }
+    } else {
+      return `../../../assets/imgs/icon_colours-x.jpg`;
     }
   }
 

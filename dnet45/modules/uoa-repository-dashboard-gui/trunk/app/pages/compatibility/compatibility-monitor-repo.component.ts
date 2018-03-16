@@ -74,7 +74,7 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        if (this.aggregations && !this.aggregations.aggregationHistory.length) {
+        if (this.aggregations && (!this.aggregations.aggregationHistory || !this.aggregations.aggregationHistory.length) ) {
           this.noAggregations = noAggregationHistory;
         }
       }

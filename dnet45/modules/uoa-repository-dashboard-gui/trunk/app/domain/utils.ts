@@ -21,6 +21,7 @@ export function getCookie(name: string) : string {
 
 export function deleteCookie(name) {
     setCookie(name, '', -1);
+    console.log(`after delete: document.cookie is: ${document.cookie.toString()}`);
 }
 
 function setCookie(name: string, value: string, expireDays: number, path: string = '') {

@@ -190,6 +190,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
           else
             this.noEvents = noEventsWithParams;
         }
+        console.log(`total pages is ${this.eventsPage.totalPages}`);
         this.eventsPageInitialized = true;
       }
     );

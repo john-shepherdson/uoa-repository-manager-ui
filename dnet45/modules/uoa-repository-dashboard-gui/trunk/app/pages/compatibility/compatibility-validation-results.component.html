@@ -49,7 +49,7 @@
                   <div>
                     <span>Started: {{ jobSummary.started }}</span>
                     ,
-                    <span>Ended: {{ jobSummary.ended }}</span>
+                    <span>Ended: {{ jobSummary.ended ? jobSummary.ended : '--' }}</span>
                     ,
                     <span>Duration: {{ jobSummary.duration }}</span>
                   </div>
@@ -78,7 +78,7 @@
                       <div class="uk-width-1-1@m uk-first-column">
                         <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
                           <div *ngIf="noContent" class="uk-alert">{{ noContent }}</div>
-                          <div>
+                          <div *ngIf="contentResults && contentResults.length">
                             <table class="uk-table uk-table-striped uk-table-middle rules-table">
                               <thead>
                               <tr>
@@ -152,7 +152,7 @@
                       <div class="uk-width-1-1@m uk-first-column">
                         <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
                           <div *ngIf="noUsage" class="uk-alert">{{ noUsage }}</div>
-                          <div>
+                          <div *ngIf="usageResults && usageResults.length">
                             <table class="uk-table uk-table-striped uk-table-middle rules-table">
                               <thead>
                               <tr>

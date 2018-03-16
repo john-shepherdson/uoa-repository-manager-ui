@@ -4,6 +4,7 @@ import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
 import { Repository } from '../../../domain/typeScriptClasses';
 import { DatasourceCreateFormComponent } from '../sources-forms/datasource-create-form.component';
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component ({
   selector: 'app-sr-journal',
@@ -26,10 +27,19 @@ export class SrJournalComponent implements OnInit {
 
   repo: Repository;
 
+  /* queryParams is used to change the queryParams without refreshing the page
+   * This was needed for Help Service [which sends back info according to the current router.url]
+   * the param that is used is 'step' and the values are: 'basicInformation','interfaces','finish'
+   */
+  queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+
   constructor(
-    private fb: FormBuilder) {}
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,) {}
 
   ngOnInit() {
+    this.setQueryParam('basicInformation');
     this.showForm = true;
   }
 
@@ -37,7 +47,7 @@ export class SrJournalComponent implements OnInit {
     if (this.showForm) {
       setTimeout( () => {
         if(this.registerJournal.registerDatasource()){
-          console.log(`REGISTERED!`);
+          this.setQueryParam('interfaces');
           this.showForm = false;
           this.showInterfaces = true;
           this.step2 = 'active';
@@ -45,6 +55,7 @@ export class SrJournalComponent implements OnInit {
         }
       }, 500);
     } else if (this.showInterfaces) {
+      this.setQueryParam('finish');
       this.showInterfaces = false;
       this.showFinish = true;
       this.step3 = 'active';
@@ -53,10 +64,12 @@ export class SrJournalComponent implements OnInit {
 
   moveBackAStep(){
     if (this.showInterfaces) {
+      this.setQueryParam('basicInformation');
       this.showForm = true;
       this.showInterfaces = false;
       this.step2 = '';
     } else if (this.showFinish) {
+      this.setQueryParam('interfaces');
       this.showInterfaces = true;
       this.showFinish = false;
       this.step3 = '';
@@ -69,6 +82,12 @@ export class SrJournalComponent implements OnInit {
 
   downloadLogo() {
     window.open("../../../assets/imgs/3_0ValidatedLogo.png","_blank", "enabledstatus=0,toolbar=0,menubar=0,location=0");
+  }
+
+  setQueryParam(value: string) {
+    // set param for step
+    this.queryParams['step'] = value;
+    this.router.navigate([], { relativeTo: this.route, queryParams: this.queryParams });
   }
 
 }

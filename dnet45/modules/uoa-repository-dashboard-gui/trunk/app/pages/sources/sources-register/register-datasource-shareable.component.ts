@@ -27,6 +27,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
 
   sourceUrl: string;
   sourceTitle: string;
+  latestUpdate: string;
 
   @Input() mode: string;
 
@@ -50,6 +51,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
       this.sourceUrl = 'https://www.re3data.org/';
       this.sourceTitle = 'Re3data';
     }
+    this.getLatestUpdate();
   }
 
   getCountries(){
@@ -105,6 +107,13 @@ export class RegisterDatasourceShareableComponent implements OnInit {
         }
       );
     }, 500);
+  }
+
+  getLatestUpdate() {
+    return this.repoService.getListLatestUpdate(this.mode).subscribe(
+      responseDate => this.latestUpdate = responseDate,
+      error => console.log(error)
+    );
   }
 
   onChooseRepository(id: string){

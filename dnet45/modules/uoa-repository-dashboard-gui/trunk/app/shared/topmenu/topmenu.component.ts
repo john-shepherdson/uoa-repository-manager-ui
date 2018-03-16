@@ -45,4 +45,9 @@ export class TopMenuComponent implements OnInit {
   getIsUserLoggedIn() {
     return this.authService.getIsUserLoggedIn();
   }
+
+  isUserAdmin() {
+    /* ACTUAL ADMINS WILL HAVE A ROLE OF 'ROLE_ADMIN' */
+    return this.authService.getUserRole().includes('ROLE_USER');
+  }
 }

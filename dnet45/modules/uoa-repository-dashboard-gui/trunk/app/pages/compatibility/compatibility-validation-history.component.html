@@ -119,13 +119,16 @@
                           <div class="el-title">{{ job.baseUrl }}</div>
                         </td>
                         <td class="uk-table-shrink">
-                          <div class="el-title">OAI Content<br>OAI Usage</div>
+                          <div *ngIf="job.validationType.includes('C')" class="el-title">OAI Content</div>
+                          <div *ngIf="job.validationType.includes('U')"class="el-title">OAI Usage</div>
                         </td>
                         <td class="uk-table-shrink">
-                          <div class="el-title">{{ job.contentJobStatus }}<br>{{ job.usageJobStatus }}</div>
+                          <div *ngIf="job.validationType.includes('C')" class="el-title">{{ job.contentJobStatus }}</div>
+                          <div *ngIf="job.validationType.includes('U')" class="el-title">{{ job.usageJobStatus }}</div>
                         </td>
                         <td class="uk-table-shrink">
-                          <div class="el-title">{{ job.contentJobScore }}<br>{{ job.usageJobScore }}</div>
+                          <div *ngIf="job.validationType.includes('C')" class="el-title">{{ job.contentJobScore }}</div>
+                          <div *ngIf="job.validationType.includes('U')" class="el-title">{{ job.usageJobScore }}</div>
                         </td>
                         <td class="uk-table-shrink" style="vertical-align: top !important;">
                           <div class="el-title">{{ job.started }}</div>
@@ -146,7 +149,7 @@
                           </div>
                         </td>
                         <td class="uk-table-shrink" style="vertical-align: top !important;">
-                          <img src="{{ getResultImage(job.ended,job.error) }}" width="20" height="20">
+                          <img src="{{ getResultImage(job.validationStatus) }}" width="20" height="20">
                         </td>
                       </tr>
                       </tbody>
@@ -335,7 +338,7 @@
                     </div>
                   </td>
                   <td class="uk-table-shrink" style="vertical-align: top !important;">
-                    <img src="{{ getResultImage(job.ended,job.error) }}" width="20" height="20">
+                    <img src="{{ getResultImage(job.validationStatus) }}" width="20" height="20">
                   </td>
                 </tr>
                 </tbody>

@@ -253,6 +253,14 @@ getTimezones(): Observable<Timezone[]>{
       .catch(this.handleError).share();
   }
 
+  getListLatestUpdate(mode: string): Observable<string> {
+    let url = `${this.apiUrl}getListLatestUpdate/${mode}`;
+    console.log(`knocking on: ${url}`);
+    return this.http.get(url)
+      .map( res => res.json()['lastCollectionDate'])
+      .catch(this.handleError);
+  }
+
 
   private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
@@ -266,8 +274,7 @@ getTimezones(): Observable<Timezone[]>{
       errMsg = `${error.status} - ${error.statusText || ''} ${body}`;
       console.log(errMsg);
     } else {
-      errMsg = (error.message) ? error.message :
-        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+      errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
       console.error(errMsg); // log to console instead
     }
     return Observable.throw(errMsg);
