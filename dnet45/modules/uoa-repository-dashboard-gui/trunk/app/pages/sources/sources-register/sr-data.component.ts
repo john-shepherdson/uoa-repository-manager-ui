@@ -72,10 +72,7 @@ export class SrDataComponent implements OnInit {
         console.log(`got datasource with id ${this.datasourceId}`);
       }
     } else if(this.showForm) {
-      if (this.updateDatasource.updateRepo()){
-        this.group = this.fb.group({});
-        this.getRepoInterfaces();
-      }
+        this.updateDatasource.updateRepo();
     } else if(this.showInterfaces) {
         this.setQueryParam('finish');
         this.showInterfaces = false;
@@ -131,6 +128,13 @@ export class SrDataComponent implements OnInit {
         }
       );
     }
+  }
+
+  getUpdatedRepo(repo: Repository){
+    this.repo = repo;
+    console.log(`repo was updated!`);
+    this.group = this.fb.group({});
+    this.getRepoInterfaces();
   }
 
   getRepoInterfaces() {

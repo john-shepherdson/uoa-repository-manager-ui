@@ -33,7 +33,7 @@
                   {{ repo.officialName }}
                 </h1>
               </div>
-              <div *ngIf="repo">
+              <div *ngIf="repo && repoInterfaces">
                 <div>
                   <ul class="uk-margin el-nav uk-tab" uk-switcher="connect: .uk-switcher">
                     <li routerLinkActive="uk-active">

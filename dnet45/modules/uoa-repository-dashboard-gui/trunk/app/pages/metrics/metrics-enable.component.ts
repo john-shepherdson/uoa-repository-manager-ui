@@ -33,7 +33,7 @@ export class MetricsEnableComponent implements OnInit {
   public confirmEnablingModal: ConfirmationDialogComponent;
 
 
-  constructor(
+  constructor (
     private route: ActivatedRoute,
     private authService: AuthenticationService,
     private piwikService: PiwikService,

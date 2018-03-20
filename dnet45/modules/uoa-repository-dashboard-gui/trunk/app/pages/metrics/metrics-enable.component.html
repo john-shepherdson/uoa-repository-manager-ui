@@ -83,6 +83,11 @@
   </div>
 </div>
 
+<confirmation-dialog #confirmEnablingModal [title]="modalTitle" [isModalShown]="isModalShown"
+                     [confirmActionButton]="modalButton" (emitObject)="confirmedEnabling($event)">
+  Are you sure you want to enable metrics for this repository?
+</confirmation-dialog>
+
 <!--   *** OLD HTML ***
 
 <div id="contentWrapper"
@@ -169,8 +174,3 @@
   </div>
 </div>
 -->
-
-<confirmation-dialog #confirmEnablingModal [title]="modalTitle" [isModalShown]="isModalShown"
-                     [confirmActionButton]="modalButton" (emitObject)="confirmedEnabling($event)">
-  Are you sure you want to enable metrics for this repository?
-</confirmation-dialog>

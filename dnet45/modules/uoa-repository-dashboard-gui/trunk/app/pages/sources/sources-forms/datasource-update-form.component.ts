@@ -3,7 +3,7 @@ import {
   formErrorRequiredFields,
   formErrorWasntSaved,
   formSubmitting,
-  formSuccessUpdatedRepo,
+  formSuccessUpdatedRepo, loadingRepoError, loadingRepoMessage,
   noServiceMessage
 } from '../../../domain/shared-messages';
 import { RepositoryService } from "../../../services/repository.service";
@@ -29,6 +29,7 @@ import {
   adminEmailDesc, lissnDesc, eissnDesc, issnDesc
 } from '../../../domain/oa-description';
 import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component ({
   selector: 'datasource-update-form',
@@ -72,10 +73,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
     latitude : ['', [Validators.required, Validators.min(-90), Validators.max(90)] ],
-    websiteUrl : ['', Validators.required],
+    websiteUrl : ['', [Validators.required] ],
     institutionName : ['', Validators.required],
     englishName: ['', Validators.required],
-    logoUrl: '',
+    logoUrl: [''],
     timezone: ['', Validators.required],
     datasourceType: ['', Validators.required],
     adminEmail: ['', [Validators.required, Validators.email]]
@@ -101,7 +102,8 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private repoService: RepositoryService
+    private repoService: RepositoryService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(){
@@ -109,12 +111,17 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   loadForm() {
-    this.updateGroup = this.fb.group(this.updateGroupDefinition, {validator: checkPlatform});
-    this.setupUpdateForm();
-    this.getDatasourceClasses();
-    this.getCountries();
-    this.getTypologies();
-    this.getTimezones();
+    if (this.selectedRepo) {
+      this.loadingMessage = loadingRepoMessage;
+      this.updateGroup = this.fb.group(this.updateGroupDefinition, {validator: checkPlatform});
+      this.setupUpdateForm();
+      //this.getDatasourceClasses();
+      //this.getCountries();
+      this.getTypologies();
+      this.getTimezones();
+    } else {
+      this.errorMessage = loadingRepoError;
+    }
   }
 
   setupUpdateForm(){
@@ -163,7 +170,25 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('lissn').setValue(this.selectedRepo.lissn);
         this.updateGroup.get('lissn').disable();
       }
+      this.getDatasourceClasses();
     }
+  }
+
+  getDatasourceClasses() {
+    this.repoService.getDatasourceClasses(this.selectedRepo.datasourceType).subscribe(
+      classes => this.datasourceClasses = classes,
+      error => {
+        this.loadingMessage = '';
+        this.errorMessage = noServiceMessage;
+        console.log(error);
+      },
+      () => {
+        for (let key in this.datasourceClasses){
+          this.classCodes.push(key);
+        }
+        this.getCountries();
+      }
+    );
   }
 
   getCountries(){
@@ -179,43 +204,39 @@ export class DatasourceUpdateFormComponent implements OnInit {
           }
         } ),
         error => {
+          this.loadingMessage = '';
           this.errorMessage = noServiceMessage;
           console.log(error);
+        }, () => {
+          this.getTypologies();
         });
-  }
-
-  getDatasourceClasses() {
-    this.repoService.getDatasourceClasses(this.selectedRepo.datasourceType).subscribe(
-      classes => this.datasourceClasses = classes,
-      error => {
-        this.errorMessage = noServiceMessage;
-        console.log(error);
-      },
-      () => {
-        for (let key in this.datasourceClasses){
-          this.classCodes.push(key);
-        }
-      }
-    );
   }
 
   getTypologies() {
     this.repoService.getTypologies().subscribe(
       types => this.typologies = types,
-      error => console.log(error)
+      error => {
+        this.loadingMessage = '';
+        console.log(error);
+      },
+      () => this.getTimezones()
     );
   }
 
   getTimezones() {
     this.repoService.getTimezones().subscribe(
       zones => this.timezones = zones,
-      error => console.log(error)
+      error => {
+        this.loadingMessage = '';
+        console.log(error);
+      },
+      () => {
+        this.loadingMessage = '';
+      }
     );
   }
 
-  updateRepo(): boolean {
-    let result: boolean;
-
+  updateRepo() {
     this.errorMessage = '';
     this.successMessage = '';
 
@@ -226,34 +247,32 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.errorMessage = '';
         this.repoService.updateRepository(this.selectedRepo).subscribe(
           response => {
-            console.log(`updateRepository responded: ${response}`);
-            result = (response == '200');
+            if(response) {
+              this.selectedRepo = response;
+              console.log(`updateRepository responded: ${JSON.stringify(response)}`);
+              this.emittedInfo.emit(response);
+            }
           },
           error => {
             console.log(error);
             this.loadingMessage = '';
             this.errorMessage = formErrorWasntSaved;
-            result = false;
           },
           () => {
             this.loadingMessage = '';
-            if (result) {
-              this.emittedInfo.emit(this.selectedRepo);
-              this.successMessage = formSuccessUpdatedRepo;
-            } else {
+            if (!this.selectedRepo) {
               this.errorMessage = formErrorWasntSaved;
+            } else {
+              this.successMessage = formSuccessUpdatedRepo;
             }
           }
         );
       } else {
         this.errorMessage = formErrorRequiredFields;
-        result = false;
       }
     } else {
       this.errorMessage = formErrorRequiredFields;
-      result = false;
     }
-    return result;
   }
 
   refreshSelectedRepo() {
@@ -279,6 +298,11 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.selectedRepo.issn = this.updateGroup.get('issn').value;
         this.selectedRepo.eissn = this.updateGroup.get('eissn').value;
         this.selectedRepo.lissn = this.updateGroup.get('lissn').value;
+    }
+    if (!this.showButton) {
+      this.selectedRepo.registeredBy = this.authService.getUserEmail();
+      this.selectedRepo.registered = true;
+      /*this.selectedRepo.registrationDate = new Date(Date.now());*/ //NOT NEEDED
     }
   }
 

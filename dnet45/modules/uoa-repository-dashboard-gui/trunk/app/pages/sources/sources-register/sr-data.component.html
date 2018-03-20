@@ -60,7 +60,8 @@
 
                     <datasource-update-form *ngIf="showForm && repo"
                                             #updateDatasource
-                                            [selectedRepo]="repo"></datasource-update-form>
+                                            [selectedRepo]="repo"
+                                            (emittedInfo)="getUpdatedRepo($event)"></datasource-update-form>
 
                     <div *ngIf="loadingMessage" class="loading-big">
                       <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">

@@ -28,9 +28,15 @@
               <div class="whiteFilm"></div>
             </div>
             <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-            <div *ngIf="eventsPage && eventsPage.totalPages" class="events-results">
+            <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages" class="events-results">
               <div class="numberOfEventsLabel">
-                <span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>
+
+                <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+                <!--<span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>-->
+
+                <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+                <span>Showing {{(currentPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (currentPage+1)*10) ) ? (eventsPage.total) : (currentPage+1)*10 }} of {{ eventsPage.total }} results</span>
+
                 <span class="uk-float-right">
                   <button id="subscribe" type="button" class="uk-button uk-button-primary uk-button-small" (click)="showSubscriptionModal()">Subscribe to these events</button>
                 </span>
@@ -54,7 +60,13 @@
                     </a>
                   </li>
                 </ul>
-                <div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>
+
+                <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+                <!--<div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>-->
+
+                <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+                <div class="resultsPageLabel">page {{ currentPage+1 }} of {{ eventsPage.totalPages }}</div>
+
               </div>
               <div *ngFor="let event of eventsPage.values" class="events-list">
                 <div class="uk-card uk-card-default well uk-scrollspy-inview uk-animation-slide-top-medium">
@@ -146,7 +158,13 @@
                     </a>
                   </li>
                 </ul>
-                <div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>
+
+                <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+                <!--<div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>-->
+
+                <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+                <div class="resultsPageLabel">page {{ currentPage+1 }} of {{ eventsPage.totalPages }}</div>
+
               </div>
             </div>
           </div>

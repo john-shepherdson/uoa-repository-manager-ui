@@ -12,13 +12,13 @@ export class AuthGuardService implements CanActivate {
   private loginUrl : string = `${apiUrl}/openid_connect_login`;
 
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {}
+  constructor (private authenticationService: AuthenticationService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    if (this.authenticationService.getIsUserLoggedIn()) { return true; }
+    if ( this.authenticationService.getIsUserLoggedIn() ) { return true; }
 
-    if (getCookie('currentUser') != null) {return true;}
+    if ( getCookie('currentUser') != null ) { return true; }
 
     // Store the attempted URL for redirecting
     sessionStorage.setItem("state.location",state.url);

@@ -38,13 +38,13 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  updateInterface(interfaceInfo: RepositoryInterface): Observable<string> {
+  updateInterface(interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
     let url = `${this.apiUrl}updateInterface`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(interfaceInfo)}`);
     httpOptions.withCredentials = true;
     return this.http.post(url,interfaceInfo,httpOptions)
-      .map( res => res.status.toString())
+      .map( res => <RepositoryInterface>res.json())
       .catch(this.handleError);
   }
 
@@ -67,13 +67,13 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  updateRepository(repoInfo: Repository): Observable<string> {
+  updateRepository(repoInfo: Repository): Observable<Repository> {
     let url = `${this.apiUrl}updateRepository`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(repoInfo)}`);
     httpOptions.withCredentials = true;
     return this.http.post(url,repoInfo,httpOptions)
-      .map( res => res.status.toString())
+      .map( res => <Repository>res.json())
       .catch(this.handleError);
   }
 

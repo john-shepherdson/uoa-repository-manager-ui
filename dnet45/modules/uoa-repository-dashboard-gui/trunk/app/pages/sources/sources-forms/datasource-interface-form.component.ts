@@ -100,8 +100,8 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   getInterfaceInfo(baseUrl: string) {
     this.successMessage = '';
     this.errorMessage = '';
-    this.loadingMessage = formInfoLoading;
     if (baseUrl) {
+      this.loadingMessage = formInfoLoading;
       this.valService.getInterfaceInformation(baseUrl).subscribe(
         info => {
           this.interfaceInfo = info;
@@ -180,7 +180,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.repoService.updateInterface(this.currentInterface).subscribe(
       response => {
         console.log(`updateRepository responded ${response}`);
-        if (response == '200') {
+        if (response) {
           this.successMessage = formSuccessUpdatedInterface;
         } else {
           this.errorMessage = formErrorWasntSaved;

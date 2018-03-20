@@ -7,7 +7,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import {
   identifyingUrl, invalidCustomBaseUrl,
   loadingReposMessage, loadingRuleSets, loadingRuleSetsError,
-  loadingUserRepoInfoError, loadingValSets, loadingValSetsError, noRuleSets, submittingJobError
+  loadingUserRepoInfoError, loadingValSets, loadingValSetsError, noRuleSets, noServiceMessage, submittingJobError
 } from '../../domain/shared-messages';
 import { ValidatorService } from '../../services/validator.service';
 import { CompatibilityValidateStep2Component } from './compatibility-validate-forms/compatibility-validate-step2.component';
@@ -108,9 +108,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   moveAStep() {
     this.errorMessage = '';
     if (this.showDatasource) {
-      if ( this.step1ChooseBaseUrl.submitForm() ) {
-        this.identifyUrl();
-      }
+      this.step1ChooseBaseUrl.submitForm();
     } else if (this.showGuidelines) {
       this.step2ChooseGuidelines.saveChanges();
       if (this.type == 'cris'){
@@ -175,11 +173,13 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         console.log(error);
         this.loadingMessage = '';
         this.identifiedUrl = false;
-        this.errorMessage = invalidCustomBaseUrl;
+        this.errorMessage = noServiceMessage;
       }, () => {
         this.loadingMessage = '';
         if (this.identifiedUrl) {
           this.getRuleSetsForType();
+        } else {
+          this.errorMessage = invalidCustomBaseUrl;
         }
       }
     );
@@ -226,6 +226,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   getChosenUrl(url: string) {
     this.chosenUrl = url;
+    this.identifyUrl();
   }
 
   getChosenRules(rules: any[]) {

@@ -45,13 +45,7 @@ export class SrAggregatorComponent implements OnInit {
 
   moveAStep(){
     if (this.showForm) {
-      if (this.registerAggregator.registerDatasource()){
-        this.setQueryParam('interfaces');
-        this.showForm = false;
-        this.showInterfaces = true;
-        this.step2 = 'active';
-        this.group = this.fb.group({});
-      }
+      this.registerAggregator.registerDatasource();
     } else if (this.showInterfaces) {
       this.setQueryParam('finish');
       this.showInterfaces = false;
@@ -76,6 +70,11 @@ export class SrAggregatorComponent implements OnInit {
 
   getCurrentRepo(repo: Repository) {
     this.repo = repo;
+    this.setQueryParam('interfaces');
+    this.showForm = false;
+    this.showInterfaces = true;
+    this.step2 = 'active';
+    this.group = this.fb.group({});
   }
 
   downloadLogo() {

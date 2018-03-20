@@ -131,6 +131,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
       error => {
         console.log(`The API returned ${error.status}`);
         this.loadingMessage = '';
+        this.jobsOfUser = null;
         this.errorMessage = loadingUserJobsError;
       },
       () => {

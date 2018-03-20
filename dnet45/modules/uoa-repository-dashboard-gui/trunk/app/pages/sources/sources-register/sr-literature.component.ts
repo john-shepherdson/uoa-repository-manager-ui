@@ -71,12 +71,7 @@ export class SrLiteratureComponent implements OnInit {
         console.log(`got datasource with id ${this.datasourceId}`);
       }
     } else if(this.showForm) {
-      setTimeout( () => {
-        if (this.updateDatasource.updateRepo()){
-          this.group = this.fb.group({});
-          this.getRepoInterfaces();
-        }
-      }, 1000);
+        this.updateDatasource.updateRepo();
     } else if(this.showInterfaces) {
         this.setQueryParam('finish');
         this.showInterfaces = false;
@@ -132,6 +127,13 @@ export class SrLiteratureComponent implements OnInit {
         }
       );
     }
+  }
+
+  getUpdatedRepo(repo: Repository){
+    this.repo = repo;
+    console.log(`repo was updated!`);
+    this.group = this.fb.group({});
+    this.getRepoInterfaces();
   }
 
   getRepoInterfaces() {

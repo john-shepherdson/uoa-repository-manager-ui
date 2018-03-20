@@ -45,15 +45,7 @@ export class SrJournalComponent implements OnInit {
 
   moveAStep(){
     if (this.showForm) {
-      setTimeout( () => {
-        if(this.registerJournal.registerDatasource()){
-          this.setQueryParam('interfaces');
-          this.showForm = false;
-          this.showInterfaces = true;
-          this.step2 = 'active';
-          this.group = this.fb.group({});
-        }
-      }, 500);
+      this.registerJournal.registerDatasource();
     } else if (this.showInterfaces) {
       this.setQueryParam('finish');
       this.showInterfaces = false;
@@ -78,6 +70,11 @@ export class SrJournalComponent implements OnInit {
 
   getCurrentRepo(repo: Repository) {
     this.repo = repo;
+    this.setQueryParam('interfaces');
+    this.showForm = false;
+    this.showInterfaces = true;
+    this.step2 = 'active';
+    this.group = this.fb.group({});
   }
 
   downloadLogo() {

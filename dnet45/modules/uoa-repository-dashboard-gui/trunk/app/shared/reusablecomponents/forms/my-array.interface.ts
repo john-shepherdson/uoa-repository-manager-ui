@@ -8,6 +8,7 @@ import { MyGroup } from "./my-group.interface";
 import { MyWrapper } from "./my-wrapper.interface";
 import { Description } from '../../../domain/oa-description';
 import { Subject } from "rxjs/Subject";
+import {ConfirmationDialogComponent} from "../confirmation-dialog.component";
 
 
 @Component({
@@ -159,14 +160,33 @@ export class MyArrayInline extends MyArray {
   template : `
     <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade">
       <div class="interfaceActionsPanel" style="margin-left: 5px;">
-        <a (click)="remove()"><i class="fa fa-remove fa-lg"></i></a>
+        <a (click)="confirmRemoveInterface()"><i class="fa fa-remove fa-lg"></i></a>
       </div>
       <ng-template my-form></ng-template>
     </div>
+
+
+    <confirmation-dialog #confirmDelete [title]="'Delete Interface'" [isModalShown]="isModalShown"
+                         [confirmActionButton]="'Yes, delete it'" (emitObject)="confirmedRemove($event)">
+      Are you sure you want to delete this interface?
+    </confirmation-dialog>
   `
 
 })
 export class MyArrayWrapper extends MyWrapper{
+
+  isModalShown: boolean = false;
+
+  @ViewChild('confirmDelete')
+  public confirmDelete: ConfirmationDialogComponent;
+
+  confirmRemoveInterface(){
+    this.confirmDelete.showModal();
+  }
+
+  confirmedRemove(){
+    this.remove();
+  }
 }
 
 @Component({

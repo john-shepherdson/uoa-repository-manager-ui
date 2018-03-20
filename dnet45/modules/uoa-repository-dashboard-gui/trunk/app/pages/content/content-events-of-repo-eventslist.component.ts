@@ -29,6 +29,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
 
   advanceSearch: AdvQueryObject;
   eventsPage: EventsPage;
+  currentPage: number;/* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
 
   group: FormGroup;
   readonly titleDefinition = { eventTitle: [''] };
@@ -61,6 +62,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     this.getParams();
     this.initQuery();
     this.initForm();
+    this.currentPage = 0; /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
     this.getEventsPage(0);
   }
 
@@ -165,6 +167,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
         }
       }
       console.log(this.advanceSearch);
+      this.currentPage = 0; /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
       this.getEventsPage(0);
     }
   }
@@ -207,16 +210,33 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   }
 
   goToNextPage(){
-    if(this.eventsPage.currPage < this.eventsPage.totalPages) {
+    /* RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+    /*if(this.eventsPage.currPage < this.eventsPage.totalPages) {
       console.log(`Get me page ${this.eventsPage.currPage+1}!`);
       this.getEventsPage(this.eventsPage.currPage+1);
+    }*/
+
+    /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+    if(this.currentPage < this.eventsPage.totalPages) {
+      this.currentPage = this.currentPage+1;
+      console.log(`Get me page ${this.currentPage}!`);
+      this.getEventsPage(this.currentPage);
     }
+
   }
 
   goToPreviousPage(){
-    if(this.eventsPage.currPage > 0) {
+    /* RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+    /*if(this.eventsPage.currPage > 0) {
       console.log(`Get me page ${this.eventsPage.currPage-1}!`);
       this.getEventsPage(this.eventsPage.currPage-1);
+    }*/
+
+    /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+    if(this.currentPage > 0) {
+      this.currentPage = this.currentPage-1;
+      console.log(`Get me page ${this.currentPage}!`);
+      this.getEventsPage(this.currentPage);
     }
   }
 

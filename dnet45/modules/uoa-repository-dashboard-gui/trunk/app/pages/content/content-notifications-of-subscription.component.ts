@@ -17,12 +17,14 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
   subId: string;
   topic: string;
   eventsPage: EventsPage;
+  currentPage: number;  /* DELETE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
 
   constructor(private route: ActivatedRoute,
               private brokerService: BrokerService) {}
 
   ngOnInit () {
     this.subId = this.route.snapshot.paramMap.get('id');
+    this.currentPage = 0; /* DELETE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
     this.getEventsPage(0);
   }
 
@@ -49,16 +51,32 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
 
 
   goToNextPage(){
-    if(this.eventsPage.currPage < this.eventsPage.totalPages) {
+    /* RESTORE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+    /*if(this.eventsPage.currPage < this.eventsPage.totalPages) {
       console.log(`Get me page ${this.eventsPage.currPage+1}!`);
       this.getEventsPage(this.eventsPage.currPage+1);
+    }*/
+
+    /* DELETE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+    if(this.currentPage < this.eventsPage.totalPages) {
+      this.currentPage = this.currentPage+1;
+      console.log(`Get me page ${this.currentPage}!`);
+      this.getEventsPage(this.currentPage);
     }
   }
 
   goToPreviousPage(){
-    if(this.eventsPage.currPage > 0) {
+    /* RESTORE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+    /*if(this.eventsPage.currPage > 0) {
       console.log(`Get me page ${this.eventsPage.currPage-1}!`);
       this.getEventsPage(this.eventsPage.currPage-1);
+    }*/
+
+    /* DELETE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+    if(this.currentPage > 0) {
+      this.currentPage = this.currentPage-1;
+      console.log(`Get me page ${this.currentPage}!`);
+      this.getEventsPage(this.currentPage);
     }
   }
 

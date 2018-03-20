@@ -67,10 +67,10 @@ export class DatasourceCreateFormComponent implements OnInit {
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
     latitude : ['', [Validators.required, Validators.min(-90), Validators.max(90)] ],
-    websiteUrl : ['', Validators.required],
+    websiteUrl : ['', [Validators.required] ],
     institutionName : ['', Validators.required],
     englishName: ['', Validators.required],
-    logoUrl: '',
+    logoUrl: [''],
     timezone: ['', Validators.required],
     datasourceType: ['', Validators.required],
     adminEmail: ['', [Validators.required, Validators.email] ]
@@ -166,9 +166,7 @@ export class DatasourceCreateFormComponent implements OnInit {
     );
   }
 
-  registerDatasource(): boolean {
-    let result: boolean;
-
+  registerDatasource() {
     this.errorMessage = '';
     this.successMessage = '';
 
@@ -180,20 +178,17 @@ export class DatasourceCreateFormComponent implements OnInit {
         this.repoService.addRepository(newRepo.datasourceType, newRepo).subscribe(
           response => {
             console.log(`addRepository responded:\n${JSON.stringify(response)}`);
-            if (response) {
-              result = true;
-              this.emittedInfo.emit(response);
-            }
+            newRepo = response;
           },
           error => {
             console.log(error);
             this.loadingMessage = '';
             this.errorMessage = formErrorWasntSaved;
-            result = false;
           },
           () => {
             this.loadingMessage = '';
-            if (result) {
+            if (newRepo) {
+              this.emittedInfo.emit(newRepo);
               this.successMessage = formSuccessRegisteredDatasource;
             } else {
               this.errorMessage = formErrorWasntSaved;
@@ -201,13 +196,11 @@ export class DatasourceCreateFormComponent implements OnInit {
           }
         );
       } else {
-        result = false;
+        this.errorMessage = formErrorRequiredFields;
       }
     } else {
       this.errorMessage = formErrorRequiredFields;
-      result = false;
     }
-    return result;
   }
 
   createNewRepository(): Repository {
@@ -230,10 +223,12 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.eissn = this.group.get('eissn').value;
     newRepo.lissn = this.group.get('lissn').value;
     newRepo.registeredBy = this.authService.getUserEmail();
-    newRepo.datasourceType = this.mode;
 
-    newRepo.dateOfCreation = new Date(Date.now()); //is this correct ?????
+    /* THE BELOW FIELDS ARE NOT SET IN GWT CODE*/
+    newRepo.datasourceType = this.mode;
+    /*newRepo.dateOfCreation = new Date(Date.now());*/ // NOT NEEDED
     newRepo.registered = true;
+    /*newRepo.registrationDate = new Date(Date.now());*/ // NOT NEEDED
 
     return newRepo;
   }
