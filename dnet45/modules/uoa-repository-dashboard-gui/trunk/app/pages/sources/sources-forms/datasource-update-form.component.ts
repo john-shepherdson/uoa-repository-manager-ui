@@ -66,9 +66,9 @@ export class DatasourceUpdateFormComponent implements OnInit {
     softwarePlatform : '',
     platformName : '',
     officialName : ['', Validators.required],
-    issn : ['', Validators.minLength(8)],
-    eissn : ['', Validators.minLength(8)],
-    lissn : ['', Validators.minLength(8)],
+    issn : ['', [Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')] ],
+    eissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
+    lissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
     repoDescription : ['', Validators.required],
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
@@ -163,11 +163,18 @@ export class DatasourceUpdateFormComponent implements OnInit {
       this.updateGroup.get('websiteUrl').disable();
       this.updateGroup.get('institutionName').disable();
       if (this.selectedRepo.datasourceType == 'journal') {
-        this.updateGroup.get('issn').setValue(this.selectedRepo.issn);
+        let ssnToShow = this.selectedRepo.issn.slice(0, 4)+ '-' + this.selectedRepo.issn.toString().slice(4);
+        this.updateGroup.get('issn').setValue(ssnToShow);
+        if (this.selectedRepo.eissn) {
+          ssnToShow = this.selectedRepo.eissn.slice(0, 4)+ '-' + this.selectedRepo.eissn.toString().slice(4);
+          this.updateGroup.get('eissn').setValue(ssnToShow);
+        }
+        if (this.selectedRepo.eissn) {
+          ssnToShow = this.selectedRepo.lissn.slice(0, 4)+ '-' + this.selectedRepo.lissn.toString().slice(4);
+          this.updateGroup.get('lissn').setValue(ssnToShow);
+        }
         this.updateGroup.get('issn').disable();
-        this.updateGroup.get('eissn').setValue(this.selectedRepo.eissn);
         this.updateGroup.get('eissn').disable();
-        this.updateGroup.get('lissn').setValue(this.selectedRepo.lissn);
         this.updateGroup.get('lissn').disable();
       }
       this.getDatasourceClasses();
@@ -295,9 +302,19 @@ export class DatasourceUpdateFormComponent implements OnInit {
     this.selectedRepo.datasourceClass = this.updateGroup.get('datasourceType').value;
     this.selectedRepo.contactEmail = this.updateGroup.get('adminEmail').value;
     if (this.selectedRepo.datasourceType == 'journal') {
-        this.selectedRepo.issn = this.updateGroup.get('issn').value;
-        this.selectedRepo.eissn = this.updateGroup.get('eissn').value;
-        this.selectedRepo.lissn = this.updateGroup.get('lissn').value;
+      let ssnParts = this.updateGroup.get('issn').value.split('-');
+      let correctSSN = ssnParts[0]+ssnParts[1];
+      this.selectedRepo.issn = correctSSN;
+      if ( this.updateGroup.get('eissn').value ) {
+        ssnParts = this.updateGroup.get('eissn').value.split('-');
+        correctSSN = ssnParts[0]+ssnParts[1];
+        this.selectedRepo.eissn = correctSSN;
+      }
+      if ( this.updateGroup.get('lissn').value ) {
+        ssnParts = this.updateGroup.get('lissn').value.split('-');
+        correctSSN = ssnParts[0]+ssnParts[1];
+        this.selectedRepo.lissn = correctSSN;
+      }
     }
     if (!this.showButton) {
       this.selectedRepo.registeredBy = this.authService.getUserEmail();

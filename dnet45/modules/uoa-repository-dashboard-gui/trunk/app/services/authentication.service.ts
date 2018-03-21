@@ -36,10 +36,10 @@ export class AuthenticationService {
     this.isLoggedIn = false;
     const baseUrl = appBaseUrl;
     console.log('logging out, going to:');
-    console.log(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo='${window.location}'`);
-    /*this.router.navigateByUrl(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo='${baseUrl}'`);*/
-    window.location.href = `https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${window.location.origin}`;
-/*    window.location.replace(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=http://194.177.192.121.xip.io:3000`);*/
+    /*console.log(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo='${window.location}'`);
+    window.location.href = `https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${window.location.origin}`;*/
+    console.log(`https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo='${window.location}'`);
+    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${window.location.origin}`;
   }
 
   public tryLogin() {

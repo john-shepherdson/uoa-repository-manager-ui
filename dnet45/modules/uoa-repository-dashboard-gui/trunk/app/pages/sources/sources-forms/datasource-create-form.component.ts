@@ -60,9 +60,9 @@ export class DatasourceCreateFormComponent implements OnInit {
   readonly groupDefinition = {
     softwarePlatform : '',
     officialName : ['', Validators.required],
-    issn : ['', Validators.minLength(8)],
-    eissn : ['', Validators.minLength(8)],
-    lissn : ['', Validators.minLength(8)],
+    issn : ['', [Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')] ],
+    eissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
+    lissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
     repoDescription : ['', Validators.required],
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
@@ -219,9 +219,23 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.datasourceClass = this.group.get('datasourceType').value;
     newRepo.typology = this.group.get('softwarePlatform').value;
     newRepo.description = this.group.get('repoDescription').value;
-    newRepo.issn = this.group.get('issn').value;
-    newRepo.eissn = this.group.get('eissn').value;
-    newRepo.lissn = this.group.get('lissn').value;
+
+    if ( this.group.get('issn').value ){
+      let ssnParts = this.group.get('issn').value.split('-');
+      let correctSSN = ssnParts[0]+ssnParts[1];
+      newRepo.issn = correctSSN;
+      if ( this.group.get('eissn').value ) {
+        ssnParts = this.group.get('eissn').value.split('-');
+        correctSSN = ssnParts[0]+ssnParts[1];
+        newRepo.eissn = correctSSN;
+      }
+      if ( this.group.get('lissn').value ) {
+        ssnParts = this.group.get('lissn').value.split('-');
+        correctSSN = ssnParts[0]+ssnParts[1];
+        newRepo.lissn = correctSSN;
+      }
+    }
+
     newRepo.registeredBy = this.authService.getUserEmail();
 
     /* THE BELOW FIELDS ARE NOT SET IN GWT CODE*/

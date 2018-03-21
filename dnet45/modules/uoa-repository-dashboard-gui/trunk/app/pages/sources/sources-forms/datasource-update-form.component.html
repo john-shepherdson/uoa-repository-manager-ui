@@ -31,19 +31,19 @@
     <form-inline [description]="issnDesc" [valid]="updateGroup.get('issn').valid">
       <span *ngIf="updateGroup.get('issn').invalid && updateGroup.get('issn').touched && updateGroup.get('issn').dirty"
             class="help-block inline"
-            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn length has to be 8 characters</span>
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn needs to be of the form: "1111-1111"</span>
       <input formControlName="issn" class="form-control" type="text" (focus)="updateGroup.get('issn').markAsUntouched()" (blur)="updateGroup.get('issn').updateValueAndValidity()">
     </form-inline>
     <form-inline [description]="eissnDesc" [valid]="updateGroup.get('eissn').valid">
       <span *ngIf="updateGroup.get('eissn').invalid && updateGroup.get('eissn').touched && updateGroup.get('eissn').dirty"
             class="help-block inline"
-            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn length has to be 8 characters</span>
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn needs to be of the form: "1111-1111"</span>
       <input formControlName="eissn"class="form-control" type="text" (focus)="updateGroup.get('eissn').markAsUntouched()" (blur)="updateGroup.get('eissn').updateValueAndValidity()">
     </form-inline>
     <form-inline [description]="lissnDesc" [valid]="updateGroup.get('lissn').valid">
       <span *ngIf="updateGroup.get('lissn').invalid && updateGroup.get('lissn').touched && updateGroup.get('lissn').dirty"
             class="help-block inline"
-            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn length has to be 8 characters</span>
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn needs to be of the form: "1111-1111"</span>
       <input formControlName="lissn"class="form-control" type="text" (focus)="updateGroup.get('lissn').markAsUntouched()" (blur)="updateGroup.get('lissn').updateValueAndValidity()">
     </form-inline>
   </div>
@@ -100,7 +100,10 @@
   <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
       uk-scrollspy-class="">Administrator & contact information</h4>
   <form-inline [description]="adminEmailDesc" [valid]="updateGroup.get('adminEmail').valid">
-    <input formControlName="adminEmail" class="form-control" type="text">
+    <span *ngIf="updateGroup.get('adminEmail').invalid && updateGroup.get('adminEmail').touched && updateGroup.get('adminEmail').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">You need to enter a valid email address</span>
+    <input formControlName="adminEmail" class="form-control" type="text" (focus)="updateGroup.get('adminEmail').markAsUntouched()" (blur)="updateGroup.get('adminEmail').updateValueAndValidity()">
   </form-inline>
   <div *ngIf="showButton" class="form-group">
     <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
