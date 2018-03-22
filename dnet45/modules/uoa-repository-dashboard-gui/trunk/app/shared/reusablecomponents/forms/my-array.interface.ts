@@ -25,6 +25,13 @@ import {ConfirmationDialogComponent} from "../confirmation-dialog.component";
         </div>
       </div>
     </div>
+
+
+    <confirmation-dialog #confirmDelete [title]="'Delete Interface'" [isModalShown]="isModalShown"
+                         [confirmActionButton]="'Yes, delete it'" (emitObject)="confirmedRemove($event)">
+      Are you sure you want to delete this interface?
+    </confirmation-dialog>
+
   `
 
 })
@@ -79,10 +86,13 @@ export class MyArray extends MyGroup {
         console.log(this.viewContainerRef.get(0));
         ((this.parentGroup as FormArray).controls[this.name].at(0).corpus((<MyGroup>componentView.instance).generate().value));
       } else {
-        (<MyGroup>componentView.instance).toBeDeleted = true;
+        this.curIntrf = <MyGroup>componentView.instance;
+        this.curIndex = index;
+        this.confirmRemoveInterface();
+        /*(<MyGroup>componentView.instance).toBeDeleted = true;
         this.remove(index);
         (this.parentGroup as FormArray).controls[this.name].removeAt(index-1);
-        this.arrayData_.splice(index-1,1);
+        this.arrayData_.splice(index-1,1);*/
       }
     });
 
@@ -90,6 +100,24 @@ export class MyArray extends MyGroup {
 
     this.viewContainerRef.insert(wrapperView.hostView);
     console.log("ADDED NEW GROUP IN CREATEVIEW");
+  }
+
+  isModalShown: boolean = false;
+  curIntrf: any;
+  curIndex: number;
+
+  @ViewChild('confirmDelete')
+  public confirmDelete: ConfirmationDialogComponent;
+
+  confirmRemoveInterface(){
+    this.confirmDelete.showModal();
+  }
+
+  confirmedRemove(){
+    this.curIntrf.toBeDeleted = true;
+    this.remove(this.curIndex);
+    (this.parentGroup as FormArray).controls[this.name].removeAt(this.curIndex-1);
+    this.arrayData_.splice(this.curIndex-1,1);
   }
 
   remove(i : number) : void {
@@ -160,33 +188,16 @@ export class MyArrayInline extends MyArray {
   template : `
     <div class="el-item uk-card uk-card-default uk-card-body uk-scrollspy-inview uk-animation-fade">
       <div class="interfaceActionsPanel" style="margin-left: 5px;">
-        <a (click)="confirmRemoveInterface()"><i class="fa fa-remove fa-lg"></i></a>
+        <a (click)="remove()"><i class="fa fa-remove fa-lg"></i></a>
       </div>
       <ng-template my-form></ng-template>
     </div>
 
-
-    <confirmation-dialog #confirmDelete [title]="'Delete Interface'" [isModalShown]="isModalShown"
-                         [confirmActionButton]="'Yes, delete it'" (emitObject)="confirmedRemove($event)">
-      Are you sure you want to delete this interface?
-    </confirmation-dialog>
   `
 
 })
 export class MyArrayWrapper extends MyWrapper{
 
-  isModalShown: boolean = false;
-
-  @ViewChild('confirmDelete')
-  public confirmDelete: ConfirmationDialogComponent;
-
-  confirmRemoveInterface(){
-    this.confirmDelete.showModal();
-  }
-
-  confirmedRemove(){
-    this.remove();
-  }
 }
 
 @Component({

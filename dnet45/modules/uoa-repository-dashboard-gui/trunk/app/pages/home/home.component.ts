@@ -13,6 +13,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {}
 
+  login() {
+    this.authService.loginWithState();
+  }
+
   getIsUserLoggedIn() {
     return this.authService.getIsUserLoggedIn();
   }

@@ -188,7 +188,6 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.loadingMessage = formSubmitting;
     this.currentInterface.baseUrl = baseUrl;
     this.currentInterface.accessSet = valset;
-    this.currentInterface.accessParams['set'] = valset;
     this.currentInterface.desiredCompatibilityLevel = compLvl;
     this.currentInterface.compliance = compLvl;
     this.currentInterface.typology = this.currentRepository.datasourceClass;
@@ -206,7 +205,9 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         this.loadingMessage = '';
         this.errorMessage = formErrorWasntSaved;
       },
-      () => this.loadingMessage = ''
+      () => {
+        this.loadingMessage = '';
+      }
     );
   }
 
@@ -217,7 +218,6 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.currentInterface = new RepositoryInterface();
     this.currentInterface.baseUrl = baseUrl;
     this.currentInterface.accessSet = valset;
-    this.currentInterface.accessParams['set'] = valset;
     this.currentInterface.desiredCompatibilityLevel = compLvl;
     this.currentInterface.compliance = compLvl;
     this.currentInterface.typology = this.currentRepository.datasourceClass;
@@ -232,23 +232,23 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         this.errorMessage = formErrorWasntSaved;
       },
       () => {
-        this.loadingMessage = '';
         if (this.currentInterface.id) {
           this.successMessage = formSuccessAddedInterface;
         } else {
           this.errorMessage = formErrorWasntSaved;
         }
+        this.loadingMessage = '';
       }
     );
   }
 
   ngOnDestroy() {
     if (this.currentInterface && this.currentInterface.id && this.toBeDeleted) {
-/*      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
+      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
         response => console.log(`deleteInterface responded: ${response}`),
-        error => console.log(error)
-      );*/
-      console.log(`deleting ${this.currentInterface.id}`);
+        error => console.log(error),
+        () => console.log(`deleted ${this.currentInterface.id}`)
+      );
     } else {
       console.log(`deleting empty interface form`);
     }
