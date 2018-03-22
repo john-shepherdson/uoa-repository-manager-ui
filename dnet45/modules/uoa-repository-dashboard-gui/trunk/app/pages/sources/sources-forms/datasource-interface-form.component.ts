@@ -76,7 +76,11 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     super.ngOnInit();
     console.log(this.group, this.parentGroup);
 
-/*  NOT ANYMORE
+    if (this.currentInterface) {
+      console.log(`accessParams is ${JSON.stringify(this.currentInterface.accessParams)}`);
+    }
+
+    /*  NOT ANYMORE
     if (this.currentInterface) {
       this.getMyControl('baseUrl').disable();
     }
@@ -121,7 +125,16 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
           this.identifiedBaseUrl = false;
           this.errorMessage = noServiceMessage;
         },
-        () => this.loadingMessage = ''
+        () => {
+          if ( this.currentInterface && this.currentInterface.accessParams && this.currentInterface.accessParams['set'] ) {
+            if ( this.valsetList.filter( x => x === this.currentInterface.accessParams['set']) ) {
+              this.patchData.next({selectValidationSet:this.currentInterface.accessParams['set']});
+            } else {
+              this.patchData.next({customValidationSet:this.currentInterface.accessParams['set']});
+            }
+          }
+          this.loadingMessage = '';
+        }
       );
     }
   }
@@ -130,7 +143,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.repoService.getCompatibilityClasses(this.currentRepository.datasourceType).subscribe(
       classes => {
         this.compClasses = classes;
-        for (let key in this.compClasses){
+        for (let key in this.compClasses) {
           this.classCodes.push(key);
         }
       },
@@ -175,11 +188,13 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.loadingMessage = formSubmitting;
     this.currentInterface.baseUrl = baseUrl;
     this.currentInterface.accessSet = valset;
+    this.currentInterface.accessParams['set'] = valset;
     this.currentInterface.desiredCompatibilityLevel = compLvl;
+    this.currentInterface.compliance = compLvl;
     this.currentInterface.typology = this.currentRepository.datasourceClass;
-    this.repoService.updateInterface(this.currentInterface).subscribe(
+    this.repoService.updateInterface(this.currentRepository.id, this.currentInterface).subscribe(
       response => {
-        console.log(`updateRepository responded ${response}`);
+        console.log(`updateRepository responded ${JSON.stringify(response)}`);
         if (response) {
           this.successMessage = formSuccessUpdatedInterface;
         } else {
@@ -202,11 +217,13 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.currentInterface = new RepositoryInterface();
     this.currentInterface.baseUrl = baseUrl;
     this.currentInterface.accessSet = valset;
+    this.currentInterface.accessParams['set'] = valset;
     this.currentInterface.desiredCompatibilityLevel = compLvl;
+    this.currentInterface.compliance = compLvl;
     this.currentInterface.typology = this.currentRepository.datasourceClass;
     this.repoService.addInterface(this.currentRepository.datasourceType, this.currentRepository.id, this.currentInterface).subscribe(
       addedInterface => {
-        console.log(`addInterface responded ${addedInterface}`);
+        console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
         this.currentInterface = addedInterface;
       },
       error => {

@@ -38,8 +38,8 @@ export class RepositoryService {
       .catch(this.handleError);
   }
 
-  updateInterface(interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
-    let url = `${this.apiUrl}updateInterface`;
+  updateInterface(repoId: string, interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
+    let url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(interfaceInfo)}`);
     httpOptions.withCredentials = true;
