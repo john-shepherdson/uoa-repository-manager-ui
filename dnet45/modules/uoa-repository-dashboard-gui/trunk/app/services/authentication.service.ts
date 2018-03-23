@@ -11,8 +11,11 @@ export class AuthenticationService {
               private router: Router,
               private http: Http) {}
 
-  private apiUrl : string = apiUrl;
-  private loginUrl : string = `${this.apiUrl}/openid_connect_login`;
+  /*private apiUrl : string = apiUrl;*/
+  /*private loginUrl : string = `${this.apiUrl}/openid_connect_login`;*/
+
+  private apiUrl : string = process.env.API_ENDPOINT;
+  private loginUrl: string = process.env.AAI_ENDPOINT;
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
@@ -36,10 +39,8 @@ export class AuthenticationService {
     this.isLoggedIn = false;
     const baseUrl = appBaseUrl;
     console.log('logging out, going to:');
-    /*console.log(`https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo='${window.location}'`);
-    window.location.href = `https://aai.openminted.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${window.location.origin}`;*/
-    console.log(`https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo='${window.location}'`);
-    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${window.location.origin}`;
+    console.log(`https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${baseUrl}/landing`);
+    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${baseUrl}/landing`;
   }
 
   public tryLogin() {
@@ -82,11 +83,15 @@ export class AuthenticationService {
         );
       } else { this.isLoggedIn = true; }
       console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
-      if(sessionStorage.getItem("state.location")) {
+      if ( sessionStorage.getItem("state.location") ) {
         let state = sessionStorage.getItem("state.location");
         sessionStorage.removeItem("state.location");
-        console.log(`state is ${state}`);
-        window.location.href = state;
+        console.log(`tried to login - returning to state: ${state}`);
+        if (state.includes('landing')) {
+          this.router.navigate([this.redirectUrl]);
+        } else {
+          this.router.navigate([state]);
+        }
       }
     }
   }

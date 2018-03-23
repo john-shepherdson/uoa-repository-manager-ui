@@ -10,7 +10,6 @@ import { TabsModule, ModalModule } from 'ngx-bootstrap';
 
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
 import { TopMenuComponent } from './shared/topmenu/topmenu.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { MetricsModule } from './pages/metrics/metrics.module';
@@ -25,6 +24,8 @@ import { ValidatorService } from './services/validator.service';
 import { PiwikService } from './services/piwik.service';
 import { BrokerService } from './services/broker.service';
 import { MonitorService } from './services/monitor.service';
+import {LandingComponent} from "./pages/landing/landing.component";
+import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { MonitorService } from './services/monitor.service';
     AppComponent,
     TopMenuComponent,
     FooterComponent,
-    HomeComponent,
+    LandingComponent,
+    DashboardComponent
   ],
   providers: [
 //    appRoutingProviders

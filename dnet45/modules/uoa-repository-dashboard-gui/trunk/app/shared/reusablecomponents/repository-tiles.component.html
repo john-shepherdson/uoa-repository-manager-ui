@@ -25,15 +25,15 @@
       </div>
 
       <!--TILES VIEW-->
-      <div *ngIf="tilesView && reposOfUser.length" class="uk-grid-large uk-grid-margin-large uk-grid repos-grid">
-        <div *ngFor="let repo of reposOfUser" class="uk-width-expand@m uk-first-column uk-margin-bottom" style="min-width: 300px;">
+      <div *ngIf="tilesView && reposOfUser.length>0" class="uk-grid-large uk-grid-margin-large uk-grid repos-grid uk-height-1-1">
+        <div *ngFor="let repo of reposOfUser" class="uk-width-expand@m uk-width-auto\@m uk-first-column uk-margin-bottom" style="min-width: 300px; max-width: 22%;">
           <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack">
             <div class="uk-first-column">
-              <div>
-                <a class="el-link" [routerLink]="[getLinkToNext(repo)]">
+              <div class="">
+                <a class="el-link uk-vertical-align-middle uk-height-1-1" [routerLink]="[getLinkToNext(repo)]">
                   <div class="el-item uk-panel uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
                     <div class="uk-child-width-expand uk-grid-medium uk-flex-middle uk-grid uk-grid-stack" uk-grid="">
-                      <div class="uk-width-1-3@m uk-first-column" style="width: 80px;">
+                      <div class="uk-width-1-3@m uk-first-column" style="width: 90px;">
                         <img *ngIf="!repo.logoUrl" class="el-image uk-border-rounded" src="/assets/imgs/yourLogoHere.jpg" alt="">
                         <img *ngIf="repo.logoUrl" class="el-image uk-border-rounded" src="{{ repo.logoUrl }}" alt="">
                       </div>
@@ -55,7 +55,7 @@
       </div>
 
       <!-- LIST VIEW -->
-      <div *ngIf="!tilesView && reposOfUser.length" class="uk-grid-large uk-grid-margin-large uk-grid repos-list">
+      <div *ngIf="!tilesView && reposOfUser.length>0" class="uk-grid-large uk-grid-margin-large uk-grid repos-list">
         <div class="uk-width-1-1@m uk-first-column">
           <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
             <div>

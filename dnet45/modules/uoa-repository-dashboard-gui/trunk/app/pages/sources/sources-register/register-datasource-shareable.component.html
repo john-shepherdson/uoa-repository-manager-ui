@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                   <label class="control-label">Start typing in the name of your repository to narrow down the view</label>
-                  <input [(ngModel)]="searchBox" id="search" class="form-control" type="text" [disabled]="(!hasSelectedCountry)" />
+                  <input id="search" class="form-control" type="text" [disabled]="(!hasSelectedCountry)" />
                 </div>
               </div>
               <div *ngIf="selectedCountry">

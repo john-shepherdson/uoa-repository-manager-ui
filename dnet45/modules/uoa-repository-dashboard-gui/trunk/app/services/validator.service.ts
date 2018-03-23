@@ -19,9 +19,10 @@ let httpOptions = new RequestOptions({ headers: headers });
 @Injectable ()
 export class ValidatorService {
 
-  private apiUrl = apiUrl + '/validator/';
+  /*private apiUrl = apiUrl + '/validator/';*/
+  private apiUrl = process.env.API_ENDPOINT + '/validator/';
 
-  constructor(private http: Http) { }
+    constructor(private http: Http) { }
 
   /* returns array of sets of rules according to mode (literature, data, cris) */
   getRuleSets(mode: string): Observable<RuleSet[]> {

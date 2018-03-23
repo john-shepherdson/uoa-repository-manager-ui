@@ -101,7 +101,4 @@
            (focus)="group.get('adminEmail').markAsUntouched()"
            (blur)="group.get('adminEmail').updateValueAndValidity()">
   </form-inline>
-  <div *ngIf="showButton" class="form-group">
-    <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="registerDatasource()">Update Information</button>
-  </div>
 </form>

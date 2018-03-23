@@ -49,6 +49,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   userEmail: string;
   modalErrorMessage: string;
 
+  isModalShown: boolean;
   @ViewChild('subscribeToEventsModal')
   public subscribeToEventsModal: ConfirmationDialogComponent;
 
@@ -251,7 +252,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     this.frequencyChoice = freq;
   }
 
-  subscribeToEvents() {
+  subscribeToEvents(events: any) {
     this.modalErrorMessage = '';
     if (this.frequencyChoice) {
       this.subscribeToEventsModal.confirmed = true;

@@ -24,7 +24,8 @@ let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class RepositoryService {
-  private apiUrl = apiUrl + '/repository/';
+  /*private apiUrl = apiUrl + '/repository/';*/
+  private apiUrl = process.env.API_ENDPOINT + '/repository/';
 
   constructor(private http: Http) { }
 
@@ -49,7 +50,7 @@ export class RepositoryService {
   }
 
   deleteInterface(id: string): Observable<string> {
-    let url = `${this.apiUrl}deleteInterface/${id}`;
+    let url = `${this.apiUrl}deleteInterface/?id=${id}`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;
     return this.http.delete(url,httpOptions)

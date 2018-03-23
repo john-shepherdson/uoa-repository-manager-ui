@@ -10,17 +10,17 @@
         <h1 class="uk-h2">Metrics</h1>
 
         <!-- TOP HELP CONTENT -->
-<!--        <help-content #topHelperContent [position]="'top'"
+        <help-content #topHelperContent [position]="'top'"
                       [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-        </help-content>-->
+        </help-content>
 
         <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
           <div class="uk-grid">
 
             <!-- LEFT HELP CONTENT -->
-<!--            <aside-help-content #leftHelperContent [position]="'left'"
+            <aside-help-content #leftHelperContent [position]="'left'"
                                 [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-            </aside-help-content>-->
+            </aside-help-content>
 
             <!-- MIDDLE -->
             <div class=" uk-width-expand@m">
@@ -87,90 +87,3 @@
                      [confirmActionButton]="modalButton" (emitObject)="confirmedEnabling($event)">
   Are you sure you want to enable metrics for this repository?
 </confirmation-dialog>
-
-<!--   *** OLD HTML ***
-
-<div id="contentWrapper"
-     class="tm-main uk-section uk-section-default"
-     uk-height-viewport="expand: true"
-     style="box-sizing: border-box;" >
-
-  &lt;!&ndash; MARGIN-TOP  &ndash;&gt;
-  <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="true"></div>
-
-  <div>
-    <div class="uk-container">
-      <div class="uk-grid uk-grid-stack">
-        <div class="uk-width-expand@m uk-first-column">
-          <div class="gwt-HTML uk-margin-medium-bottom">
-            <h1 class="uk-article-title">Metrics</h1>
-          </div>
-          <div>
-            <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
-            <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-            <div *ngIf="loadingMessage" class="loading-big">
-              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-                {{ loadingMessage }}
-              </div>
-              <div class="whiteFilm"></div>
-            </div>
-            <div *ngIf="repo">
-              <div class="gwt-HTML">
-                <h4>You don't have metrics enabled for this repository yet. Would you like to enable them?</h4>
-                <p><img src="assets/imgs/metricsWorkflow-new.svg"
-                    style="display:block; margin: 0 auto;"
-                    width="50%"></p>
-                <p>Once you select to enable metrics for your repository, the following steps need to be performed:</p>
-                <p><i>On your side</i><br>
-                          1. Download the tracking code for your repository platform<br>
-                          2. Configure the tracking code according to the instructions<br>
-                          3. Deploy the tracking code in your repository platform
-                </p>
-                <p><i>On the OpenAIRE's side</i><br>
-                      4. Validate the installation of the tracking code and inform the repository manager accordingly<br>
-                </p>
-                <div class="uk-alert uk-alert-info">
-                  For more details about the workflows and tools please consult the
-                  <a target="_blank" href="http://beta.repomanager.openaire.eu/pdf/OpenAIRE_usage_stats_Guidelinesv1.pdf">
-                    “Guidelines for Collecting Usage Events and Provision of Usage Statistics”
-                  </a>
-                  .
-                </div>
-                <button class="uk-button uk-button-primary" (click)="confirmEnabling()">Enable Metrics</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tm-sidebar uk-width-1-4@m">
-          <div class="gwt-HTML">
-            <div class="uk-card uk-card-body uk-card-default sidemenu">
-              <h3>Info</h3>
-              <p>
-                This page provides you with information about views and downloads of items in your datasource.
-              </p>
-              <p>
-                The indicators are:
-              </p>
-              <ul>
-                <li>
-                  <strong>views</strong>
-                  of your datasource items
-                  <strong> in the OpenAIRE portal</strong>
-                </li>
-                <li>
-                  <strong>views of items</strong>
-                  tracked from your datasource
-                </li>
-                <li>
-                  <strong>number of downloads</strong>
-                  tracked from your datasource
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
--->

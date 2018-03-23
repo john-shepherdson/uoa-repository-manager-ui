@@ -28,7 +28,7 @@
               <div class="whiteFilm"></div>
             </div>
             <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-            <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages" class="events-results">
+            <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages>0" class="events-results">
               <div class="numberOfEventsLabel">
 
                 <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
@@ -189,7 +189,7 @@
               <div class="uk-form-horizontal">
                 <div class="form-group">
                   <label class="control-label" style="display: block;">Title</label>
-                  <div formArrayName="eventTitles" *ngFor="let title of group.controls.eventTitles.controls; let title_index = index">
+                  <div formArrayName="eventTitles" *ngFor="let title of group.get['eventTitles'].controls; let title_index = index">
                     <div [formGroupName]="title_index">
                       <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventTitle">
                       <a class="inlineBlock deleteIcon" (click)="removeControl('eventTitles',title_index)"><i class="fa fa-remove"></i></a>
@@ -201,7 +201,7 @@
               <div class="uk-form-horizontal">
                 <div class="form-group">
                   <label class="control-label" style="display: block;">Author</label>
-                  <div formArrayName="eventAuthors" *ngFor="let author of group.controls.eventAuthors.controls; let author_index = index">
+                  <div formArrayName="eventAuthors" *ngFor="let author of group.get['eventAuthors'].controls; let author_index = index">
                     <div [formGroupName]="author_index">
                       <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventAuthor">
                       <a class="inlineBlock deleteIcon" (click)="removeControl('eventAuthors',author_index)"><i class="fa fa-remove"></i></a>
@@ -213,7 +213,7 @@
               <div class="uk-form-horizontal">
                 <div class="form-group">
                   <label class="control-label" style="display: block;">Subject</label>
-                  <div formArrayName="eventSubjects" *ngFor="let subject of group.controls.eventSubjects.controls; let subject_index = index">
+                  <div formArrayName="eventSubjects" *ngFor="let subject of group.get['eventSubjects'].controls; let subject_index = index">
                     <div [formGroupName]="subject_index">
                       <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventSubject">
                       <a class="inlineBlock deleteIcon" (click)="removeControl('eventSubjects', subject_index)"><i class="fa fa-remove"></i></a>
@@ -226,7 +226,7 @@
                 <div class="uk-form-horizontal">
                   <div class="form-group">
                     <label class="control-label" style="display: block;">Date</label>
-                    <div formArrayName="eventDateRanges" *ngFor="let date of group.controls.eventDateRanges.controls; let date_index = index">
+                    <div formArrayName="eventDateRanges" *ngFor="let date of group.get['eventDateRanges'].controls; let date_index = index">
                       <div class="uk-form" style="position: relative;" [formGroupName]=date_index>
                         <input class="form-control inlineBlock dateFrom" style="width:88%;"
                                placeholder="From"
@@ -270,234 +270,8 @@
   </div>
 </div>
 
-<!--   *** OLD HTML ***
 
-<div class="uk-grid uk-grid-stack">
-  <div class="uk-width-expand@m uk-first-column">
-    <div class="uk-margin-medium-bottom">
-      <h1 class="uk-article-title">{{ repoName }}</h1>
-      <div class="uk-text uk-text-small uk-text-secondary">{{ topic }}</div>
-    </div>
-    <div>
-      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
-      <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{successMessage}}</div>
-      <div *ngIf="loadingMessage" class="loading-big">
-        <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
-        <div class="whiteFilm"></div>
-      </div>
-      <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-      <div *ngIf="eventsPage && eventsPage.totalPages" class="events-results">
-        <div class="numberOfEventsLabel">
-          <span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>
-          <span class="uk-float-right">
-            <button id="subscribe" type="button" class="uk-button uk-button-primary uk-button-small" (click)="showSubscriptionModal()">Subscribe to these events</button>
-          </span>
-        </div>
-        <div>
-          <ul class="uk-pagination">
-            <li>
-              <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
-                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
-                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
-                </span>
-                Previous
-              </a>
-            </li>
-            <li class="uk-margin-auto-left">
-              <a class="uk-link uk-link-muted" (click)="goToNextPage()">
-                Next
-                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
-                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
-                </span>
-              </a>
-            </li>
-          </ul>
-          <div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>
-        </div>
-        <div *ngFor="let event of eventsPage.values" class="events-list">
-          <div class="uk-card uk-card-default well uk-scrollspy-inview uk-animation-slide-top-medium">
-            <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-              <div class="uk-width-1-1@m uk-first-column">
-                <p class="text-right"><span class="uk-label">Trust: {{ event.trust }}</span></p>
-                <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
-                  <table class="uk-table uk-table-striped uk-table-middle">
-                    <tbody>
-                      <tr class="el-item">
-                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">ID</strong></td>
-                        <td class="uk-table-shrink">
-                          <div class="el-title">{{ event.publication.originalId }}</div>
-                        </td>
-                      </tr>
-                      <tr class="el-item">
-                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Title(s)</strong></td>
-                        <td class="uk-table-shrink">
-                          <div class="el-title">
-                            <span *ngFor="let t of event.publication.titles">{{ t }};&nbsp;&nbsp;</span></div>
-                        </td>
-                      </tr>
-                      <tr class="el-item">
-                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Author(s)</strong></td>
-                        <td class="uk-table-shrink">
-                          <div class="el-title"><span *ngFor="let auth of event.publication.creators">{{ auth }};&nbsp;&nbsp;</span></div>
-                        </td>
-                      </tr><tr class="el-item">
-                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">PID(s)</strong></td>
-                        <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let pid of event.publication.pids">({{ pid.type }}) {{ pid.value }}</span></div></td>
-                      </tr>
-                      <tr class="el-item"><td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
-                        <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let abs of event.publication.abstracts">{{ abs }}</span></div></td>
-                      </tr>
-                      <tr class="el-item">
-                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
-                        <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let rel of event.publication.externalReferences">{{ rel.name }}; </span></div></td>
-                      </tr>
-                      <tr class="el-item">
-                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Subject(s)</strong></td>
-                        <td class="uk-table-shrink">
-                          <div class="el-title"><span *ngFor="let subj of event.publication.subjects">{{ subj }};&nbsp;</span></div>
-                        </td>
-                      </tr>
-                      <tr class="el-item">
-                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Publication date</strong></td>
-                        <td class="uk-table-shrink"><div class="el-title">{{ event.publication.publicationdate }}</div></td>
-                      </tr>
-                      <tr class="el-item success">
-                        <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Rights</strong></td>
-                        <td class="uk-table-shrink">
-                          <div class="el-title">
-                            <span *ngFor="let l of event.publication.instances">{{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b><br>
-                              <a href="{{ l.url }}" target="_blank">{{ l.url }}</a><br>
-                            </span>
-                            <span class="pull-right">
-                              <span class="uk-label uk-label-success">added</span>&nbsp;&nbsp;
-                              <span><b>from: </b>
-                                <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                                <span> ({{ event.provenance.id }})</span>
-                              </span>
-                            </span>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <ul class="uk-pagination">
-            <li>
-              <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
-                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
-                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
-                </span>
-                Previous
-              </a>
-            </li>
-            <li class="uk-margin-auto-left">
-              <a class="uk-link uk-link-muted" (click)="goToNextPage()">
-                Next
-                <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
-                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
-                </span>
-              </a>
-            </li>
-          </ul>
-          <div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div [formGroup]="group" class="tm-sidebar uk-width-1-4@m">
-    <div class="enrichContentAdvancedSearch uk-card uk-card-body uk-card-default sidemenu">
-      <div>
-        <h6 class="uk-h6 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
-          <span>Tweak and refine events</span>
-        </h6>
-      </div>
-      <div role="form" class="uk-form-horizontal">
-        <div class="uk-form-horizontal">
-          <div class="form-group">
-            <label class="control-label">Trust [{{group.get('trustMin').value}} - {{group.get('trustMax').value}}]</label><br>
-            <input type="range" min="0" max="1" step="0.05" formControlName="trustMin" class="uk-range"/>
-            <input type="range" min="0" max="1" step="0.05" formControlName="trustMax" class="uk-range"/>
-          </div>
-        </div>
-        <div class="uk-form-horizontal">
-          <div class="form-group">
-            <label class="control-label" style="display: block;">Title</label>
-            <div formArrayName="eventTitles" *ngFor="let title of group.controls.eventTitles.controls; let title_index = index">
-              <div [formGroupName]="title_index">
-                <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventTitle">
-                <a class="inlineBlock deleteIcon" (click)="removeControl('eventTitles',title_index)"><i class="fa fa-remove"></i></a>
-              </div>
-            </div>
-            <a (click)="addControl('eventTitles',titleDefinition)"><i class="fa fa-plus"></i> Add another</a>
-          </div>
-        </div>
-        <div class="uk-form-horizontal">
-          <div class="form-group">
-            <label class="control-label" style="display: block;">Author</label>
-            <div formArrayName="eventAuthors" *ngFor="let author of group.controls.eventAuthors.controls; let author_index = index">
-              <div [formGroupName]="author_index">
-                <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventAuthor">
-                <a class="inlineBlock deleteIcon" (click)="removeControl('eventAuthors',author_index)"><i class="fa fa-remove"></i></a>
-              </div>
-            </div>
-            <a (click)="addControl('eventAuthors', authorDefinition)"><i class="fa fa-plus"></i> Add another</a>
-          </div>
-        </div>
-        <div class="uk-form-horizontal">
-          <div class="form-group">
-            <label class="control-label" style="display: block;">Subject</label>
-            <div formArrayName="eventSubjects" *ngFor="let subject of group.controls.eventSubjects.controls; let subject_index = index">
-              <div [formGroupName]="subject_index">
-                <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventSubject">
-                <a class="inlineBlock deleteIcon" (click)="removeControl('eventSubjects', subject_index)"><i class="fa fa-remove"></i></a>
-              </div>
-            </div>
-            <a (click)="addControl('eventSubjects', subjectDefinition)"><i class="fa fa-plus"></i> Add another</a>
-          </div>
-        </div>
-        <div>
-          <div class="uk-form-horizontal">
-            <div class="form-group">
-              <label class="control-label" style="display: block;">Date</label>
-              <div formArrayName="eventDateRanges" *ngFor="let date of group.controls.eventDateRanges.controls; let date_index = index">
-                <div class="uk-form" style="position: relative;" [formGroupName]=date_index>
-                  <input class="form-control inlineBlock dateFrom" style="width:88%;"
-                         placeholder="From"
-                         type="text"
-                         onfocus="(this.type='date')"
-                         formControlName=dateFrom>
-                  <input class="form-control inlineBlock dateTo" style="width:88%;"
-                         placeholder="To"
-                         type="text"
-                         onfocus="(this.type='date')"
-                         formControlName=dateTo>
-                  <a class="inlineBlock deleteIcon" (click)="removeControl('eventDateRanges',date_index)"><i class="fa fa-remove" style=""></i></a>
-                </div>
-              </div>
-              <a (click)="addControl('eventDateRanges', dateRangeDefinition)"><i class="fa fa-plus"></i> Add another</a>
-            </div>
-          </div>
-        </div>
-        <div role="form" class="form-horizontal">
-          <div class="form-group">
-            <div class="actionButtons">
-              <button type="button" (click)="updateQuery()" class="uk-button uk-button-primary advancedSearch">Apply</button>
-              <button type="reset" (click)="clearForm()" class="uk-button uk-button-default clearCriteria">Clear</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
--->
-
-<confirmation-dialog #subscribeToEventsModal [title]="'Create subscription for'" [isModalShown]="isModalShown"
+<confirmation-dialog #subscribeToEventsModal [title]="'Create subscription for'" [isModalShown]="isModalShown" [
                      [confirmActionButton]="'Subscribe'" (emitObject)="subscribeToEvents($event)">
   <div *ngIf="eventsPage">
     <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{ modalErrorMessage }}</div>

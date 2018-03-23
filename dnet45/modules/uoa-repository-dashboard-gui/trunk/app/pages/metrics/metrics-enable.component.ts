@@ -80,7 +80,7 @@ export class MetricsEnableComponent implements OnInit {
     }
   }
 
-  confirmedEnabling() {
+  confirmedEnabling(event : any) {
     if (this.repo) {
       this.loadingMessage = enablingMetrics;
       let piwik: PiwikInfo = {

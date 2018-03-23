@@ -9,8 +9,8 @@ import {apiUrl} from "../domain/tempAPI";
 export class AuthGuardService implements CanActivate {
 
 //  private oidc_endpoint : string = process.env.OIDC_ENDPOINT;
-  private loginUrl : string = `${apiUrl}/openid_connect_login`;
-
+  /*private loginUrl : string = `${apiUrl}/openid_connect_login`;*/
+  private loginUrl = process.env.AAI_ENDPOINT;
 
   constructor (private authenticationService: AuthenticationService, private router: Router) {}
 

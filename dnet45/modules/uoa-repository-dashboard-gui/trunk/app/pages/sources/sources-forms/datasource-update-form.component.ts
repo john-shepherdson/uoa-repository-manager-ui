@@ -48,6 +48,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   datasourceClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
 
+  isModalShown: boolean;
   @ViewChild('updateLogoUrlModal')
   public updateLogoUrlModal: ConfirmationDialogComponent;
 
@@ -332,7 +333,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
     this.updateLogoUrlModal.showModal();
   }
 
-  updatedLogoUrl() {
+  updatedLogoUrl(event: any) {
     this.emittedUrl.emit(this.updateGroup.get('logoUrl').value);
   }
 

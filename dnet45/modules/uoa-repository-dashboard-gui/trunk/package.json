@@ -9,7 +9,7 @@
     "deploy:server": "docker rm -f uoa-repository-dashboard-gui && docker run --name uoa-repository-dashboard-gui -d -p 80:80 uoa-repository-dashboard-gui",
     "deploy:complete": "npm run build:docker && npm run deploy:server",
     "watch": "npm run build -- --watch",
-    "server": "webpack-dev-server --inline --progress --port 3000 --host 194.177.192.121 --content-base .",
+    "server": "webpack-dev-server --inline --progress --port 3000 --host aleka.athenarc.gr --content-base .",
     "start": "npm run server",
     "stats": "webpack --progress -p --profile --env.release=true --json > stats.json"
   },
@@ -29,7 +29,7 @@
     "bootstrap-slider": "^10.0.0",
     "core-js": "^2.5.3",
     "ie-shim": "^0.1.0",
-    "ng2-ckeditor": "^1.2.0",
+    "ng2-ckeditor": "1.1.9",
     "ng2-slideable-directive": "^1.0.13",
     "ng2-slider-component": "^1.0.9",
     "ng2-styled-directive": "^1.0.6",

@@ -21,7 +21,8 @@ let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class MonitorService {
-  private apiUrl = apiUrl + '/monitor/';
+  /*private apiUrl = apiUrl + '/monitor/';*/
+  private apiUrl = process.env.API_ENDPOINT + '/monitor/';
 
   constructor(private http: Http) { }
 

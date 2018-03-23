@@ -113,7 +113,7 @@ export class MyArray extends MyGroup {
     this.confirmDelete.showModal();
   }
 
-  confirmedRemove(){
+  confirmedRemove(event: any){
     this.curIntrf.toBeDeleted = true;
     this.remove(this.curIndex);
     (this.parentGroup as FormArray).controls[this.name].removeAt(this.curIndex-1);
