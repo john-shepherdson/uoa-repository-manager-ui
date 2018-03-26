@@ -34,6 +34,15 @@ export class PiwikService {
       .catch(this.handleError);
   }
 
+  enableMetricsForRepository(piwik: PiwikInfo): Observable<PiwikInfo> {
+    let url = `${this.apiUrl}enableMetricsForRepository`;
+    console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
+    return this.http.post(url,piwik,httpOptions)
+      .map( res => <PiwikInfo>res.json() )
+      .catch(this.handleError);
+  }
+
   getOpenaireId(id: string): Observable<string> {
     let url = `${this.apiUrl}getOpenaireId/${id}`;
     console.log(`knocking on: ${url}`);
@@ -58,16 +67,23 @@ export class PiwikService {
       .catch(this.handleError);
   }
 
-  savePiwikInfo(piwik: PiwikInfo): Observable<string>{
+
+  markPiwikSiteAsValidated(repositoryId: string): Observable<string> {
+    let url = `${this.apiUrl}markPiwikSiteAsValidated/${repositoryId}`;
+    console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
+    return this.http.post(url,httpOptions)
+      .map(res => res.status.toString())
+      .catch(this.handleError);
+  }
+
+  savePiwikInfo(piwik: PiwikInfo): Observable<PiwikInfo>{
     let url = `${this.apiUrl}savePiwikInfo`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;
     return this.http.post(url,piwik,httpOptions)
-      .map( res => {
-        console.log(`responded ${res.statusText}`);
-        return res.status.toString();
-      })
-      .catch(this.handleError).share();
+      .map( res => <PiwikInfo>res.json() )
+      .catch(this.handleError);
   }
 
   private handleError(error: Response | any) {

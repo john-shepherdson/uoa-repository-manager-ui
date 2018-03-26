@@ -97,7 +97,8 @@ export class MetricsEnableComponent implements OnInit {
         validationDate: null,
         comment: ''
       };
-      this.piwikService.savePiwikInfo(piwik).subscribe(
+      /*this.piwikService.savePiwikInfo(piwik).subscribe(*/
+      this.piwikService.enableMetricsForRepository(piwik).subscribe(
         response => {
           console.log(`answered ${response}`);
           this.successMessage = enabledMetricsSuccess;
@@ -107,7 +108,6 @@ export class MetricsEnableComponent implements OnInit {
           console.log(error);
           this.errorMessage = enabledMetricsError;
           this.loadingMessage = '';
-          this.getRepo();
         }
       );
     }

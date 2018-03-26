@@ -47,7 +47,6 @@ export class TopMenuComponent implements OnInit {
   }
 
   isUserAdmin() {
-    /* ACTUAL ADMINS WILL HAVE A ROLE OF 'ROLE_ADMIN' */
-    return this.authService.getUserRole().includes('ROLE_USER');
+    return this.authService.getUserRole().includes('ROLE_ADMIN');
   }
 }

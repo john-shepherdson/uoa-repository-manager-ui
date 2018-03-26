@@ -71,7 +71,8 @@ export class AdminPgMetricsComponent implements OnInit {
   approvePiwik(id: string) {
     this.loadingMessage = enablingMetrics;
     this.errorMessage = '';
-    this.piwikService.approvePiwikSite(id).subscribe(
+    /*this.piwikService.approvePiwikSite(id).subscribe(*/
+    this.piwikService.markPiwikSiteAsValidated(id).subscribe(
       response => console.log(`approvePiwikSite responded: ${response}`),
       error => {
         console.log(error);
