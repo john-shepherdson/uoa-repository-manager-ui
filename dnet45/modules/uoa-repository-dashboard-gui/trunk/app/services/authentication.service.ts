@@ -16,6 +16,7 @@ export class AuthenticationService {
 
   private apiUrl : string = process.env.API_ENDPOINT;
   private loginUrl: string = process.env.AAI_ENDPOINT;
+  private baseUrl: string = process.env.WORKFLOW_API_ENDPOINT;
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
@@ -26,7 +27,7 @@ export class AuthenticationService {
   isLoggedIn: boolean = false;
 
   public loginWithState() {
-    console.log(`logging in with state. Current url is: ${window.location}`);
+    console.log(`logging in with state. Current url is: ${this.router.url}`);
     sessionStorage.setItem("state.location", this.router.url);
     window.location.href = this.loginUrl;
   }
@@ -37,10 +38,10 @@ export class AuthenticationService {
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('role');
     this.isLoggedIn = false;
-    const baseUrl = appBaseUrl;
+
     console.log('logging out, going to:');
-    console.log(`https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${baseUrl}/landing`);
-    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${baseUrl}/landing`;
+    console.log(`https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.baseUrl}/landing`);
+    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.baseUrl}/landing`;
   }
 
   public tryLogin() {
