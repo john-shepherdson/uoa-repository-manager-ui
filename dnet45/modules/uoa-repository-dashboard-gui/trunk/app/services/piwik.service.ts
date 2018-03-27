@@ -37,6 +37,7 @@ export class PiwikService {
   enableMetricsForRepository(piwik: PiwikInfo): Observable<PiwikInfo> {
     let url = `${this.apiUrl}enableMetricsForRepository`;
     console.log(`knocking on: ${url}`);
+    console.log(`sending ${JSON.stringify(piwik)}`);
     httpOptions.withCredentials = true;
     return this.http.post(url,piwik,httpOptions)
       .map( res => <PiwikInfo>res.json() )

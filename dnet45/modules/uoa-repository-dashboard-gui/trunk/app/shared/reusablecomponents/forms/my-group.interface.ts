@@ -1,4 +1,4 @@
-import { AbstractControl, FormBuilder, FormGroup } from "@angular/forms";
+ import { AbstractControl, FormBuilder, FormGroup } from "@angular/forms";
 import {
   AfterContentInit,
   Component,
@@ -46,6 +46,8 @@ export class MyGroup implements OnInit, AfterContentInit {
   public group : AbstractControl;
 
   public createdEvent : EventEmitter<any> = new EventEmitter();
+
+  public groupErrorMessage: string;
 
   constructor(injector : Injector) {
     this._fb = injector.get(FormBuilder);

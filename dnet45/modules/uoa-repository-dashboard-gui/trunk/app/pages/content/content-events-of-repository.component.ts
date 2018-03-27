@@ -14,7 +14,6 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
   loadingMessage: string;
   noTopics: string;
 
-  chosenEvent = 'another/blabla';
   repoName = '';
   topics: Map<string,Term> = new Map<string,Term>();
   repoTopics: BrowseEntry[] = [];
@@ -87,12 +86,16 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
   }
 
   goToEventsList(topic: string) {
-    let temp = topic.split('/');
+    let temp = topic.replace(/\//g,'|');
     let chosenTopic = temp[0];
     for (let i=1; i<temp.length; i++){
-      chosenTopic += `|${temp[i]}`;
+      chosenTopic += '|' + temp[i];
     }
-    this.router.navigate([`${chosenTopic}`], { relativeTo: this.route });
+    chosenTopic = encodeURIComponent(chosenTopic);
+    /*this.router.navigate([`/content/events/${this.repoName}`, chosenTopic]);*/
+    console.log(temp,this.route.url);
+    this.router.navigate([temp], {relativeTo: this.route});
+
   }
 
 

@@ -131,7 +131,7 @@ export let timezoneDesc = {
 
 export let datasourceTypeDesc = {
   desc : 'The type of your repository',
-  label : 'Datasource Type (*)',
+  label : 'Repository Type (*)',
   mandatory : true,
   recommended : false
 };

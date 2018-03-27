@@ -69,6 +69,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
 
   getParams() {
     this.topic = this.route.snapshot.paramMap.get('topic');
+    console.log(`my topic is: ${this.topic}`);
     this.getCorrectTopic();
     this.repoName = this.route.snapshot.paramMap.get('name');
   }

@@ -70,6 +70,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       this.getInterfaceInfo(this.data[0].baseUrl);
       this.data.splice(0,1);
       this.oldInterface = true;
+      console.log(`received an interface!`);
     }
 
     /* initializes MyGroup parent component and the FormGroup */
@@ -155,6 +156,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   saveInterface() {
+    this.groupErrorMessage = '';
     this.errorMessage = '';
     this.successMessage = '';
     if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
@@ -216,7 +218,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.successMessage = '';
     this.loadingMessage = formSubmitting;
     this.currentInterface = new RepositoryInterface();
-    this.currentInterface.baseUrl = baseUrl;
+    this.currentInterface.baseUrl = encodeURIComponent(baseUrl);
     this.currentInterface.accessSet = valset;
     this.currentInterface.desiredCompatibilityLevel = compLvl;
     this.currentInterface.compliance = compLvl;

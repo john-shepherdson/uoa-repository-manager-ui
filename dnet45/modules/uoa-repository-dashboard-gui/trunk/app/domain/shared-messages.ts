@@ -15,13 +15,14 @@ export const loadingAggregationHistory = 'Retrieving aggregation history ...';
 export const loadingAggregationHistoryError = 'System error retrieving repository aggregation history.';
 export const noAggregationHistory = 'There is no aggregation history for this repository at the moment';
 
-/* Loading Rules Messages */
+/* Rules Messages */
 export const loadingRuleSets = 'Retrieving sets of rules ...';
 export const loadingRuleSetsError = 'The rule sets can not be retrieved at the moment';
 export const noRuleSets = 'No rule sets were found';
 export const noContentRulesResults = 'No content rules were tested';
 export const noUsageRulesResults = 'No usage rules were tested';
-
+export const didntSelectRules = 'You need to select at least one rule';
+export const didntSelectCrisEntities = 'You need to select at least one entity';
 
 /* Loading Validation Sets Messages */
 export const loadingValSets = 'Retrieving validation sets ...';

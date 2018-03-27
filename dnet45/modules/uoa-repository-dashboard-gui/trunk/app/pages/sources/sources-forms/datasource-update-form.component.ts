@@ -98,7 +98,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   englishNameDesc : Description = englishNameDesc;
   logoUrlDesc : Description = logoUrlDesc;
   timezoneDesc : Description = timezoneDesc;
-  datasourceTypeDesc : Description;
+  datasourceTypeDesc : Description = datasourceTypeDesc;
   adminEmailDesc : Description = adminEmailDesc;
 
   constructor(
@@ -127,13 +127,14 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   setupUpdateForm(){
     if (this.selectedRepo) {
-      if (this.selectedRepo.datasourceType == 'journal') {
+      console.log(`my datasource type is: ${this.selectedRepo.datasourceType}`);
+      /*if (this.selectedRepo.datasourceType == 'journal') {
         this.datasourceTypeDesc = journalTypeDesc;
       } else if (this.selectedRepo.datasourceType == 'aggregator') {
         this.datasourceTypeDesc = aggregatorTypeDesc;
       } else {
         this.datasourceTypeDesc = datasourceTypeDesc;
-      }
+      }*/
       this.updateGroup.setValue({
         softwarePlatform: this.selectedRepo.typology,
         platformName: '',

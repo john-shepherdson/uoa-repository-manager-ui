@@ -20,6 +20,7 @@ export class SrAggregatorComponent implements OnInit {
 
   repo: Repository;
 
+
   /* queryParams is used to change the queryParams without refreshing the page
    * This was needed for Help Service [which sends back info according to the current router.url]
    * the param that is used is 'step' and the values are: 'basicInformation','interfaces','finish'
@@ -75,6 +76,10 @@ export class SrAggregatorComponent implements OnInit {
     this.showInterfaces = true;
     this.step2 = 'active';
     this.group = this.fb.group({});
+  }
+
+  updateInterfaceCount(addedInterface: boolean) {
+
   }
 
   downloadLogo() {

@@ -30,7 +30,7 @@ import {
   timezoneDesc,
   journalTypeDesc,
   aggregatorTypeDesc,
-  adminEmailDesc
+  adminEmailDesc, datasourceTypeDesc
 } from '../../../domain/oa-description';
 import { ValidatorService } from '../../../services/validator.service';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -90,7 +90,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   englishNameDesc : Description = englishNameDesc;
   logoUrlDesc : Description = logoUrlDesc;
   timezoneDesc : Description = timezoneDesc;
-  datasourceTypeDesc : Description;
+  datasourceTypeDesc : Description = datasourceTypeDesc;
   adminEmailDesc : Description = adminEmailDesc;
 
   constructor(
@@ -106,11 +106,12 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   loadForm(){
     this.mode = this.route.snapshot.url[0].path.toString();
-    if (this.mode == 'journal') {
+    console.log(`my mode is ${this.mode}`);
+    /*if (this.mode == 'journal') {
       this.datasourceTypeDesc = journalTypeDesc;
     } else if (this.mode == 'aggregator') {
       this.datasourceTypeDesc = aggregatorTypeDesc;
-    }
+    }*/
     console.log(this.mode);
     this.group = this.fb.group(this.groupDefinition);
     this.getTypologies();

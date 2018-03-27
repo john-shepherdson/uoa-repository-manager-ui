@@ -86,9 +86,11 @@ export class MyArray extends MyGroup {
         console.log(this.viewContainerRef.get(0));
         ((this.parentGroup as FormArray).controls[this.name].at(0).corpus((<MyGroup>componentView.instance).generate().value));
       } else {
-        this.curIntrf = <MyGroup>componentView.instance;
-        this.curIndex = index;
-        this.confirmRemoveInterface();
+        if (index>0){
+          this.curIntrf = <MyGroup>componentView.instance;
+          this.curIndex = index;
+          this.confirmRemoveInterface();
+        } else { (<MyGroup>componentView.instance).groupErrorMessage = 'At least one interface must be present'; }
         /*(<MyGroup>componentView.instance).toBeDeleted = true;
         this.remove(index);
         (this.parentGroup as FormArray).controls[this.name].removeAt(index-1);
@@ -114,10 +116,12 @@ export class MyArray extends MyGroup {
   }
 
   confirmedRemove(event: any){
-    this.curIntrf.toBeDeleted = true;
-    this.remove(this.curIndex);
-    (this.parentGroup as FormArray).controls[this.name].removeAt(this.curIndex-1);
-    this.arrayData_.splice(this.curIndex-1,1);
+    if (this.curIndex!=0) {
+      this.curIntrf.toBeDeleted = true;
+      this.remove(this.curIndex);
+      (this.parentGroup as FormArray).controls[this.name].removeAt(this.curIndex - 1);
+      this.arrayData_.splice(this.curIndex - 1, 1);
+    }
   }
 
   remove(i : number) : void {

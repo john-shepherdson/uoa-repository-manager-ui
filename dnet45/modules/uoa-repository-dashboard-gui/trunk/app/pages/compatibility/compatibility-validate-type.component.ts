@@ -5,6 +5,8 @@ import { RepositoryService } from '../../services/repository.service';
 import { InterfaceInformation, JobForValidation, Repository, RuleSet } from '../../domain/typeScriptClasses';
 import { AuthenticationService } from '../../services/authentication.service';
 import {
+  didntSelectCrisEntities,
+  didntSelectRules,
   identifyingUrl, invalidCustomBaseUrl,
   loadingReposMessage, loadingRuleSets, loadingRuleSetsError,
   loadingUserRepoInfoError, loadingValSets, loadingValSetsError, noRuleSets, noServiceMessage, submittingJobError
@@ -111,16 +113,21 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       this.step1ChooseBaseUrl.submitForm();
     } else if (this.showGuidelines) {
       this.step2ChooseGuidelines.saveChanges();
-      if (this.type == 'cris'){
-        this.setQueryParam('crisEntities');
-        this.showCrisEntities = true;
+      console.log(this.chosenContentRules);
+      if (this.chosenContentRules.length || this.chosenUsageRules.length){
+        if (this.type == 'cris'){
+          this.setQueryParam('crisEntities');
+          this.showCrisEntities = true;
+        } else {
+          this.getValidationSets();
+          this.setQueryParam('parameters');
+          this.showParameters = true;
+        }
+        this.showGuidelines = false;
+        this.step3 = 'active';
       } else {
-        this.getValidationSets();
-        this.setQueryParam('parameters');
-        this.showParameters = true;
+        this.errorMessage = didntSelectRules;
       }
-      this.showGuidelines = false;
-      this.step3 = 'active';
     } else if (this.showParameters) {
       this.step3ChooseParameters.submitChanges();
       //save all changes
@@ -131,11 +138,15 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       this.step4 = 'active';
     } else if (this.showCrisEntities) {
       this.step3ChooseCrisEntities.saveChanges();
-      //save all changes
-      this.submitForValidation();
-      this.showFinish = true;
-      this.showCrisEntities = false;
-      this.step4 = 'active';
+      if (this.chosenCrisEntities.length) {
+        //save all changes
+        this.submitForValidation();
+        this.showFinish = true;
+        this.showCrisEntities = false;
+        this.step4 = 'active';
+      } else {
+        this.errorMessage = didntSelectCrisEntities;
+      }
     }
   }
 

@@ -69,7 +69,7 @@ export class MetricsEnableComponent implements OnInit {
     this.piwikService.getOpenaireId(this.repo.id).subscribe(
       id => {
         this.oaId = id;
-        console.log(this.oaId);},
+        console.log(`getOpenaireId responded: ${this.oaId}`);},
       error => console.log(`ERROR is ${error}`)
     );
   }
@@ -88,7 +88,7 @@ export class MetricsEnableComponent implements OnInit {
         openaireId: this.oaId,
         repositoryName: this.repo.officialName,
         country: this.repo.countryName,
-        siteId: `${this.analyticsUrl}siteName=${this.repo.officialName}&url=${this.repo.websiteUrl}`,
+        siteId: `${this.analyticsUrl}siteName=${encodeURIComponent(this.repo.officialName)}&url=${this.repo.websiteUrl}`,
         authenticationToken: this.authenticationToken,
         creationDate: null,
         requestorName: this.authService.getUserName(),
@@ -100,7 +100,7 @@ export class MetricsEnableComponent implements OnInit {
       /*this.piwikService.savePiwikInfo(piwik).subscribe(*/
       this.piwikService.enableMetricsForRepository(piwik).subscribe(
         response => {
-          console.log(`answered ${response}`);
+          console.log(`savePiwikInfo answered: ${JSON.stringify(response)}`);
           this.successMessage = enabledMetricsSuccess;
           this.loadingMessage = '';
         },
