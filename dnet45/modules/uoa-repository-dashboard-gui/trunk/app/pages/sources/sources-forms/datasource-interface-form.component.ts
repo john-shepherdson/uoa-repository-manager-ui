@@ -62,7 +62,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     if (this.data && this.data.length) {
       this.currentInterface = this.data[0];
       this.patchData.next({
-          baseUrl: this.data[0].baseUrl,
+          baseUrl: this.currentInterface.baseUrl,
           selectValidationSet: '',
           customValidationSet: '',
           compatibilityLevel:this.data[0].desiredCompatibilityLevel
@@ -128,10 +128,12 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         },
         () => {
           if ( this.currentInterface && this.currentInterface.accessParams && this.currentInterface.accessParams['set'] ) {
-            if ( this.valsetList.filter( x => x === this.currentInterface.accessParams['set']) ) {
+            if ( this.valsetList.filter( x => x === this.currentInterface.accessParams['set']).length ) {
               this.patchData.next({selectValidationSet:this.currentInterface.accessParams['set']});
             } else {
               this.patchData.next({customValidationSet:this.currentInterface.accessParams['set']});
+              this.getMyControl('selectValidationSet').enable();
+              this.getMyControl('customValidationSet').disable();
             }
           }
           this.loadingMessage = '';
