@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { jobTypes } from '../../domain/job-types';
 
-
-/*DELETE ME LATER*/
 import { MonitorService } from '../../services/monitor.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { JobsOfUser, StoredJob } from '../../domain/typeScriptClasses';
@@ -155,7 +153,6 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
   }
 
   getResultImage(status: string) {
-    console.log(`status is ${status}`);
     if (status == 'ongoing') {
       return `../../../assets/imgs/icon_colours-question.jpg`;
     } else if (status == 'successful') {

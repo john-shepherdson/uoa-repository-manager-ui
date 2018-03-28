@@ -33,13 +33,12 @@
                 <div class="uk-container uk-container-center">
                   <div class="al_timeline">
                     <div *ngFor="let aggr of aggregations.aggregationHistory" class="al_timeline_block versionChange">
-                      <div class="al_timeline_image uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-scale-up">
-                        <div class="al_timeline_content uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-slide-left">
-                          <h3 *ngIf="aggr.date">{{ aggr.date }}</h3>
-                          <p *ngIf="aggr.aggregationStage">Aggregation stage - {{ aggr.aggregationStage }}</p>
-                          <p *ngIf="aggr.collectionMode">CollectionMode - {{ aggr.collectionMode }}</p>
-                          <p>Number of records - {{ aggr.numberOfRecords }}</p>
-                        </div>
+                      <div class="al_timeline_image uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-scale-up"></div>
+                      <div class="al_timeline_content uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-slide-left">
+                        <h3 *ngIf="aggr.date">{{ aggr.date }}</h3>
+                        <p *ngIf="aggr.aggregationStage">Aggregation stage - {{ aggr.aggregationStage }}</p>
+                        <p *ngIf="aggr.collectionMode">CollectionMode - {{ aggr.collectionMode }}</p>
+                        <p>Number of records - {{ aggr.numberOfRecords }}</p>
                       </div>
                     </div>
                   </div>

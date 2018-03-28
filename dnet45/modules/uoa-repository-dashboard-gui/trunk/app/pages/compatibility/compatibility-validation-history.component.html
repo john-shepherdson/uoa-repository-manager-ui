@@ -117,15 +117,15 @@
                         <td class="uk-table-shrink" style="vertical-align: top !important;">
                           <div class="el-title">{{ job.baseUrl }}</div>
                         </td>
-                        <td class="uk-table-shrink">
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
                           <div *ngIf="job.validationType.includes('C')" class="el-title">OAI Content</div>
-                          <div *ngIf="job.validationType.includes('U')"class="el-title">OAI Usage</div>
+                          <div *ngIf="job.validationType.includes('U')" class="el-title">OAI Usage</div>
                         </td>
-                        <td class="uk-table-shrink">
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
                           <div *ngIf="job.validationType.includes('C')" class="el-title">{{ job.contentJobStatus }}</div>
                           <div *ngIf="job.validationType.includes('U')" class="el-title">{{ job.usageJobStatus }}</div>
                         </td>
-                        <td class="uk-table-shrink">
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
                           <div *ngIf="job.validationType.includes('C')" class="el-title">{{ job.contentJobScore }}</div>
                           <div *ngIf="job.validationType.includes('U')" class="el-title">{{ job.usageJobScore }}</div>
                         </td>
@@ -136,19 +136,19 @@
                           <div class="el-title">{{ job.guidelinesShortName }}</div>
                         </td>
                         <td class="uk-table-shrink" style="vertical-align: top !important;">
-                          <div class="el-link actions">
+                          <div class="el-link">
                             <div class="viewDetailsLinkWrapper">
-                              <a class="viewDetails" [routerLink]="[job.id]">View Results<i
-                                class="fa fa-angle-right"></i></a>
+                              <a class="viewDetails" [routerLink]="[job.id]">
+                                View Results<i class="fa fa-angle-right"></i>
+                              </a>
                             </div>
                             <div>
-                              <a class="resubmitJob" (click)="resubmitJob(job.id)">Resubmit Job<i
-                                class="fa fa-repeat"></i></a>
+                              <a class="resubmitJob" (click)="resubmitJob(job.id)">Resubmit Job<i class="fa fa-repeat"></i></a>
                             </div>
                           </div>
                         </td>
                         <td class="uk-table-shrink" style="vertical-align: top !important;">
-                          <img src="{{ getResultImage(job.validationStatus) }}" width="20" height="20">
+                          <input type="image" src="{{ getResultImage(job.validationStatus) }}" title="{{job.validationStatus}}" width="20" height="20">
                         </td>
                       </tr>
                       </tbody>

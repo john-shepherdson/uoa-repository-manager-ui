@@ -47,7 +47,7 @@ export class CompatibilityValidateStep1Component implements OnInit {
         this.errorMessage = didntChooseBaseUrl;
         return false;
       }
-    } else if (this.group.get('customBaseUrl').enabled) {
+    } else {
       if ( this.group.get('customBaseUrl').value ) {
         this.emitObject.emit(this.group.get('customBaseUrl').value);
         console.log('added new baseUrl!');

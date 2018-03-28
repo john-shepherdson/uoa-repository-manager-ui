@@ -16,7 +16,7 @@ export class AuthenticationService {
 
   private apiUrl : string = process.env.API_ENDPOINT;
   private loginUrl: string = process.env.AAI_ENDPOINT;
-  private baseUrl: string = process.env.WORKFLOW_API_ENDPOINT;
+  private baseUrl: string = 'http://aleka.athenarc.gr:3000';
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
@@ -32,7 +32,7 @@ export class AuthenticationService {
     window.location.href = this.loginUrl;
   }
 
-  public logout(){
+  public logout() {
     deleteCookie('currentUser');
     sessionStorage.removeItem('name');
     sessionStorage.removeItem('email');
@@ -73,6 +73,7 @@ export class AuthenticationService {
             sessionStorage.setItem('email',userInfo.json()['email']);
             sessionStorage.setItem('role',userInfo.json()['role']);
             this.isLoggedIn = true;
+            console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
           },
           () => {
             sessionStorage.removeItem('name');
@@ -84,8 +85,8 @@ export class AuthenticationService {
         );
       } else {
         this.isLoggedIn = true;
+        console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
       }
-      console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
       if ( sessionStorage.getItem("state.location") ) {
         let state = sessionStorage.getItem("state.location");
         sessionStorage.removeItem("state.location");

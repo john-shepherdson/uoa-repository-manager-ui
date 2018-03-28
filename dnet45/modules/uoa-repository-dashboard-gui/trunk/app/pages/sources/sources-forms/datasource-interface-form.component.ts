@@ -62,7 +62,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     if (this.data && this.data.length) {
       this.currentInterface = this.data[0];
       this.patchData.next({
-          baseUrl: decodeURIComponent(this.data[0].baseUrl),
+          baseUrl: this.data[0].baseUrl,
           selectValidationSet: '',
           customValidationSet: '',
           compatibilityLevel:this.data[0].desiredCompatibilityLevel
@@ -219,7 +219,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.successMessage = '';
     this.loadingMessage = formSubmitting;
     this.currentInterface = new RepositoryInterface();
-    this.currentInterface.baseUrl = encodeURIComponent(baseUrl);
+    this.currentInterface.baseUrl = baseUrl;
     this.currentInterface.accessSet = valset;
     this.currentInterface.accessParams = {'set': valset};
     this.currentInterface.desiredCompatibilityLevel = compLvl;
