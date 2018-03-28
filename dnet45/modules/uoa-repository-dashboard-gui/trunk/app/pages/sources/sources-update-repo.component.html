@@ -2,17 +2,17 @@
       <div class="uk-width-1-1@m uk-first-column">
 
         <!-- TOP HELP CONTENT -->
-<!--        <help-content #topHelperContent [position]="'top'"
+        <help-content #topHelperContent [position]="'top'"
                       [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-        </help-content>-->
+        </help-content>
 
         <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
           <div class="uk-grid">
 
             <!-- LEFT HELP CONTENT -->
-<!--            <aside-help-content #leftHelperContent [position]="'left'"
+            <aside-help-content #leftHelperContent [position]="'left'"
                                 [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-            </aside-help-content>-->
+            </aside-help-content>
 
             <!-- MIDDLE -->
             <div class=" uk-width-expand@m">
@@ -89,75 +89,3 @@
       </div>
     </div>
 
-<!--  *** OLD HTML ***
-
-<div class="uk-grid uk-grid-stack">
-  <div class="uk-width-expand@m uk-first-column">
-    <div *ngIf="loadingMessage" class="loading-big">
-      <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-        {{ loadingMessage }}
-      </div>
-      <div class="whiteFilm"></div>
-    </div>
-    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-    <div *ngIf="repo" class="uk-margin-medium-bottom">
-      <h1 class="uk-article-title">
-        <a id="updateLogoURL" (click)="datasourceUpdateForm.updateLogoUrl(repo.logoUrl)">
-          <img *ngIf="!logoURL" src="/assets/imgs/yourLogoHere.jpg" style="margin-right: 15px; margin-top:-8px" width="60">
-          <img *ngIf="logoURL" src="{{ logoURL }}" style="margin-right: 15px; margin-top:-8px" width="60">
-        </a>
-        {{ repo.officialName }}
-      </h1>
-    </div>
-    <div *ngIf="repo">
-      <div>
-        <ul class="uk-margin el-nav uk-tab" uk-switcher="connect: .uk-switcher">
-          <li routerLinkActive="uk-active">
-            <a href="#">Update Information</a>
-          </li>
-          <li routerLinkActive="uk-active">
-            <a href="#">Update Interfaces</a>
-          </li>
-        </ul>
-        <ul class="uk-switcher">
-          <li class="el-item">
-            <div>
-              <datasource-update-form #datasourceUpdateForm
-                                      [selectedRepo]="repo"
-                                      [showButton]=true
-                                      (emittedUrl)="getNewLogoUrl($event)"></datasource-update-form>
-            </div>
-          </li>
-          <li class="el-item">
-            <div *ngIf="repo && repoInterfaces" class="uk-width-1-1@m uk-first-column">
-              <form [formGroup]="group">
-                <form-repeat [component]="updateDatasourceInterfaces"
-                             [parentGroup]="group"
-                             [description]="interfaceFormDesc"
-                             [name]="'datasource-interface-form'"
-                             [data]="repoInterfaces"
-                             [otherData]="repo">
-                </form-repeat>
-              </form>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-&lt;!&ndash;  <div class="tm-sidebar uk-width-1-4@m">
-    <div>
-      <div class="uk-card uk-card-body uk-card-default sidemenu"><h3>Info / Help</h3>
-        <p>You have access to edit&nbsp;the following repository listed on the left.&nbsp;Fields marked with * are mandatory.
-          &nbsp;Hover over each field to find more information about it.</p>
-        <p>The official repository administrator (his/her email address being retrieved from the OAI-PMH verb Identify) will be contacted and informed about the update request.
-          So please make sure that you are either this person or have access to the email address, or that you have notified them.</p>
-        <p>For any problems or questions please contact the <a href="https://www.openaire.eu/support/helpdesk" target="_blank">OpenAIRE helpdesk</a>.</p>
-      </div>
-    </div>
-  </div>&ndash;&gt;
-  <aside-help-content #rightHelperContent [position]="'right'"
-                      [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-  </aside-help-content>
-</div>
--->

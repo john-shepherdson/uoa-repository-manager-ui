@@ -2,11 +2,10 @@
  * Created by stefania on 7/17/17.
  */
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Content, PageContent } from "../domain/page-content";
 import {helpServiceUrl} from "../domain/tempAPI";
-
 
 @Injectable()
 export class HelpContentService {
@@ -17,16 +16,13 @@ export class HelpContentService {
   constructor (private http: Http) {
   }
 
-  cache : any = {};
+  getActivePageContent(route: string) {
+    const url = this._helpServiceUrl + "/page/route?q=" + route;
+    console.log(`sending request at: ${url}`);
 
-  getActivePageContent(route: string) : Observable<PageContent> {
-    if (!this.cache[route]) {
-      this.cache[route] = this.http.get(this._helpServiceUrl + "/page/route?q=" + route)
-        .map(res => <PageContent> res.json())
-        .catch(this.handleError)
-        .share();
-    }
-    return this.cache[route];
+    return this.http.get(url)
+        .map(res => res.json() )
+        .catch(this.handleError);
   }
 
   private extractData(res: Response) {

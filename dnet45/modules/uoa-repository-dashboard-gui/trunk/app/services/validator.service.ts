@@ -2,10 +2,6 @@
 * Created by myrto on 1/24/2018
 */
 
-/*
-*  !!! USING TEMPORARY API ADDRESS AND USER
-*/
-
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';

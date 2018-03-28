@@ -62,6 +62,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   @Input() showButton: boolean;
 
+  formSubmitted:boolean = false;
   updateGroup: FormGroup;
   readonly updateGroupDefinition = {
     softwarePlatform : '',
@@ -74,10 +75,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
     latitude : ['', [Validators.required, Validators.min(-90), Validators.max(90)] ],
-    websiteUrl : ['', [Validators.required] ],
+    websiteUrl : ['', [Validators.required, Validators.pattern('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$')] ],
     institutionName : ['', Validators.required],
     englishName: ['', Validators.required],
-    logoUrl: [''],
+    logoUrl: ['', Validators.pattern('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$') ],
     timezone: ['', Validators.required],
     datasourceType: ['', Validators.required],
     adminEmail: ['', [Validators.required, Validators.email]]
@@ -165,16 +166,22 @@ export class DatasourceUpdateFormComponent implements OnInit {
       this.updateGroup.get('websiteUrl').disable();
       this.updateGroup.get('institutionName').disable();
       if (this.selectedRepo.datasourceType == 'journal') {
+
+        this.updateGroup.get('issn').setValidators([Validators.required, Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')]);
+
         let ssnToShow = this.selectedRepo.issn.slice(0, 4)+ '-' + this.selectedRepo.issn.toString().slice(4);
         this.updateGroup.get('issn').setValue(ssnToShow);
-        if (this.selectedRepo.eissn) {
+
+        if (this.selectedRepo.eissn.trim().length) {
           ssnToShow = this.selectedRepo.eissn.slice(0, 4)+ '-' + this.selectedRepo.eissn.toString().slice(4);
           this.updateGroup.get('eissn').setValue(ssnToShow);
         }
-        if (this.selectedRepo.eissn) {
+
+        if (this.selectedRepo.lissn.trim().length) {
           ssnToShow = this.selectedRepo.lissn.slice(0, 4)+ '-' + this.selectedRepo.lissn.toString().slice(4);
           this.updateGroup.get('lissn').setValue(ssnToShow);
         }
+
         this.updateGroup.get('issn').disable();
         this.updateGroup.get('eissn').disable();
         this.updateGroup.get('lissn').disable();
@@ -246,6 +253,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   updateRepo() {
+    this.formSubmitted = true;
     this.errorMessage = '';
     this.successMessage = '';
 
@@ -343,5 +351,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
 export function checkPlatform(c: AbstractControl) {
   if ( c.get('softwarePlatform').value || c.get('platformName').value )
     return null;
+  markPlatformAsRequired(c);
   return 'invalid';
+}
+
+export function markPlatformAsRequired(c: AbstractControl) {
+  c.get('platformName').setValidators([Validators.required]);
 }

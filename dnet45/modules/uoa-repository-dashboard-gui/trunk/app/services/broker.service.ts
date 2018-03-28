@@ -2,10 +2,6 @@
 * Created by myrto on 12/05/2017
 */
 
-/*
-*  !!! USING TEMPORARY API ADDRESS AND USER
-*/
-
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -15,7 +11,7 @@ import {
   AdvQueryObject, BrowseEntry, EventsPage, OpenaireSubscription, Repository, SimpleSubscriptionDesc, Subscription,
   Term
 } from '../domain/typeScriptClasses';
-import { apiUrl } from '../domain/tempAPI';
+
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });

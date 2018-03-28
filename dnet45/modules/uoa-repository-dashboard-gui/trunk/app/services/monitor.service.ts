@@ -2,9 +2,6 @@
 * Created by myrto on 12/05/2017
 */
 
-/*
-*  !!! USING TEMPORARY API ADDRESS AND USER
-*/
 
 import { Injectable } from '@angular/core';
 

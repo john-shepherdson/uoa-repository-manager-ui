@@ -31,16 +31,15 @@ export class HelpContentComponent implements OnInit {
   ngOnInit() {
     this.errorMessage = null;
 
-    this._helpContentService.getActivePageContent(window.location.toString()).subscribe(
-      pageContent => {
-        this.shiftThroughContent(pageContent);
-        console.log(`got response from help service`);
-      },
-      error => this.handleError(<any>error));
+    this._helpContentService.getActivePageContent( this.router.url ).subscribe(
+      pageContent => this.shiftThroughContent(pageContent),
+      error => this.handleError(<any>error)
+    );
   }
 
   shiftThroughContent(pageContent: PageContent) {
     this.contents = pageContent.content[this.position];
+    console.log(`help-service for ${this.router.url} -> ${this.position} responded: ${JSON.stringify(this.contents)}`);
   }
 
   isPresent() {

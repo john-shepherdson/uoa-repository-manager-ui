@@ -12,10 +12,17 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 
 export class TopMenuComponent implements OnInit {
+  userLoggedIn: boolean = false;
+  userName: string = '';
+  isUserAdmin: boolean = false;
 
   constructor(public authService: AuthenticationService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getIsUserLoggedIn();
+    this.getUserName();
+    this.getIsUserAdmin();
+  }
 
 
   onClick(id: string) {
@@ -29,24 +36,24 @@ export class TopMenuComponent implements OnInit {
   }
 
   logout(){
-    if(this.getIsUserLoggedIn()){
+    if( this.userLoggedIn ){
       this.authService.logout();
     }
   }
 
-  register(){
-    this.authService.loginWithState();
-  }
 
   getUserName() {
-    return this.authService.getUserName();
+    this.userName = this.authService.getUserName();
+    return this.userName;
   }
 
   getIsUserLoggedIn() {
-    return this.authService.getIsUserLoggedIn();
+    this.userLoggedIn = this.authService.getIsUserLoggedIn();
+    return this.userLoggedIn;
   }
 
-  isUserAdmin() {
-    return this.authService.getUserRole().includes('ROLE_ADMIN');
+  getIsUserAdmin() {
+    this.isUserAdmin = (this.authService.getUserRole().includes('ROLE_ADMIN'));
+    return this.isUserAdmin;
   }
 }

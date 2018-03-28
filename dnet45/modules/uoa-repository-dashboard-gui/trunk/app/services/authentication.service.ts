@@ -82,7 +82,9 @@ export class AuthenticationService {
             this.isLoggedIn = false;
           }
         );
-      } else { this.isLoggedIn = true; }
+      } else {
+        this.isLoggedIn = true;
+      }
       console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
       if ( sessionStorage.getItem("state.location") ) {
         let state = sessionStorage.getItem("state.location");
@@ -104,16 +106,22 @@ export class AuthenticationService {
   public getUserName() {
     if (this.isLoggedIn)
       return sessionStorage.getItem('name');
+    else
+      return '';
   }
 
   public getUserEmail() {
     if (this.isLoggedIn)
       return sessionStorage.getItem('email');
+    else
+      return '';
   }
 
   public getUserRole() {
     if (this.isLoggedIn)
       return sessionStorage.getItem('role');
+    else
+      return '';
   }
 
 }

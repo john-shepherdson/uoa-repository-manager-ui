@@ -56,9 +56,10 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   @Output() emittedInfo: EventEmitter<Repository> = new EventEmitter();
 
+  formSubmitted: boolean = false;
   group: FormGroup;
   readonly groupDefinition = {
-    softwarePlatform : '',
+    softwarePlatform : ['', Validators.required],
     officialName : ['', Validators.required],
     issn : ['', [Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')] ],
     eissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
@@ -67,10 +68,10 @@ export class DatasourceCreateFormComponent implements OnInit {
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
     latitude : ['', [Validators.required, Validators.min(-90), Validators.max(90)] ],
-    websiteUrl : ['', [Validators.required] ],
+    websiteUrl : ['', [Validators.required, Validators.pattern('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$')] ],
     institutionName : ['', Validators.required],
     englishName: ['', Validators.required],
-    logoUrl: [''],
+    logoUrl: ['', Validators.pattern('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$') ],
     timezone: ['', Validators.required],
     datasourceType: ['', Validators.required],
     adminEmail: ['', [Validators.required, Validators.email] ]
@@ -114,6 +115,9 @@ export class DatasourceCreateFormComponent implements OnInit {
     }*/
     console.log(this.mode);
     this.group = this.fb.group(this.groupDefinition);
+    if (this.mode == 'journal') {
+      this.group.get('issn').setValidators([Validators.required, Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')]);
+    }
     this.getTypologies();
     this.getTimezones();
     this.getCountries();
@@ -168,6 +172,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   }
 
   registerDatasource() {
+    this.formSubmitted = true;
     this.errorMessage = '';
     this.successMessage = '';
 
