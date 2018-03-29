@@ -58,7 +58,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   ngOnInit() {
     this.currentRepository = <Repository>this.otherData;
     this.getCompatibilityClasses();
-    console.log(`other data is: ${JSON.stringify(this.otherData)}`);
+    console.log(`other data is: ${JSON.stringify(this.otherData,null,2)}`);
     if (this.data && this.data.length) {
       this.currentInterface = this.data[0];
       this.patchData.next({
@@ -71,6 +71,9 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       this.data.splice(0,1);
       this.oldInterface = true;
       console.log(`received an interface!`);
+      if (this.currentInterface.baseUrl && this.currentInterface.accessParams['set'] && this.currentInterface.desiredCompatibilityLevel) {
+        this.wasSaved = true;
+      }
     }
 
     /* initializes MyGroup parent component and the FormGroup */
@@ -105,6 +108,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   getInterfaceInfo(baseUrl: string) {
     this.successMessage = '';
     this.errorMessage = '';
+    this.groupErrorMessage = '';
     if (baseUrl) {
       this.loadingMessage = formInfoLoading;
       this.valService.getInterfaceInformation(baseUrl).subscribe(
@@ -201,6 +205,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         console.log(`updateRepository responded ${JSON.stringify(response)}`);
         if (response) {
           this.successMessage = formSuccessUpdatedInterface;
+          this.wasSaved = true;
         } else {
           this.errorMessage = formErrorWasntSaved;
         }
@@ -240,6 +245,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       () => {
         if (this.currentInterface.id) {
           this.successMessage = formSuccessAddedInterface;
+          this.wasSaved = true;
         } else {
           this.errorMessage = formErrorWasntSaved;
         }

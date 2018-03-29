@@ -5,6 +5,8 @@ import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-in
 import { Repository } from '../../../domain/typeScriptClasses';
 import { DatasourceCreateFormComponent } from '../sources-forms/datasource-create-form.component';
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {MyArray} from "../../../shared/reusablecomponents/forms/my-array.interface";
+import {noInterfacesSaved} from "../../../domain/shared-messages";
 
 @Component ({
   selector: 'app-sr-journal',
@@ -12,6 +14,8 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 })
 
 export class SrJournalComponent implements OnInit {
+  errorMessage: string;
+
   showForm: boolean;
   showInterfaces: boolean;
   showFinish: boolean;
@@ -20,6 +24,9 @@ export class SrJournalComponent implements OnInit {
 
   @ViewChild ('registerJournal')
   registerJournal: DatasourceCreateFormComponent;
+
+  @ViewChild('interfaceFormArray')
+  public interfaceFormArray: MyArray;
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
@@ -47,14 +54,19 @@ export class SrJournalComponent implements OnInit {
     if (this.showForm) {
       this.registerJournal.registerDatasource();
     } else if (this.showInterfaces) {
-      this.setQueryParam('finish');
-      this.showInterfaces = false;
-      this.showFinish = true;
-      this.step3 = 'active';
+      if (this.interfaceFormArray.checkIfOneElementExists()) {
+        this.setQueryParam('finish');
+        this.showInterfaces = false;
+        this.showFinish = true;
+        this.step3 = 'active';
+      } else {
+        this.errorMessage = noInterfacesSaved;
+      }
     }
   }
 
   moveBackAStep(){
+    this.errorMessage = '';
     if (this.showInterfaces) {
       this.setQueryParam('basicInformation');
       this.showForm = true;

@@ -15,6 +15,7 @@ export class TopMenuComponent implements OnInit {
   userLoggedIn: boolean = false;
   userName: string = '';
   isUserAdmin: boolean = false;
+  adminHomePage = process.env.FAQ_HOMEPAGE;
 
   constructor(public authService: AuthenticationService) { }
 

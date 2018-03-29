@@ -53,7 +53,8 @@
 
                     <div *ngIf="showInterfaces && repo">
                       <form [formGroup]="group">
-                        <form-repeat [component]="addDatasourceInterfaces"
+                        <form-repeat #interfaceFormArray
+                                     [component]="addDatasourceInterfaces"
                                      [parentGroup]="group"
                                      [description]="interfaceFormDesc"
                                      [name]="'repository-interfaces'"

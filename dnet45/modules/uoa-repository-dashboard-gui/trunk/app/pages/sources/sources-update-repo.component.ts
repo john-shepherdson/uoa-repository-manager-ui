@@ -75,7 +75,15 @@ export class SourcesUpdateRepoComponent implements OnInit {
     this.group = this.fb.group({});
     this.repoService.getRepositoryInterface(this.repoId).subscribe(
       interfaces => {
-        this.repoInterfaces = interfaces;
+        this.repoInterfaces = interfaces.sort( function(a,b) {
+          if(a.id<b.id){
+            return -1;
+          } else if(a.id>b.id){
+            return 1;
+          } else {
+            return 0;
+          }
+        });
         console.log(`the number of interfaces for ${this.repoId} is ${this.repoInterfaces.length}`);
       },
       error => {

@@ -10,8 +10,9 @@ import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-in
 import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RepositoryService } from '../../../services/repository.service';
-import { formInfoLoading, loadingRepoError } from '../../../domain/shared-messages';
+import {formInfoLoading, loadingRepoError, noInterfacesSaved} from '../../../domain/shared-messages';
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {MyArray} from "../../../shared/reusablecomponents/forms/my-array.interface";
 
 @Component ({
   selector: 'app-sr-data',
@@ -46,6 +47,9 @@ export class SrDataComponent implements OnInit {
   @ViewChild('updateDatasource')
   public updateDatasource: DatasourceUpdateFormComponent;
 
+  @ViewChild('interfaceFormArray')
+  public interfaceFormArray: MyArray;
+
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
   updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
@@ -74,10 +78,14 @@ export class SrDataComponent implements OnInit {
     } else if(this.showForm) {
         this.updateDatasource.updateRepo();
     } else if(this.showInterfaces) {
+      if (this.interfaceFormArray.checkIfOneElementExists()) {
         this.setQueryParam('finish');
         this.showInterfaces = false;
         this.showFinish = true;
         this.step4 = 'active';
+      } else {
+        this.errorMessage = noInterfacesSaved;
+      }
     }
   }
 
@@ -140,8 +148,16 @@ export class SrDataComponent implements OnInit {
   getRepoInterfaces() {
     this.repoService.getRepositoryInterface(this.datasourceId).subscribe(
       interfaces => {
-        this.repoInterfaces = interfaces;
-        console.log(this.repoInterfaces.length);
+        this.repoInterfaces = interfaces.sort( function(a, b) {
+          if (a.id<b.id) {
+            return -1;
+          } else if (a.id>b.id) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        console.log(`the number of interfaces is ${this.repoInterfaces.length}`);
       },
       error => console.log(error),
       () => {

@@ -9,6 +9,7 @@ import { MyWrapper } from "./my-wrapper.interface";
 import { Description } from '../../../domain/oa-description';
 import { Subject } from "rxjs/Subject";
 import {ConfirmationDialogComponent} from "../confirmation-dialog.component";
+import {nonRemovableInterface} from "../../../domain/shared-messages";
 
 
 @Component({
@@ -51,6 +52,8 @@ export class MyArray extends MyGroup {
 
   arrayData_ : Subject<any>[] = [];
 
+  components : MyGroup[] = [];
+
   push() {
     this.createView();
   }
@@ -65,7 +68,7 @@ export class MyArray extends MyGroup {
     let wrapperFactory = this._cfr.resolveComponentFactory(this.wrapper);
     let wrapperView = wrapperFactory.create(this.viewContainerRef.injector);
     let componentView = componentFactory.create(this.viewContainerRef.injector);
-
+    this.components.push(componentView.instance);
     (<MyGroup>componentView.instance).index = this.viewContainerRef.length;
     (<MyGroup>componentView.instance).required = this.required;
     (<MyGroup>componentView.instance).data = this.data;
@@ -89,8 +92,11 @@ export class MyArray extends MyGroup {
         if (index>0){
           this.curIntrf = <MyGroup>componentView.instance;
           this.curIndex = index;
+          this.components.splice(index,1);
           this.confirmRemoveInterface();
-        } else { (<MyGroup>componentView.instance).groupErrorMessage = 'At least one interface must be present'; }
+        } else {
+          (<MyGroup>componentView.instance).groupErrorMessage = nonRemovableInterface;
+        }
         /*(<MyGroup>componentView.instance).toBeDeleted = true;
         this.remove(index);
         (this.parentGroup as FormArray).controls[this.name].removeAt(index-1);
@@ -102,6 +108,11 @@ export class MyArray extends MyGroup {
 
     this.viewContainerRef.insert(wrapperView.hostView);
     console.log("ADDED NEW GROUP IN CREATEVIEW");
+  }
+
+  public checkIfOneElementExists() {
+    console.log(`searching`);
+    return this.components.some(data => data.wasSaved);
   }
 
   isModalShown: boolean = false;

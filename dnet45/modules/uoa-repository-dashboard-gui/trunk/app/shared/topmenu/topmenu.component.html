@@ -196,7 +196,7 @@
                         <ul class="uk-nav uk-navbar-dropdown-nav">
                           <ul *ngIf="getIsUserAdmin()" class="uk-nav uk-navbar-dropdown-nav">
                             <li class="uk-nav-header" style="display: block;">Admin</li>
-                            <li style="display: block"><a [routerLink]="['/admin','help-texts']">Help Texts</a></li>
+                            <li style="display: block"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>
                             <li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin','metrics']">Metrics</a></li>
                           </ul>
                           <li><a class="logoutLink loginLink" (click)="logout()">Log out</a></li>

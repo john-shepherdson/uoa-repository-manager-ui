@@ -12,76 +12,56 @@
       Basic information
     </h4>
   </div>
-  <form-inline [description]="softwarePlatformDesc" [valid]="updateGroup.get('softwarePlatform').valid || !formSubmitted">
+  <form-inline [description]="softwarePlatformDesc" [valid]="updateGroup.get('softwarePlatform').valid">
     <select formControlName="softwarePlatform" class="form-control">
 <!--      <option value="" selected>[Other] (enter name below)</option> RESTORE AFTER getTypologies begins to work-->
       <option *ngFor="let platform of typologies" value="{{ platform.value }}">{{ platform.name }}</option>
     </select>
   </form-inline>
-  <form-inline [description]="platformNameDesc" [valid]="updateGroup.get('platformName').valid || !formSubmitted">
+  <form-inline [description]="platformNameDesc" [valid]="updateGroup.get('platformName').valid">
     <span *ngIf="updateGroup.get('platformName').touched && updateGroup.get('platformName').value"
           class="help-block inline"
           style="margin-top: 0px; margin-bottom: 0px; ">This value will be used as the platform for your repository</span>
     <input formControlName="platformName" class="form-control" style="" type="text">
   </form-inline>
-  <form-inline [description]="officialNameDesc" >
+  <form-inline [description]="officialNameDesc" [valid]="updateGroup.get('officialName').valid">
     <input formControlName="officialName" class="form-control" style="" type="text">
   </form-inline>
   <div *ngIf="selectedRepo.datasourceType == 'journal'">
-    <form-inline [description]="issnDesc" [valid]="updateGroup.get('issn').valid || !formSubmitted">
-      <span *ngIf="updateGroup.get('issn').invalid && updateGroup.get('issn').touched && updateGroup.get('issn').dirty"
-            class="help-block inline uk-text-danger"
-            style="margin-top: 0px; margin-bottom: 0px; ">Issn needs to be of the form: "1111-1111"</span>
-      <input formControlName="issn" class="form-control" type="text" (focus)="updateGroup.get('issn').markAsUntouched()" (blur)="updateGroup.get('issn').updateValueAndValidity()">
+    <form-inline [description]="issnDesc" [valid]="updateGroup.get('issn').valid">
+      <input formControlName="issn" class="form-control" type="text">
     </form-inline>
     <form-inline [description]="eissnDesc" [valid]="updateGroup.get('eissn').valid">
-      <span *ngIf="updateGroup.get('eissn').invalid && updateGroup.get('eissn').touched && updateGroup.get('eissn').dirty"
-            class="help-block inline uk-text-danger"
-            style="margin-top: 0px; margin-bottom: 0px; ">Eissn needs to be of the form: "1111-1111"</span>
-      <input formControlName="eissn"class="form-control" type="text" (focus)="updateGroup.get('eissn').markAsUntouched()" (blur)="updateGroup.get('eissn').updateValueAndValidity()">
+      <input formControlName="eissn" class="form-control" type="text">
     </form-inline>
     <form-inline [description]="lissnDesc" [valid]="updateGroup.get('lissn').valid">
-      <span *ngIf="updateGroup.get('lissn').invalid && updateGroup.get('lissn').touched && updateGroup.get('lissn').dirty"
-            class="help-block inline uk-text-danger"
-            style="margin-top: 0px; margin-bottom: 0px;">Lissn needs to be of the form: "1111-1111"</span>
-      <input formControlName="lissn"class="form-control" type="text" (focus)="updateGroup.get('lissn').markAsUntouched()" (blur)="updateGroup.get('lissn').updateValueAndValidity()">
+      <input formControlName="lissn" class="form-control" type="text">
     </form-inline>
   </div>
-  <form-inline [description]="repoDescriptionDesc" [valid]="updateGroup.get('repoDescription').valid || !formSubmitted">
+  <form-inline [description]="repoDescriptionDesc" [valid]="updateGroup.get('repoDescription').valid">
     <textarea formControlName="repoDescription" class="form-control"></textarea>
   </form-inline>
-  <form-inline [description]="countryDesc" [valid]="updateGroup.get('country') || !formSubmitted">
+  <form-inline [description]="countryDesc" [valid]="updateGroup.get('country')">
     <select formControlName="country" class="form-control">
       <option value="">-- none selected --</option>
       <option *ngFor="let country of countries" value="{{country.code}}" title="{{country.name}}">{{ country.name }}</option>
     </select>
   </form-inline>
-  <form-inline [description]="longtitudeDesc" [valid]="updateGroup.get('longtitude').valid || !formSubmitted">
-    <span *ngIf="updateGroup.get('longtitude').invalid && updateGroup.get('longtitude').touched && updateGroup.get('longtitude').dirty"
-          class="help-block inline"
-          style="margin-top: 0px; margin-bottom: 0px; ">Invalid Longtitude</span>
-    <input formControlName="longtitude" class="form-control" type="number" step="0.05" (focus)="updateGroup.get('longtitude').markAsUntouched()" (blur)="updateGroup.get('longtitude').updateValueAndValidity()">
+  <form-inline [description]="longtitudeDesc" [valid]="updateGroup.get('longtitude').valid">
+    <input formControlName="longtitude" type="text" class="form-control">
   </form-inline>
-  <form-inline [description]="latitudeDesc" [valid]="updateGroup.get('latitude').valid || !formSubmitted">
-    <span *ngIf="updateGroup.get('latitude').invalid && updateGroup.get('latitude').touched && updateGroup.get('latitude').dirty"
-          class="help-block inline"
-          style="margin-top: 0px; margin-bottom: 0px; ">Invalid Latitude</span>
-    <input formControlName="latitude" class="form-control" type="number" step="0.05" (focus)="updateGroup.get('latitude').markAsUntouched()" (blur)="updateGroup.get('latitude').updateValueAndValidity()">
+  <form-inline [description]="latitudeDesc" [valid]="updateGroup.get('latitude').valid">
+    <input formControlName="latitude" type="text" class="form-control">
   </form-inline>
-  <form-inline [description]="websiteUrlDesc" [valid]="updateGroup.get('websiteUrl').valid || !formSubmitted">
-    <span *ngIf="updateGroup.get('websiteUrl').invalid && updateGroup.get('websiteUrl').touched && updateGroup.get('websiteUrl').dirty"
-            class="help-block inline uk-text-danger"
-            style="margin-top: 0px; margin-bottom: 0px; ">You need to enter a valid url</span>
-    <input formControlName="websiteUrl" class="form-control" type="text"
-           (focus)="updateGroup.get('websiteUrl').markAsUntouched()"
-           (blur)="updateGroup.get('websiteUrl').updateValueAndValidity()">
+  <form-inline [description]="websiteUrlDesc" [valid]="updateGroup.get('websiteUrl').valid">
+    <input formControlName="websiteUrl" class="form-control" type="text">
   </form-inline>
-  <form-inline [description]="institutionNameDesc" [valid]="updateGroup.get('institutionName').valid || !formSubmitted">
+  <form-inline [description]="institutionNameDesc" [valid]="updateGroup.get('institutionName').valid">
     <input formControlName="institutionName" class="form-control" type="text">
   </form-inline>
   <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
       uk-scrollspy-class="">Extra Information</h4>
-  <form-inline [description]="englishNameDesc" [valid]="updateGroup.get('englishName').valid || !formSubmitted">
+  <form-inline [description]="englishNameDesc" [valid]="updateGroup.get('englishName').valid">
     <input formControlName="englishName" class="form-control" type="text">
   </form-inline>
   <form-inline [description]="logoUrlDesc" [valid]="updateGroup.get('logoUrl').valid">
@@ -95,13 +75,13 @@
       Please make sure that the maximum size of the uploaded image is width=360px, height=240px
     </div>
   </form-inline>
-  <form-inline [description]="timezoneDesc" [valid]="updateGroup.get('timezone').valid || !formSubmitted">
+  <form-inline [description]="timezoneDesc" [valid]="updateGroup.get('timezone').valid">
     <select formControlName="timezone" class="form-control">
       <option value="">-- none selected --</option>
       <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.name }}</option>
     </select>
   </form-inline>
-  <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid || !formSubmitted">
+  <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">
     <select formControlName="datasourceType" class="form-control">
       <option value="">-- none selected --</option>
       <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
@@ -109,7 +89,7 @@
   </form-inline>
   <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
       uk-scrollspy-class="">Administrator & contact information</h4>
-  <form-inline [description]="adminEmailDesc" [valid]="updateGroup.get('adminEmail').valid || !formSubmitted">
+  <form-inline [description]="adminEmailDesc" [valid]="updateGroup.get('adminEmail').valid">
     <span *ngIf="updateGroup.get('adminEmail').invalid && updateGroup.get('adminEmail').touched && updateGroup.get('adminEmail').dirty"
           class="help-block inline"
           style="margin-top: 0px; margin-bottom: 0px; ">You need to enter a valid email address</span>

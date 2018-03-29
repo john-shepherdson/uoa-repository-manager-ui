@@ -1719,3 +1719,7 @@ body.mini-navbar.fixed-sidebar .profile-element, .block {
 }
 
 /********************************/
+
+.visible_uk_links:hover, .visible_uk_links:focus {
+  color: #28beFF;
+}

@@ -67,16 +67,16 @@ export class DatasourceUpdateFormComponent implements OnInit {
   readonly updateGroupDefinition = {
     softwarePlatform : '',
     platformName : '',
-    officialName : ['', Validators.required],
-    issn : ['', [Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')] ],
-    eissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
-    lissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
+    officialName : '',
+    issn : '',
+    eissn : '',
+    lissn : '',
     repoDescription : ['', Validators.required],
-    country : ['', Validators.required],
-    longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
-    latitude : ['', [Validators.required, Validators.min(-90), Validators.max(90)] ],
-    websiteUrl : ['', [Validators.required, Validators.pattern('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$')] ],
-    institutionName : ['', Validators.required],
+    country : '',
+    longtitude : '',
+    latitude : '',
+    websiteUrl : [''],
+    institutionName : [''],
     englishName: ['', Validators.required],
     logoUrl: ['', Validators.pattern('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$') ],
     timezone: ['', Validators.required],
@@ -155,7 +155,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         datasourceType: this.selectedRepo.datasourceClass,
         adminEmail: this.selectedRepo.contactEmail
       });
-      if ( !this.typologies.filter(x => x.value == this.selectedRepo.typology).length ) {
+      if ( !this.updateGroup.get('softwarePlatform').value ) {
         this.updateGroup.get('softwarePlatform').setValue('');
         this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
@@ -166,8 +166,6 @@ export class DatasourceUpdateFormComponent implements OnInit {
       this.updateGroup.get('websiteUrl').disable();
       this.updateGroup.get('institutionName').disable();
       if (this.selectedRepo.datasourceType == 'journal') {
-
-        this.updateGroup.get('issn').setValidators([Validators.required, Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')]);
 
         let ssnToShow = this.selectedRepo.issn.slice(0, 4)+ '-' + this.selectedRepo.issn.toString().slice(4);
         this.updateGroup.get('issn').setValue(ssnToShow);
@@ -293,7 +291,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   refreshSelectedRepo() {
-    if (this.updateGroup.get('platformName').value.trim() ) {
+    if (this.updateGroup.get('platformName').value ) {
       this.selectedRepo.typology = this.updateGroup.get('platformName').value;
     } else if (this.updateGroup.get('softwarePlatform').value){
       this.selectedRepo.typology = this.updateGroup.get('softwarePlatform').value;
@@ -351,7 +349,6 @@ export class DatasourceUpdateFormComponent implements OnInit {
 export function checkPlatform(c: AbstractControl) {
   if ( c.get('softwarePlatform').value || c.get('platformName').value )
     return null;
-  markPlatformAsRequired(c);
   return 'invalid';
 }
 

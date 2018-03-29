@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Repository } from '../../../domain/typeScriptClasses';
 import { DatasourceCreateFormComponent } from '../sources-forms/datasource-create-form.component';
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {MyArray} from "../../../shared/reusablecomponents/forms/my-array.interface";
+import {noInterfacesSaved} from "../../../domain/shared-messages";
 
 @Component ({
   selector: 'sr-aggregator',
@@ -12,6 +14,8 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 })
 
 export class SrAggregatorComponent implements OnInit {
+  errorMessage: string;
+
   showForm: boolean;
   showInterfaces: boolean;
   showFinish: boolean;
@@ -29,6 +33,9 @@ export class SrAggregatorComponent implements OnInit {
 
   @ViewChild ('registerAggregator')
   registerAggregator: DatasourceCreateFormComponent;
+
+  @ViewChild('interfaceFormArray')
+  public interfaceFormArray: MyArray;
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
@@ -48,10 +55,14 @@ export class SrAggregatorComponent implements OnInit {
     if (this.showForm) {
       this.registerAggregator.registerDatasource();
     } else if (this.showInterfaces) {
-      this.setQueryParam('finish');
-      this.showInterfaces = false;
-      this.showFinish = true;
-      this.step3 = 'active';
+      if (this.interfaceFormArray.checkIfOneElementExists()) {
+        this.setQueryParam('finish');
+        this.showInterfaces = false;
+        this.showFinish = true;
+        this.step3 = 'active';
+      } else {
+        this.errorMessage = noInterfacesSaved;
+      }
     }
   }
 

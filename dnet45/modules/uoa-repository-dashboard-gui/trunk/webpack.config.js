@@ -99,7 +99,9 @@ module.exports = function (env) {
           PRODUCTION: JSON.stringify(false),
           API_ENDPOINT: JSON.stringify(process.env.API_ENDPOINT || "http://aleka.athenarc.gr:8380/repomanager-service-dev"),
           FAQ_ENDPOINT: JSON.stringify(process.env.FAQ_ENDPOINT || "http://aleka.athenarc.gr:5555/api"),
-          AAI_ENDPOINT: JSON.stringify(process.env.AAI_ENDPOINT || "http://aleka.athenarc.gr:8380/repomanager-service-dev/openid_connect_login")
+          AAI_ENDPOINT: JSON.stringify(process.env.AAI_ENDPOINT || "http://aleka.athenarc.gr:8380/repomanager-service-dev/openid_connect_login"),
+          FAQ_HOMEPAGE: JSON.stringify(process.env.FAQ_HOMEPAGE || "http://aleka.athenarc.gr:5555"),
+          BASE_URL: JSON.stringify(process.env.FAQ_HOMEPAGE || "http://aleka.athenarc.gr:3000")
         }
       })
     );
@@ -126,7 +128,9 @@ module.exports = function (env) {
           PRODUCTION: JSON.stringify(true),
           API_ENDPOINT: JSON.stringify("http://aleka.athenarc.gr:8380/repomanager-service-dev"),
           FAQ_ENDPOINT: JSON.stringify("http://aleka.athenarc.gr:5555/api"),
-          AAI_ENDPOINT: JSON.stringify("http://aleka.athenarc.gr:8380/repomanager-service-dev/openid_connect_login")
+          AAI_ENDPOINT: JSON.stringify("http://aleka.athenarc.gr:8380/repomanager-service-dev/openid_connect_login"),
+          FAQ_HOMEPAGE: JSON.stringify("http://aleka.athenarc.gr:5555"),
+          BASE_URL: JSON.stringify("http://aleka.athenarc.gr:3000")
         }
       })
     );

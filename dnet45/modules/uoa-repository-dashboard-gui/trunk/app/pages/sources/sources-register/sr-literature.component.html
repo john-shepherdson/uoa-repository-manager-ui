@@ -72,7 +72,8 @@
                     <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
                     <div *ngIf="showInterfaces && repoInterfaces">
                       <form [formGroup]="group">
-                        <form-repeat [component]="updateDatasourceInterfaces"
+                        <form-repeat #interfaceFormArray
+                                     [component]="updateDatasourceInterfaces"
                                      [parentGroup]="group"
                                      [description]="interfaceFormDesc"
                                      [name]="'repository-interfaces'"

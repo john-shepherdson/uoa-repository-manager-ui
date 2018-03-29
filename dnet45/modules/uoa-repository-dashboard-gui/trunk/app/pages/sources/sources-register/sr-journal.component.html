@@ -45,6 +45,7 @@
             <div class="content">
               <div>
                 <div class="animated fadeInRight stepContent">
+                  <div *ngIf="errorMessage" class="uk-alert uk-alert-warning">{{errorMessage}}</div>
                   <div>
                     <datasource-create-form *ngIf="showForm"
                                             #registerJournal
@@ -52,7 +53,8 @@
 
                     <div *ngIf="showInterfaces">
                       <form *ngIf="repo" [formGroup]="group">
-                        <form-repeat [component]="addDatasourceInterfaces"
+                        <form-repeat #interfaceFormArray
+                                     [component]="addDatasourceInterfaces"
                                      [parentGroup]="group"
                                      [description]="interfaceFormDesc"
                                      [name]="'repository-interfaces'"

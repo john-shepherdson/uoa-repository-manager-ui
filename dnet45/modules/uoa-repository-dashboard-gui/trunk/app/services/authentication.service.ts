@@ -16,7 +16,7 @@ export class AuthenticationService {
 
   private apiUrl : string = process.env.API_ENDPOINT;
   private loginUrl: string = process.env.AAI_ENDPOINT;
-  private baseUrl: string = 'http://aleka.athenarc.gr:3000';
+  private baseUrl: string = process.env.BASE_URL;
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
@@ -40,8 +40,8 @@ export class AuthenticationService {
     this.isLoggedIn = false;
 
     console.log('logging out, going to:');
-    console.log(`https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.baseUrl}/landing`);
-    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.baseUrl}/landing`;
+    console.log(`https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.baseUrl}`);
+    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.baseUrl}`;
   }
 
   public tryLogin() {
@@ -97,6 +97,8 @@ export class AuthenticationService {
           this.router.navigate([state]);
         }
       }
+    } else {
+      this.isLoggedIn = false;
     }
   }
 

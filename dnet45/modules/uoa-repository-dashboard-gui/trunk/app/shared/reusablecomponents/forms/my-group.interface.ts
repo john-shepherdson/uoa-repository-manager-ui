@@ -6,7 +6,7 @@ import {
   Injector,
   Input,
   OnChanges,
-  OnInit,
+  OnInit, Output,
   SimpleChanges
 } from "@angular/core";
 import { Description } from '../../../domain/oa-description';
@@ -48,6 +48,8 @@ export class MyGroup implements OnInit, AfterContentInit {
   public createdEvent : EventEmitter<any> = new EventEmitter();
 
   public groupErrorMessage: string;
+
+  public wasSaved: boolean = false;
 
   constructor(injector : Injector) {
     this._fb = injector.get(FormBuilder);
@@ -124,7 +126,7 @@ export class MyGroup implements OnInit, AfterContentInit {
   selector : 'form-inline',
   template : `
     <div class="form-group">
-      <label class="control-label" *ngIf="description.label != ''" [ngClass]="{'required' : description.mandatory==true, 'uk-text-danger' : valid == false}" title="{{ description.desc }}">
+      <label class="control-label" *ngIf="description.label != ''" [ngClass]="{'required' : description.mandatory==true}" title="{{ description.desc }}">
         {{ description.label }}
       </label>
       <ng-content></ng-content>

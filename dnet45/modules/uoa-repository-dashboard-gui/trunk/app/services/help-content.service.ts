@@ -21,7 +21,7 @@ export class HelpContentService {
     console.log(`sending request at: ${url}`);
 
     return this.http.get(url)
-        .map(res => res.json() )
+        .map(res => <PageContent>res.json() )
         .catch(this.handleError);
   }
 

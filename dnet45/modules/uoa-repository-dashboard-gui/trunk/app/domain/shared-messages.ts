@@ -2,7 +2,7 @@
 /* Service Down Message */
 export const noServiceMessage = 'The service is not available at the moment.';
 
-/* Loading Repositories Messages */
+/* Repositories Messages */
 export const loadingUserRepoInfoError = "Failed to load information on your registered repositories";
 export const loadingUserRepoInfoEmpty = "You have not yet registered any repositories";
 export const reposRetrievalError = 'The repositories can not be retrieved at the moment';
@@ -14,6 +14,10 @@ export const loadingRepoError = 'System error retrieving repository info';
 export const loadingAggregationHistory = 'Retrieving aggregation history ...';
 export const loadingAggregationHistoryError = 'System error retrieving repository aggregation history.';
 export const noAggregationHistory = 'There is no aggregation history for this repository at the moment';
+
+/* Interfaces Messages */
+export const noInterfacesSaved = 'You have to create at least one interface';
+export const nonRemovableInterface = 'This interface can not be removed!';
 
 /* Rules Messages */
 export const loadingRuleSets = 'Retrieving sets of rules ...';

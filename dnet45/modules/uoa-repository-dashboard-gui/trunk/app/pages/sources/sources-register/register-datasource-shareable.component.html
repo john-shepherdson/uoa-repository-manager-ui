@@ -41,7 +41,7 @@
                   <div class="form-group"
                        *ngFor="let repo of countryRepos | repoFilter: searchBox">
                     <label for="{{ repo.id }}"
-                           class="uk-button uk-button-default uk-link-muted"
+                           class="uk-button uk-link-muted visible_uk_links"
                            style="display: block; text-align: left;">
                       <input type="radio" value="{{ repo.id }}" id="{{ repo.id }}" name="repositories" (change)="onChooseRepository(repo.id)" [disabled]="repo.registered">
                       <span>
