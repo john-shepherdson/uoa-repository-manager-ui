@@ -30,7 +30,6 @@ export class HelpContentComponent implements OnInit {
 
   ngOnInit() {
     this.errorMessage = null;
-
     this._helpContentService.getActivePageContent( this.router.url ).subscribe(
       pageContent => this.shiftThroughContent(pageContent),
       error => this.handleError(<any>error)

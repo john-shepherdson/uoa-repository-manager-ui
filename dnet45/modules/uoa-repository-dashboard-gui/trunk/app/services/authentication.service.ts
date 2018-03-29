@@ -92,7 +92,7 @@ export class AuthenticationService {
         sessionStorage.removeItem("state.location");
         console.log(`tried to login - returning to state: ${state}`);
         if (state.includes('landing')) {
-          this.router.navigate([this.redirectUrl]);
+          this.router.navigate([this.baseUrl+"/dashboard"]);
         } else {
           this.router.navigate([state]);
         }

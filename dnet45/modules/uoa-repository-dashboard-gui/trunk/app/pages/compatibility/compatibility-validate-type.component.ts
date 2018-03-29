@@ -141,6 +141,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       if (this.chosenCrisEntities.length) {
         //save all changes
         this.submitForValidation();
+        this.setQueryParam('finish');
         this.showFinish = true;
         this.showCrisEntities = false;
         this.step4 = 'active';
