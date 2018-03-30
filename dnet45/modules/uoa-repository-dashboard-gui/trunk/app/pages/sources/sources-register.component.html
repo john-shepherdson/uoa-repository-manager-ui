@@ -23,7 +23,7 @@
             <div class="uk-margin uk-grid repositoryTypeSelection" uk-grid="">
               <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column">
                 <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
-                  <a routerLink="literature" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+                  <a [routerLink]="['literature']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
                   <div class="uk-card-media-top">
                     <img class="el-image" src="../../../assets/imgs/Literature_repos_square.png" alt="" style="width: 100%;">
                   </div>
@@ -43,7 +43,7 @@
               </div>
               <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match">
                 <div class="uk-margin uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-                  <a routerLink="data" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
+                  <a [routerLink]="['data']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
                   <div class="uk-card-media-top">
                     <img class="el-image" src="../../../assets/imgs/Data_repos_sqare.png" alt="" style="width:100%;">
                   </div>
@@ -63,7 +63,7 @@
               </div>
               <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match">
                 <div class="uk-margin uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-                  <a routerLink="journal" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+                  <a [routerLink]="['journal']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
                   <div class="uk-card-media-top">
                     <img class="el-image" src="../../../assets/imgs/OAJournals_square.png" alt="" style="width:100%;">
                   </div>
@@ -82,7 +82,7 @@
               </div>
               <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match">
                 <div class="uk-margin uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-                  <a routerLink="aggregator" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+                  <a [routerLink]="['aggregator']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
                   <div class="uk-card-media-top">
                     <img class="el-image" src="../../../assets/imgs/Icons_Aggregators_square.png" alt="" style="width:100%;">
                   </div>

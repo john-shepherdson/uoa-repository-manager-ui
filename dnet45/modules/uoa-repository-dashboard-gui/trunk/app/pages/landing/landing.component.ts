@@ -12,7 +12,6 @@ export class LandingComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
-    this.checkIfIsLoggedIn();
   }
 
 
@@ -20,10 +19,8 @@ export class LandingComponent implements OnInit {
     this.authService.loginWithState();
   }
 
-  checkIfIsLoggedIn() {
-    if ( this.authService.getIsUserLoggedIn() ) {
-      this.router.navigate(['/dashboard']);
-    }
+  onStartHerePush() {
+    this.router.navigate(['/dashboard']);
   }
 
   getIsUserLoggedIn() {

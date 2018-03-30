@@ -7,6 +7,10 @@ import { DatasourceCreateFormComponent } from '../sources-forms/datasource-creat
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {MyArray} from "../../../shared/reusablecomponents/forms/my-array.interface";
 import {noInterfacesSaved} from "../../../domain/shared-messages";
+import {
+  AsideHelpContentComponent,
+  HelpContentComponent
+} from "../../../shared/reusablecomponents/help-content.component";
 
 @Component ({
   selector: 'sr-aggregator',
@@ -30,6 +34,14 @@ export class SrAggregatorComponent implements OnInit {
    * the param that is used is 'step' and the values are: 'basicInformation','interfaces','finish'
    */
   queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+  @ViewChild('topHelperContent')
+  public topHelperContent: HelpContentComponent;
+  @ViewChild('leftHelperContent')
+  public leftHelperContent: AsideHelpContentComponent;
+  @ViewChild('rightHelperContent')
+  public rightHelperContent: AsideHelpContentComponent;
+  @ViewChild('bottomHelperContent')
+  public bottomHelperContent: HelpContentComponent;
 
   @ViewChild ('registerAggregator')
   registerAggregator: DatasourceCreateFormComponent;
@@ -101,6 +113,10 @@ export class SrAggregatorComponent implements OnInit {
     // set param for step
     this.queryParams['step'] = value;
     this.router.navigate([], { relativeTo: this.route, queryParams: this.queryParams });
+    this.rightHelperContent.ngOnInit();
+    this.topHelperContent.ngOnInit();
+    this.leftHelperContent.ngOnInit();
+    this.bottomHelperContent.ngOnInit();
   }
 
 }

@@ -13,6 +13,10 @@ import { RepositoryService } from '../../../services/repository.service';
 import {formInfoLoading, loadingRepoError, noInterfacesSaved} from '../../../domain/shared-messages';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {MyArray} from "../../../shared/reusablecomponents/forms/my-array.interface";
+import {
+  AsideHelpContentComponent,
+  HelpContentComponent
+} from "../../../shared/reusablecomponents/help-content.component";
 
 @Component ({
   selector: 'app-sr-data',
@@ -39,6 +43,14 @@ export class SrDataComponent implements OnInit {
    * the param that is used is 'step' and the values are: 'selectDatasource','basicInformation','interfaces','finish'
    */
   queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+  @ViewChild('topHelperContent')
+  public topHelperContent: HelpContentComponent;
+  @ViewChild('leftHelperContent')
+  public leftHelperContent: AsideHelpContentComponent;
+  @ViewChild('rightHelperContent')
+  public rightHelperContent: AsideHelpContentComponent;
+  @ViewChild('bottomHelperContent')
+  public bottomHelperContent: HelpContentComponent;
 
 
   @ViewChild('datasourcesByCountry')
@@ -91,7 +103,7 @@ export class SrDataComponent implements OnInit {
 
   moveBackAStep(){
     if(this.showForm) {
-      this.setQueryParam('baseUrl');
+      this.setQueryParam('selectDatasource');
       this.showRepositories = true;
       this.showForm = false;
       this.step2 = '';
@@ -177,6 +189,10 @@ export class SrDataComponent implements OnInit {
     // set param for step
     this.queryParams['step'] = value;
     this.router.navigate([], { relativeTo: this.route, queryParams: this.queryParams });
+    this.rightHelperContent.ngOnInit();
+    this.topHelperContent.ngOnInit();
+    this.leftHelperContent.ngOnInit();
+    this.bottomHelperContent.ngOnInit();
   }
 
 }

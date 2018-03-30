@@ -15,6 +15,7 @@ import { ValidatorService } from '../../services/validator.service';
 import { CompatibilityValidateStep2Component } from './compatibility-validate-forms/compatibility-validate-step2.component';
 import { CompatibilityValidateStep3Component } from './compatibility-validate-forms/compatibility-validate-step3.component';
 import { CompatibilityValidateStep3CrisComponent } from './compatibility-validate-forms/compatibility-validate-step3-cris.component';
+import {AsideHelpContentComponent, HelpContentComponent} from "../../shared/reusablecomponents/help-content.component";
 
 @Component ({
   selector: 'compatibility-validate-literature',
@@ -29,6 +30,14 @@ export class CompatibilityValidateTypeComponent implements OnInit {
    * the param that is used is 'step' and the values are: 'baseUrl','guidelines','crisEntities'/'parameters','finish'
    */
   queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+  @ViewChild('topHelperContent')
+  public topHelperContent: HelpContentComponent;
+  @ViewChild('leftHelperContent')
+  public leftHelperContent: AsideHelpContentComponent;
+  @ViewChild('rightHelperContent')
+  public rightHelperContent: AsideHelpContentComponent;
+  @ViewChild('bottomHelperContent')
+  public bottomHelperContent: HelpContentComponent;
 
 
   showDatasource: boolean;
@@ -311,6 +320,10 @@ export class CompatibilityValidateTypeComponent implements OnInit {
     // set param for step
     this.queryParams['step'] = value;
     this.router.navigate([], { relativeTo: this.route, queryParams: this.queryParams });
+    this.rightHelperContent.ngOnInit();
+    this.topHelperContent.ngOnInit();
+    this.leftHelperContent.ngOnInit();
+    this.bottomHelperContent.ngOnInit();
   }
 
 }

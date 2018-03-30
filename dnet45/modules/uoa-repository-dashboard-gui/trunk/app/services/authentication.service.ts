@@ -91,14 +91,8 @@ export class AuthenticationService {
         let state = sessionStorage.getItem("state.location");
         sessionStorage.removeItem("state.location");
         console.log(`tried to login - returning to state: ${state}`);
-        if (state.includes('landing')) {
-          this.router.navigate([this.baseUrl+"/dashboard"]);
-        } else {
-          this.router.navigate([state]);
-        }
+        this.router.navigate([state]);
       }
-    } else {
-      this.isLoggedIn = false;
     }
   }
 

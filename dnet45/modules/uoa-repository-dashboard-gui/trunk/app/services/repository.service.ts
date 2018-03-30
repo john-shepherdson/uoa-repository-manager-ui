@@ -88,7 +88,6 @@ export class RepositoryService {
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
       .map( res => <Repository[]>res.json())
-      .do(res => console.log(`counted ${res.length} repositories`))
       .catch(this.handleError);
   }
 
