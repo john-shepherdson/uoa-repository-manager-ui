@@ -28,7 +28,7 @@
               <div class="whiteFilm"></div>
             </div>
             <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-            <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages" class="events-results">
+            <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages>0" class="events-results">
               <div class="numberOfEventsLabel">
 
                 <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
@@ -189,7 +189,7 @@
               <div class="uk-form-horizontal">
                 <div class="form-group">
                   <label class="control-label" style="display: block;">Title</label>
-                  <div formArrayName="eventTitles" *ngFor="let title of group.controls.eventTitles.controls; let title_index = index">
+                  <div formArrayName="eventTitles" *ngFor="let title of eventTitleFormArray; let title_index = index">
                     <div [formGroupName]="title_index">
                       <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventTitle">
                       <a class="inlineBlock deleteIcon" (click)="removeControl('eventTitles',title_index)"><i class="fa fa-remove"></i></a>
@@ -201,7 +201,7 @@
               <div class="uk-form-horizontal">
                 <div class="form-group">
                   <label class="control-label" style="display: block;">Author</label>
-                  <div formArrayName="eventAuthors" *ngFor="let author of group.controls.eventAuthors.controls; let author_index = index">
+                  <div formArrayName="eventAuthors" *ngFor="let author of eventAuthorFormArray; let author_index = index">
                     <div [formGroupName]="author_index">
                       <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventAuthor">
                       <a class="inlineBlock deleteIcon" (click)="removeControl('eventAuthors',author_index)"><i class="fa fa-remove"></i></a>
@@ -213,7 +213,7 @@
               <div class="uk-form-horizontal">
                 <div class="form-group">
                   <label class="control-label" style="display: block;">Subject</label>
-                  <div formArrayName="eventSubjects" *ngFor="let subject of group.controls.eventSubjects.controls; let subject_index = index">
+                  <div formArrayName="eventSubjects" *ngFor="let subject of eventSubjectsFormArray; let subject_index = index">
                     <div [formGroupName]="subject_index">
                       <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventSubject">
                       <a class="inlineBlock deleteIcon" (click)="removeControl('eventSubjects', subject_index)"><i class="fa fa-remove"></i></a>
@@ -226,7 +226,7 @@
                 <div class="uk-form-horizontal">
                   <div class="form-group">
                     <label class="control-label" style="display: block;">Date</label>
-                    <div formArrayName="eventDateRanges" *ngFor="let date of group.controls.eventDateRanges.controls; let date_index = index">
+                    <div formArrayName="eventDateRanges" *ngFor="let date of eventDateRangesFormArray; let date_index = index">
                       <div class="uk-form" style="position: relative;" [formGroupName]=date_index>
                         <input class="form-control inlineBlock dateFrom" style="width:88%;"
                                placeholder="From"

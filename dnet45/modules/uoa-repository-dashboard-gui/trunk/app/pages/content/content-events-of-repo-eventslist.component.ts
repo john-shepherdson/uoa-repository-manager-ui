@@ -45,6 +45,11 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     eventDateRanges: this.fb.array([this.initControl(this.dateRangeDefinition)])
   };
 
+  eventTitleFormArray: any;
+  eventAuthorFormArray: any;
+  eventSubjectsFormArray: any;
+  eventDateRangesFormArray: any;
+
   frequencyChoice: string;
   userEmail: string;
   modalErrorMessage: string;
@@ -195,6 +200,14 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
           else
             this.noEvents = noEventsWithParams;
         }
+        let tempArray = <FormArray>this.group.controls['eventTitles'];
+        this.eventTitleFormArray = tempArray.controls;
+        tempArray = <FormArray>this.group.controls['eventAuthors'];
+        this.eventAuthorFormArray = tempArray.controls;
+        tempArray = <FormArray>this.group.controls['eventSubjects'];
+        this.eventSubjectsFormArray = tempArray.controls;
+        tempArray = <FormArray>this.group.controls['eventDateRanges'];
+        this.eventDateRangesFormArray = tempArray.controls;
         console.log(`total pages is ${this.eventsPage.totalPages}`);
         this.eventsPageInitialized = true;
       }

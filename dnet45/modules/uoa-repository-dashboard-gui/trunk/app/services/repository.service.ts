@@ -86,7 +86,8 @@ export class RepositoryService {
   getRepositoriesOfUser(userEmail: string): Observable<Repository[]> {
     let url = `${this.apiUrl}getRepositoriesOfUser/${userEmail}/0/100`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <Repository[]>res.json())
       .catch(this.handleError);
   }
@@ -95,7 +96,8 @@ export class RepositoryService {
   getRepositoryById(id: string): Observable<Repository> {
     let url = `${this.apiUrl}getRepositoryById/${id}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <Repository>res.json())
       .do(res => console.log(`got repository with name: ${res.officialName}`))
       .catch(this.handleError);
