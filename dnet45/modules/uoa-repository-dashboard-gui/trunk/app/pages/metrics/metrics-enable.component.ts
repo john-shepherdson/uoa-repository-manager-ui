@@ -100,7 +100,7 @@ export class MetricsEnableComponent implements OnInit {
       /*this.piwikService.savePiwikInfo(piwik).subscribe(*/
       this.piwikService.enableMetricsForRepository(piwik).subscribe(
         response => {
-          console.log(`savePiwikInfo answered: ${JSON.stringify(response)}`);
+          console.log(`savePiwikInfo answered: ${response}`);
           this.successMessage = enabledMetricsSuccess;
           this.loadingMessage = '';
         },

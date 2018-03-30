@@ -63,6 +63,7 @@ export class SrJournalComponent implements OnInit {
   }
 
   moveAStep(){
+    this.errorMessage = '';
     if (this.showForm) {
       this.registerJournal.registerDatasource();
     } else if (this.showInterfaces) {

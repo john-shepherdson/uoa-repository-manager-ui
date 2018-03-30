@@ -64,6 +64,7 @@ export class SrAggregatorComponent implements OnInit {
   }
 
   moveAStep(){
+    this.errorMessage = '';
     if (this.showForm) {
       this.registerAggregator.registerDatasource();
     } else if (this.showInterfaces) {

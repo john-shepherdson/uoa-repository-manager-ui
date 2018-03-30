@@ -31,13 +31,13 @@ export class PiwikService {
       .catch(this.handleError);
   }
 
-  enableMetricsForRepository(piwik: PiwikInfo): Observable<PiwikInfo> {
+  enableMetricsForRepository(piwik: PiwikInfo) {
     let url = `${this.apiUrl}enableMetricsForRepository`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(piwik)}`);
     httpOptions.withCredentials = true;
     return this.http.post(url,piwik,httpOptions)
-      .map( res => <PiwikInfo>res.json() )
+      .map( res => res.status.toString() )
       .catch(this.handleError);
   }
 
@@ -66,7 +66,7 @@ export class PiwikService {
   }
 
 
-  markPiwikSiteAsValidated(repositoryId: string): Observable<string> {
+  markPiwikSiteAsValidated(repositoryId: string) {
     let url = `${this.apiUrl}markPiwikSiteAsValidated/${repositoryId}`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;

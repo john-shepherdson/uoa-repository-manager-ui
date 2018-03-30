@@ -79,6 +79,7 @@ export class SrDataComponent implements OnInit {
   }
 
   moveAStep(){
+    this.errorMessage = '';
     if(this.showRepositories) {
       if (this.datasourcesByCountry.goToNextStep()) {
         this.setQueryParam('basicInformation');
