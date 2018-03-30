@@ -88,7 +88,7 @@ export class MetricsEnableComponent implements OnInit {
         openaireId: this.oaId,
         repositoryName: this.repo.officialName,
         country: this.repo.countryName,
-        siteId: `${this.analyticsUrl}siteName=${encodeURIComponent(this.repo.officialName)}&url=${this.repo.websiteUrl}`,
+        siteId: `${this.analyticsUrl}siteName=${encodeURIComponent(this.repo.officialName)}&url=${encodeURIComponent(this.repo.websiteUrl)}`,
         authenticationToken: this.authenticationToken,
         creationDate: null,
         requestorName: this.authService.getUserName(),
