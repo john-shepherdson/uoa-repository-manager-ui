@@ -88,7 +88,7 @@ export class MetricsEnableComponent implements OnInit {
         openaireId: this.oaId,
         repositoryName: this.repo.officialName,
         country: this.repo.countryName,
-        siteId: `${this.analyticsUrl}siteName=${encodeURIComponent(this.repo.officialName)}&url=${encodeURIComponent(this.repo.websiteUrl)}`,
+        siteId: '',
         authenticationToken: this.authenticationToken,
         creationDate: null,
         requestorName: this.authService.getUserName(),
@@ -97,8 +97,10 @@ export class MetricsEnableComponent implements OnInit {
         validationDate: null,
         comment: ''
       };
+      /*siteId: `${this.analyticsUrl}siteName=${encodeURIComponent(this.repo.officialName)}&url=${encodeURIComponent(this.repo.websiteUrl)}`,*/
+
       /*this.piwikService.savePiwikInfo(piwik).subscribe(*/
-      this.piwikService.enableMetricsForRepository(piwik).subscribe(
+      this.piwikService.enableMetricsForRepository(this.repo.officialName,this.repo.websiteUrl,piwik).subscribe(
         response => {
           console.log(`savePiwikInfo answered: ${response}`);
           this.successMessage = enabledMetricsSuccess;

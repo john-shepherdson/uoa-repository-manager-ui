@@ -31,12 +31,12 @@ export class PiwikService {
       .catch(this.handleError);
   }
 
-  enableMetricsForRepository(piwik: PiwikInfo) {
-    let url = `${this.apiUrl}enableMetricsForRepository`;
+  enableMetricsForRepository(repoName: string, repoWebsite: string, piwik: PiwikInfo) {
+    let url = `${this.apiUrl}enableMetricsForRepository?officialName=${encodeURIComponent(repoName)}&repoWebsite=${encodeURIComponent(repoWebsite)}`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(piwik)}`);
     httpOptions.withCredentials = true;
-    return this.http.post(url,piwik,httpOptions)
+    return this.http.post(url,JSON.stringify(piwik),httpOptions)
       .map( res => res.status.toString() )
       .catch(this.handleError);
   }
@@ -66,7 +66,7 @@ export class PiwikService {
   }
 
 
-  markPiwikSiteAsValidated(repositoryId: string) {
+  markPiwikSiteAsValidated (repositoryId: string) {
     let url = `${this.apiUrl}markPiwikSiteAsValidated/${repositoryId}`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;
