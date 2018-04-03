@@ -34,6 +34,8 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   @Output() emitRepoId: EventEmitter<string> = new EventEmitter();
   @Output() promptNext: EventEmitter<boolean> = new EventEmitter();
 
+  searchBox: string = '';
+
   constructor(private repoService:RepositoryService) {}
 
   ngOnInit() {
@@ -133,6 +135,10 @@ export class RegisterDatasourceShareableComponent implements OnInit {
       this.emitRepoId.emit(this.repoId);
       return true;
     }
+  }
+
+  searchTerm(event: any) {
+    this.searchBox = event.target.value;
   }
 
 }

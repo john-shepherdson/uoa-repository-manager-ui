@@ -61,6 +61,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     console.log(`other data is: ${JSON.stringify(this.otherData,null,2)}`);
     if (this.data && this.data.length) {
       this.currentInterface = this.data[0];
+      this.exportedData = this.currentInterface;
       this.patchData.next({
           baseUrl: this.currentInterface.baseUrl,
           selectValidationSet: '',
@@ -200,25 +201,14 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.currentInterface.desiredCompatibilityLevel = compLvl;
     this.currentInterface.compliance = compLvl;
     this.currentInterface.typology = this.currentRepository.datasourceClass;
-    this.repoService.updateInterface(this.currentRepository.id, this.currentInterface).subscribe(
-      response => {
-        console.log(`updateRepository responded ${JSON.stringify(response)}`);
-        if (response) {
-          this.successMessage = formSuccessUpdatedInterface;
-          this.wasSaved = true;
-        } else {
-          this.errorMessage = formErrorWasntSaved;
-        }
-      },
-      error => {
-        console.log(error);
-        this.loadingMessage = '';
-        this.errorMessage = formErrorWasntSaved;
-      },
-      () => {
-        this.loadingMessage = '';
-      }
-    );
+    this.exportedData = this.currentInterface;
+    if (!this.inRegister) {
+      this.updateInterface();
+    } else {
+      this.loadingMessage = '';
+      this.wasSaved = true;
+      this.successMessage = 'The interface will be stored when the registration procedure is completed';
+    }
   }
 
   addCurrent (baseUrl: string, valset: string, compLvl: string) {
@@ -232,6 +222,17 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.currentInterface.desiredCompatibilityLevel = compLvl;
     this.currentInterface.compliance = compLvl;
     this.currentInterface.typology = this.currentRepository.datasourceClass;
+    this.exportedData = this.currentInterface;
+    if (!this.inRegister) {
+      this.addInterface();
+    } else {
+      this.loadingMessage = '';
+      this.wasSaved = true;
+      this.successMessage = 'The interface will be stored when the registration procedure is completed';
+    }
+  }
+
+  addInterface() {
     this.repoService.addInterface(this.currentRepository.datasourceType, this.currentRepository.id, this.currentInterface).subscribe(
       addedInterface => {
         console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
@@ -249,6 +250,29 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         } else {
           this.errorMessage = formErrorWasntSaved;
         }
+        this.loadingMessage = '';
+      }
+    );
+
+  }
+
+  updateInterface() {
+    this.repoService.updateInterface(this.currentRepository.id, this.currentInterface).subscribe(
+      response => {
+        console.log(`updateRepository responded ${JSON.stringify(response)}`);
+        if (response) {
+          this.successMessage = formSuccessUpdatedInterface;
+          this.wasSaved = true;
+        } else {
+          this.errorMessage = formErrorWasntSaved;
+        }
+      },
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = formErrorWasntSaved;
+      },
+      () => {
         this.loadingMessage = '';
       }
     );

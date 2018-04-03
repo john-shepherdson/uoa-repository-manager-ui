@@ -51,7 +51,16 @@
             <div class="content">
               <div>
                 <div class="animated fadeInRight stepContent">
+                  <div *ngIf="loadingMessage" class="loading-big">
+                    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                      {{ loadingMessage }}
+                    </div>
+                    <div class="whiteFilm"></div>
+                  </div>
+                  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+
                   <div>
+
                     <register-datasource-shareable *ngIf="showRepositories"
                                                    #datasourcesByCountry
                                                    [mode]="'opendoar'"
@@ -63,13 +72,6 @@
                                             [selectedRepo]="repo"
                                             (emittedInfo)="getUpdatedRepo($event)"></datasource-update-form>
 
-                    <div *ngIf="loadingMessage" class="loading-big">
-                      <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-                        {{ loadingMessage }}
-                      </div>
-                      <div class="whiteFilm"></div>
-                    </div>
-                    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
                     <div *ngIf="showInterfaces && repoInterfaces">
                       <form [formGroup]="group">
                         <form-repeat #interfaceFormArray
@@ -78,7 +80,10 @@
                                      [description]="interfaceFormDesc"
                                      [name]="'repository-interfaces'"
                                      [data]="repoInterfaces"
-                                     [otherData]="repo">
+                                     [otherData]="repo"
+                                     [registerMode]="true"
+                                     (emitDataArray)="getNewInterfaces($event)"
+                                     (emitShowModal)="showDeleteInterfaceModal($event)">
                         </form-repeat>
                       </form>
                     </div>
@@ -135,3 +140,8 @@
 
   </div>
 </div>
+
+<confirmation-dialog #confirmDelete [title]="'Delete Interface'" [isModalShown]="isModalShown"
+                     [confirmActionButton]="'Yes, delete it'" (emitObject)="confirmedRemoval($event)">
+  Are you sure you want to delete this interface?
+</confirmation-dialog>

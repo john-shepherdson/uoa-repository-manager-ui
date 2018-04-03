@@ -106,7 +106,8 @@ export class RepositoryService {
   getRepositoryInterface(id: string): Observable<RepositoryInterface[]>{
     let url = `${this.apiUrl}getRepositoryInterface/${id}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <RepositoryInterface[]>res.json())
       .catch(this.handleError);
   }
@@ -115,7 +116,8 @@ export class RepositoryService {
   getUrlsOfUserRepos(userEmail: string): Observable<string[]>{
     let url = `${this.apiUrl}getUrlsOfUserRepos/${userEmail}/0/100/`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <string[]>res.json())
       .catch(this.handleError);
   }
@@ -123,12 +125,13 @@ export class RepositoryService {
   getRepositoryAggregations(id: string): Observable<Aggregations>{
     let url = `${this.apiUrl}getRepositoryAggregations/${id}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url,httpOptions)
       .map(res => <Aggregations>res.json())
       .catch(this.handleError);
   }
 
-getTimezones(): Observable<Timezone[]>{
+  getTimezones(): Observable<Timezone[]>{
 /*    let url = `${this.apiUrl}getTimezones`;
     console.log(`knocking on: ${url}`);
     return this.http.get(url)
@@ -175,7 +178,8 @@ getTimezones(): Observable<Timezone[]>{
   getMetricsInfoForRepository (repoId: string): Observable<MetricsInfo> {
     let url = `${this.apiUrl}getMetricsInfoForRepository/${repoId}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <MetricsInfo>res.json())
       .catch(this.handleError);
   }

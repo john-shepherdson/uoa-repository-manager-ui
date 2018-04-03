@@ -91,7 +91,11 @@ export class AuthenticationService {
         let state = sessionStorage.getItem("state.location");
         sessionStorage.removeItem("state.location");
         console.log(`tried to login - returning to state: ${state}`);
-        this.router.navigate([state]);
+        if (this.redirectUrl) {
+          this.router.navigate([this.redirectUrl]);
+        } else {
+          this.router.navigate([state]);
+        }
       }
     }
   }

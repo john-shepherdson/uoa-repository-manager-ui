@@ -2,7 +2,10 @@
  * Created by stefanos on 15/5/2017.
  */
 import { FormArray, FormGroup } from "@angular/forms";
-import { Component, ComponentFactoryResolver, Injector, Input, Type, ViewChild, ViewContainerRef } from "@angular/core";
+import {
+  Component, ComponentFactoryResolver, EventEmitter, Injector, Input, Output, Type, ViewChild,
+  ViewContainerRef
+} from "@angular/core";
 import { MyFormDirective } from "./my-form.directive";
 import { MyGroup } from "./my-group.interface";
 import { MyWrapper } from "./my-wrapper.interface";
@@ -73,6 +76,9 @@ export class MyArray extends MyGroup {
     (<MyGroup>componentView.instance).required = this.required;
     (<MyGroup>componentView.instance).data = this.data;
     (<MyGroup>componentView.instance).otherData = this.otherData;
+    if (this.registerMode) {
+      (<MyGroup>componentView.instance).inRegister = true;
+    }
     this.arrayData_.push((<MyGroup>componentView.instance).patchData);
     (<MyGroup>componentView.instance).description = this.description;
     let arrayGroup = (<MyGroup>componentView.instance).generate();
@@ -90,10 +96,17 @@ export class MyArray extends MyGroup {
         ((this.parentGroup as FormArray).controls[this.name].at(0).corpus((<MyGroup>componentView.instance).generate().value));
       } else {
         if (index>0){
-          this.curIntrf = <MyGroup>componentView.instance;
-          this.curIndex = index;
-          this.components.splice(index,1);
-          this.confirmRemoveInterface();
+          if (!<MyGroup>componentView.instance.exportedData) {
+            this.remove(index);
+            (this.parentGroup as FormArray).controls[this.name].removeAt(index-1);
+            this.components.splice(index,1);
+            this.arrayData_.splice(index-1,1);
+          } else {
+            this.curIntrf = <MyGroup>componentView.instance;
+            this.curIndex = index;
+            this.components.splice(index,1);
+            this.confirmRemoveInterface();
+          }
         } else {
           (<MyGroup>componentView.instance).groupErrorMessage = nonRemovableInterface;
         }
@@ -110,9 +123,32 @@ export class MyArray extends MyGroup {
     console.log("ADDED NEW GROUP IN CREATEVIEW");
   }
 
+  @Input() registerMode: boolean;
+  @Output() emitDataArray: EventEmitter<any[]> = new EventEmitter<any[]>();
+
   public checkIfOneElementExists() {
     console.log(`searching`);
-    return this.components.some(data => data.wasSaved);
+    if ( this.components.some(data => data.wasSaved) ) {
+      let array_to_emit = [];
+      this.components.forEach(element => {
+        if (element.exportedData) {
+          array_to_emit.push(element.exportedData);
+        }
+      });
+      this.emitDataArray.emit(array_to_emit);
+      return true;
+    }
+    return false;
+  }
+
+  public emitExportedDataArray() {
+    let array_to_emit = [];
+    this.components.forEach(element => {
+      if (element.exportedData) {
+        array_to_emit.push(element.exportedData);
+      }
+    });
+    this.emitDataArray.emit(array_to_emit);
   }
 
   isModalShown: boolean = false;
@@ -122,16 +158,24 @@ export class MyArray extends MyGroup {
   @ViewChild('confirmDelete')
   public confirmDelete: ConfirmationDialogComponent;
 
+  @Output() emitShowModal: EventEmitter<void> = new EventEmitter<void>();
+
   confirmRemoveInterface(){
-    this.confirmDelete.showModal();
+    if (this.registerMode){
+      this.emitShowModal.emit();
+    } else {
+      this.confirmDelete.showModal();
+    }
   }
 
-  confirmedRemove(event: any){
-    if (this.curIndex!=0) {
+  public confirmedRemove(event: any){
+    if (this.curIndex > 0) {
       this.curIntrf.toBeDeleted = true;
       this.remove(this.curIndex);
       (this.parentGroup as FormArray).controls[this.name].removeAt(this.curIndex - 1);
       this.arrayData_.splice(this.curIndex - 1, 1);
+      this.curIndex = -1;
+      this.curIntrf = null;
     }
   }
 

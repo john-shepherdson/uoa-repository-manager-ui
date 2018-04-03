@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                   <label class="control-label">Start typing in the name of your repository to narrow down the view</label>
-                  <input #searchBox id="searchBox" class="form-control" type="text" [disabled]="(!hasSelectedCountry)" />
+                  <input #searchInput id="searchInput" class="form-control" type="text" [disabled]="(!hasSelectedCountry)" (keyup)="searchTerm($event)" />
                 </div>
               </div>
               <div *ngIf="selectedCountry">
@@ -38,9 +38,9 @@
                 </div>
                 <div class="uk-alert uk-alert-warning" *ngIf="noRepositories">{{ noRepositories }}</div>
                 <div class="repositoriesRadioButtonForm" *ngIf="countryRepos">
-                  <!--<div class="form-group"
-                       *ngFor="let repo of countryRepos | repoFilter: searchBox">-->
-                  <div class="form-group">
+                  <div class="form-group"
+                       *ngFor="let repo of countryRepos | repoFilter: searchBox">
+                  <!--<div class="form-group">-->
                     <label for="{{ repo.id }}"
                            class="uk-button uk-link-muted visible_uk_links"
                            style="display: block; text-align: left;">

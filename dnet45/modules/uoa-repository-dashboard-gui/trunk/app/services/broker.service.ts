@@ -47,7 +47,8 @@ export class BrokerService {
   getDnetTopics(): Observable<Map<string,Term>> {
     let url = `${this.apiUrl}getDnetTopics`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <Map<string,Term>>res.json())
       .catch(this.handleError);
   }
@@ -55,7 +56,8 @@ export class BrokerService {
   getNotificationsBySubscriptionId(subId: string, page: number, size: number): Observable<EventsPage> {
     let url = `${this.apiUrl}getNotificationsBySubscriptionId/${subId}/${page}/${size}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <EventsPage>res.json())
       .catch(this.handleError);
   }
@@ -63,7 +65,8 @@ export class BrokerService {
   getSimpleSubscriptionsOfUser(userEmail: string): Observable<Map<string,SimpleSubscriptionDesc>> {
     let url = `${this.apiUrl}getSimpleSubscriptionsOfUser/${userEmail}/`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, this.http)
       .map( res => <Map<string,SimpleSubscriptionDesc>>res.json())
       .catch(this.handleError);
   }
@@ -71,7 +74,8 @@ export class BrokerService {
   getSubscription(subId: string): Observable<Subscription> {
     let url = `${this.apiUrl}getSubscription/${subId}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url,httpOptions)
       .map( res => <Subscription>res.json())
       .catch(this.handleError);
   }
@@ -79,7 +83,8 @@ export class BrokerService {
   getSubscriptionsOfUser(userEmail: string): Observable<Map<string, Subscription>> {
     let url = `${this.apiUrl}getSubscriptionsOfUser/${userEmail}/`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <Map<string,Subscription>>res.json())
       .catch(this.handleError);
   }
@@ -87,7 +92,8 @@ export class BrokerService {
   getTopicsForDataSource(name: string): Observable<BrowseEntry[]> {
     let url = `${this.apiUrl}getTopicsForDatasource/${name}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <BrowseEntry[]>res.json())
       .catch(this.handleError);
   }

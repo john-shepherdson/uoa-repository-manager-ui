@@ -52,7 +52,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   @ViewChild('updateLogoUrlModal')
   public updateLogoUrlModal: ConfirmationDialogComponent;
 
-  /* in sources/update emits the new logUrl */
+  /* in sources/update emits the new logoUrl */
   @Output() emittedUrl: EventEmitter<string> = new EventEmitter();
 
   /*  in sources/register (of literature or data repository) emits the updated repository */
@@ -258,30 +258,37 @@ export class DatasourceUpdateFormComponent implements OnInit {
     if (this.updateGroup.valid) {
       if ( this.selectedRepo.datasourceType != 'journal' || this.updateGroup.get('issn').value ) {
         this.refreshSelectedRepo();
-        this.loadingMessage = formSubmitting;
-        this.errorMessage = '';
-        this.repoService.updateRepository(this.selectedRepo).subscribe(
-          response => {
-            if(response) {
-              this.selectedRepo = response;
-              console.log(`updateRepository responded: ${JSON.stringify(response)}`);
-              this.emittedInfo.emit(response);
-            }
-          },
-          error => {
-            console.log(error);
-            this.loadingMessage = '';
-            this.errorMessage = formErrorWasntSaved;
-          },
-          () => {
-            this.loadingMessage = '';
-            if (!this.selectedRepo) {
+
+        /*
+          call the api only if the current page is sources/update
+          [otherwise the repository will be updated during the registration procedure, after the first interface is saved]
+        */
+        if (this.showButton) {
+          this.loadingMessage = formSubmitting;
+          this.errorMessage = '';
+          this.repoService.updateRepository(this.selectedRepo).subscribe(
+            response => {
+              if (response) {
+                this.selectedRepo = response;
+                console.log(`updateRepository responded: ${JSON.stringify(response)}`);
+                this.emittedInfo.emit(response);
+              }
+            },
+            error => {
+              console.log(error);
+              this.loadingMessage = '';
               this.errorMessage = formErrorWasntSaved;
-            } else {
-              this.successMessage = formSuccessUpdatedRepo;
+            },
+            () => {
+              this.loadingMessage = '';
+              if (!this.selectedRepo) {
+                this.errorMessage = formErrorWasntSaved;
+              } else {
+                this.successMessage = formSuccessUpdatedRepo;
+              }
             }
-          }
-        );
+          );
+        }
       } else {
         this.errorMessage = formErrorRequiredFields;
       }
@@ -293,7 +300,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   refreshSelectedRepo() {
     if (this.updateGroup.get('platformName').value ) {
       this.selectedRepo.typology = this.updateGroup.get('platformName').value;
-    } else if (this.updateGroup.get('softwarePlatform').value){
+    } else if (this.updateGroup.get('softwarePlatform').value) {
       this.selectedRepo.typology = this.updateGroup.get('softwarePlatform').value;
     }
     this.selectedRepo.officialName = this.updateGroup.get('officialName').value;
@@ -328,6 +335,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
       this.selectedRepo.registeredBy = this.authService.getUserEmail();
       this.selectedRepo.registered = true;
       /*this.selectedRepo.registrationDate = new Date(Date.now());*/ //NOT NEEDED
+      this.emittedInfo.emit(this.selectedRepo);
     }
   }
 

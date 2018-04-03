@@ -33,6 +33,8 @@
                 <div class="whiteFilm"></div>
               </div>
               <div *ngIf="repoMetrics">
+                <a class="uk-button uk-button-link"
+                   [routerLink]="['/getImpact/usagestats',repoId]" title="">Get statistics report</a>
                 <div class="uk-margin-medium-bottom">
                   <div>
                     <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match uk-grid" uk-grid="">

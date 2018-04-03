@@ -2,7 +2,7 @@ import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { DatasourceInterfaceFormComponent } from '../sources-forms/datasource-interface-form.component';
 import { Description, interfaceFormDesc } from '../../../domain/oa-description';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Repository } from '../../../domain/typeScriptClasses';
+import {Repository, RepositoryInterface} from '../../../domain/typeScriptClasses';
 import { DatasourceCreateFormComponent } from '../sources-forms/datasource-create-form.component';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {MyArray} from "../../../shared/reusablecomponents/forms/my-array.interface";
@@ -11,6 +11,8 @@ import {
   AsideHelpContentComponent,
   HelpContentComponent
 } from "../../../shared/reusablecomponents/help-content.component";
+import {ConfirmationDialogComponent} from "../../../shared/reusablecomponents/confirmation-dialog.component";
+import {RepositoryService} from "../../../services/repository.service";
 
 @Component ({
   selector: 'sr-aggregator',
@@ -18,6 +20,7 @@ import {
 })
 
 export class SrAggregatorComponent implements OnInit {
+  loadingMessage: string;
   errorMessage: string;
 
   showForm: boolean;
@@ -26,8 +29,8 @@ export class SrAggregatorComponent implements OnInit {
   step2: string = '';
   step3: string = '';
 
-  repo: Repository;
-
+  repo: Repository = null;
+  repoInterfaces: RepositoryInterface[] = [];
 
   /* queryParams is used to change the queryParams without refreshing the page
    * This was needed for Help Service [which sends back info according to the current router.url]
@@ -49,6 +52,10 @@ export class SrAggregatorComponent implements OnInit {
   @ViewChild('interfaceFormArray')
   public interfaceFormArray: MyArray;
 
+  @ViewChild('confirmDelete')
+  public confirmDelete: ConfirmationDialogComponent;
+  isModalShown: boolean = false;
+
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
   addDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
@@ -56,7 +63,8 @@ export class SrAggregatorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private repoService: RepositoryService) {}
 
   ngOnInit() {
     this.setQueryParam('basicInformation');
@@ -69,10 +77,7 @@ export class SrAggregatorComponent implements OnInit {
       this.registerAggregator.registerDatasource();
     } else if (this.showInterfaces) {
       if (this.interfaceFormArray.checkIfOneElementExists()) {
-        this.setQueryParam('finish');
-        this.showInterfaces = false;
-        this.showFinish = true;
-        this.step3 = 'active';
+        this.addRepository();
       } else {
         this.errorMessage = noInterfacesSaved;
       }
@@ -80,7 +85,9 @@ export class SrAggregatorComponent implements OnInit {
   }
 
   moveBackAStep(){
+    this.errorMessage = '';
     if (this.showInterfaces) {
+      this.interfaceFormArray.emitExportedDataArray();
       this.setQueryParam('basicInformation');
       this.showForm = true;
       this.showInterfaces = false;
@@ -102,8 +109,12 @@ export class SrAggregatorComponent implements OnInit {
     this.group = this.fb.group({});
   }
 
-  updateInterfaceCount(addedInterface: boolean) {
+  showDeleteInterfaceModal(event: any) {
+    this.confirmDelete.showModal();
+  }
 
+  confirmedRemoval(event: any) {
+    this.interfaceFormArray.confirmedRemove(event);
   }
 
   downloadLogo() {
@@ -119,5 +130,74 @@ export class SrAggregatorComponent implements OnInit {
     this.leftHelperContent.ngOnInit();
     this.bottomHelperContent.ngOnInit();
   }
+
+  addRepository() {
+    if (this.repo) {
+      this.loadingMessage = 'Saving changes';
+      this.errorMessage = '';
+      this.repoService.addRepository(this.repo.datasourceType, this.repo).subscribe(
+        response => {
+          console.log(`addRepository responded:\n${JSON.stringify(response)}`);
+          this.repo = response;
+        },
+        error => {
+          console.log(error);
+          this.loadingMessage = '';
+          this.errorMessage = 'The changes could not be saved';
+        },
+        () => {
+          this.saveNewInterfaces();
+        }
+      );
+    }
+  }
+
+  saveNewInterfaces() {
+    if (this.repoInterfaces) {
+      let failed: boolean = false;
+      for (let intrf of this.repoInterfaces) {
+        if (intrf.id) {
+          this.repoService.updateInterface(this.repo.id, intrf).subscribe(
+            response => {
+              console.log(`updateInterface responded ${JSON.stringify(response)}`);
+              intrf = response;
+            },
+            error => {
+              console.log(error);
+              failed = true;
+            }
+          );
+        } else {
+          this.repoService.addInterface(this.repo.datasourceType, this.repo.id, intrf).subscribe (
+            addedInterface => {
+              console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
+              intrf = addedInterface;
+            },
+            error => {
+              console.log(error);
+              failed = true;
+            }
+          );
+        }
+        if (failed) {
+          break;
+        }
+      }
+      this.loadingMessage = '';
+      if (failed) {
+        this.errorMessage = 'The changes could not be saved. Please try again';
+      } else {
+        this.setQueryParam('finish');
+        this.showInterfaces = false;
+        this.showFinish = true;
+        this.step3 = 'active';
+      }
+    }
+  }
+
+  getNewInterfaces (interfaces: RepositoryInterface[]) {
+    this.repoInterfaces = interfaces;
+  }
+
 
 }

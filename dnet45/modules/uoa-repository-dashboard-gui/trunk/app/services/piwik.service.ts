@@ -44,7 +44,8 @@ export class PiwikService {
   getOpenaireId(id: string): Observable<string> {
     let url = `${this.apiUrl}getOpenaireId/${id}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( oaId => oaId['_body'].toString() )
       .catch(this.handleError);
   }
@@ -52,7 +53,8 @@ export class PiwikService {
   getPiwikInfo(id: string): Observable<PiwikInfo> {
     let url = `${this.apiUrl}getPiwikSiteForRepo/${id}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( piwik => <PiwikInfo>piwik.json() )
       .catch(this.handleError);
   }
@@ -60,7 +62,8 @@ export class PiwikService {
   getPiwikSitesForRepos(): Observable<PiwikInfo[]> {
     let url = `${this.apiUrl}getPiwikSitesForRepos`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url, httpOptions)
       .map( res => <PiwikInfo[]>res.json())
       .catch(this.handleError);
   }

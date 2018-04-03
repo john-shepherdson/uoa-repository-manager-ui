@@ -56,6 +56,8 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   @Output() emittedInfo: EventEmitter<Repository> = new EventEmitter();
 
+  @Input() selectedRepo: Repository;
+
   formSubmitted: boolean = false;
   group: FormGroup;
   readonly groupDefinition = {
@@ -122,6 +124,52 @@ export class DatasourceCreateFormComponent implements OnInit {
     this.getTimezones();
     this.getCountries();
     this.getDatasourceClasses();
+
+    if (this.selectedRepo) {
+      this.setupForm();
+    }
+  }
+
+  setupForm() {
+    if (this.selectedRepo) {
+      console.log(`my datasource type is: ${this.selectedRepo.datasourceType}`);
+
+      this.group.setValue({
+        softwarePlatform: this.selectedRepo.typology,
+        officialName: this.selectedRepo.officialName,
+        issn: '',
+        eissn: '',
+        lissn: '',
+        repoDescription: this.selectedRepo.description,
+        country: this.selectedRepo.countryCode,
+        longtitude: this.selectedRepo.longitude,
+        latitude: this.selectedRepo.latitude,
+        websiteUrl: this.selectedRepo.websiteUrl,
+        institutionName: this.selectedRepo.organization,
+        englishName: this.selectedRepo.englishName,
+        logoUrl: this.selectedRepo.logoUrl,
+        timezone: this.selectedRepo.timezone,
+        datasourceType: this.selectedRepo.datasourceClass,
+        adminEmail: this.selectedRepo.contactEmail
+      });
+
+      if (this.selectedRepo.datasourceType == 'journal') {
+
+        let ssnToShow = this.selectedRepo.issn.slice(0, 4)+ '-' + this.selectedRepo.issn.toString().slice(4);
+        this.group.get('issn').setValue(ssnToShow);
+
+        if (this.selectedRepo.eissn.trim().length) {
+          ssnToShow = this.selectedRepo.eissn.slice(0, 4)+ '-' + this.selectedRepo.eissn.toString().slice(4);
+          this.group.get('eissn').setValue(ssnToShow);
+        }
+
+        if (this.selectedRepo.lissn.trim().length) {
+          ssnToShow = this.selectedRepo.lissn.slice(0, 4)+ '-' + this.selectedRepo.lissn.toString().slice(4);
+          this.group.get('lissn').setValue(ssnToShow);
+        }
+;
+      }
+    }
   }
 
   getCountries(){
@@ -178,29 +226,12 @@ export class DatasourceCreateFormComponent implements OnInit {
 
     if (this.group.valid) {
       if ( this.mode != 'journal' || this.group.get('issn').value ) {
-        let newRepo = this.createNewRepository();
-        this.loadingMessage = formSubmitting;
-        this.errorMessage = '';
-        this.repoService.addRepository(newRepo.datasourceType, newRepo).subscribe(
-          response => {
-            console.log(`addRepository responded:\n${JSON.stringify(response)}`);
-            newRepo = response;
-          },
-          error => {
-            console.log(error);
-            this.loadingMessage = '';
-            this.errorMessage = formErrorWasntSaved;
-          },
-          () => {
-            this.loadingMessage = '';
-            if (newRepo) {
-              this.emittedInfo.emit(newRepo);
-              this.successMessage = formSuccessRegisteredDatasource;
-            } else {
-              this.errorMessage = formErrorWasntSaved;
-            }
-          }
-        );
+        if (this.selectedRepo) {
+          this.emittedInfo.emit(this.selectedRepo);
+        } else {
+          let newRepo = this.createNewRepository();
+          this.emittedInfo.emit(newRepo);
+        }
       } else {
         this.errorMessage = formErrorRequiredFields;
       }
@@ -208,6 +239,10 @@ export class DatasourceCreateFormComponent implements OnInit {
       this.errorMessage = formErrorRequiredFields;
     }
   }
+  /*
+  *
+
+  * */
 
   createNewRepository(): Repository {
     let newRepo: Repository = new Repository();
@@ -225,6 +260,9 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.datasourceClass = this.group.get('datasourceType').value;
     newRepo.typology = this.group.get('softwarePlatform').value;
     newRepo.description = this.group.get('repoDescription').value;
+    newRepo.issn = '';
+    newRepo.eissn = '';
+    newRepo.lissn = '';
 
     if ( this.group.get('issn').value ){
       let ssnParts = this.group.get('issn').value.split('-');

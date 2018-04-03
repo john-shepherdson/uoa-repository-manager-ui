@@ -24,6 +24,7 @@ export class ValidatorService {
   getRuleSets(mode: string): Observable<RuleSet[]> {
     let url = `${this.apiUrl}getRuleSets/${mode}`;
     console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
     return this.http.get(url,httpOptions)
       .map(res => <RuleSet[]>res.json())
       .catch(this.handleError);
@@ -33,6 +34,7 @@ export class ValidatorService {
   getSetsOfRepository(baseUrl: string): Observable<string[]> {
     let url = `${this.apiUrl}getSetsOfRepository?url=${baseUrl}`;
     console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
     return this.http.get(url,httpOptions)
       .map(res => <string[]>res.json())
       .catch(this.handleError);
@@ -47,6 +49,7 @@ export class ValidatorService {
                    validationStatus: string): Observable<StoredJob[]> {
     let url = `${this.apiUrl}getStoredJobsNew?user=${userEmail}&jobType=${encodeURI(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
     console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
     return this.http.get(url,httpOptions)
       .map(res => <StoredJob[]>res.json())
       .catch(this.handleError);
@@ -56,6 +59,7 @@ export class ValidatorService {
   identifyRepository(baseUrl: string): Observable<boolean> {
     let url = `${this.apiUrl}identifyRepository?url=${baseUrl}`;
     console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
     return this.http.get(url,httpOptions)
       .map(res => <boolean>res.json())
       .catch(this.handleError);
@@ -64,6 +68,7 @@ export class ValidatorService {
   getInterfaceInformation(baseUrl: string): Observable<InterfaceInformation> {
     let url = `${this.apiUrl}getInterfaceInformation?baseUrl=${encodeURIComponent(baseUrl)}`;
     console.log(`knocking on: ${url}`);
+    httpOptions.withCredentials = true;
     return this.http.get(url,httpOptions)
       .map(res => <InterfaceInformation>res.json())
       .catch(this.handleError);

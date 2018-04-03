@@ -24,7 +24,8 @@ export class AuthGuardService implements CanActivate {
     sessionStorage.setItem("state.location",state.url);
 
     // Navigate to the login page via the API
-    window.location.href = this.loginUrl;
+    /*window.location.href = this.loginUrl;*/
+    this.router.navigate(['/landing']);
 
     return false;
   }

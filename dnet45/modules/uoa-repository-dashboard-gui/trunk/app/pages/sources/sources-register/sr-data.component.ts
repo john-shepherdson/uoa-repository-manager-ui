@@ -17,6 +17,7 @@ import {
   AsideHelpContentComponent,
   HelpContentComponent
 } from "../../../shared/reusablecomponents/help-content.component";
+import {ConfirmationDialogComponent} from "../../../shared/reusablecomponents/confirmation-dialog.component";
 
 @Component ({
   selector: 'app-sr-data',
@@ -52,7 +53,6 @@ export class SrDataComponent implements OnInit {
   @ViewChild('bottomHelperContent')
   public bottomHelperContent: HelpContentComponent;
 
-
   @ViewChild('datasourcesByCountry')
   public datasourcesByCountry: RegisterDatasourceShareableComponent;
 
@@ -61,6 +61,11 @@ export class SrDataComponent implements OnInit {
 
   @ViewChild('interfaceFormArray')
   public interfaceFormArray: MyArray;
+
+  @ViewChild('confirmDelete')
+  public confirmDelete: ConfirmationDialogComponent;
+  isModalShown: boolean = false;
+
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
@@ -92,10 +97,7 @@ export class SrDataComponent implements OnInit {
         this.updateDatasource.updateRepo();
     } else if(this.showInterfaces) {
       if (this.interfaceFormArray.checkIfOneElementExists()) {
-        this.setQueryParam('finish');
-        this.showInterfaces = false;
-        this.showFinish = true;
-        this.step4 = 'active';
+        this.updateRepository();
       } else {
         this.errorMessage = noInterfacesSaved;
       }
@@ -109,6 +111,7 @@ export class SrDataComponent implements OnInit {
       this.showForm = false;
       this.step2 = '';
     } else if(this.showInterfaces) {
+      this.interfaceFormArray.emitExportedDataArray();
       this.setQueryParam('basicInformation');
       this.showForm = true;
       this.showInterfaces = false;
@@ -161,7 +164,7 @@ export class SrDataComponent implements OnInit {
   getRepoInterfaces() {
     this.repoService.getRepositoryInterface(this.datasourceId).subscribe(
       interfaces => {
-        this.repoInterfaces = interfaces.sort( function(a, b) {
+        this.repoInterfaces = interfaces.sort( function(a,b) {
           if (a.id<b.id) {
             return -1;
           } else if (a.id>b.id) {
@@ -182,6 +185,14 @@ export class SrDataComponent implements OnInit {
     );
   }
 
+  showDeleteInterfaceModal(event: any) {
+    this.confirmDelete.showModal();
+  }
+
+  confirmedRemoval(event: any) {
+    this.interfaceFormArray.confirmedRemove(event);
+  }
+
   downloadLogo() {
     window.open("../../../assets/imgs/3_0ValidatedLogo.png","_blank", "enabledstatus=0,toolbar=0,menubar=0,location=0");
   }
@@ -194,6 +205,75 @@ export class SrDataComponent implements OnInit {
     this.topHelperContent.ngOnInit();
     this.leftHelperContent.ngOnInit();
     this.bottomHelperContent.ngOnInit();
+  }
+
+
+  updateRepository() {
+    this.loadingMessage = 'Saving changes';
+    this.errorMessage = '';
+    this.repoService.updateRepository(this.repo).subscribe (
+      response => {
+        if (response) {
+          this.repo = response;
+          console.log(`updateInterface responded: ${JSON.stringify(response)}`);
+        }
+      },
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = 'The changes could not be saved';
+      },
+      () => {
+        this.saveNewInterfaces();
+      }
+    );
+  }
+
+  saveNewInterfaces() {
+    if (this.repoInterfaces) {
+      let failed: boolean = false;
+      for (let intrf of this.repoInterfaces) {
+        if (intrf.id) {
+          this.repoService.updateInterface(this.repo.id, intrf).subscribe(
+            response => {
+              console.log(`updateRepository responded ${JSON.stringify(response)}`);
+              intrf = response;
+            },
+            error => {
+              console.log(error);
+              failed = true;
+            }
+          );
+        } else {
+          this.repoService.addInterface(this.repo.datasourceType, this.repo.id, intrf).subscribe (
+            addedInterface => {
+              console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
+              intrf = addedInterface;
+            },
+            error => {
+              console.log(error);
+              failed = true;
+            }
+          );
+        }
+        if (failed) {
+          break;
+        }
+      }
+      this.loadingMessage = '';
+      if (failed) {
+        this.errorMessage = 'The changes could not be saved. Please try again';
+      } else {
+        this.setQueryParam('finish');
+        this.showInterfaces = false;
+        this.showFinish = true;
+        this.step4 = 'active';
+      }
+    }
+  }
+
+  getNewInterfaces (interfaces: RepositoryInterface[]) {
+    this.repoInterfaces = interfaces;
   }
 
 }

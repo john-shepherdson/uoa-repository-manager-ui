@@ -10,6 +10,7 @@ import { MetricsRouting } from './metrics.routing';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { MetricsShowComponent } from './metrics-show.component';
 import { TabsModule } from 'ngx-bootstrap';
+import {MetricsUsagestatsComponent} from "./metrics-usagestats.component";
 
 @NgModule ({
   imports: [
@@ -22,7 +23,8 @@ import { TabsModule } from 'ngx-bootstrap';
     MetricsComponent,
     MetricsEnableComponent,
     MetricsInstructionsComponent,
-    MetricsShowComponent
+    MetricsShowComponent,
+    MetricsUsagestatsComponent
   ]
 })
 

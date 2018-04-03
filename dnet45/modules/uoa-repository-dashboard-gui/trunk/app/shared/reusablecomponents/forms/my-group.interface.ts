@@ -51,6 +51,9 @@ export class MyGroup implements OnInit, AfterContentInit {
 
   public wasSaved: boolean = false;
 
+  public exportedData: any = null;
+  @Input() public inRegister: boolean = false;
+
   constructor(injector : Injector) {
     this._fb = injector.get(FormBuilder);
     this.patchData.subscribe(_ => {

@@ -26,7 +26,8 @@ export class MonitorService {
   getJobSummary(jobId: string, groupBy: string): Observable<StoredJob> {
     let url = `${this.apiUrl}getJobSummary?jobId=${jobId}&groupBy=${groupBy}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url,httpOptions)
       .map(res => <StoredJob>res.json() )
       .catch(this.handleError);
   }
@@ -41,7 +42,8 @@ export class MonitorService {
       }
     }
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
+    httpOptions.withCredentials = true;
+    return this.http.get(url,httpOptions)
       .map(res => <JobsOfUser>res.json() )
       .catch(this.handleError);
   }
