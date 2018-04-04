@@ -52,10 +52,6 @@ export class SrAggregatorComponent implements OnInit {
   @ViewChild('interfaceFormArray')
   public interfaceFormArray: MyArray;
 
-  @ViewChild('confirmDelete')
-  public confirmDelete: ConfirmationDialogComponent;
-  isModalShown: boolean = false;
-
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
   addDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
@@ -107,14 +103,6 @@ export class SrAggregatorComponent implements OnInit {
     this.showInterfaces = true;
     this.step2 = 'active';
     this.group = this.fb.group({});
-  }
-
-  showDeleteInterfaceModal(event: any) {
-    this.confirmDelete.showModal();
-  }
-
-  confirmedRemoval(event: any) {
-    this.interfaceFormArray.confirmedRemove(event);
   }
 
   downloadLogo() {
@@ -197,6 +185,7 @@ export class SrAggregatorComponent implements OnInit {
 
   getNewInterfaces (interfaces: RepositoryInterface[]) {
     this.repoInterfaces = interfaces;
+    console.log('new interfaces is ',this.repoInterfaces);
   }
 
 

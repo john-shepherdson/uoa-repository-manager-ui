@@ -67,10 +67,6 @@ export class SrLiteratureComponent implements OnInit {
   @ViewChild('interfaceFormArray')
   public interfaceFormArray: MyArray;
 
-  @ViewChild('confirmDelete')
-  public confirmDelete: ConfirmationDialogComponent;
-  isModalShown: boolean = false;
-
 
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
@@ -163,7 +159,14 @@ export class SrLiteratureComponent implements OnInit {
     this.repo = repo;
     console.log(`repo was updated!`);
     this.group = this.fb.group({});
-    this.getRepoInterfaces();
+    if (this.repoInterfaces.length == 0) {
+      this.getRepoInterfaces();
+    } else {
+      this.setQueryParam('interfaces');
+      this.showForm = false;
+      this.showInterfaces = true;
+      this.step3 = 'active';
+    }
   }
 
   getRepoInterfaces() {
@@ -190,13 +193,6 @@ export class SrLiteratureComponent implements OnInit {
     );
   }
 
-  showDeleteInterfaceModal(event: any) {
-    this.confirmDelete.showModal();
-  }
-
-  confirmedRemoval(event: any) {
-    this.interfaceFormArray.confirmedRemove(event);
-  }
 
   downloadLogo() {
     window.open("../../../assets/imgs/3_0ValidatedLogo.png","_blank", "enabledstatus=0,toolbar=0,menubar=0,location=0");
@@ -240,7 +236,7 @@ export class SrLiteratureComponent implements OnInit {
         if (intrf.id) {
           this.repoService.updateInterface(this.repo.id, intrf).subscribe(
             response => {
-              console.log(`updateRepository responded ${JSON.stringify(response)}`);
+              console.log(`updateInterface responded ${JSON.stringify(response)}`);
               intrf = response;
             },
             error => {
@@ -278,6 +274,7 @@ export class SrLiteratureComponent implements OnInit {
 
   getNewInterfaces (interfaces: RepositoryInterface[]) {
     this.repoInterfaces = interfaces;
+    console.log('new interfaces is ',this.repoInterfaces);
   }
 
 }

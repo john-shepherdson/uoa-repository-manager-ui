@@ -35,6 +35,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   currentInterface: RepositoryInterface;
   valsetList: string[] = [];
 
+  existingCompLevel: string;
   compClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
 
@@ -61,12 +62,11 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     console.log(`other data is: ${JSON.stringify(this.otherData,null,2)}`);
     if (this.data && this.data.length) {
       this.currentInterface = this.data[0];
-      this.exportedData = this.currentInterface;
       this.patchData.next({
-          baseUrl: this.currentInterface.baseUrl,
-          selectValidationSet: '',
-          customValidationSet: '',
-          compatibilityLevel:this.data[0].desiredCompatibilityLevel
+        baseUrl: this.data[0].baseUrl,
+        selectValidationSet: '',
+        customValidationSet: '',
+        compatibilityLevel:this.data[0].desiredCompatibilityLevel
       });
       this.getInterfaceInfo(this.data[0].baseUrl);
       this.data.splice(0,1);
@@ -83,6 +83,17 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
 
     if (this.currentInterface) {
       console.log(`accessParams is ${JSON.stringify(this.currentInterface.accessParams)}`);
+      if ( !this.getMyControl('compatibilityLevel').value || !this.classCodes.filter( x => x == this.currentInterface.desiredCompatibilityLevel).length ) {
+        this.getMyControl('compatibilityLevel').setValue("");
+        this.existingCompLevel = this.currentInterface.desiredCompatibilityLevel;
+      } else {
+        this.getMyControl('compatibilityLevel').setValue(this.compClasses[this.currentInterface.desiredCompatibilityLevel]);
+      }
+      if (this.group.valid ) {
+        if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
+          this.exportedData = this.currentInterface;
+        }
+      }
     }
 
     /*  NOT ANYMORE
@@ -95,15 +106,15 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   chooseValSet(existingValSet: boolean) {
-     if(existingValSet) {
-       this.existingValSet = true;
-       this.getMyControl('selectValidationSet').enable();
-       this.getMyControl('customValidationSet').disable();
-     }  else {
-       this.existingValSet = false;
-       this.getMyControl('selectValidationSet').disable();
-       this.getMyControl('customValidationSet').enable();
-     }
+    if(existingValSet) {
+      this.existingValSet = true;
+      this.getMyControl('selectValidationSet').enable();
+      this.getMyControl('customValidationSet').disable();
+    }  else {
+      this.existingValSet = false;
+      this.getMyControl('selectValidationSet').disable();
+      this.getMyControl('customValidationSet').enable();
+    }
   }
 
   getInterfaceInfo(baseUrl: string) {
@@ -191,10 +202,32 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     }
   }
 
+  checkIfValid() {
+    if (this.inRegister) {
+      if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
+        if (this.identifiedBaseUrl) {
+          let baseUrl = this.getMyControl('baseUrl').value;
+          let valset: string = '';
+          if (this.getMyControl('selectValidationSet').enabled) {
+            valset = this.getMyControl('selectValidationSet').value;
+          } else {
+            valset = this.getMyControl('customValidationSet').value;
+          }
+          let compLvl = this.getMyControl('compatibilityLevel').value;
+
+          if (this.currentInterface) {
+            this.updateCurrent(baseUrl,valset,compLvl);
+          } else {
+            this.addCurrent(baseUrl,valset,compLvl);
+          }
+        }
+      }
+    }
+  }
+
   updateCurrent (baseUrl: string, valset: string, compLvl: string) {
     this.successMessage = '';
     this.errorMessage = '';
-    this.loadingMessage = formSubmitting;
     this.currentInterface.baseUrl = baseUrl;
     this.currentInterface.accessSet = valset;
     this.currentInterface.accessParams['set'] = valset;
@@ -203,6 +236,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.currentInterface.typology = this.currentRepository.datasourceClass;
     this.exportedData = this.currentInterface;
     if (!this.inRegister) {
+      this.loadingMessage = formSubmitting;
       this.updateInterface();
     } else {
       this.loadingMessage = '';
@@ -214,7 +248,6 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   addCurrent (baseUrl: string, valset: string, compLvl: string) {
     this.errorMessage = '';
     this.successMessage = '';
-    this.loadingMessage = formSubmitting;
     this.currentInterface = new RepositoryInterface();
     this.currentInterface.baseUrl = baseUrl;
     this.currentInterface.accessSet = valset;
@@ -224,6 +257,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.currentInterface.typology = this.currentRepository.datasourceClass;
     this.exportedData = this.currentInterface;
     if (!this.inRegister) {
+      this.loadingMessage = formSubmitting;
       this.addInterface();
     } else {
       this.loadingMessage = '';

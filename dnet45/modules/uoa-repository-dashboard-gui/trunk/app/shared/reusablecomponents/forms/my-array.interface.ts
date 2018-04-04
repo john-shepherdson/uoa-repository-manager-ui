@@ -71,7 +71,6 @@ export class MyArray extends MyGroup {
     let wrapperFactory = this._cfr.resolveComponentFactory(this.wrapper);
     let wrapperView = wrapperFactory.create(this.viewContainerRef.injector);
     let componentView = componentFactory.create(this.viewContainerRef.injector);
-    this.components.push(componentView.instance);
     (<MyGroup>componentView.instance).index = this.viewContainerRef.length;
     (<MyGroup>componentView.instance).required = this.required;
     (<MyGroup>componentView.instance).data = this.data;
@@ -79,6 +78,7 @@ export class MyArray extends MyGroup {
     if (this.registerMode) {
       (<MyGroup>componentView.instance).inRegister = true;
     }
+    this.components.push(<MyGroup>componentView.instance);
     this.arrayData_.push((<MyGroup>componentView.instance).patchData);
     (<MyGroup>componentView.instance).description = this.description;
     let arrayGroup = (<MyGroup>componentView.instance).generate();
@@ -88,6 +88,7 @@ export class MyArray extends MyGroup {
     (<MyWrapper>wrapperView.instance).description = this.description;
 
     (<MyWrapper>wrapperView.instance).first = this.viewContainerRef.length == 0;
+
     (<MyWrapper>wrapperView.instance).deleteNotifier.subscribe($event => {
       let index = this.viewContainerRef.indexOf($event);
       console.log(index);
@@ -96,7 +97,7 @@ export class MyArray extends MyGroup {
         ((this.parentGroup as FormArray).controls[this.name].at(0).corpus((<MyGroup>componentView.instance).generate().value));
       } else {
         if (index>0){
-          if (!<MyGroup>componentView.instance.exportedData) {
+          if (this.registerMode || !<MyGroup>componentView.instance.exportedData) {
             this.remove(index);
             (this.parentGroup as FormArray).controls[this.name].removeAt(index-1);
             this.components.splice(index,1);
@@ -146,9 +147,11 @@ export class MyArray extends MyGroup {
     this.components.forEach(element => {
       if (element.exportedData) {
         array_to_emit.push(element.exportedData);
+        console.log(element.exportedData);
       }
     });
     this.emitDataArray.emit(array_to_emit);
+    console.log(`emitted ${array_to_emit.length} interfaces`);
   }
 
   isModalShown: boolean = false;

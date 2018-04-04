@@ -155,7 +155,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         datasourceType: this.selectedRepo.datasourceClass,
         adminEmail: this.selectedRepo.contactEmail
       });
-      if ( !this.updateGroup.get('softwarePlatform').value ) {
+      if ( !this.updateGroup.get('softwarePlatform').value || !this.typologies.filter(x=> x.value == this.selectedRepo.typology).length ) {
         this.updateGroup.get('softwarePlatform').setValue('');
         this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
