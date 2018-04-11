@@ -62,12 +62,12 @@ export class BrokerService {
       .catch(this.handleError);
   }
 
-  getSimpleSubscriptionsOfUser(userEmail: string): Observable<Map<string,SimpleSubscriptionDesc>> {
+  getSimpleSubscriptionsOfUser(userEmail: string): Observable<Map<string,SimpleSubscriptionDesc[]>> {
     let url = `${this.apiUrl}getSimpleSubscriptionsOfUser/${userEmail}/`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;
-    return this.http.get(url, this.http)
-      .map( res => <Map<string,SimpleSubscriptionDesc>>res.json())
+    return this.http.get(url, httpOptions)
+      .map( res => <Map<string,SimpleSubscriptionDesc[]>>res.json())
       .catch(this.handleError);
   }
 

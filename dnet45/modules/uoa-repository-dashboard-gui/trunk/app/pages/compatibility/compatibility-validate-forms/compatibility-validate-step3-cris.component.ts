@@ -60,6 +60,12 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
     }
   }
 
+  onToggleCheckEntity(event:any) {
+    if ( !event.target.checked ) {
+      this.selectedAllEntities = false;
+    }
+  }
+
   saveChanges() {
     let emitted: any[] = [];
     let chosenEntities: string[] = [];

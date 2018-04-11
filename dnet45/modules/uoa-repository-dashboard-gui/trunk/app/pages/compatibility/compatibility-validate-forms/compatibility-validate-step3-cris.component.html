@@ -7,7 +7,7 @@
       <div class="margin10" formArrayName="entities">
         <div class="checkbox selectAll">
           <label>
-            <input type="checkbox" checked (change)="toggleSelectAllContentRules()">
+            <input type="checkbox" [checked]="selectedAllEntities" (change)="toggleSelectAllContentRules()">
             <span>Select / Deselect All Entities</span>
           </label>
         </div>
@@ -16,7 +16,8 @@
             <label for="entity_{{ i }}">
               <input id="entity_{{ i }}"
                      formControlName="entity"
-                     type="checkbox">
+                     type="checkbox"
+                     (change)="onToggleCheckEntity($event)">
               <span>{{ entitiesList[i] }}</span>
             </label>
           </div>

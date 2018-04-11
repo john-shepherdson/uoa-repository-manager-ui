@@ -18,7 +18,7 @@ export class ContentNotificationsComponent implements OnInit {
   loadingMessage: string;
   noSubscriptions: string;
 
-  subscrOfUser: Map<string,SimpleSubscriptionDesc> = new Map<string,SimpleSubscriptionDesc>();
+  subscrOfUser: Map<string,SimpleSubscriptionDesc[]> = new Map<string,SimpleSubscriptionDesc[]>();
   subKeys: string[] = [];
 
   constructor(private authService: AuthenticationService,
@@ -33,6 +33,7 @@ export class ContentNotificationsComponent implements OnInit {
     this.brokerService.getSimpleSubscriptionsOfUser(this.authService.getUserEmail()).subscribe(
       subscrs => this.subscrOfUser = subscrs,
       error => {
+        console.log(`getSimpleSubscriptions returned error`);
         console.log(error);
         this.loadingMessage = '';
         this.errorMessage = noServiceMessage;

@@ -122,6 +122,16 @@ export class CompatibilityValidateStep2Component implements OnInit {
 
   }
 
+  onToggleCheckRule(event:any, contentOrUsage: string) {
+    if ( !event.target.checked ) {
+      if (contentOrUsage == 'content') {
+        this.selectedAllContentRules = false;
+      } else if (contentOrUsage == 'usage') {
+        this.selectedAllUsageRules = false;
+      }
+    }
+  }
+
   toggleShowRules() {
     this.showRules = !this.showRules;
     return this.showRules;
