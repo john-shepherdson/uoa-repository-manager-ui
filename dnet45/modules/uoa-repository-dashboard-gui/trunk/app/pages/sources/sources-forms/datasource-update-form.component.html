@@ -100,7 +100,3 @@
   </div>
 </form>
 
-<confirmation-dialog #updateLogoUrlModal [title]="'Update Logo URL'" [isModalShown]="isModalShown"
-                     [confirmActionButton]="'Update'" (emitObject)="updatedLogoUrl($event)">
-  <input type="text" #logoURLinput name="logoUrl" placeholder="Logo URL" class="form-control" value="{{ updateGroup.get('logoUrl').value }}" (change)="changeLogoUrl(logoURLinput.value)">
-</confirmation-dialog>

@@ -43,7 +43,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     baseUrl: ['', Validators.required],
     selectValidationSet: [''],
     customValidationSet: [''],
-    compatibilityLevel: ['', Validators.required]
+    compatibilityLevel: ['']
   };
   baseUrlDesc: Description = baseUrlDesc;
   existingValSetDesc: Description = existingValSetDesc;
@@ -58,7 +58,6 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
 
   ngOnInit() {
     this.currentRepository = <Repository>this.otherData;
-    this.getCompatibilityClasses();
     console.log(`other data is: ${JSON.stringify(this.otherData,null,2)}`);
     if (this.data && this.data.length) {
       this.currentInterface = this.data[0];
@@ -80,21 +79,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     /* initializes MyGroup parent component and the FormGroup */
     super.ngOnInit();
     console.log(this.group, this.parentGroup);
-
-    if (this.currentInterface) {
-      console.log(`accessParams is ${JSON.stringify(this.currentInterface.accessParams)}`);
-      if ( !this.getMyControl('compatibilityLevel').value || !this.classCodes.filter( x => x == this.currentInterface.desiredCompatibilityLevel).length ) {
-        this.getMyControl('compatibilityLevel').setValue("");
-        this.existingCompLevel = this.currentInterface.desiredCompatibilityLevel;
-      } else {
-        this.getMyControl('compatibilityLevel').setValue(this.compClasses[this.currentInterface.desiredCompatibilityLevel]);
-      }
-      if (this.group.valid ) {
-        if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
-          this.exportedData = this.currentInterface;
-        }
-      }
-    }
+    this.getCompatibilityClasses();
 
     /*  NOT ANYMORE
     if (this.currentInterface) {
@@ -115,6 +100,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       this.getMyControl('selectValidationSet').disable();
       this.getMyControl('customValidationSet').enable();
     }
+    this.checkIfValid();
   }
 
   getInterfaceInfo(baseUrl: string) {
@@ -144,7 +130,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         },
         () => {
           if ( this.currentInterface && this.currentInterface.accessParams && this.currentInterface.accessParams['set'] ) {
-            if ( this.valsetList.filter( x => x === this.currentInterface.accessParams['set']).length ) {
+            if ( this.valsetList.some( x => x === this.currentInterface.accessParams['set']) ) {
               this.patchData.next({selectValidationSet:this.currentInterface.accessParams['set']});
             } else {
               this.patchData.next({customValidationSet:this.currentInterface.accessParams['set']});
@@ -169,6 +155,23 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       error => {
         this.errorMessage = noServiceMessage;
         console.log(error);
+      },
+      () => {
+        if (this.currentInterface) {
+          console.log(`accessParams is ${JSON.stringify(this.currentInterface.accessParams)}`);
+          if ( !this.currentInterface.desiredCompatibilityLevel || !this.classCodes.some( x => x == this.currentInterface.desiredCompatibilityLevel ) ) {
+            this.patchData.next({compatibilityLevel:''});
+            this.existingCompLevel = this.currentInterface.desiredCompatibilityLevel;
+          } else {
+            this.existingCompLevel = this.compClasses[this.currentInterface.desiredCompatibilityLevel];
+          }
+          if (this.group.valid ) {
+            if ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) {
+              this.exportedData = this.currentInterface;
+            }
+          }
+        }
+
       }
     );
   }
@@ -177,7 +180,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.groupErrorMessage = '';
     this.errorMessage = '';
     this.successMessage = '';
-    if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
+    if (this.group.valid && this.checkIfValsetWasChosen() && this.checkIfCompatibilityLevelWasChosen() ) {
       if (this.identifiedBaseUrl) {
         let baseUrl = this.getMyControl('baseUrl').value;
         let valset: string = '';
@@ -186,7 +189,13 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         } else {
           valset = this.getMyControl('customValidationSet').value;
         }
-        let compLvl = this.getMyControl('compatibilityLevel').value;
+        let compLvl: string = '';
+        if (this.getMyControl('compatibilityLevel').value) {
+          compLvl = this.getMyControl('compatibilityLevel').value;
+        } else {
+          compLvl = this.existingCompLevel;
+        }
+
 
         if (this.currentInterface) {
           this.updateCurrent(baseUrl,valset,compLvl);
@@ -202,18 +211,34 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     }
   }
 
+  checkIfValsetWasChosen() {
+    return ( ( this.getMyControl('selectValidationSet').enabled && this.getMyControl('selectValidationSet').value !='' ) || ( this.getMyControl('customValidationSet').enabled && this.getMyControl('customValidationSet').value !='' ) );
+  }
+
+  checkIfCompatibilityLevelWasChosen() {
+    return ( this.getMyControl('compatibilityLevel').value != '' || (this.existingCompLevel && this.existingCompLevel != '') );
+  }
+
   checkIfValid() {
+    console.log(this.existingCompLevel);
     if (this.inRegister) {
-      if (this.group.valid && ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) ) {
-        if (this.identifiedBaseUrl) {
+      if ( this.group.valid && this.checkIfValsetWasChosen() && this.checkIfCompatibilityLevelWasChosen() ) {
+        if ( this.identifiedBaseUrl ) {
           let baseUrl = this.getMyControl('baseUrl').value;
+
           let valset: string = '';
           if (this.getMyControl('selectValidationSet').enabled) {
             valset = this.getMyControl('selectValidationSet').value;
           } else {
             valset = this.getMyControl('customValidationSet').value;
           }
-          let compLvl = this.getMyControl('compatibilityLevel').value;
+
+          let compLvl: string = '';
+          if (this.getMyControl('compatibilityLevel').value) {
+            compLvl = this.getMyControl('compatibilityLevel').value;
+          } else {
+            compLvl = this.existingCompLevel;
+          }
 
           if (this.currentInterface) {
             this.updateCurrent(baseUrl,valset,compLvl);
@@ -221,6 +246,10 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
             this.addCurrent(baseUrl,valset,compLvl);
           }
         }
+      } else {
+        this.exportedData = null;
+        this.wasSaved = false;
+        this.successMessage = '';
       }
     }
   }

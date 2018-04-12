@@ -193,7 +193,7 @@ export class RepositoryService {
         console.log(`responded ${res.statusText}`);
         return res.status.toString();
       })
-      .catch(this.handleError).share();
+      .catch(this.handleError);
   }
 
   updateLongtitude(id: string, longtitude: string): Observable<string>{
@@ -208,7 +208,7 @@ export class RepositoryService {
 
     return this.http.post(url,body,httpOptions)
       .map( res => <string>res.json())
-      .catch(this.handleError).share();
+      .catch(this.handleError);
   }
 
   updateLatitude(id: string, latitude: string): Observable<string>{
@@ -223,10 +223,10 @@ export class RepositoryService {
 
     return this.http.post(url,body,httpOptions)
       .map( res => <string>res.json())
-      .catch(this.handleError).share();
+      .catch(this.handleError);
   }
 
-  updateLogoUrl(id: string, logoUrl: string): Observable<string>{
+  updateLogoUrl(id: string, logoUrl: string): Observable<any>{
     let url = `${this.apiUrl}updateLogoUrl`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
@@ -237,8 +237,8 @@ export class RepositoryService {
     httpOptions.withCredentials = true;
 
     return this.http.post(url, body, httpOptions)
-      .map( res => <string>res.json())
-      .catch(this.handleError).share();
+      .map( res => <any>res.json())
+      .catch(this.handleError);
   }
 
   updateTimezone(id: string, timezone: string): Observable<string>{
@@ -253,7 +253,7 @@ export class RepositoryService {
 
     return this.http.post(url, body, httpOptions)
       .map( res => <string>res.json())
-      .catch(this.handleError).share();
+      .catch(this.handleError);
   }
 
   getListLatestUpdate(mode: string): Observable<string> {

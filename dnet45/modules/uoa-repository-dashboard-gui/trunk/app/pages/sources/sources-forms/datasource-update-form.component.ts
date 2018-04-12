@@ -48,14 +48,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   datasourceClasses: Map<string,string> = new Map<string,string>();
   classCodes: string[] = [];
 
-  isModalShown: boolean;
-  @ViewChild('updateLogoUrlModal')
-  public updateLogoUrlModal: ConfirmationDialogComponent;
-
-  /* in sources/update emits the new logoUrl */
-  @Output() emittedUrl: EventEmitter<string> = new EventEmitter();
-
-  /*  in sources/register (of literature or data repository) emits the updated repository */
+  /*  in sources/register (in literature or data mode) the updated repository is emitted */
   @Output() emittedInfo: EventEmitter<Repository> = new EventEmitter();
 
   @Input() selectedRepo: Repository;
@@ -116,17 +109,13 @@ export class DatasourceUpdateFormComponent implements OnInit {
     if (this.selectedRepo) {
       this.loadingMessage = loadingRepoMessage;
       this.updateGroup = this.fb.group(this.updateGroupDefinition, {validator: checkPlatform});
-      this.setupUpdateForm();
-      //this.getDatasourceClasses();
-      //this.getCountries();
-      this.getTypologies();
-      this.getTimezones();
+      this.getDatasourceClasses();
     } else {
       this.errorMessage = loadingRepoError;
     }
   }
 
-  setupUpdateForm(){
+  setupUpdateForm() {
     if (this.selectedRepo) {
       console.log(`my datasource type is: ${this.selectedRepo.datasourceType}`);
       /*if (this.selectedRepo.datasourceType == 'journal') {
@@ -155,10 +144,12 @@ export class DatasourceUpdateFormComponent implements OnInit {
         datasourceType: this.selectedRepo.datasourceClass,
         adminEmail: this.selectedRepo.contactEmail
       });
-      if ( !this.updateGroup.get('softwarePlatform').value || !this.typologies.filter(x=> x.value == this.selectedRepo.typology).length ) {
+
+      if ( this.selectedRepo.typology === '' || !this.typologies.some(x => x.value == this.selectedRepo.typology) ) {
         this.updateGroup.get('softwarePlatform').setValue('');
         this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
+
       this.updateGroup.get('officialName').disable();
       this.updateGroup.get('country').disable();
       this.updateGroup.get('longtitude').disable(); // MAYBE NOT DISABLED
@@ -184,7 +175,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('eissn').disable();
         this.updateGroup.get('lissn').disable();
       }
-      this.getDatasourceClasses();
+      /*this.getDatasourceClasses();*/
     }
   }
 
@@ -233,7 +224,9 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.loadingMessage = '';
         console.log(error);
       },
-      () => this.getTimezones()
+      () => {
+        this.getTimezones();
+      }
     );
   }
 
@@ -246,6 +239,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
+        this.setupUpdateForm();
       }
     );
   }
@@ -271,7 +265,6 @@ export class DatasourceUpdateFormComponent implements OnInit {
               if (response) {
                 this.selectedRepo = response;
                 console.log(`updateRepository responded: ${JSON.stringify(response)}`);
-                this.emittedInfo.emit(response);
               }
             },
             error => {
@@ -298,10 +291,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   refreshSelectedRepo() {
-    if (this.updateGroup.get('platformName').value ) {
-      this.selectedRepo.typology = this.updateGroup.get('platformName').value;
-    } else if (this.updateGroup.get('softwarePlatform').value) {
+    if (this.updateGroup.get('softwarePlatform').value ) {
       this.selectedRepo.typology = this.updateGroup.get('softwarePlatform').value;
+    } else if (this.updateGroup.get('platformName').value) {
+      this.selectedRepo.typology = this.updateGroup.get('platformName').value;
     }
     this.selectedRepo.officialName = this.updateGroup.get('officialName').value;
     this.selectedRepo.description = this.updateGroup.get('repoDescription').value;
@@ -339,27 +332,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
     }
   }
 
-  changeLogoUrl(logoUrl: string) {
-    this.updateGroup.get('logoUrl').setValue(logoUrl);
-  }
-
-  updateLogoUrl(logoUrl: string){
-    this.updateLogoUrlModal.ids = [logoUrl];
-    this.updateLogoUrlModal.showModal();
-  }
-
-  updatedLogoUrl(event: any) {
-    this.emittedUrl.emit(this.updateGroup.get('logoUrl').value);
-  }
-
 }
 
 export function checkPlatform(c: AbstractControl) {
   if ( c.get('softwarePlatform').value || c.get('platformName').value )
     return null;
   return 'invalid';
-}
-
-export function markPlatformAsRequired(c: AbstractControl) {
-  c.get('platformName').setValidators([Validators.required]);
 }

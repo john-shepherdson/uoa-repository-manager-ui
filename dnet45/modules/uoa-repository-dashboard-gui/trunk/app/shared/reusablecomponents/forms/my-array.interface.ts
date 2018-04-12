@@ -97,17 +97,15 @@ export class MyArray extends MyGroup {
         ((this.parentGroup as FormArray).controls[this.name].at(0).corpus((<MyGroup>componentView.instance).generate().value));
       } else {
         if (index>0){
-          if (this.registerMode ) {
-            if(!<MyGroup>componentView.instance.exportedData) {
-              this.remove(index);
-              (this.parentGroup as FormArray).controls[this.name].removeAt(index - 1);
-              this.components.splice(index, 1);
-              this.arrayData_.splice(index - 1, 1);
-            }
+          if (this.registerMode || !(<MyGroup>componentView.instance).wasSaved ) {
+            this.remove(index);
+            (this.parentGroup as FormArray).controls[this.name].removeAt(index - 1);
+            this.components.splice(index, 1);
+            this.arrayData_.splice(index - 1, 1);
           } else {
             this.curIntrf = <MyGroup>componentView.instance;
             this.curIndex = index;
-            this.components.splice(index,1);
+            this.components.splice(index, 1);
             this.confirmRemoveInterface();
           }
         } else {

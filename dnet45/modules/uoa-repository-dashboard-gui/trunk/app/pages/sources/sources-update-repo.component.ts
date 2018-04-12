@@ -10,6 +10,7 @@ import {
 } from '../../domain/oa-description';
 import { formInfoLoading, loadingRepoError } from '../../domain/shared-messages';
 import { DatasourceUpdateFormComponent } from './sources-forms/datasource-update-form.component';
+import {ConfirmationDialogComponent} from "../../shared/reusablecomponents/confirmation-dialog.component";
 
 
 
@@ -32,6 +33,10 @@ export class SourcesUpdateRepoComponent implements OnInit {
   group: FormGroup;
   interfaceFormDesc: Description = interfaceFormDesc;
   updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
+
+  isModalShown: boolean;
+  @ViewChild('updateLogoUrlModal')
+  public updateLogoUrlModal: ConfirmationDialogComponent;
 
   constructor (
     private fb: FormBuilder,
@@ -94,8 +99,21 @@ export class SourcesUpdateRepoComponent implements OnInit {
     );
   }
 
-  getNewLogoUrl(newURL: string) {
-    this.logoURL = newURL;
+  updateLogoUrl(logoUrl: string){
+    this.updateLogoUrlModal.ids = [logoUrl];
+    this.updateLogoUrlModal.showModal();
+  }
+
+  updatedLogoUrl(event: any) {
+    this.repo.logoUrl = this.logoURL;
+    this.datasourceUpdateForm.updateGroup.get('logoUrl').setValue(this.logoURL);
+    this.datasourceUpdateForm.updateRepo();
+
+  }
+
+  getNewLogoUrl( event: any ) {
+    this.logoURL = event.target.value;
+
   }
 
 }
