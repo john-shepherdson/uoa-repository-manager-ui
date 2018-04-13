@@ -11,32 +11,26 @@ import { MetricsShowComponent } from './metrics-show.component';
 import {MetricsUsagestatsComponent} from "./metrics-usagestats.component";
 
 const metricsRoutes: Routes = [
-  {
-    path: 'getImpact',
-    canActivate: [AuthGuardService],
-    children: [
-      {
-        path: '',
-        component: MetricsComponent,
-      },
-      {
-        path: 'enable/:id',
-        component: MetricsEnableComponent
-      },
-      {
-        path: 'show_metrics/:id',
-        component: MetricsShowComponent
-      },
-      {
-        path: 'instructions/:id',
-        component: MetricsInstructionsComponent
-      },
-      {
-        path: 'usagestats/:id',
-        component: MetricsUsagestatsComponent
-      }
-    ]
-  }
+    {
+      path: '',
+      component: MetricsComponent,
+    },
+    {
+      path: 'enable/:id',
+      component: MetricsEnableComponent
+    },
+    {
+      path: 'show_metrics/:id',
+      component: MetricsShowComponent
+    },
+    {
+      path: 'instructions/:id',
+      component: MetricsInstructionsComponent
+    },
+    {
+      path: 'usagestats/:id',
+      component: MetricsUsagestatsComponent
+    }
 ];
 
 

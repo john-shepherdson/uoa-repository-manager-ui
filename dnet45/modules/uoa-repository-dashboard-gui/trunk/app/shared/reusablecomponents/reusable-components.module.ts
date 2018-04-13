@@ -30,7 +30,7 @@ const myGroups = [
 
 @NgModule({
   imports: [
-    BrowserModule,
+    //BrowserModule,
     CommonModule,
     RouterModule,
     TabsModule.forRoot(),

@@ -10,15 +10,9 @@ import { ContentNotificationsOfSubscriptionComponent } from './content-notificat
 
 const contentRoutes: Routes = [
   {
-    path: 'content',
+    path: '',
     component: ContentComponent,
-    canActivate: [AuthGuardService],
     children: [
-      {
-        path: '',
-        redirectTo: '/events',
-        pathMatch: 'full'
-      },
       {
         path: 'events',
         component: ContentEventsComponent,

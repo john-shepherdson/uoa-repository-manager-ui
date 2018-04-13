@@ -16,15 +16,9 @@ import { SrAggregatorComponent } from './sources-register/sr-aggregator.componen
 
 const sourcesRoutes: Routes = [
   {
-    path: 'sources',
+    path: '',
     component: SourcesComponent,
-    canActivate: [AuthGuardService],
     children: [
-      {
-        path: '',
-        redirectTo: '/register',
-        pathMatch: 'full'
-      },
       {
         path: 'register',
         children: [

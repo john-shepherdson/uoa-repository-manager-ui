@@ -12,15 +12,9 @@ import { CompatibilityValidationResultsComponent } from './compatibility-validat
 
 const compatibilityRoutes: Routes = [
   {
-    path: 'compatibility',
+    path: '',
     component: CompatibilityComponent,
-    canActivate: [AuthGuardService],
     children: [
-      {
-        path: '',
-        redirectTo: '/validate',
-        pathMatch: 'full'
-      },
       {
         path: 'validate',
         component: CompatibilityValidateComponent
