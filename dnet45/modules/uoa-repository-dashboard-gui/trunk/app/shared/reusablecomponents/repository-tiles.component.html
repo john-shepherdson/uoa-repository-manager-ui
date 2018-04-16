@@ -9,11 +9,11 @@
           <i class="fa fa-th-list"></i>
         </a>
       </div>
-      <div class="m-b-md">
+<!--      <div class="m-b-md">
         <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview">
           <span><ng-content></ng-content></span>
         </h4>
-      </div>
+      </div>-->
     </div>
     <div class="uk-width-1-1">
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
@@ -40,9 +40,9 @@
                       <div class="uk-first-column">
                         <h3 class="el-title uk-margin uk-h5 uk-margin-remove-adjacent uk-margin-small-bottom">{{ repo.officialName }}</h3>
                         <div class="{{ getBadgeCSS(repo) }}">
-                          <span *ngIf="parent == 'contentEvents'">(</span>
+                          <!--<span *ngIf="parent == 'contentEvents'">(</span>-->
                           {{ getBadgeText(repo) }}
-                          <span *ngIf="parent == 'contentEvents'"> events)</span>
+                          <!--<span *ngIf="parent == 'contentEvents'"> events)</span>-->
                         </div>
                       </div>
                     </div>
@@ -65,7 +65,7 @@
                     <th class="uk-text-nowrap">Logo</th>
                     <th class="uk-text-nowrap">Name</th>
                     <th *ngIf="parent == 'metrics'" class="uk-text-nowrap">Status</th>
-                    <th *ngIf="parent == 'contentEvents'" class="uk-text-nowrap"># of Events</th>
+                    <!--<th *ngIf="parent == 'contentEvents'" class="uk-text-nowrap"># of Events</th>-->
                   </tr>
                 </thead>
                 <tbody>
@@ -83,9 +83,9 @@
                     <td *ngIf="parent == 'metrics'" class="uk-text-nowrap uk-table-shrink">
                       <div class="{{ getBadgeCSS(repo) }}">{{ getBadgeText(repo) }}</div>
                     </td>
-                    <td *ngIf="parent=='contentEvents'" class="uk-text-nowrap uk-table-shrink">
+                    <!--<td *ngIf="parent=='contentEvents'" class="uk-text-nowrap uk-table-shrink">
                       {{ getBadgeText(repo) }}
-                    </td>
+                    </td>-->
                   </tr>
                 </tbody>
               </table>

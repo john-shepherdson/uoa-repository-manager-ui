@@ -3,6 +3,7 @@ import { Repository } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError } from '../../domain/shared-messages';
+import {BrokerService} from "../../services/broker.service";
 
 @Component ({
   selector: 'repository-tiles',
@@ -21,8 +22,8 @@ export class RepositoryTilesComponent implements OnInit {
               private repoService: RepositoryService) {}
 
   ngOnInit() {
-    this.getReposOfUser();
     this.tilesView = true;
+    this.getReposOfUser();
   }
 
   getReposOfUser(): void {
@@ -65,8 +66,8 @@ export class RepositoryTilesComponent implements OnInit {
       }
     } else if(this.parent == 'sourcesUpdate' || this.parent == 'compatibilityMonitor'){
       return repo.id;
-    } else if(this.parent == 'contentEvents') {
-      return repo.officialName;
+    /*} else if(this.parent == 'contentEvents') {
+      return repo.officialName;*/
     }
   }
 
@@ -81,8 +82,8 @@ export class RepositoryTilesComponent implements OnInit {
       } else {
         return 'uk-badge uk-badge-danger';
       }
-    } else if(this.parent=='contentEvents'){
-      return 'el-meta uk-margin uk-text-meta';
+    /*} else if(this.parent=='contentEvents'){
+      return 'el-meta uk-margin uk-text-meta';*/
     }
   }
 
@@ -98,13 +99,12 @@ export class RepositoryTilesComponent implements OnInit {
         return 'not enabled';
       }
 
-    } else if(this.parent=='contentEvents') {
-      return this.getRepoEvents(repo);
+    /*} else if(this.parent=='contentEvents') {
+      return this.getRepoEvents(repo);*/
     }
   }
 
   getRepoEvents(repo: Repository): string {
-    //return repo.events
     return '0';
   }
 

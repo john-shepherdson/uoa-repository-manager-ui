@@ -33,40 +33,46 @@
                 <div class="whiteFilm"></div>
               </div>
               <div *ngIf="repoMetrics">
-                <a class="uk-button uk-button-link"
-                   [routerLink]="['/getImpact/usagestats',repoId]" title="">Get statistics report</a>
-                <div class="uk-margin-medium-bottom">
-                  <div>
-                    <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match uk-grid" uk-grid="">
-                      <div class="metrics-openaire uk-first-column">
-                        <div class="uk-tile uk-tile-default uk-padding-small">
-                          <div class="uk-text-center">   {{ pageViews }}</div>
-                          <div class="uk-text-center"> views in OpenAIRE</div>
-                        </div>
-                      </div>
-                      <div class="metrics-views">
-                        <div class="uk-tile uk-tile-muted uk-padding-small">
-                          <div class="uk-text-center">  {{ totalViews }}
-                            <span *ngIf="repoMetrics.metricsNumbers.total_openaire_views">( {{ repoMetrics.metricsNumbers.total_openaire_views }} from OpenAIRE )</span>
+                <div class="uk-grid">
+                  <div class="uk-width-1-1 uk-margin-bottom">
+                    <div class="uk-float-right">
+                      <a class="uk-button uk-button-primary"
+                         [routerLink]="['/getImpact/usagestats',repoId]" title="">Get statistics report</a>
+                    </div>
+                  </div>
+                  <div class="uk-width-1-1 uk-margin-medium-bottom">
+                    <div>
+                      <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match uk-grid" uk-grid="">
+                        <div class="metrics-openaire uk-first-column">
+                          <div class="uk-tile uk-tile-default uk-padding-small">
+                            <div class="uk-text-center">   {{ pageViews }}</div>
+                            <div class="uk-text-center"> views in OpenAIRE</div>
                           </div>
-                          <div class="uk-text-center">views in local repository</div>
                         </div>
-                      </div>
-                      <div class="metrics-downloads">
-                        <div class="uk-tile uk-tile-primary uk-padding-small">
-                          <div class="uk-text-center">  {{ totalDownloads }}
-                            <span *ngIf="repoMetrics.metricsNumbers.total_openaire_downloads">( {{ repoMetrics.metricsNumbers.total_openaire_downloads }} from OpenAIRE )</span></div>
-                          <div class="uk-text-center">downloads in local repository</div>
+                        <div class="metrics-views">
+                          <div class="uk-tile uk-tile-muted uk-padding-small">
+                            <div class="uk-text-center">  {{ totalViews }}
+                              <span *ngIf="repoMetrics.metricsNumbers.total_openaire_views">( {{ repoMetrics.metricsNumbers.total_openaire_views }} from OpenAIRE )</span>
+                            </div>
+                            <div class="uk-text-center">views in local repository</div>
+                          </div>
+                        </div>
+                        <div class="metrics-downloads">
+                          <div class="uk-tile uk-tile-primary uk-padding-small">
+                            <div class="uk-text-center">  {{ totalDownloads }}
+                              <span *ngIf="repoMetrics.metricsNumbers.total_openaire_downloads">( {{ repoMetrics.metricsNumbers.total_openaire_downloads }} from OpenAIRE )</span></div>
+                            <div class="uk-text-center">downloads in local repository</div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-bottom uk-padding">
-                  <iframe class="statsFrame" [src]="viewsUrl"></iframe>
-                </div>
-                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-bottom uk-padding">
-                  <iframe class="statsFrame" [src]="downloadsUrl"></iframe>
+                  <div class="uk-width-1-1 uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-bottom uk-padding">
+                    <iframe class="statsFrame" [src]="viewsUrl"></iframe>
+                  </div>
+                  <div class="uk-width-1-1 uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-bottom uk-padding">
+                    <iframe class="statsFrame" [src]="downloadsUrl"></iframe>
+                  </div>
                 </div>
               </div>
 

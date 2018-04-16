@@ -31,9 +31,9 @@ import {nonRemovableInterface} from "../../../domain/shared-messages";
     </div>
 
 
-    <confirmation-dialog #confirmDelete [title]="'Delete Interface'" [isModalShown]="isModalShown"
+    <confirmation-dialog #confirmDelete [title]="'Delete '+ description.label" [isModalShown]="isModalShown"
                          [confirmActionButton]="'Yes, delete it'" (emitObject)="confirmedRemove($event)">
-      Are you sure you want to delete this interface?
+      Are you sure you want to delete this {{description.label}}?
     </confirmation-dialog>
 
   `

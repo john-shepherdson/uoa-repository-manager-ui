@@ -1,4 +1,7 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
+import {AuthenticationService} from "../../services/authentication.service";
+import {BrokerService} from "../../services/broker.service";
+import {loadingRepoMessage, loadingUserRepoInfoEmpty, reposRetrievalError} from "../../domain/shared-messages";
 
 @Component ({
   selector: 'app-content-events',
@@ -6,8 +9,51 @@ import {Component, OnInit} from "@angular/core";
 })
 
 export class ContentEventsComponent implements OnInit {
+  datasourcesOfUser = [];
+  tilesView: boolean;
+  errorMessage: string;
+  noDatasourcesMessage: string;
+  loadingMessage: string;
 
-  constructor() {}
+  @Input() parent: string = '';
 
-  ngOnInit() {}
+  constructor(private authService: AuthenticationService,
+              private brokerService: BrokerService) {}
+
+  ngOnInit() {
+    this.tilesView = true;
+    this.getDatasourcesOfUser();
+  }
+
+
+  getDatasourcesOfUser() {
+    this.loadingMessage = loadingRepoMessage;
+    this.brokerService.getDatasourcesOfUser(this.authService.getUserEmail()).subscribe(
+      res => {
+        this.datasourcesOfUser = res['datasourcesOfUser'];
+      },
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = reposRetrievalError;
+      },
+      () => {
+        this.loadingMessage = '';
+        if (!this.datasourcesOfUser.length) {
+          this.noDatasourcesMessage = loadingUserRepoInfoEmpty;
+        /*} else {
+          this.datasourcesOfUser.forEach(
+            d => {
+              console.log( d['first']['value'],' -> ',d['first']['size'] );
+            }
+          );*/
+        }
+      }
+    );
+  }
+
+  toggleTiles(){
+    this.tilesView = !this.tilesView;
+  }
+
 }

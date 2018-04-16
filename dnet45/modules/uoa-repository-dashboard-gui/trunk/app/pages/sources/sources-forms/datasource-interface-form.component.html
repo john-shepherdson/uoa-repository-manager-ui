@@ -13,7 +13,7 @@
     </div>
     <div class="whiteFilm"></div>
   </div>
-  <div *ngIf="group" [formGroup]="group">
+  <div *ngIf="group && (!loadingMessage || loadingMessage==='')" [formGroup]="group">
     <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="clear: both">{{ successMessage }}</div>
     <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="clear: both">{{ errorMessage }}</div>
     <div *ngIf="groupErrorMessage" class="uk-alert uk-alert-danger" style="clear: both">{{ groupErrorMessage }}</div>

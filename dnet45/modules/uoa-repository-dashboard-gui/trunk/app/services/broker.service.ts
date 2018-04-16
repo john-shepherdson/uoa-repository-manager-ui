@@ -34,13 +34,13 @@ export class BrokerService {
       .catch(this.handleError).share();
   }
 
-  getDatasourcesOfUser(userEmail: string): Observable<Repository[]> {
-    let url = `${this.apiUrl}getDatasourcesOfUser?user=${userEmail}&includeShared=true&includeByOthers=true`;
+  getDatasourcesOfUser(userEmail: string) {
+    let url = `${this.apiUrl}getDatasourcesOfUser?user=${userEmail}&includeShared=false&includeByOthers=false`;
     console.log(`knocking on: ${url}`);
 
     httpOptions.withCredentials = true;
-    return this.http.post(url,httpOptions)
-      .map( res => <Repository[]>res.json())
+    return this.http.get(url,httpOptions)
+      .map( res => res.json())
       .catch(this.handleError).share();
   }
 
