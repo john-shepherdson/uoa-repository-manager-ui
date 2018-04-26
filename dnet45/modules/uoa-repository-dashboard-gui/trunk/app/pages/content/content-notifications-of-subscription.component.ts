@@ -58,7 +58,7 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
     }*/
 
     /* DELETE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
-    if(this.currentPage < this.eventsPage.totalPages) {
+    if( (this.currentPage+1) < this.eventsPage.totalPages) {
       this.currentPage = this.currentPage+1;
       console.log(`Get me page ${this.currentPage}!`);
       this.getEventsPage(this.currentPage);

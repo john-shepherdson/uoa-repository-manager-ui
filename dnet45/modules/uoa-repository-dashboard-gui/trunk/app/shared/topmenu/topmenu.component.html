@@ -53,7 +53,7 @@
               </div>-->
               <div>
                 <a *ngIf="!getIsUserLoggedIn()" (click)="login()">Sign up/Register</a>
-                <a *ngIf="getIsUserLoggedIn()">{{getUserName()}}</a>
+                <span *ngIf="getIsUserLoggedIn()">{{getUserName()}}</span>
                 <ul *ngIf="getIsUserLoggedIn()" class="uk-list uk-margin-top">
                   <li>
                     <a class="uk-search-input" [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">Dashboard</a>

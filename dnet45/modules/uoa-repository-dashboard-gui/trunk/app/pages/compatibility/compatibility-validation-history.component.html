@@ -36,7 +36,7 @@
                   <div class="filterLabel">Filter by job type:</div>
                   <div class="inlineBlock">
                     <select class="form-control" #selectType (change)="getJobType(selectType.value)">
-                      <option value="noneSelected">--none selected--</option>
+                      <option value="">--none selected--</option>
                       <option *ngFor="let type of jobTypes" value="{{type}}">{{type}}</option>
                     </select>
                   </div>

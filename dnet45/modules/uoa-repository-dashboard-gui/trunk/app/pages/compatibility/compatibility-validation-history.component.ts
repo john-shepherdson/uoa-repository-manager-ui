@@ -75,7 +75,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
   }
 
   goToNextPage(){
-    if(this.currentPage < this.totalPages) {
+    if( (this.currentPage+1) < this.totalPages) {
       this.currentPage++;
       console.log(`Get me page ${this.currentPage}!`);
       this.getJobs();
