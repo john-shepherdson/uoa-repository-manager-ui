@@ -17,6 +17,7 @@
     </div>
     <div class="uk-width-1-1">
       <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+      <div *ngIf="warningMessage" class="uk-alert uk-alert-warning">{{ warningMessage }}</div>
       <div *ngIf="loadingMessage" class="loading-big">
         <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
           {{ loadingMessage }}
@@ -25,7 +26,7 @@
       </div>
 
       <!--TILES VIEW-->
-      <div *ngIf="tilesView && reposOfUser.length>0" class="uk-grid-large uk-grid-margin-large uk-grid repos-grid uk-height-1-1">
+      <div *ngIf="tilesView && reposOfUser && reposOfUser.length>0" class="uk-grid-large uk-grid-margin-large uk-grid repos-grid uk-height-1-1">
         <div *ngFor="let repo of reposOfUser" class="uk-width-expand@m uk-width-auto\@m uk-first-column uk-margin-bottom" style="min-width: 300px; max-width: 22%;">
           <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack">
             <div class="uk-first-column">
@@ -55,7 +56,7 @@
       </div>
 
       <!-- LIST VIEW -->
-      <div *ngIf="!tilesView && reposOfUser.length>0" class="uk-grid-large uk-grid-margin-large uk-grid repos-list">
+      <div *ngIf="!tilesView && reposOfUser && reposOfUser.length>0" class="uk-grid-large uk-grid-margin-large uk-grid repos-list">
         <div class="uk-width-1-1@m uk-first-column">
           <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
             <div>

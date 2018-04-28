@@ -21,7 +21,7 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
     this.selectedAllEntities = true;
     this.getEntitiesList();
 
-    if (this.entitiesList.length) {
+    if (this.entitiesList && this.entitiesList.length) {
       this.group = this.fb.group({
         entities: this.fb.array([this.initEntities()]),
         refIntegrity: ''

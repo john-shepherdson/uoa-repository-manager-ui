@@ -219,7 +219,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
           this.loadingMessage = '';
           this.showDatasource = false;
           this.step2 = 'active';
-          if (this.ruleSets.length) {
+          if (this.ruleSets && this.ruleSets.length) {
             this.showGuidelines = true;
             this.setQueryParam('guidelines');
           } else {

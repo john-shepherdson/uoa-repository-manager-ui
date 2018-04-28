@@ -26,7 +26,7 @@
               <div class="whiteFilm"></div>
             </div>
             <div *ngIf="noTopics" class="uk-alert">{{ noTopics }}</div>
-            <div *ngIf="repoTopics.length > 0" class="uk-grid-margin uk-grid uk-grid-stack repos-list">
+            <div *ngIf="repoTopics && repoTopics.length > 0" class="uk-grid-margin uk-grid uk-grid-stack repos-list">
               <div class="uk-width-1-2@m uk-first-column">
                 <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
                   <div>

@@ -14,6 +14,7 @@ export class RepositoryTilesComponent implements OnInit {
   reposOfUser: Repository[] = [];
   tilesView: boolean;
   errorMessage: string;
+  warningMessage: string;
   loadingMessage: string;
 
   @Input() parent: string = '';
@@ -46,8 +47,8 @@ export class RepositoryTilesComponent implements OnInit {
           },
         () => {
           this.loadingMessage = '';
-          if (!this.reposOfUser.length) {
-            this.errorMessage = loadingUserRepoInfoEmpty;
+          if (!this.reposOfUser || !this.reposOfUser.length) {
+            this.warningMessage = loadingUserRepoInfoEmpty;
           }
         }
       );

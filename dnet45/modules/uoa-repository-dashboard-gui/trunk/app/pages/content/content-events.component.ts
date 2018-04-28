@@ -39,7 +39,7 @@ export class ContentEventsComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        if (!this.datasourcesOfUser.length) {
+        if (!this.datasourcesOfUser || !this.datasourcesOfUser.length) {
           this.noDatasourcesMessage = loadingUserRepoInfoEmpty;
         /*} else {
           this.datasourcesOfUser.forEach(

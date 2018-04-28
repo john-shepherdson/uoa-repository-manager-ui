@@ -93,7 +93,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
           this.countryRepos = [];
         },
         () => {
-          if (!this.countryRepos.length) {
+          if (!this.countryRepos || !this.countryRepos.length) {
             this.noRepositories = noRepositoriesFound;
           } else {
             this.noRepositories = '';
