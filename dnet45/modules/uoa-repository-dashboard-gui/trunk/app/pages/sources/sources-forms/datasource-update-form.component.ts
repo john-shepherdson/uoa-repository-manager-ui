@@ -60,7 +60,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   readonly updateGroupDefinition = {
     softwarePlatform : '',
     platformName : '',
-    officialName : '',
+    officialName :  ['', Validators.required],
     issn : '',
     eissn : '',
     lissn : '',
@@ -69,7 +69,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
     longtitude : '',
     latitude : '',
     websiteUrl : [''],
-    institutionName : [''],
+    institutionName :  ['', Validators.required],
     englishName: ['', Validators.required],
     logoUrl: ['', Validators.pattern('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$') ],
     timezone: ['', Validators.required],
@@ -150,12 +150,12 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
 
-      this.updateGroup.get('officialName').disable();
+      //this.updateGroup.get('officialName').disable();
       this.updateGroup.get('country').disable();
       this.updateGroup.get('longtitude').disable(); // MAYBE NOT DISABLED
       this.updateGroup.get('latitude').disable();   // MAYBE NOT DISABLED
       this.updateGroup.get('websiteUrl').disable();
-      this.updateGroup.get('institutionName').disable();
+      //this.updateGroup.get('institutionName').disable();
       if (this.selectedRepo.datasourceType == 'journal') {
 
         let ssnToShow = this.selectedRepo.issn.slice(0, 4)+ '-' + this.selectedRepo.issn.toString().slice(4);
