@@ -90,7 +90,7 @@ export class BrokerService {
   }
 
   getTopicsForDataSource(name: string): Observable<BrowseEntry[]> {
-    let url = `${this.apiUrl}getTopicsForDatasource/${name}`;
+    let url = `${this.apiUrl}getTopicsForDatasource/${encodeURIComponent(name)}`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;
     return this.http.get(url, httpOptions)
