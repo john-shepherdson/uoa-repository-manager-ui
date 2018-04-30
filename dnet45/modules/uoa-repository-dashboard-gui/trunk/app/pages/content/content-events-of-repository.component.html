@@ -44,7 +44,7 @@
                       <tr class="el-item" *ngFor="let moreTopic of moreList">
                         <td class="uk-table-shrink uk-width-4-5">
                           <a (click)="goToEventsList(moreTopic.value)" class="el-link">{{ moreTopic.value }}</a>
-                          <div class="uk-text uk-text-meta">{{ topics[moreTopic.value]['englishName'] }}</div>
+                          <div *ngIf="topics[moreTopic.value]" class="uk-text uk-text-meta">{{ topics[moreTopic.value]['englishName'] }}</div>
                         </td>
                         <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
                           <div class="el-title">{{ moreTopic.size }}</div>
@@ -80,7 +80,7 @@
                       <tr class="el-item" *ngFor="let missingTopic of missingList">
                         <td class="uk-table-shrink uk-width-4-5">
                           <a (click)="goToEventsList(missingTopic.value)" class="el-link">{{ missingTopic.value }}</a>
-                          <div class="uk-text uk-text-meta">{{ topics[missingTopic.value]['englishName'] }}</div>
+                          <div *ngIf="topics[missingTopic.value]" class="uk-text uk-text-meta">{{ topics[missingTopic.value]['englishName'] }}</div>
                         </td>
                         <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
                           <div class="el-title">{{ missingTopic.size }}</div>
