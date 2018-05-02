@@ -86,49 +86,121 @@
                             <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Title(s)</strong></td>
                             <td class="uk-table-shrink">
                               <div class="el-title">
-                                <span *ngFor="let t of event.publication.titles">{{ t }};&nbsp;&nbsp;</span></div>
+                                <span *ngFor="let t of event.publication.titles; let ti_index = index">
+                                  <br *ngIf="ti_index>0">
+                                  <span>{{ t }}</span>
+                                </span>
+                              </div>
                             </td>
                           </tr>
                           <tr class="el-item">
                             <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Author(s)</strong></td>
                             <td class="uk-table-shrink">
-                              <div class="el-title"><span *ngFor="let auth of event.publication.creators">{{ auth }};&nbsp;&nbsp;</span></div>
+                              <div class="el-title">
+                                <span *ngFor="let auth of event.publication.creators; let au_index = index">
+                                  <span *ngIf="au_index>0"> | </span>
+                                  <span>{{ auth }}</span>
+                                </span>
+                              </div>
                             </td>
-                          </tr><tr class="el-item">
+                          </tr>
+                          <tr class="el-item" [ngClass]="{'success': event.highlight.pids && event.highlight.pids.length>0 }">
                             <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">PID(s)</strong></td>
-                            <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let pid of event.publication.pids">({{ pid.type }}) {{ pid.value }}</span></div></td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title">
+                                <span *ngFor="let pid of event.publication.pids">
+                                  <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b>
+                                    <span *ngIf="event.highlight.pids && event.highlight.pids.length>0 && isHighlighted(pid,event.highlight.pids)">
+                                      <span class="uk-label uk-label-success">added</span>&nbsp;&nbsp;
+                                      <span *ngIf="event.provenance" class="pull-right">
+                                        <b>from: </b>
+                                        <a *ngIf="event.provenance.url" href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                        <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
+                            </td>
                           </tr>
-                          <tr class="el-item"><td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
-                            <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let abs of event.publication.abstracts">{{ abs }}</span></div></td>
+                          <tr class="el-item" [ngClass]="{'success': event.highlight.abstracts && event.highlight.abstracts.length>0 }">
+                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title">
+                                <span *ngFor="let abs of event.publication.abstracts; let a_index = index">
+                                  <br *ngIf="a_index > 0">
+                                  <span>{{ abs }}</span>
+                                  <span *ngIf="event.highlight.abstracts && event.highlight.abstracts.length>0 && event.provenance">
+                                    <span class="pull-right">
+                                      <b>from: </b>
+                                      <a *ngIf="event.provenance.url" href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                      <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
+                            </td>
                           </tr>
-                          <tr class="el-item">
+                          <tr class="el-item" [ngClass]="{'success': event.highlight.projects && event.highlight.projects.length>0 }">
                             <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
-                            <td class="uk-table-shrink"><div class="el-title"><span *ngFor="let rel of event.publication.externalReferences">{{ rel.name }}; </span></div></td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title">
+                                <span *ngFor="let proj of event.publication.projects; let p_index = index">
+                                  <br *ngIf="p_index > 0">
+                                  <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
+                                  <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
+                                  <span *ngIf="event.highlight.projects && event.highlight.projects.length>0 && event.provenance">
+                                    <span class="pull-right">
+                                      <b>from: </b>
+                                      <a *ngIf="event.provenance.url" href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                      <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
+                            </td>
                           </tr>
-                          <tr class="el-item">
+                          <tr class="el-item" [ngClass]="{'success': event.highlight.subjects && event.highlight.subjects.length>0 }">
                             <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Subject(s)</strong></td>
                             <td class="uk-table-shrink">
-                              <div class="el-title"><span *ngFor="let subj of event.publication.subjects">{{ subj }};&nbsp;</span></div>
+                              <div class="el-title">
+                                <span *ngFor="let subj of event.publication.subjects; let s_index = index">
+                                  <br *ngIf="s_index > 0">
+                                  <span>{{ subj }}</span>
+                                  <span *ngIf="event.highlight.subjects && event.highlight.subjects.length>0 && event.provenance">
+                                    <span class="pull-right">
+                                      <b>from: </b>
+                                      <a *ngIf="event.provenance.url" href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                      <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
                             </td>
                           </tr>
-                          <tr class="el-item">
+                          <tr class="el-item" [ngClass]="{'success': event.highlight.publicationdate && event.highlight.publicationdate.length>0 }">
                             <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Publication date</strong></td>
                             <td class="uk-table-shrink"><div class="el-title">{{ event.publication.publicationdate }}</div></td>
                           </tr>
-                          <tr class="el-item success">
+                          <tr class="el-item" [ngClass]="{'success': event.highlight.instances && event.highlight.instances.length>0 }">
                             <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Rights</strong></td>
                             <td class="uk-table-shrink">
                               <div class="el-title">
-                            <span *ngFor="let l of event.publication.instances">{{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b><br>
-                              <a href="{{ l.url }}" target="_blank">{{ l.url }}</a><br>
-                            </span>
-                                <span class="pull-right">
-                              <span class="uk-label uk-label-success">added</span>&nbsp;&nbsp;
-                              <span><b>from: </b>
-                                <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                                <span> ({{ event.provenance.id }})</span>
-                              </span>
-                            </span>
+                                <span *ngFor="let l of event.publication.instances; let l_index = index">
+                                  <br *ngIf="l_index > 0">
+                                  <span>
+                                    {{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b><br>
+                                    <a href="{{ l.url }}" target="_blank">{{ l.url }}</a>
+                                  </span>
+                                  <span *ngIf="event.highlight.instances && event.highlight.instances.length>0 && isHighlighted(l,event.highlight.instances)">
+                                    <span class="uk-label uk-label-success">added</span>&nbsp;&nbsp;
+                                    <span *ngIf="event.provenance" class="pull-right">
+                                      <b>from: </b>
+                                      <a *ngIf="event.provenance.url" href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                      <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                    </span>
+                                  </span>
+                                </span>
                               </div>
                             </td>
                           </tr>

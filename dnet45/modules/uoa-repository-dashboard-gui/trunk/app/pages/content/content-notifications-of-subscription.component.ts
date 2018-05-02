@@ -81,6 +81,10 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
   }
 
 
+  isHighlighted(item: any, itemList: any[]) {
+    return itemList.some(x => x === item);
+  }
+
   getCorrectTopic() {
     let temp = this.eventsPage.topic.split('/');
     this.topic = temp[0];

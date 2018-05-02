@@ -214,6 +214,10 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     );
   }
 
+  isHighlighted(item: any, itemList: any[]) {
+    return itemList.some(x => x === item);
+  }
+
   getCorrectTopic() {
     let temp = this.topic.split('|');
     this.correctTopic = temp[0];
