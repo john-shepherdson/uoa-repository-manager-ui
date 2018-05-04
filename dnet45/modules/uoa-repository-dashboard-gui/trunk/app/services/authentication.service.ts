@@ -61,6 +61,7 @@ export class AuthenticationService {
             sessionStorage.removeItem('role');
             deleteCookie('currentUser');
             this.isLoggedIn = false;
+            this.router.navigate(['/landing']);
           }
         );
       },1000 * 60 * 5);
