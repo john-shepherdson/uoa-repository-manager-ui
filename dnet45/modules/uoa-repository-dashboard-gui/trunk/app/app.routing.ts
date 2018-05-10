@@ -44,7 +44,8 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     loadChildren: './pages/adminPg/adminPg.module#AdminPgModule',
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService]
   },
   {
     path: '**',

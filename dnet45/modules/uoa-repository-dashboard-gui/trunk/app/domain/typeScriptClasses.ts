@@ -710,3 +710,45 @@ export class UserInfo implements  IsSerializable {
   name: string;
   email: string;
 }
+
+/*
+
+
+public class ReportResponse {
+  created: string;
+  reportExceptions: ReportException[];
+  requestor: Requestor;
+  reportDefinition: ReportDefinition;
+  reportWrapper: ReportWrapper;
+}
+
+export class ReportResponseWrapper {
+  reportResponse: ReportResponse;
+}
+
+export class ReportWrapper {
+  report: Report;
+}
+
+export class Report {
+  created: string;
+  version: string;
+  name: string;
+  vendor: Vendor;
+  customer: Customer;
+
+}
+
+export class Vendor {
+  contact: Contact;
+}
+
+export class Contact {
+  contact: string;
+  email: string;
+}
+
+export class Customer {
+  id: string;
+  reportItems: ReportItem[];
+}*/

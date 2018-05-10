@@ -86,12 +86,20 @@ export class MetricsUsagestatsComponent implements OnInit {
   }
 
   goToReport() {
-    let prettyString: string = '';
-    if (this.pretty) {
-      prettyString = `&Pretty=Pretty`;
-    }
+    let params = new URLSearchParams();
 
-    let url = `http://beta.services.openaire.eu/usagestats/sushilite/GetReport/?Report=${this.chosen_report}=4&RequestorID=${this.userEmail}&BeginDate=${this.beginDate}&EndDate=${this.endDate}&RepositoryIdentifier=${this.repoId}&ItemIdentifier=${this.itemIdentifier}&Granularity=${this.granularity}${prettyString}`;
+    if (this.pretty) {
+      params.append('Pretty', 'Pretty');
+    }
+    params.append('Report', this.chosen_report);
+    params.append('Release', '4');
+    params.append('RequestorID', this.userEmail);
+    params.append('BeginDate', this.beginDate);
+    params.append('EndDate', this.endDate);
+    params.append('RepositoryIdentifier', this.repoId);
+    params.append('ItemIdentifier', this.itemIdentifier);
+    params.append('Granularity', this.granularity);
+    let url = `http://beta.services.openaire.eu/usagestats/sushilite/GetReport/?${params}`;
     window.open(url,"_blank");
   }
 
