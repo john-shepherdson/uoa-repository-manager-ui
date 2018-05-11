@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 import { PiwikService } from '../../services/piwik.service';
 import { RepositoryService } from '../../services/repository.service';
@@ -35,6 +35,7 @@ export class MetricsEnableComponent implements OnInit {
 
   constructor (
     private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthenticationService,
     private piwikService: PiwikService,
     private repoService: RepositoryService
@@ -110,6 +111,9 @@ export class MetricsEnableComponent implements OnInit {
           console.log(error);
           this.errorMessage = enabledMetricsError;
           this.loadingMessage = '';
+        },
+        () => {
+          this.router.navigate([`/getImpact/instructions/${this.repo.id}`])
         }
       );
     }

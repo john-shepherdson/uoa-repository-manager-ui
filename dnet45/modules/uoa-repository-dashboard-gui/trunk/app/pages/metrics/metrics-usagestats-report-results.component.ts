@@ -7,7 +7,7 @@ import { ReportResponse } from '../../domain/usageStatsClasses';
 
 @Component({
   selector: 'metrics-usagestats-report-results',
-  templateUrl: 'metrics-usagestats-report-results.component'
+  templateUrl: 'metrics-usagestats-report-results.component.html'
 })
 export class MetricsUsagestatsReportResultsComponent implements OnInit {
 
@@ -28,9 +28,6 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
     let params = new URLSearchParams();
 
     this.route.queryParams.subscribe( qparams => {
-      if (qparams['pretty']) {
-        params.append('Pretty', 'Pretty');
-      }
       params.append('Report', qparams['report']);
       params.append('Release', '4');
       params.append('RequestorID', this.authService.getUserEmail());
@@ -39,6 +36,9 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
       params.append('RepositoryIdentifier', qparams['repoId']);
       params.append('ItemIdentifier', qparams['itemIdentifier']);
       params.append('Granularity', qparams['granularity']);
+      if (qparams['pretty']) {
+        params.append('Pretty', '');
+      }
     });
 
     this.usageService.getReportResponse(params).subscribe(

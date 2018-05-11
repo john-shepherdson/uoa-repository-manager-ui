@@ -27,7 +27,7 @@ export class MetricsUsagestatsComponent implements OnInit {
   endDate: string = '';
   itemIdentifier: string = '';
   itemDataType: string = '';
-  granularity: string;
+  granularity: string = 'Monthly';
   pretty: boolean = true;
 
   constructor(private repoService: RepositoryService, private route: ActivatedRoute, private router: Router, private authService: AuthenticationService) {}
@@ -83,10 +83,6 @@ export class MetricsUsagestatsComponent implements OnInit {
     this.endDate = event.target.value;
   }
 
-  updateItemIdentifier(event: any) {
-    this.itemIdentifier = event.target.value;
-  }
-
   updateItemDataType(event: any) {
     this.itemDataType = event.target.value;
   }
@@ -100,32 +96,39 @@ export class MetricsUsagestatsComponent implements OnInit {
   }
 
   goToReport() {
-/*    let params = new URLSearchParams();
-    if (this.pretty) {
-      params.append('Pretty', 'Pretty');
-    }
-    params.append('Report', this.chosen_report);
-    params.append('Release', '4');
-    params.append('RequestorID', this.userEmail);
-    params.append('BeginDate', this.beginDate);
-    params.append('EndDate', this.endDate);
-    params.append('RepositoryIdentifier', this.shownRepoId);
-    params.append('ItemIdentifier', this.itemIdentifier);
-    params.append('Granularity', this.granularity);
-    let url = `http://beta.services.openaire.eu/usagestats/sushilite/GetReport/?${params}`;
-    window.open(url,"_blank");*/
+    this.errorMessage = '';
+    if ( this.beginDate && this.endDate ) {
+      /*    let params = new URLSearchParams();
+          if (this.pretty) {
+            params.append('Pretty', 'Pretty');
+          }
+          params.append('Report', this.chosen_report);
+          params.append('Release', '4');
+          params.append('RequestorID', this.userEmail);
+          params.append('BeginDate', this.beginDate);
+          params.append('EndDate', this.endDate);
+          params.append('RepositoryIdentifier', this.shownRepoId);
+          params.append('ItemIdentifier', this.itemIdentifier);
+          params.append('Granularity', this.granularity);
+          let url = `http://beta.services.openaire.eu/usagestats/sushilite/GetReport/?${params}`;
+          window.open(url,"_blank");*/
 
-    this.router.navigate(['usagestats-report-results'], {
-      queryParams: {
-        report: this.chosen_report,
-        beginDate: this.beginDate,
-        endDate: this.endDate,
-        repoId: this.shownRepoId,
-        itemIdentifier: this.itemIdentifier,
-        granularity: this.granularity,
-        pretty: this.pretty
-      }
-    })
+      this.router.navigate(['/getImpact/usagestats-report-results'], {
+        queryParams: {
+          report: this.chosen_report,
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          repoId: this.shownRepoId,
+          itemIdentifier: this.itemIdentifier,
+          granularity: this.granularity,
+          pretty: this.pretty
+        }
+      })
+
+    } else {
+      this.errorMessage = 'You need to choose a date range!';
+    }
+
   }
 
 }
