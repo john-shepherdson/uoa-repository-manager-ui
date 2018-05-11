@@ -93,7 +93,7 @@
                     </a>
                   </li>
                 </ul>
-                <div class="resultsPageLabel">page {{ currentPage+1 }} of {{ totalPages }}</div>
+                <div class="resultsPageLabel">page {{ (totalPages > 0) ? currentPage+1 : 0 }} of {{ totalPages }}</div>
               </div>
               <div>
                 <div>
@@ -177,7 +177,7 @@
                     </a>
                   </li>
                 </ul>
-                <div class="resultsPageLabel">page {{ currentPage+1 }} of {{ totalPages }}</div>
+                <div class="resultsPageLabel">page {{ (totalPages > 0) ? currentPage+1 : 0 }} of {{ totalPages }}</div>
               </div>
             </div>
             <div class="row"></div>

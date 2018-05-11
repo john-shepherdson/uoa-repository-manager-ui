@@ -26,6 +26,7 @@ import { BrokerService } from './services/broker.service';
 import { MonitorService } from './services/monitor.service';
 import {LandingComponent} from "./pages/landing/landing.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
+import { UsagestatsService } from './services/usagestats.service';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import {DashboardComponent} from "./pages/dashboard/dashboard.component";
     PiwikService,
     RepositoryService,
     ValidatorService,
+    UsagestatsService,
     AuthGuardService,
     AuthenticationService
   ],

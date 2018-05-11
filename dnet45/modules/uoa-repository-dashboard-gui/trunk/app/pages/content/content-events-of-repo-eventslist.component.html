@@ -65,7 +65,7 @@
                 <!--<div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>-->
 
                 <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-                <div class="resultsPageLabel">page {{ currentPage+1 }} of {{ eventsPage.totalPages }}</div>
+                <div class="resultsPageLabel">page {{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }} of {{ eventsPage.totalPages }}</div>
 
               </div>
               <div *ngFor="let event of eventsPage.values" class="events-list">
@@ -235,7 +235,7 @@
                 <!--<div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>-->
 
                 <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-                <div class="resultsPageLabel">page {{ currentPage+1 }} of {{ eventsPage.totalPages }}</div>
+                <div class="resultsPageLabel">page {{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }} of {{ eventsPage.totalPages }}</div>
 
               </div>
             </div>

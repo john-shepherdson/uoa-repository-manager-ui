@@ -16,6 +16,8 @@ export class MetricsUsagestatsComponent implements OnInit {
 
   repo: Repository;
   repoId: string;
+  shownRepoId: string;
+  shownOpenaireId: string;
   issnToShow: string = '';
   chosen_report: string;
   disable_report_choice: boolean;
@@ -31,9 +33,20 @@ export class MetricsUsagestatsComponent implements OnInit {
   constructor(private repoService: RepositoryService, private route: ActivatedRoute, private router: Router, private authService: AuthenticationService) {}
 
   ngOnInit() {
-    this.repoId = this.route.snapshot.paramMap.get('id');
+    this.getRepoId();
     this.getUserEmail();
     this.getRepo();
+  }
+
+  getRepoId() {
+    this.repoId = this.route.snapshot.paramMap.get('id');
+    this.shownRepoId = this.convertToDisplayedFormat(this.repoId);
+    console.log(`shownRepoId is ${this.repoId}`);
+  }
+
+  convertToDisplayedFormat(input: string) {
+    const tempArray = this.repoId.split('____::');
+    return tempArray[0] + ':' + tempArray[1];
   }
 
   onChooseReport(event: any) {
@@ -54,6 +67,7 @@ export class MetricsUsagestatsComponent implements OnInit {
         this.errorMessage = 'The repository could not be retrieved';
       },
       () => {
+        this.shownOpenaireId = this.convertToDisplayedFormat(this.repo.piwikInfo.openaireId);
         if (this.repo.issn){
           this.issnToShow = this.repo.issn.slice(0, 4)+ '-' + this.repo.issn.toString().slice(4);
         }
@@ -86,8 +100,7 @@ export class MetricsUsagestatsComponent implements OnInit {
   }
 
   goToReport() {
-    let params = new URLSearchParams();
-
+/*    let params = new URLSearchParams();
     if (this.pretty) {
       params.append('Pretty', 'Pretty');
     }
@@ -96,11 +109,23 @@ export class MetricsUsagestatsComponent implements OnInit {
     params.append('RequestorID', this.userEmail);
     params.append('BeginDate', this.beginDate);
     params.append('EndDate', this.endDate);
-    params.append('RepositoryIdentifier', this.repoId);
+    params.append('RepositoryIdentifier', this.shownRepoId);
     params.append('ItemIdentifier', this.itemIdentifier);
     params.append('Granularity', this.granularity);
     let url = `http://beta.services.openaire.eu/usagestats/sushilite/GetReport/?${params}`;
-    window.open(url,"_blank");
+    window.open(url,"_blank");*/
+
+    this.router.navigate(['usagestats-report-results'], {
+      queryParams: {
+        report: this.chosen_report,
+        beginDate: this.beginDate,
+        endDate: this.endDate,
+        repoId: this.shownRepoId,
+        itemIdentifier: this.itemIdentifier,
+        granularity: this.granularity,
+        pretty: this.pretty
+      }
+    })
   }
 
 }

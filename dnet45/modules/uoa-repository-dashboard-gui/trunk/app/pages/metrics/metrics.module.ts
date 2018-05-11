@@ -11,6 +11,7 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
 import { MetricsShowComponent } from './metrics-show.component';
 import { TabsModule } from 'ngx-bootstrap';
 import {MetricsUsagestatsComponent} from "./metrics-usagestats.component";
+import { MetricsUsagestatsReportResultsComponent } from './metrics-usagestats-report-results.component';
 
 @NgModule ({
   imports: [
@@ -24,7 +25,8 @@ import {MetricsUsagestatsComponent} from "./metrics-usagestats.component";
     MetricsEnableComponent,
     MetricsInstructionsComponent,
     MetricsShowComponent,
-    MetricsUsagestatsComponent
+    MetricsUsagestatsComponent,
+    MetricsUsagestatsReportResultsComponent
   ]
 })
 

@@ -9,6 +9,7 @@ import { MetricsInstructionsComponent } from './metrics-instructions.component';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { MetricsShowComponent } from './metrics-show.component';
 import {MetricsUsagestatsComponent} from "./metrics-usagestats.component";
+import { MetricsUsagestatsReportResultsComponent } from './metrics-usagestats-report-results.component';
 
 const metricsRoutes: Routes = [
     {
@@ -30,6 +31,10 @@ const metricsRoutes: Routes = [
     {
       path: 'usagestats/:id',
       component: MetricsUsagestatsComponent
+    },
+    {
+      path: 'usagestats-report-results',
+      component: MetricsUsagestatsReportResultsComponent
     }
 ];
 
