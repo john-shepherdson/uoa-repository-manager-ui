@@ -35,47 +35,48 @@
                               repoResponse.Report.Report.Customer.ReportItems.length > 0">{{ repoResponse.Report.Report.Customer.ReportItems[0].ItemPlatform }}</span>
                 </h3>
                 <table class="uk-table uk-align-left">
-                  <tr class="uk-padding-remove">
-                    <td class="uk-align-right">Period covered</td>
+                  <tr>
+                    <th>Period covered</th>
                     <td>{{ coveredPeriod }}</td>
                   </tr>
                   <tr>
-                    <td class="uk-align-right">Filters</td>
+                    <th>Filters</th>
                     <td>
-                      <span *ngFor="let filter of repoResponse.ReportDefinition.Filters.Filter">
-                        {{ filter.Name }}: {{ filter.Value }};
+                      <span *ngFor="let filter of repoResponse.ReportDefinition.Filters.Filter; let i = index">
+                        <br *ngIf="i>0">
+                        {{ filter.Name }}: {{ filter.Value }}
                       </span>
                     </td>
                   </tr>
                   <tr>
-                    <td class="uk-align-right">Date run</td>
+                    <th>Date run</th>
                     <td>{{ repoResponse.Report.Report['@Created'] | date: "MM/dd/yyyy" }}</td>
                   </tr>
                   <tr>
-                    <td class="uk-align-right">Number of results</td>
+                    <th>Number of results</th>
                     <td>{{ repoResponse.ReportDefinition.Filters.ReportAttribute[1].Value }}</td>
                   </tr>
                 </table>
 
-                <table>
+                <table class="uk-table uk-table-expand">
                   <thead>
-                    <tr>
-                      <th>ItemUrl</th>
-                      <th>Title</th>
-                      <th>Publisher</th>
-                      <th>Item Type</th>
-                      <th colspan="2">{{ coveredPeriod }}</th>
-                    </tr>
+                  <tr>
+                    <th>ItemUrl</th>
+                    <th>Title</th>
+                    <th>Publisher</th>
+                    <th>Item Type</th>
+                    <th colspan="2">Apr 2018</th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of repoResponse.Report.Report.Customer.ReportItems">
-                      <td>{{ item.ItemIdentifier[1].Value }}</td>
-                      <td>{{ item.ItemName }}</td>
-                      <td>{{ item.ItemPublisher }}</td>
-                      <td>{{ item.ItemDataType }}</td>
-                      <td>{{ item.ItemPerformance[0].Instance[0].Count }}</td>
-                      <td>{{ item.ItemPerformance[0].Instance[1].Count }}</td>
-                    </tr>
+                  <tr *ngFor="let item of repoResponse.Report.Report.Customer.ReportItems">
+                    <td>{{ transformItem(item.ItemIdentifier[1].Value) }}</td>
+                    <td>{{ item.ItemName }}</td>
+                    <td>{{ item.ItemPublisher }}</td>
+                    <td>{{ item.ItemDataType }}</td>
+                    <td>{{ item.ItemPerformance[0].Instance[0].Count }}</td>
+                    <td>{{ item.ItemPerformance[0].Instance[1].Count }}</td>
+                  </tr>
                   </tbody>
                 </table>
               </div>

@@ -87,6 +87,10 @@ export class MetricsUsagestatsComponent implements OnInit {
     this.itemDataType = event.target.value;
   }
 
+  updateItemIdentifier(event: any) {
+    this.itemIdentifier = event.target.value;
+  }
+
   updateGranularity(event: any) {
     this.granularity = event.target.value;
   }
@@ -105,6 +109,7 @@ export class MetricsUsagestatsComponent implements OnInit {
           endDate: this.endDate,
           repoId: this.shownRepoId,
           itemDataType: this.itemDataType,
+          itemIdentifier: this.itemIdentifier,
           granularity: this.granularity,
           pretty: this.pretty
         }

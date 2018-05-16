@@ -113,7 +113,8 @@
                       Item Identifier:
                     </div>
                     <div class="uk-width-2-3">
-                      {{ repo.piwikInfo.openaireId }}
+                      <input name="ItemIdentifier" placeholder="e.g. openaire:od_________::fb90de6f20d79783d05749d8f60417d5"
+                             type="text" (blur)="updateItemIdentifier($event)">
                     </div>
                   </div>
 

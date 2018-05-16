@@ -72,4 +72,17 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
     );
 
   }
+
+  transformItem(url: string) {
+    const temp = url.split(';');
+    let output = '';
+    for (let u of temp) {
+      if (output.length === 0) {
+        output = output + '\n';
+      }
+      output = output + u.replace(/\\/g,'');
+    }
+    return output;
+  }
+
 }
