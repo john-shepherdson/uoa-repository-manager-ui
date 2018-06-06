@@ -18,7 +18,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
 
     if ( this.authenticationService.getIsUserLoggedIn() ) { return true; }
 
-    if ( getCookie('currentUser') != null ) { return true; }
+    if ( getCookie('openAIREUser') != null ) { return true; }
 
     // Store the attempted URL for redirecting
     sessionStorage.setItem("state.location",state.url);

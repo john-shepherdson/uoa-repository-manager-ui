@@ -33,7 +33,7 @@ export class AuthenticationService {
   }
 
   public logout() {
-    deleteCookie('currentUser');
+    deleteCookie('openAIREUser');
     sessionStorage.removeItem('name');
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('role');
@@ -45,7 +45,7 @@ export class AuthenticationService {
   }
 
   public tryLogin() {
-    if(getCookie('currentUser')) {
+    if(getCookie('openAIREUser')) {
       console.log(`I got the cookie!`);
       /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTD */
       setInterval(() => {
@@ -59,7 +59,7 @@ export class AuthenticationService {
             sessionStorage.removeItem('name');
             sessionStorage.removeItem('email');
             sessionStorage.removeItem('role');
-            deleteCookie('currentUser');
+            deleteCookie('openAIREUser');
             this.isLoggedIn = false;
             this.router.navigate(['/landing']);
           }
@@ -80,7 +80,7 @@ export class AuthenticationService {
             sessionStorage.removeItem('name');
             sessionStorage.removeItem('email');
             sessionStorage.removeItem('role');
-            deleteCookie('currentUser');
+            deleteCookie('openAIREUser');
             this.isLoggedIn = false;
           }
         );

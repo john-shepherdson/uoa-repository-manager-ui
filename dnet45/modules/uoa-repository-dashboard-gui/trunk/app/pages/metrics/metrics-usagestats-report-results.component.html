@@ -27,12 +27,12 @@
 
               <div *ngIf="errorMessage" class="uk-alert uk-alert-warning">{{errorMessage}}</div>
               <div *ngIf="repoResponse" class="uk-margin-top">
-                <h3>{{ repoResponse.ReportDefinition['@Name'] }} Report Results for
+                <h3>{{ repoResponse.ReportDefinition['@Name'] }} Report Results
                   <span *ngIf="repoResponse.Report &&
                               repoResponse.Report.Report &&
                               repoResponse.Report.Report.Customer &&
                               repoResponse.Report.Report.Customer.ReportItems &&
-                              repoResponse.Report.Report.Customer.ReportItems.length > 0">{{ repoResponse.Report.Report.Customer.ReportItems[0].ItemPlatform }}</span>
+                              repoResponse.Report.Report.Customer.ReportItems.length > 0">for {{ repoResponse.Report.Report.Customer.ReportItems[0].ItemPlatform }}</span>
                 </h3>
                 <table class="uk-table uk-align-left">
                   <tr>
