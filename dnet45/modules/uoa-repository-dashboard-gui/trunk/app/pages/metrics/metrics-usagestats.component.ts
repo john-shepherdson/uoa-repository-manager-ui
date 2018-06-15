@@ -3,6 +3,8 @@ import {RepositoryService} from "../../services/repository.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
 import {Repository} from "../../domain/typeScriptClasses";
+import {Observable} from "rxjs/Observable";
+import {ReportResponseWrapper} from "../../domain/usageStatsClasses";
 
 
 @Component({
@@ -102,7 +104,7 @@ export class MetricsUsagestatsComponent implements OnInit {
   goToReport() {
     /* additional field: */
     /*itemIdentifier: this.repo.piwikInfo.openaireId,*/
-      this.router.navigate(['/getImpact/usagestats-report-results'], {
+      /*this.router.navigate(['/getImpact/usagestats-report-results'], {
         queryParams: {
           report: this.chosen_report,
           beginDate: this.beginDate,
@@ -113,7 +115,31 @@ export class MetricsUsagestatsComponent implements OnInit {
           granularity: this.granularity,
           pretty: this.pretty
         }
-      })
+      });*/
+
+      const params = new URLSearchParams();
+
+      params.append('Report', this.chosen_report);
+      params.append('Release', '4');
+      params.append('RequestorID', this.authService.getUserEmail());
+      params.append('BeginDate', this.beginDate);
+      params.append('EndDate', this.endDate);
+      params.append('RepositoryIdentifier', this.shownRepoId);
+      if (this.itemIdentifier) {
+        params.append('ItemIdentifier', this.itemIdentifier);
+      }
+      if (this.itemDataType) {
+        params.append('ItemDataType', this.itemDataType);
+      }
+      params.append('Granularity', this.granularity);
+      if (this.pretty && this.pretty === true) {
+        params.append('Pretty', 'Pretty');
+      }
+
+      let url = `http://beta.services.openaire.eu/usagestats/sushilite/GetReport/?${params}`;
+      console.log(`going to: ${url}`);
+
+      window.location.href = url;
   }
 
 }
