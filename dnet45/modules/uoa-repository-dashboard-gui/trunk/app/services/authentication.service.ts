@@ -40,8 +40,14 @@ export class AuthenticationService {
     sessionStorage.removeItem('role');
     this.isLoggedIn = false;
 
-    console.log('logging out, going to:');
+    console.log('logging out, calling:');
     console.log(`${this.apiUrl}/openid_logout`);
+
+    /*this.http.get(this.apiUrl + '/openid_logout',{ withCredentials: true }).subscribe(
+      res => console.log(res),
+      error => console.log(error),
+      () => this.router.navigate(['/landing'])
+    );*/
     window.location.href = `${this.apiUrl}/openid_logout`;
     /*window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.baseUrl}`;*/
   }
@@ -49,7 +55,7 @@ export class AuthenticationService {
   public tryLogin() {
     if( getCookie('openAIREUser') ) {
       console.log(`I got the cookie!`);
-      /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTD */
+      /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTDOWN */
       setInterval(() => {
         this.http.get(this.apiUrl + '/user/login',{ withCredentials: true }).subscribe(
           userInfo => {

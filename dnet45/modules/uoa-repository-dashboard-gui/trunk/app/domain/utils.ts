@@ -24,10 +24,20 @@ export function deleteCookie(name) {
     console.log(`after delete: document.cookie is: ${document.cookie.toString()}`);
 }
 
-function setCookie(name: string, value: string, expireDays: number, path: string = '') {
+/* defaulr path used to be '' */
+function setCookie(name: string, value: string, expireDays: number, path: string = '/') {
     let d:Date = new Date();
     d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
     let expires:string = `expires=${d.toUTCString()}`;
-    let cpath:string = path ? `; path=${path}` : '';
-    document.cookie = `${name}=${value}; ${expires}${cpath}`;
+    /*let cpath:string = path ? `; path=${path}` : '';*/
+    /*document.cookie = `${name}=${value}; ${expires}${cpath}`;*/
+
+    /* new code from Argyro */
+    let domain = "";
+    if (document.domain.indexOf(".di.uoa.gr")!= -1) { // for development
+      domain = ".athenarc.gr";
+    } else if(document.domain.indexOf(".openaire.eu") != -1) {
+      domain = ".openaire.eu";
+    }
+    document.cookie = name+'='+value+'; path='+path+'; domain='+domain+';';
 }
