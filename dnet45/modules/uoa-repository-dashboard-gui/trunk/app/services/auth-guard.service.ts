@@ -16,9 +16,9 @@ export class AuthGuardService implements CanActivate, CanLoad {
 
   canActivate (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    if ( this.authenticationService.getIsUserLoggedIn() ) { return true; }
+    if ( ((getCookie('openAIREUser) !== null) && (getCookie('openAIREUser) !== '')) && this.authenticationService.getIsUserLoggedIn() ) { return true; }
 
-    if ( getCookie('openAIREUser') != null ) { return true; }
+    if ( (getCookie('openAIREUser) !== null) && (getCookie('openAIREUser) !== '') ) { return true; }
 
     // Store the attempted URL for redirecting
     sessionStorage.setItem("state.location",state.url);

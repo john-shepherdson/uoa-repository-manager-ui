@@ -10,8 +10,9 @@
                   <i class="fa fa-external-link" style="margin-right:3px;"></i>{{ sourceTitle }}
                 </a>
                 . <br>
-                <b>Last Updated: </b>
-                {{ latestUpdate }}
+                <span *ngIf="latestUpdate && (latestUpdate !== 'null')">
+			<b>Last Updated: </b>{{ latestUpdate }}
+		</span>
               </div>
               <div>
                 <div class="form-group">

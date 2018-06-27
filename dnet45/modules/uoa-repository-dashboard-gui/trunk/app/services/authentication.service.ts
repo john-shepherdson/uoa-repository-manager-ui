@@ -48,7 +48,7 @@ export class AuthenticationService {
   }
 
   public tryLogin() {
-    if( getCookie('openAIREUser') ) {
+    if( getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') ) {
       console.log(`I got the cookie!`);
       /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTDOWN */
       setInterval(() => {
