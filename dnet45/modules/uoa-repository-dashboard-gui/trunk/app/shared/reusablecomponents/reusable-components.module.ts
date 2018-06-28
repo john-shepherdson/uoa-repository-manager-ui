@@ -17,6 +17,7 @@ import { InlineFormWrapper, MyGroup } from './forms/my-group.interface';
 import { MyArray, MyArrayInline, MyArrayWrapper, MyInlineArrayWrapper } from './forms/my-array.interface';
 import { MyFormDirective } from './forms/my-form.directive';
 import { RouterModule } from '@angular/router';
+import {HttpClientModule} from "@angular/common/http";
 
 const myGroups = [
   MyGroup,
@@ -38,6 +39,7 @@ const myGroups = [
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     JsonpModule
   ],
   entryComponents : [

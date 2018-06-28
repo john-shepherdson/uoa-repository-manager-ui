@@ -15,6 +15,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
   noTopics: string;
 
   repoName = '';
+  correctName = '';
   topics: Map<string,Term> = new Map<string,Term>();
   repoTopics: BrowseEntry[] = [];
   moreList: BrowseEntry[] = [];
@@ -30,6 +31,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
 
   ngOnInit() {
     this.repoName = this.route.snapshot.paramMap.get('name');
+    this.getCorrectName();
     setTimeout(() => {
       this.getTopics();
     },500);
@@ -37,7 +39,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
 
   getRepoTopics(): void {
     this.loadingMessage = loadingTopics;
-    this.brokerService.getTopicsForDataSource(this.repoName)
+    this.brokerService.getTopicsForDataSource(this.correctName)
       .subscribe(
         topics => {
           this.repoTopics = topics;
@@ -98,5 +100,14 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
 
   }
 
+  getCorrectName() {
+    let temp = this.repoName.split('|');
+    this.correctName = temp[0];
+    this.repoName = temp[0];
+    for (let i=1; i<temp.length; i++){
+      this.correctName += `/${temp[i]}`;
+      this.repoName += ` | ${temp[i]}`;
+    }
+  }
 
 }

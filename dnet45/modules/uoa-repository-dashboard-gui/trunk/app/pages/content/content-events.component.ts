@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {AuthenticationService} from "../../services/authentication.service";
 import {BrokerService} from "../../services/broker.service";
 import {loadingRepoMessage, loadingUserRepoInfoEmpty, reposRetrievalError} from "../../domain/shared-messages";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component ({
   selector: 'app-content-events',
@@ -18,7 +19,9 @@ export class ContentEventsComponent implements OnInit {
   @Input() parent: string = '';
 
   constructor(private authService: AuthenticationService,
-              private brokerService: BrokerService) {}
+              private brokerService: BrokerService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.tilesView = true;
@@ -54,6 +57,11 @@ export class ContentEventsComponent implements OnInit {
 
   toggleTiles(){
     this.tilesView = !this.tilesView;
+  }
+
+  goToRepoEvents(repoName: string) {
+    const newName = repoName.replace(/\//g,'|');
+    this.router.navigate([newName], {relativeTo: this.route});
   }
 
 }

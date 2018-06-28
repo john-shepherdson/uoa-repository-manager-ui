@@ -6,6 +6,7 @@ import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Content, PageContent } from "../domain/page-content";
 import {helpServiceUrl} from "../domain/tempAPI";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class HelpContentService {
@@ -13,16 +14,18 @@ export class HelpContentService {
   private _helpServiceUrl = process.env.FAQ_ENDPOINT;
   /*private _helpServiceUrl = helpServiceUrl;*/
 
-  constructor (private http: Http) {
+  constructor (private http: Http, private httpClient: HttpClient) {
   }
 
   getActivePageContent(route: string) {
     const url = this._helpServiceUrl + "/page/route?q=" + route;
     console.log(`sending request at: ${url}`);
 
-    return this.http.get(url)
+    /*return this.http.get(url, {withCredentials: true})
         .map(res => <PageContent>res.json() )
-        .catch(this.handleError);
+        .catch(this.handleError);*/
+    return this.httpClient.get<PageContent>(url)
+      .catch(this.handleError);
   }
 
   private extractData(res: Response) {
