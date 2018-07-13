@@ -27,6 +27,8 @@ import { MonitorService } from './services/monitor.service';
 import {LandingComponent} from "./pages/landing/landing.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import { UsagestatsService } from './services/usagestats.service';
+import {AuthenticationInterceptor} from "./services/authentication-interceptor";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 
 @NgModule({
@@ -54,7 +56,11 @@ import { UsagestatsService } from './services/usagestats.service';
     DashboardComponent
   ],
   providers: [
-//    appRoutingProviders
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    },
     BrokerService,
     MonitorService,
     PiwikService,

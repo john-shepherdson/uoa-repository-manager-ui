@@ -97,11 +97,11 @@ module.exports = function (env) {
       new webpack.DefinePlugin({
         "process.env": {
           PRODUCTION: JSON.stringify(false),
-          API_ENDPOINT: JSON.stringify(process.env.API_ENDPOINT || "http://aleka.athenarc.gr:8480/uoa-repository-manager-service"),
+          API_ENDPOINT: JSON.stringify(process.env.API_ENDPOINT || "http://koulis.athenarc.gr:8480/uoa-repository-manager-service"),
           FAQ_ENDPOINT: JSON.stringify(process.env.FAQ_ENDPOINT || "https:/demo.openminted.eu/provide/api"),
-          AAI_ENDPOINT: JSON.stringify(process.env.AAI_ENDPOINT || "http://aleka.athenarc.gr:8480/uoa-repository-manager-service/openid_connect_login"),
+          AAI_ENDPOINT: JSON.stringify(process.env.AAI_ENDPOINT || "http://koulis.athenarc.gr:8480/uoa-repository-manager-service/openid_connect_login"),
           FAQ_HOMEPAGE: JSON.stringify(process.env.FAQ_HOMEPAGE || "http://audrey.athenarc.gr:5555"),
-          BASE_URL: JSON.stringify(process.env.FAQ_HOMEPAGE || "http://aleka.athenarc.gr:4200")
+          BASE_URL: JSON.stringify(process.env.FAQ_HOMEPAGE || "http://koulis.athenarc.gr:4200")
         }
       })
     );
@@ -126,11 +126,11 @@ module.exports = function (env) {
       new webpack.DefinePlugin({
         "process.env": {
           PRODUCTION: JSON.stringify(true),
-          API_ENDPOINT: JSON.stringify("http://aleka.athenarc.gr:8480/uoa-repository-manager-service"),
+          API_ENDPOINT: JSON.stringify("http://koulis.athenarc.gr:8480/uoa-repository-manager-service"),
           FAQ_ENDPOINT: JSON.stringify("http://audrey.athenarc.gr:5555/api"),
-          AAI_ENDPOINT: JSON.stringify("http://aleka.athenarc.gr:8480/uoa-repository-manager-service/openid_connect_login"),
+          AAI_ENDPOINT: JSON.stringify("http://koulis.athenarc.gr:8480/uoa-repository-manager-service/openid_connect_login"),
           FAQ_HOMEPAGE: JSON.stringify("http://audrey.athenarc.gr:5555"),
-          BASE_URL: JSON.stringify("http://aleka.athenarc.gr:4200")
+          BASE_URL: JSON.stringify("http://koulis.athenarc.gr:4200")
         }
       })
     );

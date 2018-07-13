@@ -5,6 +5,7 @@ import {LandingComponent} from "./pages/landing/landing.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {AuthGuardService} from "./services/auth-guard.service";
 import {MetricsModule} from "./pages/metrics/metrics.module";
+import {ForbiddenPageComponent} from "./shared/reusablecomponents/403-forbidden-page.component";
 
 const appRoutes: Routes = [
   {
@@ -46,6 +47,10 @@ const appRoutes: Routes = [
     loadChildren: './pages/adminPg/adminPg.module#AdminPgModule',
     canActivate: [AuthGuardService],
     canLoad: [AuthGuardService]
+  },
+  {
+    path: '403-forbidden',
+    component: ForbiddenPageComponent
   },
   {
     path: '**',

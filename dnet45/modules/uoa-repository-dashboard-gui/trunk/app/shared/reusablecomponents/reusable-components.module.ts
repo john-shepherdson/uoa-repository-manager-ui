@@ -18,6 +18,7 @@ import { MyArray, MyArrayInline, MyArrayWrapper, MyInlineArrayWrapper } from './
 import { MyFormDirective } from './forms/my-form.directive';
 import { RouterModule } from '@angular/router';
 import {HttpClientModule} from "@angular/common/http";
+import {ForbiddenPageComponent} from "./403-forbidden-page.component";
 
 const myGroups = [
   MyGroup,
@@ -51,6 +52,7 @@ const myGroups = [
     AsideHelpContentComponent,
     ConfirmationDialogComponent,
     RepositoryTilesComponent,
+    ForbiddenPageComponent,
     ...myGroups
 /*
     MyChoiceWrapper,
