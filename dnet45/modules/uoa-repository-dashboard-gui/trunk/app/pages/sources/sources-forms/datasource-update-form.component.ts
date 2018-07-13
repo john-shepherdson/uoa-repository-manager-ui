@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   formErrorRequiredFields,
   formErrorWasntSaved,
@@ -24,11 +24,8 @@ import {
   logoUrlDesc,
   timezoneDesc,
   datasourceTypeDesc,
-  journalTypeDesc,
-  aggregatorTypeDesc,
   adminEmailDesc, lissnDesc, eissnDesc, issnDesc
 } from '../../../domain/oa-description';
-import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
 import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component ({
@@ -118,13 +115,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   setupUpdateForm() {
     if (this.selectedRepo) {
       console.log(`my datasource type is: ${this.selectedRepo.datasourceType}`);
-      /*if (this.selectedRepo.datasourceType == 'journal') {
-        this.datasourceTypeDesc = journalTypeDesc;
-      } else if (this.selectedRepo.datasourceType == 'aggregator') {
-        this.datasourceTypeDesc = aggregatorTypeDesc;
-      } else {
-        this.datasourceTypeDesc = datasourceTypeDesc;
-      }*/
+
       this.updateGroup.setValue({
         softwarePlatform: this.selectedRepo.typology,
         platformName: '',
@@ -150,10 +141,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
 
-      //this.updateGroup.get('officialName').disable();
+      // this.updateGroup.get('officialName').disable();
       this.updateGroup.get('country').disable();
-      this.updateGroup.get('longtitude').disable(); // MAYBE NOT DISABLED
-      this.updateGroup.get('latitude').disable();   // MAYBE NOT DISABLED
+      // this.updateGroup.get('longtitude').disable();
+      // this.updateGroup.get('latitude').disable();
       this.updateGroup.get('websiteUrl').disable();
       //this.updateGroup.get('institutionName').disable();
       if (this.selectedRepo.datasourceType == 'journal') {

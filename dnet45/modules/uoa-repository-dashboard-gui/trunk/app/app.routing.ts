@@ -40,7 +40,7 @@ const appRoutes: Routes = [
   {
     path: 'getImpact',
     loadChildren: './pages/metrics/metrics.module#MetricsModule',
-    //canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin',

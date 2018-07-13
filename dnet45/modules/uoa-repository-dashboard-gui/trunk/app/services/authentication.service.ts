@@ -50,6 +50,7 @@ export class AuthenticationService {
   public tryLogin() {
     if( getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') ) {
       console.log(`I got the cookie!`);
+      console.log(`in tryLogin -> document.cookie is: ${document.cookie.toString()}`);
       /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTDOWN */
       setInterval(() => {
         this.http.get(this.apiUrl + '/user/login',{ withCredentials: true }).subscribe(
@@ -107,6 +108,7 @@ export class AuthenticationService {
   }
 
   public getIsUserLoggedIn() {
+    this.isLoggedIn = (getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') && (this.getUserEmail() !== '' ) );
     return this.isLoggedIn;
   }
 

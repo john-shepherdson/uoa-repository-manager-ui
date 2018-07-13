@@ -110,11 +110,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   loadForm(){
     this.mode = this.route.snapshot.url[0].path.toString();
     console.log(`my mode is ${this.mode}`);
-    /*if (this.mode == 'journal') {
-      this.datasourceTypeDesc = journalTypeDesc;
-    } else if (this.mode == 'aggregator') {
-      this.datasourceTypeDesc = aggregatorTypeDesc;
-    }*/
+
     console.log(this.mode);
     this.group = this.fb.group(this.groupDefinition);
     if (this.mode == 'journal') {
@@ -167,7 +163,7 @@ export class DatasourceCreateFormComponent implements OnInit {
           ssnToShow = this.selectedRepo.lissn.slice(0, 4)+ '-' + this.selectedRepo.lissn.toString().slice(4);
           this.group.get('lissn').setValue(ssnToShow);
         }
-;
+
       }
     }
   }
@@ -239,10 +235,6 @@ export class DatasourceCreateFormComponent implements OnInit {
       this.errorMessage = formErrorRequiredFields;
     }
   }
-  /*
-  *
-
-  * */
 
   createNewRepository(): Repository {
     let newRepo: Repository = new Repository();

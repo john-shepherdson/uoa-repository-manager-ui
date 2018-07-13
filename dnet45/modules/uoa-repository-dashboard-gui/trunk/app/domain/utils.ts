@@ -7,8 +7,8 @@ export function getCookie(name: string) : string {
     let caLen: number = ca.length;
     let cookieName = `${name}=`;
     let c: string;
-    console.log(`document.cookie is: ${document.cookie.toString()}`);
-    console.log(`ca is: ${JSON.stringify(ca)}`);
+    /*console.log(`document.cookie is: ${document.cookie.toString()}`);
+    console.log(`ca is: ${JSON.stringify(ca)}`);*/
     for (let i: number = 0; i < caLen; i += 1) {
         c = ca[i].replace(/^\s+/g, '');
         if (c.indexOf(cookieName) == 0) {
