@@ -81,10 +81,12 @@ export class AuthenticationService {
             this.isLoggedIn = true;
             console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
           },
-          () => {
+          error => {
             sessionStorage.removeItem('name');
             sessionStorage.removeItem('email');
             sessionStorage.removeItem('role');
+            console.log("Error!");
+            console.log(error);
             deleteCookie('openAIREUser');
             deleteCookie('AccessToken');
             this.isLoggedIn = false;
@@ -98,7 +100,9 @@ export class AuthenticationService {
         let state = sessionStorage.getItem("state.location");
         sessionStorage.removeItem("state.location");
         console.log(`tried to login - returning to state: ${state}`);
-        if (this.redirectUrl) {
+        if ( !this.getIsUserLoggedIn() ) {
+          this.router.navigate(['/landing']);
+        } else if (this.redirectUrl) {
           this.router.navigate([this.redirectUrl]);
         } else {
           this.router.navigate([state]);

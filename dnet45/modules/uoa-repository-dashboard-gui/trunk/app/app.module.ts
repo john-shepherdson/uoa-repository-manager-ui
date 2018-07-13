@@ -28,7 +28,7 @@ import {LandingComponent} from "./pages/landing/landing.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import { UsagestatsService } from './services/usagestats.service';
 import {AuthenticationInterceptor} from "./services/authentication-interceptor";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -37,6 +37,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     JsonpModule,
     ModalModule.forRoot(),
 //    routing,
