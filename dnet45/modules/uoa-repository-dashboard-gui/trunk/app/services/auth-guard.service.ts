@@ -20,6 +20,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
 
     if ( (getCookie('openAIREUser') !== null) && (getCookie('openAIREUser') !== '') ) { return true; }
 
+    /* If no cookie was found, clear the app's session.
+       The user may have logged out using another OpenAIRE portal */
+    sessionStorage.clear();
+
     // Store the attempted URL for redirecting
     sessionStorage.setItem("state.location",state.url);
 
