@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
-import { apiUrl, appBaseUrl } from '../domain/tempAPI';
 import { deleteCookie, getCookie } from '../domain/utils';
 import { Http } from '@angular/http';
 
@@ -10,9 +9,6 @@ export class AuthenticationService {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private http: Http) {}
-
-  /*private apiUrl : string = apiUrl;*/
-  /*private loginUrl : string = `${this.apiUrl}/openid_connect_login`;*/
 
   private apiUrl : string = process.env.API_ENDPOINT;
   private loginUrl: string = process.env.AAI_ENDPOINT;

@@ -9,7 +9,6 @@ import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { PiwikInfo } from '../domain/typeScriptClasses';
-import { apiUrl } from '../domain/tempAPI';
 
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -17,7 +16,6 @@ const httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class PiwikService {
-  /*private apiUrl = `${apiUrl}/piwik/`;*/
   private apiUrl = process.env.API_ENDPOINT + '/piwik/';
 
   constructor(private http: Http) { }

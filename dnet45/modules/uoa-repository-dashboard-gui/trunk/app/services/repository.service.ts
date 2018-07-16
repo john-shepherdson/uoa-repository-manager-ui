@@ -12,7 +12,6 @@ import {
   Aggregations, Country, MetricsInfo, Repository, RepositoryInterface, Timezone,
   Typology
 } from '../domain/typeScriptClasses';
-import { apiUrl } from '../domain/tempAPI';
 import { timezones } from '../domain/timezones';
 import { typologies } from '../domain/typologies';
 
@@ -21,7 +20,6 @@ let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class RepositoryService {
-  /*private apiUrl = apiUrl + '/repository/';*/
   private apiUrl = process.env.API_ENDPOINT + '/repository/';
 
   constructor(private http: Http) { }

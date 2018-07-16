@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { InterfaceInformation, JobForValidation, RuleSet, StoredJob } from '../domain/typeScriptClasses';
-import { apiUrl } from '../domain/tempAPI';
 
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -15,7 +14,6 @@ let httpOptions = new RequestOptions({ headers: headers });
 @Injectable ()
 export class ValidatorService {
 
-  /*private apiUrl = apiUrl + '/validator/';*/
   private apiUrl = process.env.API_ENDPOINT + '/validator/';
 
     constructor(private http: Http) { }

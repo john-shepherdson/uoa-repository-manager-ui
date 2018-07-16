@@ -3,13 +3,11 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanLoad, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import { getCookie } from '../domain/utils';
-import {apiUrl} from "../domain/tempAPI";
 
 @Injectable ()
 export class AuthGuardService implements CanActivate, CanLoad {
 
 //  private oidc_endpoint : string = process.env.OIDC_ENDPOINT;
-  /*private loginUrl : string = `${apiUrl}/openid_connect_login`;*/
   private loginUrl = process.env.AAI_ENDPOINT;
 
   constructor (private authenticationService: AuthenticationService, private router: Router) {}

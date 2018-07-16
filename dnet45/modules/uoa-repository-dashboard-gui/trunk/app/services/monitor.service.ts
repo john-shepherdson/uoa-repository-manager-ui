@@ -10,7 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { InterfaceInformation, JobsOfUser, StoredJob } from "../domain/typeScriptClasses";
-import { apiUrl } from '../domain/tempAPI';
 import { URLParameter } from '../domain/url-parameter';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -18,7 +17,6 @@ let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class MonitorService {
-  /*private apiUrl = apiUrl + '/monitor/';*/
   private apiUrl = process.env.API_ENDPOINT + '/monitor/';
 
   constructor(private http: Http) { }

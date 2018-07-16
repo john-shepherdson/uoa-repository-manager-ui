@@ -15,7 +15,6 @@ const httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class UsagestatsService {
-  /*private apiUrl = `${apiUrl}/piwik/`;*/
   private apiUrl = process.env.API_ENDPOINT + '/piwik/';
 
   constructor(private http: Http) { }

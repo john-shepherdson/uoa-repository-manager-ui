@@ -18,7 +18,6 @@ let httpOptions = new RequestOptions({ headers: headers });
 
 @Injectable ()
 export class BrokerService {
-  /*private apiUrl = apiUrl + '/broker/';*/
   private apiUrl = process.env.API_ENDPOINT + '/broker/';
 
   constructor(private http: Http) { }
