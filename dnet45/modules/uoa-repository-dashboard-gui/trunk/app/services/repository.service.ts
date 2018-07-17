@@ -14,6 +14,7 @@ import {
 } from '../domain/typeScriptClasses';
 import { timezones } from '../domain/timezones';
 import { typologies } from '../domain/typologies';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
@@ -22,7 +23,7 @@ let httpOptions = new RequestOptions({ headers: headers });
 export class RepositoryService {
   private apiUrl = process.env.API_ENDPOINT + '/repository/';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private httpClient: HttpClient) { }
 
   addInterface(datatype: string, repoId: string, newInterface: RepositoryInterface): Observable<RepositoryInterface> {
     let url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}`;
@@ -94,11 +95,11 @@ export class RepositoryService {
   getRepositoryById(id: string): Observable<Repository> {
     let url = `${this.apiUrl}getRepositoryById/${id}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <Repository>res.json())
-      .do(res => console.log(`got repository with name: ${res.officialName}`))
-      .catch(this.handleError);
+    const headerOptions = {
+      headers : new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json'),
+      withCredentials: true
+    };
+    return this.httpClient.get(url, headerOptions);
   }
 
   getRepositoryInterface(id: string): Observable<RepositoryInterface[]>{
