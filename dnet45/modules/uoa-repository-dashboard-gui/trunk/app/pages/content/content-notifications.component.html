@@ -28,7 +28,7 @@
             </div>
             <div *ngIf="noSubscriptions" class="uk-alert">{{noSubscriptions}}</div>
           </div>
-          <div *ngIf="subscrOfUser">
+          <div *ngIf="subscrOfUser && subKeys">
             <div *ngFor="let key of subKeys">
               <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium uk-scrollspy-class=">
                 <span>{{ key }}</span>

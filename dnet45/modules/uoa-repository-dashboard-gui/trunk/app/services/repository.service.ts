@@ -50,7 +50,7 @@ export class RepositoryService {
     let url = `${this.apiUrl}deleteInterface/?id=${id}`;
     console.log(`knocking on: ${url}`);
 
-    return this.httpClient.delete(url,{withCredentials: true, responseType:'text'});
+    return this.httpClient.delete(url, {withCredentials: true, responseType:'text'});
   }
 
   addRepository(datatype: string, newRepository: Repository): Observable<Repository> {
@@ -151,14 +151,15 @@ export class RepositoryService {
     return this.httpClient.get(url, headerOptions);
   }
 
-  updateEnglishName(id: string, englishname: string): Observable<string>{
+  updateEnglishName(id: string, englishname: string) {
     let url = `${this.apiUrl}updateEnglishName?id=${id}&officialName=DSpace&englishname=${englishname}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.httpClient.post<string>(url,headerOptions);
+    const body = {};
+
+    return this.httpClient.post(url, body, {withCredentials: true, responseType: 'text'});
   }
 
-  updateLongtitude(id: string, longtitude: string): Observable<string>{
+  updateLongtitude(id: string, longtitude: string){
     let url = `${this.apiUrl}updateLongtitude`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
@@ -167,10 +168,10 @@ export class RepositoryService {
     });
     console.log(`sending ${body}`);
 
-    return this.httpClient.post<string>(url,body,headerOptions);
+    return this.httpClient.post(url,body, {withCredentials: true, responseType: 'text'});
   }
 
-  updateLatitude(id: string, latitude: string): Observable<string>{
+  updateLatitude(id: string, latitude: string) {
     let url = `${this.apiUrl}updateLatitude`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
@@ -179,10 +180,10 @@ export class RepositoryService {
     });
     console.log(`sending ${body}`);
 
-    return this.httpClient.post<string>(url,body,headerOptions);
+    return this.httpClient.post(url,body,{withCredentials: true, responseType: 'text'});
   }
 
-  updateLogoUrl(id: string, logoUrl: string): Observable<any>{
+  updateLogoUrl(id: string, logoUrl: string) {
     let url = `${this.apiUrl}updateLogoUrl`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
@@ -191,10 +192,10 @@ export class RepositoryService {
     });
     console.log(`sending ${body}`);
 
-    return this.httpClient.post<any>(url,body,headerOptions);
+    return this.httpClient.post(url,body,{withCredentials: true, responseType: 'text'});
   }
 
-  updateTimezone(id: string, timezone: string): Observable<string>{
+  updateTimezone(id: string, timezone: string) {
     let url = `${this.apiUrl}updateTimezone`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify({
@@ -203,7 +204,7 @@ export class RepositoryService {
     });
     console.log(`sending ${body}`);
 
-    return this.httpClient.post<string>(url,body,headerOptions);
+    return this.httpClient.post(url,body,{withCredentials: true, responseType: 'text'});
   }
 
   getListLatestUpdate(mode: string): Observable<any> {

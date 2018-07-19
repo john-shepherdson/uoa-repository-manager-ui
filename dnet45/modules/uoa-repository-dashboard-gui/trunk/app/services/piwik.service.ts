@@ -28,25 +28,25 @@ export class PiwikService {
               private httpClient: HttpClient) { }
 
 
-  approvePiwikSite(repositoryId: string): Observable<string> {
+  approvePiwikSite(repositoryId: string) {
     let url = `${this.apiUrl}approvePiwikSite/${repositoryId}`;
     console.log(`knocking on: ${url}`);
-    return this.httpClient.get<string>(url);
+    return this.httpClient.get(url, {withCredentials: true, responseType: 'text'});
   }
 
-  enableMetricsForRepository(repoName: string, repoWebsite: string, piwik: PiwikInfo): Observable<string> {
+  enableMetricsForRepository(repoName: string, repoWebsite: string, piwik: PiwikInfo): Observable<PiwikInfo> {
     let url = `${this.apiUrl}enableMetricsForRepository?officialName=${encodeURIComponent(repoName)}&repoWebsite=${encodeURIComponent(repoWebsite)}`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(piwik)}`);
 
-    return this.httpClient.post<string>(url,JSON.stringify(piwik),headerOptions);
+    return this.httpClient.post<PiwikInfo>(url, JSON.stringify(piwik),headerOptions);
   }
 
-  getOpenaireId(id: string): Observable<string> {
+  getOpenaireId(id: string) {
     let url = `${this.apiUrl}getOpenaireId/${id}`;
     console.log(`knocking on: ${url}`);
 
-    return this.httpClient.get(url, headerOptions).map( oaId => oaId['_body'].toString() );
+    return this.httpClient.get(url, {withCredentials: true, responseType: 'text'});
   }
 
   getPiwikInfo(id: string): Observable<PiwikInfo> {
@@ -64,11 +64,12 @@ export class PiwikService {
   }
 
 
-  markPiwikSiteAsValidated (repositoryId: string): Observable<string> {
+  markPiwikSiteAsValidated (repositoryId: string) {
     let url = `${this.apiUrl}markPiwikSiteAsValidated/${repositoryId}`;
     console.log(`knocking on: ${url}`);
+    const body = {};
 
-    return this.httpClient.post<any>(url,{withCredentials: true, responseType:'text'});
+    return this.httpClient.post(url, body,{withCredentials: true, responseType:'text'});
   }
 
   savePiwikInfo(piwik: PiwikInfo): Observable<PiwikInfo> {

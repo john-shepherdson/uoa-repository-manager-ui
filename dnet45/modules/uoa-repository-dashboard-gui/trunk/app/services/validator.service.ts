@@ -73,16 +73,17 @@ export class ValidatorService {
   reSubmitJobForValidation(id: string) {
     let url = `${this.apiUrl}reSubmitJobForValidation/${id}`;
     console.log(`knocking on: ${url}`);
+    const body = {};
 
-    return this.httpClient.post(url, {withCredentials: true, responseType: 'text'});
+    return this.httpClient.post(url, body, {withCredentials: true, responseType: 'text'});
   }
 
-  submitJobForValidation(job: JobForValidation) {
+  submitJobForValidation(job: JobForValidation): Observable<JobForValidation> {
     let url = `${this.apiUrl}submitJobForValidation`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify(job);
 
-    return this.httpClient.post(url,body,{withCredentials: true, responseType: 'text'});
+    return this.httpClient.post<JobForValidation>(url, body, headerOptions);
   }
 
 }

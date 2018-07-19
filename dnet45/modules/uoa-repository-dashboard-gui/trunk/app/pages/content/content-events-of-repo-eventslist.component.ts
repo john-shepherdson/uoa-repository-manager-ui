@@ -294,7 +294,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
       console.log(JSON.stringify(sub));
       this.loadingMessage = subscribingToEvents;
       this.brokerService.subscribeToEvent(sub).subscribe(
-        response => console.log(`subscribeToEvents responded ${response}`),
+        response => console.log(`subscribeToEvents responded ${JSON.stringify(response)}`),
         error => {
           this.errorMessage = subscribingToEventsError;
           this.loadingMessage = '';

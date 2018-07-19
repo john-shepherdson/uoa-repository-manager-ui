@@ -141,19 +141,11 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       this.step3ChooseParameters.submitChanges();
       //save all changes
       this.submitForValidation();
-      this.setQueryParam('finish');
-      this.showFinish = true;
-      this.showParameters = false;
-      this.step4 = 'active';
     } else if (this.showCrisEntities) {
       this.step3ChooseCrisEntities.saveChanges();
       if (this.chosenCrisEntities.length) {
         //save all changes
         this.submitForValidation();
-        this.setQueryParam('finish');
-        this.showFinish = true;
-        this.showCrisEntities = false;
-        this.step4 = 'active';
       } else {
         this.errorMessage = didntSelectCrisEntities;
       }
@@ -312,6 +304,13 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       newJob => console.log(JSON.stringify(newJob)),
       error => {
         this.errorMessage = submittingJobError;
+      },
+      () => {
+        this.setQueryParam('finish');
+        this.showFinish = true;
+        this.showCrisEntities = false;
+        this.showParameters = false;
+        this.step4 = 'active';
       }
     );
   }

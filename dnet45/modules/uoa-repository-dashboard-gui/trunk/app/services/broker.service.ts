@@ -97,18 +97,19 @@ export class BrokerService {
 */
 
   /*CHECK IF sub is sent as body*/
-  subscribeToEvent(sub: OpenaireSubscription){
+  subscribeToEvent(sub: OpenaireSubscription): Observable<Subscription>{
     let url = `${this.apiUrl}subscribe`;
     console.log(`knocking on: ${url}`);
 
-    return this.httpClient.post(url,sub,{withCredentials: true, responseType:'text'});
+    return this.httpClient.post<Subscription>(url,sub,headerOptions);
   }
 
-  unsubscribe(subscriptionId: string): Observable<string> {
+  unsubscribe(subscriptionId: string) {
     let url = `${this.apiUrl}unsubscribe/${subscriptionId}`;
     console.log(`knocking on: ${url}`);
+    const body = {};
 
-    return this.httpClient.post<any>(url,{withCredentials: true, responseType:'text'});
+    return this.httpClient.post(url, body, {withCredentials: true, responseType: 'text'});
 }
 
 }
