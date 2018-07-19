@@ -113,7 +113,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
 
   getLatestUpdate() {
     return this.repoService.getListLatestUpdate(this.mode).subscribe(
-      responseDate => this.latestUpdate = responseDate,
+      responseDate => this.latestUpdate = responseDate['lastCollectionDate'],
       error => console.log(error)
     );
   }
@@ -128,7 +128,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   }
 
   public goToNextStep(): boolean {
-    if(!this.hasSelectedRepo || this.noRepositories){
+    if (!this.hasSelectedRepo || this.noRepositories) {
       this.alertMessage = noRepositoryChosenMsg;
       return false;
     } else {

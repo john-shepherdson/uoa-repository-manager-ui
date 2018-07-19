@@ -6,36 +6,40 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { InterfaceInformation, JobForValidation, RuleSet, StoredJob } from '../domain/typeScriptClasses';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import any = jasmine.any;
 
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
+const headerOptions = {
+  headers : new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Accept', 'application/json'),
+  withCredentials: true
+};
 
 @Injectable ()
 export class ValidatorService {
 
   private apiUrl = process.env.API_ENDPOINT + '/validator/';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http,
+                private httpClient: HttpClient) { }
 
   /* returns array of sets of rules according to mode (literature, data, cris) */
   getRuleSets(mode: string): Observable<RuleSet[]> {
     let url = `${this.apiUrl}getRuleSets/${mode}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map(res => <RuleSet[]>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get(url,headerOptions);
   }
 
 
   getSetsOfRepository(baseUrl: string): Observable<string[]> {
     let url = `${this.apiUrl}getSetsOfRepository?url=${baseUrl}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map(res => <string[]>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<string[]>(url,headerOptions);
   }
 
   getStoredJobsNew(userEmail: string,
@@ -47,74 +51,38 @@ export class ValidatorService {
                    validationStatus: string): Observable<StoredJob[]> {
     let url = `${this.apiUrl}getStoredJobsNew?user=${userEmail}&jobType=${encodeURI(jobType)}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map(res => <StoredJob[]>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<StoredJob[]>(url,headerOptions);
   }
 
   /* returns true if there is a repository containing the baseUrl */
   identifyRepository(baseUrl: string): Observable<boolean> {
     let url = `${this.apiUrl}identifyRepository?url=${baseUrl}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map(res => <boolean>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<boolean>(url,headerOptions);
   }
 
   getInterfaceInformation(baseUrl: string): Observable<InterfaceInformation> {
     let url = `${this.apiUrl}getInterfaceInformation?baseUrl=${encodeURIComponent(baseUrl)}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map(res => <InterfaceInformation>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<InterfaceInformation>(url,headerOptions);
   }
 
-  reSubmitJobForValidation(id: string): Observable<string> {
+  reSubmitJobForValidation(id: string) {
     let url = `${this.apiUrl}reSubmitJobForValidation/${id}`;
     console.log(`knocking on: ${url}`);
 
-    httpOptions.withCredentials = true;
-    return this.http.post(url,httpOptions)
-      .map(res => {
-        console.log(`responded ${res.status}`);
-        return res.status.toString();
-      })
-      .catch(this.handleError);
+    return this.httpClient.post(url, {withCredentials: true, responseType: 'text'});
   }
 
-  submitJobForValidation(job: JobForValidation): Observable<string> {
+  submitJobForValidation(job: JobForValidation) {
     let url = `${this.apiUrl}submitJobForValidation`;
     console.log(`knocking on: ${url}`);
     let body = JSON.stringify(job);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,body,httpOptions)
-      .map(res => {
-        console.log(`responded ${res.status}`);
-        return res.status.toString();
-      })
-      .catch(this.handleError);
+
+    return this.httpClient.post(url,body,{withCredentials: true, responseType: 'text'});
   }
 
-
-/* from omtd project */
-  private handleError(error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    let errMsg = "";
-    console.log('E R R O R !!!');
-    console.log(error);
-    if (error instanceof Response) {
-      const body = error.text() || '';
-      //const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${body}`;
-    } else {
-      errMsg = (error.message) ? error.message :
-        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-      console.error(errMsg); // log to console instead
-    }
-    return Observable.throw(errMsg);
-  }
 }

@@ -44,10 +44,10 @@
                   {{ piwik.repositoryName }}<br>(ID: {{ piwik.repositoryId }})
                 </td>
                 <td class="uk-table-shrink">ID: {{ piwik.siteId }}<br>Authentication Token: {{ piwik.authenticationToken }}</td>
-                <td class="uk-text-nowrap uk-table-shrink">{{ piwik.creationDate | date : "yyyy-mm-dd" }}</td>
+                <td class="uk-text-nowrap uk-table-shrink">{{ piwik.creationDate | date : "yyyy-MM-dd" }}</td>
                 <td class="uk-text-nowrap uk-table-shrink">{{ piwik.requestorName }}<br>{{ piwik.requestorEmail }}</td>
                 <td class="uk-text-nowrap uk-table-shrink">
-                  <span *ngIf="piwik.validated">YES<br>on {{ piwik.validationDate | date : "yyyy-mm-dd" }}</span>
+                  <span *ngIf="piwik.validated">YES<br>on {{ piwik.validationDate | date : "yyyy-MM-dd" }}</span>
                   <span *ngIf="!piwik.validated">NO</span>
                 </td>
                 <td class="uk-text-nowrap uk-table-shrink">

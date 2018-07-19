@@ -9,98 +9,73 @@ import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { PiwikInfo } from '../domain/typeScriptClasses';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
 const httpOptions = new RequestOptions({ headers: headers });
+const headerOptions = {
+  headers : new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Accept', 'application/json'),
+  withCredentials: true
+};
 
 @Injectable ()
 export class PiwikService {
   private apiUrl = process.env.API_ENDPOINT + '/piwik/';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http,
+              private httpClient: HttpClient) { }
 
 
   approvePiwikSite(repositoryId: string): Observable<string> {
     let url = `${this.apiUrl}approvePiwikSite/${repositoryId}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map(res => res.status.toString())
-      .catch(this.handleError);
+    return this.httpClient.get<string>(url);
   }
 
-  enableMetricsForRepository(repoName: string, repoWebsite: string, piwik: PiwikInfo) {
+  enableMetricsForRepository(repoName: string, repoWebsite: string, piwik: PiwikInfo): Observable<string> {
     let url = `${this.apiUrl}enableMetricsForRepository?officialName=${encodeURIComponent(repoName)}&repoWebsite=${encodeURIComponent(repoWebsite)}`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(piwik)}`);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,JSON.stringify(piwik),httpOptions)
-      .map( res => res.status.toString() )
-      .catch(this.handleError);
+
+    return this.httpClient.post<string>(url,JSON.stringify(piwik),headerOptions);
   }
 
   getOpenaireId(id: string): Observable<string> {
     let url = `${this.apiUrl}getOpenaireId/${id}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( oaId => oaId['_body'].toString() )
-      .catch(this.handleError);
+
+    return this.httpClient.get(url, headerOptions).map( oaId => oaId['_body'].toString() );
   }
 
   getPiwikInfo(id: string): Observable<PiwikInfo> {
     let url = `${this.apiUrl}getPiwikSiteForRepo/${id}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( piwik => <PiwikInfo>piwik.json() )
-      .catch(this.handleError);
+
+    return this.httpClient.get<PiwikInfo>(url, headerOptions);
   }
 
   getPiwikSitesForRepos(): Observable<PiwikInfo[]> {
     let url = `${this.apiUrl}getPiwikSitesForRepos`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <PiwikInfo[]>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<PiwikInfo[]>(url, headerOptions);
   }
 
 
-  markPiwikSiteAsValidated (repositoryId: string) {
+  markPiwikSiteAsValidated (repositoryId: string): Observable<string> {
     let url = `${this.apiUrl}markPiwikSiteAsValidated/${repositoryId}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,httpOptions)
-      .map(res => res.status.toString())
-      .catch(this.handleError);
+
+    return this.httpClient.post<any>(url,{withCredentials: true, responseType:'text'});
   }
 
-  savePiwikInfo(piwik: PiwikInfo): Observable<PiwikInfo>{
+  savePiwikInfo(piwik: PiwikInfo): Observable<PiwikInfo> {
     let url = `${this.apiUrl}savePiwikInfo`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,piwik,httpOptions)
-      .map( res => <PiwikInfo>res.json() )
-      .catch(this.handleError);
-  }
 
-  private handleError(error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    let errMsg = "";
-    console.log('E R R O R !!!');
-    console.log(error);
-    if (error instanceof Response) {
-      const body = error.text() || '';
-      //const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${body}`;
-    } else {
-      errMsg = (error.message) ? error.message :
-        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-      console.error(errMsg); // log to console instead
-    }
-    return Observable.throw(errMsg);
+    return this.httpClient.post<PiwikInfo>(url,piwik,headerOptions);
   }
 
 

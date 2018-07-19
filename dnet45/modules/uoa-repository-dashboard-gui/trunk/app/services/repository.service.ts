@@ -8,31 +8,34 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import {
-  Aggregations, Country, MetricsInfo, Repository, RepositoryInterface, Timezone,
-  Typology
-} from '../domain/typeScriptClasses';
+import { AggregationDetails, Country, MetricsInfo, Repository, RepositoryInterface, Timezone, Typology } from '../domain/typeScriptClasses';
 import { timezones } from '../domain/timezones';
 import { typologies } from '../domain/typologies';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {tap} from "rxjs/operators";
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
+const headerOptions = {
+  headers : new HttpHeaders().set('Content-Type', 'application/json')
+                             .set('Accept', 'application/json'),
+  withCredentials: true
+};
+
 
 @Injectable ()
 export class RepositoryService {
   private apiUrl = process.env.API_ENDPOINT + '/repository/';
 
-  constructor(private http: Http, private httpClient: HttpClient) { }
+  constructor(private http: Http,
+              private httpClient: HttpClient) { }
 
   addInterface(datatype: string, repoId: string, newInterface: RepositoryInterface): Observable<RepositoryInterface> {
     let url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(newInterface)}`);
     httpOptions.withCredentials = true;
-    return this.http.post(url,newInterface,httpOptions)
-      .map( res => <RepositoryInterface>res.json())
-      .catch(this.handleError);
+    return this.httpClient.post<RepositoryInterface>(url,newInterface,headerOptions);
   }
 
   updateInterface(repoId: string, interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
@@ -40,159 +43,119 @@ export class RepositoryService {
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(interfaceInfo)}`);
     httpOptions.withCredentials = true;
-    return this.http.post(url,interfaceInfo,httpOptions)
-      .map( res => <RepositoryInterface>res.json())
-      .catch(this.handleError);
+    return this.httpClient.post<RepositoryInterface>(url,interfaceInfo,headerOptions);
   }
 
-  deleteInterface(id: string): Observable<string> {
+  deleteInterface(id: string) {
     let url = `${this.apiUrl}deleteInterface/?id=${id}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.delete(url,httpOptions)
-      .map( res => res.status.toString() )
-      .catch(this.handleError);
+
+    return this.httpClient.delete(url,{withCredentials: true, responseType:'text'});
   }
 
   addRepository(datatype: string, newRepository: Repository): Observable<Repository> {
     let url = `${this.apiUrl}addRepository?datatype=${datatype}`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(newRepository)}`);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,newRepository,httpOptions)
-      .map( res => <Repository>res.json())
-      .catch(this.handleError);
+    return this.httpClient.post<Repository>(url,newRepository,headerOptions);
   }
 
   updateRepository(repoInfo: Repository): Observable<Repository> {
     let url = `${this.apiUrl}updateRepository`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(repoInfo)}`);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,repoInfo,httpOptions)
-      .map( res => <Repository>res.json())
-      .catch(this.handleError);
+    return this.httpClient.post<Repository>(url,repoInfo,headerOptions);
   }
 
   getRepositoriesOfCountry(country: string, mode: string): Observable<Repository[]> {
     let url = `${this.apiUrl}getRepositoriesByCountry/${country}/${mode}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <Repository[]>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
   getRepositoriesOfUser(userEmail: string): Observable<Repository[]> {
     let url = `${this.apiUrl}getRepositoriesOfUser/${userEmail}/0/100`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <Repository[]>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
 
   getRepositoryById(id: string): Observable<Repository> {
     let url = `${this.apiUrl}getRepositoryById/${id}`;
     console.log(`knocking on: ${url}`);
-    const headerOptions = {
-      headers : new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json'),
-      withCredentials: true
-    };
     return this.httpClient.get(url, headerOptions);
   }
 
   getRepositoryInterface(id: string): Observable<RepositoryInterface[]>{
     let url = `${this.apiUrl}getRepositoryInterface/${id}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <RepositoryInterface[]>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
 
   getUrlsOfUserRepos(userEmail: string): Observable<string[]>{
     let url = `${this.apiUrl}getUrlsOfUserRepos/${userEmail}/0/100/`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <string[]>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
-  getRepositoryAggregations(id: string): Observable<Aggregations>{
+  getRepositoryAggregations(id: string): Observable<AggregationDetails[]>{
     let url = `${this.apiUrl}getRepositoryAggregations/${id}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map(res => <Aggregations>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
+  }
+
+  getRepositoryAggregationsByYear(id: string): Observable<Map<string,AggregationDetails[]>>{
+    let url = `${this.apiUrl}getRepositoryAggregationsByYear/${id}`;
+    console.log(`knocking on: ${url}`);
+    return this.httpClient.get<Map<string,AggregationDetails[]>>(url, headerOptions);
   }
 
   getTimezones(): Observable<Timezone[]>{
 /*    let url = `${this.apiUrl}getTimezones`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <Timezone[]>res.json())
-      .catch(this.handleError);*/
+    return this.httpClient.get(url, headerOptions);*/
     return Observable.of(<Timezone[]>timezones);
   }
 
   getTypologies(): Observable<Typology[]>{
 /*    let url = `${this.apiUrl}getTypologies`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <string[]>res.json())
-      .catch(this.handleError);*/
+    return this.httpClient.get(url, headerOptions);*/
     return Observable.of(<Typology[]>typologies);
   }
 
   getCountries(): Observable<Country[]> {
     let url = `${this.apiUrl}getCountries`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <Country[]>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
 
   getCompatibilityClasses (mode: string): Observable<Map<string,string>> {
     let url = `${this.apiUrl}getCompatibilityClasses/${mode}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <Map<string,string>>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
   getDatasourceClasses(mode: string): Observable<Map<string,string>>{
     let url = `${this.apiUrl}getDatasourceClasses/${mode}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <Map<string,string>>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
 
   getMetricsInfoForRepository (repoId: string): Observable<MetricsInfo> {
     let url = `${this.apiUrl}getMetricsInfoForRepository/${repoId}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <MetricsInfo>res.json())
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
   updateEnglishName(id: string, englishname: string): Observable<string>{
     let url = `${this.apiUrl}updateEnglishName?id=${id}&officialName=DSpace&englishname=${englishname}`;
     console.log(`knocking on: ${url}`);
     httpOptions.withCredentials = true;
-    return this.http.post(url,httpOptions)
-      .map( res => {
-        console.log(`responded ${res.statusText}`);
-        return res.status.toString();
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<string>(url,headerOptions);
   }
 
   updateLongtitude(id: string, longtitude: string): Observable<string>{
@@ -203,11 +166,8 @@ export class RepositoryService {
       logntitude: longtitude
     });
     console.log(`sending ${body}`);
-    httpOptions.withCredentials = true;
 
-    return this.http.post(url,body,httpOptions)
-      .map( res => <string>res.json())
-      .catch(this.handleError);
+    return this.httpClient.post<string>(url,body,headerOptions);
   }
 
   updateLatitude(id: string, latitude: string): Observable<string>{
@@ -218,11 +178,8 @@ export class RepositoryService {
       latitude: latitude
     });
     console.log(`sending ${body}`);
-    httpOptions.withCredentials = true;
 
-    return this.http.post(url,body,httpOptions)
-      .map( res => <string>res.json())
-      .catch(this.handleError);
+    return this.httpClient.post<string>(url,body,headerOptions);
   }
 
   updateLogoUrl(id: string, logoUrl: string): Observable<any>{
@@ -233,11 +190,8 @@ export class RepositoryService {
       logoUrl: logoUrl
     });
     console.log(`sending ${body}`);
-    httpOptions.withCredentials = true;
 
-    return this.http.post(url, body, httpOptions)
-      .map( res => <any>res.json())
-      .catch(this.handleError);
+    return this.httpClient.post<any>(url,body,headerOptions);
   }
 
   updateTimezone(id: string, timezone: string): Observable<string>{
@@ -248,19 +202,14 @@ export class RepositoryService {
       timezone: timezone
     });
     console.log(`sending ${body}`);
-    httpOptions.withCredentials = true;
 
-    return this.http.post(url, body, httpOptions)
-      .map( res => <string>res.json())
-      .catch(this.handleError);
+    return this.httpClient.post<string>(url,body,headerOptions);
   }
 
-  getListLatestUpdate(mode: string): Observable<string> {
+  getListLatestUpdate(mode: string): Observable<any> {
     let url = `${this.apiUrl}getListLatestUpdate/${mode}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => res.json()['lastCollectionDate'])
-      .catch(this.handleError);
+    return this.httpClient.get(url, headerOptions);
   }
 
 

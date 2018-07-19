@@ -25,7 +25,7 @@ const appRoutes: Routes = [
   {
     path: 'sources',
     loadChildren: './pages/sources/sources.module#SourcesModule',
-    //canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'compatibility',

@@ -166,10 +166,17 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
       }
       controlArray = <FormArray>this.group.controls['eventDateRanges'];
       for (i = 0; i < controlArray.length; i++) {
-        if (controlArray.at(i).get('dateFrom').value && controlArray.at(i).get('dateTo').value) {
+        if (controlArray.at(i).get('dateFrom').value) {
+          let toDate;
+          if (controlArray.at(i).get('dateTo').value ||
+              (controlArray.at(i).get('dateFrom').value > controlArray.at(i).get('dateTo').value) ) {
+            toDate = controlArray.at(i).get('dateTo').value;
+          } else {
+            toDate = Date.now();
+          }
           this.advanceSearch.dates.push({
             min: controlArray.at(i).get('dateFrom').value,
-            max: controlArray.at(i).get('dateTo').value
+            max: toDate
           });
         }
       }

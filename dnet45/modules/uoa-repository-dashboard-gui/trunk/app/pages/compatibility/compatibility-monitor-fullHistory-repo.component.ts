@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {AggregationDetails, Aggregations, Repository} from '../../domain/typeScriptClasses';
+import {AggregationDetails, Repository} from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import {
   loadingAggregationHistory,
@@ -11,11 +11,11 @@ import {
 } from '../../domain/shared-messages';
 
 @Component ({
-  selector: 'app-compatibility-monitor-repo',
-  templateUrl: 'compatibility-monitor-repo.component.html'
+  selector: 'app-compatibility-fullHistory-monitor-repo',
+  templateUrl: 'compatibility-monitor-fullHistory-repo.component.html'
 })
 
-export class CompatibilityMonitorRepoComponent implements OnInit {
+export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
   loadingMessage: string;
   errorMessage: string;
   noAggregations: string;
@@ -24,7 +24,8 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
   repoName: string = '';
   repo: Repository;
 
-  latestAggregations: AggregationDetails[] = [];
+  aggregationsMap: Map<string,AggregationDetails[]> = new Map<string,AggregationDetails[]>();
+  years: string[] = [];
 
   constructor(private route: ActivatedRoute,
               private repoService: RepositoryService) {}
@@ -55,7 +56,7 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
           this.loadingMessage = '';
           if (this.repo) {
             this.repoName = this.repo.officialName;
-            this.getLatestAggregationHistory();
+            this.getAllAggregationHistory();
           } else {
             this.errorMessage = loadingRepoError;
           }
@@ -64,17 +65,20 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
     }
   }
 
-  getLatestAggregationHistory() {
+  getAllAggregationHistory() {
     this.loadingMessage = loadingAggregationHistory;
-    this.repoService.getRepositoryAggregations(this.repo.id).subscribe(
-      aggr => this.latestAggregations = aggr,
+    this.repoService.getRepositoryAggregationsByYear(this.repo.id).subscribe(
+      aggr => this.aggregationsMap = aggr,
       error => {
         this.loadingMessage = '';
         this.errorMessage = loadingAggregationHistoryError;
       },
       () => {
         this.loadingMessage = '';
-        if ( !this.latestAggregations || (this.latestAggregations.length===0) ) {
+        for (let key in this.aggregationsMap) {
+          this.years.push(key);
+        }
+        if ( this.years.length === 0 ) {
           this.noAggregations = noAggregationHistory;
         }
       }

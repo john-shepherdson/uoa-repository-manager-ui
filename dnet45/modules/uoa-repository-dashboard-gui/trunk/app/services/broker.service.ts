@@ -11,139 +11,104 @@ import {
   AdvQueryObject, BrowseEntry, EventsPage, OpenaireSubscription, Repository, SimpleSubscriptionDesc, Subscription,
   Term
 } from '../domain/typeScriptClasses';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
+const headerOptions = {
+  headers : new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Accept', 'application/json'),
+  withCredentials: true
+};
 
 @Injectable ()
 export class BrokerService {
   private apiUrl = process.env.API_ENDPOINT + '/broker/';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http,
+              private httpClient: HttpClient) { }
 
   advancedShowEvents(page: number,size: number,searchParams: AdvQueryObject): Observable<EventsPage>{
     let url = `${this.apiUrl}advancedShowEvents/${page}/${size}`;
     console.log(`knocking on: ${url}`);
     let body = searchParams;
     console.log(`sending ${JSON.stringify(body)}`);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,body,httpOptions)
-      .map( res => <EventsPage>res.json())
-      .catch(this.handleError).share();
+
+    return this.httpClient.post<EventsPage>(url,body,headerOptions);
   }
 
   getDatasourcesOfUser(userEmail: string) {
     let url = `${this.apiUrl}getDatasourcesOfUser?user=${userEmail}&includeShared=false&includeByOthers=false`;
     console.log(`knocking on: ${url}`);
 
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map( res => res.json())
-      .catch(this.handleError).share();
+    return this.httpClient.get(url,headerOptions);
   }
 
   getDnetTopics(): Observable<Map<string,Term>> {
     let url = `${this.apiUrl}getDnetTopics`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <Map<string,Term>>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<Map<string,Term>>(url, headerOptions);
   }
 
   getNotificationsBySubscriptionId(subId: string, page: number, size: number): Observable<EventsPage> {
     let url = `${this.apiUrl}getNotificationsBySubscriptionId/${subId}/${page}/${size}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <EventsPage>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<EventsPage>(url, headerOptions);
   }
 
   getSimpleSubscriptionsOfUser(userEmail: string): Observable<Map<string,SimpleSubscriptionDesc[]>> {
     let url = `${this.apiUrl}getSimpleSubscriptionsOfUser/${userEmail}/`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <Map<string,SimpleSubscriptionDesc[]>>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<Map<string,SimpleSubscriptionDesc[]>>(url, headerOptions);
   }
 
   getSubscription(subId: string): Observable<Subscription> {
     let url = `${this.apiUrl}getSubscription/${subId}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map( res => <Subscription>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<Subscription>(url,headerOptions);
   }
 
   getSubscriptionsOfUser(userEmail: string): Observable<Map<string, Subscription>> {
     let url = `${this.apiUrl}getSubscriptionsOfUser/${userEmail}/`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <Map<string,Subscription>>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<Map<string, Subscription>>(url, headerOptions);
   }
 
   getTopicsForDataSource(name: string): Observable<BrowseEntry[]> {
     let url = `${this.apiUrl}getTopicsForDatasource/${encodeURIComponent(name)}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url, httpOptions)
-      .map( res => <BrowseEntry[]>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<BrowseEntry[]>(url, headerOptions);
   }
 
 /* NOT WORKING AND PROBABLY NOT NEEDED
   showEvents(repoName: string, topic: string, page: number): Observable<EventsPage> {
     let url = `${this.apiUrl}showEvents/{datasourceName}/{topic}/{page}?datasourceName=${repoName}&topic=${topic}&page=${page}`;
     console.log(`knocking on: ${url}`);
-    return this.http.get(url)
-      .map( res => <EventsPage>res.json())
-      .catch(this.handleError);
+
+    return this.httpClient.get<EventsPage>(url, headerOptions);
   }
 */
 
   /*CHECK IF sub is sent as body*/
-  subscribeToEvent(sub: OpenaireSubscription): Observable<string>{
+  subscribeToEvent(sub: OpenaireSubscription){
     let url = `${this.apiUrl}subscribe`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,sub,httpOptions)
-      .map( res => res.status.toString())
-      .catch(this.handleError);
+
+    return this.httpClient.post(url,sub,{withCredentials: true, responseType:'text'});
   }
 
   unsubscribe(subscriptionId: string): Observable<string> {
     let url = `${this.apiUrl}unsubscribe/${subscriptionId}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.post(url,httpOptions)
-      .map( res => res.status.toString())
-      .catch(this.handleError);
+
+    return this.httpClient.post<any>(url,{withCredentials: true, responseType:'text'});
 }
-
-
-private handleError(error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    let errMsg = "";
-    console.log('E R R O R !!!');
-    console.log(error);
-    if (error instanceof Response) {
-      const body = error.text() || '';
-      //const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${body}`;
-      console.log(errMsg);
-    } else {
-      errMsg = (error.message) ? error.message :
-        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-      console.error(errMsg); // log to console instead
-    }
-    return Observable.throw(errMsg);
-  }
 
 }

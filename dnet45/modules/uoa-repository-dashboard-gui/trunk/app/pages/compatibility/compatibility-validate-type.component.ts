@@ -309,7 +309,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
     };
     console.log(JSON.stringify(newJob));
     this.valService.submitJobForValidation(newJob).subscribe(
-      newJob => console.log(newJob),
+      newJob => console.log(JSON.stringify(newJob)),
       error => {
         this.errorMessage = submittingJobError;
       }

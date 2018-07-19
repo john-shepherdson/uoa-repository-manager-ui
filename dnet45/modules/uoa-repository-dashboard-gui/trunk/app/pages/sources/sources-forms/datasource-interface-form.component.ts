@@ -305,6 +305,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         console.log(error);
         this.loadingMessage = '';
         this.errorMessage = formErrorWasntSaved;
+        this.currentInterface = null;
       },
       () => {
         if (this.currentInterface.id) {
@@ -344,7 +345,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   ngOnDestroy() {
     if (this.currentInterface && this.currentInterface.id && this.toBeDeleted) {
       this.repoService.deleteInterface(this.currentInterface.id).subscribe(
-        response => console.log(`deleteInterface responded: ${response}`),
+        response => console.log(`deleteInterface responded: ${JSON.stringify(response)}`),
         error => console.log(error),
         () => console.log(`deleted ${this.currentInterface.id}`)
       );

@@ -11,23 +11,28 @@ import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { InterfaceInformation, JobsOfUser, StoredJob } from "../domain/typeScriptClasses";
 import { URLParameter } from '../domain/url-parameter';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let httpOptions = new RequestOptions({ headers: headers });
+const headerOptions = {
+  headers : new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Accept', 'application/json'),
+  withCredentials: true
+};
 
 @Injectable ()
 export class MonitorService {
   private apiUrl = process.env.API_ENDPOINT + '/monitor/';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http,
+              private httpClient: HttpClient) { }
 
   getJobSummary(jobId: string, groupBy: string): Observable<StoredJob> {
     let url = `${this.apiUrl}getJobSummary?jobId=${jobId}&groupBy=${groupBy}`;
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map(res => <StoredJob>res.json() )
-      .catch(this.handleError);
+
+    return this.httpClient.get<StoredJob>(url,headerOptions);
   }
 
   getJobsOfUser(params: URLParameter[]): Observable<JobsOfUser> {
@@ -40,30 +45,8 @@ export class MonitorService {
       }
     }
     console.log(`knocking on: ${url}`);
-    httpOptions.withCredentials = true;
-    return this.http.get(url,httpOptions)
-      .map(res => <JobsOfUser>res.json() )
-      .catch(this.handleError);
-  }
 
-
-  private handleError(error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    let errMsg = "";
-    console.log(`E R R O R !!!`);
-    console.log(error);
-    if (error instanceof Response) {
-      const body = error.text() || '';
-      //const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${body}`;
-      console.log(errMsg);
-    } else {
-      errMsg = (error.message) ? error.message :
-        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-      console.error(errMsg); // log to console instead
-    }
-    return Observable.throw(errMsg);
+    return this.httpClient.get<JobsOfUser>(url,headerOptions);
   }
 
 }
