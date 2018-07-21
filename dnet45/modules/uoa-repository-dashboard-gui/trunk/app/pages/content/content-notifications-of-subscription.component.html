@@ -142,8 +142,18 @@
                             <div class="el-title">
                                 <span *ngFor="let proj of event.publication.projects; let p_index = index">
                                   <br *ngIf="p_index > 0">
-                                  <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
+                                  <!--<span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
+                                      <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>-->
+				  <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
                                   <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
+                                  <span *ngIf="(proj.funder && proj.funder !=='') ||
+					       (proj.fundingProgram && proj.fundingProgram !=='')">
+                                    (<span *ngIf="proj.funder && proj.funder !==''">{{ proj.funder }} </span>
+                                    <span *ngIf="(proj.funder && proj.funder !=='') &&
+						 (proj.fundingProgram && proj.fundingProgram !=='')">, </span>
+                                    <span *ngIf="proj.fundingProgram && proj.fundingProgram !==''">{{ proj.fundingProgram }}</span>)
+                                  </span>
+
                                   <span *ngIf="event.highlight.projects && event.highlight.projects.length>0 && event.provenance">
                                     <span class="pull-right">
                                       <b>from: </b>

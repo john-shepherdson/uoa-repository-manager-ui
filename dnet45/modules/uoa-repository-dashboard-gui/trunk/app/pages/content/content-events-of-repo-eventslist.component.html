@@ -151,9 +151,10 @@
                                   <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
                                   <span *ngIf="(proj.funder && proj.funder !=='') ||
                                                (proj.fundingProgram && proj.fundingProgram !=='')">
-                                    ( <span *ngIf="proj.funder && proj.funder !==''">{{ proj.funder }} </span>
-                                    <span *ngIf="proj.fundingProgram && proj.fundingProgram !==''">{{ proj.fundingProgram }}</span>
-                                    )
+                                    (<span *ngIf="proj.funder && proj.funder !==''">{{ proj.funder }} </span>
+				    <span *ngIf="(proj.funder && proj.funder !=='') &&
+						 (proj.fundingProgram && proj.fundingProgram !=='')">, </span>
+                                    <span *ngIf="proj.fundingProgram && proj.fundingProgram !==''">{{ proj.fundingProgram }}</span>)
                                   </span>
                                   <span *ngIf="event.highlight.projects && event.highlight.projects.length>0 && event.provenance">
                                     <span class="pull-right">
