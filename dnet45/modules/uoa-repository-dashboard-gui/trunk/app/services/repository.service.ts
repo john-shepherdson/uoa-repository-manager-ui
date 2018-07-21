@@ -30,24 +30,24 @@ export class RepositoryService {
   constructor(private http: Http,
               private httpClient: HttpClient) { }
 
-  addInterface(datatype: string, repoId: string, newInterface: RepositoryInterface): Observable<RepositoryInterface> {
-    let url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}`;
+  addInterface(datatype: string, repoId: string, registeredBy: string, newInterface: RepositoryInterface): Observable<RepositoryInterface> {
+    let url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(newInterface)}`);
     httpOptions.withCredentials = true;
     return this.httpClient.post<RepositoryInterface>(url,newInterface,headerOptions);
   }
 
-  updateInterface(repoId: string, interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
-    let url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}`;
+  updateInterface(repoId: string, registeredBy: string, interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
+    let url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}`;
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(interfaceInfo)}`);
     httpOptions.withCredentials = true;
     return this.httpClient.post<RepositoryInterface>(url,interfaceInfo,headerOptions);
   }
 
-  deleteInterface(id: string) {
-    let url = `${this.apiUrl}deleteInterface/?id=${id}`;
+  deleteInterface(id: string, registeredBy: string) {
+    let url = `${this.apiUrl}deleteInterface/?id=${id}&registeredBy=${registeredBy}`;
     console.log(`knocking on: ${url}`);
 
     return this.httpClient.delete(url, {withCredentials: true, responseType:'text'});

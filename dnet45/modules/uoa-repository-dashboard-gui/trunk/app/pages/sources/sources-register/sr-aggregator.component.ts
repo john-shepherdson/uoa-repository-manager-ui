@@ -13,6 +13,7 @@ import {
 } from "../../../shared/reusablecomponents/help-content.component";
 import {ConfirmationDialogComponent} from "../../../shared/reusablecomponents/confirmation-dialog.component";
 import {RepositoryService} from "../../../services/repository.service";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component ({
   selector: 'sr-aggregator',
@@ -125,7 +126,7 @@ export class SrAggregatorComponent implements OnInit {
       this.errorMessage = '';
       this.repoService.addRepository(this.repo.datasourceType, this.repo).subscribe(
         response => {
-          console.log(`addRepository responded:\n${JSON.stringify(response)}`);
+          console.log(`addRepository responded: ${response.id}, ${response.registeredBy}`);
           this.repo = response;
         },
         error => {
@@ -145,7 +146,7 @@ export class SrAggregatorComponent implements OnInit {
       let failed: boolean = false;
       for (let intrf of this.repoInterfaces) {
         if (intrf.id) {
-          this.repoService.updateInterface(this.repo.id, intrf).subscribe(
+          this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, intrf).subscribe(
             response => {
               console.log(`updateInterface responded ${JSON.stringify(response)}`);
               intrf = response;
@@ -156,7 +157,7 @@ export class SrAggregatorComponent implements OnInit {
             }
           );
         } else {
-          this.repoService.addInterface(this.repo.datasourceType, this.repo.id, intrf).subscribe (
+          this.repoService.addInterface(this.repo.datasourceType, this.repo.id, this.repo.registeredBy, intrf).subscribe (
             addedInterface => {
               console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
               intrf = addedInterface;

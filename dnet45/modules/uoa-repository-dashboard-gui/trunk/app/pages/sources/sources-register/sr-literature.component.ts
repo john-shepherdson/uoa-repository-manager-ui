@@ -23,6 +23,7 @@ import {
   HelpContentComponent
 } from "../../../shared/reusablecomponents/help-content.component";
 import {ConfirmationDialogComponent} from "../../../shared/reusablecomponents/confirmation-dialog.component";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component ({
   selector:'app-sr-literature',
@@ -215,7 +216,7 @@ export class SrLiteratureComponent implements OnInit {
       response => {
         if (response) {
           this.repo = response;
-          console.log(`updateInterface responded: ${JSON.stringify(response)}`);
+          console.log(`updateRepository responded: ${response.id}, ${response.registeredBy}`);
         }
       },
       error => {
@@ -234,7 +235,7 @@ export class SrLiteratureComponent implements OnInit {
       let failed: boolean = false;
       for (let intrf of this.repoInterfaces) {
         if (intrf.id) {
-          this.repoService.updateInterface(this.repo.id, intrf).subscribe(
+          this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, intrf).subscribe(
             response => {
               console.log(`updateInterface responded ${JSON.stringify(response)}`);
               intrf = response;
@@ -245,7 +246,7 @@ export class SrLiteratureComponent implements OnInit {
             }
           );
         } else {
-          this.repoService.addInterface(this.repo.datasourceType, this.repo.id, intrf).subscribe (
+          this.repoService.addInterface(this.repo.datasourceType, this.repo.registeredBy, this.repo.id, intrf).subscribe (
             addedInterface => {
               console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
               intrf = addedInterface;

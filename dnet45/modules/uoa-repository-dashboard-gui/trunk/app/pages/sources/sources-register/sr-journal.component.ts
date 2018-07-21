@@ -13,6 +13,7 @@ import {
 } from "../../../shared/reusablecomponents/help-content.component";
 import {RepositoryService} from "../../../services/repository.service";
 import {ConfirmationDialogComponent} from "../../../shared/reusablecomponents/confirmation-dialog.component";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component ({
   selector: 'app-sr-journal',
@@ -60,7 +61,8 @@ export class SrJournalComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private repoService: RepositoryService) {}
+    private repoService: RepositoryService,
+    private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.setQueryParam('basicInformation');
@@ -125,7 +127,7 @@ export class SrJournalComponent implements OnInit {
       this.errorMessage = '';
       this.repoService.addRepository(this.repo.datasourceType, this.repo).subscribe(
         response => {
-          console.log(`addRepository responded:\n${JSON.stringify(response)}`);
+          console.log(`addRepository responded: ${response.id}, ${response.registeredBy}`);
           this.repo = response;
         },
         error => {
@@ -145,7 +147,7 @@ export class SrJournalComponent implements OnInit {
       let failed: boolean = false;
       for (let intrf of this.repoInterfaces) {
         if (intrf.id) {
-          this.repoService.updateInterface(this.repo.id, intrf).subscribe(
+          this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, intrf).subscribe(
             response => {
               console.log(`updateInterface responded ${JSON.stringify(response)}`);
               intrf = response;
@@ -156,7 +158,7 @@ export class SrJournalComponent implements OnInit {
             }
           );
         } else {
-          this.repoService.addInterface(this.repo.datasourceType, this.repo.id, intrf).subscribe (
+          this.repoService.addInterface(this.repo.datasourceType, this.repo.id, this.repo.registeredBy, intrf).subscribe (
             addedInterface => {
               console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
               intrf = addedInterface;

@@ -70,8 +70,8 @@ export class ValidatorService {
     return this.httpClient.get<InterfaceInformation>(url,headerOptions);
   }
 
-  reSubmitJobForValidation(id: string) {
-    let url = `${this.apiUrl}reSubmitJobForValidation/${id}`;
+  reSubmitJobForValidation(id: string, userEmail: string) {
+    let url = `${this.apiUrl}reSubmitJobForValidation/${userEmail}/${id}`;
     console.log(`knocking on: ${url}`);
     const body = {};
 

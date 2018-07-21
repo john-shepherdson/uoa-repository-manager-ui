@@ -162,8 +162,8 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     }
   }
 
-  resubmitJob (id: string) {
-    this.valService.reSubmitJobForValidation(id).subscribe(
+  resubmitJob (id: string, email: string) {
+    this.valService.reSubmitJobForValidation(id, email).subscribe(
       res => this.successMessage = `The job with id ${id} was successfully resubmitted`,
       error => {
         this.failureMessage = `Could not resubmit the job with id ${id}`;

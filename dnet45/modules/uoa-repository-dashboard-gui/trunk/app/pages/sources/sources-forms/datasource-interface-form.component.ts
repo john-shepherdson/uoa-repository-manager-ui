@@ -296,7 +296,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   addInterface() {
-    this.repoService.addInterface(this.currentRepository.datasourceType, this.currentRepository.id, this.currentInterface).subscribe(
+    this.repoService.addInterface(this.currentRepository.datasourceType, this.currentRepository.id, this.currentRepository.registeredBy, this.currentInterface).subscribe(
       addedInterface => {
         console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
         this.currentInterface = addedInterface;
@@ -321,7 +321,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   updateInterface() {
-    this.repoService.updateInterface(this.currentRepository.id, this.currentInterface).subscribe(
+    this.repoService.updateInterface(this.currentRepository.id, this.currentRepository.registeredBy, this.currentInterface).subscribe(
       response => {
         console.log(`updateRepository responded ${JSON.stringify(response)}`);
         if (response) {
@@ -344,7 +344,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
 
   ngOnDestroy() {
     if (this.currentInterface && this.currentInterface.id && this.toBeDeleted) {
-      this.repoService.deleteInterface(this.currentInterface.id).subscribe(
+      this.repoService.deleteInterface(this.currentInterface.id, this.currentRepository.registeredBy).subscribe(
         response => console.log(`deleteInterface responded: ${JSON.stringify(response)}`),
         error => console.log(error),
         () => console.log(`deleted ${this.currentInterface.id}`)
