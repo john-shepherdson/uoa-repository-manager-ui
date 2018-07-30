@@ -2,9 +2,6 @@
   <div class="uk-width-1-1@m uk-first-column">
 
     <h1 class="uk-h2">Aggregation history for {{ repoName }}</h1>
-    <div *ngIf="repo">
-      <a [routerLink]="['/compatibility/monitor', repo.id]" class="uk-h3 uk-link">Go back</a>
-    </div>
 
     <!-- TOP HELP CONTENT -->
     <help-content #topHelperContent [position]="'top'"
@@ -32,8 +29,18 @@
           <div *ngIf="noAggregations">{{ noAggregations }}</div>
           <div *ngIf="aggregationsMap && years && (years.length > 0) && !noAggregations">
             <div *ngFor="let year of years" class="uk-width-1-1@m">
-              <h4>{{ year }}</h4>
-              <div class="section md-bg-blue-grey-700">
+              <div>
+                <h4>{{ year }}</h4>
+                <div *ngFor="let aggr of aggregationsMap[year]">
+                  <div class="uk-grid uk-child-width-1-4">
+                    <div><span *ngIf="aggr.date">{{ aggr.date | date : "yyyy-MM-dd" }}</span></div>
+                    <div><span *ngIf="aggr.aggregationStage">Aggregation stage: {{ aggr.aggregationStage }}</span></div>
+                    <div><span *ngIf="aggr.collectionMode">CollectionMode: {{ aggr.collectionMode }}</span></div>
+                    <div><span *ngIf="aggr.numberOfRecords">Number of records: {{ aggr.numberOfRecords }}</span></div>
+                  </div>
+                </div>
+              </div>
+              <!--<div class="section md-bg-blue-grey-700">
                 <div class="uk-container uk-container-center">
                   <div class="al_timeline">
                     <div *ngFor="let aggr of aggregationsMap[year]" class="al_timeline_block versionChange">
@@ -47,10 +54,21 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>-->
               <hr>
             </div>
           </div>
+
+          <div *ngIf="repo" class="uk-inline">
+            <div class="uk-float-right" style="z-index: 100; bottom: 30px; position: fixed; right: 30px;">
+              <button [routerLink]="['/compatibility/monitor', repo.id]"
+                      style="box-shadow: 0 1px 10px #444444"
+                      class="uk-button uk-button-primary">
+                Go back
+              </button>
+            </div>
+          </div>
+
         </div>
 
         <!-- RIGHT HELP CONTENT -->

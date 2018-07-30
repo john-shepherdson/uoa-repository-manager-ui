@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { JobResultEntry, StoredJob } from '../../domain/typeScriptClasses';
 import { MonitorService } from '../../services/monitor.service';
 import {
@@ -7,6 +7,7 @@ import {
   noUsageRulesResults
 } from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-compatibility-validation-results',
@@ -32,7 +33,9 @@ export class CompatibilityValidationResultsComponent implements OnInit {
   public checkErrors: ConfirmationDialogComponent;
 
   constructor (private route: ActivatedRoute,
-               private monitorService: MonitorService) {}
+               private router: Router,
+               private monitorService: MonitorService,
+               private authService: AuthenticationService) {}
 
   ngOnInit () {
     setTimeout(() => {
@@ -70,6 +73,9 @@ export class CompatibilityValidationResultsComponent implements OnInit {
         }
         if (!this.usageResults.length) {
           this.noUsage = noUsageRulesResults;
+        }
+        if ( this.authService.getUserEmail() !== this.jobSummary.userEmail ) {
+          this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
         }
       }
     );

@@ -12,6 +12,7 @@ import { MetricsShowComponent } from './metrics-show.component';
 import { TabsModule } from 'ngx-bootstrap';
 import {MetricsUsagestatsComponent} from "./metrics-usagestats.component";
 import { MetricsUsagestatsReportResultsComponent } from './metrics-usagestats-report-results.component';
+import {MetricsUsagestatsReportComponent} from "./metrics-usagestats-report.component";
 
 @NgModule ({
   imports: [
@@ -26,6 +27,7 @@ import { MetricsUsagestatsReportResultsComponent } from './metrics-usagestats-re
     MetricsInstructionsComponent,
     MetricsShowComponent,
     MetricsUsagestatsComponent,
+    MetricsUsagestatsReportComponent,
     MetricsUsagestatsReportResultsComponent
   ]
 })

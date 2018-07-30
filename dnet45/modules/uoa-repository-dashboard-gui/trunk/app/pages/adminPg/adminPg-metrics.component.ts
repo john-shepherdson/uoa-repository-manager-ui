@@ -35,11 +35,11 @@ export class AdminPgMetricsComponent implements OnInit {
   getPiwiks() {
     this.loadingMessage = loadingReposMessage;
     this.piwikService.getPiwikSitesForRepos()
-      .subscribe(
-        piwiks => this.piwiks = piwiks.sort( function(a,b){
-          if(a.repositoryName<b.repositoryName){
+      .subscribe (
+        piwiks => this.piwiks = piwiks.sort( function(a,b) {
+          if (a.repositoryName<b.repositoryName) {
             return -1;
-          } else if(a.repositoryName>b.repositoryName){
+          } else if (a.repositoryName>b.repositoryName) {
             return 1;
           } else {
             return 0;

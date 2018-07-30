@@ -4,8 +4,9 @@
 
 import {Component, OnInit} from '@angular/core';
 import {PiwikInfo} from '../../domain/typeScriptClasses';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { PiwikService } from '../../services/piwik.service';
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component ({
   selector: 'app-metrics-instructions',
@@ -18,8 +19,9 @@ export class MetricsInstructionsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private piwikService: PiwikService
-  ) {}
+    private router: Router,
+    private piwikService: PiwikService,
+    private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.getPiwik();
@@ -29,7 +31,12 @@ export class MetricsInstructionsComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     this.piwikService.getPiwikInfo(id).subscribe(
       piwik => this.piwik = piwik,
-      error => console.log(error)
+      error => console.log(error),
+      () => {
+        /*if ( this.authService.getUserEmail() !== this.piwik.requestorEmail ) {
+          this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
+        }*/
+      }
     );
   }
 

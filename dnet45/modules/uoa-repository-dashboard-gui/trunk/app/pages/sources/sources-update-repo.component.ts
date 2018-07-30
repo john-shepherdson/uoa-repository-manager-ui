@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatasourceInterfaceFormComponent } from './sources-forms/datasource-interface-form.component';
 import { Repository, RepositoryInterface } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   Description,
   interfaceFormDesc,
@@ -11,6 +11,7 @@ import {
 import { formInfoLoading, loadingRepoError } from '../../domain/shared-messages';
 import { DatasourceUpdateFormComponent } from './sources-forms/datasource-update-form.component';
 import {ConfirmationDialogComponent} from "../../shared/reusablecomponents/confirmation-dialog.component";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 
@@ -41,7 +42,9 @@ export class SourcesUpdateRepoComponent implements OnInit {
   constructor (
     private fb: FormBuilder,
     private repoService: RepositoryService,
-    private route: ActivatedRoute )
+    private authService: AuthenticationService,
+    private route: ActivatedRoute,
+    private router: Router)
   {}
 
 
@@ -71,6 +74,9 @@ export class SourcesUpdateRepoComponent implements OnInit {
         () => {
           this.loadingMessage = '';
           this.logoURL = this.repo.logoUrl;
+          if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
+            this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
+          }
         }
       );
     }

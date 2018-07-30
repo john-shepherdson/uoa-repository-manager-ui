@@ -12,6 +12,6 @@ export class SourcesUpdateComponent implements OnInit {
   ngOnInit() {}
 
   downloadLogo() {
-    window.open("../../../assets/imgs/3_0ValidatedLogo.png","_blank", "enabledstatus=0,toolbar=0,menubar=0,location=0");
+    window.open("../../../assets/imgs/OpenAIRE_validated_icon_medium.png","_blank", "enabledstatus=0,toolbar=0,menubar=0,location=0");
   }
 }

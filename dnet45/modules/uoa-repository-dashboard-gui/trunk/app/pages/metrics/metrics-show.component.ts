@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { MetricsInfo, PiwikInfo } from '../../domain/typeScriptClasses';
 import { PiwikService } from '../../services/piwik.service';
 import { RepositoryService } from '../../services/repository.service';
 import { loadingMetrics, loadingMetricsError } from '../../domain/shared-messages';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component ({
   selector: 'metrics-show',
@@ -26,10 +27,11 @@ export class MetricsShowComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private sanitizer: DomSanitizer,
     private piwikService: PiwikService,
-    private repoService: RepositoryService
-  ) {}
+    private repoService: RepositoryService,
+    private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.repoId = this.route.snapshot.paramMap.get('id');
@@ -51,7 +53,11 @@ export class MetricsShowComponent implements OnInit {
       () => {
         this.loadingMessage = '';
         this.errorMessage = '';
-        this.getMetrics();
+        /*if ( this.authService.getUserEmail() !== this.piwik.requestorEmail ) {
+          this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
+        } else {*/
+          this.getMetrics();
+        /*}*/
       }
     );
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AggregationDetails, Aggregations, Repository} from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import {
@@ -9,6 +9,7 @@ import {
   loadingRepoMessage,
   noAggregationHistory
 } from '../../domain/shared-messages';
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component ({
   selector: 'app-compatibility-monitor-repo',
@@ -27,7 +28,9 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
   latestAggregations: AggregationDetails[] = [];
 
   constructor(private route: ActivatedRoute,
-              private repoService: RepositoryService) {}
+              private router: Router,
+              private repoService: RepositoryService,
+              private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.readRepoId();
@@ -55,7 +58,11 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
           this.loadingMessage = '';
           if (this.repo) {
             this.repoName = this.repo.officialName;
-            this.getLatestAggregationHistory();
+            if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
+              this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
+            } else {
+              this.getLatestAggregationHistory();
+            }
           } else {
             this.errorMessage = loadingRepoError;
           }

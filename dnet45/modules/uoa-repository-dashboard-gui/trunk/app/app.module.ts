@@ -24,16 +24,19 @@ import { ValidatorService } from './services/validator.service';
 import { PiwikService } from './services/piwik.service';
 import { BrokerService } from './services/broker.service';
 import { MonitorService } from './services/monitor.service';
-import {LandingComponent} from "./pages/landing/landing.component";
-import {DashboardComponent} from "./pages/dashboard/dashboard.component";
+import { LandingComponent } from "./pages/landing/landing.component";
+import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { UsagestatsService } from './services/usagestats.service';
-import {AuthenticationInterceptor} from "./services/authentication-interceptor";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { AuthenticationInterceptor } from "./services/authentication-interceptor";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { CookieLawModule } from "./shared/reusablecomponents/cookie-law/cookie-law.module";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 
 @NgModule({
   imports: [
     BrowserModule,
+    NoopAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
@@ -47,7 +50,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
     SourcesModule,
     CompatibilityModule,
     ContentModule,
-    AdminPgModule
+    AdminPgModule,
+    CookieLawModule
   ],
   declarations: [
     AppComponent,

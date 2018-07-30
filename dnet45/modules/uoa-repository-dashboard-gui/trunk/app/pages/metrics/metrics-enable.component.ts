@@ -62,6 +62,9 @@ export class MetricsEnableComponent implements OnInit {
           this.getOAid();
         }
         this.loadingMessage = '';
+        if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
+          this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
+        }
       }
     );
   }
