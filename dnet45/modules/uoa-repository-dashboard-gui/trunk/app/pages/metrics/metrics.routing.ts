@@ -15,7 +15,7 @@ import {MetricsUsagestatsReportComponent} from "./metrics-usagestats-report.comp
 const metricsRoutes: Routes = [
     {
       path: '',
-      component: MetricsComponent,
+      component: MetricsComponent
     },
     {
       path: 'enable/:id',

@@ -1,11 +1,11 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {TabsModule} from "ngx-bootstrap";
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TabsModule } from "ngx-bootstrap";
 import { ReactiveFormsModule } from '@angular/forms';
-import {CompatibilityComponent} from "./compatibility.component";
-import {CompatibilityValidateComponent} from "./compatibility-validate.component";
-import {CompatibilityRouting} from "./compatibility.routing";
-import {CompatibilityMonitorComponent} from "./compatibility-monitor.component";
+import { CompatibilityComponent } from "./compatibility.component";
+import { CompatibilityValidateComponent } from "./compatibility-validate.component";
+import { CompatibilityRouting } from "./compatibility.routing";
+import { CompatibilityMonitorComponent } from "./compatibility-monitor.component";
 import { CompatibilityValidationHistoryComponent } from './compatibility-validation-history.component';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { CompatibilityMonitorRepoComponent } from './compatibility-monitor-repo.component';
@@ -15,7 +15,7 @@ import { CompatibilityValidateStep2Component } from './compatibility-validate-fo
 import { CompatibilityValidateStep3Component } from './compatibility-validate-forms/compatibility-validate-step3.component';
 import { CompatibilityValidationResultsComponent } from './compatibility-validation-results.component';
 import { CompatibilityValidateStep3CrisComponent } from './compatibility-validate-forms/compatibility-validate-step3-cris.component';
-import {CompatibilityMonitorFullHistoryRepoComponent} from "./compatibility-monitor-fullHistory-repo.component";
+import { CompatibilityMonitorFullHistoryRepoComponent } from "./compatibility-monitor-fullHistory-repo.component";
 
 @NgModule ({
   imports: [

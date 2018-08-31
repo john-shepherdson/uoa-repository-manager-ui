@@ -11,15 +11,6 @@ const adminRoutes: Routes = [
     component: AdminPgComponent,
     children: [
       {
-        path: '',
-        redirectTo: '/help-texts',
-        pathMatch: 'full'
-      },
-      {
-        path: 'help-texts',
-        component: AdminPgHelpTextsComponent
-      },
-      {
         path: 'metrics',
         component: AdminPgMetricsComponent
       }

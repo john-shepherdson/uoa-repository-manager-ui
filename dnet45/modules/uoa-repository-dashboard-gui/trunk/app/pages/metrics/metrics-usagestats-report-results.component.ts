@@ -11,78 +11,143 @@ import {ar1_report_results} from "../../domain/sushilite_demo_data/AR1_ex";
 })
 export class MetricsUsagestatsReportResultsComponent implements OnInit {
 
+  loadingMessage: string;
   errorMessage: string;
+  infoMessage: string;
 
-  repoResponse = ar1_report_results['ReportResponse'];
+  repoResponse: ReportResponse;
   coveredPeriod: string;
+  params: URLSearchParams;
+  page:number;
+  pageSize:number;
+  totalPages:number;
+  selectedItemIndex: number;
 
   constructor(private route: ActivatedRoute,
               private authService: AuthenticationService,
               private usageService: UsagestatsService) {}
 
   ngOnInit() {
-    //this.getReportResponse();
-    if (this.repoResponse.Report && this.repoResponse.ReportDefinition.Filters.UsageDateRange &&
-      this.repoResponse.ReportDefinition.Filters.UsageDateRange.Begin && this.repoResponse.ReportDefinition.Filters.UsageDateRange.End) {
-      this.coveredPeriod = this.repoResponse.ReportDefinition.Filters.UsageDateRange.Begin + ' to ' + this.repoResponse.ReportDefinition.Filters.UsageDateRange.End;
-    } else {
-      let defaultDatePeriod = this.repoResponse.Exception.filter(x => x['Message'] === 'Unspecified Date Arguments');
-      this.coveredPeriod = defaultDatePeriod[0].Data.split(':')[1].trim() + ' to ' + defaultDatePeriod[1].Data.split(':')[1].trim() + ' (default)';
-    }
+    this.page = 0;
+    this.pageSize = 10;
+    this.readParams();
+  }
+
+  readParams() {
+    this.params = new URLSearchParams();
+
+    this.route.queryParams.subscribe( qparams => {
+      this.params.append('Report', qparams['report']);
+      this.params.append('Release', '4');
+      this.params.append('RequestorID', this.authService.getUserEmail());
+      this.params.append('BeginDate', qparams['beginDate']);
+      this.params.append('EndDate', qparams['endDate']);
+      this.params.append('RepositoryIdentifier', qparams['repoId']);
+      this.params.append('ItemIdentifier', qparams['itemIdentifier']);
+      this.params.append('ItemDataType', qparams['itemIdentifier']);
+      this.params.append('Granularity', qparams['granularity']);
+    });
+
+    this.getReportResponse();
   }
 
   getReportResponse() {
-    let params = new URLSearchParams();
+    this.errorMessage = '';
+    this.loadingMessage = 'Loading results...';
+    this.infoMessage = '';
+    this.selectedItemIndex = null;
+    this.repoResponse = null;
 
-    this.route.queryParams.subscribe( qparams => {
-      params.append('Report', qparams['report']);
-      params.append('Release', '4');
-      params.append('RequestorID', this.authService.getUserEmail());
-      params.append('BeginDate', qparams['beginDate']);
-      params.append('EndDate', qparams['endDate']);
-      params.append('RepositoryIdentifier', qparams['repoId']);
-      if (qparams['itemIdentifier']) {
-        params.append('ItemIdentifier', qparams['itemIdentifier']);
-      }
-      if (qparams['itemDataType']) {
-        params.append('ItemDataType', qparams['itemIdentifier']);
-      }
-      params.append('Granularity', qparams['granularity']);
-      if (qparams['pretty'] && qparams['pretty']==='true') {
-        params.append('Pretty', 'Pretty');
-      }
-    });
-
-    this.usageService.getReportResponse(params).subscribe(
+    this.usageService.getReportResponse(this.page.toString(), this.pageSize.toString(), this.params).subscribe(
       responseWrapper => {
-        this.repoResponse = responseWrapper.ReportResponse
+        this.repoResponse = responseWrapper.ReportResponse;
       },
       error => {
         this.errorMessage = 'Failed to load the report results!';
+        this.loadingMessage = '';
       },
       () => {
-        if (this.repoResponse.Report && this.repoResponse.ReportDefinition.Filters.UsageDateRange &&
-          this.repoResponse.ReportDefinition.Filters.UsageDateRange.Begin && this.repoResponse.ReportDefinition.Filters.UsageDateRange.End) {
-          this.coveredPeriod = this.repoResponse.ReportDefinition.Filters.UsageDateRange.Begin + ' to ' + this.repoResponse.ReportDefinition.Filters.UsageDateRange.End;
+        this.errorMessage = '';
+        this.loadingMessage = '';
+
+        this.totalPages = Math.ceil(
+          +this.repoResponse.ReportDefinition.Filters
+                  .ReportAttribute.filter(x => x['Name'] === 'ReportItemCount')[0].Value / this.pageSize);
+        if ( this.totalPages === 0 ) {
+          this.infoMessage = 'No results were found';
+        }
+
+        if (this.repoResponse.ReportDefinition && this.repoResponse.ReportDefinition.Filters &&
+            this.repoResponse.ReportDefinition.Filters.ReportAttribute) {
+
+          if (this.repoResponse.Report && this.repoResponse.ReportDefinition.Filters.UsageDateRange &&
+            this.repoResponse.ReportDefinition.Filters.UsageDateRange.Begin &&
+            this.repoResponse.ReportDefinition.Filters.UsageDateRange.End) {
+            this.coveredPeriod = this.repoResponse.ReportDefinition.Filters.UsageDateRange.Begin + ' to ';
+            this.coveredPeriod = this.coveredPeriod + this.repoResponse.ReportDefinition.Filters.UsageDateRange.End;
+          } else {
+            let defaultDatePeriod = this.repoResponse.Exception.filter(x => x['Message'] === 'Unspecified Date Arguments');
+
+            this.coveredPeriod = defaultDatePeriod[0].Data.split(':')[1].trim() + ' to ';
+            this.coveredPeriod = this.coveredPeriod + defaultDatePeriod[1].Data.split(':')[1].trim() + ' (default)';
+          }
+
         } else {
-          let defaultDatePeriod = this.repoResponse.Exception.filter(x => x['Message'] === 'Unspecified Date Arguments');
-          this.coveredPeriod = defaultDatePeriod[0].Data.split(':')[1].trim() + ' to ' + defaultDatePeriod[1].Data.split(':')[1].trim() + ' (default)';
+          this.repoResponse = null;
         }
       }
     );
 
   }
 
-  transformItem(url: string) {
-    const temp = url.split(';');
+
+  getPageSize(num: string){
+    this.pageSize = +num;
+    this.page = 0;
+    this.getReportResponse();
+  }
+
+  goToNextPage(){
+    if( (this.page+1) < this.totalPages) {
+      this.page++;
+      console.log(`Get me page ${this.page}!`);
+      this.getReportResponse();
+    }
+  }
+
+  goToPreviousPage(){
+    if(this.page > 0) {
+      this.page--;
+      console.log(`Get me page ${this.page}!`);
+      this.getReportResponse();
+    }
+  }
+
+  displayItemPerformance(i: number) {
+    if (this.selectedItemIndex === i) {
+      this.selectedItemIndex = null;
+    } else {
+      this.selectedItemIndex = i;
+    }
+  }
+
+  transformItem(urls: string) {
+    /*const temp = urls.split(';');
     let output = '';
     for (let u of temp) {
-      if (output.length === 0) {
+      if (output.length > 0) {
         output = output + '\n';
       }
-      output = output + u.replace(/\\/g,'');
+      output = output + u.replace(/\\/g,'').trim();
+    }*/
+    return urls.split(';');
+  }
+
+  getBg(i: number) {
+    if (i % 2 === 0) {
+      console.log('true!');
+      return 'background-color:white;';
     }
-    return output;
   }
 
 }

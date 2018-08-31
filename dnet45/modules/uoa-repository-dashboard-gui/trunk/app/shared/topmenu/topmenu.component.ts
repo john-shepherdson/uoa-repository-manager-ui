@@ -17,12 +17,17 @@ export class TopMenuComponent implements OnInit {
   isUserAdmin: boolean = false;
   adminHomePage = process.env.FAQ_HOMEPAGE;
 
+  inBeta: boolean;
+
   constructor(public authService: AuthenticationService) { }
 
   ngOnInit() {
     this.getIsUserLoggedIn();
     this.getUserName();
     this.getIsUserAdmin();
+
+    const baseUrl = window.location.origin;
+    this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
   }
 
 

@@ -66,6 +66,7 @@ const myGroups = [
     AsideHelpContentComponent,
     ConfirmationDialogComponent,
     RepositoryTilesComponent,
+    ForbiddenPageComponent,
     ...myGroups
   ],
   providers: [

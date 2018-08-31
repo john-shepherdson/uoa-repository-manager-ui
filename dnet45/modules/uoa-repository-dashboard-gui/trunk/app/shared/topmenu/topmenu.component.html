@@ -119,9 +119,9 @@
                   <!--class="uk-responsive-height"-->
                   <!--src="http://dl119.madgik.di.uoa.gr/images/site_images/Home-icon.png"-->
                   <!--alt="home"></a></li>-->
-                  <li><a href="https://beta.explore.openaire.eu" title="Search in OA. Link your research">Explore</a></li>
-                  <li class="active"><a href="http://beta.provide.openaire.eu/" title="Content Provider Dashboard">Provide</a></li>
-                  <li><a href="https://beta.connect.openaire.eu" title="Research Community Dashboard">Connect</a></li>
+                  <li><a href="https://{{ inBeta ? 'beta.' : '' }}explore.openaire.eu" title="Search in OA. Link your research">Explore</a></li>
+                  <li class="active"><a href="http://{{ inBeta ? 'beta.' : '' }}provide.openaire.eu/" title="Content Provider Dashboard">Provide</a></li>
+                  <li><a href="https://{{ inBeta ? 'beta.' : '' }}connect.openaire.eu" title="Research Community Dashboard">Connect</a></li>
                   <li><a href="https://monitor.openaire.eu" title="Monitoring Dashboard">Monitor</a></li>
                   <li><a href="https://develop.openaire.eu" title="APIs">Develop</a></li>
                 </ul>

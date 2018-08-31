@@ -77,7 +77,7 @@ var defaultConfig = {
     },
     proxy: {
       '/uoa-repository-manager-service': {
-        target: 'http://koulis.athenarc.gr:8080',
+        target: 'http://aleka.athenarc.gr:8480',
         secure: false
       }
     }
@@ -122,6 +122,9 @@ module.exports = function (env) {
       }
     );
   } else {
+    /*disabling console.log in production*/
+    console.log = function () {};
+
     webpackConfig.plugins.push(
       new AotPlugin({
         tsConfigPath: 'tsconfig.json',

@@ -53,6 +53,7 @@ export class MetricsShowComponent implements OnInit {
       () => {
         this.loadingMessage = '';
         this.errorMessage = '';
+        // TODO: UNCOMMENT
         /*if ( this.authService.getUserEmail() !== this.piwik.requestorEmail ) {
           this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
         } else {*/

@@ -29,17 +29,17 @@
           <div *ngIf="noAggregations">{{ noAggregations }}</div>
           <div *ngIf="aggregationsMap && years && (years.length > 0) && !noAggregations">
             <div *ngFor="let year of years" class="uk-width-1-1@m">
-              <div>
+              <ul class="uk-list uk-list-striped">
                 <h4>{{ year }}</h4>
-                <div *ngFor="let aggr of aggregationsMap[year]">
+                <li *ngFor="let aggr of aggregationsMap[year]">
                   <div class="uk-grid uk-child-width-1-4">
                     <div><span *ngIf="aggr.date">{{ aggr.date | date : "yyyy-MM-dd" }}</span></div>
                     <div><span *ngIf="aggr.aggregationStage">Aggregation stage: {{ aggr.aggregationStage }}</span></div>
                     <div><span *ngIf="aggr.collectionMode">CollectionMode: {{ aggr.collectionMode }}</span></div>
                     <div><span *ngIf="aggr.numberOfRecords">Number of records: {{ aggr.numberOfRecords }}</span></div>
                   </div>
-                </div>
-              </div>
+                </li>
+              </ul>
               <!--<div class="section md-bg-blue-grey-700">
                 <div class="uk-container uk-container-center">
                   <div class="al_timeline">

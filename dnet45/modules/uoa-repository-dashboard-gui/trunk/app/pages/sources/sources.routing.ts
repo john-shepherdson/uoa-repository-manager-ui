@@ -24,8 +24,7 @@ const sourcesRoutes: Routes = [
         children: [
           {
             path: '',
-            component: SourcesRegisterComponent,
-            pathMatch: 'full'
+            component: SourcesRegisterComponent
           },
           {
             path: 'literature',

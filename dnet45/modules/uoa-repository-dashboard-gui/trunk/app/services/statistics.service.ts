@@ -6,13 +6,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { ReportResponseWrapper } from '../domain/usageStatsClasses';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 
-const headers = new Headers({ 'Content-Type': 'application/json' });
-const httpOptions = new RequestOptions({ headers: headers });
 const headerOptions = {
   headers : new HttpHeaders().set('Content-Type', 'application/json')
     .set('Accept', 'application/json'),
@@ -20,17 +17,17 @@ const headerOptions = {
 };
 
 @Injectable ()
-export class UsagestatsService {
-  private apiUrl = process.env.API_ENDPOINT + '/sushilite/';
+export class StatisticsService {
+  private apiUrl = process.env.API_ENDPOINT + '/stats/';
 
   constructor(private httpClient: HttpClient) { }
 
 
-  getReportResponse(page: String, pageSize: String, params: URLSearchParams): Observable<ReportResponseWrapper> {
-    let url = `${this.apiUrl}getReportResults/${page}/${pageSize}?${params}`;
+  getStatisticsNumbers(): Observable<Map<string,string>> {
+    let url = `${this.apiUrl}getStatistics`;
     console.log(`knocking on: ${url}`);
 
-    return this.httpClient.get<ReportResponseWrapper>(url, headerOptions);
+    return this.httpClient.get<Map<string,string>>(url, headerOptions);
   }
 
 

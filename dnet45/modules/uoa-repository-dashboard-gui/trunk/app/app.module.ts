@@ -31,6 +31,8 @@ import { AuthenticationInterceptor } from "./services/authentication-interceptor
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { CookieLawModule } from "./shared/reusablecomponents/cookie-law/cookie-law.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { ReusableComponentsModule } from './shared/reusablecomponents/reusable-components.module';
+import { StatisticsService } from './services/statistics.service';
 
 
 @NgModule({
@@ -43,15 +45,10 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
     HttpClientModule,
     JsonpModule,
     ModalModule.forRoot(),
-//    routing,
-    AppRouting,
     TabsModule,
-    MetricsModule,
-    SourcesModule,
-    CompatibilityModule,
-    ContentModule,
-    AdminPgModule,
-    CookieLawModule
+    ReusableComponentsModule,
+    CookieLawModule,
+    AppRouting,
   ],
   declarations: [
     AppComponent,
@@ -72,6 +69,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
     RepositoryService,
     ValidatorService,
     UsagestatsService,
+    StatisticsService,
     AuthGuardService,
     AuthenticationService
   ],

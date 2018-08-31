@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {AggregationDetails, Repository} from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import {
@@ -9,6 +9,7 @@ import {
   loadingRepoMessage,
   noAggregationHistory
 } from '../../domain/shared-messages';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component ({
   selector: 'app-compatibility-fullHistory-monitor-repo',
@@ -28,7 +29,9 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
   years: string[] = [];
 
   constructor(private route: ActivatedRoute,
-              private repoService: RepositoryService) {}
+              private router: Router,
+              private repoService: RepositoryService,
+              private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.readRepoId();
@@ -56,7 +59,11 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
           this.loadingMessage = '';
           if (this.repo) {
             this.repoName = this.repo.officialName;
-            this.getAllAggregationHistory();
+            if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
+              this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
+            } else {
+              this.getAllAggregationHistory();
+            }
           } else {
             this.errorMessage = loadingRepoError;
           }
@@ -80,6 +87,8 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
         }
         if ( this.years.length === 0 ) {
           this.noAggregations = noAggregationHistory;
+        } else {
+          this.years.sort( (a, b)  => ( a > b ? -1 : 1 ) );
         }
       }
     );

@@ -44,12 +44,16 @@ export class ContentEventsComponent implements OnInit {
         this.loadingMessage = '';
         if (!this.datasourcesOfUser || !this.datasourcesOfUser.length) {
           this.noDatasourcesMessage = loadingUserRepoInfoEmpty;
-        /*} else {
-          this.datasourcesOfUser.forEach(
-            d => {
-              console.log( d['first']['value'],' -> ',d['first']['size'] );
+        } else {
+          this.datasourcesOfUser.sort( function(a,b) {
+            if ( a['first']['value'] < b['first']['value'] ) {
+              return -1;
+            } else if (a['first']['value'] > b['first']['value']) {
+              return 1;
+            } else {
+              return 0;
             }
-          );*/
+          });
         }
       }
     );

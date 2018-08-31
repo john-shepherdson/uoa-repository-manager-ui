@@ -10,7 +10,7 @@ import {loadingRepoMessage} from "../../domain/shared-messages";
 
 @Component({
   selector: 'metrics-usagestats-report',
-  templateUrl: 'metrics-usagestats-report.component.html'
+  templateUrl: './metrics-usagestats-report.component.html'
 })
 
 export class MetricsUsagestatsReportComponent implements OnInit {
@@ -32,7 +32,6 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   itemIdentifier: string = '';
   itemDataType: string = '';
   granularity: string = 'Monthly';
-  pretty: boolean = true;
 
   constructor(private repoService: RepositoryService,
               private route: ActivatedRoute,
@@ -80,9 +79,10 @@ export class MetricsUsagestatsReportComponent implements OnInit {
           this.issnToShow = this.repo.issn.slice(0, 4)+ '-' + this.repo.issn.toString().slice(4);
         }
         this.title = `${this.chosen_report} report for ${this.repo.officialName}`;
-        if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
+        // TODO: UNCOMMENT
+        /*if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
           this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
-        }
+        }*/
       }
     );
   }
@@ -107,14 +107,8 @@ export class MetricsUsagestatsReportComponent implements OnInit {
     this.granularity = event.target.value;
   }
 
-  updatePretty(event: any) {
-    this.pretty = !this.pretty;
-  }
-
   goToReport() {
-    /* additional field: */
-    /*itemIdentifier: this.repo.piwikInfo.openaireId,*/
-    /*this.router.navigate([`/getImpact/${this.repoId}/${this.chosen_report}/results'], {
+    this.router.navigate(['/getImpact/usagestats-report-results'], {
       queryParams: {
         report: this.chosen_report,
         beginDate: this.beginDate,
@@ -122,12 +116,11 @@ export class MetricsUsagestatsReportComponent implements OnInit {
         repoId: this.shownRepoId,
         itemDataType: this.itemDataType,
         itemIdentifier: this.itemIdentifier,
-        granularity: this.granularity,
-        pretty: this.pretty
+        granularity: this.granularity
       }
-    });*/
+    });
 
-    const params = new URLSearchParams();
+    /*const params = new URLSearchParams();
 
     params.append('Report', this.chosen_report);
     params.append('Release', '4');
@@ -141,15 +134,12 @@ export class MetricsUsagestatsReportComponent implements OnInit {
     if (this.itemDataType) {
       params.append('ItemDataType', this.itemDataType);
     }
-    params.append('Granularity', this.granularity);
-    if (this.pretty && this.pretty === true) {
-      params.append('Pretty', 'Pretty');
-    }
+    params.append('Pretty', 'Pretty');
 
     let url = `http://beta.services.openaire.eu/usagestats/sushilite/GetReport/?${params}`;
     console.log(`going to: ${url}`);
 
-    window.location.href = url;
+    window.location.href = url;*/
   }
 
 }

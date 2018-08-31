@@ -108,12 +108,22 @@
           <div class="uk-margin uk-panel">
             <h3 class="el-title uk-margin uk-h3 uk-heading-bullet uk-text-primary">
               Our community    </h3>
-            <div class="el-content uk-margin uk-text-lead">800 literature repositories<br>200 OA Journals<br>50 data repositories<br>4 aggregators</div>
+            <div class="el-content uk-margin uk-text-lead">
+              {{ statisticsNumbers ? (statisticsNumbers['literature'] | number) : 'N/A' }} literature repositories<br>
+              {{ statisticsNumbers ? (statisticsNumbers['journal'] | number) : 'N/A' }} OA Journals<br>
+              {{ statisticsNumbers ? (statisticsNumbers['dataRepositories'] | number) : 'N/A' }} data repositories<br>
+              {{ statisticsNumbers ? (statisticsNumbers['aggregators'] | number) : 'N/A' }} aggregators</div>
           </div>
           <hr class="uk-divider-small uk-text-left">
           <div class="uk-margin">
-            <div>22,3 mi publications<br>6,000 datasets<br>1000 software</div>
-            <div>1,200,000 usage events (2017)<br>330,000 metadata exchange events (2017)&nbsp;&nbsp;</div></div>
+            <div>
+              {{ statisticsNumbers ? (statisticsNumbers['publications'] | number) : 'N/A' }} publications<br>
+              {{ statisticsNumbers ? (statisticsNumbers['datasets'] | number) : 'N/A' }} datasets<br>
+              {{ statisticsNumbers ? (statisticsNumbers['software'] | number) : 'N/A' }} software</div>
+            <div>
+              1,200,000 usage events (2017)<br>
+              330,000 metadata exchange events (2017)&nbsp;&nbsp;
+            </div></div>
         </div>
         <div class="uk-width-expand@m">
           <h3 class="uk-h3 uk-heading-bullet uk-text-primary">
@@ -182,7 +192,7 @@
               <h4 class="el-title uk-margin uk-h4">
                 A Researcher?    </h4>
               <div class="el-content uk-margin uk-text-lead">Explore all OA research results. Link all your research. Build your profile</div>
-              <p><a href="/www.cnn.com" class="el-link uk-button uk-button-default uk-button-small">OpenAIRE.EXPLORE</a></p>
+              <p><a href="https://{{ inBeta ? 'beta.' : '' }}explore.openaire.eu" class="el-link uk-button uk-button-default uk-button-small">OpenAIRE.EXPLORE</a></p>
             </div>
           </div>
           <div class="uk-width-expand@m uk-width-1-2@s uk-dark uk-grid-item-match">
@@ -190,7 +200,7 @@
               <h4 class="el-title uk-margin uk-h4">
                 A Research Administrator?    </h4>
               <div class="el-content uk-margin uk-text-lead">Use our monitoring services and easily track all relevant research results.</div>
-              <p><a href="/www.cnn.com" class="el-link uk-button uk-button-default uk-button-small">OpenAIRE.MONITOR</a></p>
+              <p><a href="https://monitor.openaire.eu" class="el-link uk-button uk-button-default uk-button-small">OpenAIRE.MONITOR</a></p>
             </div>
           </div>
           <div class="uk-width-expand@m uk-width-1-2@s uk-dark uk-grid-item-match">
@@ -198,7 +208,7 @@
               <h4 class="el-title uk-margin uk-h4">
                 A Research community?    </h4>
               <div class="el-content uk-margin uk-text-lead">Use a trusted partner to share, link, disseminate and monitor your research.</div>
-              <p><a href="/www.cnn.com" class="el-link uk-button uk-button-default uk-button-small">OpenAIRE.CONNECT</a></p>
+              <p><a href="https://{{ inBeta ? 'beta.' : '' }}connect.openaire.eu" class="el-link uk-button uk-button-default uk-button-small">OpenAIRE.CONNECT</a></p>
             </div>
           </div>
 
@@ -207,7 +217,7 @@
               <h4 class="el-title uk-margin uk-h4">
                 A Developer?    </h4>
               <div class="el-content uk-margin uk-text-lead">Get access to OpenAIRE data and capitalize on on Europe's open linked research</div>
-              <p><a href="/www.cnn.com" class="el-link uk-button uk-button-default uk-button-small">OpenAIRE.DEVELOP</a></p>
+              <p><a href="https://develop.openaire.eu" class="el-link uk-button uk-button-default uk-button-small">OpenAIRE.DEVELOP</a></p>
             </div>
           </div>
         </div>
