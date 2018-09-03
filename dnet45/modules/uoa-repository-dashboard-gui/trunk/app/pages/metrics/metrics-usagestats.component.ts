@@ -41,10 +41,9 @@ export class MetricsUsagestatsComponent implements OnInit {
         },
         () => {
           this.title = this.title + ' for ' + this.repo.officialName;
-          // TODO: UNCOMMENT
-          /*if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
+          if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
             this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
-          }*/
+          }
         }
       );
     }
