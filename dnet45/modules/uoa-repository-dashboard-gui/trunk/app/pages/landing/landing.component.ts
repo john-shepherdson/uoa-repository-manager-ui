@@ -12,6 +12,7 @@ export class LandingComponent implements OnInit {
 
   statisticsNumbers: Map<string,string>;
   inBeta: boolean;
+  usagestats: any;
 
   constructor(private authService: AuthenticationService,
               private statsService: StatisticsService,
@@ -33,7 +34,12 @@ export class LandingComponent implements OnInit {
     this.statsService.getStatisticsNumbers().subscribe(
       res => this.statisticsNumbers = res,
       error => console.log(error),
-      () => console.log(JSON.stringify(this.statisticsNumbers))
+      () => {
+        console.log(JSON.stringify(this.statisticsNumbers));
+        if (this.statisticsNumbers) {
+          this.usagestats = JSON.parse(this.statisticsNumbers['usagestats']);
+        }
+      }
     );
   }
 
