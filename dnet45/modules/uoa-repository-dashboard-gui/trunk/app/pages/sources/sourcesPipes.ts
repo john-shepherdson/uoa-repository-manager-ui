@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Repository } from '../../domain/typeScriptClasses';
+import { Repository, RepositorySnippet } from '../../domain/typeScriptClasses';
 
 @Pipe ({
   name: 'repoFilter'
 })
 
 export class RepoFilter implements PipeTransform {
-  transform (items: Repository[], searchTerm: string): any[] {
+  transform (items: RepositorySnippet[], searchTerm: string): any[] {
     if(!items) return [];
     if(!searchTerm) return items;
 
@@ -15,7 +15,7 @@ export class RepoFilter implements PipeTransform {
 
     return items.filter(
       repo => {
-        return repo.officialName.toLowerCase().includes(searchTerm);
+        return repo.officialname.toLowerCase().includes(searchTerm);
       }
     );
   }
