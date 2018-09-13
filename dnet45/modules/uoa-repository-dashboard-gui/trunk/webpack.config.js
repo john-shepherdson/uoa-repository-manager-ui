@@ -77,7 +77,7 @@ var defaultConfig = {
     },
     proxy: {
       '/uoa-repository-manager-service': {
-        target: 'http://koulis.athenarc.gr:8480',
+        target: 'http://aleka.athenarc.gr:8480',
         secure: false
       }
     }

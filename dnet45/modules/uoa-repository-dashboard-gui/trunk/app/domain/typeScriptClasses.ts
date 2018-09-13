@@ -79,80 +79,6 @@ export class PiwikInfo implements IsSerializable {
     comment: string;
 }
 
-/*export class Repository extends DriverResource implements IsSerializable {
-    id: string = null;
-    officialName: string = null;
-    englishName: string = '';
-    websiteUrl: string = '';
-    logoUrl: string = '';
-    contactEmail: string = '';
-    countryName: string = '';
-    countryCode: string = '';
-    organization: string = '';
-    latitude: number = 0;
-    longitude: number = 0;
-    timezone: number = 0;
-    namespacePrefix: string = '';
-    odNumberOfItems: string = '';
-    odNumberOfItemsDate: string = '';
-    odPolicies: string = '';
-    odLanguages: string = '';
-    odContentTypes: string = '';
-    collectedFrom: string = '';
-    inferred: boolean = null;
-    deletedByInference: boolean = null;
-    trust: number = 0;
-    inferenceProvenance: string = '';
-    dateOfValidation: Date = null;
-    datasourceClass: string = '';
-    provenanceActionClass: string = '';
-    dateOfCollection: Date = null;
-    typology: string = '';
-    activationId: string = '';
-    mergehomonyms: boolean = null;
-    description: string = '';
-    releaseStartDate: Date = null;
-    releaseEndDate: Date = null;
-    missionStatementUrl: string = '';
-    dataProvider: boolean = null;
-    serviceProvider: boolean = null;
-    databaseAccessType: string = '';
-    dataUploadType: string = '';
-    databaseAccessRestriction: string = '';
-    dataUploadRestriction: string = '';
-    versioning: boolean = null;
-    citationGuidelineUrl: string = '';
-    qualityManagementKind: string = '';
-    pidSystems: string = '';
-    certificates: string = '';
-    aggregator: string = '';
-    issn: string = '';
-    eissn: string = '';
-    lissn: string = '';
-    interfaces: RepositoryInterface[] = [];
-    availableDiskSpace: string = '';
-    securityParameters: string = '';
-    protocol: string = 'oai';
-    registeredBy: string = '';
-    datasourceType: string = '';
-    datasourceAggregatorId: string = '';
-    datasourceOriginalIdValue: string = '';
-    datasourceOriginalIdProvenance: string = '';
-    datasourceAggregated: boolean = false;
-    datasourceComplianceDegreeValue: string = '';
-    datasourceComplianceDegreeEncoding: string = '';
-    numberOfObjects: number = 0;
-    maxSizeOfDatastructure: number = 0;
-    maxNumberOfDataStructures: number = 0;
-    registered: boolean = null;
-    extraFields: { [index: string]: string } = {};
-    piwikInfo: PiwikInfo = null;
-    environments: string[] = [];
-    registrationDate: Date = null;
-    verified: boolean = false;
-    dataCollectionTypes: DataCollectionType[] = [];
-}*/
-
 export class Repository extends DriverResource implements IsSerializable {
   id: string;
   officialName: string;
@@ -227,6 +153,14 @@ export class Repository extends DriverResource implements IsSerializable {
   dataCollectionTypes: DataCollectionType[];
 }
 
+export class RepositorySnippet {
+  id: string;
+  officialname: string;
+  englishname: string;
+  websiteurl: string;
+  registeredby: string;
+}
+
 export class RepositoryAccessProtocol {
     value: string;
     username: string;
@@ -249,30 +183,6 @@ export class RepositoryBlackboardMessage {
 
 export class RepositoryComparator implements Comparator<Repository> {
 }
-
-/*export class RepositoryInterface implements Serializable, IsSerializable {
-    desiredCompatibilityLevel: string = '';
-    complianceName: string = null;
-    upgradeToV3: string = '';
-    deleteApi: boolean = false;
-    accessSet: string = '';
-    accessFormat: string = '';
-    metadataIdentifierPath: string = '';
-    lastCollectionDate: string = '';
-    nextScheduledExecution: string = '';
-    status: string = '';
-    collectedFrom: string = '';
-    id: string = '';
-    typology: string = '';
-    compliance: string = 'UNKNOWN';
-    contentDescription: string = '';
-    accessProtocol: string = 'oai';
-    baseUrl: string = '';
-    active: boolean = false;
-    removable: boolean = false;
-    accessParams: { [index: string]: string } = {};
-    extraFields: { [index: string]: string } = {};
-}*/
 
 export class RepositoryInterface implements Serializable, IsSerializable {
   desiredCompatibilityLevel: string;
@@ -636,8 +546,6 @@ export type ActionStatus = "DONE" | "ONGOING" | "FAILED" | "WAITING" | "ASSIGNED
 
 
 
-/*ADDITIONAL CLASSES -- added by myrto --*/
-
 export class Country {
   name: string;
   code: string;
@@ -710,45 +618,3 @@ export class UserInfo implements  IsSerializable {
   name: string;
   email: string;
 }
-
-/*
-
-
-public class ReportResponse {
-  created: string;
-  reportExceptions: ReportException[];
-  requestor: Requestor;
-  reportDefinition: ReportDefinition;
-  reportWrapper: ReportWrapper;
-}
-
-export class ReportResponseWrapper {
-  reportResponse: ReportResponse;
-}
-
-export class ReportWrapper {
-  report: Report;
-}
-
-export class Report {
-  created: string;
-  version: string;
-  name: string;
-  vendor: Vendor;
-  customer: Customer;
-
-}
-
-export class Vendor {
-  contact: Contact;
-}
-
-export class Contact {
-  contact: string;
-  email: string;
-}
-
-export class Customer {
-  id: string;
-  reportItems: ReportItem[];
-}*/

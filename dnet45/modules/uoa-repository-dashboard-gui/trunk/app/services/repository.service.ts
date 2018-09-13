@@ -8,7 +8,16 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import { AggregationDetails, Country, MetricsInfo, Repository, RepositoryInterface, Timezone, Typology } from '../domain/typeScriptClasses';
+import {
+  AggregationDetails,
+  Country,
+  MetricsInfo,
+  Repository,
+  RepositoryInterface,
+  RepositorySnippet,
+  Timezone,
+  Typology
+} from '../domain/typeScriptClasses';
 import { timezones } from '../domain/timezones';
 import { typologies } from '../domain/typologies';
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
@@ -67,7 +76,7 @@ export class RepositoryService {
     return this.httpClient.post<Repository>(url,repoInfo,headerOptions);
   }
 
-  getRepositoriesOfCountry(country: string, mode: string): Observable<Repository[]> {
+  getRepositoriesOfCountry(country: string, mode: string): Observable<RepositorySnippet[]> {
     let url = `${this.apiUrl}getRepositoriesByCountry/${country}/${mode}`;
     console.log(`knocking on: ${url}`);
     return this.httpClient.get(url, headerOptions);

@@ -5,7 +5,7 @@ import {
   noRepositoriesFound,
   noRepositoryChosenMsg,
   noServiceMessage } from '../../../domain/shared-messages';
-import { Country, Repository } from '../../../domain/typeScriptClasses';
+import { Country, Repository, RepositorySnippet } from '../../../domain/typeScriptClasses';
 
 @Component({
   selector: 'register-datasource-shareable',
@@ -16,7 +16,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   countries: Country[] = [];
   hasSelectedCountry: boolean;
   selectedCountry: string;
-  countryRepos: Repository[] = [];
+  countryRepos: RepositorySnippet[] = [];
   hasSelectedRepo: boolean;
 
   noRepositories: string;
@@ -112,7 +112,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   }
 
   getLatestUpdate() {
-    return this.repoService.getListLatestUpdate(this.mode).subscribe(
+    return this.repoService.getListLatestUpdate(this.mode).subscribe (
       responseDate => this.latestUpdate = responseDate['lastCollectionDate'],
       error => console.log(error)
     );

@@ -19,7 +19,7 @@
                   <label class="control-label">Select repository's country</label>
                   <select class="form-control" (change) ="getReposInCountry($event.target.value)">
                     <option value="" disabled>-- none selected --</option>
-                    <option *ngFor="let country of countries" value="{{ country.name }}">{{ country.name }}</option>
+                    <option *ngFor="let country of countries" value="{{ country.code }}">{{ country.name }}</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -45,11 +45,11 @@
                     <label for="{{ repo.id }}"
                            class="uk-button uk-link-muted visible_uk_links"
                            style="display: block; text-align: left;">
-                      <input type="radio" value="{{ repo.id }}" id="{{ repo.id }}" name="repositories" (change)="onChooseRepository(repo.id)" [disabled]="repo.registered">
+                      <input type="radio" value="{{ repo.id }}" id="{{ repo.id }}" name="repositories" (change)="onChooseRepository(repo.id)" [disabled]="repo.registeredby !== 'null'">
                       <span>
-                        {{ repo.officialName }}
-                        <span *ngIf="repo.registered" class="uk-label uk-label-warning registeredLabel">Registered</span>
-                        <a target="_blank" href="{{repo.websiteUrl }}" [ngStyle]="">
+                        {{(repo.officialname !== 'null') ? repo.officialname : repo.englishname }}
+                        <span *ngIf="repo.registeredby !== 'null'" class="uk-label uk-label-warning registeredLabel">Registered</span>
+                        <a target="_blank" href="{{ (repo.websiteurl !== 'null') ? repo.websiteurl : '' }}" [ngStyle]="">
                           <i class="fa fa-external-link externalLink"></i>
                         </a>
                       </span>
