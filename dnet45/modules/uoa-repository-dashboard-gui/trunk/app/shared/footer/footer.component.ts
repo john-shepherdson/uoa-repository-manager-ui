@@ -1,7 +1,7 @@
 /**
  * Created by stefania on 1/19/17.
  */
-import {Component} from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'footer',
@@ -9,6 +9,14 @@ import {Component} from "@angular/core";
   styleUrls: ['./footer.component.css'],
 })
 
-export class FooterComponent {
+export class FooterComponent implements OnInit {
+  inBeta: boolean;
+
+  constructor() {}
+
+  ngOnInit() {
+    const baseUrl = window.location.origin;
+    this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
+  }
 
 }

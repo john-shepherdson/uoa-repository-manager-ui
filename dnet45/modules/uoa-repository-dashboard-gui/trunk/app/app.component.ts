@@ -13,6 +13,10 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent implements OnInit {
 
   constructor(private router: Router,private authService: AuthenticationService) {
+    /*disabling console.log in production*/
+    if ( process.env.PRODUCTION === true ) {
+      console.log = function () {};
+    }
 
     // URL of the SPA to redirect the user to after login
     this.authService.redirectUrl = "/dashboard";

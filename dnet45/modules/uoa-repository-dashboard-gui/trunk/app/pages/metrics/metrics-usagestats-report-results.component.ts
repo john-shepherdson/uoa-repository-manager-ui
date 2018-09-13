@@ -4,10 +4,12 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { UsagestatsService } from '../../services/usagestats.service';
 import { ReportResponse } from '../../domain/usageStatsClasses';
 import {ar1_report_results} from "../../domain/sushilite_demo_data/AR1_ex";
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'metrics-usagestats-report-results',
-  templateUrl: 'metrics-usagestats-report-results.component.html'
+  templateUrl: 'metrics-usagestats-report-results.component.html',
+  styleUrls:['metrics-usagestats-report-results.component.css']
 })
 export class MetricsUsagestatsReportResultsComponent implements OnInit {
 
@@ -23,14 +25,18 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
   totalPages:number;
   selectedItemIndex: number;
 
+  pageSizeSelect: FormGroup;
+
   constructor(private route: ActivatedRoute,
               private authService: AuthenticationService,
-              private usageService: UsagestatsService) {}
+              private usageService: UsagestatsService,
+              private fb: FormBuilder) {}
 
   ngOnInit() {
     this.page = 0;
     this.pageSize = 10;
     this.readParams();
+    this.pageSizeSelect = this.fb.group({selectPageSize: ['']});
   }
 
   readParams() {
@@ -70,6 +76,9 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
         this.errorMessage = '';
         this.loadingMessage = '';
 
+        this.pageSizeSelect.get('selectPageSize').setValue(this.pageSize);
+        this.pageSizeSelect.get('selectPageSize').updateValueAndValidity();
+
         this.totalPages = Math.ceil(
           +this.repoResponse.ReportDefinition.Filters
                   .ReportAttribute.filter(x => x['Name'] === 'ReportItemCount')[0].Value / this.pageSize);
@@ -101,8 +110,8 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
   }
 
 
-  getPageSize(num: string){
-    this.pageSize = +num;
+  getPageSize(){
+    this.pageSize = +(this.pageSizeSelect.get('selectPageSize').value);
     this.page = 0;
     this.getReportResponse();
   }

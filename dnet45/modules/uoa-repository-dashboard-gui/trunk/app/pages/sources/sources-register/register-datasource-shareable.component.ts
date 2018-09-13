@@ -59,8 +59,8 @@ export class RegisterDatasourceShareableComponent implements OnInit {
   getCountries(){
     this.repoService.getCountries()
       .subscribe(
-        countries => this.countries = countries.sort( function(a,b){
-          if(a.name<b.name){
+        countries => this.countries = countries.sort( function(a,b) {
+          if (a.name<b.name) {
             return -1;
           } else if(a.name>b.name){
             return 1;

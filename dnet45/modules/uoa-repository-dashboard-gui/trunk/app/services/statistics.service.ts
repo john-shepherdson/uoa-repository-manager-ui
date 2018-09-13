@@ -11,8 +11,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 
 const headerOptions = {
-  headers : new HttpHeaders().set('Content-Type', 'application/json')
-    .set('Accept', 'application/json'),
+  headers : new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json'),
   withCredentials: true
 };
 

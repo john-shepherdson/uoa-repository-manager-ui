@@ -13,13 +13,15 @@ import { TabsModule } from 'ngx-bootstrap';
 import {MetricsUsagestatsComponent} from "./metrics-usagestats.component";
 import { MetricsUsagestatsReportResultsComponent } from './metrics-usagestats-report-results.component';
 import {MetricsUsagestatsReportComponent} from "./metrics-usagestats-report.component";
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule ({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
     MetricsRouting,
-    ReusableComponentsModule
+    ReusableComponentsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     MetricsComponent,

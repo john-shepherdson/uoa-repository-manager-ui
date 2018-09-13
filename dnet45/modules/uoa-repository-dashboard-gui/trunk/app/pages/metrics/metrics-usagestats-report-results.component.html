@@ -70,8 +70,8 @@
                   <div>
                     <div class="show-options uk-inline" style="float: right;">
                       <div class="filterLabel" style="display: inline;">Results per page:</div>
-                      <div class="inlineBlock">
-                        <select #itemsPerPage class="form-control" (change)="getPageSize(itemsPerPage.value)">
+                      <div [formGroup]="pageSizeSelect" class="inlineBlock">
+                        <select class="form-control" formControlName="selectPageSize" (change)="getPageSize()">
                           <option value="10" selected>10</option>
                           <option value="25">25</option>
                           <option value="50">50</option>
@@ -121,17 +121,9 @@
                                 <th>Publisher</th>
                                 <th>Type</th>
                                 <th colspan="2">Downloads/Views</th>
-                                <!--<th *ngIf="repoResponse.ReportDefinition.Filters.ReportAttribute[0].Value === 'Totals'">
-                                  Total Downloads
-                                </th>
-                                <th *ngIf="repoResponse.ReportDefinition.Filters.ReportAttribute[0].Value === 'Totals'">
-                                  Total Views
-                                </th>-->
                               </tr>
                             </thead>
                             <td colspan="6" *ngIf="infoMessage" class="uk-alert">{{ infoMessage }}</td>
-                            <!--<tbody *ngFor="let item of repoResponse.Report.Report.Customer.ReportItems; let item_i = index"
-                                   style="{{ (item_i % 2) > 0 ? 'background-color:white; border-bottom: 1px solid gray;': 'border-bottom: 1px solid gray;'">-->
                             <tbody *ngFor="let item of repoResponse.Report.Report.Customer.ReportItems; let item_i = index"
                                    style="border-bottom: 1px solid whitesmoke;">
                               <tr>
@@ -146,7 +138,7 @@
                                 <td class="uk-text-center"
                                     *ngIf="repoResponse.ReportDefinition.Filters.ReportAttribute[0].Value === 'Monthly'" colspan="2">
                                   <a *ngIf="item.ItemPerformance && (item.ItemPerformance.length > 0)"
-                                     (click)="displayItemPerformance(item_i)">See results</a>
+                                     (click)="displayItemPerformance(item_i)">{{ (selectedItemIndex === item_i) ? 'Hide' : 'See' }} results</a>
                                 </td>
                                 <td class="uk-text-center"
                                     *ngIf="repoResponse.ReportDefinition.Filters.ReportAttribute[0].Value === 'Totals'">
@@ -160,17 +152,7 @@
                               <tr *ngIf="(selectedItemIndex === item_i)">
                                 <td colspan="6">
                                   <div class="uk-animation-slide-top-medium uk-margin-small-top">
-                                    <!--<div class="uk-child-width-expand uk-grid" uk-grid>
-                                      <div class="uk-h5">Month</div>
-                                      <div class="uk-h5">Downloads</div>
-                                      <div class="uk-h5">Views</div>
-                                    </div>
-                                    <div *ngFor="let month of item.ItemPerformance" class="uk-child-width-expand uk-grid" uk-grid>
-                                      <div>{{ month.Period.Begin | date: "MMM yyyy" }}</div>
-                                      <div>{{ month.Instance[0].Count }}</div>
-                                      <div>{{ month.Instance[1].Count }}</div>
-                                    </div>-->
-                                    <table class="uk-table uk-table-middle uk-table-striped">
+                                    <table class="uk-table uk-table-middle uk-table-striped innerTable">
                                       <tr>
                                         <th>Month</th>
                                         <th>Downloads</th>
