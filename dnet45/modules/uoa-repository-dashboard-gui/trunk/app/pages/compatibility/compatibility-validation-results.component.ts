@@ -74,7 +74,7 @@ export class CompatibilityValidationResultsComponent implements OnInit {
         if (!this.usageResults.length) {
           this.noUsage = noUsageRulesResults;
         }
-        if ( this.authService.getUserEmail() !== this.jobSummary.userEmail ) {
+        if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.jobSummary.userEmail) ) {
           this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
         }
       }

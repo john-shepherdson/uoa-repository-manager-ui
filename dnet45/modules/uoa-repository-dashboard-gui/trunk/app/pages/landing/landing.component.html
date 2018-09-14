@@ -109,21 +109,21 @@
             <h3 class="el-title uk-margin uk-h3 uk-heading-bullet uk-text-primary">
               Our community    </h3>
             <div class="el-content uk-margin uk-text-lead">
-              {{ statisticsNumbers ? (statisticsNumbers['literature'] | number) : 'N/A' }} literature repositories<br>
-              {{ statisticsNumbers ? (statisticsNumbers['journal'] | number) : 'N/A' }} OA Journals<br>
-              {{ statisticsNumbers ? (statisticsNumbers['dataRepositories'] | number) : 'N/A' }} data repositories<br>
-              {{ statisticsNumbers ? (statisticsNumbers['aggregators'] | number) : 'N/A' }} aggregators</div>
+              {{ statisticsNumbers ? (statisticsNumbers.literature | number) : 'N/A' }} literature repositories<br>
+              {{ statisticsNumbers ? (statisticsNumbers.journal | number) : 'N/A' }} OA Journals<br>
+              {{ statisticsNumbers ? (statisticsNumbers.dataRepositories | number) : 'N/A' }} data repositories<br>
+              {{ statisticsNumbers ? (statisticsNumbers.aggregators | number) : 'N/A' }} aggregators</div>
           </div>
           <hr class="uk-divider-small uk-text-left">
           <div class="uk-margin">
             <div>
-              {{ statisticsNumbers ? (statisticsNumbers['publications'] | number) : 'N/A' }} publications<br>
-              {{ statisticsNumbers ? (statisticsNumbers['datasets'] | number) : 'N/A' }} datasets<br>
-              {{ statisticsNumbers ? (statisticsNumbers['software'] | number) : 'N/A' }} software</div>
+              {{ statisticsNumbers ? (statisticsNumbers.publications | number) : 'N/A' }} publications<br>
+              {{ statisticsNumbers ? (statisticsNumbers.datasets | number) : 'N/A' }} datasets<br>
+              {{ statisticsNumbers ? (statisticsNumbers.software | number) : 'N/A' }} software</div>
             <div>
-              {{ usagestats ? (usagestats['number'] | number) : 'N/A' }} usage events&nbsp;
-              ({{ usagestats ? usagestats['year'] : 'N/A' }})<br>
-              330,000 metadata exchange events
+              {{ statisticsNumbers ? (statisticsNumbers.lastYearUsagestats.number | number) : 'N/A' }} usage events&nbsp;
+              ({{ statisticsNumbers ? statisticsNumbers.lastYearUsagestats.year : 'N/A' }})<br>
+              {{ statisticsNumbers ? statisticsNumbers.usagestats : 'N/A' }} metadata exchange events
             </div></div>
         </div>
         <!--<div class="uk-width-expand@m">

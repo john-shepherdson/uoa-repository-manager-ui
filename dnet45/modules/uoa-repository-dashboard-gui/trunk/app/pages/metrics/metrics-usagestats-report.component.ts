@@ -79,7 +79,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
           this.issnToShow = this.repo.issn.slice(0, 4)+ '-' + this.repo.issn.toString().slice(4);
         }
         this.title = `${this.chosen_report} report for ${this.repo.officialName}`;
-        if ( this.authService.getUserEmail() !== this.repo.registeredBy ) {
+        if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.repo.registeredBy) ) {
           this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
         }
       }

@@ -56,18 +56,26 @@ export class RegisterDatasourceShareableComponent implements OnInit {
     this.getLatestUpdate();
   }
 
-  getCountries(){
+  getCountries() {
     this.repoService.getCountries()
       .subscribe(
-        countries => this.countries = countries.sort( function(a,b) {
-          if (a.name<b.name) {
-            return -1;
-          } else if(a.name>b.name){
-            return 1;
-          } else {
-            return 0;
-          }
-        } ),
+        countries => {
+          /* check for null values */
+          let i = countries.findIndex(el => el.name === null);
+          /* remove null values from array */
+          if (i !== -1) { countries.splice(i, 1); }
+
+          /* sort countries array */
+          this.countries = countries.sort( function(a,b) {
+            if (a.name<b.name) {
+              return -1;
+            } else if(a.name>b.name){
+              return 1;
+            } else {
+              return 0;
+            }
+          } );
+        },
         error => {
           this.alertMessage = noServiceMessage;
           console.log(error);

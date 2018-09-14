@@ -19,6 +19,7 @@ export class AuthenticationService {
 
   private _storage: Storage = sessionStorage;
 
+  public activateFrontAuthorization: boolean = process.env.PRODUCTION;
 
   isLoggedIn: boolean = false;
 

@@ -618,3 +618,15 @@ export class UserInfo implements  IsSerializable {
   name: string;
   email: string;
 }
+
+export class UsageStatsSummary implements IsSerializable {
+  literature: string;
+  aggregators: string;
+  journal: string;
+  software: string;
+  lastYearUsagestats: { number: string; year: string; };
+  usagestats: string;
+  dataRepositories: string;
+  datasets: string;
+  publications: string;
+}

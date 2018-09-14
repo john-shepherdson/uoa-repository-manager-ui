@@ -2,6 +2,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import { StatisticsService } from '../../services/statistics.service';
+import { UsageStatsSummary } from '../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'landing',
@@ -10,9 +11,9 @@ import { StatisticsService } from '../../services/statistics.service';
 
 export class LandingComponent implements OnInit {
 
-  statisticsNumbers: Map<string,string>;
+  statisticsNumbers: UsageStatsSummary;
   inBeta: boolean;
-  usagestats: any;
+
 
   constructor(private authService: AuthenticationService,
               private statsService: StatisticsService,
@@ -32,22 +33,15 @@ export class LandingComponent implements OnInit {
 
   getStatisticsNumbers() {
     this.statsService.getStatisticsNumbers().subscribe(
-      res => this.statisticsNumbers = res,
+      res => {
+        this.statisticsNumbers = res;
+        this.statisticsNumbers.lastYearUsagestats = JSON.parse(res['lastYearUsagestats'].toString());
+      },
       error => console.log(error),
       () => {
-        console.log(JSON.stringify(this.statisticsNumbers));
-        if (this.statisticsNumbers) {
-          this.usagestats = JSON.parse(this.statisticsNumbers['usagestats']);
-        }
+        console.log('statisticsNumbers is', JSON.stringify(this.statisticsNumbers));
       }
     );
   }
 
-  onStartHerePush() {
-    this.router.navigate(['/dashboard']);
-  }
-
-  getIsUserLoggedIn() {
-    return this.authService.getIsUserLoggedIn();
-  }
 }

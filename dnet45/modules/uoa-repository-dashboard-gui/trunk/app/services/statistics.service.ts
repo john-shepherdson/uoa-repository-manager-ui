@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { ReportResponseWrapper } from '../domain/usageStatsClasses';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { UsageStatsSummary } from '../domain/typeScriptClasses';
 
 
 const headerOptions = {
@@ -22,11 +23,11 @@ export class StatisticsService {
   constructor(private httpClient: HttpClient) { }
 
 
-  getStatisticsNumbers(): Observable<Map<string,string>> {
+  getStatisticsNumbers(): Observable<UsageStatsSummary> {
     let url = `${this.apiUrl}getStatistics`;
     console.log(`knocking on: ${url}`);
 
-    return this.httpClient.get<Map<string,string>>(url, headerOptions);
+    return this.httpClient.get<UsageStatsSummary>(url, headerOptions);
   }
 
 

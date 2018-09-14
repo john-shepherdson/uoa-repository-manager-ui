@@ -283,47 +283,80 @@
       </div>
 
       <div class="uk-width-expand@m uk-light">
-        <div>
-          <ul class="uk-subnav uk-margin-remove-bottom uk-subnav-divider" uk-margin="">
-            <li class="el-item uk-first-column">
-              <a class="el-link" href="https://{{ inBeta ? 'beta.' : '' }}openaire.eu/project-factsheets">About</a>
-            </li>
-            <!--<li class="el-item">
-              <a class="el-content uk-disabled">Services</a>
-            </li>-->
-            <li class="el-item">
-              <a class="el-link" href="https://{{ inBeta ? 'beta.' : '' }}openaire.eu/news-events">News - Events</a>
-            </li>
-            <li class="el-item">
-              <a class="el-content uk-disabled" href="https://blogs.openaire.eu/">Blog</a>
-            </li>
-            <li class="el-item">
-              <a class="el-content uk-disabled" href="https://{{ inBeta ? 'beta.' : '' }}.openaire.eu/contact-us">Contact us</a>
-            </li>
+        <div class="uk-text-right">
+          <ul class="uk-subnav uk-margin-remove-bottom uk-subnav-divider uk-flex-right" uk-margin="">
+            <li class="el-item uk-first-column"><a class="el-link" href="https://{{ inBeta ? 'beta.' : '' }}openaire.eu/about" target="_blank">About</a></li>
+            <li class="el-item"><a class="el-link" href="http://catalogue.openaire.eu" target="_blank">Services</a></li>
+            <li class="el-item"><a class="el-link" href="https://{{ inBeta ? 'beta.' : '' }}openaire.eu/support" target="_blank">Support</a></li>
+            <li class="el-item"><a class="el-link" href="https://{{ inBeta ? 'beta.' : '' }}openaire.eu/news" target="_blank">News</a></li>
+            <li class="el-item"><a class="el-link" href="https://{{ inBeta ? 'beta.' : '' }}openaire.eu/events" target="_blank">Events</a></li>
+            <li class="el-item"><a class="el-link" href="https://{{ inBeta ? 'beta.' : '' }}openaire.eu/documents" target="_blank">Documents</a></li>
           </ul>
         </div>
+        <div class="uk-margin uk-width-small uk-margin-auto-left uk-text-right uk-panel">
+          <div class="uk-child-width-expand uk-grid-collapse uk-grid" uk-grid="">
+            <div class="uk-width-auto uk-first-column">
+              <span uk-icon="icon: phone;ratio: 1" class="el-image uk-icon"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" d="M15.5,17 C15.5,17.8 14.8,18.5 14,18.5 L7,18.5 C6.2,18.5 5.5,17.8 5.5,17 L5.5,3 C5.5,2.2 6.2,1.5 7,1.5 L14,1.5 C14.8,1.5 15.5,2.2 15.5,3 L15.5,17 L15.5,17 L15.5,17 Z"></path> <circle cx="10.5" cy="16.5" r="0.8"></circle></svg></span>            </div>
+            <div>
+              <p>
+                <a href="https://{{ inBeta ? 'beta.' : '' }}openaire.eu/support/159-static-content/general-information/contact-pages/925-contact-us"
+                   target="_blank" class="el-link uk-button uk-button-text">
+
+                  Contact us
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
+
     </div>
   </div>
 </div>
 
 <div class="uk-section-primary uk-section uk-section-xsmall uk-padding-remove-bottom">
+
   <div class="uk-container">
+
     <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
       <div class="uk-width-1-1@m uk-first-column">
         <div class="uk-margin-medium uk-margin-remove-bottom uk-text-center">
           <img src="http://dl119.madgik.di.uoa.gr/images/Logos/Logo_Horizontal_white_small.png" class="el-image" alt="OpenAIRE">
         </div>
-        <div class="footer-license uk-margin uk-margin-remove-bottom uk-text-center uk-text-lead">
-          <div><a href="http://creativecommons.org/licenses/by/4.0/" rel="license"><img src="https://i.creativecommons.org/l/by/3.0/80x15.png" alt="Creative" style="height: auto; max-width: 100%; vertical-align: middle;"></a>&nbsp;UNLESS OTHERWISE INDICATED, ALL MATERIALS CREATED BY THE OPENAIRE CONSORTIUM ARE LICENSED UNDER A&nbsp;<a href="http://creativecommons.org/licenses/by/4.0/" rel="license">CREATIVE COMMONS ATTRIBUTION 4.0 INTERNATIONAL LICENSE</a>.</div>
-          <!--<div>OPENAIRE IS POWERED BY&nbsp;<a href="http://www.d-net.research-infrastructures.eu/">D-NET</a>.</div></div>-->
-        <div class="uk-margin uk-margin-remove-bottom uk-text-center">
-          <img src="http://dl119.madgik.di.uoa.gr/templates/yootheme/cache/ec_logo_inv_small-4aa7cf58.png" srcset="http://dl119.madgik.di.uoa.gr/templates/yootheme/cache/ec_logo_inv_small-e4d7de03.png 91w,http://dl119.madgik.di.uoa.gr/templates/yootheme/cache/ec_logo_inv_small-4aa7cf58.png 114w" sizes="(min-width: 114px) 114px, 100vw" class="el-image" alt="European Commission" width="114">
+      </div>
+    </div>
+
+    <div class="uk-grid-large uk-flex-middle uk-margin-small uk-grid" uk-grid="">
+      <div class="uk-width-small@m uk-first-column uk-margin uk-margin-remove-bottom uk-text-center">
+        <div class="uk-width-small@m uk-first-column uk-margin-small-bottom">
+          <img class="el-image"
+               src="http://dl119.madgik.di.uoa.gr/templates/yootheme/cache/ec_logo_inv_small-4aa7cf58.png"
+               srcset="http://dl119.madgik.di.uoa.gr/templates/yootheme/cache/ec_logo_inv_small-e4d7de03.png 91w,http://dl119.madgik.di.uoa.gr/templates/yootheme/cache/ec_logo_inv_small-4aa7cf58.png 114w"
+               sizes="(min-width: 114px) 114px, 100vw" class="el-image" alt="European Commission" width="114">
         </div>
-        <div class="uk-margin uk-margin-remove-top uk-margin-remove-bottom uk-text-right">
-          <a href="#" uk-totop="" uk-scroll="" class="uk-totop uk-icon"><svg width="15" height="20" viewBox="0 0 15 20" xmlns="http://www.w3.org/2000/svg" ratio="1"> <polyline fill="none" stroke="#0000" stroke-width="1.1" points="1,8 7.5,1.5 14,8 "></polyline> <rect fill="000" x="7" y="2" width="1" height="20"></rect></svg></a>
+      </div>
+      <div class="uk-width-expand@m">
+        <div class="footer-license uk-margin uk-margin-remove-bottom uk-text-center uk-text-lead">
+          <a href="http://creativecommons.org/licenses/by/4.0/" rel="license">
+            <img src="https://i.creativecommons.org/l/by/3.0/80x15.png" alt="Creative" style="height: auto; max-width: 100%; vertical-align: middle;"></a>
+          UNLESS OTHERWISE INDICATED, ALL MATERIALS CREATED BY THE OpenAIRE CONSORTIUM ARE LICENCED UNDER
+          <a href="http://creativecommons.org/licenses/by/4.0/" rel="license">CC ATTRIBUTION 4.0 INTERNATIONAL LICENSE</a>.
+          <!--<div>OPENAIRE IS POWERED BY&nbsp;<a href="http://www.d-net.research-infrastructures.eu/">D-NET</a>.</div>-->
+        </div>
+      </div>
+      <div class="uk-width-small@m">
+        <div class="uk-margin uk-margin-remove-top uk-margin-small-bottom uk-text-right">
+          <a href="#" uk-scroll="" class="uk-totop uk-icon">
+            <svg width="15" height="20" viewBox="0 0 15 20" xmlns="http://www.w3.org/2000/svg">
+              <polyline fill="none" stroke="#0000" stroke-width="1.1" points="1,8 7.5,1.5 14,8"></polyline>
+              <rect fill="000" x="7" y="2" width="1" height="20"></rect>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
+
   </div>
+
 </div>
