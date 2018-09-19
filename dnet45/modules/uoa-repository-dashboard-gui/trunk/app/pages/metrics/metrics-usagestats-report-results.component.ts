@@ -151,7 +151,13 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
       }
       output = output + u.replace(/\\/g,'').trim();
     }*/
-    const i = itemIdentifiers.findIndex(x => x['Type'] === 'URL');
+    let field: string;
+    if (this.chosenReport === 'RR1') {
+      field = 'URL';
+    } else {
+      field = 'URLs';
+    }
+    const i = itemIdentifiers.findIndex(x => x['Type'] === field);
     if ( i > -1 ){
       const urls = itemIdentifiers[i]['Value'];
       return urls.split(';');

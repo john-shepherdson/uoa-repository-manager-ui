@@ -131,7 +131,7 @@
                                 <td *ngIf="chosenReport !== 'RR1'">{{ item.ItemName }}</td>
                                 <td *ngIf="chosenReport !== 'RR1'">{{ item.ItemPublisher }}</td>
                                 <td *ngIf="chosenReport === 'RR1'">{{ item.ItemPlatform }}</td>
-                                <td>
+                                <td style="min-width: 300px;">
                                   <span *ngFor="let url of transformItem(item.ItemIdentifier); let i = index">
                                     <br *ngIf="i>0">{{ url }}
                                   </span>
