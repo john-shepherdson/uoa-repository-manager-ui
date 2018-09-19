@@ -23,6 +23,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   repoId: string;
   shownRepoId: string;
   shownOpenaireId: string;
+  useCurrentRepo: boolean;
   issnToShow: string = '';
   chosen_report: string;
 
@@ -50,6 +51,9 @@ export class MetricsUsagestatsReportComponent implements OnInit {
     this.shownRepoId = this.convertToDisplayedFormat(this.repoId);
     console.log(`shownRepoId is ${this.repoId}`);
     this.title = `${this.chosen_report} report`;
+    if (this.chosen_report !== 'RR1') {
+      this.useCurrentRepo = true;
+    }
   }
 
   convertToDisplayedFormat(input: string) {
@@ -75,8 +79,8 @@ export class MetricsUsagestatsReportComponent implements OnInit {
         if (this.repo.piwikInfo) {
           this.shownOpenaireId = this.convertToDisplayedFormat(this.repo.piwikInfo.openaireId);
         }
-        if (this.repo.issn){
-          this.issnToShow = this.repo.issn.slice(0, 4)+ '-' + this.repo.issn.toString().slice(4);
+        if (this.repo.issn && this.repo.issn !== 'null'){
+          this.shownRepoId = this.repo.issn.slice(0, 4)+ '-' + this.repo.issn.toString().slice(4);
         }
         this.title = `${this.chosen_report} report for ${this.repo.officialName}`;
         if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.repo.registeredBy) ) {
@@ -106,7 +110,12 @@ export class MetricsUsagestatsReportComponent implements OnInit {
     this.granularity = event.target.value;
   }
 
+  updateUseCurrentRepo(event: any) {
+    this.useCurrentRepo = event.target.value;
+  }
+
   goToReport() {
+    if (!this.useCurrentRepo) { this.shownRepoId = ''; }
     this.router.navigate(['/getImpact/usagestats-report-results'], {
       queryParams: {
         report: this.chosen_report,

@@ -26,6 +26,7 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
   selectedItemIndex: number;
 
   pageSizeSelect: FormGroup;
+  chosenReport: string;
 
   constructor(private route: ActivatedRoute,
               private authService: AuthenticationService,
@@ -54,6 +55,7 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
       this.params.append('Granularity', qparams['granularity']);
     });
 
+    this.chosenReport = this.params.get('Report');
     this.getReportResponse();
   }
 
@@ -140,7 +142,7 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
     }
   }
 
-  transformItem(urls: string) {
+  transformItem(itemIdentifiers: any[]) {
     /*const temp = urls.split(';');
     let output = '';
     for (let u of temp) {
@@ -149,7 +151,12 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
       }
       output = output + u.replace(/\\/g,'').trim();
     }*/
-    return urls.split(';');
+    const i = itemIdentifiers.findIndex(x => x['Type'] === 'URL');
+    if ( i > -1 ){
+      const urls = itemIdentifiers[i]['Value'];
+      return urls.split(';');
+    }
+    return '';
   }
 
   getBg(i: number) {

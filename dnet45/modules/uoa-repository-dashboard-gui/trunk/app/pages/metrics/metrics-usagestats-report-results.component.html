@@ -116,9 +116,10 @@
                           <table class="uk-table uk-table-middle uk-table-striped" style="vertical-align: top !important;">
                             <thead>
                               <tr>
-                                <th>Item Urls</th>
-                                <th>Title</th>
-                                <th>Publisher</th>
+                                <th *ngIf="chosenReport !== 'RR1'">Title</th>
+                                <th *ngIf="chosenReport !== 'RR1'">Publisher</th>
+                                <th *ngIf="chosenReport === 'RR1'">Platform name</th>
+                                <th>{{ (chosenReport !== 'RR1') ? 'Item Urls' : 'Url' }}</th>
                                 <th>Type</th>
                                 <th colspan="2">Downloads/Views</th>
                               </tr>
@@ -127,13 +128,14 @@
                             <tbody *ngFor="let item of repoResponse.Report.Report.Customer.ReportItems; let item_i = index"
                                    style="border-bottom: 1px solid whitesmoke;">
                               <tr>
+                                <td *ngIf="chosenReport !== 'RR1'">{{ item.ItemName }}</td>
+                                <td *ngIf="chosenReport !== 'RR1'">{{ item.ItemPublisher }}</td>
+                                <td *ngIf="chosenReport === 'RR1'">{{ item.ItemPlatform }}</td>
                                 <td>
-                                <span *ngFor="let url of transformItem(item.ItemIdentifier[1].Value); let i = index">
-                                  <br *ngIf="i>0">{{ url }}
-                                </span>
+                                  <span *ngFor="let url of transformItem(item.ItemIdentifier); let i = index">
+                                    <br *ngIf="i>0">{{ url }}
+                                  </span>
                                 </td>
-                                <td>{{ item.ItemName }}</td>
-                                <td>{{ item.ItemPublisher }}</td>
                                 <td>{{ item.ItemDataType }}</td>
                                 <td class="uk-text-center"
                                     *ngIf="repoResponse.ReportDefinition.Filters.ReportAttribute[0].Value === 'Monthly'" colspan="2">
