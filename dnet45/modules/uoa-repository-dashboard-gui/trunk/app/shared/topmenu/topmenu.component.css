@@ -1,0 +1,19 @@
+.tooltipStyling {
+  padding: 15px 20px;
+  color: #333;
+  white-space: nowrap;
+  text-align:center;
+  text-transform: uppercase;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  background:  #fff;
+  -moz-box-shadow: 0px 0px 1px #666;
+  -webkit-box-shadow: 0px 0px 1px #666;
+  box-shadow: 0px 0px 1px #666;
+}
+
+.activeClass {
+  background:#15A3FF!important;
+  background:#17A6F6!important;
+}

@@ -6,7 +6,7 @@ import { UsageStatsSummary } from '../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'landing',
-  templateUrl: 'landing.component.html'
+  templateUrl: './landing.component.html'
 })
 
 export class LandingComponent implements OnInit {
@@ -34,8 +34,8 @@ export class LandingComponent implements OnInit {
   getStatisticsNumbers() {
     this.statsService.getStatisticsNumbers().subscribe(
       res => {
-        this.statisticsNumbers = res;
-        this.statisticsNumbers.lastYearUsagestats = JSON.parse(res['lastYearUsagestats'].toString());
+      	this.statisticsNumbers = res;
+      	this.statisticsNumbers.lastYearUsagestats = JSON.parse(res['lastYearUsagestats'].toString());
       },
       error => console.log(error),
       () => {

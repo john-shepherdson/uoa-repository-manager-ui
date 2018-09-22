@@ -8,6 +8,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 @Component({
   selector: 'top-menu',
   templateUrl: './topmenu.component.html',
+  styleUrls: ['./topmenu.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 
