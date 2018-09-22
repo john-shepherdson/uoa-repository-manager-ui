@@ -44,4 +44,12 @@ export class LandingComponent implements OnInit {
     );
   }
 
+  goToPage(pageUrl: string) {
+    if (this.authService.getIsUserLoggedIn()) {
+      this.router.navigate([pageUrl]);
+    } else {
+      this.login();
+    }
+  }
+
 }

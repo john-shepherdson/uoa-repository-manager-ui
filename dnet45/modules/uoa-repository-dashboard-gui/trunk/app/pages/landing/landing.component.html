@@ -16,7 +16,7 @@
               <h4 id="page#7" class="uk-text-center uk-h4 uk-scrollspy-inview uk-animation-fade" uk-scrollspy-class="" style="">
                 A one-stop-shop for sharing, finding and enriching your content    </h4>
               <div class="uk-margin-large uk-text-center uk-scrollspy-inview uk-animation-fade" uk-scrollspy-class="" style="">
-                <a class="el-content uk-button uk-button-primary" [routerLink]="['/dashboard']">
+                <a class="el-content uk-button uk-button-primary" (click)="goToPage('/dashboard')">
                   Start here
                 </a>
               </div>
@@ -42,7 +42,7 @@
             <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-4@m uk-child-width-1-4@l uk-child-width-1-4@xl uk-grid-parallax uk-grid uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" uk-grid-parallax="translate: " uk-lightbox="toggle: a[data-type]" style="margin-bottom: 20px;">
               <div class="uk-first-column">
                 <div uk-scrollspy-class="" class="el-item uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" style="">
-                  <a [routerLink]="['/compatibility','validate']" class="el-link uk-position-cover uk-position-z-index uk-margin-remove-adjacent"></a>
+                  <a (click)="goToPage('/compatibility/validate')" class="el-link uk-position-cover uk-position-z-index uk-margin-remove-adjacent"></a>
                   <div class="uk-card-media-top"><img src="https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/register_bw_3-34cc7a83.jpg" srcset="https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/register_bw_3-b8268aa2.jpg 640w,https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/register_bw_3-34cc7a83.jpg 800w" sizes="(min-width: 800px) 800px, 100vw" class="el-image" alt="" width="800"></div>
                   <div class="uk-card-body">
                     <h3 class="el-title uk-margin uk-h2 uk-margin-remove-adjacent uk-margin-remove-bottom">
@@ -54,7 +54,7 @@
               </div>
               <div>
                 <div uk-scrollspy-class="" class="el-item uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" style="">
-                  <a [routerLink]="['/sources','register']" class="el-link uk-position-cover uk-position-z-index uk-margin-remove-adjacent"></a>
+                  <a (click)="goToPage('/sources/register')" class="el-link uk-position-cover uk-position-z-index uk-margin-remove-adjacent"></a>
                   <div class="uk-card-media-top"><img src="https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/register_bw_5-fb15ad7f.jpg" srcset="https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/register_bw_5-f80c4720.jpg 579w,https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/register_bw_5-fb15ad7f.jpg 724w" sizes="(min-width: 724px) 724px, 100vw" class="el-image" alt="" width="724"></div>
                   <div class="uk-card-body">
                     <h3 class="el-title uk-margin uk-h2 uk-margin-remove-adjacent uk-margin-remove-bottom">
@@ -66,7 +66,7 @@
               </div>
               <div>
                 <div uk-scrollspy-class="" class="el-item uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" style="">
-                  <a [routerLink]="['/content','events']" class="el-link uk-position-cover uk-position-z-index uk-margin-remove-adjacent"></a>
+                  <a (click)="goToPage('/content/events')" class="el-link uk-position-cover uk-position-z-index uk-margin-remove-adjacent"></a>
                   <div class="uk-card-media-top"><img src="https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/enrich_bw_3-1b487ba1.jpg" srcset="https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/enrich_bw_3-32af51c0.jpg 640w,https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/enrich_bw_3-1b487ba1.jpg 800w" sizes="(min-width: 800px) 800px, 100vw" class="el-image" alt="" width="800"></div>
                   <div class="uk-card-body">
                     <h3 class="el-title uk-margin uk-h2 uk-margin-remove-adjacent uk-margin-remove-bottom">
@@ -78,7 +78,7 @@
               </div>
               <div>
                 <div uk-scrollspy-class="" class="el-item uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" style="">
-                  <a [routerLink]="['/getImpact']" class="el-link uk-position-cover uk-position-z-index uk-margin-remove-adjacent"></a>
+                  <a (click)="goToPage('/getImpact')" class="el-link uk-position-cover uk-position-z-index uk-margin-remove-adjacent"></a>
                   <div class="uk-card-media-top"><img src="https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/measure_bw_4-88ee2637.jpg" srcset="https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/measure_bw_4-0a65f376.jpg 640w,https://dl119.madgik.di.uoa.gr/templates/yootheme/cache/measure_bw_4-88ee2637.jpg 800w" sizes="(min-width: 800px) 800px, 100vw" class="el-image" alt="" width="800"></div>
                   <div class="uk-card-body">
                     <h3 class="el-title uk-margin uk-h2 uk-margin-remove-adjacent uk-margin-remove-bottom">
@@ -91,7 +91,7 @@
             </div>
 
             <div class="uk-margin-medium uk-text-center uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" style="">
-              <a [routerLink]="['/dashboard']" class="el-content uk-button uk-button-secondary">
+              <a (click)="goToPage('/dashboard')" class="el-content uk-button uk-button-secondary">
                 Get Started
               </a>
             </div>
