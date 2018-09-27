@@ -19,7 +19,12 @@ export class AppComponent implements OnInit {
     }
 
     // URL of the SPA to redirect the user to after login
-    this.authService.redirectUrl = "/dashboard";
+    //this.authService.redirectUrl = "/dashboard";
+
+    if (window.location.pathname.includes('/compatibility/browseHistory/')) {
+      this.authService.redirectUrl = window.location.pathname;
+      console.log('redirectUrl', this.authService.redirectUrl);
+    }
 
     this.authService.tryLogin();
   }

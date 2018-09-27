@@ -25,7 +25,16 @@ export class AuthenticationService {
 
   public loginWithState() {
     console.log(`logging in with state. Current url is: ${this.router.url}`);
-    sessionStorage.setItem("state.location", this.router.url);
+    if (this.redirectUrl) {
+      let url = this.redirectUrl;
+      this.redirectUrl = null;
+      console.log('stored location', url);
+      sessionStorage.setItem("state.location", url);
+    } else {
+      /*sessionStorage.setItem("state.location", this.router.url);*/
+      sessionStorage.setItem("state.location", '/dashboard');
+    }
+    console.log('redirect location', sessionStorage.getItem('state.location'));
     window.location.href = this.loginUrl;
   }
 
@@ -97,9 +106,11 @@ export class AuthenticationService {
               if ( !this.getIsUserLoggedIn() ) {
                 console.log('user hasn\'t logged in yet -- going to landing');
                 this.router.navigate(['/landing']);
-              } else if (this.redirectUrl) {
-                this.router.navigate([this.redirectUrl]);
-              } else {
+              } /*else if (this.redirectUrl) {
+                let url = this.redirectUrl;
+                this.redirectUrl = null;
+                this.router.navigate([url]);
+              } */else {
                 this.router.navigate([state]);
               }
             }
@@ -109,7 +120,14 @@ export class AuthenticationService {
         this.isLoggedIn = true;
         console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
       }
-    }
+    }/* else {
+      if (this.redirectUrl) {
+        let url = this.redirectUrl;
+        this.redirectUrl = null;
+        this.router.navigate([url]);
+        console.log('route is', url);
+      }
+    }*/
   }
 
   public getIsUserLoggedIn() {

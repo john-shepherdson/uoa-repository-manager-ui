@@ -19,7 +19,7 @@
                   <label class="control-label">Select repository's country</label>
                   <select class="form-control" (change) ="getReposInCountry($event.target.value)">
                     <option value="" disabled>-- none selected --</option>
-                    <option *ngFor="let country of countries" value="{{ country.code }}">{{country.name }}</option>
+                    <option *ngFor="let country of countries; let i = index" value="{{ i }}">{{ country.name ? country.name : country.code }}</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -29,7 +29,7 @@
               </div>
               <div *ngIf="selectedCountry">
                 <div>
-                  <h2>{{ sourceTitle }} Repositories in {{ selectedCountry }}</h2>
+                  <h2>{{ sourceTitle }} Repositories in {{ selectedCountry.name ? selectedCountry.name : selectedCountry.code }}</h2>
                 </div>
                 <div *ngIf="loadingMessage" class="loading-big">
                   <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">

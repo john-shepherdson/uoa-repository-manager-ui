@@ -52,9 +52,12 @@
                 </div>
               </div>-->
               <div>
-                <a *ngIf="!getIsUserLoggedIn()" (click)="login()">Sign up/Register</a>
+                <a *ngIf="!getIsUserLoggedIn()" (click)="login()">Sign in| Register</a>
                 <span *ngIf="getIsUserLoggedIn()">{{getUserName()}}</span>
                 <ul *ngIf="getIsUserLoggedIn()" class="uk-list uk-margin-top">
+                  <li>
+                    <a class="uk-search-input" [routerLink]="['landing']" [routerLinkActive]="['uk-active']">Home</a>
+                  </li>
                   <li>
                     <a class="uk-search-input" [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">Dashboard</a>
                   </li>
@@ -122,7 +125,7 @@
                   <!-- <li><a href="https://{{ inBeta ? 'beta.' : '' }}explore.openaire.eu" title="Search in OA. Link your research">Explore</a></li> -->
                   <li uk-tooltip="title: Search in OA. Link your research; pos: bottom-left; cls: uk-active tooltipStyling uk-width-auto">
                     <a href="https://{{ inBeta ? 'beta.' : '' }}explore.openaire.eu" target="_blank">Explore</a></li>
-                  <li uk-tooltip="title: Content Provider Dashboard; pos: bottom-left; cls: uk-active tooltipStyling uk-width-auto" class="activeClass">
+                  <li uk-tooltip="title: Content Provider Dashboard; pos: bottom-left; cls: uk-active tooltipStyling uk-width-auto" class="myActiveClass">
                     <a href="https://{{ inBeta ? 'beta.' : '' }}provide.openaire.eu/" target="_blank">Provide</a></li>
                   <li uk-tooltip="title: Research Community Dashboard; pos: bottom-left; cls: uk-active tooltipStyling uk-width-auto">
                     <a href="https://{{ inBeta ? 'beta.' : '' }}connect.openaire.eu" target="_blank">Connect</a></li>

@@ -48,6 +48,7 @@ export class LandingComponent implements OnInit {
     if (this.authService.getIsUserLoggedIn()) {
       this.router.navigate([pageUrl]);
     } else {
+      this.authService.redirectUrl = pageUrl;
       this.login();
     }
   }

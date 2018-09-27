@@ -6,6 +6,7 @@ import {
   noRepositoryChosenMsg,
   noServiceMessage } from '../../../domain/shared-messages';
 import { Country, Repository, RepositorySnippet } from '../../../domain/typeScriptClasses';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'register-datasource-shareable',
@@ -15,7 +16,7 @@ import { Country, Repository, RepositorySnippet } from '../../../domain/typeScri
 export class RegisterDatasourceShareableComponent implements OnInit {
   countries: Country[] = [];
   hasSelectedCountry: boolean;
-  selectedCountry: string;
+  selectedCountry: Country;
   countryRepos: RepositorySnippet[] = [];
   hasSelectedRepo: boolean;
 
@@ -42,7 +43,6 @@ export class RegisterDatasourceShareableComponent implements OnInit {
     this.setUpSourceInfo();
     this.getCountries();
     this.hasSelectedCountry = false;
-    this.selectedCountry = '';
   }
 
   setUpSourceInfo() {
@@ -60,16 +60,21 @@ export class RegisterDatasourceShareableComponent implements OnInit {
     this.repoService.getCountries()
       .subscribe(
         countries => {
-          /* check for null values */
-          let i = countries.findIndex(el => el.name === null);
-          /* remove null values from array */
-          if (i !== -1) { countries.splice(i, 1); }
+          // TODO: check again getCountries null return values
+          /*/!* check for null values *!/
+          let nullVals = countries.filter(el => el.name === null);
+          /!* remove null values from array *!/
+          for (let nullVal of nullVals) {
+            let i = countries.findIndex(el => el === nullVal);
+            /!* remove null value from array *!/
+            if (i !== -1) { countries.splice(i, 1); }
+          }*/
 
           /* sort countries array */
           this.countries = countries.sort( function(a,b) {
             if (a.name<b.name) {
               return -1;
-            } else if(a.name>b.name){
+            } else if(a.name>b.name) {
               return 1;
             } else {
               return 0;
@@ -82,15 +87,16 @@ export class RegisterDatasourceShareableComponent implements OnInit {
         });
   }
 
-  getReposInCountry(country: string){
+  getReposInCountry(i: number){
     setTimeout( () => {
+      const country = this.countries[i];
       console.log(`I got ${country} and ${this.mode}`);
       this.countryRepos = [];
       this.selectedCountry = country;
       this.hasSelectedCountry = false;
       this.loadingMessage = loadingReposMessage;
       this.noRepositories = '';
-      this.repoService.getRepositoriesOfCountry(country, this.mode).subscribe(
+      this.repoService.getRepositoriesOfCountry(country.code, this.mode).subscribe (
         repos => {
           this.countryRepos = repos;
         },
@@ -105,7 +111,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
             this.noRepositories = noRepositoriesFound;
           } else {
             this.noRepositories = '';
-            if (this.selectedCountry == country) {
+            if (this.selectedCountry.code == country.code) {
               /* to make sure that the correct set of repositories is displayed - in case of consequent country selections */
               this.hasSelectedCountry = true;
             } else {
@@ -114,6 +120,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
           }
           this.loadingMessage = '';
           this.alertMessage = '';
+          console.log('this.selectedCountry became', JSON.stringify(this.selectedCountry));
         }
       );
     }, 500);

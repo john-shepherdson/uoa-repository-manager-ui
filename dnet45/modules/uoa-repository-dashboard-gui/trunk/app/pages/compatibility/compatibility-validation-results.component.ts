@@ -38,9 +38,15 @@ export class CompatibilityValidationResultsComponent implements OnInit {
                private authService: AuthenticationService) {}
 
   ngOnInit () {
-    setTimeout(() => {
-      this.getJobInfo();
-    }, 500 );
+    if (this.authService.getIsUserLoggedIn()) {
+      setTimeout(() => {
+        this.getJobInfo();
+      }, 500 );
+    } else {
+      const id = this.route.snapshot.paramMap.get('id');
+      this.authService.redirectUrl = '/compatibility/browseHistory/' + id;
+      this.authService.loginWithState();
+    }
   }
 
   getJobInfo() {

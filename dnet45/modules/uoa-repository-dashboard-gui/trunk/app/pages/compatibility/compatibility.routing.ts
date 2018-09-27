@@ -9,6 +9,7 @@ import { CompatibilityMonitorComponent } from './compatibility-monitor.component
 import { CompatibilityMonitorRepoComponent } from './compatibility-monitor-repo.component';
 import { CompatibilityMonitorFullHistoryRepoComponent } from './compatibility-monitor-fullHistory-repo.component';
 import { CompatibilityValidateComponent } from './compatibility-validate.component';
+import { AuthGuardService } from '../../services/auth-guard.service';
 
 const compatibilityRoutes: Routes = [
   {
@@ -17,15 +18,18 @@ const compatibilityRoutes: Routes = [
     children: [
       {
         path: 'validate',
-        component: CompatibilityValidateComponent
+        component: CompatibilityValidateComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'validate/:type',
-        component: CompatibilityValidateTypeComponent
+        component: CompatibilityValidateTypeComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'browseHistory',
-        component: CompatibilityValidationHistoryComponent
+        component: CompatibilityValidationHistoryComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'browseHistory/:id',
@@ -33,15 +37,18 @@ const compatibilityRoutes: Routes = [
       },
       {
         path: 'monitor',
-        component: CompatibilityMonitorComponent
+        component: CompatibilityMonitorComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'monitor/:id',
-        component: CompatibilityMonitorRepoComponent
+        component: CompatibilityMonitorRepoComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'monitor/fullHistory/:id',
-        component: CompatibilityMonitorFullHistoryRepoComponent
+        component: CompatibilityMonitorFullHistoryRepoComponent,
+        canActivate: [AuthGuardService]
       }
     ]
   }

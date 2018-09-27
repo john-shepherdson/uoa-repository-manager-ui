@@ -29,8 +29,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'compatibility',
-    loadChildren: './pages/compatibility/compatibility.module#CompatibilityModule',
-    canActivate: [AuthGuardService]
+    loadChildren: './pages/compatibility/compatibility.module#CompatibilityModule'
   },
   {
     path: 'content',
