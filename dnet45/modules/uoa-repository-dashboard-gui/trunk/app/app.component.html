@@ -11,7 +11,13 @@
     (function() {
       var u="//analytics.openaire.eu/";
       _paq.push(['setTrackerUrl', u+'piwik.php']);
-      _paq.push(['setSiteId', '92']);
+      if ( (window.location.origin).includes('beta') || (window.location.origin).includes('athenarc') ) {
+        _paq.push(['setSiteId', '92']);
+        console.log('92');
+      } else {
+        _paq.push(['setSiteId', '111']);
+        console.log('111');
+      }
       var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
       g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
     })();
@@ -20,7 +26,7 @@
 
   <div>
     <!-- Piwik Image Tracker-->
-    <img src="https://analytics.openaire.eu/piwik.php?idsite=92&rec=1" style="border:0" alt="" />
+    <img src="{{ piwikUrl }}" style="border:0" alt="" />
     <!-- End Piwik -->
   </div>
 

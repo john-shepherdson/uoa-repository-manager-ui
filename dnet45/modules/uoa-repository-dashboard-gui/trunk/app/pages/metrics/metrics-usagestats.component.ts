@@ -41,7 +41,8 @@ export class MetricsUsagestatsComponent implements OnInit {
         },
         () => {
           this.title = this.title + ' for ' + this.repo.officialName;
-          if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.repo.registeredBy) ) {
+          console.log(this.authService.getUserEmail(), this.repo.registeredBy);
+          if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.repo.registeredBy.trim()) ) {
             this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
           }
         }

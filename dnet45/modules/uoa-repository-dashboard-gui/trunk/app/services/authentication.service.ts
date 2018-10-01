@@ -82,7 +82,7 @@ export class AuthenticationService {
           userInfo => {
             console.log(userInfo.json());
             sessionStorage.setItem('name',userInfo.json()['name']);
-            sessionStorage.setItem('email',userInfo.json()['email']);
+            sessionStorage.setItem('email',userInfo.json()['email'].trim());
             sessionStorage.setItem('role',userInfo.json()['role']);
             this.isLoggedIn = true;
             console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
