@@ -1,6 +1,7 @@
 <div id="landingPage">
   <div class="uk-offcanvas-content">
 
+    <!--MOBILE-->
     <div class="tm-header-mobile uk-hidden@m">
       <nav class="uk-navbar-container uk-navbar" uk-navbar="">
         <div class="uk-navbar-left">
@@ -103,6 +104,7 @@
       </div>
     </div>
 
+    <!--LAPTOP-->
     <div class="tm-toolbar uk-visible@m">
       <div class="uk-container uk-flex uk-flex-middle uk-container-expand">
 
@@ -125,7 +127,7 @@
                   <!-- <li><a href="https://{{ inBeta ? 'beta.' : '' }}explore.openaire.eu" title="Search in OA. Link your research">Explore</a></li> -->
                   <li uk-tooltip="title: Search in OA. Link your research; pos: bottom-left; cls: uk-active tooltipStyling uk-width-auto">
                     <a href="https://{{ inBeta ? 'beta.' : '' }}explore.openaire.eu" target="_blank">Explore</a></li>
-                  <li uk-tooltip="title: Content Provider Dashboard; pos: bottom-left; cls: uk-active tooltipStyling uk-width-auto" class="myActiveClass">
+                  <li uk-tooltip="title: Content Provider Dashboard; pos: bottom-left; cls: uk-active tooltipStyling uk-width-auto" class="custom-provide-li">
                     <a href="https://{{ inBeta ? 'beta.' : '' }}provide.openaire.eu/" target="_blank">Provide</a></li>
                   <li uk-tooltip="title: Research Community Dashboard; pos: bottom-left; cls: uk-active tooltipStyling uk-width-auto">
                     <a href="https://{{ inBeta ? 'beta.' : '' }}connect.openaire.eu" target="_blank">Connect</a></li>
@@ -143,9 +145,12 @@
     </div>
 
     <div class="tm-header uk-visible@m tm-header-transparent" uk-header="">
-      <div class="uk-navbar-container uk-sticky uk-navbar-transparent uk-light" uk-sticky="top:0" media="768"
+      <div class="uk-navbar-container uk-sticky uk-navbar-transparent" uk-sticky="top:0" media="768"
            cls-active="uk-active uk-navbar-sticky" style="" animation="uk-animation-slide-top"
-           top=".tm-header + [class*=&quot;uk-section&quot;]" cls-inactive="uk-navbar-transparent uk-light">
+           top=".tm-header + [class*=&quot;uk-section&quot;]" cls-inactive="uk-navbar-transparent">
+      <!--<div class="uk-navbar-container uk-sticky uk-navbar-transparent uk-light" uk-sticky="top:0" media="768"-->
+           <!--cls-active="uk-active uk-navbar-sticky" style="" animation="uk-animation-slide-top"-->
+           <!--top=".tm-header + [class*=&quot;uk-section&quot;]" cls-inactive="uk-navbar-transparent uk-light">-->
         <div class="uk-container uk-container-expand">
           <nav class="uk-navbar" uk-navbar="{&quot;align&quot;:&quot;left&quot;}">
             <div class="uk-navbar-left">
@@ -156,9 +161,9 @@
 
             <!-- THERE WAS COMMENTED SCRIPT HERE - CHECK REPOSITORYMANAGER.HTML -->
 
-            <div class="uk-navbar-center" *ngIf="getIsUserLoggedIn()" >
+            <div class="uk-navbar-right">
 
-              <ul class="uk-navbar-nav">
+              <ul class="uk-navbar-nav" *ngIf="getIsUserLoggedIn()" >
                 <li class="uk-parent" [routerLinkActive]="['uk-active']">
                   <a [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">
                     Dashboard
@@ -213,53 +218,57 @@
                   </a>
                 </li>
               </ul>
-            </div>
-            <div class="uk-navbar-right">
 
-              <ul *ngIf="!getIsUserLoggedIn()" class="uk-navbar-nav">
-                <li class="uk-parent">
-                  <a class="loginLink" (click)="login()">
-                    <span class="uk-margin-small-right uk-icon">
+              <div class="uk-navbar-item">
+
+                <ul *ngIf="!getIsUserLoggedIn()" class="uk-navbar-nav">
+                  <li class="uk-parent">
+                    <a class="" (click)="login()">
+                      Sign in
+                      <span class="uk-margin-small-left uk-icon">
                       <svg height="20" ratio="1" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="9.9" cy="6.4" fill="none" r="4.4" stroke="#000" stroke-width="1.1"></circle>
                         <path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>
                       </svg>
                     </span>
-                    Sign in | Register
-                  </a>
-                </li>
-              </ul>
+                    </a>
+                  </li>
+                </ul>
 
-              <ul *ngIf="getIsUserLoggedIn()" class="uk-navbar-nav">
-                <li class="uk-parent">
-                  <a class="loginLink" aria-expanded="false">
-                    <span class="uk-margin-small-right uk-icon">
+                <ul *ngIf="getIsUserLoggedIn()" class="uk-navbar-nav">
+                  <li class="uk-parent">
+                    <a class="" aria-expanded="false">
+                      {{ getUserName() }}
+                      <span class="uk-margin-small-left uk-icon">
                       <svg height="20" ratio="1" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="9.9" cy="6.4" fill="none" r="4.4" stroke="#000" stroke-width="1.1"></circle>
                         <path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>
                       </svg>
                     </span>
-                    {{ getUserName() }}
-                  </a>
-                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="userMenu" (click)="onClick('userMenu')">
-                    <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-                      <div class="uk-first-column">
-                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <ul *ngIf="getIsUserAdmin()" class="uk-nav uk-navbar-dropdown-nav">
-                            <li class="uk-nav-header" style="display: block;">Admin</li>
-                            <li style="display: block"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>
-                            <li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin','metrics']">Metrics</a></li>
+                    </a>
+                    <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
+                         id="userMenu" (click)="onClick('userMenu')">
+                      <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                        <div class="uk-first-column">
+                          <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <ul *ngIf="getIsUserAdmin()" class="uk-nav uk-navbar-dropdown-nav">
+                              <li class="uk-nav-header" style="display: block;">Admin</li>
+                              <li style="display: block"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>
+                              <li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin','metrics']">Metrics</a></li>
+                            </ul>
+                            <li><a class="" (click)="logout()">Log out</a></li>
                           </ul>
-                          <li><a class="logoutLink loginLink" (click)="logout()">Log out</a></li>
-                        </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-              </ul>
+                  </li>
+                </ul>
+
+              </div>
+
 
             </div>
+
           </nav>
         </div>
       </div>

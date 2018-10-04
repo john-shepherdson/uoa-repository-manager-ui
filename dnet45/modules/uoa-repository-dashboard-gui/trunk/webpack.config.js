@@ -77,7 +77,7 @@ var defaultConfig = {
     },
     proxy: {
       '/uoa-repository-manager-service': {
-        target: 'http://koulis.athenarc.gr:8480',
+        target: 'http://localhost:8480',
         secure: false
       }
     }
@@ -107,7 +107,7 @@ module.exports = function (env) {
           FAQ_ENDPOINT: JSON.stringify(process.env.FAQ_ENDPOINT || "https:/demo.openminted.eu/provide/api"),
           AAI_ENDPOINT: JSON.stringify(process.env.AAI_ENDPOINT || "/uoa-repository-manager-service/openid_connect_login"),
           FAQ_HOMEPAGE: JSON.stringify(process.env.FAQ_HOMEPAGE || "http://audrey.athenarc.gr:5555"),
-          BASE_URL: JSON.stringify(process.env.BASE_URL || "http://koulis.athenarc.gr:4200")
+          BASE_URL: JSON.stringify(process.env.BASE_URL || "http://localhost:4200")
         }
       })
     );
@@ -137,7 +137,7 @@ module.exports = function (env) {
           FAQ_ENDPOINT: JSON.stringify("http://audrey.athenarc.gr:5555/api"),
           AAI_ENDPOINT: JSON.stringify("/uoa-repository-manager-service/openid_connect_login"),
           FAQ_HOMEPAGE: JSON.stringify("http://audrey.athenarc.gr:5555"),
-          BASE_URL: JSON.stringify("http://koulis.athenarc.gr:4200")
+          BASE_URL: JSON.stringify("http://localhost:4200")
         }
       })
     );

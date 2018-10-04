@@ -1,15 +1,15 @@
-.uk-block-secondary {
-  background: #003D8C none repeat scroll 0 0;
-}
+/*.uk-block-secondary {*/
+  /*background: #003D8C none repeat scroll 0 0;*/
+/*}*/
 
-.uk-block-secondary:not(.tm-block-texture) {
-  border-color: #003D8C;
-}
+/*.uk-block-secondary:not(.tm-block-texture) {*/
+  /*border-color: #003D8C;*/
+/*}*/
 
-.tm-bottom-d {
-  color: #ffffff;
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-}
+/*.tm-bottom-d {*/
+  /*color: #ffffff;*/
+  /*font-size: 10px;*/
+  /*letter-spacing: 4px;*/
+  /*text-transform: uppercase;*/
+/*}*/
 
