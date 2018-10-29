@@ -270,6 +270,9 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       this.crisRefIntegrity = null;
       this.chosenCrisEntities = null;
     }
+    if ( this.chosenValSet==='' ) {
+      this.chosenValSet= 'none';
+    }
     let newJob: JobForValidation = {
       selectedCrisEntities: this.chosenCrisEntities,
       selectedContentRules: this.chosenContentRules,
