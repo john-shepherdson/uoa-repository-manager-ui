@@ -52,6 +52,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   @Input() showButton: boolean;
 
+  repoId: string;
   formSubmitted:boolean = false;
   updateGroup: FormGroup;
   readonly updateGroupDefinition = {
@@ -104,6 +105,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   loadForm() {
     if (this.selectedRepo) {
+      this.repoId = this.selectedRepo.id.split('::')[1];
       this.loadingMessage = loadingRepoMessage;
       this.updateGroup = this.fb.group(this.updateGroupDefinition, {validator: checkPlatform});
       this.getDatasourceClasses();
