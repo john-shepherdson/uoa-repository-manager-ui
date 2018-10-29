@@ -47,7 +47,7 @@ export class RegisterDatasourceShareableComponent implements OnInit {
 
   setUpSourceInfo() {
     if (this.mode == 'opendoar') {
-      this.sourceUrl = 'https://www.opendoar.org/';
+      this.sourceUrl = 'http://v2.sherpa.ac.uk/opendoar/';
       this.sourceTitle = 'OpenDOAR';
     } else if (this.mode == 're3data') {
       this.sourceUrl = 'https://www.re3data.org/';
