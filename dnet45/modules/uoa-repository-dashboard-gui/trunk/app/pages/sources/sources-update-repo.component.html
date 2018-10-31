@@ -24,7 +24,7 @@
                 <div class="whiteFilm"></div>
               </div>
               <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-              <div *ngIf="!loadingMessage && repo" class="uk-margin-medium-bottom">
+              <div *ngIf="!loadingMessage && (repo !== null)" class="uk-margin-medium-bottom">
                 <h1 class="uk-article-title">
                   <a id="updateLogoURL" (click)="updateLogoUrl(repo.logoUrl)">
                     <img *ngIf="!logoURL" src="/assets/imgs/yourLogoHere.jpg" style="margin-right: 15px; margin-top:-8px" width="60">
@@ -33,7 +33,7 @@
                   {{ repo.officialName }}
                 </h1>
               </div>
-              <div *ngIf="!loadingMessage && repo && repoInterfaces">
+              <div *ngIf="!loadingMessage && (repo !== null) && (repoInterfaces !== null)">
                 <div>
                   <ul class="uk-margin el-nav uk-tab" uk-switcher="connect: .uk-switcher">
                     <li routerLinkActive="uk-active">
