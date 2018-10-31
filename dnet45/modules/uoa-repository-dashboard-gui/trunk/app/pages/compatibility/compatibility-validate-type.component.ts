@@ -88,6 +88,10 @@ export class CompatibilityValidateTypeComponent implements OnInit {
 
   readType() {
     this.type = this.route.snapshot.paramMap.get('type');
+    if (this.type == 'cris') {
+      this.chosenValSet = 'none';
+      this.noOfRecords = -1;
+    }
     console.log(this.type);
   }
 
@@ -269,10 +273,11 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       isCris = false;
       this.crisRefIntegrity = null;
       this.chosenCrisEntities = null;
+      if ( this.chosenValSet==='' ) {
+        this.chosenValSet= 'none';
+      }
     }
-    if ( this.chosenValSet==='' ) {
-      this.chosenValSet= 'none';
-    }
+
     let newJob: JobForValidation = {
       selectedCrisEntities: this.chosenCrisEntities,
       selectedContentRules: this.chosenContentRules,

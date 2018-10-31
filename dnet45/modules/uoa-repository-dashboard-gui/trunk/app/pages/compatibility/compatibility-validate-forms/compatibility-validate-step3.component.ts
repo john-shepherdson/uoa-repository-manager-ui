@@ -58,7 +58,7 @@ export class CompatibilityValidateStep3Component implements OnInit {
       if ( this.group.get('noOfRecordsInput').enabled ) {
         emitted.push(this.group.get('noOfRecordsInput').value);
       } else {
-        emitted.push('');
+        emitted.push('-1');
       }
 
       if ( this.group.get('xpathInput').enabled ) {

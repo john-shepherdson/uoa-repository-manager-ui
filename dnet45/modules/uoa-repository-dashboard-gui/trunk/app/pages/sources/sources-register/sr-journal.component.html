@@ -54,12 +54,12 @@
                   <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
 
                   <div>
-                    <datasource-create-form *ngIf="showForm"
+                    <datasource-create-form *ngIf="showForm && !loadingMessage"
                                             #registerJournal
                                             [selectedRepo]="repo"
                                             (emittedInfo)="getCurrentRepo($event)"></datasource-create-form>
 
-                    <div *ngIf="showInterfaces">
+                    <div *ngIf="showInterfaces && !loadingMessage">
                       <form *ngIf="repo" [formGroup]="group">
                         <form-repeat #interfaceFormArray
                                      [component]="addDatasourceInterfaces"
@@ -73,7 +73,7 @@
                         </form-repeat>
                       </form>
                     </div>
-                    <div *ngIf="showFinish" class="row openAIRECompliantLogoDownload">
+                    <div *ngIf="showFinish && !loadingMessage" class="row openAIRECompliantLogoDownload">
                       <div class="col-lg-12">
                         <div class="col-md-12">
                           <div class="gwt-HTML">
@@ -96,11 +96,11 @@
               </div>
             </div>
             <div class="wizardActions">
-              <button *ngIf="!showForm && !showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveBackAStep()">
+              <button *ngIf="!showForm && !showFinish && !loadingMessage" class="uk-button uk-button-grey-light" type="button" (click)="moveBackAStep()">
                 <i class="fa fa-angle-double-left"></i>
                 Back
               </button>
-              <button *ngIf="!showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
+              <button *ngIf="!showFinish && !loadingMessage" class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
                 Next
                 <i class="fa fa-angle-double-right"></i>
               </button>

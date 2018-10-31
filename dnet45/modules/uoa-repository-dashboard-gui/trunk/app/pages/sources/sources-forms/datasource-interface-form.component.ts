@@ -180,7 +180,9 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
     this.groupErrorMessage = '';
     this.errorMessage = '';
     this.successMessage = '';
-    if (this.group.valid && this.checkIfValsetWasChosen() && this.checkIfCompatibilityLevelWasChosen() ) {
+
+    // if decided that valset is required add && this.checkIfValsetWasChosen() to the condition
+    if (this.group.valid && this.checkIfCompatibilityLevelWasChosen() ) {
       if (this.identifiedBaseUrl) {
         let baseUrl = this.getMyControl('baseUrl').value;
         let valset: string = '';
@@ -212,7 +214,10 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   checkIfValsetWasChosen() {
-    return ( ( this.getMyControl('selectValidationSet').enabled && this.getMyControl('selectValidationSet').value !='' ) || ( this.getMyControl('customValidationSet').enabled && this.getMyControl('customValidationSet').value !='' ) );
+    return ( ( this.getMyControl('selectValidationSet').enabled &&
+               this.getMyControl('selectValidationSet').value !='' ) ||
+             ( this.getMyControl('customValidationSet').enabled &&
+               this.getMyControl('customValidationSet').value !='' ) );
   }
 
   checkIfCompatibilityLevelWasChosen() {
@@ -222,7 +227,8 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   checkIfValid() {
     console.log(this.existingCompLevel);
     if (this.inRegister) {
-      if ( this.group.valid && this.checkIfValsetWasChosen() && this.checkIfCompatibilityLevelWasChosen() ) {
+      // if decided that valset is required add && this.checkIfValsetWasChosen() to the condition
+      if ( this.group.valid && this.checkIfCompatibilityLevelWasChosen() ) {
         if ( this.identifiedBaseUrl ) {
           let baseUrl = this.getMyControl('baseUrl').value;
 

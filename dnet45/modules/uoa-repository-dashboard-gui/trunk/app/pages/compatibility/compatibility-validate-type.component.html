@@ -58,29 +58,29 @@
                     </div>
                     <div class="whiteFilm"></div>
                   </div>
-                  <div *ngIf="showDatasource">
+                  <div *ngIf="showDatasource && !loadingMessage">
                     <compatibility-validate-step1 #step1ChooseBaseUrl
                                                   [baseUrlList]="baseUrlList"
                                                   (emitObject)="getChosenUrl($event)"></compatibility-validate-step1>
                   </div>
-                  <div *ngIf="showGuidelines">
+                  <div *ngIf="showGuidelines && !loadingMessage">
                     <compatibility-validate-step2 #step2ChooseGuidelines
                                                   [ruleSets]="ruleSets"
                                                   (emitObject)="getChosenRules($event)">
                     </compatibility-validate-step2>
                   </div>
-                  <div *ngIf="showParameters">
+                  <div *ngIf="showParameters && !loadingMessage">
                     <compatibility-validate-step3 #step3ChooseParameters
                                                   [valSets]="valSets"
                                                   (emitObject)="getChosenParameters($event)">
                     </compatibility-validate-step3>
                   </div>
-                  <div *ngIf="showCrisEntities">
+                  <div *ngIf="showCrisEntities && !loadingMessage">
                     <compatibility-validate-step3-cris #step3ChooseCrisEntities
                                                        (emitObject)="getChosenCrisEntities($event)">
                     </compatibility-validate-step3-cris>
                   </div>
-                  <div *ngIf="showFinish">
+                  <div *ngIf="showFinish && !loadingMessage">
                     <div>
                       <div class="success">
                         <i class="fa fa-check-circle" style=""></i>
@@ -94,14 +94,14 @@
                 </div>
               </div>
             </div>
-            <div class="wizardActions">
+            <div *ngIf="!loadingMessage" class="wizardActions">
               <button *ngIf="!showDatasource && !showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveBackAStep()">
                 <i class="fa fa-angle-double-left"></i>
                 Back
               </button>
               <button *ngIf="!showFinish" class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
-                <span *ngIf="!showParameters">Next</span>
-                <span *ngIf="showParameters" class="uk-link">Finish</span>
+                <span *ngIf="!showParameters && !showCrisEntities">Next</span>
+                <span *ngIf="showParameters || showCrisEntities" class="uk-link">Finish</span>
                 <i class="fa fa-angle-double-right"></i>
               </button>
             </div>
