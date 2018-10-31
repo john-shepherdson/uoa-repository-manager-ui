@@ -71,7 +71,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       this.data.splice(0,1);
       this.oldInterface = true;
       console.log(`received an interface!`);
-      if (this.currentInterface.baseUrl && this.currentInterface.accessParams['set'] && this.currentInterface.desiredCompatibilityLevel) {
+      if (this.currentInterface.baseUrl && this.currentInterface.desiredCompatibilityLevel) {
         this.wasSaved = true;
       }
     }
@@ -166,9 +166,7 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
             this.existingCompLevel = this.compClasses[this.currentInterface.desiredCompatibilityLevel];
           }
           if (this.group.valid ) {
-            if ( this.getMyControl('selectValidationSet').value || this.getMyControl('customValidationSet').value ) {
-              this.exportedData = this.currentInterface;
-            }
+            this.exportedData = this.currentInterface;
           }
         }
 
@@ -221,11 +219,10 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
   }
 
   checkIfCompatibilityLevelWasChosen() {
-    return ( this.getMyControl('compatibilityLevel').value != '' || (this.existingCompLevel && this.existingCompLevel != '') );
+    return ( this.getMyControl('compatibilityLevel').value != '' || (this.existingCompLevel && (this.existingCompLevel != '')) );
   }
 
   checkIfValid() {
-    console.log(this.existingCompLevel);
     if (this.inRegister) {
       // if decided that valset is required add && this.checkIfValsetWasChosen() to the condition
       if ( this.group.valid && this.checkIfCompatibilityLevelWasChosen() ) {
@@ -241,6 +238,8 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
 
           let compLvl: string = '';
           if (this.getMyControl('compatibilityLevel').value) {
+            this.existingCompLevel = this.compClasses[this.getMyControl('compatibilityLevel').value];
+            console.log('this.existingCompLevel is',this.existingCompLevel);
             compLvl = this.getMyControl('compatibilityLevel').value;
           } else {
             compLvl = this.existingCompLevel;
@@ -314,13 +313,19 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
         this.currentInterface = null;
       },
       () => {
+        this.loadingMessage = '';
         if (this.currentInterface.id) {
           this.successMessage = formSuccessAddedInterface;
           this.wasSaved = true;
+          if ( !this.currentInterface.desiredCompatibilityLevel || !this.classCodes.some( x => x == this.currentInterface.desiredCompatibilityLevel ) ) {
+            this.patchData.next({compatibilityLevel:''});
+            this.existingCompLevel = this.currentInterface.desiredCompatibilityLevel;
+          } else {
+            this.existingCompLevel = this.compClasses[this.currentInterface.desiredCompatibilityLevel];
+          }
         } else {
           this.errorMessage = formErrorWasntSaved;
         }
-        this.loadingMessage = '';
       }
     );
 
@@ -344,6 +349,12 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       },
       () => {
         this.loadingMessage = '';
+        if ( !this.currentInterface.desiredCompatibilityLevel || !this.classCodes.some( x => x == this.currentInterface.desiredCompatibilityLevel ) ) {
+          this.patchData.next({compatibilityLevel:''});
+          this.existingCompLevel = this.currentInterface.desiredCompatibilityLevel;
+        } else {
+          this.existingCompLevel = this.compClasses[this.currentInterface.desiredCompatibilityLevel];
+        }
       }
     );
   }

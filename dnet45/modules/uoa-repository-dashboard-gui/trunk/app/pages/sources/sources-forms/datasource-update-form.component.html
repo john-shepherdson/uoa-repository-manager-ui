@@ -6,7 +6,7 @@
 </div>
 <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
 <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
-<form *ngIf="selectedRepo" [formGroup]="updateGroup">
+<form *ngIf="selectedRepo && !loadingMessage" [formGroup]="updateGroup">
   <div>
     <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
       Basic information

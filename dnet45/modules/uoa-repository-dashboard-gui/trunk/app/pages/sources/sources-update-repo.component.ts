@@ -56,7 +56,6 @@ export class SourcesUpdateRepoComponent implements OnInit {
     this.repoId = this.route.snapshot.paramMap.get('id');
     console.log(`repoId is ${this.repoId}`);
     this.getRepo();
-    this.getRepoInterfaces();
   }
 
   getRepo() {
@@ -72,10 +71,11 @@ export class SourcesUpdateRepoComponent implements OnInit {
           this.errorMessage = loadingRepoError;
         },
         () => {
-          this.loadingMessage = '';
-          this.logoURL = this.repo.logoUrl;
           if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.repo.registeredBy.trim()) ) {
             this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
+          } else {
+            this.logoURL = this.repo.logoUrl;
+            this.getRepoInterfaces();
           }
         }
       );
