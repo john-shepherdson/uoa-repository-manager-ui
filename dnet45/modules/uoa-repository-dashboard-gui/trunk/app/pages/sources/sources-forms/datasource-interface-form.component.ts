@@ -71,9 +71,10 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
       this.data.splice(0,1);
       this.oldInterface = true;
       console.log(`received an interface!`);
-      if (this.currentInterface.baseUrl && this.currentInterface.desiredCompatibilityLevel) {
+      /*if (this.interfaceInfo && this.interfaceInfo.identified &&
+          this.currentInterface.desiredCompatibilityLevel) {
         this.wasSaved = true;
-      }
+      }*/
     }
 
     /* initializes MyGroup parent component and the FormGroup */
@@ -129,6 +130,10 @@ export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestr
           this.errorMessage = noServiceMessage;
         },
         () => {
+          if (this.interfaceInfo && this.interfaceInfo.identified &&
+              this.currentInterface && this.currentInterface.desiredCompatibilityLevel) {
+            this.wasSaved = true;
+          }
           if ( this.currentInterface && this.currentInterface.accessParams && this.currentInterface.accessParams['set'] ) {
             if ( this.valsetList.some( x => x === this.currentInterface.accessParams['set']) ) {
               this.patchData.next({selectValidationSet:this.currentInterface.accessParams['set']});
