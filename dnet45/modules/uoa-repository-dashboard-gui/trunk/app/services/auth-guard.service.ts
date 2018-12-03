@@ -37,7 +37,8 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canLoad () {
 
     if (this.authenticationService.getUserRole() &&
-        this.authenticationService.getUserRole().includes('ROLE_ADMIN')) {
+        (this.authenticationService.getUserRole().includes('ROLE_ADMIN') ||
+          this.authenticationService.getUserRole().includes('ROLE_PORTAL_ADMIN'))) {
 
       return true;
     }
