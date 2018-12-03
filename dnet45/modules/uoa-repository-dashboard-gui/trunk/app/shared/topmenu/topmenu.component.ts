@@ -2,7 +2,7 @@
  * Created by stefania on 7/5/16.
  */
 
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import { Component, DoCheck, OnInit, ViewEncapsulation } from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
@@ -31,7 +31,6 @@ export class TopMenuComponent implements OnInit {
     this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
   }
 
-
   onClick(id: string) {
     var el: HTMLElement = document.getElementById(id);
     el.classList.remove('uk-open');
@@ -43,11 +42,8 @@ export class TopMenuComponent implements OnInit {
   }
 
   logout(){
-    if( this.userLoggedIn ){
-      this.authService.logout();
-    }
+    this.authService.logout();
   }
-
 
   getUserName() {
     this.userName = this.authService.getUserName();

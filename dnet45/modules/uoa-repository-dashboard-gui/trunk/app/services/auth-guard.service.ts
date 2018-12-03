@@ -23,10 +23,12 @@ export class AuthGuardService implements CanActivate, CanLoad {
     sessionStorage.clear();
 
     // Store the attempted URL for redirecting
-    sessionStorage.setItem("state.location",state.url);
+    sessionStorage.setItem("state.location", state.url);
 
-    // Navigate to the login page via the API
-    // window.location.href = this.loginUrl;
+    // If we decide that in this case we will send the user back to the aai
+    // this.authenticationService.redirectUrl = state.url;
+    // this.authenticationService.loginWithState();
+
     this.router.navigate(['/landing']);
 
     return false;

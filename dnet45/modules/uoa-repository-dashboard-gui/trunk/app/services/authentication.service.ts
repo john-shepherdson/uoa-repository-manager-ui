@@ -63,16 +63,23 @@ export class AuthenticationService {
           userInfo => {
             console.log("User is still logged in");
             console.log(userInfo.json());
+            console.log(`the cookie is:`, getCookie('openAIREUser'));
             this.isLoggedIn = true;
           },
           () => {
-            sessionStorage.removeItem('name');
+            /*sessionStorage.removeItem('name');
             sessionStorage.removeItem('email');
             sessionStorage.removeItem('role');
             deleteCookie('openAIREUser');
             deleteCookie('AccessToken');
             this.isLoggedIn = false;
-            this.router.navigate(['/landing']);
+            this.router.navigate(['/landing']);*/
+            this.logout();
+          },
+          () => {
+            if ( !getCookie('openAIREUser') || (getCookie('openAIREUser') === '') ) {
+                this.logout();
+            }
           }
         );
       },1000 * 60 * 5);
