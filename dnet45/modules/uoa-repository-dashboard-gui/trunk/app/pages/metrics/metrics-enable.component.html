@@ -34,7 +34,7 @@
                   </div>
                   <div class="whiteFilm"></div>
                 </div>
-                <div *ngIf="repo">
+                <div *ngIf="repo && !loadingMessage">
                   <div class="gwt-HTML">
                     <h4>You don't have metrics enabled for this repository yet. Would you like to enable them?</h4>
                     <p><img src="assets/imgs/metricsWorkflow-new.svg"

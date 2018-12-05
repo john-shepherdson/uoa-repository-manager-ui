@@ -25,7 +25,7 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
   repoName: string = '';
   repo: Repository;
 
-  aggregationsMap: Map<string,AggregationDetails[]> = new Map<string,AggregationDetails[]>();
+  aggregationsMap: Map<string, AggregationDetails[]> = new Map<string, AggregationDetails[]>();
   years: string[] = [];
 
   constructor(private route: ActivatedRoute,
@@ -82,9 +82,10 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        for (let key in this.aggregationsMap) {
+        this.years = Object.keys(this.aggregationsMap);
+        /*for (let key in this.aggregationsMap) {
           this.years.push(key);
-        }
+        }*/
         if ( this.years.length === 0 ) {
           this.noAggregations = noAggregationHistory;
         } else {

@@ -32,11 +32,12 @@
               <ul class="uk-list uk-list-striped">
                 <h4>{{ year }}</h4>
                 <li *ngFor="let aggr of aggregationsMap[year]">
-                  <div class="uk-grid uk-child-width-1-4">
+                  <div class="uk-grid uk-child-width-1-5">
                     <div><span *ngIf="aggr.date">{{ aggr.date | date : "yyyy-MM-dd" }}</span></div>
                     <div><span *ngIf="aggr.aggregationStage">Aggregation stage: {{ aggr.aggregationStage }}</span></div>
                     <div><span *ngIf="aggr.collectionMode">CollectionMode: {{ aggr.collectionMode }}</span></div>
                     <div><span *ngIf="aggr.numberOfRecords">Number of records: {{ aggr.numberOfRecords }}</span></div>
+                    <div><span *ngIf="aggr.indexedVersion !== null">Is the indexed version: {{ (aggr.indexedVersion === true) ? 'Yes': 'No' }}</span></div>
                   </div>
                 </li>
               </ul>

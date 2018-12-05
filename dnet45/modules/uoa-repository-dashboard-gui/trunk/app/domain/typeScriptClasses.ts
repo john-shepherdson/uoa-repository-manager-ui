@@ -604,6 +604,7 @@ export class AggregationDetails implements IsSerializable {
   date: Date;
   numberOfRecords: number;
   collectionMode: string;
+  indexedVersion: boolean;
 }
 
 export class Aggregations implements IsSerializable {

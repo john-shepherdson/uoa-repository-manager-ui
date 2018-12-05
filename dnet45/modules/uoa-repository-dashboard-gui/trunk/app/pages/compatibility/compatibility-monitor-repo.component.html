@@ -40,7 +40,8 @@
                         <h3 *ngIf="aggr.date">{{ aggr.date | date : "yyyy-MM-dd" }}</h3>
                         <p *ngIf="aggr.aggregationStage">Aggregation stage - {{ aggr.aggregationStage }}</p>
                         <p *ngIf="aggr.collectionMode">CollectionMode - {{ aggr.collectionMode }}</p>
-                        <p>Number of records - {{ aggr.numberOfRecords }}</p>
+                        <p *ngIf="aggr.numberOfRecords">Number of records - {{ aggr.numberOfRecords }}</p>
+                        <p *ngIf="aggr.indexedVersion !== null">Is the indexed version - {{ (aggr.indexedVersion === true) ? 'Yes': 'No' }}</p>
                       </div>
                     </div>
                   </div>
