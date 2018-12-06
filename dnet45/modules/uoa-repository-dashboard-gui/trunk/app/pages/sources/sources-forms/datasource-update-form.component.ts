@@ -320,7 +320,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
     if (!this.showButton) {
       this.selectedRepo.registeredBy = this.authService.getUserEmail();
       this.selectedRepo.registered = true;
-      /*this.selectedRepo.registrationDate = new Date(Date.now());*/ //NOT NEEDED
+      this.selectedRepo.registrationDate = new Date(Date.now()); //NOT NEEDED ??
       this.emittedInfo.emit(this.selectedRepo);
     }
   }
