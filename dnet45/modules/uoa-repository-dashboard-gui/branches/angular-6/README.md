@@ -1,46 +1,27 @@
-# omtd-platform
+# OaRepoManagerUi
 
-## First time
-`npm intall` for all the dependencies.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+
+## Development server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
-For development `npm run build` and it can be deployed with `npm run start` using lite-server and browsersync.
 
-For production `npm run build_prod` and it can be deployed with `npm run serve` using simple-angular-server.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-To deploy to the simple server use `npm run serve`
+## Running unit tests
 
-## Develop
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-To make it easier to develop with watchdog support using `npm start` make the according changes in the `index.html` file.
+## Running end-to-end tests
 
-### Release
-Using `npm run build_prod` and `npm run serve`.
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-Uncomment this.
-```javascript
-<script src="dist/bundle.min.js"></script>
-```
+## Further help
 
-Comment this.
-```javascript
-<!--
-<script>
-    System.import('app').catch(function(err){ console.error(err); });
-</script> 
--->
-```
-
-### Develop
-Using `npm start`.
-
-Comment this.
-```javascript
-<!-- <script src="dist/bundle.min.js"></script> -->
-```
-Uncomment this.
-```javascript
-<script>
-    System.import('app').catch(function(err){ console.error(err); });
-</script> 
-```
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
