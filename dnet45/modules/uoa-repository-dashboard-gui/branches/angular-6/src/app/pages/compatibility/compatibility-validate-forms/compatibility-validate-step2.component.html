@@ -8,7 +8,7 @@
              type="radio"
              (change)="refreshLists()"
              [checked]="set_index == 0">
-      <span>{{ set.name }}</span>
+      <span class="uk-margin-small-left">{{ set.name }}</span>
     </label>
   </div>
   <button class="uk-button uk-button-link" (click)="toggleShowRules()">
@@ -28,7 +28,7 @@
             <span>Select / Deselect All Content Rules</span>
           </label>
         </div>
-        <div *ngFor="let content of group.controls.contentRules.controls; let content_index = index" class="checkbox">
+        <div *ngFor="let content of group.controls['contentRules'].controls; let content_index = index" class="checkbox">
           <div [formGroupName]="content_index">
             <label class="uk-link-muted small" for="contentRules_{{ content_index }}">
               <input id="contentRules_{{ content_index }}"
@@ -36,7 +36,7 @@
                      formControlName="rule"
                      type="checkbox"
                      (change)="onToggleCheckRule($event,'content')">
-              <span>{{ currentContentRules[content_index].name }}</span>
+              <span class="uk-margin-small-left">{{ currentContentRules[content_index].name }}</span>
             </label>
           </div>
         </div>
@@ -50,7 +50,7 @@
             <span>Select / Deselect All Usage Rules</span>
           </label>
         </div>
-        <div *ngFor="let usage of group.controls.usageRules.controls; let usage_index = index" class="checkbox">
+        <div *ngFor="let usage of group.controls['usageRules'].controls; let usage_index = index" class="checkbox">
           <div [formGroupName]="usage_index">
             <label class="uk-link-muted small" for="usageRules_{{ usage_index }}">
               <input id="usageRules_{{ usage_index }}"
@@ -59,7 +59,7 @@
                      formControlName="rule"
                      type="checkbox"
                      (change)="onToggleCheckRule($event,'usage')">
-              <span>{{ currentUsageRules[usage_index].name }}</span>
+              <span class="uk-margin-small-left">{{ currentUsageRules[usage_index].name }}</span>
             </label>
           </div>
         </div>

@@ -11,14 +11,14 @@
             <span>Select / Deselect All Entities</span>
           </label>
         </div>
-        <div *ngFor="let content of group.controls.entities.controls; let i = index" class="checkbox">
+        <div *ngFor="let content of group.controls['entities'].controls; let i = index" class="checkbox">
           <div [formGroupName]="i">
             <label for="entity_{{ i }}">
               <input id="entity_{{ i }}"
                      formControlName="entity"
                      type="checkbox"
                      (change)="onToggleCheckEntity($event)">
-              <span>{{ entitiesList[i] }}</span>
+              <span class="uk-margin-small-left">{{ entitiesList[i] }}</span>
             </label>
           </div>
         </div>
@@ -36,13 +36,13 @@
                  name="referentialIntegrity"
                  value="yes"
                  checked
-                 type="radio"> <span>Yes</span>
+                 type="radio"> <span class="uk-margin-small-left">Yes</span>
         </label>
         <label class="btn btn-link" for="no">
           <input id="no"
                  name="referentialIntegrity"
                  value="no"
-                 type="radio"> <span>No</span>
+                 type="radio"> <span class="uk-margin-small-left">No</span>
         </label>
       </div>
     </div>

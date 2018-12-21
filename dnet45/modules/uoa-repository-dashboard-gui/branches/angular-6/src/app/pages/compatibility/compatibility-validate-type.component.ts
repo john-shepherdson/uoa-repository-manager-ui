@@ -26,7 +26,6 @@ export class CompatibilityValidateTypeComponent implements OnInit {
    * This was needed for Help Service [which sends back info according to the current router.url]
    * the param that is used is 'step' and the values are: 'baseUrl','guidelines','crisEntities'/'parameters','finish'
    */
-  queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
   currentStep: number;
   @ViewChild('topHelperContent')
   public topHelperContent: HelpContentComponent;
@@ -36,16 +35,6 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   public rightHelperContent: AsideHelpContentComponent;
   @ViewChild('bottomHelperContent')
   public bottomHelperContent: HelpContentComponent;
-
-  showDatasource: boolean;
-  showGuidelines: boolean;
-  showParameters: boolean;
-  showCrisEntities: boolean;
-  showFinish: boolean;
-
-  step2 = '';
-  step3 = '';
-  step4 = '';
 
   baseUrlList: string[] = [];
   ruleSets: RuleSet[] = [];
@@ -136,6 +125,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
           console.log(error);
           this.loadingMessage = '';
           this.errorMessage = loadingUserRepoInfoError;
+          window.scroll(1, 1);
         },
         () => {
           this.loadingMessage = '';
@@ -159,6 +149,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         }
       } else {
         this.errorMessage = didntSelectRules;
+        window.scroll(1, 1);
       }
     } else if ((this.currentStep === 2) && (this.type !== 'cris')) {
       this.step3ChooseParameters.submitChanges();
@@ -171,6 +162,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         this.submitForValidation();
       } else {
         this.errorMessage = didntSelectCrisEntities;
+        window.scroll(1, 1);
       }
     }
   }
@@ -199,12 +191,14 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         this.loadingMessage = '';
         this.identifiedUrl = false;
         this.errorMessage = noServiceMessage;
+        window.scroll(1, 1);
       }, () => {
         this.loadingMessage = '';
         if (this.identifiedUrl) {
           this.getRuleSetsForType();
         } else {
           this.errorMessage = invalidCustomBaseUrl;
+          window.scroll(1, 1);
         }
       }
     );
@@ -218,6 +212,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         error => {
           this.loadingMessage = '';
           this.errorMessage = loadingRuleSetsError;
+          window.scroll(1, 1);
         },
         () => {
           this.loadingMessage = '';
@@ -225,6 +220,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
             this.navigateToStep('guidelines');
           } else {
             this.errorMessage = noRuleSets;
+            window.scroll(1, 1);
           }
         }
       );
@@ -237,11 +233,11 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         sets => this.valSets = sets,
         error => {
           this.errorMessage = loadingValSetsError;
+          window.scroll(1, 1);
         },
         () => {
           this.loadingMessage = '';
-          this.step2 = 'active';
-          this.showParameters = true;
+          this.currentStep = 2;
         }
       );
   }
@@ -316,21 +312,12 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       job => console.log(JSON.stringify(job)),
       error => {
         this.errorMessage = submittingJobError;
+        window.scroll(1, 1);
       },
       () => {
         this.navigateToStep('finish');
       }
     );
-  }
-
-  setQueryParam(value: string) {
-    // set param for step
-    this.queryParams['step'] = value;
-    this.router.navigate([], { relativeTo: this.route, queryParams: this.queryParams });
-    this.rightHelperContent.ngOnInit();
-    this.topHelperContent.ngOnInit();
-    this.leftHelperContent.ngOnInit();
-    this.bottomHelperContent.ngOnInit();
   }
 
 }

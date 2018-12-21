@@ -111,7 +111,9 @@
                         <th></th>
                       </tr>
                       </thead>
-                      <div *ngIf="infoMessage" class="uk-alert">{{ infoMessage }}</div>
+                      <tr *ngIf="infoMessage">
+                        <td colspan="7">{{ infoMessage }}</td>
+                      </tr>
                       <tbody *ngIf="jobsOfUser && jobsOfUser.jobs">
                       <tr class="el-item" *ngFor="let job of jobsOfUser.jobs">
                         <td class="uk-table-shrink" style="vertical-align: top !important;">
