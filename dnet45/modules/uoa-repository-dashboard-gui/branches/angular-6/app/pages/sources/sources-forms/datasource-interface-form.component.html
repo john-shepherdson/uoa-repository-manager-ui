@@ -1,0 +1,61 @@
+<div>
+  <div class="interfaceActionsPanel">
+    <a *ngIf="!inRegister" (click)="saveInterface()"><i class="fa fa-save fa-lg"></i></a>
+  </div>
+<!--  <div>
+    <h5 *ngIf="currentInterface && oldInterface && currentRepository">{{ currentRepository.datasourceType }} Interface</h5>
+  </div>-->
+</div>
+<div>
+  <div *ngIf="loadingMessage" class="loading-big">
+    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+      {{ loadingMessage }}
+    </div>
+    <div class="whiteFilm"></div>
+  </div>
+  <div *ngIf="group && (!loadingMessage || (loadingMessage===''))" [formGroup]="group">
+    <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="clear: both">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="clear: both">{{ errorMessage }}</div>
+    <div *ngIf="groupErrorMessage" class="uk-alert uk-alert-danger" style="clear: both">{{ groupErrorMessage }}</div>
+    <div class="form-group has-success">
+      <label class="control-label" for="baseUrl" title="{{ baseUrlDesc.desc }}">Base OAI-PMH URL (*)</label>
+      <span *ngIf="identifiedBaseUrl" class="help-block inline" style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">
+        Identified
+      </span>
+      <input id="baseUrl" type="text" class="form-control" formControlName="baseUrl" (blur)="getInterfaceInfo(group.get('baseUrl').value)" required (change)="checkIfValid()">
+    </div>
+    <div class="form-group">
+      <!--<label class="control-label">Validation Set (*)</label>-->
+      <label class="control-label">Validation Set</label>
+      <div>
+        <label class="uk-button validationSetRadio" for="selectRadio{{index}}" title="{{ existingValSetDesc.desc }}">
+          <input id="selectRadio{{index}}" value="select" name="validationSet{{index}}" type="radio" (change)="chooseValSet(true)" checked>
+          <span>Choose existing</span>
+        </label>
+      </div>
+      <select id="selectValidationSet{{index}}" formControlName="selectValidationSet" class="form-control" (change)="checkIfValid()">
+        <option value="" selected>-- none selected --</option>
+        <option *ngFor="let set of valsetList" value="{{set}}">{{set}}</option>
+      </select>
+      <div>
+        <label class="uk-button validationSetRadio" for="customRadio{{index}}" title="{{ customValSetDesc.desc }}">
+          <input id="customRadio{{index}}" value="custom" name="validationSet{{index}}" type="radio" (change)="chooseValSet(false)">
+          <span>or a custom one</span>
+        </label>
+      </div>
+      <input id="customValidationSet{{index}}" formControlName="customValidationSet" class="form-control" type="text" (blur)="checkIfValid()">
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="compLvl" title="{{ compatibilityLevelDesc.desc }}">Desired Compatibility Level (*)</label>
+      <select class="form-control" #compLvl id="compLvl" formControlName="compatibilityLevel" (change)="checkIfValid()">
+        <option value="">-- none selected --</option>
+        <option *ngFor="let key of classCodes" value="{{key}}">{{compClasses[key]}}</option>
+      </select>
+    </div>
+    <div>
+      <label class="uk-form-controls-text control-label">Current Compatibility Level</label>
+      <div *ngIf="!existingCompLevel">not available</div>
+      <div *ngIf="existingCompLevel">{{ existingCompLevel }}</div>
+    </div>
+  </div>
+</div>
