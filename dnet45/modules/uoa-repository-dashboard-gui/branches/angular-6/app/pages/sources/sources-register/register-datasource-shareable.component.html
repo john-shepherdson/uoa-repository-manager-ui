@@ -1,0 +1,67 @@
+        <div>
+          <div>
+            <div class="animated fadeInRight stepContent">
+              <div class="uk-alert uk-alert-danger" *ngIf="alertMessage" style="padding: 10px">
+                {{ alertMessage }}
+              </div>
+              <div class="alert alert-info">
+                Please make sure your repository is registered in
+                <a target="_blank" href="{{ sourceUrl }}">
+                  <i class="fa fa-external-link" style="margin-right:3px;"></i>{{ sourceTitle }}
+                </a>
+                . <br>
+                <span *ngIf="latestUpdate && (latestUpdate !== 'null')">
+                  <b>Last Updated: </b>{{ latestUpdate }}
+                </span>
+              </div>
+              <div>
+                <div class="form-group">
+                  <label class="control-label">Select repository's country</label>
+                  <select class="form-control" (change) ="getReposInCountry($event.target.value)">
+                    <option value="" disabled>-- none selected --</option>
+                    <option *ngFor="let country of countries; let i = index" value="{{ i }}">{{ country.name ? country.name : country.code }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Start typing in the name of your repository to narrow down the view</label>
+                  <input #searchInput id="searchInput" class="form-control" type="text" [disabled]="(!hasSelectedCountry)" (keyup)="searchTerm($event)" />
+                </div>
+              </div>
+              <div *ngIf="selectedCountry">
+                <div>
+                  <h2>{{ sourceTitle }} Repositories in {{ selectedCountry.name ? selectedCountry.name : selectedCountry.code }}</h2>
+                </div>
+                <div *ngIf="loadingMessage" class="loading-big">
+                  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                    {{ loadingMessage }}
+                  </div>
+                  <div class="whiteFilm"></div>
+                </div>
+                <div class="uk-alert uk-alert-warning" *ngIf="noRepositories">{{ noRepositories }}</div>
+                <div class="repositoriesRadioButtonForm" *ngIf="countryRepos && !loadingMessage">
+                  <div class="form-group"
+                       *ngFor="let repo of countryRepos | repoFilter: searchBox">
+                  <!--<div class="form-group">-->
+                    <label for="{{ repo.id }}"
+                           class="uk-button uk-link-muted visible_uk_links"
+                           style="display: block; text-align: left;">
+                      <input type="radio" value="{{ repo.id }}" id="{{ repo.id }}" name="repositories" (change)="onChooseRepository(repo.id)" [disabled]="repo.registeredby !== null">
+                      <span>
+                        {{(repo.officialname !== null) ? repo.officialname : repo.englishname }}
+                        <span *ngIf="repo.registeredby !== null" class="uk-label uk-label-warning registeredLabel">Registered</span>
+                        <a target="_blank" href="{{ (repo.websiteurl !== null) ? repo.websiteurl : '' }}" [ngStyle]="">
+                          <i class="fa fa-external-link externalLink"></i>
+                        </a>
+                      </span>
+                      <div *ngIf="repoId == repo.id" class="uk-float-right">
+                        <a class="uk-button uk-button-primary uk-border-rounded uk-vertical-align-middle"
+                                style="border-color: grey;"
+                                (click)="pushedNext()">NEXT</a>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

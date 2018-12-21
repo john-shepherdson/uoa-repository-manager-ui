@@ -1,0 +1,36 @@
+/*
+ADDED TO RepositoryManager
+
+.tooltipStyling {
+  padding: 15px 20px;
+  color: #333;
+  white-space: nowrap;
+  text-align:center;
+  text-transform: uppercase;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  background:  #fff;
+  -moz-box-shadow: 0px 0px 1px #666;
+  -webkit-box-shadow: 0px 0px 1px #666;
+  box-shadow: 0px 0px 1px #666;
+}
+
+.myActiveClass {
+  background:#15A3FF!important;
+  background:#17A6F6!important;
+}
+*/
+
+.tm-toolbar .uk-subnav-line .custom-provide-li {
+  background:#37C7E9 !important;
+}
+
+.tm-toolbar .uk-subnav-line li:hover, .tm-toolbar .uk-subnav li:hover {
+  background: #37C7E9 !important;
+}
+
+.tm-toolbar .uk-subnav-line li a:hover, .tm-toolbar .uk-subnav li a:hover, .tm-toolbar .uk-subnav-line li:hover a, .tm-toolbar .uk-subnav li:hover a {
+  background:  #37C7E9 !important;
+  color:white !important;
+}

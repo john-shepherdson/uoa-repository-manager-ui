@@ -1,0 +1,88 @@
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+  <div class="uk-width-1-1@m uk-first-column">
+
+    <h1 class="uk-h2">Metrics Admin</h1>
+
+    <!-- TOP HELP CONTENT -->
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+    <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
+      <div class="uk-grid">
+
+        <!-- LEFT HELP CONTENT -->
+        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+        <!-- MIDDLE -->
+        <div class="uk-width-expand@m">
+
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+          <div *ngIf="loadingMessage" class="loading-big">
+            <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+              {{ loadingMessage }}
+            </div>
+            <div class="whiteFilm"></div>
+          </div>
+          <div *ngIf="piwiks && piwiks.length>0">
+            <table class="uk-table uk-table-striped uk-table-middle" style="font-size: 12px;">
+              <thead>
+              <tr>
+                <th class="uk-text-nowrap">Repository</th>
+                <th class="uk-text-nowrap">Piwik site</th>
+                <th class="uk-text-nowrap">Requested on</th>
+                <th class="uk-text-nowrap">Requestor</th>
+                <th class="uk-text-nowrap">Validated</th>
+                <th class="uk-text-nowrap">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="el-item" *ngFor="let piwik of piwiks">
+                <td class="uk-table-shrink">
+                  {{ piwik.repositoryName }}<br>(ID: {{ piwik.repositoryId }})
+                </td>
+                <td class="uk-table-shrink">ID: {{ piwik.siteId }}<br>Authentication Token: {{ piwik.authenticationToken }}</td>
+                <td class="uk-text-nowrap uk-table-shrink">{{ piwik.creationDate | date : "yyyy-MM-dd" }}</td>
+                <td class="uk-text-nowrap uk-table-shrink">{{ piwik.requestorName }}<br>{{ piwik.requestorEmail }}</td>
+                <td class="uk-text-nowrap uk-table-shrink">
+                  <span *ngIf="piwik.validated">YES<br>on {{ piwik.validationDate | date : "yyyy-MM-dd" }}</span>
+                  <span *ngIf="!piwik.validated">NO</span>
+                </td>
+                <td class="uk-text-nowrap uk-table-shrink">
+                  <button id="{{ piwik.repositoryId }}"
+                          *ngIf="!piwik.validated"
+                          class="uk-button uk-button-primary validate"
+                          (click)="confirmApproval(piwik.repositoryId)">Validate</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- RIGHT HELP CONTENT -->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+      </div>
+    </div>
+
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+
+  </div>
+</div>
+
+
+<confirmation-dialog #confirmApprovalModal [title]="modalTitle" [isModalShown]="isModalShown"
+                     [confirmActionButton]="modalButton" (emitObject)="confirmedApproval($event)">
+  Are you sure you want to validate the selected piwik site(s)?
+</confirmation-dialog>

@@ -1,0 +1,166 @@
+import { Injectable } from "@angular/core";
+import { ActivatedRoute, Router } from '@angular/router';
+import { deleteCookie, getCookie } from '../domain/utils';
+import { Http } from '@angular/http';
+
+@Injectable()
+export class AuthenticationService {
+
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private http: Http) {}
+
+  private apiUrl : string = process.env.API_ENDPOINT;
+  private loginUrl: string = process.env.AAI_ENDPOINT;
+  private baseUrl: string = process.env.BASE_URL;
+
+  // store the URL so we can redirect after logging in
+  public redirectUrl: string;
+
+  private _storage: Storage = sessionStorage;
+
+  public activateFrontAuthorization: boolean = process.env.PRODUCTION;
+
+  isLoggedIn: boolean = false;
+
+  public loginWithState() {
+    console.log(`logging in with state. Current url is: ${this.router.url}`);
+    if (this.redirectUrl) {
+      let url = this.redirectUrl;
+      this.redirectUrl = null;
+      console.log('stored location', url);
+      sessionStorage.setItem("state.location", url);
+    } else {
+      /*sessionStorage.setItem("state.location", this.router.url);*/
+      sessionStorage.setItem("state.location", '/dashboard');
+    }
+    console.log('redirect location', sessionStorage.getItem('state.location'));
+    window.location.href = this.loginUrl;
+  }
+
+  public logout() {
+    deleteCookie('openAIREUser');
+    deleteCookie('AccessToken');
+    sessionStorage.removeItem('name');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('role');
+    this.isLoggedIn = false;
+
+    console.log('logging out, calling:');
+    console.log(`${this.apiUrl}/openid_logout`);
+
+    /*window.location.href = `${this.apiUrl}/openid_logout`;*/
+    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.apiUrl}/openid_logout`;
+  }
+
+  public tryLogin() {
+    if( getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') ) {
+      console.log(`I got the cookie!`);
+      console.log(`in tryLogin -> document.cookie is: ${document.cookie.toString()}`);
+      /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTDOWN */
+      setInterval(() => {
+        this.http.get(this.apiUrl + '/user/login',{ withCredentials: true }).subscribe(
+          userInfo => {
+            console.log("User is still logged in");
+            console.log(userInfo.json());
+            console.log(`the cookie is:`, getCookie('openAIREUser'));
+            this.isLoggedIn = true;
+          },
+          () => {
+            /*sessionStorage.removeItem('name');
+            sessionStorage.removeItem('email');
+            sessionStorage.removeItem('role');
+            deleteCookie('openAIREUser');
+            deleteCookie('AccessToken');
+            this.isLoggedIn = false;
+            this.router.navigate(['/landing']);*/
+            this.logout();
+          },
+          () => {
+            if ( !getCookie('openAIREUser') || (getCookie('openAIREUser') === '') ) {
+                this.logout();
+            }
+          }
+        );
+      },1000 * 60 * 5);
+      if(!sessionStorage.getItem('name')) {
+        console.log(`session.name wasn't found --> logging in via repo-service!`);
+        this.http.get(this.apiUrl + '/user/login',{ withCredentials: true }).subscribe(
+          userInfo => {
+            console.log(userInfo.json());
+            sessionStorage.setItem('name',userInfo.json()['name']);
+            sessionStorage.setItem('email',userInfo.json()['email'].trim());
+            sessionStorage.setItem('role',userInfo.json()['role']);
+            this.isLoggedIn = true;
+            console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
+          },
+          error => {
+            sessionStorage.removeItem('name');
+            sessionStorage.removeItem('email');
+            sessionStorage.removeItem('role');
+            console.log("Error!");
+            console.log(error);
+            deleteCookie('openAIREUser');
+            deleteCookie('AccessToken');
+            this.isLoggedIn = false;
+            this.router.navigate(['/landing']);
+          },
+          () => {
+            if ( sessionStorage.getItem("state.location") ) {
+              let state = sessionStorage.getItem("state.location");
+              sessionStorage.removeItem("state.location");
+              console.log(`tried to login - returning to state: ${state}`);
+              if ( !this.getIsUserLoggedIn() ) {
+                console.log('user hasn\'t logged in yet -- going to landing');
+                this.router.navigate(['/landing']);
+              } /*else if (this.redirectUrl) {
+                let url = this.redirectUrl;
+                this.redirectUrl = null;
+                this.router.navigate([url]);
+              } */else {
+                this.router.navigate([state]);
+              }
+            }
+          }
+        );
+      } else {
+        this.isLoggedIn = true;
+        console.log(`the current user is: ${sessionStorage.getItem('name')}, ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
+      }
+    }/* else {
+      if (this.redirectUrl) {
+        let url = this.redirectUrl;
+        this.redirectUrl = null;
+        this.router.navigate([url]);
+        console.log('route is', url);
+      }
+    }*/
+  }
+
+  public getIsUserLoggedIn() {
+    this.isLoggedIn = (getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') && (this.getUserEmail() !== '' ) );
+    return this.isLoggedIn;
+  }
+
+  public getUserName() {
+    if (this.isLoggedIn)
+      return sessionStorage.getItem('name');
+    else
+      return '';
+  }
+
+  public getUserEmail() {
+    if (this.isLoggedIn)
+      return sessionStorage.getItem('email');
+    else
+      return '';
+  }
+
+  public getUserRole() {
+    if (this.isLoggedIn)
+      return sessionStorage.getItem('role');
+    else
+      return '';
+  }
+
+}
