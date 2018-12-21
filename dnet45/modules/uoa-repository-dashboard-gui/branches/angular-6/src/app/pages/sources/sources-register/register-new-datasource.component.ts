@@ -114,7 +114,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
   addInterfaceToList(intrf?: RepositoryInterface) {
     const curIndex = this.dataForInterfaceComp.length;
     const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.datasourceType,
-      datasourceClass: this.repo.datasourceType, registeredBy: this.repo.registeredBy };
+      datasourceClass: this.repo.datasourceClass, registeredBy: this.repo.registeredBy };
     if (intrf) {
       this.dataForInterfaceComp.push([true, curIndex, curRepoInfo, intrf]);
     } else {
@@ -149,7 +149,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
           true, i,
           { id: this.repo.id,
             datasourceType: this.repo.datasourceType,
-            datasourceClass: this.repo.datasourceType,
+            datasourceClass: this.repo.datasourceClass,
             registeredBy: this.repo.registeredBy
           },
           this.repoInterfaces[i]
@@ -160,7 +160,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
         true, 0,
         { id: this.repo.id,
           datasourceType: this.repo.datasourceType,
-          datasourceClass: this.repo.datasourceType,
+          datasourceClass: this.repo.datasourceClass,
           registeredBy: this.repo.registeredBy
         }
       ]);

@@ -104,7 +104,7 @@
                       class="uk-button uk-button-grey-light" type="button" (click)="moveAStep()">
 
                 <span *ngIf="!showParameters && !showCrisEntities"
-                      class="{{(currentStep === 2) ? 'uk-link' : '}}">
+                      class="{{(currentStep === 2) ? 'uk-link' : ''}}">
                   {{ (currentStep < 2) ? 'Next' : 'Finish' }}
                 </span>
                 <i class="fa fa-angle-double-right"></i>

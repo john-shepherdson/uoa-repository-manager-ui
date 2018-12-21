@@ -124,12 +124,18 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
 
-      // this.updateGroup.get('officialName').disable();
-      this.updateGroup.get('country').disable();
-      // this.updateGroup.get('longtitude').disable();
-      // this.updateGroup.get('latitude').disable();
-      this.updateGroup.get('websiteUrl').disable();
-      // this.updateGroup.get('institutionName').disable();
+      if ((this.selectedRepo.datasourceType === 'opendoar') ||
+        (this.selectedRepo.datasourceType === 're3data')) {
+
+        // this.updateGroup.get('officialName').disable();
+        this.updateGroup.get('country').disable();
+        // this.updateGroup.get('longtitude').disable();
+        // this.updateGroup.get('latitude').disable();
+        this.updateGroup.get('websiteUrl').disable();
+        // this.updateGroup.get('institutionName').disable();
+
+      }
+
       if (this.selectedRepo.datasourceType === 'journal') {
 
         let ssnToShow = this.selectedRepo.issn.slice(0, 4) + '-' + this.selectedRepo.issn.toString().slice(4);
@@ -145,9 +151,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
           this.updateGroup.get('lissn').setValue(ssnToShow);
         }
 
-        this.updateGroup.get('issn').disable();
+        /* it was decided that all fields will be open, 21-12-2018 */
+        /*this.updateGroup.get('issn').disable();
         this.updateGroup.get('eissn').disable();
-        this.updateGroup.get('lissn').disable();
+        this.updateGroup.get('lissn').disable();*/
       }
       /*this.getDatasourceClasses();*/
     }

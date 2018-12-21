@@ -115,7 +115,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
           false, i,
           { id: this.repo.id,
             datasourceType: this.repo.datasourceType,
-            datasourceClass: this.repo.datasourceType,
+            datasourceClass: this.repo.datasourceClass,
             registeredBy: this.repo.registeredBy
           },
           this.repoInterfaces[i]
@@ -126,7 +126,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
         false, 0,
         { id: this.repo.id,
           datasourceType: this.repo.datasourceType,
-          datasourceClass: this.repo.datasourceType,
+          datasourceClass: this.repo.datasourceClass,
           registeredBy: this.repo.registeredBy
         }
       ]);
@@ -136,7 +136,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
   addInterfaceToList(intrf?: RepositoryInterface) {
     const curIndex = this.dataForInterfaceComp.length;
     const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.datasourceType,
-      datasourceClass: this.repo.datasourceType, registeredBy: this.repo.registeredBy };
+      datasourceClass: this.repo.datasourceClass, registeredBy: this.repo.registeredBy };
     if (intrf) {
       this.dataForInterfaceComp.push([false, curIndex, curRepoInfo, intrf]);
     } else {
