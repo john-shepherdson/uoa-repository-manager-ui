@@ -1,0 +1,7 @@
+.innerTable {
+  padding: 50px;
+}
+
+.innerTable th, .innerTable td {
+  padding: 11px 12px;
+}
