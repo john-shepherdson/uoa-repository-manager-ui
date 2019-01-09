@@ -40,7 +40,7 @@
               </thead>
               <tbody>
               <tr class="el-item" *ngFor="let piwik of piwiks">
-                <td class="uk-table-shrink">
+                <td class="uk-table-shrink uk-text-truncate">
                   {{ piwik.repositoryName }}<br>(ID: {{ piwik.repositoryId }})
                 </td>
                 <td class="uk-table-shrink">ID: {{ piwik.siteId }}<br>Authentication Token: {{ piwik.authenticationToken }}</td>
