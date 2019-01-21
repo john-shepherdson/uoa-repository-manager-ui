@@ -30,12 +30,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if ((window.location.origin).includes('beta') ||
+    /*if ((window.location.origin).includes('beta') ||
         (window.location.origin).includes('athenarc') ) {
       this.piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
     } else {
       this.piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=111&rec=1';
-    }
+    }*/
 
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
