@@ -115,7 +115,8 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       of(this.getInterfaces()).subscribe(
         () => {
           if (this.repoInterfaces.length > 0) {
-            this.updateRepository();
+            // this.updateRepository();
+            this.registerRepository();
           } else {
             this.errorMessage = noInterfacesSaved;
           }
@@ -269,13 +270,34 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     window.open('../../../../assets/imgs/3_0ValidatedLogo.png', '_blank', 'enabledstatus=0,toolbar=0,menubar=0,location=0');
   }
 
-  updateRepository() {
+  // updateRepository() {
+  //   if (this.repo) {
+  //     this.loadingMessage = 'Saving changes';
+  //     this.errorMessage = '';
+  //     this.repoService.updateRepository(this.repo).subscribe(
+  //       response => {
+  //         console.log(`updateRepository responded: ${response.id}, ${response.registeredBy}`);
+  //         this.repo = response;
+  //       },
+  //       error => {
+  //         console.log(error);
+  //         this.loadingMessage = '';
+  //         this.errorMessage = 'The changes could not be saved';
+  //       },
+  //       () => {
+  //         this.saveNewInterfaces();
+  //       }
+  //     );
+  //   }
+  // }
+
+  registerRepository() {
     if (this.repo) {
       this.loadingMessage = 'Saving changes';
       this.errorMessage = '';
-      this.repoService.updateRepository(this.repo).subscribe(
+      this.repoService.addRepository( this.repo.datasourceType, this.repo).subscribe(
         response => {
-          console.log(`updateRepository responded: ${response.id}, ${response.registeredBy}`);
+          console.log(`addRepository responded: ${response.id}, ${response.registeredBy}`);
           this.repo = response;
         },
         error => {

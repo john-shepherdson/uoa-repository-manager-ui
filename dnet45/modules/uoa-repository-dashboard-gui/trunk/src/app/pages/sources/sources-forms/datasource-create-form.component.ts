@@ -37,12 +37,15 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   formSubmitted = false;
   group: FormGroup;
+
+  // old issn regex
+  // issn : ['', [Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')] ],
   readonly groupDefinition = {
     softwarePlatform : ['', Validators.required],
     officialName : ['', Validators.required],
-    issn : ['', [Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')] ],
-    eissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
-    lissn : ['', Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$') ],
+    issn : ['', [Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')] ],
+    eissn : ['', Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$') ],
+    lissn : ['', Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$') ],
     repoDescription : ['', Validators.required],
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
@@ -91,7 +94,7 @@ export class DatasourceCreateFormComponent implements OnInit {
     }
     this.group = this.fb.group(this.groupDefinition);
     if (this.mode === 'journal') {
-      this.group.get('issn').setValidators([Validators.required, Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')]);
+      this.group.get('issn').setValidators([Validators.required, Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')]);
     }
     this.getTypologies();
     this.getTimezones();
