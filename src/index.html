@@ -1,110 +1,58 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>OpenAIRE's Repository Manager</title>
-  <base href="/">
+  <head>
+    <meta charset="utf-8">
+    <title>OpenAIRE's Repository Manager</title>
+    <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-
-  <!-- Animation CSS -->
-  <link type="text/css" href="assets/css/animate.css" rel="stylesheet">
-  <link type="text/css" href="assets/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link type="text/css" href="assets/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 
-  <link type="text/css" href="assets/css/fonts/yanonekaffeesatz.css" rel="stylesheet">
-
-  <!-- stylesheets -->
-  <link type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-  <link type="text/css" rel="stylesheet" href="assets/css/theme.css">
-
-  <link type="text/css" rel="stylesheet" href="assets/css/RepositoryManager.css">
-  <link type="text/css" rel="stylesheet" href="assets/css/custom.css">
-  <link type="text/css" rel="stylesheet" href="assets/css/custom-provide.css">
-
-  <link type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto|Roboto+Condensed" rel="stylesheet">
-
-  <script src="dist/polyfills.bundle.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-  <script src="assets/js/uikit-3/js/uikit.min.js"></script>
-  <script src="assets/js/theme.js"></script>
-
-  <!--NEW FONT AWESOME-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
-</head>
-<body>
-
-  <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
-  <noscript>
-    <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
-      Your web browser must have JavaScript enabled
-      in order for this application to display correctly.
-    </div>
-  </noscript>
-
-  <!-- Piwik -->
-  <script type="text/javascript">
-    var piwikUrl;
-    if ((window.location.origin).includes('beta') ||
-      (window.location.origin).includes('athenarc') ) {
-      piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
-    } else {
-      piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=111&rec=1';
-    }
-    // document.getElementById('piwikImg').setAttribute("src", piwikUrl);
-
-    var _paq = window._paq || [];
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-
-    (function() {
-      /* CREATING PIWIK IMAGE */
-      dv = document.createElement('div');
-      dv.setAttribute('style', 'height:0px;');
-      im = document.createElement('img');
-      im.setAttribute('src', piwikUrl);
-      im.setAttribute('style', 'border:0;');
-      im.setAttribute('alt', '');
-      dv.appendChild(im);
-      document.appendChild(dv);
+    <!-- Animation CSS -->
+    <link type="text/css" href="assets/css/animate.css" rel="stylesheet">
+    <link type="text/css" href="assets/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link type="text/css" href="assets/css/plugins/steps/jquery.steps.css" rel="stylesheet">
 
 
-      /* ORIGINAL TRACKING SCRIPT */
-      var u="//analytics.openaire.eu/";
-      _paq.push(['setTrackerUrl', u+'piwik.php']);
-      if ( (window.location.origin).includes('beta') || (window.location.origin).includes('athenarc') ) {
-        _paq.push(['setSiteId', '92']);
-        console.log('92');
-      } else {
-        _paq.push(['setSiteId', '111']);
-        console.log('111');
-      }
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-    })();
-  </script>
-  <!-- End Piwik Code -->
+    <link type="text/css" href="assets/css/fonts/yanonekaffeesatz.css" rel="stylesheet">
 
-  <!-- PIEIK IMAGE IS NOW CREATED DYNAMICALLY USING JS -->
-  <!--<div style="height: 0px">
-    &lt;!&ndash; Piwik Image Tracker&ndash;&gt;
-    <img id="piwikImg" src="https://analytics.openaire.eu/piwik.php?idsite=92&rec=1" style="border:0" alt="" />
-    &lt;!&ndash; End Piwik &ndash;&gt;
-  </div>-->
+    <!-- stylesheets -->
+    <link type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <link type="text/css" rel="stylesheet" href="assets/css/theme.css">
 
-  <oa-repo-manager>
-    <div uk-spinner="ratio: 2" class="uk-overlay uk-position-center uk-dark" style="margin: auto"></div>
-  </oa-repo-manager>
+    <link type="text/css" rel="stylesheet" href="assets/css/RepositoryManager.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/custom.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/custom-provide.css">
 
-</body>
+    <link type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto|Roboto+Condensed" rel="stylesheet">
+
+    <script src="dist/polyfills.bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <script src="assets/js/uikit-3/js/uikit.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+
+    <!--NEW FONT AWESOME-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+  </head>
+  <body>
+
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+
+    <oa-repo-manager>
+      <div uk-spinner="ratio: 2" class="uk-overlay uk-position-center uk-dark" style="margin: auto"></div>
+    </oa-repo-manager>
+
+  </body>
 </html>

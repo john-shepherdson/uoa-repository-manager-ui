@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { environment } from '../environments/environment';
+import { MatomoInjector } from 'ngx-matomo';
 
 @Component({
   selector: 'oa-repo-manager',
@@ -12,7 +13,9 @@ export class AppComponent implements OnInit {
   piwikUrl: string;
 
   constructor(private router: Router,
-              private authService: AuthenticationService) {
+              private authService: AuthenticationService,
+              private matomoInjector: MatomoInjector) {
+
     /*disabling console.log in production*/
     if ( environment.production === true ) {
       console.log = function () {};
@@ -30,14 +33,19 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*if ((window.location.origin).includes('beta') ||
-        (window.location.origin).includes('athenarc') ) {
-      this.piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
-    } else {
-      this.piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=111&rec=1';
-    }*/
-
     this.router.events.subscribe((evt) => {
+      if (evt instanceof RoutesRecognized) {
+        let piwikUrl;
+        if (window.location.origin.includes('beta')) {
+          // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
+          piwikUrl = '92';
+        } else {
+          // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=111&rec=1';
+          piwikUrl = '111';
+        }
+        this.matomoInjector.init('https://analytics.openaire.eu/', piwikUrl);
+      }
+
       if (!(evt instanceof NavigationEnd)) {
         return;
       }

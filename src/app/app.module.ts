@@ -19,6 +19,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { AuthenticationService } from './services/authentication.service';
 import { LandingComponent } from './pages/landing/landing.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { MatomoModule } from 'ngx-matomo';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     HttpClientModule,
     ReusableComponentsModule,
     CookieLawModule,
+    MatomoModule,
     AppRoutingModule
   ],
   providers: [
