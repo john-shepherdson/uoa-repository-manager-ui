@@ -19,7 +19,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
 
     /* If no cookie was found, clear the app's session.
        The user may have logged out using another OpenAIRE portal */
-    localStorage.clear();
     sessionStorage.clear();
 
     // Store the attempted URL for redirecting
@@ -39,7 +38,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
     if (this.authenticationService.getUserRole() &&
         (this.authenticationService.getUserRole().includes('ROLE_ADMIN') ||
          this.authenticationService.getUserRole().includes('ROLE_PORTAL_ADMIN')) ) {
-
+      console.log('Admin recognized');
       return true;
     }
 

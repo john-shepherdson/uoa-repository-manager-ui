@@ -140,6 +140,8 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
         let ssnToShow = this.selectedRepo.issn.slice(0, 4) + '-' + this.selectedRepo.issn.toString().slice(4);
         this.updateGroup.get('issn').setValue(ssnToShow);
+        this.updateGroup.get('issn').clearValidators();
+        this.updateGroup.get('issn').setValidators([Validators.required, Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')]);
 
         if (this.selectedRepo.eissn.trim().length) {
           ssnToShow = this.selectedRepo.eissn.slice(0, 4) + '-' + this.selectedRepo.eissn.toString().slice(4);

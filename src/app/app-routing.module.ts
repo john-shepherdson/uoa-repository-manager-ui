@@ -42,8 +42,6 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     loadChildren: './pages/adminPg/adminPg.module#AdminPgModule',
-    canActivate: [AuthGuardService],
-    canLoad: [AuthGuardService]
   },
   {
     path: '403-forbidden',

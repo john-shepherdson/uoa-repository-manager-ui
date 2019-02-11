@@ -115,7 +115,6 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       of(this.getInterfaces()).subscribe(
         () => {
           if (this.repoInterfaces.length > 0) {
-            // this.updateRepository();
             this.registerRepository();
           } else {
             this.errorMessage = noInterfacesSaved;

@@ -1,7 +1,3 @@
-/*
-*  updated by myrto on 19/12/2018
-*/
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -94,6 +90,7 @@ export class DatasourceCreateFormComponent implements OnInit {
     }
     this.group = this.fb.group(this.groupDefinition);
     if (this.mode === 'journal') {
+      this.group.get('issn').clearValidators();
       this.group.get('issn').setValidators([Validators.required, Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')]);
     }
     this.getTypologies();
@@ -202,16 +199,8 @@ export class DatasourceCreateFormComponent implements OnInit {
     window.scroll(1, 1);
 
     if (this.group.valid) {
-      if ( this.mode !== 'journal' || this.group.get('issn').value ) {
-        if (this.selectedRepo) {
-          this.emittedInfo.emit(this.selectedRepo);
-        } else {
-          const newRepo = this.createNewRepository();
-          this.emittedInfo.emit(newRepo);
-        }
-      } else {
-        this.errorMessage = formErrorRequiredFields;
-      }
+      this.selectedRepo = this.createNewRepository();
+      this.emittedInfo.emit(this.selectedRepo);
     } else {
       this.errorMessage = formErrorRequiredFields;
     }
