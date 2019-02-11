@@ -17,7 +17,7 @@ export class AuthenticationService {
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
 
-  private _storage: Storage = localStorage;
+  private _storage: Storage = sessionStorage;
 
   public activateFrontAuthorization: boolean = environment.production;
 
@@ -41,7 +41,6 @@ export class AuthenticationService {
   public logout() {
     deleteCookie('openAIREUser');
     deleteCookie('AccessToken');
-    localStorage.clear();
     sessionStorage.clear();
     this.isLoggedIn = false;
 
@@ -82,15 +81,14 @@ export class AuthenticationService {
         this.http.get(this.apiUrl + '/user/login', { withCredentials: true }).subscribe(
           userInfo => {
             console.log(userInfo);
-            localStorage.setItem('name', userInfo['name']);
-            localStorage.setItem('email', userInfo['email'].trim());
-            localStorage.setItem('role', userInfo['role']);
+            sessionStorage.setItem('name', userInfo['name']);
+            sessionStorage.setItem('email', userInfo['email'].trim());
+            sessionStorage.setItem('role', userInfo['role']);
             this.isLoggedIn = true;
-            console.log(`the current user is: ${localStorage.getItem('name')},
-                         ${localStorage.getItem('email')}, ${localStorage.getItem('role')}`);
+            console.log(`the current user is: ${sessionStorage.getItem('name')},
+                         ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
           },
           error => {
-            localStorage.clear();
             sessionStorage.clear();
             console.log('Error!');
             console.log(error);
@@ -102,7 +100,7 @@ export class AuthenticationService {
           () => {
             if ( sessionStorage.getItem('state.location') ) {
               const state = sessionStorage.getItem('state.location');
-              sessionStorage.clear();
+              sessionStorage.removeItem('state.location');
               console.log(`tried to login - returning to state: ${state}`);
               if ( !this.getIsUserLoggedIn() ) {
                 console.log('user hasn\'t logged in yet -- going to landing');
@@ -115,8 +113,8 @@ export class AuthenticationService {
         );
       } else {
         this.isLoggedIn = true;
-        console.log(`the current user is: ${localStorage.getItem('name')},
-                     ${localStorage.getItem('email')}, ${localStorage.getItem('role')}`);
+        console.log(`the current user is: ${sessionStorage.getItem('name')},
+                     ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
         if (this.redirectUrl) {
           const url = this.redirectUrl;
           this.redirectUrl = null;
@@ -134,7 +132,7 @@ export class AuthenticationService {
 
   public getUserName() {
     if (this.isLoggedIn) {
-      return localStorage.getItem('name');
+      return sessionStorage.getItem('name');
     } else {
       return '';
     }
@@ -142,7 +140,7 @@ export class AuthenticationService {
 
   public getUserEmail() {
     if (this.isLoggedIn) {
-      return localStorage.getItem('email');
+      return sessionStorage.getItem('email');
     } else {
       return '';
     }
@@ -150,7 +148,7 @@ export class AuthenticationService {
 
   public getUserRole() {
     if (this.isLoggedIn) {
-      return localStorage.getItem('role');
+      return sessionStorage.getItem('role');
     } else {
       return '';
     }

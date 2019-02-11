@@ -71,6 +71,7 @@ export const loadingMetricsError = 'Failed to load the metrics for this reposito
 export const enablingMetrics = 'Enabling metrics for this repository...';
 export const enabledMetricsSuccess = 'The metrics for this repository were enabled';
 export const enabledMetricsError = 'System error enabling metrics for this repository.';
+export const validatePiwikSiteSuccess = 'The piwik site was approved.';
 
 
 /* Forms validation Messages */
@@ -87,5 +88,5 @@ export const formSuccessUpdatedInterface = 'The interface was updated successful
 
 /* BaseUrl validation Messages */
 export const didntChooseBaseUrl = 'You need to select a base URL';
-export const invalidCustomBaseUrl = 'The url you entered is not valid';
+export const invalidCustomBaseUrl = 'The url is not responding or is not a valid OAI-PMH url';
 export const identifyingUrl = 'Identifying Url ...';

@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PiwikService } from '../../services/piwik.service';
 import { PiwikInfo } from '../../domain/typeScriptClasses';
-import { enabledMetricsError, enablingMetrics, loadingReposMessage,
-         reposRetrievalError } from '../../domain/shared-messages';
+import {
+  enabledMetricsError,
+  enablingMetrics,
+  loadingReposMessage,
+  reposRetrievalError,
+  validatePiwikSiteSuccess
+} from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 
 @Component ({
@@ -13,6 +18,7 @@ import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/con
 export class AdminPgMetricsComponent implements OnInit {
   piwiks: PiwikInfo[] = [];
   errorMessage: string;
+  successMessage: string;
   loadingMessage: string;
 
   modalTitle = 'Approval Confirmation';
@@ -50,6 +56,7 @@ export class AdminPgMetricsComponent implements OnInit {
         },
         () => {
           this.loadingMessage = '';
+          window.scroll(1, 1);
         }
       );
   }
@@ -68,6 +75,7 @@ export class AdminPgMetricsComponent implements OnInit {
   approvePiwik(id: string) {
     this.loadingMessage = enablingMetrics;
     this.errorMessage = '';
+    this.successMessage = '';
 
     /*this.piwikService.approvePiwikSite(id).subscribe(*/
     this.piwikService.markPiwikSiteAsValidated(id).subscribe(
@@ -80,6 +88,7 @@ export class AdminPgMetricsComponent implements OnInit {
       () => {
         this.loadingMessage = '';
         this.errorMessage = '';
+        this.successMessage = validatePiwikSiteSuccess;
         this.getPiwiks();
       }
     );

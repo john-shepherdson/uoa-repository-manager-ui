@@ -10,11 +10,25 @@ import { MatomoInjector } from 'ngx-matomo';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  piwikUrl: string;
-
   constructor(private router: Router,
               private authService: AuthenticationService,
               private matomoInjector: MatomoInjector) {
+
+    console.log('11-02-2019. First deploy of project upgraded to angular 6');
+
+    let piwikUrl;
+    if (window.location.origin.includes('beta')) {
+      // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
+      piwikUrl = '92';
+    } else if (window.location.origin.includes('localhost:4200') ||
+               window.location.origin.includes('athenarc')) {
+      // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
+      piwikUrl = '9222222';
+    } else {
+      // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=111&rec=1';
+      piwikUrl = '111';
+    }
+    this.matomoInjector.init('https://analytics.openaire.eu/', piwikUrl);
 
     /*disabling console.log in production*/
     if ( environment.production === true ) {
@@ -34,17 +48,21 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.router.events.subscribe((evt) => {
-      if (evt instanceof RoutesRecognized) {
+      /*if ((evt instanceof RoutesRecognized) && (environment.production === true)) {
         let piwikUrl;
         if (window.location.origin.includes('beta')) {
           // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
           piwikUrl = '92';
+        } else if (window.location.origin.includes('localhost:4200') ||
+                   window.location.origin.includes('athenarc')) {
+          // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
+          piwikUrl = '9222222';
         } else {
           // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=111&rec=1';
           piwikUrl = '111';
         }
         this.matomoInjector.init('https://analytics.openaire.eu/', piwikUrl);
-      }
+      }*/
 
       if (!(evt instanceof NavigationEnd)) {
         return;
