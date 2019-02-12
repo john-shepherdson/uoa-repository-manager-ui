@@ -126,21 +126,21 @@
 
               <div class="uk-width-expand@m">
                 <p class="uk-margin-medium-bottom">
-                  <span class="emphasis provide">{{ statisticsNumbers ? (statisticsNumbers.literature | number) : 'N/A' }}</span><br>
+                  <span class="emphasis provide">{{ (statisticsNumbers && statisticsNumbers.literature) ? (statisticsNumbers.literature | number) : 'N/A' }}</span><br>
                   <span class="uk-text-uppercase">literature repositories</span>
                 </p>
                 <p>
-                  <span class="emphasis provide">{{ statisticsNumbers ? (statisticsNumbers.journal | number) : 'N/A' }}</span><br>
+                  <span class="emphasis provide">{{ (statisticsNumbers && statisticsNumbers.journal) ? (statisticsNumbers.journal | number) : 'N/A' }}</span><br>
                   <span class="uk-text-uppercase">OA Journals</span>
                 </p>
               </div>
               <div class="uk-width-expand@m">
                 <p class="uk-margin-medium-bottom">
-                  <span class="emphasis provide">{{ statisticsNumbers ? (statisticsNumbers.dataRepositories | number) : 'N/A' }}</span><br>
+                  <span class="emphasis provide">{{ (statisticsNumbers && statisticsNumbers.dataRepositories) ? (statisticsNumbers.dataRepositories | number) : 'N/A' }}</span><br>
                   <span class="uk-text-uppercase">data repositories</span>
                 </p>
                 <p>
-                  <span class="emphasis provide">{{ statisticsNumbers ? (statisticsNumbers.aggregators | number) : 'N/A' }}</span><br>
+                  <span class="emphasis provide">{{ (statisticsNumbers && statisticsNumbers.aggregators) ? (statisticsNumbers.aggregators | number) : 'N/A' }}</span><br>
                   <span class="uk-text-uppercase">aggregators</span>
                 </p>
               </div>
@@ -151,22 +151,29 @@
 
               <div class="uk-width-expand@m">
                 <p>
-                  <span class="emphasis">{{ statisticsNumbers ? (statisticsNumbers.publications | number) : 'N/A' }}</span><span class="uk-text-uppercase"> publications</span>
+                  <span class="emphasis">{{ (statisticsNumbers && statisticsNumbers.publications) ? (statisticsNumbers.publications | number) : 'N/A' }}</span>
+                  <span class="uk-text-uppercase"> publications</span>
                 </p>
                 <p>
-                  <span class="emphasis">{{ statisticsNumbers ? (statisticsNumbers.datasets | number) : 'N/A' }}</span><span class="uk-text-uppercase"> datasets</span>
+                  <span class="emphasis">{{ (statisticsNumbers && statisticsNumbers.datasets) ? (statisticsNumbers.datasets | number) : 'N/A' }}</span>
+                  <span class="uk-text-uppercase"> datasets</span>
                 </p>
                 <p>
-                  <span class="emphasis">{{ statisticsNumbers ? (statisticsNumbers.software | number) : 'N/A' }}</span><span class="uk-text-uppercase"> software</span>
+                  <span class="emphasis">{{ (statisticsNumbers && statisticsNumbers.software) ? (statisticsNumbers.software | number) : 'N/A' }}</span>
+                  <span class="uk-text-uppercase"> software</span>
                 </p>
               </div>
               <div class="uk-width-expand@m">
                 <p>
-                  <span class="emphasis">{{ statisticsNumbers ? (statisticsNumbers.lastYearUsagestats.number | number) : 'N/A' }}</span><span class="uk-text-uppercase"> usage events
+                  <span class="emphasis">{{ statisticsNumbers ? (statisticsNumbers.lastYearUsagestats.number | number) : 'N/A' }}</span>
+                  <span class="uk-text-uppercase"> usage events
                   ({{ statisticsNumbers ? statisticsNumbers.lastYearUsagestats.year : 'N/A' }})</span>
                 </p>
                 <p>
-                  <span class="emphasis">{{ statisticsNumbers ? (statisticsNumbers.usagestats | number) : 'N/A' }}</span><span class="uk-text-uppercase"> metadata exchange events</span>
+                  <span class="emphasis">
+                    {{ (statisticsNumbers && statisticsNumbers.usagestats) ? statisticsNumbers.usagestats : 'N/A' }}
+                  </span>
+                  <span class="uk-text-uppercase"> metadata exchange events</span>
                 </p>
               </div>
 
