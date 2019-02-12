@@ -35,7 +35,7 @@ export class LandingComponent implements OnInit {
     this.statsService.getStatisticsNumbers().subscribe(
       res => {
         this.statisticsNumbers = res;
-        this.statisticsNumbers.lastYearUsagestats = JSON.parse(res['lastYearUsagestats'].toString());
+        // this.statisticsNumbers.lastYearUsagestats = JSON.parse(res['lastYearUsagestats'].toString());
       },
       error => console.log(error),
       () => {

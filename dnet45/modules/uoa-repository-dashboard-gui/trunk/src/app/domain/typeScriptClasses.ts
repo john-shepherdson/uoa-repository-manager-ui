@@ -625,7 +625,7 @@ export class UsageStatsSummary implements IsSerializable {
   aggregators: string;
   journal: string;
   software: string;
-  lastYearUsagestats: { number: string; year: string; };
+  lastYearUsagestats: { number: string; year: number; };
   usagestats: string;
   dataRepositories: string;
   datasets: string;
