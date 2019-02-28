@@ -8,7 +8,7 @@ import { DatasourceCreateFormComponent } from '../sources-forms/datasource-creat
 import { DatasourceNewInterfaceFormComponent } from '../sources-forms/datasource-new-interface-form.component';
 import { from, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
-import { noInterfacesSaved } from '../../../domain/shared-messages';
+import { formErrorRegisterRepo, noInterfacesSaved } from '../../../domain/shared-messages';
 
 @Component({
   selector: 'app-register-new-datasource',
@@ -190,7 +190,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
         error => {
           console.log(error);
           this.loadingMessage = '';
-          this.errorMessage = 'The changes could not be saved';
+          this.errorMessage = formErrorRegisterRepo;
         },
         () => {
           this.saveNewInterfaces();

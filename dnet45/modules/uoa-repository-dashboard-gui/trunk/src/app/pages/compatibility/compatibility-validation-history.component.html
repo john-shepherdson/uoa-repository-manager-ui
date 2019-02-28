@@ -150,7 +150,7 @@
                           </div>
                         </td>
                         <td class="uk-table-shrink" style="vertical-align: top !important;">
-                          <input type="image" src="{{ getResultImage(job.validationStatus) }}" title="{{job.validationStatus}}" width="20" height="20">
+                          <img type="image" [src]="getResultImage(job.validationStatus)" title="{{job.validationStatus}}">
                         </td>
                       </tr>
                       </tbody>

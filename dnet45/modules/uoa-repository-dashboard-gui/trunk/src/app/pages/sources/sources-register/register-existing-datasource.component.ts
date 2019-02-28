@@ -12,6 +12,7 @@ import { DatasourceNewInterfaceFormComponent } from '../sources-forms/datasource
 import { from, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import {
+  formErrorRegisterRepo,
   formInfoLoading, formInterfacesLoading, loadingInterfacesError, loadingRepoError,
   noInterfacesSaved
 } from '../../../domain/shared-messages';
@@ -281,7 +282,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   //       error => {
   //         console.log(error);
   //         this.loadingMessage = '';
-  //         this.errorMessage = 'The changes could not be saved';
+  //         this.errorMessage = formErrorRegisterRepo;
   //       },
   //       () => {
   //         this.saveNewInterfaces();
@@ -302,7 +303,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         error => {
           console.log(error);
           this.loadingMessage = '';
-          this.errorMessage = 'The changes could not be saved';
+          this.errorMessage = formErrorRegisterRepo;
         },
         () => {
           this.saveNewInterfaces();
