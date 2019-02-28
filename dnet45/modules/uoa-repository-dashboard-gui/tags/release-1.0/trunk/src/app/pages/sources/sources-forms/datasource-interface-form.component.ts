@@ -1,0 +1,379 @@
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { MyGroup } from '../../../shared/reusablecomponents/forms/my-group.interface';
+import { Validators } from '@angular/forms';
+import { formErrorRequiredFields, formErrorWasntSaved, formInfoLoading, formSubmitting, formSuccessAddedInterface,
+         formSuccessUpdatedInterface, invalidCustomBaseUrl, noServiceMessage } from '../../../domain/shared-messages';
+import { ValidatorService } from '../../../services/validator.service';
+import { RepositoryService } from '../../../services/repository.service';
+import { InterfaceInformation, Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
+import { baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description, existingValSetDesc } from '../../../domain/oa-description';
+
+@Component ({
+  selector: 'datasource-interface-form',
+  templateUrl: './datasource-interface-form.component.html'
+})
+
+export class DatasourceInterfaceFormComponent extends MyGroup implements OnDestroy, OnInit {
+
+  loadingMessage: string;
+  successMessage: string;
+  errorMessage: string;
+
+  currentRepository: Repository;
+  oldInterface: boolean;
+
+  identifiedBaseUrl: boolean;
+  existingValSet: boolean;
+  interfaceInfo: InterfaceInformation;
+  currentInterface: RepositoryInterface;
+  valsetList: string[] = [];
+
+  existingCompLevel: string;
+  compClasses: Map<string, string> = new Map<string, string>();
+  classCodes: string[] = [];
+
+  readonly groupDefinition = {
+    baseUrl: ['', Validators.required],
+    selectValidationSet: [''],
+    customValidationSet: [''],
+    compatibilityLevel: ['']
+  };
+  baseUrlDesc: Description = baseUrlDesc;
+  existingValSetDesc: Description = existingValSetDesc;
+  customValSetDesc: Description = customValSetDesc;
+  compatibilityLevelDesc: Description = compatibilityLevelDesc;
+
+  constructor(injector: Injector,
+              private valService: ValidatorService,
+              private repoService: RepositoryService){
+    super(injector);
+  }
+
+  ngOnInit() {
+    this.currentRepository = <Repository>this.otherData;
+    console.log(`other data is: ${JSON.stringify(this.otherData, null, 2)}`);
+    if (this.data && this.data.length) {
+      this.currentInterface = this.data[0];
+      this.patchData.next({
+        baseUrl: this.data[0].baseUrl,
+        selectValidationSet: '',
+        customValidationSet: '',
+        compatibilityLevel: this.data[0].desiredCompatibilityLevel
+      });
+      this.getInterfaceInfo(this.data[0].baseUrl);
+      this.data.splice(0, 1);
+      this.oldInterface = true;
+      console.log(`received an interface!`);
+      /*if (this.interfaceInfo && this.interfaceInfo.identified &&
+          this.currentInterface.desiredCompatibilityLevel) {
+        this.wasSaved = true;
+      }*/
+    }
+
+    /* initializes MyGroup parent component and the FormGroup */
+    super.ngOnInit();
+    console.log(this.group, this.parentGroup);
+    this.getCompatibilityClasses();
+
+    /*  NOT ANYMORE
+    if (this.currentInterface) {
+      this.getMyControl('baseUrl').disable();
+    }
+*/
+    this.existingValSet = true;
+    this.getMyControl('customValidationSet').disable();
+  }
+
+  chooseValSet(existingValSet: boolean) {
+    if (existingValSet) {
+      this.existingValSet = true;
+      this.getMyControl('selectValidationSet').enable();
+      this.getMyControl('customValidationSet').disable();
+    }  else {
+      this.existingValSet = false;
+      this.getMyControl('selectValidationSet').disable();
+      this.getMyControl('customValidationSet').enable();
+    }
+    this.checkIfValid();
+  }
+
+  getInterfaceInfo(baseUrl: string) {
+    this.successMessage = '';
+    this.errorMessage = '';
+    this.groupErrorMessage = '';
+    if (baseUrl) {
+      this.loadingMessage = formInfoLoading;
+      this.valService.getInterfaceInformation(baseUrl).subscribe(
+        info => {
+          this.interfaceInfo = info;
+          if (this.interfaceInfo.identified) {
+            this.identifiedBaseUrl = true;
+          } else {
+            this.errorMessage = invalidCustomBaseUrl;
+          }
+          if (this.interfaceInfo.sets) {
+            this.valsetList = this.interfaceInfo.sets;
+            console.log(this.valsetList);
+          }
+        },
+        error => {
+          console.log(error);
+          this.loadingMessage = '';
+          this.identifiedBaseUrl = false;
+          this.errorMessage = noServiceMessage;
+        },
+        () => {
+          if (this.interfaceInfo && this.interfaceInfo.identified &&
+              this.currentInterface && this.currentInterface.desiredCompatibilityLevel) {
+            this.wasSaved = true;
+          }
+          if ( this.currentInterface && this.currentInterface.accessParams && this.currentInterface.accessParams['set'] ) {
+            if ( this.valsetList.some( x => x === this.currentInterface.accessParams['set']) ) {
+              this.patchData.next({selectValidationSet: this.currentInterface.accessParams['set']});
+            } else {
+              this.patchData.next({customValidationSet: this.currentInterface.accessParams['set']});
+              this.getMyControl('selectValidationSet').enable();
+              this.getMyControl('customValidationSet').disable();
+            }
+          }
+          this.loadingMessage = '';
+        }
+      );
+    }
+  }
+
+  getCompatibilityClasses() {
+    this.repoService.getCompatibilityClasses(this.currentRepository.datasourceType).subscribe(
+      classes => {
+        this.compClasses = classes;
+        for (const key in this.compClasses) {
+          this.classCodes.push(key);
+        }
+      },
+      error => {
+        this.errorMessage = noServiceMessage;
+        console.log(error);
+      },
+      () => {
+        if (this.currentInterface) {
+          console.log(`accessParams is ${JSON.stringify(this.currentInterface.accessParams)}`);
+          if ( !this.currentInterface.desiredCompatibilityLevel ||
+               !this.classCodes.some( x => x === this.currentInterface.desiredCompatibilityLevel ) ) {
+            this.patchData.next({compatibilityLevel: ''});
+            this.existingCompLevel = this.currentInterface.desiredCompatibilityLevel;
+          } else {
+            this.existingCompLevel = this.compClasses[this.currentInterface.desiredCompatibilityLevel];
+          }
+          if (this.group.valid ) {
+            this.exportedData = this.currentInterface;
+          }
+        }
+
+      }
+    );
+  }
+
+  saveInterface() {
+    this.groupErrorMessage = '';
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    // if decided that valset is required add && this.checkIfValsetWasChosen() to the condition
+    if (this.group.valid && this.checkIfCompatibilityLevelWasChosen() ) {
+      if (this.identifiedBaseUrl) {
+        const baseUrl = this.getMyControl('baseUrl').value;
+        let valset = '';
+        if (this.getMyControl('selectValidationSet').enabled) {
+          valset = this.getMyControl('selectValidationSet').value;
+        } else {
+          valset = this.getMyControl('customValidationSet').value;
+        }
+        let compLvl = '';
+        if (this.getMyControl('compatibilityLevel').value) {
+          compLvl = this.getMyControl('compatibilityLevel').value;
+        } else {
+          compLvl = this.existingCompLevel;
+        }
+
+
+        if (this.currentInterface) {
+          this.updateCurrent(baseUrl, valset, compLvl);
+        } else {
+          this.addCurrent(baseUrl, valset, compLvl);
+        }
+      } else {
+        this.errorMessage = invalidCustomBaseUrl;
+      }
+    } else {
+      this.errorMessage = formErrorRequiredFields;
+      this.successMessage = '';
+    }
+  }
+
+  checkIfValsetWasChosen() {
+    return ( ( this.getMyControl('selectValidationSet').enabled &&
+               this.getMyControl('selectValidationSet').value !== '' ) ||
+             ( this.getMyControl('customValidationSet').enabled &&
+               this.getMyControl('customValidationSet').value !== '' ) );
+  }
+
+  checkIfCompatibilityLevelWasChosen() {
+    return ( (this.getMyControl('compatibilityLevel').value !== '') ||
+             (this.existingCompLevel && (this.existingCompLevel !== '')) );
+  }
+
+  checkIfValid() {
+    if (this.inRegister) {
+      // if decided that valset is required add && this.checkIfValsetWasChosen() to the condition
+      if ( this.group.valid && this.checkIfCompatibilityLevelWasChosen() ) {
+        if ( this.identifiedBaseUrl ) {
+          const baseUrl = this.getMyControl('baseUrl').value;
+
+          let valset = '';
+          if (this.getMyControl('selectValidationSet').enabled) {
+            valset = this.getMyControl('selectValidationSet').value;
+          } else {
+            valset = this.getMyControl('customValidationSet').value;
+          }
+
+          let compLvl = '';
+          if (this.getMyControl('compatibilityLevel').value) {
+            this.existingCompLevel = this.compClasses[this.getMyControl('compatibilityLevel').value];
+            console.log('this.existingCompLevel is', this.existingCompLevel);
+            compLvl = this.getMyControl('compatibilityLevel').value;
+          } else {
+            compLvl = this.existingCompLevel;
+          }
+
+          if (this.currentInterface) {
+            this.updateCurrent(baseUrl, valset, compLvl);
+          } else {
+            this.addCurrent(baseUrl, valset, compLvl);
+          }
+        }
+      } else {
+        this.exportedData = null;
+        this.wasSaved = false;
+        this.successMessage = '';
+      }
+    }
+  }
+
+  updateCurrent (baseUrl: string, valset: string, compLvl: string) {
+    this.successMessage = '';
+    this.errorMessage = '';
+    this.currentInterface.baseUrl = baseUrl;
+    this.currentInterface.accessSet = valset;
+    this.currentInterface.accessParams['set'] = valset;
+    this.currentInterface.desiredCompatibilityLevel = compLvl;
+    this.currentInterface.compliance = compLvl;
+    this.currentInterface.typology = this.currentRepository.datasourceClass;
+    this.exportedData = this.currentInterface;
+    if (!this.inRegister) {
+      this.loadingMessage = formSubmitting;
+      this.updateInterface();
+    } else {
+      this.loadingMessage = '';
+      this.wasSaved = true;
+      this.successMessage = 'The interface will be stored when the registration procedure is completed';
+    }
+  }
+
+  addCurrent (baseUrl: string, valset: string, compLvl: string) {
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.currentInterface = new RepositoryInterface();
+    this.currentInterface.baseUrl = baseUrl;
+    this.currentInterface.accessSet = valset;
+    this.currentInterface.accessParams = {'set': valset};
+    this.currentInterface.desiredCompatibilityLevel = compLvl;
+    this.currentInterface.compliance = compLvl;
+    this.currentInterface.typology = this.currentRepository.datasourceClass;
+    this.exportedData = this.currentInterface;
+    if (!this.inRegister) {
+      this.loadingMessage = formSubmitting;
+      this.addInterface();
+    } else {
+      this.loadingMessage = '';
+      this.wasSaved = true;
+      this.successMessage = 'The interface will be stored when the registration procedure is completed';
+    }
+  }
+
+  addInterface() {
+    this.repoService.addInterface(this.currentRepository.datasourceType,
+                                  this.currentRepository.id,
+                                  this.currentRepository.registeredBy,
+                                  this.currentInterface).subscribe(
+      addedInterface => {
+        console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
+        this.currentInterface = addedInterface;
+      },
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = formErrorWasntSaved;
+        this.currentInterface = null;
+      },
+      () => {
+        this.loadingMessage = '';
+        if (this.currentInterface.id) {
+          this.successMessage = formSuccessAddedInterface;
+          this.wasSaved = true;
+          if ( !this.currentInterface.desiredCompatibilityLevel ||
+               !this.classCodes.some( x => x === this.currentInterface.desiredCompatibilityLevel ) ) {
+            this.patchData.next({compatibilityLevel: ''});
+            this.existingCompLevel = this.currentInterface.desiredCompatibilityLevel;
+          } else {
+            this.existingCompLevel = this.compClasses[this.currentInterface.desiredCompatibilityLevel];
+          }
+        } else {
+          this.errorMessage = formErrorWasntSaved;
+        }
+      }
+    );
+
+  }
+
+  updateInterface() {
+    this.repoService.updateInterface(this.currentRepository.id, this.currentRepository.registeredBy, this.currentInterface).subscribe(
+      response => {
+        console.log(`updateRepository responded ${JSON.stringify(response)}`);
+        if (response) {
+          this.successMessage = formSuccessUpdatedInterface;
+          this.wasSaved = true;
+        } else {
+          this.errorMessage = formErrorWasntSaved;
+        }
+      },
+      error => {
+        console.log(error);
+        this.loadingMessage = '';
+        this.errorMessage = formErrorWasntSaved;
+      },
+      () => {
+        this.loadingMessage = '';
+        if ( !this.currentInterface.desiredCompatibilityLevel ||
+             !this.classCodes.some( x => x === this.currentInterface.desiredCompatibilityLevel ) ) {
+          this.patchData.next({compatibilityLevel: ''});
+          this.existingCompLevel = this.currentInterface.desiredCompatibilityLevel;
+        } else {
+          this.existingCompLevel = this.compClasses[this.currentInterface.desiredCompatibilityLevel];
+        }
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.currentInterface && this.currentInterface.id && this.toBeDeleted) {
+      this.repoService.deleteInterface(this.currentInterface.id, this.currentRepository.registeredBy).subscribe(
+        response => console.log(`deleteInterface responded: ${JSON.stringify(response)}`),
+        error => console.log(error),
+        () => console.log(`deleted ${this.currentInterface.id}`)
+      );
+    } else {
+      console.log(`deleting empty interface form`);
+    }
+  }
+
+}
