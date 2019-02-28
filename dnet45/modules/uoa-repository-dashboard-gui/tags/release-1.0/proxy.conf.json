@@ -1,0 +1,8 @@
+{
+  "/uoa-repository-manager-service/*": {
+    "target": "http://aleka.athenarc.gr:8480",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}
