@@ -171,7 +171,7 @@ export class DatasourceCreateFormComponent implements OnInit {
         console.log(error);
       },
       () => {
-        for (const key in this.datasourceClasses) {
+        for (const key of Object.keys(this.datasourceClasses)) {
           this.classCodes.push(key);
         }
       }
@@ -208,20 +208,20 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   createNewRepository(): Repository {
     const newRepo: Repository = new Repository();
-    newRepo.officialName = this.group.get('officialName').value;
-    newRepo.englishName = this.group.get('englishName').value;
+    newRepo.officialName = encodeURI(this.group.get('officialName').value);
+    newRepo.englishName = encodeURI(this.group.get('englishName').value);
     newRepo.websiteUrl = this.group.get('websiteUrl').value;
     newRepo.logoUrl = this.group.get('logoUrl').value;
     newRepo.contactEmail = this.group.get('adminEmail').value;
     newRepo.countryName = this.countries.filter(x => x.code === this.group.get('country').value)[0].name;
     newRepo.countryCode = this.group.get('country').value;
-    newRepo.organization = this.group.get('institutionName').value;
+    newRepo.organization = encodeURI(this.group.get('institutionName').value);
     newRepo.latitude = this.group.get('latitude').value;
     newRepo.longitude = this.group.get('longtitude').value;
     newRepo.timezone = this.group.get('timezone').value;
     newRepo.datasourceClass = this.group.get('datasourceType').value;
     newRepo.typology = this.group.get('softwarePlatform').value;
-    newRepo.description = this.group.get('repoDescription').value;
+    newRepo.description = encodeURI(this.group.get('repoDescription').value);
     newRepo.issn = '';
     newRepo.eissn = '';
     newRepo.lissn = '';

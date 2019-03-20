@@ -171,7 +171,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         console.log(error);
       },
       () => {
-        for (const key in this.datasourceClasses){
+        for (const key of Object.keys(this.datasourceClasses)) {
           this.classCodes.push(key);
         }
         this.getCountries();
@@ -280,15 +280,15 @@ export class DatasourceUpdateFormComponent implements OnInit {
     } else if (this.updateGroup.get('platformName').value) {
       this.selectedRepo.typology = this.updateGroup.get('platformName').value;
     }
-    this.selectedRepo.officialName = this.updateGroup.get('officialName').value;
-    this.selectedRepo.description = this.updateGroup.get('repoDescription').value;
+    this.selectedRepo.officialName = encodeURI(this.updateGroup.get('officialName').value);
+    this.selectedRepo.description = encodeURI(this.updateGroup.get('repoDescription').value);
     this.selectedRepo.countryCode = this.updateGroup.get('country').value;
     this.selectedRepo.countryName = this.countries.filter(x => x.code === this.updateGroup.get('country').value)[0].name;
     this.selectedRepo.longitude = this.updateGroup.get('longtitude').value;
     this.selectedRepo.latitude = this.updateGroup.get('latitude').value;
     this.selectedRepo.websiteUrl = this.updateGroup.get('websiteUrl').value;
-    this.selectedRepo.organization = this.updateGroup.get('institutionName').value;
-    this.selectedRepo.englishName = this.updateGroup.get('englishName').value;
+    this.selectedRepo.organization = encodeURI(this.updateGroup.get('institutionName').value);
+    this.selectedRepo.englishName = encodeURI(this.updateGroup.get('englishName').value);
     this.selectedRepo.logoUrl = this.updateGroup.get('logoUrl').value;
     this.selectedRepo.timezone = this.updateGroup.get('timezone').value;
     this.selectedRepo.datasourceClass = this.updateGroup.get('datasourceType').value;
