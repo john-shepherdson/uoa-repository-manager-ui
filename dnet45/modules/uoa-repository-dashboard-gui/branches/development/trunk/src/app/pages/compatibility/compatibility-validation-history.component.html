@@ -1,0 +1,207 @@
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+  <div class="uk-width-1-1@m uk-first-column">
+
+    <h1 class="uk-h2">Previous validations</h1>
+
+    <!-- TOP HELP CONTENT -->
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+    <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
+      <div class="uk-grid">
+
+        <!-- LEFT HELP CONTENT -->
+        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+        <!-- MIDDLE -->
+        <div class=" uk-width-expand@m">
+
+          <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+          <div *ngIf="failureMessage" class="uk-alert uk-alert-danger">{{ failureMessage }}</div>
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+          <div *ngIf="loadingMessage" class="loading-big">
+            <div class="loader-big"
+                 style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+              {{ loadingMessage }}
+            </div>
+            <div class="whiteFilm"></div>
+          </div>
+          <div *ngIf="jobsOfUser">
+            <div class="uk-grid page-controls">
+              <div class="uk-margin-bottom uk-width-1-1 filters">
+                <div class="links">
+                  <div class="filterLabel">Filter by job type:</div>
+                  <div class="inlineBlock">
+                    <select class="form-control" #selectType (change)="getJobType(selectType.value)">
+                      <option value="">--none selected--</option>
+                      <option *ngFor="let type of jobTypes" value="{{type}}">{{type}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="uk-margin-bottom uk-width-1-1 filters">
+                <div class="links uk-inline">
+                  <div class="filterLabel" style="display: inline;">Filter validation jobs:</div>
+                  <a class="uk-active"
+                     [class.active]="currentFilter==='all'"
+                     (click)="filterJobs('all')">All jobs ({{this.jobsOfUser.totalJobs}})</a>
+                  <a class="uk-active"
+                     [class.active]="currentFilter==='successful'"
+                     (click)="filterJobs('successful')">successful ({{this.jobsOfUser.totalJobsSuccessful}})</a>
+                  <a class="uk-active"
+                     [class.active]="currentFilter==='failed'"
+                     (click)="filterJobs('failed')">failed ({{this.jobsOfUser.totalJobsFailed}})</a>
+                  <a class="uk-active"
+                     [class.active]="currentFilter==='ongoing'"
+                     (click)="filterJobs('ongoing')">ongoing ({{this.jobsOfUser.totalJobsOngoing}})</a>
+                </div>
+                <div class="show-options uk-inline" style="float: right;">
+                  <div class="filterLabel" style="display: inline;">Jobs per page:</div>
+                  <div class="inlineBlock">
+                    <select #itemsPerPage class="form-control" (change)="getItemsPerPage(+itemsPerPage.value)">
+                      <option value="10" selected>10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="contentAndPagerPanel">
+              <div>
+                <ul class="uk-pagination">
+                  <li>
+                    <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
+                      <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+                        <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"
+                             icon="pagination-previous" ratio="1"></svg>
+                      </span>
+                      Previous
+                    </a>
+                  </li>
+                  <li class="uk-margin-auto-left">
+                    <a class="uk-link uk-link-muted" (click)="goToNextPage()">
+                      Next
+                      <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                        <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"
+                             icon="pagination-next" ratio="1"></svg>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="resultsPageLabel">page {{ (totalPages > 0) ? currentPage+1 : 0 }} of {{ totalPages }}</div>
+              </div>
+              <div>
+                <div>
+                  <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-top uk-margin-bottom">
+                    <table class="uk-table uk-table-middle uk-table-striped" style="vertical-align: top !important;">
+                      <thead>
+                      <tr>
+                        <th>Repository</th>
+                        <th>Validation Type</th>
+                        <th>Status</th>
+                        <th>Score</th>
+                        <th>Started</th>
+                        <th>Guidelines</th>
+                        <th>Actions</th>
+                        <th></th>
+                      </tr>
+                      </thead>
+                      <tr *ngIf="infoMessage">
+                        <td colspan="7">{{ infoMessage }}</td>
+                      </tr>
+                      <tbody *ngIf="jobsOfUser && jobsOfUser.jobs">
+                      <tr class="el-item" *ngFor="let job of jobsOfUser.jobs">
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
+                          <div class="el-title">{{ job.baseUrl }}</div>
+                        </td>
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
+                          <div *ngIf="job.validationType.includes('C')" class="el-title">OAI Content</div>
+                          <div *ngIf="job.validationType.includes('U')" class="el-title">OAI Usage</div>
+                        </td>
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
+                          <div *ngIf="job.validationType.includes('C')" class="el-title">{{ job.contentJobStatus }}</div>
+                          <div *ngIf="job.validationType.includes('U')" class="el-title">{{ job.usageJobStatus }}</div>
+                        </td>
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
+                          <div *ngIf="job.validationType.includes('C')" class="el-title">{{ job.contentJobScore }}</div>
+                          <div *ngIf="job.validationType.includes('U')" class="el-title">{{ job.usageJobScore }}</div>
+                        </td>
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
+                          <div class="el-title">{{ job.started }}</div>
+                        </td>
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
+                          <div class="el-title">{{ job.guidelinesShortName }}</div>
+                        </td>
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
+                          <div class="el-link">
+                            <div class="viewDetailsLinkWrapper">
+                              <a class="viewDetails" [routerLink]="[job.id]">
+                                View Results<i class="fa fa-angle-right"></i>
+                              </a>
+                            </div>
+                            <div>
+                              <a class="resubmitJob" (click)="resubmitJob(job.id.toString(), job.userEmail)">Resubmit Job<i class="fa fa-repeat"></i></a>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="uk-table-shrink" style="vertical-align: top !important;">
+                          <img type="image" [src]="getResultImage(job.validationStatus)" title="{{job.validationStatus}}">
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <ul class="uk-pagination">
+                  <li>
+                    <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
+                    <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+                      <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"
+                           icon="pagination-previous" ratio="1"></svg>
+                    </span>
+                      Previous
+                    </a>
+                  </li>
+                  <li class="uk-margin-auto-left">
+                    <a class="uk-link uk-link-muted" (click)="goToNextPage()">
+                      Next
+                      <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                        <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"
+                             icon="pagination-next" ratio="1"></svg>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="resultsPageLabel">page {{ (totalPages > 0) ? currentPage+1 : 0 }} of {{ totalPages }}</div>
+              </div>
+            </div>
+            <div class="row"></div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT HELP CONTENT -->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+      </div>
+    </div>
+
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+
+  </div>
+</div>
+
