@@ -1,0 +1,60 @@
+    <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+      <div class="uk-width-1-1@m uk-first-column">
+        <h1 class="uk-h2">Manage your datasources</h1>
+
+        <!-- TOP HELP CONTENT -->
+        <help-content #topHelperContent [position]="'top'"
+                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
+
+        <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
+          <div class="uk-grid">
+
+            <!-- LEFT HELP CONTENT -->
+            <aside-help-content #leftHelperContent [position]="'left'"
+                                [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+            </aside-help-content>
+
+            <!-- MIDDLE -->
+            <div class=" uk-width-expand@m">
+
+              <repository-tiles [parent]="'sourcesUpdate'"></repository-tiles>
+              <div class="row openAIRECompliantLogoDownload">
+                <div class="col-lg-12">
+                  <div class="col-md-12">
+                    <div>
+                      <div class="openAIRECompliantLogo">
+                        <h2 class="openAIRECompliantLogoMessage">
+                          Congratulations! Your repository was successfully registered in OpenAIRE. You can download this logo to use in your site.
+                        </h2>
+                        <img src="../../../assets/imgs/OpenAIRE_validated_icon_medium.png" alt="OpenAireCompliant">
+                      </div>
+                    </div>
+                    <a (click)="downloadLogo()">
+                      Download
+                      <i class="fa fa-download" style=""></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT HELP CONTENT -->
+            <aside-help-content #rightHelperContent [position]="'right'"
+                                [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+            </aside-help-content>
+
+          </div>
+        </div>
+
+
+        <!-- BOTTOM HELP CONTENT -->
+        <help-content #bottomHelperContent [position]="'bottom'"
+                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
+
+
+      </div>
+    </div>
+
