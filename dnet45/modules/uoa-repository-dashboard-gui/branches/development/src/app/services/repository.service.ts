@@ -20,7 +20,8 @@ import { typologies } from '../domain/typologies';
 
 const headerOptions = {
   headers : new HttpHeaders().set('Content-Type', 'application/json')
-                             .set('Accept', 'application/json'),
+                             .set('Accept', 'application/json; charset=utf-8')
+                             .set('Accept-Charset', 'charset=utf-8'),
   withCredentials: true
 };
 

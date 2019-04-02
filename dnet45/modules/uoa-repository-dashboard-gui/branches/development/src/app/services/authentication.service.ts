@@ -140,8 +140,10 @@ export class AuthenticationService {
 
   public getUserEmail() {
     if (this.isLoggedIn) {
+      console.log('bommin');
       return sessionStorage.getItem('email');
     } else {
+      console.log('bommout');
       return '';
     }
   }

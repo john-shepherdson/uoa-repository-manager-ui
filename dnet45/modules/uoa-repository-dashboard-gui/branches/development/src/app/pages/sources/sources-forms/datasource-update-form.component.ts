@@ -280,15 +280,15 @@ export class DatasourceUpdateFormComponent implements OnInit {
     } else if (this.updateGroup.get('platformName').value) {
       this.selectedRepo.typology = this.updateGroup.get('platformName').value;
     }
-    this.selectedRepo.officialName = this.updateGroup.get('officialName').value.toString();
-    this.selectedRepo.description = this.updateGroup.get('repoDescription').value.toString();
+    this.selectedRepo.officialName = this.updateGroup.get('officialName').value;
+    this.selectedRepo.description = this.updateGroup.get('repoDescription').value;
     this.selectedRepo.countryCode = this.updateGroup.get('country').value;
     this.selectedRepo.countryName = this.countries.filter(x => x.code === this.updateGroup.get('country').value)[0].name;
     this.selectedRepo.longitude = this.updateGroup.get('longtitude').value;
     this.selectedRepo.latitude = this.updateGroup.get('latitude').value;
     this.selectedRepo.websiteUrl = this.updateGroup.get('websiteUrl').value;
-    this.selectedRepo.organization = this.updateGroup.get('institutionName').value.toString();
-    this.selectedRepo.englishName = this.updateGroup.get('englishName').value.toString();
+    this.selectedRepo.organization = this.updateGroup.get('institutionName').value;
+    this.selectedRepo.englishName = this.updateGroup.get('englishName').value;
     this.selectedRepo.logoUrl = this.updateGroup.get('logoUrl').value;
     this.selectedRepo.timezone = this.updateGroup.get('timezone').value;
     this.selectedRepo.datasourceClass = this.updateGroup.get('datasourceType').value;
