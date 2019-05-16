@@ -1,10 +1,8 @@
-import { Component, OnInit, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DatasourceInterfaceFormComponent } from './sources-forms/datasource-interface-form.component';
 import { Repository, RepositoryInterface } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Description, interfaceFormDesc, } from '../../domain/oa-description';
 import { formInfoLoading, loadingRepoError } from '../../domain/shared-messages';
 import { DatasourceUpdateFormComponent } from './sources-forms/datasource-update-form.component';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
@@ -28,8 +26,6 @@ export class SourcesUpdateRepoComponent implements OnInit {
   @ViewChild('datasourceUpdateForm') datasourceUpdateForm: DatasourceUpdateFormComponent;
 
   group: FormGroup;
-  interfaceFormDesc: Description = interfaceFormDesc;
-  updateDatasourceInterfaces: Type<any> = DatasourceInterfaceFormComponent;
 
   @ViewChildren('interfacesArray') interfacesArray: QueryList<DatasourceNewInterfaceFormComponent>;
   dataForInterfaceComp: any[] = [];

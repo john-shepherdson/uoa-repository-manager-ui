@@ -14,7 +14,6 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
 import { SourcesUpdateRepoComponent } from './sources-update-repo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RepoFilter } from './sourcesPipes';
-import { DatasourceInterfaceFormComponent } from './sources-forms/datasource-interface-form.component';
 import { DatasourceNewInterfaceFormComponent } from './sources-forms/datasource-new-interface-form.component';
 import { SrDataComponent } from './sources-register/sr-data.component';
 import { RegisterDatasourceSelectExistingComponent } from './sources-register/register-datasource-select-existing.component';
@@ -34,9 +33,6 @@ import { RegisterExistingDatasourceComponent } from './sources-register/register
     SourcesRouting,
     ReusableComponentsModule
   ],
-  entryComponents : [
-    DatasourceInterfaceFormComponent
-  ],
   declarations: [
     SourcesComponent,
     SourcesRegisterComponent,
@@ -51,7 +47,6 @@ import { RegisterExistingDatasourceComponent } from './sources-register/register
     RegisterDatasourceSelectExistingComponent,
     DatasourceUpdateFormComponent,
     DatasourceCreateFormComponent,
-    DatasourceInterfaceFormComponent,
     DatasourceNewInterfaceFormComponent,
     RepoFilter                           // a pipe that searches for string in repository name
   ]

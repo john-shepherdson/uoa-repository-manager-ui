@@ -50,7 +50,13 @@ export class RegisterNewDatasourceComponent implements OnInit {
 
   ngOnInit() {
     if (this.datasourceType) {
-      this.getStep();
+
+      // will execute getStep() every time there is a change in query params
+      this.route.queryParams.subscribe(
+        params => {
+          this.getStep();
+        }
+      );
     }
   }
 
@@ -218,6 +224,8 @@ export class RegisterNewDatasourceComponent implements OnInit {
         },
         () => {
           this.loadingMessage = '';
+          this.repo = null;
+          this.repoInterfaces = [];
           this.navigateToStep('finish');
         }
       );
