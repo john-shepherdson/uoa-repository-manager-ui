@@ -69,7 +69,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
         this.currentStep = 1;
       } else if (stepName === 'interfaces') {
         if (!this.repo) {
-          this.navigateToStep('basicInformation');
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`);
         } else {
           this.currentStep = 2;
         }
@@ -77,18 +77,10 @@ export class RegisterNewDatasourceComponent implements OnInit {
         this.currentStep = 3;
       }
     }
-  }
-
-  navigateToStep(step: string) {
-    this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=${step}`)
-      .then( () => {
-          this.getStep();
-          this.rightHelperContent.ngOnInit();
-          this.topHelperContent.ngOnInit();
-          this.leftHelperContent.ngOnInit();
-          this.bottomHelperContent.ngOnInit();
-        }
-      );
+    this.rightHelperContent.ngOnInit();
+    this.topHelperContent.ngOnInit();
+    this.leftHelperContent.ngOnInit();
+    this.bottomHelperContent.ngOnInit();
   }
 
   moveAStep() {
@@ -112,7 +104,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
     this.errorMessage = '';
     if (this.currentStep === 2) {
       of(this.getInterfaces()).subscribe(
-        () => this.navigateToStep('basicInformation')
+        () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`)
       );
     }
   }
@@ -176,7 +168,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
   getCurrentRepo(repo: Repository) {
     this.repo = repo;
     of (this.fillInterfacesForms()).subscribe(
-      () => this.navigateToStep('interfaces')
+      () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`)
     );
   }
 
@@ -226,7 +218,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
           this.loadingMessage = '';
           this.repo = null;
           this.repoInterfaces = [];
-          this.navigateToStep('finish');
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=finish`);
         }
       );
     }

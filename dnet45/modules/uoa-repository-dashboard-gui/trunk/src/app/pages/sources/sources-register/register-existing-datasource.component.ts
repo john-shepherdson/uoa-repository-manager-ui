@@ -80,13 +80,13 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       const stepName = this.route.snapshot.queryParamMap.get('step');
       if (stepName === 'basicInformation') {
         if (!this.datasourceId) {
-          this.navigateToStep('selectDatasource');
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=selectDatasource`);
         } else {
           this.currentStep = 1;
         }
       } else if (stepName === 'interfaces') {
         if (!this.repo) {
-          this.navigateToStep('selectDatasource');
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=selectDatasource`);
         } else {
           this.currentStep = 2;
         }
@@ -94,18 +94,22 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         this.currentStep = 3;
       }
     }
+    this.rightHelperContent.ngOnInit();
+    this.topHelperContent.ngOnInit();
+    this.leftHelperContent.ngOnInit();
+    this.bottomHelperContent.ngOnInit();
   }
 
   navigateToStep(step: string) {
-    this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=${step}`)
-      .then( () => {
-          this.getStep();
+    this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=${step}`);
+      /*.then( () => {
+          // this.getStep();
           this.rightHelperContent.ngOnInit();
           this.topHelperContent.ngOnInit();
           this.leftHelperContent.ngOnInit();
           this.bottomHelperContent.ngOnInit();
         }
-      );
+      );*/
   }
 
   moveAStep() {
@@ -113,7 +117,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     if (this.currentStep === 0) {
       if (this.datasourcesByCountry.goToNextStep()) {
         console.log(`got datasource with id ${this.datasourceId}`);
-        this.navigateToStep('basicInformation');
+        this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`);
       }
     } else if (this.currentStep === 1) {
       this.registerDatasource.updateRepo();
@@ -135,10 +139,10 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     if (this.currentStep === 1) {
       this.repoInterfaces = [];
       this.repo = null;
-      this.navigateToStep('selectDatasource');
+      this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=selectDatasource`);
     } else if (this.currentStep === 2) {
       of(this.getInterfaces()).subscribe(
-        () => this.navigateToStep('basicInformation')
+        () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`)
       );
     }
   }
@@ -236,7 +240,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       this.getRepoInterfaces();
     } else {
       of(this.fillInterfacesForms()).subscribe(
-        () => this.navigateToStep('interfaces')
+        () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`)
       );
     }
   }
@@ -265,7 +269,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       () => {
         this.loadingMessage = '';
         of(this.fillInterfacesForms()).subscribe(
-          () => this.navigateToStep('interfaces')
+          () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`)
         );
       }
     );
@@ -339,7 +343,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
           this.datasourceId = null;
           this.repo = null;
           this.repoInterfaces = [];
-          this.navigateToStep('finish');
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=finish`);
         }
       );
     }

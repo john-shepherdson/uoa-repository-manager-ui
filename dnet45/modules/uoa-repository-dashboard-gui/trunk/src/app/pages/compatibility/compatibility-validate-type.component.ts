@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { CompatibilityValidateStep1Component } from './compatibility-validate-forms/compatibility-validate-step1.component';
 import { RepositoryService } from '../../services/repository.service';
 import { JobForValidation, RuleSet } from '../../domain/typeScriptClasses';
@@ -69,7 +69,9 @@ export class CompatibilityValidateTypeComponent implements OnInit {
     if (this.route.snapshot.paramMap.has('type')) {
       this.type = this.route.snapshot.paramMap.get('type');
       this.getBaseUrlList();
-      this.getStep();
+      this.route.queryParams.subscribe(
+        () => this.getStep()
+      );
     }
   }
 
@@ -79,13 +81,13 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       const stepName = this.route.snapshot.queryParamMap.get('step');
       if (stepName === 'guidelines') {
         if (!this.identifiedUrl) {
-          this.navigateToStep('baseUrl');
+          this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=baseUrl`);
         } else {
           this.currentStep = 1;
         }
       } else if ((stepName === 'parameters') || (stepName === 'crisEntities')) {
         if (!this.chosenUrl) {
-          this.navigateToStep('baseUrl');
+          this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=baseUrl`);
         } else {
           this.currentStep = 2;
         }
@@ -93,18 +95,10 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         this.currentStep = 3;
       }
     }
-  }
-
-  navigateToStep(step: string) {
-    this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=${step}`)
-      .then( () => {
-          this.getStep();
-          this.rightHelperContent.ngOnInit();
-          this.topHelperContent.ngOnInit();
-          this.leftHelperContent.ngOnInit();
-          this.bottomHelperContent.ngOnInit();
-        }
-      );
+    this.rightHelperContent.ngOnInit();
+    this.topHelperContent.ngOnInit();
+    this.leftHelperContent.ngOnInit();
+    this.bottomHelperContent.ngOnInit();
   }
 
   /* retrieves the baseUrl list for the registered repositories of the user */
@@ -142,10 +136,10 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       console.log(this.chosenContentRules);
       if (this.chosenContentRules.length || this.chosenUsageRules.length) {
         if (this.type === 'cris') {
-          this.navigateToStep('crisEntities');
+          this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=crisEntities`);
         } else {
           this.getValidationSets();
-          this.navigateToStep('parameters');
+          this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=parameters`);
         }
       } else {
         this.errorMessage = didntSelectRules;
@@ -170,11 +164,11 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   moveBackAStep () {
     this.errorMessage = '';
     if (this.currentStep === 1) {
-      this.navigateToStep('baseUrl');
+      this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=baseUrl`);
     } else if ((this.currentStep === 2) && (this.type !== 'cris')) {
-      this.navigateToStep('guidelines');
+      this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=guidelines`);
     } else if ((this.currentStep === 2) && (this.type === 'cris')) {
-      this.navigateToStep('guidelines');
+      this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=guidelines`);
     }
   }
 
@@ -217,7 +211,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         () => {
           this.loadingMessage = '';
           if (this.ruleSets && this.ruleSets.length) {
-            this.navigateToStep('guidelines');
+            this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=guidelines`);
           } else {
             this.errorMessage = noRuleSets;
             window.scroll(1, 1);
@@ -315,7 +309,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         window.scroll(1, 1);
       },
       () => {
-        this.navigateToStep('finish');
+        this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=finish`);
       }
     );
   }
