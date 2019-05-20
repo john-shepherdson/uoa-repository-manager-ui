@@ -4,12 +4,8 @@ import { baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description, exi
 import { InterfaceInformation, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { ValidatorService } from '../../../services/validator.service';
 import { RepositoryService } from '../../../services/repository.service';
-import {
-  formErrorWasntSaved,
-  formInfoLoading, formSubmitting, formSuccessAddedInterface, formSuccessUpdatedInterface, invalidCustomBaseUrl,
-  nonRemovableInterface,
-  noServiceMessage
-} from '../../../domain/shared-messages';
+import { formErrorWasntSaved, formInfoLoading, formSubmitting, formSuccessAddedInterface, formSuccessUpdatedInterface, invalidCustomBaseUrl,
+         nonRemovableInterface, noServiceMessage } from '../../../domain/shared-messages';
 
 export class RepoFields {
   id: string;
@@ -29,8 +25,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
 
   @Input() data: any[] = []; // expects an array containing at least 3 of the 4 below fields in this order
   inRegister: boolean;
-  interfaceID: number;     // holds the interface index in the interfaces array as displayed
-  currentRepo: RepoFields; // a fraction of the Repository class
+  interfaceID: number;      // holds the interface index in the interfaces array as displayed
+  currentRepo: RepoFields;  // a fraction of the Repository class
   currentInterface: RepositoryInterface;
 
   @Output() emitDeleteInterface: EventEmitter<number> = new EventEmitter<number>();
@@ -175,7 +171,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   checkIfValid() {
     if (this.formIsValid()) {
       if (this.inRegister) {
-        this.successMessage = 'The interface will be stored when the registration procedure is completed';
+        this.successMessage = 'The interface will be stored when the registration procedure is completed.';
         this.saveInterface();
       }
     } else {
@@ -212,7 +208,33 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       }
     } else {
       this.interfaceToExport = null;
+      this.errorMessage = 'Please make sure all required fields are filled with acceptable values.';
     }
+  }
+
+  getCurrentValues() {
+    let intrf = this.currentInterface;
+    if (intrf == null) {
+      intrf = new RepositoryInterface();
+    }
+    intrf.baseUrl = this.repoInterfaceForm.get('baseUrl').value;
+    if (this.existingValSet) {
+      intrf.accessSet = this.repoInterfaceForm.get('selectValidationSet').value;
+      intrf.accessParams = {'set': this.repoInterfaceForm.get('selectValidationSet').value};
+    } else {
+      intrf.accessSet = this.repoInterfaceForm.get('customValidationSet').value;
+      intrf.accessParams = {'set': this.repoInterfaceForm.get('customValidationSet').value};
+    }
+    if (this.repoInterfaceForm.get('compatibilityLevel').value) {
+      intrf.desiredCompatibilityLevel = this.repoInterfaceForm.get('compatibilityLevel').value;
+      intrf.compliance = this.repoInterfaceForm.get('compatibilityLevel').value;
+    } else {
+      intrf.desiredCompatibilityLevel = this.existingCompLevel;
+      intrf.compliance = this.existingCompLevel;
+    }
+    intrf.typology = this.currentRepo.datasourceClass;
+
+    return intrf;
   }
 
   addCurrent (baseUrl: string, valset: string, compLvl: string) {
@@ -309,7 +331,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
     if (this.interfaceID > 0) {
-      if (this.currentInterface && (this.currentInterface.id !== null)) {
+      if (this.currentInterface && (this.currentInterface.id !== null) && !this.inRegister) {
         this.repoService.deleteInterface(this.currentInterface.id, this.currentRepo.registeredBy).subscribe(
           res => console.log(`deleteInterface responded: ${JSON.stringify(res)}`),
           er => console.log(er),
