@@ -35,9 +35,7 @@ export class MetricsShowComponent implements OnInit {
 
   ngOnInit() {
     this.repoId = this.route.snapshot.paramMap.get('id');
-    setTimeout(() => {
-      this.getPiwik();
-    }, 1000);
+    this.getPiwik();
   }
 
 
