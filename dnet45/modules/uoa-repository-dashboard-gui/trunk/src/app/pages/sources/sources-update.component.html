@@ -18,8 +18,10 @@
             <!-- MIDDLE -->
             <div class=" uk-width-expand@m">
 
-              <repository-tiles [parent]="'sourcesUpdate'"></repository-tiles>
-              <div class="row openAIRECompliantLogoDownload">
+              <repository-tiles #repositoryTiles [parent]="'sourcesUpdate'"
+                                (emitNoRepos)="setNoRepositories($event)"></repository-tiles>
+
+              <div *ngIf="!noRepositories" class="row openAIRECompliantLogoDownload">
                 <div class="col-lg-12">
                   <div class="col-md-12">
                     <div>
