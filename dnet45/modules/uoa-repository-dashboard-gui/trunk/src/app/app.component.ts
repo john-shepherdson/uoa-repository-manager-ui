@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
               private matomoInjector: MatomoInjector,
               private matomoTracker: MatomoTracker) {
 
-    console.log('11-02-2019. First deploy of project upgraded to angular 6');
+    console.log('21-06-2019. Fixed matomo to log userIds?');
 
     let piwikUrl;
     if (window.location.origin.includes('beta')) {
@@ -48,12 +48,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.authService.isLoggedIn) {
-      this.matomoTracker.setUserId(this.authService.getUserEmail());
-    }
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
+      }
+      if (this.authService.isLoggedIn) {
+        this.matomoTracker.setUserId(this.authService.getUserEmail());
       }
       window.scrollTo(0, 0);
     });
