@@ -1,0 +1,124 @@
+<div *ngIf="loadingMessage" class="loading-big">
+  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+    {{ loadingMessage }}
+  </div>
+  <div class="whiteFilm"></div>
+</div>
+<div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+<form *ngIf="selectedRepo && !loadingMessage" [formGroup]="updateGroup">
+  <div>
+    <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
+      Basic information
+    </h4>
+  </div>
+  <div *ngIf="selectedRepo.datasourceType === 'opendoar'" class="uk-alert uk-alert-primary">
+    The following fields are completed by OpenDOAR.<br>
+    If you want to edit them, you can do it by using this
+    <a target="_blank" href="{{ 'http://v2.sherpa.ac.uk/id/repository/' + repoId }}">OpenDOAR link</a>
+  </div>
+  <div *ngIf="selectedRepo.datasourceType === 're3data'" class="uk-alert uk-alert-primary">
+    The following fields are completed by Re3data.<br>
+    If you want to edit them, you can do it by using this
+    <a target="_blank" href="{{ 'http://service.re3data.org/repository/' + repoId }}">Re3data link</a>
+  </div>
+  <form-inline [description]="softwarePlatformDesc" [valid]="updateGroup.get('softwarePlatform').valid">
+    <select formControlName="softwarePlatform" class="form-control">
+<!--      <option value="" selected>[Other] (enter name below)</option> RESTORE AFTER getTypologies begins to work-->
+      <option *ngFor="let platform of typologies" value="{{ platform.value }}">{{ platform.name }}</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="platformNameDesc" [valid]="updateGroup.get('platformName').valid">
+    <span *ngIf="updateGroup.get('platformName').touched && updateGroup.get('platformName').value"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; ">This value will be used as the platform for your repository</span>
+    <input formControlName="platformName" class="form-control" style="" type="text">
+  </form-inline>
+  <form-inline [description]="officialNameDesc" [valid]="updateGroup.get('officialName').valid">
+    <input formControlName="officialName" class="form-control" style="" type="text">
+  </form-inline>
+  <div *ngIf="selectedRepo.datasourceType == 'journal'">
+    <form-inline [description]="issnDesc" [valid]="updateGroup.get('issn').valid">
+      <span *ngIf="updateGroup.get('issn').invalid && updateGroup.get('issn').touched && updateGroup.get('issn').dirty"
+            class="help-block inline uk-text-danger"
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn needs to be of the form: "1111-1111" or "1111-111X"</span>
+      <input formControlName="issn" class="form-control" type="text"
+             (focus)="updateGroup.get('issn').markAsUntouched()" (blur)="updateGroup.get('issn').updateValueAndValidity()">
+    </form-inline>
+    <form-inline [description]="eissnDesc" [valid]="updateGroup.get('eissn').valid">
+      <span *ngIf="updateGroup.get('eissn').invalid && updateGroup.get('eissn').touched && updateGroup.get('eissn').dirty"
+            class="help-block inline uk-text-danger"
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn needs to be of the form: "1111-1111" or "1111-111X"</span>
+      <input formControlName="eissn" class="form-control" type="text"
+             (focus)="updateGroup.get('eissn').markAsUntouched()" (blur)="updateGroup.get('eissn').updateValueAndValidity()">
+    </form-inline>
+    <form-inline [description]="lissnDesc" [valid]="updateGroup.get('lissn').valid">
+      <span *ngIf="updateGroup.get('lissn').invalid && updateGroup.get('lissn').touched && updateGroup.get('lissn').dirty"
+            class="help-block inline uk-text-danger"
+            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn needs to be of the form: "1111-1111" or "1111-111X"</span>
+      <input formControlName="lissn" class="form-control" type="text"
+             (focus)="updateGroup.get('lissn').markAsUntouched()" (blur)="updateGroup.get('lissn').updateValueAndValidity()">
+    </form-inline>
+  </div>
+  <form-inline [description]="repoDescriptionDesc" [valid]="updateGroup.get('repoDescription').valid">
+    <textarea formControlName="repoDescription" class="form-control"></textarea>
+  </form-inline>
+  <form-inline [description]="countryDesc" [valid]="updateGroup.get('country')">
+    <select formControlName="country" class="form-control">
+      <option value="">-- none selected --</option>
+      <option *ngFor="let country of countries" value="{{country.code}}" title="{{country.name}}">{{ country.name }}</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="longtitudeDesc" [valid]="updateGroup.get('longtitude').valid">
+    <input formControlName="longtitude" type="text" class="form-control">
+  </form-inline>
+  <form-inline [description]="latitudeDesc" [valid]="updateGroup.get('latitude').valid">
+    <input formControlName="latitude" type="text" class="form-control">
+  </form-inline>
+  <form-inline [description]="websiteUrlDesc" [valid]="updateGroup.get('websiteUrl').valid">
+    <input formControlName="websiteUrl" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="institutionNameDesc" [valid]="updateGroup.get('institutionName').valid">
+    <input formControlName="institutionName" class="form-control" type="text">
+  </form-inline>
+  <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
+      uk-scrollspy-class="">Extra Information</h4>
+  <form-inline [description]="englishNameDesc" [valid]="updateGroup.get('englishName').valid">
+    <input formControlName="englishName" class="form-control" type="text">
+  </form-inline>
+  <form-inline [description]="logoUrlDesc" [valid]="updateGroup.get('logoUrl').valid">
+    <span *ngIf="updateGroup.get('logoUrl').invalid && updateGroup.get('logoUrl').touched && updateGroup.get('logoUrl').dirty"
+          class="help-block inline uk-text-danger"
+          style="margin-top: 0px; margin-bottom: 0px; ">The url you entered is not valid</span>
+    <input formControlName="logoUrl" class="form-control" type="text"
+           (focus)="updateGroup.get('logoUrl').markAsUntouched()"
+           (blur)="updateGroup.get('logoUrl').updateValueAndValidity()">
+    <div class="comment fontItalic">
+      Please make sure that the maximum size of the uploaded image is width=360px, height=240px
+    </div>
+  </form-inline>
+  <form-inline [description]="timezoneDesc" [valid]="updateGroup.get('timezone').valid">
+    <select formControlName="timezone" class="form-control">
+      <option value="">-- none selected --</option>
+      <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.name }}</option>
+    </select>
+  </form-inline>
+  <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">
+    <select formControlName="datasourceType" class="form-control">
+      <option value="">-- none selected --</option>
+      <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
+    </select>
+  </form-inline>
+  <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
+      uk-scrollspy-class="">Administrator & contact information</h4>
+  <form-inline [description]="adminEmailDesc" [valid]="updateGroup.get('adminEmail').valid">
+    <span *ngIf="updateGroup.get('adminEmail').invalid && updateGroup.get('adminEmail').touched && updateGroup.get('adminEmail').dirty"
+          class="help-block inline"
+          style="margin-top: 0px; margin-bottom: 0px; ">You need to enter a valid email address</span>
+    <input formControlName="adminEmail" class="form-control" type="text" (focus)="updateGroup.get('adminEmail').markAsUntouched()" (blur)="updateGroup.get('adminEmail').updateValueAndValidity()">
+  </form-inline>
+  <div *ngIf="showButton" class="form-group">
+    <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
+  </div>
+</form>
+
