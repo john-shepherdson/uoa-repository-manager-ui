@@ -8,7 +8,7 @@ import { DatasourceCreateFormComponent } from '../sources-forms/datasource-creat
 import { DatasourceNewInterfaceFormComponent } from '../sources-forms/datasource-new-interface-form.component';
 import { from, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
-import { formErrorRegisterRepo, noInterfacesSaved } from '../../../domain/shared-messages';
+import { errorsInInterfaces, formErrorRegisterRepo, noInterfacesSaved } from '../../../domain/shared-messages';
 
 @Component({
   selector: 'app-register-new-datasource',
@@ -21,6 +21,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
   datasourceType: string;
   repo: Repository = null;
   repoInterfaces: RepositoryInterface[] = [];
+  interfacesToDelete: string[] = [];
 
   /* queryParams are used to follow the steps without refreshing the page
    * This was needed for Help Service [which sends back info according to the current router.url].
@@ -50,7 +51,13 @@ export class RegisterNewDatasourceComponent implements OnInit {
 
   ngOnInit() {
     if (this.datasourceType) {
-      this.getStep();
+
+      // will execute getStep() every time there is a change in query params
+      this.route.queryParams.subscribe(
+        params => {
+          this.getStep();
+        }
+      );
     }
   }
 
@@ -63,7 +70,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
         this.currentStep = 1;
       } else if (stepName === 'interfaces') {
         if (!this.repo) {
-          this.navigateToStep('basicInformation');
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`);
         } else {
           this.currentStep = 2;
         }
@@ -71,18 +78,10 @@ export class RegisterNewDatasourceComponent implements OnInit {
         this.currentStep = 3;
       }
     }
-  }
-
-  navigateToStep(step: string) {
-    this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=${step}`)
-      .then( () => {
-          this.getStep();
-          this.rightHelperContent.ngOnInit();
-          this.topHelperContent.ngOnInit();
-          this.leftHelperContent.ngOnInit();
-          this.bottomHelperContent.ngOnInit();
-        }
-      );
+    this.rightHelperContent.ngOnInit();
+    this.topHelperContent.ngOnInit();
+    this.leftHelperContent.ngOnInit();
+    this.bottomHelperContent.ngOnInit();
   }
 
   moveAStep() {
@@ -91,11 +90,17 @@ export class RegisterNewDatasourceComponent implements OnInit {
       this.registerDatasource.registerDatasource();
     } else if (this.currentStep === 2) {
       of(this.getInterfaces()).subscribe(
-        () => {
-          if (this.repoInterfaces.length > 0) {
-            this.addRepository();
+        errors => {
+          if (errors > 0) {
+            this.errorMessage = errorsInInterfaces;
+            window.scrollTo(1, 1);
           } else {
-            this.errorMessage = noInterfacesSaved;
+            if (this.repoInterfaces.length > 0) {
+              this.addRepository();
+            } else {
+              this.errorMessage = noInterfacesSaved;
+              window.scrollTo(1, 1);
+            }
           }
         }
       );
@@ -106,7 +111,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
     this.errorMessage = '';
     if (this.currentStep === 2) {
       of(this.getInterfaces()).subscribe(
-        () => this.navigateToStep('basicInformation')
+        () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`)
       );
     }
   }
@@ -132,13 +137,21 @@ export class RegisterNewDatasourceComponent implements OnInit {
 
   getInterfaces() {
     this.repoInterfaces = [];
+    let invalidFormsCount = 0;
     for (const el of this.interfacesArray.toArray()) {
       const intrf = el.getInterface();
       if (intrf) {
         this.repoInterfaces.push(intrf);
         console.log(JSON.stringify(intrf));
+      } else {
+        invalidFormsCount = invalidFormsCount + 1;
+        const repo_interface = el.getCurrentValues();
+        this.repoInterfaces.push(repo_interface);
+        console.log(JSON.stringify(repo_interface));
       }
     }
+    console.log('new interfaces is ', this.repoInterfaces);
+    return invalidFormsCount;
   }
 
   fillInterfacesForms() {
@@ -170,7 +183,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
   getCurrentRepo(repo: Repository) {
     this.repo = repo;
     of (this.fillInterfacesForms()).subscribe(
-      () => this.navigateToStep('interfaces')
+      () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`)
     );
   }
 
@@ -218,7 +231,9 @@ export class RegisterNewDatasourceComponent implements OnInit {
         },
         () => {
           this.loadingMessage = '';
-          this.navigateToStep('finish');
+          this.repo = null;
+          this.repoInterfaces = [];
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=finish`);
         }
       );
     }

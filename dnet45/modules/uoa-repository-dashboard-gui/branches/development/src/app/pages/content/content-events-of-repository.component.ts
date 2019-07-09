@@ -32,9 +32,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
   ngOnInit() {
     this.repoName = this.route.snapshot.paramMap.get('name');
     this.getCorrectName();
-    setTimeout(() => {
-      this.getTopics();
-    }, 500);
+    this.getTopics();
   }
 
   getRepoTopics(): void {

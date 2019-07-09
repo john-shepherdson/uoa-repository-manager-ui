@@ -1,0 +1,114 @@
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+  <div class="uk-width-1-1@m uk-first-column">
+
+    <h1 class="uk-h2">Metrics Admin</h1>
+
+    <!-- TOP HELP CONTENT -->
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+    <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
+      <div class="uk-grid">
+
+        <!-- LEFT HELP CONTENT -->
+        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+        <!-- MIDDLE -->
+        <div class="uk-width-expand@m">
+
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+          <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+          <div *ngIf="loadingMessage" class="loading-big">
+            <div class="loader-big"
+                 style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+              {{ loadingMessage }}
+            </div>
+            <div class="whiteFilm"></div>
+          </div>
+
+          <div class="uk-grid">
+            <div class="uk-width-1-1@m">
+              <form [formGroup]="dataForm" class="uk-form-horizontal uk-width-1-4@m  uk-float-right">
+                <div class="uk-margin">
+                  <label class="uk-form-label uk-text-right" for="pageSize">Items per page: </label>
+                  <div class="uk-form-controls">
+                    <select class="uk-select" id="pageSize" formControlName="pageSize">
+                      <option value="10">10</option>
+                      <option value="25" selected>25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="uk-margin">
+                  <label class="uk-form-label uk-text-right" for="sortBy">Sort by: </label>
+                  <div class="uk-form-controls">
+                    <select class="uk-select" id="sortBy" formControlName="requestSortBy">
+                      <option value="registrationdate" selected>date</option>
+                      <option value="officialname">name</option>
+                    </select>
+                  </div>
+                </div>
+
+              </form>
+<!--              <div class="uk-input uk-width-1-2@m uk-float-right uk-position-center">-->
+<!--                <input type="text">-->
+<!--              </div>-->
+              <form class="uk-search uk-search-default uk-width-1-2@m uk-float-right uk-position-center">
+                <input class="uk-search-input" type="search" placeholder="Search...">
+              </form>
+            </div>
+
+          </div>
+
+          <div class="uk-grid">
+
+            <div class="uk-width-1-4@m">
+              <form [formGroup]="dataForm" class="uk-form-stacked">
+
+                <div class="uk-margin">
+                  <div class="uk-form-label uk-text-large">Datasource Type</div>
+                  <div class="uk-form-controls">
+                    <label><input class="uk-radio" type="radio" value="Literature" formControlName="typology">
+                      Literature</label><br>
+                    <label><input class="uk-radio" type="radio" value="Data" formControlName="typology">
+                      Data</label><br>
+                    <label><input class="uk-radio" type="radio" value="Journal" formControlName="typology">
+                      Journal</label><br>
+                    <label><input class="uk-radio" type="radio" value="Aggregator" formControlName="typology">
+                      Aggregator</label>
+                  </div>
+                </div>
+
+                <div class="uk-margin">
+                  <div class="uk-form-label uk-text-large">Countries</div>
+                  <div class="uk-form-controls">
+                    <read-more [maxHeight]="235">
+                      <div *ngFor="let country of countries">
+                        <label><input class="uk-radio" type="radio" value="{{country.code}}"
+                                      formControlName="country"> {{country.name}}</label><br>
+                      </div>
+                    </read-more>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
+            <div class="uk-width-3-4@m">
+              <pre><code>{{dataForm.value | json}}</code></pre>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

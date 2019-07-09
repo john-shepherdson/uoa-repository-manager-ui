@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Repository } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -17,6 +17,7 @@ export class RepositoryTilesComponent implements OnInit {
   loadingMessage: string;
 
   @Input() parent: string = '';
+  @Output() emitNoRepos: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private authService: AuthenticationService,
               private repoService: RepositoryService) {}
@@ -48,6 +49,7 @@ export class RepositoryTilesComponent implements OnInit {
           this.loadingMessage = '';
           if (!this.reposOfUser || !this.reposOfUser.length) {
             this.warningMessage = loadingUserRepoInfoEmpty;
+            this.emitNoRepos.emit(true);
           }
         }
       );

@@ -20,8 +20,7 @@ import { typologies } from '../domain/typologies';
 
 const headerOptions = {
   headers : new HttpHeaders().set('Content-Type', 'application/json')
-                             .set('Accept', 'application/json; charset=utf-8')
-                             .set('Accept-Charset', 'charset=utf-8'),
+                             .set('Accept', 'application/json'),
   withCredentials: true
 };
 
@@ -157,4 +156,9 @@ export class RepositoryService {
     return this.httpClient.get<any>(url, headerOptions);
   }
 
+  searchRegisteredRepositories(country, typology, englishName, officialName, requestSortBy, order, page, pageSize) {
+    const url = `${this.apiUrl}searchRegisteredRepositories/${page}/${pageSize}`;
+    console.log(`knocking on: ${url}`);
+    return this.httpClient.get<RepositorySnippet[]>(url, headerOptions);
+  }
 }

@@ -17,7 +17,8 @@ export const loadingAggregationHistoryError = 'System error retrieving repositor
 export const noAggregationHistory = 'There is no aggregation history for this repository at the moment';
 
 /* Interfaces Messages */
-export const noInterfacesSaved = 'You have to create at least one interface';
+export const noInterfacesSaved = 'You have to create at least one interface.';
+export const errorsInInterfaces = 'There are still invalid interfaces. Please correct or remove them.';
 export const nonRemovableInterface = 'This interface can not be removed!';
 
 /* Rules Messages */

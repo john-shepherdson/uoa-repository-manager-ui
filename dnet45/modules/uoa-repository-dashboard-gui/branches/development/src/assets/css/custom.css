@@ -934,7 +934,7 @@ transform: translateY(-50%);
 }
 .wk-tab>li.wk-active>a {
 border-color: transparent transparent #1678CB transparent !important;
-background:tranparent;
+background:transparent;
 border-bottom: 2px solid #1678CB;
 }
 .wk-tab>*>a {
@@ -1558,6 +1558,7 @@ background:#fff!important;
 padding-left:16px!important;
 }
 
+/*.black-text { color: black;}*/
 
 
 

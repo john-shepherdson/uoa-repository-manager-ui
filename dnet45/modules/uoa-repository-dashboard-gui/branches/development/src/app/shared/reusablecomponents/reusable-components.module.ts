@@ -17,6 +17,7 @@ import { HelpContentService } from '../../services/help-content.service';
 import { ModalModule, TabsModule } from 'ngx-bootstrap';
 import { TopMenuComponent } from '../topmenu/topmenu.component';
 import { FooterComponent } from '../footer/footer.component';
+import {ReadMoreComponent, ReadMoreTextComponent} from './read-more.component';
 
 const myGroups = [
   MyGroup,
@@ -49,6 +50,8 @@ const myGroups = [
     FooterComponent,
     RepositoryTilesComponent,
     ForbiddenPageComponent,
+    ReadMoreComponent,
+    ReadMoreTextComponent,
     ...myGroups
   ],
   exports: [
@@ -59,7 +62,8 @@ const myGroups = [
     FooterComponent,
     RepositoryTilesComponent,
     ForbiddenPageComponent,
-    ...myGroups
+    ...myGroups,
+    ReadMoreComponent
   ],
   providers: [
     HelpContentService

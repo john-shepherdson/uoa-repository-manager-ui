@@ -87,42 +87,40 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
   }
 
   getReposInCountry(i: number) {
-    setTimeout( () => {
-      const country = this.countries[i];
-      console.log(`I got ${country} and ${this.mode}`);
-      this.countryRepos = [];
-      this.selectedCountry = country;
-      this.hasSelectedCountry = false;
-      this.loadingMessage = loadingReposMessage;
-      this.noRepositories = '';
-      this.repoService.getRepositoriesOfCountry(country.code, this.mode).subscribe (
-        repos => {
-          this.countryRepos = repos;
-        },
-        error => {
-          console.log(error.statusText);
-          this.loadingMessage = '';
-          this.alertMessage = noServiceMessage;
-          this.countryRepos = [];
-        },
-        () => {
-          if (!this.countryRepos || !this.countryRepos.length) {
-            this.noRepositories = noRepositoriesFound;
+    const country = this.countries[i];
+    console.log(`I got ${country} and ${this.mode}`);
+    this.countryRepos = [];
+    this.selectedCountry = country;
+    this.hasSelectedCountry = false;
+    this.loadingMessage = loadingReposMessage;
+    this.noRepositories = '';
+    this.repoService.getRepositoriesOfCountry(country.code, this.mode).subscribe (
+      repos => {
+        this.countryRepos = repos;
+      },
+      error => {
+        console.log(error.statusText);
+        this.loadingMessage = '';
+        this.alertMessage = noServiceMessage;
+        this.countryRepos = [];
+      },
+      () => {
+        if (!this.countryRepos || !this.countryRepos.length) {
+          this.noRepositories = noRepositoriesFound;
+        } else {
+          this.noRepositories = '';
+          if (this.selectedCountry.code === country.code) {
+            /* to make sure that the correct set of repositories is displayed - in case of consequent country selections */
+            this.hasSelectedCountry = true;
           } else {
-            this.noRepositories = '';
-            if (this.selectedCountry.code === country.code) {
-              /* to make sure that the correct set of repositories is displayed - in case of consequent country selections */
-              this.hasSelectedCountry = true;
-            } else {
-              this.countryRepos = [];
-            }
+            this.countryRepos = [];
           }
-          this.loadingMessage = '';
-          this.alertMessage = '';
-          console.log('this.selectedCountry became', JSON.stringify(this.selectedCountry));
         }
-      );
-    }, 500);
+        this.loadingMessage = '';
+        this.alertMessage = '';
+        console.log('this.selectedCountry became', JSON.stringify(this.selectedCountry));
+      }
+    );
   }
 
   getLatestUpdate() {
