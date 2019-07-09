@@ -87,30 +87,32 @@
           <div class="uk-card-body">
 
             <ul *ngIf="getIsUserLoggedIn()" class="uk-child-width-1-1@s">
-    <!--                  <div *ngIf="getRepos()"></div>-->
-                <div *ngFor="let repository of repositories">
+              <!--                  <div *ngIf="getRepos()"></div>-->
+              <div *ngFor="let repository of repositories">
 
-                    <div class="uk container-fluid">
-                      <div class="uk-card">
-                        <div class="uk-card-header">
-                          <div class="uk-width-1-4@m uk-position-left">
-                            <img src="{{repository.logoUrl ? repository.logoUrl : '../../../assets/imgs/yourLogoHere.jpg'}}" alt="">
-                          </div>
-                          <div class="uk-width-3-4@m uk-position-right">
-                            <div class="uk-card-title"><h5 class="uk-text-center" style="color:black;">{{repository.officialName}}</h5></div>
-                          </div>
-                        </div>
+                <div class="uk container-fluid">
+                  <div class="uk-card">
+                    <div class="uk-card-header">
+                      <div class="uk-width-1-4@m uk-position-left">
+                        <img src="{{repository.logoUrl ? repository.logoUrl : '../../../assets/imgs/yourLogoHere.jpg'}}"
+                             alt="">
                       </div>
-
-                      <div class="uk-card-body">
-                        <p>Number of records collected: 57966</p>
-                        <p>Last indexed version: 2019-05-05</p>
-                        <p>Content enrichment events: 234</p>
-                        <p>Views and downloads: 1200</p>
+                      <div class="uk-width-3-4@m uk-position-right">
+                        <div class="uk-card-title"><h5 class="uk-text-center"
+                                                       style="color:black;">{{repository.officialName}}</h5></div>
                       </div>
                     </div>
+                  </div>
 
+                  <div class="uk-card-body">
+                    <p>Number of records collected: 57966</p>
+                    <p>Last indexed version: 2019-05-05</p>
+                    <p>Content enrichment events: 234</p>
+                    <p>Views and downloads: 1200</p>
+                  </div>
                 </div>
+
+              </div>
             </ul>
 
           </div>

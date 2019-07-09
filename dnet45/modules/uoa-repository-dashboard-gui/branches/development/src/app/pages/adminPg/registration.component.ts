@@ -35,12 +35,12 @@ export class RegistrationComponent implements OnInit {
     this.dataForm = this.fb.group(this.formPrepare);
 
     this.getCountries();
-    // this.repoService.searchRegisteredRepositories('', '', '', '', 'registrationdate', 'DESCENDING', 0, 25)
-    //   .subscribe(
-    //     suc => this.repositorySnippet = suc,
-    //     error => console.log(error),
-    //     () => console.log(this.repositorySnippet )
-    //   );
+    this.repoService.searchRegisteredRepositories('', '', '', '', 'registrationdate', 'DESCENDING', 0, 25)
+      .subscribe(
+        suc => this.repositorySnippet = suc,
+        error => console.log(error),
+        () => console.log(this.repositorySnippet )
+      );
 
   }
 
