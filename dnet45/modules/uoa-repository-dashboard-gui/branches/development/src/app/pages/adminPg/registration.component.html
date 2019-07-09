@@ -102,31 +102,22 @@
             </div>
 
             <div class="uk-width-3-4@m">
-              <pre><code>{{dataForm.value | json}}</code></pre>
-
+<!--              <pre><code>{{dataForm.value | json}}</code></pre>-->
               <table class="uk-table uk-table-striped">
                 <thead>
                 <tr>
-                  <th>Table Heading</th>
-                  <th>Table Heading</th>
-                  <th>Table Heading</th>
+                  <th>Repository</th>
+                  <th>Date</th>
+                  <th>Organization</th>
+                  <th>Datasource Type</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>Table Data</td>
-                  <td>Table Data</td>
-                  <td>Table Data</td>
-                </tr>
-                <tr>
-                  <td>Table Data</td>
-                  <td>Table Data</td>
-                  <td>Table Data</td>
-                </tr>
-                <tr>
-                  <td>Table Data</td>
-                  <td>Table Data</td>
-                  <td>Table Data</td>
+                <tr *ngFor="let res of repositorySnippet">
+                  <td>{{res.officialname}} <br> ({{res.id}})</td>
+                  <td>{{res.registrationdate}}</td>
+                  <td>{{res.organizations}}</td>
+                  <td>{{res.typology.split('::')[1]}}</td>
                 </tr>
                 </tbody>
               </table>

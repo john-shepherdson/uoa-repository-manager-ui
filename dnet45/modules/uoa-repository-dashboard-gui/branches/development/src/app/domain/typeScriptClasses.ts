@@ -159,6 +159,9 @@ export class RepositorySnippet {
   englishname: string;
   websiteurl: string;
   registeredby: string;
+  registrationdate: Date; //added
+  organizations: string;  //added
+  typology: string;       //added
 }
 
 export class RepositoryAccessProtocol {
