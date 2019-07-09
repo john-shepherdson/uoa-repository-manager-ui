@@ -35,7 +35,7 @@
                 <div class="uk-margin">
                   <label class="uk-form-label uk-text-right" for="pageSize">Items per page: </label>
                   <div class="uk-form-controls">
-                    <select class="uk-select" id="pageSize" formControlName="pageSize">
+                    <select class="uk-select" id="pageSize" (change)="handleChange()" formControlName="pageSize">
                       <option value="10">10</option>
                       <option value="25" selected>25</option>
                       <option value="50">50</option>
@@ -47,7 +47,7 @@
                 <div class="uk-margin">
                   <label class="uk-form-label uk-text-right" for="sortBy">Sort by: </label>
                   <div class="uk-form-controls">
-                    <select class="uk-select" id="sortBy" formControlName="requestSortBy">
+                    <select class="uk-select" id="sortBy" (change)="handleChange()" formControlName="requestSortBy">
                       <option value="registrationdate" selected>date</option>
                       <option value="officialname">name</option>
                     </select>
@@ -58,8 +58,9 @@
 <!--              <div class="uk-input uk-width-1-2@m uk-float-right uk-position-center">-->
 <!--                <input type="text">-->
 <!--              </div>-->
-              <form class="uk-search uk-search-default uk-width-1-2@m uk-float-right uk-position-center">
-                <input class="uk-search-input" type="search" placeholder="Search...">
+              <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-2@m uk-float-right">
+                <input class="uk-width-1-2 uk-search-input" type="search" formControlName="officialname" placeholder="Search...">
+                <button class="uk-button" (click)="handleChange()">Search</button>
               </form>
             </div>
 
@@ -73,13 +74,13 @@
                 <div class="uk-margin">
                   <div class="uk-form-label uk-text-large">Datasource Type</div>
                   <div class="uk-form-controls">
-                    <label><input class="uk-radio" type="radio" value="Literature" formControlName="typology">
+                    <label><input class="uk-radio" type="radio" value="Literature" (change)="handleChange()" formControlName="typology">
                       Literature</label><br>
-                    <label><input class="uk-radio" type="radio" value="Data" formControlName="typology">
+                    <label><input class="uk-radio" type="radio" value="Data" (change)="handleChange()" formControlName="typology">
                       Data</label><br>
-                    <label><input class="uk-radio" type="radio" value="Journal" formControlName="typology">
+                    <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChange()" formControlName="typology">
                       Journal</label><br>
-                    <label><input class="uk-radio" type="radio" value="Aggregator" formControlName="typology">
+                    <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChange()" formControlName="typology">
                       Aggregator</label>
                   </div>
                 </div>
@@ -90,7 +91,7 @@
                     <read-more [maxHeight]="235">
                       <div *ngFor="let country of countries">
                         <label><input class="uk-radio" type="radio" value="{{country.code}}"
-                                      formControlName="country"> {{country.name}}</label><br>
+                                      (change)="handleChange()" formControlName="country"> {{country.name}}</label><br>
                       </div>
                     </read-more>
                   </div>
@@ -102,6 +103,33 @@
 
             <div class="uk-width-3-4@m">
               <pre><code>{{dataForm.value | json}}</code></pre>
+
+              <table class="uk-table uk-table-striped">
+                <thead>
+                <tr>
+                  <th>Table Heading</th>
+                  <th>Table Heading</th>
+                  <th>Table Heading</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Table Data</td>
+                  <td>Table Data</td>
+                  <td>Table Data</td>
+                </tr>
+                <tr>
+                  <td>Table Data</td>
+                  <td>Table Data</td>
+                  <td>Table Data</td>
+                </tr>
+                <tr>
+                  <td>Table Data</td>
+                  <td>Table Data</td>
+                  <td>Table Data</td>
+                </tr>
+                </tbody>
+              </table>
 
             </div>
 

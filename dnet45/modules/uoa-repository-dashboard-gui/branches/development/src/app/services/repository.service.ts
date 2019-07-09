@@ -2,7 +2,7 @@
 * Created by myrto on 12/05/2017
 */
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
@@ -159,6 +159,20 @@ export class RepositoryService {
   searchRegisteredRepositories(country, typology, englishName, officialName, requestSortBy, order, page, pageSize) {
     const url = `${this.apiUrl}searchRegisteredRepositories/${page}/${pageSize}`;
     console.log(`knocking on: ${url}`);
-    return this.httpClient.get<RepositorySnippet[]>(url, headerOptions);
+    let params = new HttpParams();
+    if (country) {
+      params = params.append('country', country);
+    }
+    if (typology) {
+      params = params.append('typology', typology);
+    }
+    // params = params.append('englishName', englishName);
+    if (officialName) {
+      params = params.append('officialName', officialName);
+    }
+    params = params.append('requestSortBy', requestSortBy);
+    params = params.append('order', order);
+
+    return this.httpClient.get<RepositorySnippet[]>(url, {params, withCredentials: true});
   }
 }

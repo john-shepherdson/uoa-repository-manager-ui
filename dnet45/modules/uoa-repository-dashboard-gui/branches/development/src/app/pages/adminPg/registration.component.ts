@@ -4,7 +4,7 @@ import {Country, RepositorySnippet} from '../../domain/typeScriptClasses';
 import {RepositoryService} from '../../services/repository.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
-@Component ({
+@Component({
   selector: 'app-registration',
   templateUrl: 'registration.component.html'
 })
@@ -20,27 +20,25 @@ export class RegistrationComponent implements OnInit {
   formPrepare = {
     country: '',
     typology: '',
+    englishname: '',
+    officialname: '',
     requestSortBy: 'registrationdate',
     order: 'DESCENDING',
-    page: '1',
+    page: '0',
     pageSize: '25'
   };
 
   dataForm: FormGroup;
 
   constructor(private repoService: RepositoryService,
-              private fb: FormBuilder) {}
+              private fb: FormBuilder) {
+  }
 
   ngOnInit() {
     this.dataForm = this.fb.group(this.formPrepare);
 
     this.getCountries();
-    this.repoService.searchRegisteredRepositories('', '', '', '', 'registrationdate', 'DESCENDING', 0, 25)
-      .subscribe(
-        suc => this.repositorySnippet = suc,
-        error => console.log(error),
-        () => console.log(this.repositorySnippet )
-      );
+    this.getRegisteredRepositories();
 
   }
 
@@ -62,6 +60,20 @@ export class RegistrationComponent implements OnInit {
           console.log(error);
         },
       );
+  }
+
+  getRegisteredRepositories() {
+    this.repoService.searchRegisteredRepositories(this.dataForm.get('country').value, this.dataForm.get('typology').value, this.dataForm.get('englishname').value,
+      this.dataForm.get('officialname').value, this.dataForm.get('requestSortBy').value, this.dataForm.get('order').value, this.dataForm.get('page').value,
+      this.dataForm.get('pageSize').value).subscribe(
+        suc => this.repositorySnippet = suc,
+        error => console.log(error),
+        () => console.log(this.repositorySnippet)
+      );
+  }
+
+  handleChange() {
+    this.getRegisteredRepositories();
   }
 
 }
