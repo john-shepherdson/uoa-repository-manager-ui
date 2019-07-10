@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { RepositoryService } from '../../services/repository.service';
-import {Repository} from '../../domain/typeScriptClasses';
+import {Repository, RepositorySnippet, RepositorySummaryInfo} from '../../domain/typeScriptClasses';
 
 @Component ({
   selector: 'app-dashboard',
@@ -13,14 +13,16 @@ export class DashboardComponent implements OnInit {
   constructor(private authService: AuthenticationService,
               private repositoryService: RepositoryService) { }
 
-  repositories: Repository[] = [];
+  repositories: RepositorySummaryInfo[] = [];
   userEmail: string;
+
+  loading: boolean = true;
 
   ngOnInit() {
     // this.getUserEmail();
     this.userEmail = sessionStorage.getItem('email');
     if (this.userEmail) {
-      this.getRepositoriesOfUser(this.userEmail);
+      this.getRepositoriesSummaryInfo(this.userEmail);
     }
   }
 
@@ -34,14 +36,14 @@ export class DashboardComponent implements OnInit {
 
   getRepos() {
     console.log('in getRepos');
-    this.getRepositoriesOfUser(this.userEmail);
+    this.getRepositoriesSummaryInfo(this.userEmail);
   }
 
-  getRepositoriesOfUser(userEmail: string) {
-    this.repositoryService.getRepositoriesOfUser(userEmail).subscribe(
-      repositories => this.repositories = repositories,
-      error => console.log('Errrrror'),
-      () => console.log(this.repositories)
+  getRepositoriesSummaryInfo(userEmail: string) {
+    this.repositoryService.getRepositoriesSummaryInfo(userEmail).subscribe(
+      repositories => { this.repositories = repositories; this.loading=false },
+      error => { console.log('Errrrror'); this.loading=false },
+      () => { console.log(this.repositories); this.loading=false }
     );
   }
 }

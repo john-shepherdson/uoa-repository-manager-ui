@@ -10,7 +10,7 @@ import {
   Country, MetricsInfo,
   Repository,
   RepositoryInterface,
-  RepositorySnippet,
+  RepositorySnippet, RepositorySummaryInfo,
   Timezone,
   Typology
 } from '../domain/typeScriptClasses';
@@ -28,6 +28,7 @@ const headerOptions = {
 @Injectable ()
 export class RepositoryService {
   private apiUrl = environment.API_ENDPOINT + '/repository/';
+  private dashboardAPIUrl = environment.API_ENDPOINT + '/dashboard/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -174,5 +175,11 @@ export class RepositoryService {
     params = params.append('order', order);
 
     return this.httpClient.get<RepositorySnippet[]>(url, {params, withCredentials: true});
+  }
+
+  getRepositoriesSummaryInfo(userEmail: string): Observable<RepositorySummaryInfo[]> {
+    const url = `${this.dashboardAPIUrl}getRepositoriesSummary/${userEmail}/0/100`;
+    console.log(`knocking on: ${url}`);
+    return this.httpClient.get<RepositorySummaryInfo[]>(url, headerOptions);
   }
 }

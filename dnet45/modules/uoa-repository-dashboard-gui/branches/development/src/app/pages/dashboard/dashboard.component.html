@@ -1,7 +1,7 @@
 <div *ngIf="getIsUserLoggedIn()" id="contentWrapper" class="tm-main uk-section uk-section-default" uk-height-viewport="expand: true" style="box-sizing: border-box;" >
 
 
-  <div class="uk container-fluid">
+  <div class="uk-container uk-container-expand">
     <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="aria-hidden"></div>
     <div class="uk-grid uk-padding">
       <div class="uk-width-3-4@m uk-first-column">
@@ -81,41 +81,62 @@
         </div>
       </div>
 
-      <div class="uk-width-1-4@m uk-inline uk-padding-remove">
-        <div class="uk-card">
-          <h5 class="uk-card-header uk-text-center" style="color:black;">MY DATASOURCES</h5>
-          <div class="uk-card-body">
+      <div class="uk-width-1-4@m">
+        <div class="uk-card uk-card-body uk-card-grey" style="min-height: 300px;">
+          <h5 class="">MY DATASOURCES AT A GLANCE</h5>
 
-            <ul *ngIf="getIsUserLoggedIn()" class="uk-child-width-1-1@s">
-              <!--                  <div *ngIf="getRepos()"></div>-->
-              <div *ngFor="let repository of repositories">
+          <div *ngIf="loading">
+            <div class="loader-big" style="text-align: center; padding-top: 100px; color: rgb(47, 64, 80); font-weight: bold;">
+              Retrieving your datasources...
+            </div>
+            <div class="whiteFilm"></div>
+          </div>
 
-                <div class="uk container-fluid">
-                  <div class="uk-card">
-                    <div class="uk-card-header">
-                      <div class="uk-width-1-4@m uk-position-left">
-                        <img src="{{repository.logoUrl ? repository.logoUrl : '../../../assets/imgs/yourLogoHere.jpg'}}"
-                             alt="">
-                      </div>
-                      <div class="uk-width-3-4@m uk-position-right">
-                        <div class="uk-card-title"><h5 class="uk-text-center"
-                                                       style="color:black;">{{repository.officialName}}</h5></div>
-                      </div>
-                    </div>
+          <div *ngIf="!loading">
+            <div *ngIf="repositories && repositories.length>0">
+              <div *ngFor="let repository of repositories" class="uk-margin-bottom uk-margin-top">
+
+                <div class="uk-padding-small" style="background-color: #fff">
+                  <div class="uk-inline uk-width-1-3@m">
+                    <img src="{{repository.logoURL ? repository.logoURL : '../../../assets/imgs/yourLogoHere.jpg'}}" alt="">
                   </div>
+                  <div class="uk-inline uk-width-2-3@m">
+                    <div class="uk-margin-left">{{repository.repositoryName}}</div>
+                  </div>
+                </div>
 
-                  <div class="uk-card-body">
-                    <p>Number of records collected: 57966</p>
-                    <p>Last indexed version: 2019-05-05</p>
-                    <p>Content enrichment events: 234</p>
-                    <p>Views and downloads: 1200</p>
+                <div class="uk-margin-small-top">
+                  <div>Number of records collected:
+                    <span *ngIf="repository.recordsCollected">{{repository.recordsCollected}}</span>
+                    <span *ngIf="!repository.recordsCollected">not available</span>
+                  </div>
+                  <div>Last indexed version:
+                    <span *ngIf="repository.lastIndexedVersion">{{repository.lastIndexedVersion | date :'short'}}</span>
+                    <span *ngIf="!repository.lastIndexedVersion">not available</span>
+                  </div>
+                  <div>Content enrichment events:
+                    <span *ngIf="repository.enrichmentEvents">{{repository.enrichmentEvents}}</span>
+                    <span *ngIf="!repository.enrichmentEvents">not available</span>
+                  </div>
+                  <div>Views:
+                    <span *ngIf="repository.totalViews">{{repository.totalViews}}</span>
+                    <span *ngIf="!repository.totalViews">not available</span>
+                  </div>
+                  <div>Downloads:
+                    <span *ngIf="repository.totalDownloads">{{repository.totalDownloads}}</span>
+                    <span *ngIf="!repository.totalDownloads">not available</span>
                   </div>
                 </div>
 
               </div>
-            </ul>
-
+            </div>
+            <div *ngIf="!repositories || repositories.length==0">
+              No repositories available...
+            </div>
           </div>
+
+
+
         </div>
       </div>
 
