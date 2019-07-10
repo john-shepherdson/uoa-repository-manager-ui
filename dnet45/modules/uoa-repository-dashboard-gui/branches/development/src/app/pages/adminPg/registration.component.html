@@ -1,7 +1,7 @@
 <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
   <div class="uk-width-1-1@m uk-first-column">
 
-    <h1 class="uk-h2">Metrics Admin</h1>
+    <h1 class="uk-h2">Registration Admin Page</h1>
 
     <!-- TOP HELP CONTENT -->
     <help-content #topHelperContent [position]="'top'"
@@ -30,7 +30,7 @@
           </div>
 
           <div class="uk-grid">
-            <div class="uk-width-1-1@m">
+            <div class="uk-width-1-1@m" style="padding-left: 55px">
               <form [formGroup]="dataForm" class="uk-form-horizontal uk-width-1-4@m  uk-float-right">
                 <div class="uk-margin">
                   <label class="uk-form-label uk-text-right" for="pageSize">Items per page: </label>
@@ -124,9 +124,9 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let res of repositorySnippet">
-                  <td class="uk-width-1-6@m">{{res.officialname}} <br> ({{res.id}})</td>
+                  <td class="uk-width-1-6@m">{{res.officialname}} <br> ({{res.id}}) <br> {{res.registeredby}}</td>
                   <td >{{res.registrationdate}}</td>
-                  <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ', ' + getCountryName(organization.country)}}<br></div></td>
+                  <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ' (' + getCountryName(organization.country)}})<br></div></td>
                   <td>{{res.typology.split('::')[1]}}</td>
                 </tr>
                 </tbody>
