@@ -16,6 +16,7 @@ export class RegistrationComponent implements OnInit {
   loadingMessage: string;
   countries: Country[] = [];
   repositorySnippet: RepositorySnippet[] = [];
+  thisIsForBadUse: RepositorySnippet[] = []; // remove if page total is fixed!!!
 
   formPrepare = {
     country: '',
@@ -58,7 +59,7 @@ export class RegistrationComponent implements OnInit {
           this.loadingMessage = '';
           this.errorMessage = noServiceMessage;
           console.log(error);
-        },
+        }
       );
   }
 
@@ -68,12 +69,48 @@ export class RegistrationComponent implements OnInit {
       this.dataForm.get('pageSize').value).subscribe(
         suc => this.repositorySnippet = suc,
         error => console.log(error),
-        () => console.log(this.repositorySnippet)
+        // () => console.log(this.repositorySnippet)
       );
   }
 
   handleChange() {
     this.getRegisteredRepositories();
+  }
+
+  getCountryName(countryCode): string {
+    for (const country of Object.values(this.countries)) {
+      if (country.code === countryCode) {
+        return country.name;
+      }
+    }
+  }
+
+  previousPage() {
+    if (this.dataForm.get('page').value > 0) {
+      this.dataForm.get('page').setValue(+this.dataForm.get('page').value - 1);
+      this.handleChange();
+    }
+  }
+
+  nextPage() {
+    /** remove when page total is fixed!!! **/
+    this.repoService.searchRegisteredRepositories(this.dataForm.get('country').value, this.dataForm.get('typology').value, this.dataForm.get('englishname').value,
+      this.dataForm.get('officialname').value, this.dataForm.get('requestSortBy').value, this.dataForm.get('order').value, +this.dataForm.get('page').value + 1,
+      this.dataForm.get('pageSize').value).subscribe(
+      suc => this.thisIsForBadUse = suc,
+      error => console.log(error),
+      () => {
+        console.log(this.thisIsForBadUse.length );
+        if (!(this.thisIsForBadUse.length === 0)) {
+          console.log('got here');
+          this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
+          this.repositorySnippet = this.thisIsForBadUse;
+          // this.handleChange();
+        }
+      }
+    );
+    /** **/
+
   }
 
 }
