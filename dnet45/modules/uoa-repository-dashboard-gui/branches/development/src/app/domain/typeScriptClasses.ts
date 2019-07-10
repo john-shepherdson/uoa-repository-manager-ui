@@ -158,10 +158,18 @@ export class RepositorySnippet {
   officialname: string;
   englishname: string;
   websiteurl: string;
+  typology: string;
   registeredby: string;
-  registrationdate: Date; //added
-  organizations: string;  //added
-  typology: string;       //added
+  organizations: Organization[];
+  registrationdate: Date;
+}
+
+export class Organization {
+  country: string;
+  legalname: string;
+  websiteurl: string;
+  legalshortname: string;
+  logourl: string;
 }
 
 export class RepositoryAccessProtocol {
@@ -633,4 +641,15 @@ export class UsageStatsSummary implements IsSerializable {
   dataRepositories: string;
   datasets: string;
   publications: string;
+}
+
+export class RepositorySummaryInfo {
+  id: string;
+  repositoryName: string;
+  logoURL: string;
+  recordsCollected: number;
+  lastIndexedVersion: Date;
+  enrichmentEvents: number;
+  totalViews: string;
+  totalDownloads: string;
 }
