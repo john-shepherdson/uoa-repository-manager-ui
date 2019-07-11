@@ -1,7 +1,7 @@
 <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
   <div class="uk-width-1-1@m uk-first-column">
 
-    <h1 class="uk-h2">Registration Admin Page</h1>
+    <h1 class="uk-h2">Registrations</h1>
 
     <!-- TOP HELP CONTENT -->
     <help-content #topHelperContent [position]="'top'"
@@ -29,6 +29,7 @@
             <div class="whiteFilm"></div>
           </div>
 
+          <!-- RIGHT FILTERS -->
           <div class="uk-grid">
             <div class="uk-width-1-1@m" style="padding-left: 55px">
               <form [formGroup]="dataForm" class="uk-form-horizontal uk-width-1-4@m  uk-float-right">
@@ -54,8 +55,19 @@
                   </div>
                 </div>
 
+                <div class="uk-margin">
+                  <label class="uk-form-label uk-text-right" for="orderBy">Order by: </label>
+                  <div class="uk-form-controls">
+                    <select class="uk-select" id="orderBy" (change)="handleChange()" formControlName="order">
+                      <option value="DESCENDING" selected>Descending</option>
+                      <option value="ASCENDING">Ascending</option>
+                    </select>
+                  </div>
+                </div>
+
               </form>
 
+              <!-- SEARCH BAR -->
               <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-2@m uk-float-right">
                 <input class="uk-width-1-2 uk-search-input" type="search" formControlName="officialname" placeholder="Search...">
                 <button class="uk-button" (click)="handleChange()">Search</button>
@@ -64,6 +76,7 @@
 
           </div>
 
+          <!-- LEFT FILTERS -->
           <div class="uk-grid">
 
             <div class="uk-width-1-4@m">
@@ -74,38 +87,33 @@
                 <div class="uk-margin">
                   <div class="uk-form-label uk-text-large">Datasource Type</div>
                   <div class="uk-form-controls">
-                    <label><input class="uk-radio" type="radio" value="" (change)="handleChange()" formControlName="typology">
-                      Any</label><br>
-<!--                    <label><input class="uk-radio" type="radio" value="Literature" (change)="handleChange()" formControlName="typology">-->
-<!--                      Literature</label><br>-->
-<!--                    <label><input class="uk-radio" type="radio" value="Data" (change)="handleChange()" formControlName="typology">-->
-<!--                      Data</label><br>-->
-                    <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChange()" formControlName="typology">
-                      Aggregator</label><br>
-                    <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChange()" formControlName="typology">
-                      Journal</label><br>
-<!--                    <label><input class="uk-radio" type="radio" value="public" (change)="handleChange()" formControlName="typology">-->
-<!--                      Public Repository</label><br>-->
-                    <label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChange()" formControlName="typology">
-                      Institutional</label><br>
-                    <label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChange()" formControlName="typology">
-                      Thematic</label><br>
-                    <label><input class="uk-radio" type="radio" value="Products" (change)="handleChange()" formControlName="typology">
-                      Products</label><br>
-                    <label><input class="uk-radio" type="radio" value="Unknown" (change)="handleChange()" formControlName="typology">
-                      Unknown</label>
+                    <label><input class="uk-radio" type="radio" value="" (change)="handleChange()" formControlName="typology"> Any</label><br>
+<!--                    <label><input class="uk-radio" type="radio" value="Literature" (change)="handleChange()" formControlName="typology">Literature</label><br>-->
+<!--                    <label><input class="uk-radio" type="radio" value="Data" (change)="handleChange()" formControlName="typology">Data</label><br>-->
+                    <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChange()" formControlName="typology">Aggregator</label><br>
+                    <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChange()" formControlName="typology">Journal</label><br>
+<!--                    <label><input class="uk-radio" type="radio" value="public" (change)="handleChange()" formControlName="typology">Public Repository</label><br>-->
+                    <label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChange()" formControlName="typology">Institutional</label><br>
+                    <label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChange()" formControlName="typology">Thematic</label><br>
+                    <label><input class="uk-radio" type="radio" value="Products" (change)="handleChange()" formControlName="typology">Products</label><br>
+                    <label><input class="uk-radio" type="radio" value="Unknown" (change)="handleChange()" formControlName="typology">Unknown</label>
                   </div>
                 </div>
 
                 <div class="uk-margin">
                   <div class="uk-form-label uk-text-large">Countries</div>
                   <div class="uk-form-controls">
-                    <read-more [maxHeight]="235">
-                      <div *ngFor="let country of countries">
-                        <label><input class="uk-radio" type="radio" value="{{country.code}}"
-                                      (change)="handleChange()" formControlName="country"> {{country.name}}</label><br>
-                      </div>
-                    </read-more>
+                    <ng-container *ngIf="countries && countries.length>0">
+                      <read-more [maxHeight]="238">
+                        <div><input class="uk-radio" type="radio" value="" (change)="handleChange()" formControlName="country"> Any</div>
+                        <ng-container *ngFor="let country of countries">
+                          <div class="">
+                            <input class="uk-radio" type="radio" value="{{country.code}}"
+                                   (change)="handleChange()" formControlName="country"> {{country.name}}
+                          </div>
+                        </ng-container>
+                      </read-more>
+                    </ng-container>
                   </div>
                 </div>
 
@@ -113,6 +121,7 @@
 
             </div>
 
+            <!-- TABLE -->
             <div class="uk-width-3-4@m">
 <!--              <pre><code>{{dataForm.value | json}}</code></pre>-->
               <table class="uk-table uk-table-striped">
