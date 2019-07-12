@@ -77,6 +77,11 @@ export class RegistrationComponent implements OnInit {
     this.getRegisteredRepositories();
   }
 
+  handleChangeAndResetPage() {
+    this.dataForm.get('page').setValue(0);
+    this.getRegisteredRepositories();
+  }
+
   getCountryName(countryCode): string {
     for (const country of Object.values(this.countries)) {
       if (country.code === countryCode) {
@@ -94,13 +99,13 @@ export class RegistrationComponent implements OnInit {
 
   nextPage() {
     /** remove when page total is fixed!!! **/
-    this.repoService.searchRegisteredRepositories(this.dataForm.get('country').value, this.dataForm.get('typology').value, this.dataForm.get('englishname').value,
+      this.repoService.searchRegisteredRepositories(this.dataForm.get('country').value, this.dataForm.get('typology').value, this.dataForm.get('englishname').value,
       this.dataForm.get('officialname').value, this.dataForm.get('requestSortBy').value, this.dataForm.get('order').value, +this.dataForm.get('page').value + 1,
       this.dataForm.get('pageSize').value).subscribe(
       suc => this.thisIsForBadUse = suc,
       error => console.log(error),
       () => {
-        console.log(this.thisIsForBadUse.length );
+        console.log(this.thisIsForBadUse.length);
         if (!(this.thisIsForBadUse.length === 0)) {
           console.log('got here');
           this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
