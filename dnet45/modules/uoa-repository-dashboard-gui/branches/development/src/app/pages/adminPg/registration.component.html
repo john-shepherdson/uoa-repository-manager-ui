@@ -1,7 +1,7 @@
 <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
   <div class="uk-width-1-1@m uk-first-column">
 
-    <h1 class="uk-h2">Registrations</h1>
+    <h1 class="uk-h2">Registrations Admin Page</h1>
 
     <!-- TOP HELP CONTENT -->
     <help-content #topHelperContent [position]="'top'"
@@ -29,56 +29,19 @@
             <div class="whiteFilm"></div>
           </div>
 
-          <!-- RIGHT FILTERS -->
+
+
+
           <div class="uk-grid">
-            <div class="uk-width-1-1@m" style="padding-left: 55px">
-              <form [formGroup]="dataForm" class="uk-form-horizontal uk-width-1-4@m  uk-float-right">
-                <div class="uk-margin">
-                  <label class="uk-form-label uk-text-right" for="pageSize">Items per page: </label>
-                  <div class="uk-form-controls">
-                    <select class="uk-select" id="pageSize" (change)="this.dataForm.get('page').setValue(0); handleChange()" formControlName="pageSize">
-                      <option value="10">10</option>
-                      <option value="25" selected>25</option>
-                      <option value="50">50</option>
-                      <option value="100">100</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="uk-margin">
-                  <label class="uk-form-label uk-text-right" for="sortBy">Sort by: </label>
-                  <div class="uk-form-controls">
-                    <select class="uk-select" id="sortBy" (change)="handleChange()" formControlName="requestSortBy">
-                      <option value="registrationdate" selected>Date</option>
-                      <option value="officialname">Name</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="uk-margin">
-                  <label class="uk-form-label uk-text-right" for="orderBy">Order by: </label>
-                  <div class="uk-form-controls">
-                    <select class="uk-select" id="orderBy" (change)="handleChange()" formControlName="order">
-                      <option value="DESCENDING" selected>Descending</option>
-                      <option value="ASCENDING">Ascending</option>
-                    </select>
-                  </div>
-                </div>
-
-              </form>
-
-              <!-- SEARCH BAR -->
-              <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-2@m uk-float-right">
-                <input class="uk-width-1-2 uk-search-input" type="search" formControlName="officialname" placeholder="Search...">
+            <div class="uk-width-1-1@m uk-padding" style="background-color: #fff; text-align: center">
+              <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
+                <input class="uk-width-1-2 uk-search-input" type="search" formControlName="officialname" placeholder="Search (official name) ..." style="background-color: #fff">
                 <button class="uk-button" (click)="handleChange()">Search</button>
               </form>
             </div>
-
           </div>
 
-          <!-- LEFT FILTERS -->
           <div class="uk-grid">
-
             <div class="uk-width-1-4@m">
               <form [formGroup]="dataForm" class="uk-form-stacked">
 
@@ -88,11 +51,11 @@
                   <div class="uk-form-label uk-text-large">Datasource Type</div>
                   <div class="uk-form-controls">
                     <label><input class="uk-radio" type="radio" value="" (change)="handleChange()" formControlName="typology"> Any</label><br>
-<!--                    <label><input class="uk-radio" type="radio" value="Literature" (change)="handleChange()" formControlName="typology"> Literature</label><br>-->
-<!--                    <label><input class="uk-radio" type="radio" value="Data" (change)="handleChange()" formControlName="typology"> Data</label><br>-->
+                    <!--                    <label><input class="uk-radio" type="radio" value="Literature" (change)="handleChange()" formControlName="typology"> Literature</label><br>-->
+                    <!--                    <label><input class="uk-radio" type="radio" value="Data" (change)="handleChange()" formControlName="typology"> Data</label><br>-->
                     <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChange()" formControlName="typology"> Aggregator</label><br>
                     <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChange()" formControlName="typology"> Journal</label><br>
-<!--                    <label><input class="uk-radio" type="radio" value="public" (change)="handleChange()" formControlName="typology"> Public Repository</label><br>-->
+                    <!--                    <label><input class="uk-radio" type="radio" value="public" (change)="handleChange()" formControlName="typology"> Public Repository</label><br>-->
                     <label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChange()" formControlName="typology"> Institutional</label><br>
                     <label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChange()" formControlName="typology"> Thematic</label><br>
                     <label><input class="uk-radio" type="radio" value="Products" (change)="handleChange()" formControlName="typology"> Products</label><br>
@@ -118,39 +81,85 @@
                 </div>
 
               </form>
-
             </div>
+            <div class="uk-width-expand@m">
+              <div class="uk-grid">
+                <div class="uk-width-1-1@m uk-margin-medium">
+                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid">
 
-            <!-- TABLE -->
-            <div class="uk-width-3-4@m">
-<!--              <pre><code>{{dataForm.value | json}}</code></pre>-->
-              <table class="uk-table uk-table-striped">
-                <thead>
-                <tr>
-                  <th>Repository</th>
-                  <th>Date</th>
-                  <th>Organization</th>
-                  <th>Type</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let res of repositorySnippet">
-                  <td class="uk-width-1-6@m">{{res.officialname}} <br> ({{res.id}}) <br> {{res.registeredby}}</td>
-                  <td >{{res.registrationdate}}</td>
-                  <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ' (' + getCountryName(organization.country)}})<br></div></td>
-                  <td>{{res.typology.split('::')[1]}}</td>
-                </tr>
-                </tbody>
-              </table>
+                    <div class="uk-width-2-5@m">
+                      <div class="uk-margin">
+                        <label class="uk-form-label uk-text-right" for="pageSize">Items per page: </label>
+                        <div class="uk-form-controls">
+                          <select class="uk-select" id="pageSize" (change)="this.dataForm.get('page').setValue(0); handleChange()" formControlName="pageSize">
+                            <option value="10">10</option>
+                            <option value="25" selected>25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
 
-              <ul class="uk-pagination uk-flex-center" uk-margin>
-                <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
-                <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
-                <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
-              </ul>
+                    <div class="uk-width-expand@m ">
 
+                      <div class="uk-float-right">
+                        <label class="uk-form-label uk-text-right" for="orderBy">Order by: </label>
+                        <div class="uk-form-controls">
+                          <select class="uk-select" id="orderBy" (change)="handleChange()" formControlName="order">
+                            <option value="DESCENDING" selected>Descending</option>
+                            <option value="ASCENDING">Ascending</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="uk-float-right">
+                        <label class="uk-form-label uk-text-right" for="sortBy">Sort by: </label>
+                        <div class="uk-form-controls">
+                          <select class="uk-select" id="sortBy" (change)="handleChange()" formControlName="requestSortBy">
+                            <option value="registrationdate" selected>date</option>
+                            <option value="officialname">name</option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                  </form>
+                </div>
+
+                <div class="uk-width-1-1@m">
+
+                  <table class="uk-table uk-table-striped">
+                    <thead>
+                    <tr>
+                      <th>Repository</th>
+                      <th>Date</th>
+                      <th>Organization</th>
+                      <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let res of repositorySnippet">
+                      <td class="uk-width-1-6@m">{{res.officialname}} <br> ({{res.id}}) <br> {{res.registeredby}}</td>
+                      <td >{{res.registrationdate}}</td>
+                      <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ' (' + getCountryName(organization.country)}})<br></div></td>
+                      <td>{{res.typology.split('::')[1]}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+
+                  <ul class="uk-pagination uk-flex-center" uk-margin>
+                    <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
+                    <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
+                    <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
+                  </ul>
+
+                </div>
+
+              </div>
             </div>
-
           </div>
 
         </div>
