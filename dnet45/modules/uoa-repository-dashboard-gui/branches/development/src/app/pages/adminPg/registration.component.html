@@ -36,7 +36,7 @@
                 <div class="uk-margin">
                   <label class="uk-form-label uk-text-right" for="pageSize">Items per page: </label>
                   <div class="uk-form-controls">
-                    <select class="uk-select" id="pageSize" (change)="handleChangeAndResetPage()" formControlName="pageSize">
+                    <select class="uk-select" id="pageSize" (change)="this.dataForm.get('page').setValue(0); handleChange()" formControlName="pageSize">
                       <option value="10">10</option>
                       <option value="25" selected>25</option>
                       <option value="50">50</option>

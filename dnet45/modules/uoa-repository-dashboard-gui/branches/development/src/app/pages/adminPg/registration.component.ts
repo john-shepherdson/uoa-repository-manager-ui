@@ -77,11 +77,6 @@ export class RegistrationComponent implements OnInit {
     this.getRegisteredRepositories();
   }
 
-  handleChangeAndResetPage() {
-    this.dataForm.get('page').setValue(0);
-    this.getRegisteredRepositories();
-  }
-
   getCountryName(countryCode): string {
     for (const country of Object.values(this.countries)) {
       if (country.code === countryCode) {
