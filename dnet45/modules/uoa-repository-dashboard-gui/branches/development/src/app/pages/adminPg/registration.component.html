@@ -51,11 +51,11 @@
                   <div class="uk-form-label uk-text-large">Datasource Type</div>
                   <div class="uk-form-controls">
                     <label><input class="uk-radio" type="radio" value="" (change)="handleChange()" formControlName="typology"> Any</label><br>
-                    <!--                    <label><input class="uk-radio" type="radio" value="Literature" (change)="handleChange()" formControlName="typology"> Literature</label><br>-->
-                    <!--                    <label><input class="uk-radio" type="radio" value="Data" (change)="handleChange()" formControlName="typology"> Data</label><br>-->
+<!--                                        <label><input class="uk-radio" type="radio" value="Literature" (change)="handleChange()" formControlName="typology"> Literature</label><br>-->
                     <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChange()" formControlName="typology"> Aggregator</label><br>
                     <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChange()" formControlName="typology"> Journal</label><br>
-                    <!--                    <label><input class="uk-radio" type="radio" value="public" (change)="handleChange()" formControlName="typology"> Public Repository</label><br>-->
+                    <label><input class="uk-radio" type="radio" value="datarepository" (change)="handleChange()" formControlName="typology"> Data Repository</label><br>
+                    <label><input class="uk-radio" type="radio" value="pubrepository" (change)="handleChange()" formControlName="typology"> Public Repository</label><br>
                     <label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChange()" formControlName="typology"> Institutional</label><br>
                     <label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChange()" formControlName="typology"> Thematic</label><br>
                     <label><input class="uk-radio" type="radio" value="Products" (change)="handleChange()" formControlName="typology"> Products</label><br>
@@ -145,7 +145,7 @@
                       <td class="uk-width-1-6@m">{{res.officialname}} <br> ({{res.id}}) <br> {{res.registeredby}}</td>
                       <td >{{res.registrationdate}}</td>
                       <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ' (' + getCountryName(organization.country)}})<br></div></td>
-                      <td>{{res.typology.split('::')[1]}}</td>
+                      <td>{{res.typology.split('::')[0]}}</td>
                     </tr>
                     </tbody>
                   </table>
