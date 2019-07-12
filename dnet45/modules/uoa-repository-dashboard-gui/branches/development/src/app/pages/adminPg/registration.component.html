@@ -91,7 +91,7 @@
                       <div class="uk-margin">
                         <label class="uk-form-label uk-text-right" for="pageSize">Items per page: </label>
                         <div class="uk-form-controls">
-                          <select class="uk-select" id="pageSize" (change)="this.dataForm.get('page').setValue(0); handleChange()" formControlName="pageSize">
+                          <select class="uk-select" id="pageSize" (change)="handleChangeAndResetPage()" formControlName="pageSize">
                             <option value="10">10</option>
                             <option value="25" selected>25</option>
                             <option value="50">50</option>
@@ -106,7 +106,7 @@
                       <div class="uk-float-right">
                         <label class="uk-form-label uk-text-right" for="orderBy">Order by: </label>
                         <div class="uk-form-controls">
-                          <select class="uk-select" id="orderBy" (change)="handleChange()" formControlName="order">
+                          <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
                             <option value="DESCENDING" selected>Descending</option>
                             <option value="ASCENDING">Ascending</option>
                           </select>
@@ -116,9 +116,9 @@
                       <div class="uk-float-right">
                         <label class="uk-form-label uk-text-right" for="sortBy">Sort by: </label>
                         <div class="uk-form-controls">
-                          <select class="uk-select" id="sortBy" (change)="handleChange()" formControlName="requestSortBy">
-                            <option value="registrationdate" selected>date</option>
-                            <option value="officialname">name</option>
+                          <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="requestSortBy">
+                            <option value="registrationdate" selected>Date</option>
+                            <option value="officialname">Name</option>
                           </select>
                         </div>
                       </div>

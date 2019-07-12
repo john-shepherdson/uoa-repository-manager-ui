@@ -18,7 +18,7 @@ const adminRoutes: Routes = [
         component: AdminPgMetricsComponent
       },
       {
-        path: 'registration',
+        path: 'registrations/:page/:pageSize',
         component: RegistrationComponent
       }
     ]
