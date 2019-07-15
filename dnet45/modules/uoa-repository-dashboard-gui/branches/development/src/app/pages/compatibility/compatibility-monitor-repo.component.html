@@ -35,13 +35,19 @@
                 <div class="uk-container uk-container-center">
                   <div class="al_timeline">
                     <div *ngFor="let aggr of latestAggregations" class="al_timeline_block versionChange">
-                      <div class="al_timeline_image uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-scale-up"></div>
+                      <div class="al_timeline_image uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-scale-up">
+                        <ng-container *ngIf="aggr.indexedVersion">
+                          <img src="https://www.openaire.eu/images/Logos/Favicon-90x90.png" style="width: 80%;margin-top: 9%;">
+                        </ng-container>
+                      </div>
                       <div class="al_timeline_content uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-slide-left">
-                        <h3 *ngIf="aggr.date">{{ aggr.date | date : "yyyy-MM-dd" }}</h3>
+                        <h3 *ngIf="aggr.date" class="uk-inline">{{ aggr.date | date : "yyyy-MM-dd" }}</h3>
+                        <span *ngIf="aggr.indexedVersion" class="ng-star-inserted uk-inline uk-float-right uk-badge"
+                              style="padding-top: 10px;padding-left: 10px;padding-right: 10px;margin-top: 5px;">Indexed version</span>
                         <p *ngIf="aggr.aggregationStage">Aggregation stage - {{ aggr.aggregationStage }}</p>
                         <p *ngIf="aggr.collectionMode">CollectionMode - {{ aggr.collectionMode }}</p>
                         <p *ngIf="aggr.numberOfRecords">Number of records - {{ aggr.numberOfRecords }}</p>
-                        <p *ngIf="aggr.indexedVersion !== null">Is the indexed version - {{ (aggr.indexedVersion === true) ? 'Yes': 'No' }}</p>
+                        <!--<p *ngIf="aggr.indexedVersion !== null">Is the indexed version - {{ (aggr.indexedVersion === true) ? 'Yes': 'No' }}</p>-->
                       </div>
                     </div>
                   </div>
