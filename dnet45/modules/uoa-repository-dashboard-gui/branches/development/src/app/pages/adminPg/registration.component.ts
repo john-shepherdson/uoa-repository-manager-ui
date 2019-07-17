@@ -25,12 +25,12 @@ export class RegistrationComponent implements OnInit {
   formPrepare = {
     country: '',
     typology: '',
-    englishname: '',
-    officialname: '',
+    englishName: '',
+    officialName: '',
     requestSortBy: 'registrationdate',
     order: 'DESCENDING',
     page: '0',
-    pageSize: '25'
+    size: '25'
   };
 
   dataForm: FormGroup;
@@ -85,9 +85,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   getRegisteredRepositories(urlParams: URLParameter[]) {
-    this.repoService.searchRegisteredRepositories(this.dataForm.get('country').value, this.dataForm.get('typology').value, this.dataForm.get('englishname').value,
-      this.dataForm.get('officialname').value, this.dataForm.get('requestSortBy').value, this.dataForm.get('order').value, this.dataForm.get('page').value,
-      this.dataForm.get('pageSize').value, urlParams).subscribe(
+    this.repoService.searchRegisteredRepositories(this.dataForm.get('page').value,
+      this.dataForm.get('size').value, urlParams).subscribe(
         suc => this.repositorySnippet = suc,
         error => console.log(error),
       );
@@ -95,23 +94,13 @@ export class RegistrationComponent implements OnInit {
 
   handleChange() {
     const tempUrlParams = new Array<URLParameter>();
+    const map: { [name: string]: string; } = {};
+
     for (let i in this.dataForm.controls) {
       if (this.dataForm.get(i).value !== '') {
         tempUrlParams.push({key: i, value: [this.dataForm.get(i).value]});
+        map[i] = this.dataForm.get(i).value;
       }
-    }
-    const map: { [name: string]: string; } = {};
-    for (const urlParameter of tempUrlParams) {
-      let concatValue = '';
-      let counter = 0;
-      for (const value of urlParameter.value) {
-        if (counter !== 0) {
-          concatValue += ',';
-        }
-        concatValue += value;
-        counter++;
-      }
-      map[urlParameter.key] = concatValue;
     }
 
     this.router.navigate([`/admin/registrations`],
@@ -147,9 +136,8 @@ export class RegistrationComponent implements OnInit {
         tempUrlParams.push({key: i, value: [this.dataForm.get(i).value]});
       }
     }
-      this.repoService.searchRegisteredRepositories(this.dataForm.get('country').value, this.dataForm.get('typology').value, this.dataForm.get('englishname').value,
-      this.dataForm.get('officialname').value, this.dataForm.get('requestSortBy').value, this.dataForm.get('order').value, +this.dataForm.get('page').value + 1,
-      this.dataForm.get('pageSize').value, tempUrlParams).subscribe(
+      this.repoService.searchRegisteredRepositories(+this.dataForm.get('page').value + 1,
+      this.dataForm.get('size').value, tempUrlParams).subscribe(
       suc => this.thisIsForBadUse = suc,
       error => console.log(error),
       () => {

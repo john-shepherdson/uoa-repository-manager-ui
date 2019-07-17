@@ -158,7 +158,7 @@ export class RepositoryService {
     return this.httpClient.get<any>(url, headerOptions);
   }
 
-  searchRegisteredRepositories(country, typology, englishName, officialName, requestSortBy, order, page, pageSize, urlParams: URLParameter[]) {
+  searchRegisteredRepositories(page, pageSize, urlParams: URLParameter[]) {
     const url = `${this.apiUrl}searchRegisteredRepositories/${page}/${pageSize}`;
     console.log(`knocking on: ${url}`);
 
