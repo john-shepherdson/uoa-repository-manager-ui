@@ -17,6 +17,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { timezones } from '../domain/timezones';
 import { typologies } from '../domain/typologies';
+import {URLParameter} from '../domain/url-parameter';
 
 const headerOptions = {
   headers : new HttpHeaders().set('Content-Type', 'application/json')
@@ -157,22 +158,22 @@ export class RepositoryService {
     return this.httpClient.get<any>(url, headerOptions);
   }
 
-  searchRegisteredRepositories(country, typology, englishName, officialName, requestSortBy, order, page, pageSize) {
+  searchRegisteredRepositories(country, typology, englishName, officialName, requestSortBy, order, page, pageSize, urlParams: URLParameter[]) {
     const url = `${this.apiUrl}searchRegisteredRepositories/${page}/${pageSize}`;
     console.log(`knocking on: ${url}`);
+
+    console.log('urlParams');
+    console.log(urlParams);
+    console.log(urlParams.length);
     let params = new HttpParams();
-    if (country) {
-      params = params.append('country', country);
+    for (const urlParameter of urlParams) {
+      for (const value of urlParameter.value) {
+        params = params.append(urlParameter.key, value);
+        console.log(params);
+      }
     }
-    if (typology) {
-      params = params.append('typology', typology);
-    }
-    // params = params.append('englishName', englishName);
-    if (officialName) {
-      params = params.append('officialName', officialName);
-    }
-    params = params.append('requestSortBy', requestSortBy);
-    params = params.append('order', order);
+    console.log('final params');
+    console.log(params);
 
     return this.httpClient.get<RepositorySnippet[]>(url, {params, withCredentials: true});
   }

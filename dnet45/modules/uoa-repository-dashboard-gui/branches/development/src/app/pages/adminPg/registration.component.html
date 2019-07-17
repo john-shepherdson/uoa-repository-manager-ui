@@ -36,7 +36,7 @@
             <div class="uk-width-1-1@m uk-padding" style="background-color: #fff; text-align: center">
               <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
                 <input class="uk-width-1-2 uk-search-input" type="search" formControlName="officialname" placeholder="Search (official name) ..." style="background-color: #fff">
-                <button class="uk-button" (click)="handleChange()">Search</button>
+                <button class="uk-button" (click)="handleChangeAndResetPage()">Search</button>
               </form>
             </div>
           </div>
@@ -50,17 +50,16 @@
                 <div class="uk-margin">
                   <div class="uk-form-label uk-text-large">Datasource Type</div>
                   <div class="uk-form-controls">
-                    <label><input class="uk-radio" type="radio" value="" (change)="handleChange()" formControlName="typology"> Any</label><br>
-<!--                                        <label><input class="uk-radio" type="radio" value="Literature" (change)="handleChange()" formControlName="typology"> Literature</label><br>-->
-                    <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChange()" formControlName="typology"> Aggregator</label><br>
-                    <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChange()" formControlName="typology"> Journal</label><br>
-                    <label><input class="uk-radio" type="radio" value="datarepository" (change)="handleChange()" formControlName="typology"> Data Repository</label><br>
-                    <label><input class="uk-radio" type="radio" value="pubsrepository" (change)="handleChange()" formControlName="typology"> Public Repository</label><br>
-                    <label><input class="uk-radio" type="radio" value="entityregistry" (change)="handleChange()" formControlName="typology"> Entity Registry</label><br>
-                    <label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChange()" formControlName="typology"> Institutional</label><br>
-                    <label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChange()" formControlName="typology"> Thematic</label><br>
-                    <label><input class="uk-radio" type="radio" value="Products" (change)="handleChange()" formControlName="typology"> Products</label><br>
-                    <label><input class="uk-radio" type="radio" value="Unknown" (change)="handleChange()" formControlName="typology"> Unknown</label>
+                    <label><input class="uk-radio" type="radio" value="" (change)="handleChangeAndResetPage()" formControlName="typology"> Any</label><br>
+                    <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChangeAndResetPage()" formControlName="typology"> Aggregator</label><br>
+                    <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChangeAndResetPage()" formControlName="typology"> Journal</label><br>
+                    <label><input class="uk-radio" type="radio" value="datarepository" (change)="handleChangeAndResetPage()" formControlName="typology"> Data Repository</label><br>
+                    <label><input class="uk-radio" type="radio" value="pubsrepository" (change)="handleChangeAndResetPage()" formControlName="typology"> Public Repository</label><br>
+                    <label><input class="uk-radio" type="radio" value="entityregistry" (change)="handleChangeAndResetPage()" formControlName="typology"> Entity Registry</label><br>
+                    <label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChangeAndResetPage()" formControlName="typology"> Institutional</label><br>
+                    <label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChangeAndResetPage()" formControlName="typology"> Thematic</label><br>
+                    <label><input class="uk-radio" type="radio" value="Products" (change)="handleChangeAndResetPage()" formControlName="typology"> Products</label><br>
+                    <label><input class="uk-radio" type="radio" value="Unknown" (change)="handleChangeAndResetPage()" formControlName="typology"> Unknown</label>
                   </div>
                 </div>
 
@@ -69,11 +68,11 @@
                   <div class="uk-form-controls">
                     <ng-container *ngIf="countries && countries.length>0">
                       <read-more [maxHeight]="238">
-                        <div><input class="uk-radio" type="radio" value="" (change)="handleChange()" formControlName="country"> Any</div>
+                        <div><input class="uk-radio" type="radio" value="" (change)="handleChangeAndResetPage()" formControlName="country"> Any</div>
                         <ng-container *ngFor="let country of countries">
                           <div class="">
                             <input class="uk-radio" type="radio" value="{{country.code}}"
-                                   (change)="handleChange()" formControlName="country"> {{country.name}}
+                                   (change)="handleChangeAndResetPage()" formControlName="country"> {{country.name}}
                           </div>
                         </ng-container>
                       </read-more>

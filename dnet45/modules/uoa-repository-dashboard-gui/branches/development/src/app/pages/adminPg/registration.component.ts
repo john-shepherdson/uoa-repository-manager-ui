@@ -3,6 +3,8 @@ import {noServiceMessage} from '../../domain/shared-messages';
 import {Country, RepositorySnippet} from '../../domain/typeScriptClasses';
 import {RepositoryService} from '../../services/repository.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {URLParameter} from '../../domain/url-parameter';
 
 @Component({
   selector: 'app-registration',
@@ -17,6 +19,7 @@ export class RegistrationComponent implements OnInit {
   loadingMessage: string;
   countries: Country[] = [];
   repositorySnippet: RepositorySnippet[] = [];
+  urlParams: URLParameter[] = [];
   thisIsForBadUse: RepositorySnippet[] = []; // remove if page total is fixed!!!
 
   formPrepare = {
@@ -33,14 +36,31 @@ export class RegistrationComponent implements OnInit {
   dataForm: FormGroup;
 
   constructor(private repoService: RepositoryService,
-              private fb: FormBuilder) {
-  }
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     this.dataForm = this.fb.group(this.formPrepare);
+    const tempUrlParams = new Array<URLParameter>();
+
+    this.route.queryParams
+      .subscribe(params => {
+        for (const i in params) {
+          this.dataForm.get(i).setValue(params[i]);
+        }
+        for (let i in this.dataForm.controls) {
+          if (this.dataForm.get(i).value) {
+            tempUrlParams.push({key: i, value: [this.dataForm.get(i).value]});
+          }
+        }
+        this.handleChange();
+      },
+      error => this.errorMessage = <any>error
+    );
 
     this.getCountries();
-    this.getRegisteredRepositories();
+
 
   }
 
@@ -64,23 +84,44 @@ export class RegistrationComponent implements OnInit {
       );
   }
 
-  getRegisteredRepositories() {
+  getRegisteredRepositories(urlParams: URLParameter[]) {
     this.repoService.searchRegisteredRepositories(this.dataForm.get('country').value, this.dataForm.get('typology').value, this.dataForm.get('englishname').value,
       this.dataForm.get('officialname').value, this.dataForm.get('requestSortBy').value, this.dataForm.get('order').value, this.dataForm.get('page').value,
-      this.dataForm.get('pageSize').value).subscribe(
+      this.dataForm.get('pageSize').value, urlParams).subscribe(
         suc => this.repositorySnippet = suc,
         error => console.log(error),
-        // () => console.log(this.repositorySnippet)
       );
   }
 
   handleChange() {
-    this.getRegisteredRepositories();
+    const tempUrlParams = new Array<URLParameter>();
+    for (let i in this.dataForm.controls) {
+      if (this.dataForm.get(i).value !== '') {
+        tempUrlParams.push({key: i, value: [this.dataForm.get(i).value]});
+      }
+    }
+    const map: { [name: string]: string; } = {};
+    for (const urlParameter of tempUrlParams) {
+      let concatValue = '';
+      let counter = 0;
+      for (const value of urlParameter.value) {
+        if (counter !== 0) {
+          concatValue += ',';
+        }
+        concatValue += value;
+        counter++;
+      }
+      map[urlParameter.key] = concatValue;
+    }
+
+    this.router.navigate([`/admin/registrations`],
+      {queryParams: map});
+    this.getRegisteredRepositories(tempUrlParams);
   }
 
   handleChangeAndResetPage() {
     this.dataForm.get('page').setValue(0);
-    this.getRegisteredRepositories();
+    this.handleChange();
   }
 
   getCountryName(countryCode): string {
@@ -100,18 +141,21 @@ export class RegistrationComponent implements OnInit {
 
   nextPage() {
     /** remove when page total is fixed!!! **/
+    const tempUrlParams = new Array<URLParameter>();
+    for (let i in this.dataForm.controls) {
+      if (this.dataForm.get(i).value !== '') {
+        tempUrlParams.push({key: i, value: [this.dataForm.get(i).value]});
+      }
+    }
       this.repoService.searchRegisteredRepositories(this.dataForm.get('country').value, this.dataForm.get('typology').value, this.dataForm.get('englishname').value,
       this.dataForm.get('officialname').value, this.dataForm.get('requestSortBy').value, this.dataForm.get('order').value, +this.dataForm.get('page').value + 1,
-      this.dataForm.get('pageSize').value).subscribe(
+      this.dataForm.get('pageSize').value, tempUrlParams).subscribe(
       suc => this.thisIsForBadUse = suc,
       error => console.log(error),
       () => {
-        console.log(this.thisIsForBadUse.length);
         if (!(this.thisIsForBadUse.length === 0)) {
-          console.log('got here');
           this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
-          this.repositorySnippet = this.thisIsForBadUse;
-          // this.handleChange();
+          this.handleChange();
         }
       }
     );
