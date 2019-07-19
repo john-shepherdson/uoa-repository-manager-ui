@@ -158,22 +158,15 @@ export class RepositoryService {
     return this.httpClient.get<any>(url, headerOptions);
   }
 
-  searchRegisteredRepositories(page, pageSize, urlParams: URLParameter[]) {
-    const url = `${this.apiUrl}searchRegisteredRepositories/${page}/${pageSize}`;
-    console.log(`knocking on: ${url}`);
-
-    console.log('urlParams');
-    console.log(urlParams);
-    console.log(urlParams.length);
+  searchRegisteredRepositories(page, size, urlParams: URLParameter[]) {
+    const url = `${this.apiUrl}searchRegisteredRepositories/${page}/${size}`;
+    console.log(`knoking on: ${url}`);
     let params = new HttpParams();
     for (const urlParameter of urlParams) {
       for (const value of urlParameter.value) {
         params = params.append(urlParameter.key, value);
-        console.log(params);
       }
     }
-    console.log('final params');
-    console.log(params);
 
     return this.httpClient.get<RepositorySnippet[]>(url, {params, withCredentials: true});
   }
