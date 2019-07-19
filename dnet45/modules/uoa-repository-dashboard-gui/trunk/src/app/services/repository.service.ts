@@ -2,7 +2,7 @@
 * Created by myrto on 12/05/2017
 */
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
@@ -10,13 +10,14 @@ import {
   Country, MetricsInfo,
   Repository,
   RepositoryInterface,
-  RepositorySnippet,
+  RepositorySnippet, RepositorySummaryInfo,
   Timezone,
   Typology
 } from '../domain/typeScriptClasses';
 import { Observable, of } from 'rxjs';
 import { timezones } from '../domain/timezones';
 import { typologies } from '../domain/typologies';
+import {URLParameter} from '../domain/url-parameter';
 
 const headerOptions = {
   headers : new HttpHeaders().set('Content-Type', 'application/json')
@@ -28,6 +29,7 @@ const headerOptions = {
 @Injectable ()
 export class RepositoryService {
   private apiUrl = environment.API_ENDPOINT + '/repository/';
+  private dashboardAPIUrl = environment.API_ENDPOINT + '/dashboard/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -156,4 +158,22 @@ export class RepositoryService {
     return this.httpClient.get<any>(url, headerOptions);
   }
 
+  searchRegisteredRepositories(page, size, urlParams: URLParameter[]) {
+    const url = `${this.apiUrl}searchRegisteredRepositories/${page}/${size}`;
+    console.log(`knocking on: ${url}`);
+    let params = new HttpParams();
+    for (const urlParameter of urlParams) {
+      for (const value of urlParameter.value) {
+        params = params.append(urlParameter.key, value);
+      }
+    }
+
+    return this.httpClient.get<RepositorySnippet[]>(url, {params, withCredentials: true});
+  }
+
+  getRepositoriesSummaryInfo(userEmail: string): Observable<RepositorySummaryInfo[]> {
+    const url = `${this.dashboardAPIUrl}getRepositoriesSummary/${userEmail}/0/100`;
+    console.log(`knocking on: ${url}`);
+    return this.httpClient.get<RepositorySummaryInfo[]>(url, headerOptions);
+  }
 }

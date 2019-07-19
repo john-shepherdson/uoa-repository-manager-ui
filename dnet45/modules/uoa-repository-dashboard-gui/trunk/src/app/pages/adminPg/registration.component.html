@@ -1,0 +1,169 @@
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+  <div class="uk-width-1-1@m uk-first-column">
+
+    <h1 class="uk-h2">Registrations Admin Page</h1>
+
+    <!-- TOP HELP CONTENT -->
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+    <div class="uk-container uk-container-expand  uk-margin-medium-top uk-margin-medium-bottom">
+      <div class="uk-grid">
+
+        <!-- LEFT HELP CONTENT -->
+        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
+
+        <!-- MIDDLE -->
+        <div class="uk-width-expand@m">
+
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+          <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+          <div *ngIf="loadingMessage" class="loading-big">
+            <div class="loader-big"
+                 style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+              {{ loadingMessage }}
+            </div>
+            <div class="whiteFilm"></div>
+          </div>
+
+
+
+
+          <div class="uk-grid">
+            <div class="uk-width-1-1@m uk-padding" style="background-color: #fff; text-align: center">
+              <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
+                <input class="uk-width-1-2 uk-search-input" type="search" formControlName="officialName" placeholder="Search (official name) ..." style="background-color: #fff">
+                <button class="uk-button" (click)="handleChangeAndResetPage()">Search</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="uk-grid">
+            <div class="uk-width-1-4@m">
+              <form [formGroup]="dataForm" class="uk-form-stacked">
+
+                <div class="uk-form-label uk-text-large">Filtered By</div>
+
+                <div class="uk-margin">
+                  <div class="uk-form-label uk-text-large">Datasource Type</div>
+                  <div class="uk-form-controls">
+                    <label><input class="uk-radio" type="radio" value="" (change)="handleChangeAndResetPage()" formControlName="typology"> Any</label><br>
+                    <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChangeAndResetPage()" formControlName="typology"> Aggregator</label><br>
+                    <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChangeAndResetPage()" formControlName="typology"> Journal</label><br>
+                    <label><input class="uk-radio" type="radio" value="datarepository" (change)="handleChangeAndResetPage()" formControlName="typology"> Data Repository</label><br>
+                    <label><input class="uk-radio" type="radio" value="pubsrepository" (change)="handleChangeAndResetPage()" formControlName="typology"> Public Repository</label><br>
+                    <label><input class="uk-radio" type="radio" value="entityregistry" (change)="handleChangeAndResetPage()" formControlName="typology"> Entity Registry</label><br>
+                    <label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChangeAndResetPage()" formControlName="typology"> Institutional</label><br>
+                    <label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChangeAndResetPage()" formControlName="typology"> Thematic</label><br>
+                    <label><input class="uk-radio" type="radio" value="Products" (change)="handleChangeAndResetPage()" formControlName="typology"> Products</label><br>
+                    <label><input class="uk-radio" type="radio" value="Unknown" (change)="handleChangeAndResetPage()" formControlName="typology"> Unknown</label>
+                  </div>
+                </div>
+
+                <div class="uk-margin">
+                  <div class="uk-form-label uk-text-large">Countries</div>
+                  <div class="uk-form-controls">
+                    <ng-container *ngIf="countries && countries.length>0">
+                      <read-more [maxHeight]="238">
+                        <div><input class="uk-radio" type="radio" value="" (change)="handleChangeAndResetPage()" formControlName="country"> Any</div>
+                        <ng-container *ngFor="let country of countries">
+                          <div class="">
+                            <input class="uk-radio" type="radio" value="{{country.code}}"
+                                   (change)="handleChangeAndResetPage()" formControlName="country"> {{country.name}}
+                          </div>
+                        </ng-container>
+                      </read-more>
+                    </ng-container>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+            <div class="uk-width-expand@m">
+              <div class="uk-grid">
+                <div class="uk-width-1-1@m uk-margin-medium">
+                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid">
+
+                    <div class="uk-width-2-5@m">
+                      <div class="uk-margin">
+                        <label class="uk-form-label uk-text-right" for="size">Items per page: </label>
+                        <div class="uk-form-controls">
+                          <select class="uk-select" id="size" (change)="handleChangeAndResetPage()" formControlName="size">
+                            <option value="10">10</option>
+                            <option value="25" selected>25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="uk-width-expand@m ">
+
+                      <div class="uk-float-right">
+                        <label class="uk-form-label uk-text-right" for="orderBy">Order by: </label>
+                        <div class="uk-form-controls">
+                          <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
+                            <option value="DESCENDING" selected>Descending</option>
+                            <option value="ASCENDING">Ascending</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="uk-float-right">
+                        <label class="uk-form-label uk-text-right" for="sortBy">Sort by: </label>
+                        <div class="uk-form-controls">
+                          <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="requestSortBy">
+                            <option value="registrationdate" selected>Date</option>
+                            <option value="officialname">Name</option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                  </form>
+                </div>
+
+                <div class="uk-width-1-1@m">
+
+                  <table class="uk-table uk-table-striped">
+                    <thead>
+                    <tr>
+                      <th>Repository</th>
+                      <th>Date</th>
+                      <th>Organization</th>
+                      <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let res of repositorySnippet">
+                      <td class="uk-width-1-6@m">{{res.officialname}} <br> ({{res.id}}) <br> {{res.registeredby}}</td>
+                      <td >{{res.registrationdate}}</td>
+                      <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ' (' + getCountryName(organization.country)}})<br></div></td>
+                      <td>{{res.typology.split('::')[0]}}<br>{{res.typology.split('::')[1]}}<br>{{res.typology.split('::')[2]}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+
+                  <ul class="uk-pagination uk-flex-center" uk-margin>
+                    <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
+                    <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
+                    <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
+                  </ul>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
