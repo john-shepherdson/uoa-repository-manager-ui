@@ -63,8 +63,8 @@
                         <label class="uk-form-label uk-text-right" for="orderBy">Order by: </label>
                         <div class="uk-form-controls">
                           <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
-                            <option value="DESC" selected>Descending</option>
-                            <option value="ASC">Ascending</option>
+                            <option value="DSC">Descending</option>
+                            <option value="ASC" selected>Ascending</option>
                           </select>
                         </div>
                       </div>
@@ -73,8 +73,8 @@
                         <label class="uk-form-label uk-text-right" for="sortBy">Sort by: </label>
                         <div class="uk-form-controls">
                           <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="orderField">
-                            <option value="creationDate" selected>Date</option>
-                            <option value="repositoryName">Name</option>
+                            <option value="CREATION_DATE" >Date</option>
+                            <option value="REPOSITORY_NAME" selected>Name</option>
                           </select>
                         </div>
                       </div>
