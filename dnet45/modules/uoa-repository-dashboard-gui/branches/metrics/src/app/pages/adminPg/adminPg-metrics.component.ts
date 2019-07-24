@@ -34,7 +34,7 @@ export class AdminPgMetricsComponent implements OnInit {
   formPrepare = {
     handleChangeAndResetPage: '',
     repositoryName: '',
-    orderField: 'creationDate',
+    orderField: '',
     order: 'ASC',
     page: '0',
     quantity: '25'
@@ -44,6 +44,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
   @ViewChild('confirmApprovalModal')
   public confirmApprovalModal: ConfirmationDialogComponent;
+  private wholePageTotal: number;
 
   constructor(private piwikService: PiwikService,
               private fb: FormBuilder,
@@ -71,7 +72,7 @@ export class AdminPgMetricsComponent implements OnInit {
         error => this.errorMessage = <any>error
       );
 
-    this.getPiwiks(tempUrlParams);
+    // this.getPiwiks(tempUrlParams);
     this.isModalShown = false;
   }
 
@@ -153,8 +154,19 @@ export class AdminPgMetricsComponent implements OnInit {
     this.handleChange();
   }
 
-  previousPage() { }
+  previousPage() {
+    if (this.dataForm.get('page').value > 0) {
+      this.dataForm.get('page').setValue(+this.dataForm.get('page').value - 1);
+      this.handleChange();
+    }
+  }
 
-  nextPage() { }
+  nextPage() {
+    this.wholePageTotal = Math.floor(this.piwiks.total / (this.dataForm.get('quantity').value)) - 1;
+    if ((this.dataForm.get('page').value <= this.wholePageTotal) && (this.piwiks.total % (this.dataForm.get('quantity').value) !== 0)) {
+      this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
+      this.handleChange();
+    }
+  }
 
 }
