@@ -8,7 +8,7 @@
                   [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
     </help-content>
 
-    <div class="uk-container uk-container-expand  uk-margin-medium-top uk-margin-medium-bottom">
+    <div class="uk-container uk-container-expand uk-margin-medium-top uk-margin-medium-bottom">
       <div class="uk-grid">
 
         <!-- LEFT HELP CONTENT -->
@@ -22,8 +22,7 @@
           <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
           <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
           <div *ngIf="loadingMessage" class="loading-big">
-            <div class="loader-big"
-                 style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+            <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
               {{ loadingMessage }}
             </div>
             <div class="whiteFilm"></div>
@@ -153,6 +152,7 @@
                   <ul class="uk-pagination uk-flex-center" uk-margin>
                     <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
                     <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
+                    <li> </li>
                     <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
                   </ul>
 

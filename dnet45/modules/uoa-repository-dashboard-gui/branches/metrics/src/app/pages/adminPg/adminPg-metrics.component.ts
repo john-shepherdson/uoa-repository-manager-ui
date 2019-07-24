@@ -9,6 +9,11 @@ import {
   validatePiwikSiteSuccess
 } from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
+import {URLParameter} from '../../domain/url-parameter';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {RepositoryService} from '../../services/repository.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PiwikInfoPage} from '../../domain/page-content';
 
 @Component ({
   selector: 'app-admin-metrics',
@@ -16,7 +21,8 @@ import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/con
 })
 
 export class AdminPgMetricsComponent implements OnInit {
-  piwiks: PiwikInfo[] = [];
+  piwiks: PiwikInfoPage;
+  urlParams: URLParameter[] = [];
   errorMessage: string;
   successMessage: string;
   loadingMessage: string;
@@ -25,30 +31,60 @@ export class AdminPgMetricsComponent implements OnInit {
   modalButton = 'Yes, validate';
   isModalShown: boolean;
 
+  formPrepare = {
+    handleChangeAndResetPage: '',
+    repositoryName: '',
+    orderField: 'creationDate',
+    order: 'ASC',
+    page: '0',
+    quantity: '25'
+  };
+
+  dataForm: FormGroup;
+
   @ViewChild('confirmApprovalModal')
   public confirmApprovalModal: ConfirmationDialogComponent;
 
-  constructor(private piwikService: PiwikService) {}
+  constructor(private piwikService: PiwikService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) {}
 
   ngOnInit() {
-    this.getPiwiks();
+    this.dataForm = this.fb.group(this.formPrepare);
+    const tempUrlParams = new Array<URLParameter>();
+    this.urlParams = [];
+    console.log('ngoninit');
+    console.log(tempUrlParams);
+    this.route.queryParams
+      .subscribe(params => {
+          for (const i in params) {
+            this.dataForm.get(i).setValue(params[i]);
+          }
+          for (let i in this.dataForm.controls) {
+            if (this.dataForm.get(i).value) {
+              this.urlParams.push({key: i, value: [this.dataForm.get(i).value]});
+            }
+          }
+          this.handleChange();
+        },
+        error => this.errorMessage = <any>error
+      );
+
+    this.getPiwiks(tempUrlParams);
     this.isModalShown = false;
   }
 
 
-  getPiwiks() {
+  getPiwiks(urlParams) {
     this.loadingMessage = loadingReposMessage;
-    this.piwikService.getPiwikSitesForRepos()
+    this.piwikService.getPiwikSitesForRepos(urlParams)
       .subscribe (
-        piwiks => this.piwiks = piwiks.sort( function(a, b) {
-          if (a.repositoryName < b.repositoryName) {
-            return -1;
-          } else if (a.repositoryName > b.repositoryName) {
-            return 1;
-          } else {
-            return 0;
-          }
-        } ),
+        piwiks => {
+          this.piwiks = piwiks;
+          console.log(this.piwiks);
+          console.log(this.piwiks.results);
+          },
         error => {
           console.log(error);
           this.loadingMessage = '';
@@ -89,9 +125,36 @@ export class AdminPgMetricsComponent implements OnInit {
         this.loadingMessage = '';
         this.errorMessage = '';
         this.successMessage = validatePiwikSiteSuccess;
-        this.getPiwiks();
+        this.getPiwiks(this.urlParams);
       }
     );
   }
+
+  handleChange() {
+    // const tempUrlParams = new Array<URLParameter>();
+    this.urlParams = [];
+    const map: { [name: string]: string; } = {};
+
+    for (let i in this.dataForm.controls) {
+      if (this.dataForm.get(i).value !== '') {
+        this.urlParams.push({key: i, value: [this.dataForm.get(i).value]});
+        map[i] = this.dataForm.get(i).value;
+      }
+    }
+
+    this.router.navigate([`/admin/metrics`],
+      {queryParams: map});
+    this.getPiwiks(this.urlParams);
+    // this.getPiwiks();
+  }
+
+  handleChangeAndResetPage() {
+    this.dataForm.get('page').setValue(0);
+    this.handleChange();
+  }
+
+  previousPage() { }
+
+  nextPage() { }
 
 }

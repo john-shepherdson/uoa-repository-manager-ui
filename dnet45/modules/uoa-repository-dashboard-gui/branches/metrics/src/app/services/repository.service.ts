@@ -161,6 +161,9 @@ export class RepositoryService {
   searchRegisteredRepositories(page, size, urlParams: URLParameter[]) {
     const url = `${this.apiUrl}searchRegisteredRepositories/${page}/${size}`;
     console.log(`knocking on: ${url}`);
+    console.log('urlParams');
+    console.log(urlParams);
+    console.log(urlParams.length);
     let params = new HttpParams();
     for (const urlParameter of urlParams) {
       for (const value of urlParameter.value) {
