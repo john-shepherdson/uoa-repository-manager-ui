@@ -35,6 +35,7 @@ export class AdminPgMetricsComponent implements OnInit {
     handleChangeAndResetPage: '',
     repositoryName: '',
     orderField: '',
+    // orderField: 'creationDate',
     order: 'ASC',
     page: '0',
     quantity: '25'
