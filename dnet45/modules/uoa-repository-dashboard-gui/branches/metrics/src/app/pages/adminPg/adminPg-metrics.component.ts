@@ -165,6 +165,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
   handleChangeAndResetPage() {
     this.dataForm.get('page').setValue(0);
+    this.dataForm.get('from').setValue(0);
     this.handleChange();
   }
 
