@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { PiwikService } from '../../services/piwik.service';
 import { PiwikInfo } from '../../domain/typeScriptClasses';
 import {
@@ -31,13 +31,16 @@ export class AdminPgMetricsComponent implements OnInit {
   modalButton = 'Yes, validate';
   isModalShown: boolean;
 
+  getCSV: boolean;
+
   formPrepare = {
     handleChangeAndResetPage: '',
     repositoryName: '',
     orderField: 'REPOSITORY_NAME',
     order: 'ASC',
     page: '0',
-    quantity: '25'
+    quantity: '25',
+    from: '0'
   };
 
   dataForm: FormGroup;
@@ -74,18 +77,22 @@ export class AdminPgMetricsComponent implements OnInit {
 
     // this.getPiwiks(tempUrlParams);
     this.isModalShown = false;
+    // this.getCSV = false;
   }
 
 
-  getPiwiks(urlParams) {
+  getPiwiks(getCSV) {
+    if (getCSV) { console.log('truuee');
+
+    } else {
     this.loadingMessage = loadingReposMessage;
-    this.piwikService.getPiwikSitesForRepos(urlParams)
-      .subscribe (
+    this.piwikService.getPiwikSitesForRepos(this.urlParams)
+      .subscribe(
         piwiks => {
           this.piwiks = piwiks;
           console.log(this.piwiks);
           console.log(this.piwiks.results);
-          },
+        },
         error => {
           console.log(error);
           this.loadingMessage = '';
@@ -96,6 +103,7 @@ export class AdminPgMetricsComponent implements OnInit {
           window.scroll(1, 1);
         }
       );
+    }
   }
 
   confirmApproval(repoId: string) {
@@ -126,7 +134,7 @@ export class AdminPgMetricsComponent implements OnInit {
         this.loadingMessage = '';
         this.errorMessage = '';
         this.successMessage = validatePiwikSiteSuccess;
-        this.getPiwiks(this.urlParams);
+        this.getPiwiks(this.getCSV);
       }
     );
   }
@@ -145,7 +153,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
     this.router.navigate([`/admin/metrics`],
       {queryParams: map});
-    this.getPiwiks(this.urlParams);
+    this.getPiwiks(this.getCSV);
     // this.getPiwiks();
   }
 
@@ -157,6 +165,7 @@ export class AdminPgMetricsComponent implements OnInit {
   previousPage() {
     if (this.dataForm.get('page').value > 0) {
       this.dataForm.get('page').setValue(+this.dataForm.get('page').value - 1);
+      this.dataForm.get('from').setValue(+this.dataForm.get('from').value - +this.dataForm.get('quantity').value);
       this.handleChange();
     }
   }
@@ -165,6 +174,9 @@ export class AdminPgMetricsComponent implements OnInit {
     this.wholePageTotal = Math.floor(this.piwiks.total / (this.dataForm.get('quantity').value)) - 1;
     if ((this.dataForm.get('page').value <= this.wholePageTotal) && (this.piwiks.total % (this.dataForm.get('quantity').value) !== 0)) {
       this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
+      console.log('quantity');
+      console.log(this.dataForm.get('quantity').value);
+      this.dataForm.get('from').setValue(+this.dataForm.get('from').value + +this.dataForm.get('quantity').value);
       this.handleChange();
     }
   }

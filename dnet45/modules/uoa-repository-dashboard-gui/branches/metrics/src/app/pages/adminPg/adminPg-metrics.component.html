@@ -33,8 +33,14 @@
               <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
                 <input class="uk-width-1-2 uk-search-input" type="search" formControlName="officialName" placeholder="Search (official name) ..." style="background-color: #fff">
                 <button class="uk-button" (click)="handleChangeAndResetPage()">Search</button>
+                <div class="uk-position-right">
+                  <button class="uk-button uk-button-primary" (click)="getPiwiks(true)">Export to CSV</button>
+                </div>
               </form>
             </div>
+
+
+
           </div>
 
           <div class="uk-grid">
