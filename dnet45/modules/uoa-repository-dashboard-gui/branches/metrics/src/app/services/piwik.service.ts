@@ -68,7 +68,6 @@ export class PiwikService {
     return this.httpClient.get<PiwikInfoPage>(url, {params, withCredentials: true});
   }
 
-
   markPiwikSiteAsValidated (repositoryId: string) {
     const url = `${this.apiUrl}markPiwikSiteAsValidated/${repositoryId}`;
     console.log(`knocking on: ${url}`);

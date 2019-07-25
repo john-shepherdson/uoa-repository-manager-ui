@@ -14,6 +14,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {RepositoryService} from '../../services/repository.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PiwikInfoPage} from '../../domain/page-content';
+import {environment} from '../../../environments/environment';
 
 @Component ({
   selector: 'app-admin-metrics',
@@ -80,11 +81,18 @@ export class AdminPgMetricsComponent implements OnInit {
     // this.getCSV = false;
   }
 
+  downloadCSV() {
+    const url = environment.API_ENDPOINT;
+    let csvUrlParams = '/piwik/getPiwikSitesForRepos/csv?';
+    for (let i in this.dataForm.controls) {
+      if (this.dataForm.get(i).value !== '') {
+        csvUrlParams = csvUrlParams.concat(i, '=', this.dataForm.get(i).value, '&');
+      }
+    }
+    window.open(url + csvUrlParams, '_blank');
+  }
 
-  getPiwiks(getCSV) {
-    if (getCSV) { console.log('truuee');
-
-    } else {
+  getPiwiks() {
     this.loadingMessage = loadingReposMessage;
     this.piwikService.getPiwikSitesForRepos(this.urlParams)
       .subscribe(
@@ -103,7 +111,6 @@ export class AdminPgMetricsComponent implements OnInit {
           window.scroll(1, 1);
         }
       );
-    }
   }
 
   confirmApproval(repoId: string) {
@@ -134,7 +141,7 @@ export class AdminPgMetricsComponent implements OnInit {
         this.loadingMessage = '';
         this.errorMessage = '';
         this.successMessage = validatePiwikSiteSuccess;
-        this.getPiwiks(this.getCSV);
+        this.getPiwiks();
       }
     );
   }
@@ -143,7 +150,6 @@ export class AdminPgMetricsComponent implements OnInit {
     // const tempUrlParams = new Array<URLParameter>();
     this.urlParams = [];
     const map: { [name: string]: string; } = {};
-
     for (let i in this.dataForm.controls) {
       if (this.dataForm.get(i).value !== '') {
         this.urlParams.push({key: i, value: [this.dataForm.get(i).value]});
@@ -153,7 +159,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
     this.router.navigate([`/admin/metrics`],
       {queryParams: map});
-    this.getPiwiks(this.getCSV);
+    this.getPiwiks();
     // this.getPiwiks();
   }
 
@@ -174,8 +180,6 @@ export class AdminPgMetricsComponent implements OnInit {
     this.wholePageTotal = Math.floor(this.piwiks.total / (this.dataForm.get('quantity').value)) - 1;
     if ((this.dataForm.get('page').value <= this.wholePageTotal) && (this.piwiks.total % (this.dataForm.get('quantity').value) !== 0)) {
       this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
-      console.log('quantity');
-      console.log(this.dataForm.get('quantity').value);
       this.dataForm.get('from').setValue(+this.dataForm.get('from').value + +this.dataForm.get('quantity').value);
       this.handleChange();
     }
