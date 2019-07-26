@@ -46,6 +46,7 @@ export class AdminPgMetricsComponent implements OnInit {
   @ViewChild('confirmApprovalModal')
   public confirmApprovalModal: ConfirmationDialogComponent;
   private wholePageTotal: number;
+  private piwiksTotal: number;
 
   constructor(private piwikService: PiwikService,
               private fb: FormBuilder,
@@ -54,10 +55,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.fb.group(this.formPrepare);
-    const tempUrlParams = new Array<URLParameter>();
     this.urlParams = [];
-    console.log('ngoninit');
-    console.log(tempUrlParams);
     this.route.queryParams
       .subscribe(params => {
           for (const i in params) {
@@ -93,8 +91,6 @@ export class AdminPgMetricsComponent implements OnInit {
       .subscribe(
         piwiks => {
           this.piwiks = piwiks;
-          console.log(this.piwiks);
-          console.log(this.piwiks.results);
         },
         error => {
           console.log(error);
@@ -142,7 +138,6 @@ export class AdminPgMetricsComponent implements OnInit {
   }
 
   handleChange() {
-    // const tempUrlParams = new Array<URLParameter>();
     this.urlParams = [];
     const map: { [name: string]: string; } = {};
     for (let i in this.dataForm.controls) {
@@ -152,10 +147,8 @@ export class AdminPgMetricsComponent implements OnInit {
       }
     }
 
-    this.router.navigate([`/admin/metrics`],
-      {queryParams: map});
+    this.router.navigate([`/admin/metrics`], {queryParams: map});
     this.getPiwiks();
-    // this.getPiwiks();
   }
 
   handleChangeAndResetPage() {
@@ -173,7 +166,8 @@ export class AdminPgMetricsComponent implements OnInit {
   }
 
   nextPage() {
-    this.wholePageTotal = Math.floor(this.piwiks.total / (this.dataForm.get('quantity').value)) - 1;
+    if ((this.dataForm.get('searchField').value) !== '') { this.piwiksTotal = this.piwiks.to; } else { this.piwiksTotal = this.piwiks.total; }
+    this.wholePageTotal = Math.floor(this.piwiksTotal / (this.dataForm.get('quantity').value)) - 1;
     if ((this.dataForm.get('page').value <= this.wholePageTotal) && (this.piwiks.total % (this.dataForm.get('quantity').value) !== 0)) {
       this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
       this.dataForm.get('from').setValue(+this.dataForm.get('from').value + +this.dataForm.get('quantity').value);

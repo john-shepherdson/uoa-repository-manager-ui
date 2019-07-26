@@ -42,8 +42,6 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
     this.dataForm = this.fb.group(this.formPrepare);
     const tempUrlParams = new Array<URLParameter>();
-console.log('ngoninit');
-console.log(tempUrlParams);
     this.route.queryParams
       .subscribe(params => {
         for (const i in params) {

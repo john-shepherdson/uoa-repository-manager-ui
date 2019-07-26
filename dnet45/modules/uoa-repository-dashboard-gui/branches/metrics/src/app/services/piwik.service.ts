@@ -55,9 +55,6 @@ export class PiwikService {
   getPiwikSitesForRepos(urlParams: URLParameter[]): Observable<PiwikInfoPage> {
     const url = `${this.apiUrl}getPiwikSitesForRepos`;
     console.log(`knocking on: ${url}`);
-    console.log('urlParams');
-    console.log(urlParams);
-    console.log(urlParams.length);
     let params = new HttpParams();
     for (const urlParameter of urlParams) {
       for (const value of urlParameter.value) {
