@@ -31,7 +31,7 @@
           <div class="uk-grid">
             <div class="uk-width-1-1@m uk-padding" style="background-color: #fff; text-align: center">
               <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
-                <input class="uk-width-1-2 uk-search-input" type="search" formControlName="repositoryName" placeholder="Search (repository name) ..." style="background-color: #fff">
+                <input class="uk-width-1-2 uk-search-input" type="search" formControlName="searchField" placeholder="Search (repository name) ..." style="background-color: #fff">
                 <button class="uk-button" (click)="handleChangeAndResetPage()">Search</button>
                 <div class="uk-position-right">
                   <button class="uk-button uk-button-primary" (click)="downloadCSV()">Export to CSV</button>

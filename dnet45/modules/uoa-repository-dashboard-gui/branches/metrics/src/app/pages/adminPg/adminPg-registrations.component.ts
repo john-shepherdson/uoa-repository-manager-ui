@@ -8,8 +8,8 @@ import {URLParameter} from '../../domain/url-parameter';
 
 @Component({
   selector: 'app-registration',
-  templateUrl: 'registration.component.html',
-  styleUrls: ['./registration.component.css']
+  templateUrl: 'adminPg-registrations.component.html',
+  styleUrls: ['./adminPg-registrations.component.css']
 })
 
 export class RegistrationComponent implements OnInit {
@@ -25,8 +25,7 @@ export class RegistrationComponent implements OnInit {
   formPrepare = {
     country: '',
     typology: '',
-    englishName: '',
-    handleChangeAndResetPage: '',
+    officialName: '',
     requestSortBy: 'registrationdate',
     order: 'DESCENDING',
     page: '0',

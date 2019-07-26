@@ -32,11 +32,8 @@ export class AdminPgMetricsComponent implements OnInit {
   modalButton = 'Yes, validate';
   isModalShown: boolean;
 
-  getCSV: boolean;
-
   formPrepare = {
-    handleChangeAndResetPage: '',
-    repositoryName: '',
+    searchField: '',
     orderField: 'REPOSITORY_NAME',
     order: 'ASC',
     page: '0',
@@ -76,9 +73,7 @@ export class AdminPgMetricsComponent implements OnInit {
         error => this.errorMessage = <any>error
       );
 
-    // this.getPiwiks(tempUrlParams);
     this.isModalShown = false;
-    // this.getCSV = false;
   }
 
   downloadCSV() {
