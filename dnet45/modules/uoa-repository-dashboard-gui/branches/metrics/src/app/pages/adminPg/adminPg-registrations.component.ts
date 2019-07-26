@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {noServiceMessage} from '../../domain/shared-messages';
+import {loadingReposMessage, noServiceMessage} from '../../domain/shared-messages';
 import {Country, RepositorySnippet} from '../../domain/typeScriptClasses';
 import {RepositoryService} from '../../services/repository.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -83,10 +83,15 @@ export class RegistrationComponent implements OnInit {
   }
 
   getRegisteredRepositories(urlParams: URLParameter[]) {
+    this.loadingMessage = loadingReposMessage;
     this.repoService.searchRegisteredRepositories(this.dataForm.get('page').value,
       this.dataForm.get('size').value, urlParams).subscribe(
         suc => this.repositorySnippet = suc,
-        error => console.log(error),
+        error => {
+          console.log(error);
+          this.loadingMessage = '';
+        },
+      () => this.loadingMessage = ''
       );
   }
 
