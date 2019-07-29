@@ -1,7 +1,7 @@
 <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
   <div class="uk-width-1-1@m uk-first-column">
 
-    <h1 class="uk-h2">Registrations Admin Page</h1>
+    <h1 class="uk-h2">Registrations Admin</h1>
 
     <!-- TOP HELP CONTENT -->
     <help-content #topHelperContent [position]="'top'"
@@ -21,14 +21,6 @@
 
           <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
           <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
-          <div *ngIf="loadingMessage" class="loading-big">
-            <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-              {{ loadingMessage }}
-            </div>
-            <div class="whiteFilm"></div>
-          </div>
-
-
 
 
           <div class="uk-grid">
@@ -130,6 +122,15 @@
 
                 <div class="uk-width-1-1@m">
 
+                  <div *ngIf="loadingMessage" class="loading-big">
+                    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                      {{ loadingMessage }}
+
+                    </div>
+                    <div class="whiteFilm"></div>
+                  </div>
+
+                  <!-- TABLE -->
                   <table class="uk-table uk-table-striped">
                     <thead>
                     <tr>
@@ -143,7 +144,7 @@
                     <tr *ngFor="let res of repositorySnippet">
                       <td class="uk-width-1-6@m">{{res.officialname}} <br> ({{res.id}}) <br> {{res.registeredby}}</td>
                       <td >{{res.registrationdate}}</td>
-                      <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ' (' + getCountryName(organization.country)}})<br></div></td>
+                      <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ' (' + getCountryName(organization.country) + ')'}}<br></div></td>
                       <td>{{res.typology.split('::')[0]}}<br>{{res.typology.split('::')[1]}}<br>{{res.typology.split('::')[2]}}</td>
                     </tr>
                     </tbody>

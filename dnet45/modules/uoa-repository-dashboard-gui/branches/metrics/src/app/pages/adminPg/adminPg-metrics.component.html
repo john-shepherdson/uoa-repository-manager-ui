@@ -21,12 +21,7 @@
 
           <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
           <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
-          <div *ngIf="loadingMessage" class="loading-big">
-            <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-              {{ loadingMessage }}
-            </div>
-            <div class="whiteFilm"></div>
-          </div>
+
 
           <div class="uk-grid">
             <div class="uk-width-1-1@m uk-padding" style="background-color: #fff; text-align: center">
@@ -88,6 +83,13 @@
                 </div>
 
                 <div class="uk-width-1-1@m">
+
+                  <div *ngIf="loadingMessage" class="loading-big">
+                    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                      {{ loadingMessage }}
+                    </div>
+                    <div class="whiteFilm"></div>
+                  </div>
 
                   <!-- TABLE -->
                   <div *ngIf="piwiks && piwiks.results.length>0">
