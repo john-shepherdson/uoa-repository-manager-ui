@@ -82,6 +82,7 @@ export class AdminPgMetricsComponent implements OnInit {
         csvUrlParams = csvUrlParams.concat(i, '=', this.dataForm.get(i).value, '&');
       }
     }
+    csvUrlParams = csvUrlParams.split('&page=')[0];
     window.open(url + csvUrlParams, '_blank');
   }
 
