@@ -15,6 +15,7 @@ import {RepositoryService} from '../../services/repository.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PiwikInfoPage} from '../../domain/page-content';
 import {environment} from '../../../environments/environment';
+import {st} from '@angular/core/src/render3';
 
 @Component ({
   selector: 'app-admin-metrics',
@@ -162,11 +163,25 @@ export class AdminPgMetricsComponent implements OnInit {
   }
 
   getPages() {
+    let addToEndCounter = 0;
+    let addToStartCounter = 0;
     this.pages = [];
     this.pageTotal = Math.ceil(this.piwiks.total / (this.dataForm.get('quantity').value));
     for ( let i = (+this.dataForm.get('page').value - this.offset); i < (+this.dataForm.get('page').value + 1 + this.offset); ++i ) {
-        if ((i >= 0) && (i < this.pageTotal)) {
-          this.pages.push(i);
+      if ( i < 0 ) { addToEndCounter++; }
+      if ( i >= this.pageTotal ) { addToStartCounter++; }
+      if ((i >= 0) && (i < this.pageTotal)) {
+        this.pages.push(i);
+      }
+    }
+    for ( let i = 0; i < addToEndCounter; ++i ) {
+      if (this.pages.length < this.pageTotal) {
+        this.pages.push(this.pages.length);
+      }
+    }
+    for ( let i = 0; i < addToStartCounter; ++i ) {
+      if (this.pages[0] > 0) {
+        this.pages.unshift(this.pages[0] - 1 );
       }
     }
   }
