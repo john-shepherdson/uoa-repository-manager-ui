@@ -48,7 +48,7 @@ export class AdminPgMetricsComponent implements OnInit {
   private pageTotal: number;
   private piwiksTotal: number;
   private pages = [];
-  private offset = 4;
+  private offset = 2;
 
   constructor(private piwikService: PiwikService,
               private fb: FormBuilder,
@@ -164,8 +164,8 @@ export class AdminPgMetricsComponent implements OnInit {
   getPages() {
     this.pages = [];
     this.pageTotal = Math.ceil(this.piwiks.total / (this.dataForm.get('quantity').value));
-    for (let i = (+this.dataForm.get('page').value + 1 - this.offset); i < (+this.dataForm.get('page').value + 1 + this.offset); i++) {
-        if (i >= 0 && i < this.pageTotal) {
+    for ( let i = (+this.dataForm.get('page').value - this.offset); i < (+this.dataForm.get('page').value + 1 + this.offset); ++i ) {
+        if ((i >= 0) && (i < this.pageTotal)) {
           this.pages.push(i);
       }
     }
