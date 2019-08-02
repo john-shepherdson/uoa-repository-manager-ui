@@ -45,8 +45,10 @@ export class AdminPgMetricsComponent implements OnInit {
 
   @ViewChild('confirmApprovalModal')
   public confirmApprovalModal: ConfirmationDialogComponent;
-  private wholePageTotal: number;
+  private pageTotal: number;
   private piwiksTotal: number;
+  private pages = [];
+  private offset = 4;
 
   constructor(private piwikService: PiwikService,
               private fb: FormBuilder,
@@ -92,6 +94,7 @@ export class AdminPgMetricsComponent implements OnInit {
       .subscribe(
         piwiks => {
           this.piwiks = piwiks;
+          this.getPages();
         },
         error => {
           console.log(error);
@@ -158,6 +161,22 @@ export class AdminPgMetricsComponent implements OnInit {
     this.handleChange();
   }
 
+  getPages() {
+    this.pages = [];
+    this.pageTotal = Math.ceil(this.piwiks.total / (this.dataForm.get('quantity').value));
+    for (let i = (+this.dataForm.get('page').value + 1 - this.offset); i < (+this.dataForm.get('page').value + 1 + this.offset); i++) {
+        if (i >= 0 && i < this.pageTotal) {
+          this.pages.push(i);
+      }
+    }
+  }
+
+  selectPage(page) {
+    this.dataForm.get('page').setValue(page);
+    this.dataForm.get('from').setValue(((+this.dataForm.get('page').value) * (+this.dataForm.get('quantity').value)));
+    this.handleChange();
+  }
+
   previousPage() {
     if (this.dataForm.get('page').value > 0) {
       this.dataForm.get('page').setValue(+this.dataForm.get('page').value - 1);
@@ -167,9 +186,9 @@ export class AdminPgMetricsComponent implements OnInit {
   }
 
   nextPage() {
-    if ((this.dataForm.get('searchField').value) !== '') { this.piwiksTotal = this.piwiks.to; } else { this.piwiksTotal = this.piwiks.total; }
-    this.wholePageTotal = Math.floor(this.piwiksTotal / (this.dataForm.get('quantity').value)) - 1;
-    if ((this.dataForm.get('page').value <= this.wholePageTotal) && (this.piwiks.total % (this.dataForm.get('quantity').value) !== 0)) {
+    // if ((this.dataForm.get('searchField').value) !== '') { this.piwiksTotal = this.piwiks.to; } else { this.piwiksTotal = this.piwiks.total; }
+    this.pageTotal = Math.ceil(this.piwiks.total / (this.dataForm.get('quantity').value)) - 1;
+    if (this.dataForm.get('page').value < this.pageTotal) {
       this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
       this.dataForm.get('from').setValue(+this.dataForm.get('from').value + +this.dataForm.get('quantity').value);
       this.handleChange();
