@@ -48,7 +48,7 @@ export class AdminPgMetricsComponent implements OnInit {
   public confirmApprovalModal: ConfirmationDialogComponent;
   private pageTotal: number;
   private piwiksTotal: number;
-  private pages = [];
+  public pages = [];
   private offset = 2;
 
   constructor(private piwikService: PiwikService,
