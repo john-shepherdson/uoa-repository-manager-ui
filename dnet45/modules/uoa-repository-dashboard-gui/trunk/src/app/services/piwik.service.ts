@@ -2,11 +2,13 @@
 * Created by myrto on 12/05/2017
 */
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { PiwikInfo } from '../domain/typeScriptClasses';
 import { Observable } from 'rxjs';
+import {URLParameter} from '../domain/url-parameter';
+import {PiwikInfoPage} from '../domain/page-content';
 
 const headerOptions = {
   headers : new HttpHeaders().set('Content-Type', 'application/json')
@@ -50,13 +52,18 @@ export class PiwikService {
     return this.httpClient.get<PiwikInfo>(url, headerOptions);
   }
 
-  getPiwikSitesForRepos(): Observable<PiwikInfo[]> {
+  getPiwikSitesForRepos(urlParams: URLParameter[]): Observable<PiwikInfoPage> {
     const url = `${this.apiUrl}getPiwikSitesForRepos`;
     console.log(`knocking on: ${url}`);
+    let params = new HttpParams();
+    for (const urlParameter of urlParams) {
+      for (const value of urlParameter.value) {
+        params = params.append(urlParameter.key, value);
+      }
+    }
 
-    return this.httpClient.get<PiwikInfo[]>(url, headerOptions);
+    return this.httpClient.get<PiwikInfoPage>(url, {params, withCredentials: true});
   }
-
 
   markPiwikSiteAsValidated (repositoryId: string) {
     const url = `${this.apiUrl}markPiwikSiteAsValidated/${repositoryId}`;

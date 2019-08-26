@@ -6,7 +6,7 @@ import { AdminPgRouting } from './adminPg.routing';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { AdminPgComponent } from './adminPg.component';
 import { AdminPgMetricsComponent } from './adminPg-metrics.component';
-import {RegistrationComponent} from './registration.component';
+import {RegistrationComponent} from './adminPg-registrations.component';
 
 @NgModule ({
   imports: [

@@ -1,6 +1,8 @@
 /**
  * Created by stefania on 7/17/17.
  */
+import {PiwikInfo} from './typeScriptClasses';
+
 export class PageContent {
 
   content: PositionContents;
@@ -32,4 +34,11 @@ export interface Page {
   _id: string;
   route: string;
   name: string;
+}
+
+export class PiwikInfoPage {
+  total: number;
+  from: number;
+  to: number;
+  results: PiwikInfo[];
 }

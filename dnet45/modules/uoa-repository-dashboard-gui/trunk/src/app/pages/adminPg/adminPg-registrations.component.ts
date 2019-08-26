@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {noServiceMessage} from '../../domain/shared-messages';
+import {loadingReposMessage, noServiceMessage} from '../../domain/shared-messages';
 import {Country, RepositorySnippet} from '../../domain/typeScriptClasses';
 import {RepositoryService} from '../../services/repository.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -8,8 +8,8 @@ import {URLParameter} from '../../domain/url-parameter';
 
 @Component({
   selector: 'app-registration',
-  templateUrl: 'registration.component.html',
-  styleUrls: ['./registration.component.css']
+  templateUrl: 'adminPg-registrations.component.html',
+  styleUrls: ['./adminPg-registrations.component.css']
 })
 
 export class RegistrationComponent implements OnInit {
@@ -25,7 +25,6 @@ export class RegistrationComponent implements OnInit {
   formPrepare = {
     country: '',
     typology: '',
-    englishName: '',
     officialName: '',
     requestSortBy: 'registrationdate',
     order: 'DESCENDING',
@@ -43,7 +42,6 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
     this.dataForm = this.fb.group(this.formPrepare);
     const tempUrlParams = new Array<URLParameter>();
-
     this.route.queryParams
       .subscribe(params => {
         for (const i in params) {
@@ -85,10 +83,15 @@ export class RegistrationComponent implements OnInit {
   }
 
   getRegisteredRepositories(urlParams: URLParameter[]) {
+    this.loadingMessage = loadingReposMessage;
     this.repoService.searchRegisteredRepositories(this.dataForm.get('page').value,
       this.dataForm.get('size').value, urlParams).subscribe(
         suc => this.repositorySnippet = suc,
-        error => console.log(error),
+        error => {
+          console.log(error);
+          this.loadingMessage = '';
+        },
+      () => this.loadingMessage = ''
       );
   }
 

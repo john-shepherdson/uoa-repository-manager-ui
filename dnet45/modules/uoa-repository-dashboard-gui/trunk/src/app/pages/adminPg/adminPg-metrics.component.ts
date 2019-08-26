@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { PiwikService } from '../../services/piwik.service';
 import { PiwikInfo } from '../../domain/typeScriptClasses';
 import {
@@ -9,6 +9,13 @@ import {
   validatePiwikSiteSuccess
 } from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
+import {URLParameter} from '../../domain/url-parameter';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {RepositoryService} from '../../services/repository.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PiwikInfoPage} from '../../domain/page-content';
+import {environment} from '../../../environments/environment';
+import {st} from '@angular/core/src/render3';
 
 @Component ({
   selector: 'app-admin-metrics',
@@ -16,7 +23,8 @@ import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/con
 })
 
 export class AdminPgMetricsComponent implements OnInit {
-  piwiks: PiwikInfo[] = [];
+  piwiks: PiwikInfoPage;
+  urlParams: URLParameter[] = [];
   errorMessage: string;
   successMessage: string;
   loadingMessage: string;
@@ -25,30 +33,70 @@ export class AdminPgMetricsComponent implements OnInit {
   modalButton = 'Yes, validate';
   isModalShown: boolean;
 
+  formPrepare = {
+    searchField: '',
+    orderField: 'REPOSITORY_NAME',
+    order: 'ASC',
+    page: '0',
+    quantity: '25',
+    from: '0'
+  };
+
+  dataForm: FormGroup;
+
   @ViewChild('confirmApprovalModal')
   public confirmApprovalModal: ConfirmationDialogComponent;
+  private pageTotal: number;
+  private piwiksTotal: number;
+  private pages = [];
+  private offset = 2;
 
-  constructor(private piwikService: PiwikService) {}
+  constructor(private piwikService: PiwikService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) {}
 
   ngOnInit() {
-    this.getPiwiks();
+    this.dataForm = this.fb.group(this.formPrepare);
+    this.urlParams = [];
+    this.route.queryParams
+      .subscribe(params => {
+          for (const i in params) {
+            this.dataForm.get(i).setValue(params[i]);
+          }
+          for (let i in this.dataForm.controls) {
+            if (this.dataForm.get(i).value) {
+              this.urlParams.push({key: i, value: [this.dataForm.get(i).value]});
+            }
+          }
+          this.handleChange();
+        },
+        error => this.errorMessage = <any>error
+      );
+
     this.isModalShown = false;
   }
 
+  downloadCSV() {
+    const url = environment.API_ENDPOINT;
+    let csvUrlParams = '/piwik/getPiwikSitesForRepos/csv?';
+    for (let i in this.dataForm.controls) {
+      if (this.dataForm.get(i).value !== '') {
+        csvUrlParams = csvUrlParams.concat(i, '=', this.dataForm.get(i).value, '&');
+      }
+    }
+    csvUrlParams = csvUrlParams.split('&page=')[0];
+    window.open(url + csvUrlParams, '_blank');
+  }
 
   getPiwiks() {
     this.loadingMessage = loadingReposMessage;
-    this.piwikService.getPiwikSitesForRepos()
-      .subscribe (
-        piwiks => this.piwiks = piwiks.sort( function(a, b) {
-          if (a.repositoryName < b.repositoryName) {
-            return -1;
-          } else if (a.repositoryName > b.repositoryName) {
-            return 1;
-          } else {
-            return 0;
-          }
-        } ),
+    this.piwikService.getPiwikSitesForRepos(this.urlParams)
+      .subscribe(
+        piwiks => {
+          this.piwiks = piwiks;
+          this.getPages();
+        },
         error => {
           console.log(error);
           this.loadingMessage = '';
@@ -92,6 +140,74 @@ export class AdminPgMetricsComponent implements OnInit {
         this.getPiwiks();
       }
     );
+  }
+
+  handleChange() {
+    this.urlParams = [];
+    const map: { [name: string]: string; } = {};
+    for (let i in this.dataForm.controls) {
+      if (this.dataForm.get(i).value !== '') {
+        this.urlParams.push({key: i, value: [this.dataForm.get(i).value]});
+        map[i] = this.dataForm.get(i).value;
+      }
+    }
+
+    this.router.navigate([`/admin/metrics`], {queryParams: map});
+    this.getPiwiks();
+  }
+
+  handleChangeAndResetPage() {
+    this.dataForm.get('page').setValue(0);
+    this.dataForm.get('from').setValue(0);
+    this.handleChange();
+  }
+
+  getPages() {
+    let addToEndCounter = 0;
+    let addToStartCounter = 0;
+    this.pages = [];
+    this.pageTotal = Math.ceil(this.piwiks.total / (this.dataForm.get('quantity').value));
+    for ( let i = (+this.dataForm.get('page').value - this.offset); i < (+this.dataForm.get('page').value + 1 + this.offset); ++i ) {
+      if ( i < 0 ) { addToEndCounter++; }
+      if ( i >= this.pageTotal ) { addToStartCounter++; }
+      if ((i >= 0) && (i < this.pageTotal)) {
+        this.pages.push(i);
+      }
+    }
+    for ( let i = 0; i < addToEndCounter; ++i ) {
+      if (this.pages.length < this.pageTotal) {
+        this.pages.push(this.pages.length);
+      }
+    }
+    for ( let i = 0; i < addToStartCounter; ++i ) {
+      if (this.pages[0] > 0) {
+        this.pages.unshift(this.pages[0] - 1 );
+      }
+    }
+  }
+
+  selectPage(page) {
+    this.dataForm.get('page').setValue(page);
+    this.dataForm.get('from').setValue(((+this.dataForm.get('page').value) * (+this.dataForm.get('quantity').value)));
+    this.handleChange();
+  }
+
+  previousPage() {
+    if (this.dataForm.get('page').value > 0) {
+      this.dataForm.get('page').setValue(+this.dataForm.get('page').value - 1);
+      this.dataForm.get('from').setValue(+this.dataForm.get('from').value - +this.dataForm.get('quantity').value);
+      this.handleChange();
+    }
+  }
+
+  nextPage() {
+    // if ((this.dataForm.get('searchField').value) !== '') { this.piwiksTotal = this.piwiks.to; } else { this.piwiksTotal = this.piwiks.total; }
+    this.pageTotal = Math.ceil(this.piwiks.total / (this.dataForm.get('quantity').value)) - 1;
+    if (this.dataForm.get('page').value < this.pageTotal) {
+      this.dataForm.get('page').setValue(+this.dataForm.get('page').value + 1);
+      this.dataForm.get('from').setValue(+this.dataForm.get('from').value + +this.dataForm.get('quantity').value);
+      this.handleChange();
+    }
   }
 
 }
