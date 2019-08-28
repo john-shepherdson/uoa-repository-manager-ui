@@ -93,5 +93,5 @@ export const formSuccessUpdatedInterface = 'The interface was updated successful
 
 /* BaseUrl validation Messages */
 export const didntChooseBaseUrl = 'You need to select a base URL';
-export const invalidCustomBaseUrl = 'The url is not responding or is not a valid OAI-PMH url';
+export const invalidCustomBaseUrl = 'The url is not responding or is not a valid OAI-PMH url. Please, make sure that you are using the correct protocol ("http" or "https"), as the service is currently unable to follow url redirects.';
 export const identifyingUrl = 'Identifying Url ...';
