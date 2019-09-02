@@ -475,6 +475,7 @@ export class Publication implements IsSerializable {
     pids: Pid[];
     instances: Instance[];
     externalReferences: ExternalReference[];
+    publications: Publication[];
     projects: Project[];
     datasets: Dataset[];
 }

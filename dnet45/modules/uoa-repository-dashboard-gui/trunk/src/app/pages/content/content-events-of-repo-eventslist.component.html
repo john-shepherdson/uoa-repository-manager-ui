@@ -185,6 +185,70 @@
                               </div>
                             </td>
                           </tr>
+
+                          <!--Publications-->
+                          <tr class="el-item" [ngClass]="{'success': event.highlight.publications && event.highlight.publications.length>0 }">
+                            <td *ngIf="this.topic.includes('PUBLICATION')" class="uk-table-shrink uk-width-1-4">
+                              <strong class="el-title uk-display-block">{{this.lastTopicEntry}}<br>Publication(s)</strong>
+                            </td>
+                            <td *ngIf="!(this.topic.includes('PUBLICATION'))"
+                                class="uk-table-shrink uk-width-1-4">
+                              <strong class="el-title uk-display-block">Publication(s)</strong>
+                            </td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title">
+                                <span *ngFor="let pub of event.publication.publications; let s_index = index">
+                                  <br *ngIf="s_index > 0">
+                                  <span>{{ pub.titles[0] }} (ID: {{pub.originalId}})</span>
+                                  <span *ngIf="event.highlight.publications && event.highlight.publications.length>0 && event.provenance">
+                                    <span class="pull-right">
+                                      <b>from: </b>
+                                      <ng-container *ngIf="event.provenance.url">
+                                        <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                        <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                      </ng-container>
+                                      <ng-container *ngIf="!event.provenance.url">
+                                        <span>{{ event.provenance.repositoryName }}</span>
+                                      </ng-container>
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <!--Datasets-->
+                          <tr class="el-item" [ngClass]="{'success': event.highlight.datasets && event.highlight.datasets.length>0 }">
+                            <td *ngIf="this.topic.includes('DATASET')" class="uk-table-shrink uk-width-1-4">
+                              <strong class="el-title uk-display-block">{{this.lastTopicEntry}}<br>Dataset(s)</strong>
+                            </td>
+                            <td *ngIf="!(this.topic.includes('DATASET'))" class="uk-table-shrink uk-width-1-4">
+                              <strong class="el-title uk-display-block">Dataset(s)</strong>
+                            </td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title">
+                                <span *ngFor="let dataset of event.publication.datasets; let s_index = index">
+                                  <br *ngIf="s_index > 0">
+                                  <span>{{ dataset.titles[0] }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
+                                  <span *ngIf="event.highlight.datasets && event.highlight.datasets.length>0 && event.provenance">
+                                    <span class="pull-right">
+                                      <b>from: </b>
+                                      <ng-container *ngIf="event.provenance.url">
+                                        <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                        <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                      </ng-container>
+                                      <ng-container *ngIf="!event.provenance.url">
+                                        <span>{{ event.provenance.repositoryName }}</span>
+                                      </ng-container>
+                                    </span>
+                                  </span>
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+
+
+
                           <tr class="el-item" [ngClass]="{'success': event.highlight.publicationdate && event.highlight.publicationdate.length>0 }">
                             <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Publication date</strong></td>
                             <td class="uk-table-shrink"><div class="el-title">{{ event.publication.publicationdate }}</div></td>
