@@ -27,8 +27,12 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery-bez/lib/jquery.bez.js",
               "node_modules/uikit/dist/js/uikit.min.js",
-              "node_modules/uikit/dist/js/uikit-icons.min.js"
+              "node_modules/uikit/dist/js/uikit-icons.min.js",
+              "src/assets/js/altair_admin_common.min.js",
+              "src/assets/js/common.min.js",
+              "src/assets/js/pages/forms_wizard.js"
             ]
           },
           "configurations": {

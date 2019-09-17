@@ -103,6 +103,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   }
 
   moveAStep() {
+    window.scrollTo(0, 0);
     this.errorMessage = '';
     if (this.currentStep === 0) {
       if (this.datasourcesByCountry.goToNextStep()) {
@@ -131,6 +132,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   }
 
   moveBackAStep() {
+    window.scrollTo(0, 0);
     this.errorMessage = '';
     if (this.currentStep === 1) {
       this.repoInterfaces = [];
@@ -144,6 +146,9 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   }
 
   addInterfaceToList(intrf?: RepositoryInterface) {
+
+    console.log('clicked add interface to list');
+
     const curIndex = this.dataForInterfaceComp.length;
     const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.datasourceType,
       datasourceClass: this.repo.datasourceClass, registeredBy: this.repo.registeredBy };

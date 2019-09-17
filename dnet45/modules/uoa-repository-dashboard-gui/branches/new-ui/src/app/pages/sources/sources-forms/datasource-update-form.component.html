@@ -22,101 +22,224 @@
     If you want to edit them, you can do it by using this
     <a target="_blank" href="{{ 'http://service.re3data.org/repository/' + repoId }}">Re3data link</a>
   </div>
-  <form-inline [description]="softwarePlatformDesc" [valid]="updateGroup.get('softwarePlatform').valid">
-    <select formControlName="softwarePlatform" class="form-control">
-<!--      <option value="" selected>[Other] (enter name below)</option> RESTORE AFTER getTypologies begins to work-->
-      <option *ngFor="let platform of typologies" value="{{ platform.value }}">{{ platform.name }}</option>
-    </select>
-  </form-inline>
-  <form-inline [description]="platformNameDesc" [valid]="updateGroup.get('platformName').valid">
-    <span *ngIf="updateGroup.get('platformName').touched && updateGroup.get('platformName').value"
-          class="help-block inline"
-          style="margin-top: 0px; margin-bottom: 0px; ">This value will be used as the platform for your repository</span>
-    <input formControlName="platformName" class="form-control" style="" type="text">
-  </form-inline>
-  <form-inline [description]="officialNameDesc" [valid]="updateGroup.get('officialName').valid">
-    <input formControlName="officialName" class="form-control" style="" type="text">
-  </form-inline>
-  <div *ngIf="selectedRepo.datasourceType == 'journal'">
-    <form-inline [description]="issnDesc" [valid]="updateGroup.get('issn').valid">
-      <span *ngIf="updateGroup.get('issn').invalid && updateGroup.get('issn').touched && updateGroup.get('issn').dirty"
-            class="help-block inline uk-text-danger"
-            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn needs to be of the form: "1111-1111" or "1111-111X"</span>
-      <input formControlName="issn" class="form-control" type="text"
-             (focus)="updateGroup.get('issn').markAsUntouched()" (blur)="updateGroup.get('issn').updateValueAndValidity()">
-    </form-inline>
-    <form-inline [description]="eissnDesc" [valid]="updateGroup.get('eissn').valid">
-      <span *ngIf="updateGroup.get('eissn').invalid && updateGroup.get('eissn').touched && updateGroup.get('eissn').dirty"
-            class="help-block inline uk-text-danger"
-            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn needs to be of the form: "1111-1111" or "1111-111X"</span>
-      <input formControlName="eissn" class="form-control" type="text"
-             (focus)="updateGroup.get('eissn').markAsUntouched()" (blur)="updateGroup.get('eissn').updateValueAndValidity()">
-    </form-inline>
-    <form-inline [description]="lissnDesc" [valid]="updateGroup.get('lissn').valid">
-      <span *ngIf="updateGroup.get('lissn').invalid && updateGroup.get('lissn').touched && updateGroup.get('lissn').dirty"
-            class="help-block inline uk-text-danger"
-            style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn needs to be of the form: "1111-1111" or "1111-111X"</span>
-      <input formControlName="lissn" class="form-control" type="text"
-             (focus)="updateGroup.get('lissn').markAsUntouched()" (blur)="updateGroup.get('lissn').updateValueAndValidity()">
-    </form-inline>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('softwarePlatform') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="softwarePlatformDesc" [valid]="updateGroup.get('softwarePlatform').valid">
+          <select formControlName="softwarePlatform" class="md-input">
+            <!--      <option value="" selected>[Other] (enter name below)</option> RESTORE AFTER getTypologies begins to work-->
+            <option *ngFor="let platform of typologies" value="{{ platform.value }}">{{ platform.name }}</option>
+          </select>
+        </form-inline>
+      </div>
+    </div>
   </div>
-  <form-inline [description]="repoDescriptionDesc" [valid]="updateGroup.get('repoDescription').valid">
-    <textarea formControlName="repoDescription" class="form-control"></textarea>
-  </form-inline>
-  <form-inline [description]="countryDesc" [valid]="updateGroup.get('country')">
-    <select formControlName="country" class="form-control">
-      <option value="">-- none selected --</option>
-      <option *ngFor="let country of countries" value="{{country.code}}" title="{{country.name}}">{{ country.name }}</option>
-    </select>
-  </form-inline>
-  <form-inline [description]="longtitudeDesc" [valid]="updateGroup.get('longtitude').valid">
-    <input formControlName="longtitude" type="text" class="form-control">
-  </form-inline>
-  <form-inline [description]="latitudeDesc" [valid]="updateGroup.get('latitude').valid">
-    <input formControlName="latitude" type="text" class="form-control">
-  </form-inline>
-  <form-inline [description]="websiteUrlDesc" [valid]="updateGroup.get('websiteUrl').valid">
-    <input formControlName="websiteUrl" class="form-control" type="text">
-  </form-inline>
-  <form-inline [description]="institutionNameDesc" [valid]="updateGroup.get('institutionName').valid">
-    <input formControlName="institutionName" class="form-control" type="text">
-  </form-inline>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{(updateGroup.get('platformName') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="platformNameDesc" [valid]="updateGroup.get('platformName').valid">
+            <span *ngIf="updateGroup.get('platformName').touched && updateGroup.get('platformName').value"
+                  class="help-block inline"
+                  style="margin-top: 0px; margin-bottom: 0px; font-style: italic">This value will be used as the platform for your repository</span>
+          <input formControlName="platformName" class="md-input" style="" type="text">
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('officialName') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="officialNameDesc" [valid]="updateGroup.get('officialName').valid">
+          <input formControlName="officialName" class="md-input" style="" type="text">
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRepo.datasourceType == 'journal'">
+    <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+      <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+        <div class="md-input-wrapper {{ (updateGroup.get('issn') != null) ? 'md-input-filled' : '' }}">
+          <form-inline [description]="issnDesc" [valid]="updateGroup.get('issn').valid">
+            <span *ngIf="updateGroup.get('issn').invalid && updateGroup.get('issn').touched && updateGroup.get('issn').dirty"
+                  class="help-block inline uk-text-danger"
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn needs to be of the form: "1111-1111" or "1111-111X"</span>
+            <input formControlName="issn" class="md-input" type="text"
+                   (focus)="updateGroup.get('issn').markAsUntouched()" (blur)="updateGroup.get('issn').updateValueAndValidity()">
+          </form-inline>
+        </div>
+      </div>
+    </div>
+
+    <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+      <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+        <div class="md-input-wrapper {{ (updateGroup.get('eissn') != null) ? 'md-input-filled' : '' }}">
+          <form-inline [description]="eissnDesc" [valid]="updateGroup.get('eissn').valid">
+            <span *ngIf="updateGroup.get('eissn').invalid && updateGroup.get('eissn').touched && updateGroup.get('eissn').dirty"
+                  class="help-block inline uk-text-danger"
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn needs to be of the form: "1111-1111" or "1111-111X"</span>
+            <input formControlName="eissn" class="md-input" type="text"
+                   (focus)="updateGroup.get('eissn').markAsUntouched()" (blur)="updateGroup.get('eissn').updateValueAndValidity()">
+          </form-inline>
+        </div>
+      </div>
+    </div>
+
+    <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+      <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+        <div class="md-input-wrapper {{ (updateGroup.get('lissn') != null) ? 'md-input-filled' : '' }}">
+          <form-inline [description]="lissnDesc" [valid]="updateGroup.get('lissn').valid">
+            <span *ngIf="updateGroup.get('lissn').invalid && updateGroup.get('lissn').touched && updateGroup.get('lissn').dirty"
+                  class="help-block inline uk-text-danger"
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn needs to be of the form: "1111-1111" or "1111-111X"</span>
+            <input formControlName="lissn" class="md-input" type="text"
+                   (focus)="updateGroup.get('lissn').markAsUntouched()" (blur)="updateGroup.get('lissn').updateValueAndValidity()">
+          </form-inline>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('repoDescription') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="repoDescriptionDesc" [valid]="updateGroup.get('repoDescription').valid">
+          <textarea formControlName="repoDescription" class="md-input"></textarea>
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('country') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="countryDesc" [valid]="updateGroup.get('country')">
+          <select formControlName="country" class="md-input">
+            <option value="">-- none selected --</option>
+            <option *ngFor="let country of countries" value="{{country.code}}" title="{{country.name}}">{{ country.name }}</option>
+          </select>
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('longtitude') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="longtitudeDesc" [valid]="updateGroup.get('longtitude').valid">
+          <input formControlName="longtitude" type="text" class="md-input">
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('latitude') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="latitudeDesc" [valid]="updateGroup.get('latitude').valid">
+          <input formControlName="latitude" type="text" class="md-input">
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('websiteUrl') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="websiteUrlDesc" [valid]="updateGroup.get('websiteUrl').valid">
+          <input formControlName="websiteUrl" class="md-input" type="text">
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('institutionName') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="institutionNameDesc" [valid]="updateGroup.get('institutionName').valid">
+          <input formControlName="institutionName" class="md-input" type="text">
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
   <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
       uk-scrollspy-class="">Extra Information</h4>
-  <form-inline [description]="englishNameDesc" [valid]="updateGroup.get('englishName').valid">
-    <input formControlName="englishName" class="form-control" type="text">
-  </form-inline>
-  <form-inline [description]="logoUrlDesc" [valid]="updateGroup.get('logoUrl').valid">
-    <span *ngIf="updateGroup.get('logoUrl').invalid && updateGroup.get('logoUrl').touched && updateGroup.get('logoUrl').dirty"
-          class="help-block inline uk-text-danger"
-          style="margin-top: 0px; margin-bottom: 0px; ">The url you entered is not valid</span>
-    <input formControlName="logoUrl" class="form-control" type="text"
-           (focus)="updateGroup.get('logoUrl').markAsUntouched()"
-           (blur)="updateGroup.get('logoUrl').updateValueAndValidity()">
-    <div class="comment fontItalic">
-      Please make sure that the maximum size of the uploaded image is width=360px, height=240px
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('englishName') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="englishNameDesc" [valid]="updateGroup.get('englishName').valid">
+          <input formControlName="englishName" class="md-input" type="text">
+        </form-inline>
+      </div>
     </div>
-  </form-inline>
-  <form-inline [description]="timezoneDesc" [valid]="updateGroup.get('timezone').valid">
-    <select formControlName="timezone" class="form-control">
-      <option value="">-- none selected --</option>
-      <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.name }}</option>
-    </select>
-  </form-inline>
-  <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">
-    <select formControlName="datasourceType" class="form-control">
-      <option value="">-- none selected --</option>
-      <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
-    </select>
-  </form-inline>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('logoUrl') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="logoUrlDesc" [valid]="updateGroup.get('logoUrl').valid">
+        <span *ngIf="updateGroup.get('logoUrl').invalid && updateGroup.get('logoUrl').touched && updateGroup.get('logoUrl').dirty"
+              class="help-block inline uk-text-danger"
+              style="margin-top: 0px; margin-bottom: 0px; ">The url you entered is not valid</span>
+          <input formControlName="logoUrl" class="md-input" type="text"
+                 (focus)="updateGroup.get('logoUrl').markAsUntouched()"
+                 (blur)="updateGroup.get('logoUrl').updateValueAndValidity()">
+          <div class="comment fontItalic">
+            Please make sure that the maximum size of the uploaded image is width=360px, height=240px
+          </div>
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('timezone') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="timezoneDesc" [valid]="updateGroup.get('timezone').valid">
+          <select formControlName="timezone" class="md-input">
+            <option value="">-- none selected --</option>
+            <option *ngFor="let timezone of timezones" value="{{ timezone.offset }}">{{ timezone.name }}</option>
+          </select>
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('datasourceType') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">
+          <select formControlName="datasourceType" class="md-input">
+            <option value="">-- none selected --</option>
+            <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
+          </select>
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
   <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
       uk-scrollspy-class="">Administrator & contact information</h4>
-  <form-inline [description]="adminEmailDesc" [valid]="updateGroup.get('adminEmail').valid">
-    <span *ngIf="updateGroup.get('adminEmail').invalid && updateGroup.get('adminEmail').touched && updateGroup.get('adminEmail').dirty"
-          class="help-block inline"
-          style="margin-top: 0px; margin-bottom: 0px; ">You need to enter a valid email address</span>
-    <input formControlName="adminEmail" class="form-control" type="text" (focus)="updateGroup.get('adminEmail').markAsUntouched()" (blur)="updateGroup.get('adminEmail').updateValueAndValidity()">
-  </form-inline>
+
+  <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
+    <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
+      <div class="md-input-wrapper {{ (updateGroup.get('adminEmail') != null) ? 'md-input-filled' : '' }}">
+        <form-inline [description]="adminEmailDesc" [valid]="updateGroup.get('adminEmail').valid">
+          <span *ngIf="updateGroup.get('adminEmail').invalid && updateGroup.get('adminEmail').touched && updateGroup.get('adminEmail').dirty"
+                class="help-block inline"
+                style="margin-top: 0px; margin-bottom: 0px; ">You need to enter a valid email address</span>
+          <input formControlName="adminEmail" class="md-input" type="text" (focus)="updateGroup.get('adminEmail').markAsUntouched()" (blur)="updateGroup.get('adminEmail').updateValueAndValidity()">
+        </form-inline>
+      </div>
+    </div>
+  </div>
+
   <div *ngIf="showButton" class="form-group">
     <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
   </div>

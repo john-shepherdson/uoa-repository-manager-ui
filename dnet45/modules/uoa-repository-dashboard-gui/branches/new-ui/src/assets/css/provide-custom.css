@@ -1,0 +1,108 @@
+.loading {
+  position: relative;
+  min-height: 200px;
+}
+
+.loading-medium {
+  position: relative;
+  min-height: 400px;
+}
+
+.loading-big {
+  position: relative;
+  min-height: 600px;
+}
+
+.loader-small {
+  background: url("../imgs/loader-small.gif") no-repeat center;
+  z-index: 110;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.loader-big {
+  background: url("../imgs/loader-big.gif") no-repeat center;
+  z-index: 110;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.whiteFilm {
+  background: #ffffff;
+  z-index: 105;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/********* FORM WIZARD *********/
+
+.wizard > .content {
+  overflow: scroll;
+  min-height: 480px;
+}
+
+/*******************************/
+
+.repositoryTypeSelection .uk-card-body {
+  padding: 20px 20px;
+}
+
+.repositoryTypeSelection .el-title {
+  font-size: 16px;
+}
+
+
+
+/********* REGISTRATION FORMS *********/
+
+.wizard > .content > .body {
+  padding: 48px 24px 0px;
+}
+
+.radioButtonForm .uk-button {
+  background: none;
+  border: none;
+  padding: 4px 0px;
+}
+
+.visible_uk_links:hover, .visible_uk_links:focus {
+  color: #128DD5;
+}
+
+.interface-box.new {
+  border: 2px dashed #e7eaec;
+  min-height: 504px;
+}
+
+.interface-box.new a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.interface-box.new i {
+  color: #c4c4c4;
+  display: block;
+  font-size: 60px;
+  margin-top: 155px;
+}
+
+.interface-box.new .info {
+  color: #c4c4c4;
+  display: inline-block;
+  font-size: 21px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+/**************************************/

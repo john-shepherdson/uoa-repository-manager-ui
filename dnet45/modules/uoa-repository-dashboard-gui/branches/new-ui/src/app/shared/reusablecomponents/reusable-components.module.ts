@@ -15,9 +15,11 @@ import { RepositoryTilesComponent } from './repository-tiles.component';
 import { ForbiddenPageComponent } from './403-forbidden-page.component';
 import { HelpContentService } from '../../services/help-content.service';
 import { ModalModule, TabsModule } from 'ngx-bootstrap';
-import { TopMenuComponent } from '../topmenu/topmenu.component';
+import { TopmenuLandingComponent } from '../topmenulanding/topmenu-landing.component';
 import { FooterComponent } from '../footer/footer.component';
-import {ReadMoreComponent, ReadMoreTextComponent} from './read-more.component';
+import { ReadMoreComponent, ReadMoreTextComponent } from './read-more.component';
+import { SideMenuComponent } from "../sidemenu/sidemenu.component";
+import {TopmenuDashboardComponent} from "../topmenudashboard/topmenu-dashboard.component";
 
 const myGroups = [
   MyGroup,
@@ -46,7 +48,9 @@ const myGroups = [
     HelpContentComponent,
     AsideHelpContentComponent,
     ConfirmationDialogComponent,
-    TopMenuComponent,
+    TopmenuLandingComponent,
+    TopmenuDashboardComponent,
+    SideMenuComponent,
     FooterComponent,
     RepositoryTilesComponent,
     ForbiddenPageComponent,
@@ -58,7 +62,9 @@ const myGroups = [
     HelpContentComponent,
     AsideHelpContentComponent,
     ConfirmationDialogComponent,
-    TopMenuComponent,
+    TopmenuLandingComponent,
+    TopmenuDashboardComponent,
+    SideMenuComponent,
     FooterComponent,
     RepositoryTilesComponent,
     ForbiddenPageComponent,

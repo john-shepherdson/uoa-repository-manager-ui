@@ -59,4 +59,46 @@ export class AppComponent implements OnInit {
     });
   }
 
+  isHomeRoute() {
+    console.log('Is home route? Route is: ' + this.router.url);
+    return (this.router.url === '/') || (this.router.url === '/landing');
+  }
+
+  // ngAfterContentInit() {
+  //
+  //   // this.loadScript('assets/js/common.js');
+  //   // this.loadScript('assets/js/uikit_custom.js');
+  //   // this.loadScript('assets/js/altair_admin_common.js');
+  //   this.loadScript('assets/js/altair_admin_common.min.js');
+  //
+  //   // setTimeout( () => {
+  //   //   // this.loadScript('assets/js/common.js');
+  //   //   // this.loadScript('assets/js/uikit_custom.js');
+  //   //   this.loadScript('assets/js/altair_admin_common.min.js');
+  //   // }, 2000);
+  //
+  //   // $.getScript('assets/js/altair_admin_common.min.js');
+  //
+  //
+  //
+  //   // // Load the script
+  //   // // var self = this;
+  //   //
+  //   // var script = <HTMLScriptElement>document.createElement("SCRIPT");
+  //   // script.src = 'assets/js/altair_admin_common.min.js';
+  //   // script.type = 'text/javascript';
+  //   // // self.script = <HTMLScriptElement>document.createElement("SCRIPT");
+  //   // // self.script.src = '../Content/js/settings.js';
+  //   // // self.script.type = 'text/javascript';
+  //   // document.getElementsByTagName("head")[0].appendChild(script);
+  // }
+  //
+  // public loadScript(url) {
+  //   console.log('preparing to load...')
+  //   let node = document.createElement('script');
+  //   node.src = url;
+  //   node.type = 'text/javascript';
+  //   document.getElementsByTagName('head')[0].appendChild(node);
+  // }
+
 }

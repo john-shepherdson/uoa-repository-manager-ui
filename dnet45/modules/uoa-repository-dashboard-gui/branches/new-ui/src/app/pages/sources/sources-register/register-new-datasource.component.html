@@ -1,3 +1,240 @@
+<!--<div id="page_content_inner">-->
+  <!--<h2 class="heading_b uk-margin-bottom">Register your datasource</h2>-->
+
+  <!--&lt;!&ndash; TOP HELP CONTENT &ndash;&gt;-->
+  <!--<help-content #topHelperContent [position]="'top'"-->
+                <!--[ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">-->
+  <!--</help-content>-->
+
+  <!--<div class="uk-grid">-->
+
+    <!--&lt;!&ndash; LEFT HELP CONTENT &ndash;&gt;-->
+    <!--<aside-help-content #leftHelperContent [position]="'left'"-->
+                        <!--[ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">-->
+    <!--</aside-help-content>-->
+
+    <!--<div class=" uk-width-expand@m">-->
+      <!--<div class="md-card uk-margin-large-bottom">-->
+        <!--<div class="md-card-content">-->
+          <!--<form class="uk-form-stacked" id="wizard_advanced_form" novalidate="">-->
+            <!--<div id="wizard_advanced" role="application" class="wizard clearfix"><div class="steps clearfix"><ul role="tablist"><li role="tab" class="first current" aria-disabled="false" aria-selected="true"><a id="wizard_advanced-t-0" href="#wizard_advanced-h-0" aria-controls="wizard_advanced-p-0"><span class="current-info audible">current step: </span><span class="number">1</span> <span class="title">Owner information</span></a></li><li role="tab" class="disabled" aria-disabled="true"><a id="wizard_advanced-t-1" href="#wizard_advanced-h-1" aria-controls="wizard_advanced-p-1"><span class="number">2</span> <span class="title">Vehicle information</span></a></li><li role="tab" class="disabled last" aria-disabled="true"><a id="wizard_advanced-t-2" href="#wizard_advanced-h-2" aria-controls="wizard_advanced-p-2"><span class="number">3</span> <span class="title">Additional information</span></a></li></ul></div><div class="content clearfix" style="height: 480px;">-->
+
+              <!--&lt;!&ndash; first section &ndash;&gt;-->
+              <!--<h3 id="wizard_advanced-h-0" tabindex="-1" class="title current">Owner information</h3>-->
+              <!--<section id="wizard_advanced-p-0" role="tabpanel" aria-labelledby="wizard_advanced-h-0" class="body step-0 current" data-step="0" aria-hidden="false">-->
+                <!--<h2 class="heading_a">-->
+                  <!--Owner Information-->
+                  <!--<span class="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>-->
+                <!--</h2>-->
+                <!--<hr class="md-hr">-->
+                <!--<div class="uk-grid">-->
+                  <!--<div class="uk-width-medium-1-1 parsley-row">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_fullname">Full Name<span class="req">*</span></label><input type="text" name="wizard_fullname" id="wizard_fullname" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">-->
+                  <!--<div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">-->
+                    <!--<div class="uk-input-group">-->
+                      <!--<div class="md-input-wrapper"><label for="wizard_address">Address<span class="req">*</span></label><input type="text" name="wizard_address__0" id="wizard_address__0" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                      <!--<span class="uk-input-group-addon">-->
+                            <!--<a href="#" class="btnSectionClone"><i class="material-icons md-24"></i></a>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="uk-grid" data-uk-grid-margin="">-->
+                  <!--<div class="uk-width-medium-1-3 parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_birth">Birth Date<span class="req">*</span></label><input type="text" name="wizard_birth" id="wizard_birth" required="" class="md-input" data-parsley-date="" data-parsley-date-message="This value should be a valid date" data-uk-datepicker="{format:'MM.DD.YYYY'}"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="uk-width-medium-1-3 parsley-row">-->
+                    <!--<select id="wizard_birth_place" name="wizard_birth_place" data-md-selectize-delayed="" tabindex="-1" style="display: none;" class="selectized" required=""><option value="" selected="selected"></option></select><div class="selectize-control single plugin-tooltip"><div class="selectize-input items required invalid not-full has-options"><input type="select-one" autocomplete="off" tabindex="" id="wizard_birth_place-selectized" placeholder="Place of Birth" style="width: 93px;" required=""></div></div><div class="selectize_fix"></div>-->
+                  <!--</div>-->
+                  <!--<div class="uk-width-medium-1-3 parsley-row">-->
+                    <!--<label class="uk-form-label">Marital Status<span class="req">*</span></label>-->
+                    <!--<span class="icheck-inline">-->
+                                            <!--<div class="iradio_md"><input type="radio" name="wizard_status" id="wizard_status_married" required="" class="wizard-icheck" value="married" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" data-parsley-multiple="wizard_status"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div>-->
+                                            <!--<label for="wizard_status_married" class="inline-label">Married</label>-->
+                                        <!--</span>-->
+                    <!--<span class="icheck-inline">-->
+                                            <!--<div class="iradio_md"><input type="radio" name="wizard_status" id="wizard_status_single" class="wizard-icheck" value="single" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" data-parsley-multiple="wizard_status"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div>-->
+                                            <!--<label for="wizard_status_single" class="inline-label">Single</label>-->
+                                        <!--</span>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="uk-grid uk-grid-width-medium-1-2 uk-grid-width-large-1-4" data-uk-grid-margin="">-->
+                  <!--<div class="uk-input-group uk-row-first">-->
+                                        <!--<span class="uk-input-group-addon">-->
+                                            <!--<i class="material-icons"></i>-->
+                                        <!--</span>-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_phone">Phone Number</label><input type="text" class="md-input" name="wizard_phone" id="wizard_phone"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row">-->
+                    <!--<div class="uk-input-group">-->
+                                            <!--<span class="uk-input-group-addon">-->
+                                                <!--<i class="material-icons"></i>-->
+                                            <!--</span>-->
+                      <!--<div class="md-input-wrapper"><label for="wizard_email">Email</label><input type="text" class="md-input" name="wizard_email" id="wizard_email" required=""><span class="md-input-bar "></span></div>-->
+
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="uk-input-group">-->
+                                        <!--<span class="uk-input-group-addon">-->
+                                            <!--<i class="uk-icon-skype"></i>-->
+                                        <!--</span>-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_skype">Skype</label><input type="text" class="md-input" name="wizard_skype" id="wizard_skype"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="uk-input-group">-->
+                                        <!--<span class="uk-input-group-addon">-->
+                                            <!--<i class="uk-icon-twitter"></i>-->
+                                        <!--</span>-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_twitter">Twitter</label><input type="text" class="md-input" name="wizard_twitter" id="wizard_twitter"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</section>-->
+
+              <!--&lt;!&ndash; second section &ndash;&gt;-->
+              <!--<h3 id="wizard_advanced-h-1" tabindex="-1" class="title">Vehicle information</h3>-->
+              <!--<section id="wizard_advanced-p-1" role="tabpanel" aria-labelledby="wizard_advanced-h-1" class="body step-1" data-step="1" style="display: none;" aria-hidden="true">-->
+                <!--<h2 class="heading_a">-->
+                  <!--Vehicle information-->
+                  <!--<span class="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>-->
+                <!--</h2>-->
+                <!--<hr class="md-hr">-->
+                <!--<div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-xlarge-1-4" data-uk-grid-margin="">-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_title_number">Title Number<span class="req">*</span></label><input type="text" name="wizard_vehicle_title_number" id="wizard_vehicle_title_number" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_vin">VIN<span class="req">*</span></label><input type="text" name="wizard_vehicle_vin" id="wizard_vehicle_vin" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_plate_number">Current Plate Number<span class="req">*</span></label><input type="text" name="wizard_vehicle_plate_number" id="wizard_vehicle_plate_number" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_expiration">Expiration Date<span class="req">*</span></label><input type="text" name="wizard_vehicle_expiration" id="wizard_vehicle_expiration" required="" class="md-input" data-parsley-americandate="" data-parsley-americandate-message="This value should be a valid date (MM.DD.YYYY)" data-uk-datepicker="{format:'MM.DD.YYYY'}"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="uk-grid uk-grid-width-large-1-3 uk-grid-width-xlarge-1-6" data-uk-grid-margin="">-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_year">Registration Year</label><input type="text" name="wizard_vehicle_year" id="wizard_vehicle_year" class="md-input" data-uk-datepicker="{format:'MM.YYYY'}"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_make">Make</label><input type="text" name="wizard_vehicle_make" id="wizard_vehicle_make" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_model">Model<span class="req">*</span></label><input type="text" name="wizard_vehicle_model" id="wizard_vehicle_model" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_body">Body Type<span class="req">*</span></label><input type="text" name="wizard_vehicle_body" id="wizard_vehicle_body" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_axles">Axles</label><input type="text" name="wizard_vehicle_axles" id="wizard_vehicle_axles" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_fuel">Fuel<span class="req">*</span></label><input type="text" name="wizard_vehicle_fuel" id="wizard_vehicle_fuel" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</section>-->
+
+              <!--&lt;!&ndash; third section &ndash;&gt;-->
+              <!--<h3 id="wizard_advanced-h-2" tabindex="-1" class="title">Additional information</h3>-->
+              <!--<section id="wizard_advanced-p-2" role="tabpanel" aria-labelledby="wizard_advanced-h-2" class="body step-2" data-step="2" style="display: none;" aria-hidden="true">-->
+                <!--<h2 class="heading_a">-->
+                  <!--Additional information-->
+                  <!--<span class="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>-->
+                <!--</h2>-->
+                <!--<hr class="md-hr">-->
+                <!--<div class="uk-grid uk-margin-large-bottom" data-uk-grid-margin="">-->
+                  <!--<div class="uk-width-1-1 uk-row-first">-->
+                    <!--<label class="uk-form-label">Location Where Vehicle is Principally Garaged</label>-->
+                    <!--<div class="uk-grid" data-uk-grid-margin="">-->
+                      <!--<div class="uk-width-medium-2-10 parsley-row uk-row-first">-->
+                                                <!--<span class="icheck-inline uk-margin-top uk-margin-left">-->
+                                                    <!--<div class="iradio_md"><input type="radio" name="wizard_additional_location" id="wizard_status_location_city" class="wizard-icheck" value="City" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" data-parsley-multiple="wizard_additional_location"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div>-->
+                                                    <!--<label for="wizard_status_location_city" class="inline-label">City</label>-->
+                                                <!--</span>-->
+                      <!--</div>-->
+                      <!--<div class="uk-width-medium-2-10 parsley-row uk-row-first">-->
+                                                <!--<span class="icheck-inline uk-margin-top uk-margin-left">-->
+                                                    <!--<div class="iradio_md"><input type="radio" name="wizard_additional_location" id="wizard_status_location_county" class="wizard-icheck" value="County" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" data-parsley-multiple="wizard_additional_location"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div>-->
+                                                    <!--<label for="wizard_status_location_county" class="inline-label">County</label>-->
+                                                <!--</span>-->
+                      <!--</div>-->
+                      <!--<div class="uk-width-medium-3-10 parsley-row uk-row-first">-->
+                        <!--<div class="uk-input-group">-->
+                                                    <!--<span class="uk-input-group-addon">-->
+                                                       <!--<div class="iradio_md"><input type="radio" name="wizard_additional_location" class="wizard-icheck" value="town" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" data-parsley-multiple="wizard_additional_location"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div>-->
+                                                    <!--</span>-->
+                          <!--<div class="md-input-wrapper"><label for="wizard_location_town">Town of</label><input type="text" class="md-input" name="wizard_location_town" id="wizard_location_town"><span class="md-input-bar "></span></div>-->
+
+                        <!--</div>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<span class="uk-alert uk-alert-info">If you would like your registration renewals sent to an address other than your residence/business address, enter it below.</span>-->
+                <!--<div class="uk-grid" data-uk-grid-margin="">-->
+                  <!--<div class="uk-width-medium-2-6 parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_registration_address">Registration Mailing Address</label><input type="text" name="wizard_vehicle_registration_address" id="wizard_vehicle_registration_address" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="uk-width-medium-1-6 parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_registration_city">City<span class="req">*</span></label><input type="text" name="wizard_vehicle_registration_city" id="wizard_vehicle_registration_city" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="uk-width-medium-1-6 parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_registration_state">State<span class="req">*</span></label><input type="text" name="wizard_vehicle_registration_state" id="wizard_vehicle_registration_state" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="uk-width-medium-1-6 parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_registration_zip">ZIP<span class="req">*</span></label><input type="text" name="wizard_vehicle_registration_zip" id="wizard_vehicle_registration_zip" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                  <!--<div class="uk-width-medium-1-6 parsley-row uk-row-first">-->
+                    <!--<div class="md-input-wrapper"><label for="wizard_vehicle_registration_code">Code<span class="req">*</span></label><input type="text" name="wizard_vehicle_registration_code" id="wizard_vehicle_registration_code" required="" class="md-input"><span class="md-input-bar "></span></div>-->
+
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</section>-->
+
+            <!--</div><div class="actions clearfix"><ul role="menu" aria-label="Pagination"><li class="button_previous disabled" aria-disabled="true"><a href="#previous" role="menuitem"><i class="material-icons"></i> Previous</a></li><li class="button_next" aria-hidden="false" aria-disabled="false"><a href="#next" role="menuitem">Next <i class="material-icons"></i></a></li><li class="button_finish" style="display: none;" aria-hidden="true"><a href="#finish" role="menuitem">Finish</a></li></ul></div></div>-->
+          <!--</form>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; RIGHT HELP CONTENT &ndash;&gt;-->
+    <!--<aside-help-content #rightHelperContent [position]="'right'"-->
+                        <!--[ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">-->
+    <!--</aside-help-content>-->
+
+  <!--</div>-->
+
+  <!--&lt;!&ndash; BOTTOM HELP CONTENT &ndash;&gt;-->
+  <!--<help-content #bottomHelperContent [position]="'bottom'"-->
+                <!--[ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">-->
+  <!--</help-content>-->
+
+<!--</div>-->
+
+
+
 <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
   <div class="uk-width-1-1@m uk-first-column">
 
