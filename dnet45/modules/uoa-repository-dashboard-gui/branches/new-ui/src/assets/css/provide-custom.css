@@ -1,3 +1,5 @@
+/********* LOADERS *********/
+
 .loading {
   position: relative;
   min-height: 200px;
@@ -43,6 +45,18 @@
   top: 0;
   left: 0;
 }
+
+.transparentFilm {
+  background: transparent;
+  z-index: 105;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+/**************************/
 
 /********* FORM WIZARD *********/
 
@@ -106,3 +120,25 @@
 }
 
 /**************************************/
+
+
+/********** REPOSITORY LIST/GRID VIEW **********/
+
+.md-card .md-card-head-img {
+  height: 80%;
+  margin-top: 5%;
+}
+
+a.md-card p {
+  color: #444;
+}
+
+/***********************************************/
+
+/********** TABS CARD **********/
+
+.md-card.tabs .md-card-content {
+  padding: 20px 30px;
+}
+
+/***********************************************/

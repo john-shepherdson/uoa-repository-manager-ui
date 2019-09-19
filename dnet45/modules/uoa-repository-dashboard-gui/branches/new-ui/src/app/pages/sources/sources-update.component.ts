@@ -9,11 +9,15 @@ import { RepositoryTilesComponent } from '../../shared/reusablecomponents/reposi
 export class SourcesUpdateComponent implements OnInit {
 
   @ViewChild('repositoryTiles') repositoryTiles: RepositoryTilesComponent;
-  noRepositories: boolean;
+  noRepositories: boolean = true;
+  tilesView: boolean = true;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.add("top_bar_active");   //add the class
+  }
 
   setNoRepositories(norepos: boolean) {
     this.noRepositories = norepos;
@@ -21,5 +25,9 @@ export class SourcesUpdateComponent implements OnInit {
 
   downloadLogo() {
     window.open('../../../assets/imgs/OpenAIRE_validated_icon_medium.png', '_blank', 'enabledstatus=0,toolbar=0,menubar=0,location=0');
+  }
+
+  changeView(view: string) {
+    this.tilesView = (view == 'tiles');
   }
 }

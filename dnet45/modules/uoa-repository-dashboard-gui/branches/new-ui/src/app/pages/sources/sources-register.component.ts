@@ -16,5 +16,7 @@ export class SourcesRegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 }

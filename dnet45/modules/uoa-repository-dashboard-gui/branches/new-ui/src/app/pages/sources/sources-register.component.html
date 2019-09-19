@@ -1,195 +1,197 @@
-<div id="page_content_inner">
-  <h2 class="heading_b uk-margin-bottom">Register your datasource</h2>
+<div id="page_content">
+  <div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">Register your datasource</h2>
 
-  <!-- TOP HELP CONTENT -->
-  <help-content #topHelperContent [position]="'top'"
-                [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-  </help-content>
+    <!-- TOP HELP CONTENT -->
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
 
-  <div class="uk-grid">
+    <div class="uk-grid">
 
-    <!-- LEFT HELP CONTENT -->
-    <aside-help-content #leftHelperContent [position]="'left'"
-                        [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-    </aside-help-content>
+      <!-- LEFT HELP CONTENT -->
+      <aside-help-content #leftHelperContent [position]="'left'"
+                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
 
-    <!-- MIDDLE -->
-    <div class=" uk-width-expand@m">
+      <!-- MIDDLE -->
+      <div class=" uk-width-expand@m">
 
-      <div class="uk-grid uk-grid-match repositoryTypeSelection" data-uk-grid-margin="">
-        <div class="uk-width-medium-1-4 uk-row-first">
-          <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
-            <a [routerLink]="['literature']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-            <div class="uk-card-media-top">
-              <img class="el-image" src="../../../assets/imgs/Literature_repos_square.png" alt="" style="width: 100%;">
-            </div>
-            <div class="uk-card-body">
-              <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom">
-                Make sure your repository is already registered in OpenDOAR, the authoritative directory of institutional and thematic OA repositories.
-              </h3>
-              <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
-                <a href="http://v2.sherpa.ac.uk/opendoar/" target="_blank">
-                  List provided by
-                  <br>
-                  OpenDOAR<i class="fa fa-external-link" style="margin-left: 3px !important;"></i>
-                </a>
+        <div class="uk-grid uk-grid-match repositoryTypeSelection" data-uk-grid-margin="">
+          <div class="uk-width-medium-1-4 uk-row-first">
+            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
+              <a [routerLink]="['literature']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../assets/imgs/Literature_repos_square.png" alt="" style="width: 100%;">
+              </div>
+              <div class="uk-card-body">
+                <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom">
+                  Make sure your repository is already registered in OpenDOAR, the authoritative directory of institutional and thematic OA repositories.
+                </h3>
+                <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
+                  <a href="http://v2.sherpa.ac.uk/opendoar/" target="_blank">
+                    List provided by
+                    <br>
+                    OpenDOAR<i class="fa fa-external-link" style="margin-left: 3px !important;"></i>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-          <!--<div class="md-card">-->
+            <!--<div class="md-card">-->
             <!--<div class="md-card-content">-->
-              <!--Deleniti sit dolores magni et illo blanditiis numquam neque nihil id qui consequuntur earum assumenda modi aut qui sed aliquam cumque nesciunt non delectus dolor impedit dolores totam enim aut expedita officia dolorum iusto et consequatur vel vitae modi et quae enim quo sit dicta consequatur.-->
+            <!--Deleniti sit dolores magni et illo blanditiis numquam neque nihil id qui consequuntur earum assumenda modi aut qui sed aliquam cumque nesciunt non delectus dolor impedit dolores totam enim aut expedita officia dolorum iusto et consequatur vel vitae modi et quae enim quo sit dicta consequatur.-->
             <!--</div>-->
-          <!--</div>-->
-        </div>
-        <div class="uk-width-medium-1-4">
-          <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-            <a [routerLink]="['data']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
-            <div class="uk-card-media-top">
-              <img class="el-image" src="../../../assets/imgs/Data_repos_sqare.png" alt="" style="width:100%;">
+            <!--</div>-->
+          </div>
+          <div class="uk-width-medium-1-4">
+            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
+              <a [routerLink]="['data']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../assets/imgs/Data_repos_sqare.png" alt="" style="width:100%;">
+              </div>
+              <div class="uk-card-body">
+                <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
+                  Make sure your data repository is registered in Re3Data, the global registry of research data repositories from different academic disciplines.
+                </h3>
+                <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
+                  <a href="http://www.re3data.org" target="_blank">
+                    List provided by
+                    <br>
+                    Re3data<i class="fa fa-external-link" style="margin-left: 3px !important;"></i>
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class="uk-card-body">
-              <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
-                Make sure your data repository is registered in Re3Data, the global registry of research data repositories from different academic disciplines.
-              </h3>
-              <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
-                <a href="http://www.re3data.org" target="_blank">
-                  List provided by
-                  <br>
-                  Re3data<i class="fa fa-external-link" style="margin-left: 3px !important;"></i>
-                </a>
+          </div>
+          <div class="uk-width-medium-1-4">
+            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
+              <a [routerLink]="['journal']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../assets/imgs/OAJournals_square.png" alt="" style="width:100%;">
+              </div>
+              <div class="uk-card-body">
+                <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom">
+                  Make sure that your Open Access Journal is compatible with the OpenAIRE literature Guidelines.
+                </h3>
+                <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
+                  <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
+                    For any questions please contact the OpenAIRE helpdesk.
+                    <i class="fa fa-external-link" style="margin-left: 3px !important;"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="uk-width-medium-1-4">
+            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
+              <a [routerLink]="['aggregator']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../assets/imgs/Icons_Aggregators_square.png" alt="" style="width:100%;">
+              </div>
+              <div class="uk-card-body">
+                <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom">
+                  Make sure that your publications aggregator is compatible with the OpenAIRE literature Guidelines.
+                </h3>
+                <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
+                  <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
+                    For any questions please contact the OpenAIRE helpdesk.
+                    <i class="fa fa-external-link" style="margin-left: 3px !important;"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="uk-width-medium-1-4">
-          <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-            <a [routerLink]="['journal']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-            <div class="uk-card-media-top">
-              <img class="el-image" src="../../../assets/imgs/OAJournals_square.png" alt="" style="width:100%;">
-            </div>
-            <div class="uk-card-body">
-              <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom">
-                Make sure that your Open Access Journal is compatible with the OpenAIRE literature Guidelines.
-              </h3>
-              <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
-                <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
-                  For any questions please contact the OpenAIRE helpdesk.
-                  <i class="fa fa-external-link" style="margin-left: 3px !important;"></i>
-                </a>
+
+        <div class="uk-margin uk-grid uk-grid-match repositoryTypeSelection" uk-grid="">
+          <div class="uk-width-medium-1-4 uk-row-first">
+            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
+              <a class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../assets/imgs/CRIS_square_grey.png" alt="" style="width:100%;">
+              </div>
+              <div class="uk-card-body">
+                <!--<h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
+                  Make sure your data repository is registered in Re3Data, the global registry of research data repositories from different academic disciplines.
+                </h3>-->
+                <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
+                  <a>
+                    Stay tuned
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="uk-width-medium-1-4">
-          <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-            <a [routerLink]="['aggregator']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-            <div class="uk-card-media-top">
-              <img class="el-image" src="../../../assets/imgs/Icons_Aggregators_square.png" alt="" style="width:100%;">
+          <div class="uk-width-medium-1-4">
+            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
+              <a class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../assets/imgs/Software_repos_square.png" alt="" style="width:100%;">
+              </div>
+              <div class="uk-card-body">
+                <!--<h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
+                  Catch-all repository registration
+                </h3>-->
+                <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
+                  <a>
+                    Stay tuned
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class="uk-card-body">
-              <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom">
-                Make sure that your publications aggregator is compatible with the OpenAIRE literature Guidelines.
-              </h3>
-              <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
-                <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
-                  For any questions please contact the OpenAIRE helpdesk.
-                  <i class="fa fa-external-link" style="margin-left: 3px !important;"></i>
-                </a>
+          </div>
+          <div class="uk-width-medium-1-4">
+            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
+              <a class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../assets/imgs/Catch-all_repos_sqare.png" alt="" style="width:100%;">
+              </div>
+              <div class="uk-card-body">
+                <!--<h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
+                  Make sure your data repository is registered in Re3Data, the global registry of research data repositories from different academic disciplines.
+                </h3>-->
+                <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
+                  <a>
+                    Stay tuned
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="uk-width-medium-1-4">
+            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
+              <a class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../assets/imgs/Other_Sources_square.png" alt="" style="width:100%;">
+              </div>
+              <div class="uk-card-body uk-text-meta">
+                <!--<h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
+                  Catch-all repository registration
+                </h3>-->
+                <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
+                  <a>
+                    Stay tuned
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="uk-margin uk-grid uk-grid-match repositoryTypeSelection" uk-grid="">
-        <div class="uk-width-medium-1-4 uk-row-first">
-          <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-            <a class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-            <div class="uk-card-media-top">
-              <img class="el-image" src="../../../assets/imgs/CRIS_square_grey.png" alt="" style="width:100%;">
-            </div>
-            <div class="uk-card-body">
-              <!--<h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
-                Make sure your data repository is registered in Re3Data, the global registry of research data repositories from different academic disciplines.
-              </h3>-->
-              <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
-                <a>
-                  Stay tuned
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="uk-width-medium-1-4">
-          <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-            <a class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-            <div class="uk-card-media-top">
-              <img class="el-image" src="../../../assets/imgs/Software_repos_square.png" alt="" style="width:100%;">
-            </div>
-            <div class="uk-card-body">
-              <!--<h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
-                Catch-all repository registration
-              </h3>-->
-              <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
-                <a>
-                  Stay tuned
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="uk-width-medium-1-4">
-          <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-            <a class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-            <div class="uk-card-media-top">
-              <img class="el-image" src="../../../assets/imgs/Catch-all_repos_sqare.png" alt="" style="width:100%;">
-            </div>
-            <div class="uk-card-body">
-              <!--<h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
-                Make sure your data repository is registered in Re3Data, the global registry of research data repositories from different academic disciplines.
-              </h3>-->
-              <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
-                <a>
-                  Stay tuned
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="uk-width-medium-1-4">
-          <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-            <a class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-            <div class="uk-card-media-top">
-              <img class="el-image" src="../../../assets/imgs/Other_Sources_square.png" alt="" style="width:100%;">
-            </div>
-            <div class="uk-card-body uk-text-meta">
-              <!--<h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
-                Catch-all repository registration
-              </h3>-->
-              <div class="el-meta uk-margin uk-text-meta" style="z-index:9999; position:relative;">
-                <a>
-                  Stay tuned
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- RIGHT HELP CONTENT -->
+      <aside-help-content #rightHelperContent [position]="'right'"
+                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
     </div>
 
-    <!-- RIGHT HELP CONTENT -->
-    <aside-help-content #rightHelperContent [position]="'right'"
-                        [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-    </aside-help-content>
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
 
   </div>
-
-  <!-- BOTTOM HELP CONTENT -->
-  <help-content #bottomHelperContent [position]="'bottom'"
-                [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-  </help-content>
-
 </div>
 
 

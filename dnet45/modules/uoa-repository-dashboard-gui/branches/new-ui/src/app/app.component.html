@@ -1,16 +1,15 @@
-<div *ngIf=!isHomeRoute() class="sidebar_main_open sidebar_main_swipe uk-height-1-1">
+<div *ngIf="!isHomeRoute() ; else landing" class="sidebar_main_open sidebar_main_swipe uk-height-1-1">
   <top-menu-dashboard></top-menu-dashboard>
   <side-menu></side-menu>
-  <div id="page_content">
-    <router-outlet></router-outlet>
-  </div>
+  <router-outlet></router-outlet>
 </div>
 
-<div *ngIf="isHomeRoute()">
+<ng-template #landing>
   <top-menu-landing></top-menu-landing>
   <router-outlet></router-outlet>
   <footer></footer>
-</div>
+</ng-template>
+
 
 
 

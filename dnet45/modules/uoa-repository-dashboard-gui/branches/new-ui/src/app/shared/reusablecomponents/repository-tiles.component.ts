@@ -11,19 +11,20 @@ import { loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError } fr
 
 export class RepositoryTilesComponent implements OnInit {
   reposOfUser: Repository[] = [];
-  tilesView: boolean;
+  // tilesView: boolean;
   errorMessage: string;
   warningMessage: string;
   loadingMessage: string;
 
   @Input() parent: string = '';
+  @Input() tilesView: boolean = true;
   @Output() emitNoRepos: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private authService: AuthenticationService,
               private repoService: RepositoryService) {}
 
   ngOnInit() {
-    this.tilesView = true;
+    // this.tilesView = true;
     this.getReposOfUser();
   }
 
@@ -50,6 +51,8 @@ export class RepositoryTilesComponent implements OnInit {
           if (!this.reposOfUser || !this.reposOfUser.length) {
             this.warningMessage = loadingUserRepoInfoEmpty;
             this.emitNoRepos.emit(true);
+          } else {
+            this.emitNoRepos.emit(false);
           }
         }
       );
@@ -97,10 +100,6 @@ export class RepositoryTilesComponent implements OnInit {
         return 'not enabled';
       }
     }
-  }
-
-  toggleTiles() {
-    this.tilesView = !this.tilesView;
   }
 
 }

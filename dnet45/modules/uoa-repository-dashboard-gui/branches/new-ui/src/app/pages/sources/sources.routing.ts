@@ -16,7 +16,7 @@ import { SrAggregatorComponent } from './sources-register/sr-aggregator.componen
 const sourcesRoutes: Routes = [
   {
     path: '',
-    component: SourcesComponent,
+    // component: SourcesComponent,
     children: [
       {
         path: 'register',

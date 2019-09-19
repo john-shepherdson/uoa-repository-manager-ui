@@ -126,7 +126,7 @@ export class AuthenticationService {
   }
 
   public getIsUserLoggedIn() {
-    this.isLoggedIn = (getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') && (this.getUserEmail() !== '' ) );
+    this.isLoggedIn = (getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') && (sessionStorage.getItem('email') !== null ) );
     return this.isLoggedIn;
   }
 
@@ -139,7 +139,7 @@ export class AuthenticationService {
   }
 
   public getUserEmail() {
-    if (this.isLoggedIn) {
+    if (this.getIsUserLoggedIn()) {
       return sessionStorage.getItem('email');
     } else {
       return '';

@@ -35,7 +35,8 @@ export class ConfirmationDialogComponent {
   }
 
   public hideModal(): void {
-    this.autoShownModal.hide();
+    this.isModalShown = false;
+    // this.autoShownModal.hide();
   }
 
   public onHidden(): void {
@@ -45,7 +46,8 @@ export class ConfirmationDialogComponent {
   public confirmedAction() {
     this.emitObject.emit(this._ids);
     if(this.confirmed) {
-      this.hideModal();
+      this.isModalShown = false;
+      // this.hideModal();
     }
   }
 }
