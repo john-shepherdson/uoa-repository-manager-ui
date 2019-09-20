@@ -1,16 +1,16 @@
-<div *ngIf="ruleSets" [formGroup]="group" class="form-group">
-  <div *ngFor="let set of ruleSets; let set_index = index">
-    <label class="btn btn-link" for="ruleSet_{{ set_index }}">
-      <input id="ruleSet_{{ set_index }}"
-             value="{{ set.id }}"
-             formControlName="ruleSet"
-             name="ruleSet"
-             type="radio"
-             (change)="refreshLists()"
-             [checked]="set_index == 0">
-      <span class="uk-margin-small-left">{{ set.name }}</span>
-    </label>
+<div *ngIf="ruleSets" [formGroup]="group" class="form-group radioButtonForm">
+
+  <div class="radioButtonForm uk-margin-bottom">
+    <div *ngFor="let set of ruleSets; let set_index = index" class="">
+
+      <label for="ruleSet_{{ set_index }}" class="uk-button uk-link-muted visible_uk_links" style="display: block; text-align: left;">
+        <input id="ruleSet_{{ set_index }}" value="{{ set.id }}" formControlName="ruleSet" name="ruleSet" type="radio"
+               (change)="refreshLists()" [checked]="set_index == 0">
+        <span class="uk-margin-small-left">{{ set.name }}</span>
+      </label>
+    </div>
   </div>
+
   <button class="uk-button uk-button-link" (click)="toggleShowRules()">
     <span *ngIf="showRules">
       <i class="fa fa-angle-up"></i>
@@ -20,9 +20,17 @@
       Show Content and Usage Rules</span>
   </button>
   <div *ngIf="showRules" class="uk-grid uk-animation-fade">
-    <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column" formArrayName="contentRules">
-      <div class="margin10">
-        <div class="checkbox selectAll">
+    <div class="uk-width-1-2 uk-grid-item-match uk-first-column" formArrayName="contentRules">
+      <div class="">
+        <div class="checkbox selectAll uk-margin-small-bottom">
+
+          <!--<div class="icheckbox_md">-->
+            <!--<input type="checkbox" name="checkbox_demo_mercury" id="checkbox_demo_1" data-md-icheck=""  [checked]="selectedAllContentRules" (change)="toggleSelectAllContentRules()"-->
+                   <!--style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;">-->
+            <!--<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins>-->
+          <!--</div>-->
+          <!--<label for="checkbox_demo_1" class="inline-label">Select / Deselect All Content Rules</label>-->
+
           <label>
             <input type="checkbox" [checked]="selectedAllContentRules" (change)="toggleSelectAllContentRules()">
             <span>Select / Deselect All Content Rules</span>
@@ -42,9 +50,9 @@
         </div>
       </div>
     </div>
-    <div class="uk-width-expand@m uk-width-1-2@s uk-grid-item-match uk-first-column" formArrayName="usageRules">
-      <div class="margin10">
-        <div class="checkbox selectAll">
+    <div class="uk-width-1-2 uk-grid-item-match uk-first-column" formArrayName="usageRules">
+      <div class="">
+        <div class="checkbox selectAll uk-margin-small-bottom">
           <label>
             <input type="checkbox" [checked]="selectedAllUsageRules" (change)="toggleSelectAllUsageRules()">
             <span>Select / Deselect All Usage Rules</span>

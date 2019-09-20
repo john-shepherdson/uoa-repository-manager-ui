@@ -65,6 +65,14 @@
   min-height: 480px;
 }
 
+.wizard .content .body .uk-form-label {
+  display: block;
+  font-weight: 500;
+  font-size: 14px;
+  margin: -4px 0;
+  padding-bottom: 8px;
+}
+
 /*******************************/
 
 .repositoryTypeSelection .uk-card-body {
@@ -155,3 +163,35 @@ a.md-card p {
 
 /******************************/
 
+/********* VALIDATION FORMS *********/
+
+.selectAll label {
+  display: block;
+  width: 100%;
+  background: rgba(0, 0, 0, 0) linear-gradient(#f7f8fc, #f8f9fc) repeat scroll 0 0;
+  border-bottom: 1px solid #dee3ea;
+  border-top: 1px solid #d4dbe4;
+  box-shadow: 0 1px rgba(255, 255, 255, 0.79) inset;
+  padding: 5px 5px;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+.selectAll span {
+  letter-spacing: 0.5px;
+  margin-left: 15px;
+}
+
+.xPathPanel {
+  display: block;
+  width: 100%;
+  background: rgba(0, 0, 0, 0) linear-gradient(#f7f8fc, #f8f9fc) repeat scroll 0 0;
+  border-bottom: 1px solid #dee3ea;
+  border-top: 1px solid #d4dbe4;
+  box-shadow: 0 1px rgba(255, 255, 255, 0.79) inset;
+  padding: 20px 10px;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+/************************************/

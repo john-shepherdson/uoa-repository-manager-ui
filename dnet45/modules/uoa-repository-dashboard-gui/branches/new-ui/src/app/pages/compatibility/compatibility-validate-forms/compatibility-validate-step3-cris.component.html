@@ -1,49 +1,79 @@
 <div *ngIf="entitiesList" [formGroup]="group">
-  <div class="marginBottom20 uk-margin-top">
-    <div>
-      <label>Cris Entities</label>
-    </div>
-    <div>
-      <div class="margin10" formArrayName="entities">
-        <div class="checkbox selectAll">
-          <label>
-            <input type="checkbox" [checked]="selectedAllEntities" (change)="toggleSelectAllContentRules()">
-            <span>Select / Deselect All Entities</span>
-          </label>
-        </div>
-        <div *ngFor="let content of group.controls['entities'].controls; let i = index" class="checkbox">
-          <div [formGroupName]="i">
-            <label for="entity_{{ i }}">
-              <input id="entity_{{ i }}"
-                     formControlName="entity"
-                     type="checkbox"
-                     (change)="onToggleCheckEntity($event)">
-              <span class="uk-margin-small-left">{{ entitiesList[i] }}</span>
+
+  <div class="uk-margin-bottom uk-margin-top">
+
+    <label class="uk-form-label">Cris Entities</label>
+
+    <div class="uk-grid uk-margin-top">
+      <div class="uk-width-1-2 uk-grid-item-match uk-first-column" formArrayName="entities">
+
+        <div class="">
+          <div class="checkbox selectAll uk-margin-small-bottom">
+
+            <label>
+              <input type="checkbox" [checked]="selectedAllContentRules" (change)="toggleSelectAllContentRules()">
+              <span>Select / Deselect All Entities</span>
             </label>
           </div>
+          <div *ngFor="let content of group.controls['entities'].controls; let i = index" class="checkbox">
+            <div [formGroupName]="i">
+              <label class="uk-link-muted small" for="entity_{{ i }}">
+                <input id="entity_{{ i }}"
+                       formControlName="entity"
+                       type="checkbox"
+                       (change)="onToggleCheckEntity($event)">
+                <span class="uk-margin-small-left">{{ entitiesList[i] }}</span>
+              </label>
+            </div>
+          </div>
         </div>
+        <!--<div class="checkbox selectAll">-->
+          <!--<label>-->
+            <!--<input type="checkbox" [checked]="selectedAllEntities" (change)="toggleSelectAllContentRules()">-->
+            <!--<span>Select / Deselect All Entities</span>-->
+          <!--</label>-->
+        <!--</div>-->
+        <!--<div *ngFor="let content of group.controls['entities'].controls; let i = index" class="checkbox">-->
+          <!--<div [formGroupName]="i">-->
+            <!--<label for="entity_{{ i }}">-->
+              <!--<input id="entity_{{ i }}"-->
+                     <!--formControlName="entity"-->
+                     <!--type="checkbox"-->
+                     <!--(change)="onToggleCheckEntity($event)">-->
+              <!--<span class="uk-margin-small-left">{{ entitiesList[i] }}</span>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
   </div>
-  <div class="marginBottom20">
-    <div>
-      <label>Check Referential Integrity</label>
-    </div>
-    <div class="uk-grid form-inline">
-      <div class="uk-width-1-1">
-        <label class="btn btn-link" for="yes">
-          <input id="yes"
-                 name="referentialIntegrity"
-                 value="yes"
-                 checked
-                 type="radio"> <span class="uk-margin-small-left">Yes</span>
-        </label>
-        <label class="btn btn-link" for="no">
-          <input id="no"
-                 name="referentialIntegrity"
-                 value="no"
-                 type="radio"> <span class="uk-margin-small-left">No</span>
-        </label>
+
+  <div class="uk-margin-bottom radioButtonForm">
+
+    <label class="uk-form-label">Check Referential Integrity</label>
+
+    <div class="uk-margin-bottom uk-grid uk-grid uk-grid-width-medium-1-2 uk-grid-width-large-1-4">
+
+      <div class="uk-input-group uk-row-first">
+        <div class="">
+          <label for="yes"
+                 class="uk-button uk-link-muted visible_uk_links"
+                 style="display: block; text-align: left;">
+            <input id="yes" name="referentialIntegrity" type="radio" value="yes" checked>
+            <span>Yes</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="uk-input-group">
+        <div class="">
+          <label for="no"
+                 class="uk-button uk-link-muted visible_uk_links"
+                 style="display: block; text-align: left;">
+            <input id="no" name="referentialIntegrity" type="radio" value="no">
+            <span>No</span>
+          </label>
+        </div>
       </div>
     </div>
   </div>

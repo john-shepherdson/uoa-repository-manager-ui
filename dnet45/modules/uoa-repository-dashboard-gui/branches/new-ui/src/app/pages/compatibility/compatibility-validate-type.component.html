@@ -1,135 +1,303 @@
-<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-  <div class="uk-width-1-1@m uk-first-column">
-
-    <h1 class="uk-h2">Run compatibility test</h1>
+<div id="page_content">
+  <div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">Run compatibility test</h2>
 
     <!-- TOP HELP CONTENT -->
     <help-content #topHelperContent [position]="'top'"
                   [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
     </help-content>
 
-    <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
-      <div class="uk-grid">
+    <div class="uk-grid">
 
-        <!-- LEFT HELP CONTENT -->
-        <aside-help-content #leftHelperContent [position]="'left'"
-                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
+      <!-- LEFT HELP CONTENT -->
+      <aside-help-content #leftHelperContent [position]="'left'"
+                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
 
-        <!-- MIDDLE -->
-        <div class=" uk-width-expand@m">
+      <!-- MIDDLE -->
+      <div class=" uk-width-expand@m">
+        <div class="md-card uk-margin-large-bottom">
+          <div class="md-card-content">
 
-          <div class="wizard">
-            <div class="wizardBreadcrumbs">
-              <div class="steps clearfix">
-                <div class="step active">
-                  <div>
-                    Select datasource
-                    <span></span>
-                  </div>
+            <form class="uk-form-stacked" id="wizard_advanced_form" novalidate="">
+
+              <div id="wizard_advanced" role="application" class="wizard clearfix">
+                <div class="steps clearfix">
+                  <ul role="tablist">
+                    <li role="tab" class="first {{ (currentStep == 0) ? 'current' : '' }}" aria-disabled="false" aria-selected="true">
+                      <a id="wizard_advanced-t-0" href="#wizard_advanced-h-0" aria-controls="wizard_advanced-p-0">
+                        <!--<span class="current-info audible">current step: </span>-->
+                        <span class="number">1</span>
+                        <span class="title">Select datasource</span>
+                      </a>
+                    </li>
+                    <li role="tab" class="{{ (currentStep < 1) ? 'disabled' : '' }} {{ (currentStep == 1) ? 'current' : '' }}" aria-disabled="true">
+                      <a id="wizard_advanced-t-1" href="#wizard_advanced-h-1" aria-controls="wizard_advanced-p-1">
+                        <span class="number">2</span>
+                        <span class="title">Select guidelines</span>
+                      </a>
+                    </li>
+                    <li role="tab" class=" {{ (currentStep < 2) ? 'disabled' : '' }} {{ (currentStep == 2) ? 'current' : '' }}" aria-disabled="true">
+                      <a id="wizard_advanced-t-2" href="#wizard_advanced-h-2" aria-controls="wizard_advanced-p-2">
+                        <span class="number">3</span>
+                        <span class="title">Select parameters</span>
+                      </a>
+                    </li>
+                    <li role="tab" class="last {{ (currentStep < 3) ? 'disabled' : '' }} {{ (currentStep == 3) ? 'current' : '' }}" aria-disabled="true">
+                      <a id="wizard_advanced-t-3" href="#wizard_advanced-h-3" aria-controls="wizard_advanced-p-3">
+                        <span class="number">4</span>
+                        <span class="title">Finish</span>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-                <div class="step {{ (currentStep > 0) ? 'active' : '' }}">
-                  <div>
-                    Select guidelines
-                    <span></span>
-                  </div>
-                </div>
-                <div class="step {{ (currentStep > 1) ? 'active' : '' }}">
-                  <div>
-                    Select parameters
-                    <span></span>
-                  </div>
-                </div>
-                <div class="step {{ (currentStep > 2) ? 'active' : '' }}">
-                  <div>
-                    Finish
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="content">
-              <div>
-                <div class="animated fadeInRight stepContent">
-                  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+                <div class="content clearfix" style="height: 660px">
+
                   <div *ngIf="loadingMessage" class="loading-big">
                     <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
                       {{ loadingMessage }}
                     </div>
                     <div class="whiteFilm"></div>
                   </div>
-                  <div *ngIf="(currentStep === 0) && !loadingMessage">
-                    <compatibility-validate-step1 #step1ChooseBaseUrl
-                                                  [baseUrlList]="baseUrlList"
-                                                  (emitObject)="getChosenUrl($event)"></compatibility-validate-step1>
-                  </div>
-                  <div *ngIf="(currentStep === 1) && !loadingMessage">
-                    <compatibility-validate-step2 #step2ChooseGuidelines
-                                                  [ruleSets]="ruleSets"
-                                                  (emitObject)="getChosenRules($event)">
-                    </compatibility-validate-step2>
-                  </div>
-                  <div *ngIf="(currentStep === 2) && (type !== 'cris') && !loadingMessage">
-                    <compatibility-validate-step3 #step3ChooseParameters
-                                                  [valSets]="valSets"
-                                                  (emitObject)="getChosenParameters($event)">
-                    </compatibility-validate-step3>
-                  </div>
-                  <div *ngIf="(currentStep === 2) && (type === 'cris') && !loadingMessage">
-                    <compatibility-validate-step3-cris #step3ChooseCrisEntities
-                                                       (emitObject)="getChosenCrisEntities($event)">
-                    </compatibility-validate-step3-cris>
-                  </div>
-                  <div *ngIf="(currentStep === 3) && !loadingMessage">
-                    <div>
-                      <div class="success">
-                        <i class="fa fa-check-circle" style=""></i>
-                        <h3>Validation has begun</h3>
-                      </div>
-                      <div class="uk-alert uk-alert-primary marginTop20 textAlignCenter">
-                        You will be notified by email with the results of the compatibility test.
+                  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger uk-margin-top">{{ errorMessage }}</div>
+
+                  <!-- first section -->
+                  <h3 id="wizard_advanced-h-0" tabindex="-1" class="title {{ (currentStep == 0) ? 'current' : '' }}">Select Repository</h3>
+                  <section id="wizard_advanced-p-0" role="tabpanel" aria-labelledby="wizard_advanced-h-0"
+                           class="body step-0 {{ (currentStep == 0) ? 'current' : '' }}" data-step="0" aria-hidden="false">
+
+                    <div *ngIf="(currentStep === 0) && !loadingMessage">
+                      <compatibility-validate-step1 #step1ChooseBaseUrl
+                                                    [baseUrlList]="baseUrlList"
+                                                    (emitObject)="getChosenUrl($event)"></compatibility-validate-step1>
+                    </div>
+                  </section>
+
+                  <!-- second section -->
+                  <h3 id="wizard_advanced-h-1" tabindex="-1" class="title {{ (currentStep == 1) ? 'current' : '' }}">Enter Information</h3>
+                  <section id="wizard_advanced-p-1" role="tabpanel" aria-labelledby="wizard_advanced-h-1"
+                           class="body step-1 {{ (currentStep == 1) ? 'current' : '' }}" data-step="1"  aria-hidden="true">
+
+                    <div *ngIf="(currentStep === 1) && !loadingMessage">
+                      <compatibility-validate-step2 #step2ChooseGuidelines
+                                                    [ruleSets]="ruleSets"
+                                                    (emitObject)="getChosenRules($event)">
+                      </compatibility-validate-step2>
+                    </div>
+                  </section>
+
+                  <!-- third section -->
+                  <h3 id="wizard_advanced-h-2" tabindex="-1" class="title {{ (currentStep == 2) ? 'current' : '' }}">Add Interfaces</h3>
+                  <section id="wizard_advanced-p-2" role="tabpanel" aria-labelledby="wizard_advanced-h-2"
+                           class="body step-2 {{ (currentStep == 2) ? 'current' : '' }}" data-step="2" aria-hidden="true">
+
+                    <div *ngIf="(currentStep === 2) && (type !== 'cris') && !loadingMessage">
+                      <compatibility-validate-step3 #step3ChooseParameters
+                                                    [valSets]="valSets"
+                                                    (emitObject)="getChosenParameters($event)">
+                      </compatibility-validate-step3>
+                    </div>
+                    <div *ngIf="(currentStep === 2) && (type === 'cris') && !loadingMessage">
+                      <compatibility-validate-step3-cris #step3ChooseCrisEntities
+                                                         (emitObject)="getChosenCrisEntities($event)">
+                      </compatibility-validate-step3-cris>
+                    </div>
+                  </section>
+
+                  <!-- fourth section -->
+                  <h3 id="wizard_advanced-h-3" tabindex="-1" class="title {{ (currentStep == 3) ? 'current' : '' }}">Finish</h3>
+                  <section id="wizard_advanced-p-3" role="tabpanel" aria-labelledby="wizard_advanced-h-3"
+                           class="body step-3 {{ (currentStep == 3) ? 'current' : '' }}" data-step="2"  aria-hidden="true">
+
+                    <div *ngIf="(currentStep === 3) && !loadingMessage">
+                      <div style="text-align: center">
+                        <div class="success">
+                          <i class="fa fa-check-circle fa-3x" style="color: green"></i>
+                          <h3>Validation has begun</h3>
+                        </div>
+                        <div class="uk-margin-top">
+                          You will be notified by email with the results of the compatibility test.
+                        </div>
                       </div>
                     </div>
-                  </div>
+
+                  </section>
+
+                </div>
+                <div *ngIf="currentStep != 3" class="actions clearfix">
+                  <ul role="menu" aria-label="Pagination">
+                    <li class="button_previous {{ (currentStep < 1) ? 'disabled' : '' }}" aria-disabled="true">
+                      <a (click)="moveBackAStep()" role="menuitem"><i class="material-icons"></i> Previous</a>
+                    </li>
+                    <li *ngIf="currentStep < 2" class="button_next" aria-hidden="false" aria-disabled="false">
+                      <a (click)="moveAStep()" role="menuitem">Next<i class="material-icons"></i></a>
+                    </li>
+                    <li *ngIf="currentStep == 2" class="button_finish" aria-hidden="true">
+                      <a (click)="moveAStep()" role="menuitem">Finish</a>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </div>
-            <div *ngIf="!loadingMessage" class="wizardActions">
-              <button *ngIf="((currentStep === 1) || (currentStep === 2)) && !loadingMessage"
-                      class="uk-button uk-button-grey-light uk-margin-small-right" type="button"
-                      (click)="moveBackAStep()">
-                <i class="fa fa-angle-double-left"></i>
-                Back
-              </button>
-              <button *ngIf="(currentStep < 3) && !loadingMessage"
-                      class="uk-button uk-button-grey-light uk-margin-small-left" type="button"
-                      (click)="moveAStep()">
 
-                <span class="{{(currentStep === 2) ? 'uk-link' : ''}}">
-                  {{ (currentStep < 2) ? 'Next' : 'Finish' }}
-                </span>
-                <i class="fa fa-angle-double-right"></i>
+            </form>
 
-              </button>
-            </div>
           </div>
-
         </div>
-
-        <!-- RIGHT HELP CONTENT -->
-        <aside-help-content #rightHelperContent [position]="'right'"
-                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
-
       </div>
-    </div>
 
+      <!-- RIGHT HELP CONTENT -->
+      <aside-help-content #rightHelperContent [position]="'right'"
+                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
+    </div>
 
     <!-- BOTTOM HELP CONTENT -->
     <help-content #bottomHelperContent [position]="'bottom'"
                   [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
     </help-content>
 
-
   </div>
 </div>
+
+
+
+
+
+
+
+<!--<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">-->
+  <!--<div class="uk-width-1-1@m uk-first-column">-->
+
+    <!--<h1 class="uk-h2">Run compatibility test</h1>-->
+
+    <!--&lt;!&ndash; TOP HELP CONTENT &ndash;&gt;-->
+    <!--<help-content #topHelperContent [position]="'top'"-->
+                  <!--[ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">-->
+    <!--</help-content>-->
+
+    <!--<div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">-->
+      <!--<div class="uk-grid">-->
+
+        <!--&lt;!&ndash; LEFT HELP CONTENT &ndash;&gt;-->
+        <!--<aside-help-content #leftHelperContent [position]="'left'"-->
+                            <!--[ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">-->
+        <!--</aside-help-content>-->
+
+        <!--&lt;!&ndash; MIDDLE &ndash;&gt;-->
+        <!--<div class=" uk-width-expand@m">-->
+
+          <!--<div class="wizard">-->
+            <!--<div class="wizardBreadcrumbs">-->
+              <!--<div class="steps clearfix">-->
+                <!--<div class="step active">-->
+                  <!--<div>-->
+                    <!--Select datasource-->
+                    <!--<span></span>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="step {{ (currentStep > 0) ? 'active' : '' }}">-->
+                  <!--<div>-->
+                    <!--Select guidelines-->
+                    <!--<span></span>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="step {{ (currentStep > 1) ? 'active' : '' }}">-->
+                  <!--<div>-->
+                    <!--Select parameters-->
+                    <!--<span></span>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="step {{ (currentStep > 2) ? 'active' : '' }}">-->
+                  <!--<div>-->
+                    <!--Finish-->
+                    <!--<span></span>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="content">-->
+              <!--<div>-->
+                <!--<div class="animated fadeInRight stepContent">-->
+                  <!--<div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>-->
+                  <!--<div *ngIf="loadingMessage" class="loading-big">-->
+                    <!--<div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">-->
+                      <!--{{ loadingMessage }}-->
+                    <!--</div>-->
+                    <!--<div class="whiteFilm"></div>-->
+                  <!--</div>-->
+                  <!--<div *ngIf="(currentStep === 0) && !loadingMessage">-->
+                    <!--<compatibility-validate-step1 #step1ChooseBaseUrl-->
+                                                  <!--[baseUrlList]="baseUrlList"-->
+                                                  <!--(emitObject)="getChosenUrl($event)"></compatibility-validate-step1>-->
+                  <!--</div>-->
+                  <!--<div *ngIf="(currentStep === 1) && !loadingMessage">-->
+                    <!--<compatibility-validate-step2 #step2ChooseGuidelines-->
+                                                  <!--[ruleSets]="ruleSets"-->
+                                                  <!--(emitObject)="getChosenRules($event)">-->
+                    <!--</compatibility-validate-step2>-->
+                  <!--</div>-->
+                  <!--<div *ngIf="(currentStep === 2) && (type !== 'cris') && !loadingMessage">-->
+                    <!--<compatibility-validate-step3 #step3ChooseParameters-->
+                                                  <!--[valSets]="valSets"-->
+                                                  <!--(emitObject)="getChosenParameters($event)">-->
+                    <!--</compatibility-validate-step3>-->
+                  <!--</div>-->
+                  <!--<div *ngIf="(currentStep === 2) && (type === 'cris') && !loadingMessage">-->
+                    <!--<compatibility-validate-step3-cris #step3ChooseCrisEntities-->
+                                                       <!--(emitObject)="getChosenCrisEntities($event)">-->
+                    <!--</compatibility-validate-step3-cris>-->
+                  <!--</div>-->
+                  <!--<div *ngIf="(currentStep === 3) && !loadingMessage">-->
+                    <!--<div>-->
+                      <!--<div class="success">-->
+                        <!--<i class="fa fa-check-circle" style=""></i>-->
+                        <!--<h3>Validation has begun</h3>-->
+                      <!--</div>-->
+                      <!--<div class="uk-alert uk-alert-primary marginTop20 textAlignCenter">-->
+                        <!--You will be notified by email with the results of the compatibility test.-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div *ngIf="!loadingMessage" class="wizardActions">-->
+              <!--<button *ngIf="((currentStep === 1) || (currentStep === 2)) && !loadingMessage"-->
+                      <!--class="uk-button uk-button-grey-light uk-margin-small-right" type="button"-->
+                      <!--(click)="moveBackAStep()">-->
+                <!--<i class="fa fa-angle-double-left"></i>-->
+                <!--Back-->
+              <!--</button>-->
+              <!--<button *ngIf="(currentStep < 3) && !loadingMessage"-->
+                      <!--class="uk-button uk-button-grey-light uk-margin-small-left" type="button"-->
+                      <!--(click)="moveAStep()">-->
+
+                <!--<span class="{{(currentStep === 2) ? 'uk-link' : ''}}">-->
+                  <!--{{ (currentStep < 2) ? 'Next' : 'Finish' }}-->
+                <!--</span>-->
+                <!--<i class="fa fa-angle-double-right"></i>-->
+
+              <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
+
+        <!--</div>-->
+
+        <!--&lt;!&ndash; RIGHT HELP CONTENT &ndash;&gt;-->
+        <!--<aside-help-content #rightHelperContent [position]="'right'"-->
+                            <!--[ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">-->
+        <!--</aside-help-content>-->
+
+      <!--</div>-->
+    <!--</div>-->
+
+
+    <!--&lt;!&ndash; BOTTOM HELP CONTENT &ndash;&gt;-->
+    <!--<help-content #bottomHelperContent [position]="'bottom'"-->
+                  <!--[ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">-->
+    <!--</help-content>-->
+
+
+  <!--</div>-->
+<!--</div>-->

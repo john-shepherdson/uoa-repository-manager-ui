@@ -1,20 +1,29 @@
-<div *ngIf="baseUrlList" [formGroup]="group" class="form-group">
-  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-  <div>
-    <label class="btn btn-link validationSetRadio" for="selectRadio">
+<div *ngIf="baseUrlList" [formGroup]="group" class="radioButtonForm">
+  <!--<label class="control-label">Validation Set</label>-->
+
+  <div class="form-group">
+    <label for="selectRadio" class="uk-button uk-link-muted visible_uk_links" style="display: block; text-align: left;">
       <input id="selectRadio" value="select" name="baseURLRadio" type="radio" (change)="chooseUrl(true)" checked>
       <span class="uk-margin-small-left">Select base URL from one of your registered repositories</span>
     </label>
   </div>
-  <select id="selectBaseUrl" formControlName="selectBaseUrl" class="form-control" >
-    <option value="">-- none selected --</option>
-    <option *ngFor="let url of baseUrlList" value="{{ url }}">{{ url }}</option>
-  </select>
-  <div>
-    <label class="btn btn-link validationSetRadio" for="customRadio">
+  <div class="md-input-wrapper">
+    <!--<label class="">Select repository's country</label>-->
+    <select class="md-input" id="selectBaseUrl" formControlName="selectBaseUrl">
+      <option value="">-- none selected --</option>
+      <option *ngFor="let url of baseUrlList" value="{{ url }}">{{ url }}</option>
+    </select>
+    <span class="md-input-bar"></span>
+  </div>
+  <div class="form-group">
+    <label for="customRadio" class="uk-button uk-link-muted visible_uk_links" style="display: block; text-align: left;">
       <input id="customRadio" value="custom" name="baseURLRadio" type="radio" (change)="chooseUrl(false)">
       <span class="uk-margin-small-left">or enter new</span>
     </label>
   </div>
-  <input id="customBaseUrl" formControlName="customBaseUrl" class="form-control" type="text">
+  <div class="md-input-wrapper">
+    <input id="customBaseUrl" formControlName="customBaseUrl" class="md-input" type="text">
+    <span class="md-input-bar"></span>
+  </div>
+
 </div>

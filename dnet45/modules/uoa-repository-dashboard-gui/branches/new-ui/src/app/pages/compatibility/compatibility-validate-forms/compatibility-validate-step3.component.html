@@ -1,62 +1,89 @@
-<div class="uk-margin-top">
+<div class="" [formGroup]="group">
   <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
-  <div class="marginBottom20" [formGroup]="group">
-    <div>
-      <label>Number of records to validate</label>
+
+  <div class="uk-margin-bottom radioButtonForm">
+
+    <label class="uk-form-label">Number of records to validate</label>
+
+    <div class="uk-margin-bottom uk-grid uk-grid uk-grid-width-medium-1-2 uk-grid-width-large-1-4">
+      <div class="uk-input-group uk-row-first">
+        <div class="">
+          <label for="allRecords"
+                 class="uk-button uk-link-muted visible_uk_links"
+                 style="display: block; text-align: left;">
+            <input id="allRecords" name="noOfRecords" type="radio" (change)="chooseAll(true)" checked>
+            <span>All</span>
+          </label>
+        </div>
+      </div>
+      <div class="uk-input-group">
+        <div class="">
+          <label for="someRecords"
+                 class="uk-button uk-link-muted visible_uk_links"
+                 style="display: block; text-align: left;">
+            <input id="someRecords" name="noOfRecords" type="radio" (change)="chooseAll(false)">
+            <span>Custom</span>
+          </label>
+        </div>
+      </div>
+      <div class="uk-input-group">
+        <div class="md-input-wrapper">
+          <input class="md-input" formControlName="noOfRecordsInput" type="number">
+          <span class="md-input-bar"></span>
+        </div>
+      </div>
     </div>
-    <div class="uk-margin uk-grid">
-      <div class="uk-width-1-4@s">
-        <label class="uk-link-muted" for="allRecords">
-          <input id="allRecords" name="noOfRecords" type="radio" (change)="chooseAll(true)" checked>
-          <span class="uk-margin-small-left">All</span>
-        </label>
-      </div>
-      <div class="uk-width-1-4@s">
-        <label class="uk-link-muted" for="someRecords">
-          <input id="someRecords" name="noOfRecords" type="radio" (change)="chooseAll(false)">
-          <span class="uk-margin-small-left">Custom</span>
-        </label>
-      </div>
-      <div class="uk-width-1-2@s">
-        <input class="form-control" formControlName="noOfRecordsInput" type="number">
-      </div>
-    </div>
-    <div class="marginBottom20">
-      <div>
-        <label for="selectValSet">Validation Set</label>
-      </div>
-      <div>
-        <select id="selectValSet" class="form-control" formControlName="selectValSet">
+
+  </div>
+
+  <div class="uk-margin-medium-bottom">
+
+    <label for="selectValSet" class="uk-form-label">Validation Set</label>
+
+    <div class="uk-width-1-1">
+
+      <div class="md-input-wrapper md-input-filled">
+        <select class="md-input" id="selectValSet" formControlName="selectValSet">
           <option value="">All sets</option>
           <option *ngFor="let set of valSets" value="{{set}}">{{set}}</option>
         </select>
+        <span class="md-input-bar"></span>
       </div>
-      <div class="xPathPanel marginBottom20">
-        <div>
-          <label>Would you like to group your results by a specific field?</label>
-        </div>
-        <div class="uk-grid">
-          <div class="uk-width-1-4@s">
-            <label class="uk-link-muted" for="noXPath">
-              <input id="noXPath" name="xpath" type="radio" (change)="addXpath(false)" checked>
-              <span class="uk-margin-small-left">No</span>
-            </label>
-          </div>
-          <div class="uk-width-1-4@s">
-            <label class="uk-link-muted" for="customXPath">
-              <input id="customXPath" name="xpath" type="radio" (change)="addXpath(true)">
-              <span class="uk-margin-small-left">Yes</span>
-            </label>
-          </div>
-          <div class="uk-width-1-2@s">
-            <input class="form-control" formControlName="xpathInput" placeholder="-XPATH-" type="text">
-          </div>
-        </div>
-        <div class="comment fontItalic marginTop10">
-          <strong>XPath Examples:</strong>
-          1. //header/setSpec 2. //record/metadata//*[name()='dc:language']
+    </div>
+
+  </div>
+
+  <div class="xPathPanel uk-margin-bottom radioButtonForm">
+
+    <label class="uk-form-label">Would you like to group your results by a specific field?</label>
+
+    <div class="uk-grid uk-grid-width-medium-1-2 uk-grid-width-large-1-4">
+      <div class="uk-input-group uk-row-first">
+        <div class="">
+          <label class="uk-button uk-link-muted visible_uk_links" for="noXPath">
+            <input id="noXPath" name="xpath" type="radio" (change)="addXpath(false)" checked>
+            <span class="uk-margin-small-left">No</span>
+          </label>
         </div>
       </div>
+      <div class="uk-input-group">
+        <div class="">
+          <label class="uk-button uk-link-muted visible_uk_links" for="customXPath">
+            <input id="customXPath" name="xpath" type="radio" (change)="addXpath(true)">
+            <span class="uk-margin-small-left">Yes</span>
+          </label>
+        </div>
+      </div>
+      <div class="uk-input-group">
+        <div class="md-input-wrapper">
+          <input class="md-input" formControlName="xpathInput" placeholder="-XPATH-" type="text">
+          <span class="md-input-bar"></span>
+        </div>
+      </div>
+    </div>
+    <div class="uk-text-italic uk-text-small uk-margin-top">
+      <strong>XPath Examples:</strong>
+      1. //header/setSpec 2. //record/metadata//*[name()='dc:language']
     </div>
   </div>
 </div>

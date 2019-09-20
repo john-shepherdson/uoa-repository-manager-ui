@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabsModule } from 'ngx-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompatibilityRouting } from './compatibility.routing';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { CompatibilityComponent } from './compatibility.component';
@@ -21,6 +21,7 @@ import { CompatibilityValidateStep3CrisComponent } from './compatibility-validat
   imports: [
     CommonModule,
     TabsModule.forRoot(),
+    FormsModule,
     ReactiveFormsModule,
     CompatibilityRouting,
     ReusableComponentsModule

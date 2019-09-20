@@ -73,6 +73,8 @@ export class CompatibilityValidateTypeComponent implements OnInit {
         () => this.getStep()
       );
     }
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   getStep() {
