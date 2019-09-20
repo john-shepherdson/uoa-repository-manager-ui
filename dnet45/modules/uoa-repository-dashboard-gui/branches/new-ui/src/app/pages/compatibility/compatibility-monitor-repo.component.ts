@@ -30,6 +30,8 @@ export class CompatibilityMonitorRepoComponent implements OnInit {
   ngOnInit() {
     this.readRepoId();
     this.getRepo();
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   readRepoId() {

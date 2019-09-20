@@ -142,3 +142,16 @@ a.md-card p {
 }
 
 /***********************************************/
+
+/********** TIMELINE **********/
+
+.timeline_icon_white {
+  background: #fff;
+}
+
+.timeline_item .md-list > li {
+  border-bottom: none;
+}
+
+/******************************/
+
