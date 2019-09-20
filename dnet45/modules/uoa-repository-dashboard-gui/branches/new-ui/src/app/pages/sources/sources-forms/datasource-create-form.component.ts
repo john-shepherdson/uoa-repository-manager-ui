@@ -1,9 +1,26 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { adminEmailDesc, countryDesc, datasourceTypeDesc, Description, eissnDesc, englishNameDesc, institutionNameDesc,
-         issnDesc, latitudeDesc, lissnDesc, logoUrlDesc, longtitudeDesc, officialNameDesc, repoDescriptionDesc,
-         softwarePlatformDesc, timezoneDesc, websiteUrlDesc } from '../../../domain/oa-description';
+import {
+  adminEmailDesc,
+  countryDesc,
+  datasourceTypeDesc,
+  Description,
+  eissnDesc,
+  englishNameDesc,
+  institutionNameDesc,
+  issnDesc,
+  latitudeDesc,
+  lissnDesc,
+  logoUrlDesc,
+  longtitudeDesc,
+  officialNameDesc,
+  platformNameDesc,
+  repoDescriptionDesc,
+  softwarePlatformDesc,
+  timezoneDesc,
+  websiteUrlDesc
+} from '../../../domain/oa-description';
 import { ActivatedRoute } from '@angular/router';
 import { RepositoryService } from '../../../services/repository.service';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -38,6 +55,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   // issn : ['', [Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')] ],
   readonly groupDefinition = {
     softwarePlatform : ['', Validators.required],
+    platformName : '',
     officialName : ['', Validators.required],
     issn : ['', [Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')] ],
     eissn : ['', Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$') ],
@@ -56,6 +74,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   };
 
   softwarePlatformDesc: Description = softwarePlatformDesc;
+  platformNameDesc: Description = platformNameDesc;
   officialNameDesc: Description = officialNameDesc;
   issnDesc: Description = issnDesc;
   eissnDesc: Description = eissnDesc;
@@ -109,6 +128,7 @@ export class DatasourceCreateFormComponent implements OnInit {
 
       this.group.setValue({
         softwarePlatform: this.selectedRepo.typology,
+        platformName: '',
         officialName: this.selectedRepo.officialName,
         issn: '',
         eissn: '',
@@ -220,7 +240,12 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.longitude = this.group.get('longtitude').value;
     newRepo.timezone = this.group.get('timezone').value;
     newRepo.datasourceClass = this.group.get('datasourceType').value;
-    newRepo.typology = this.group.get('softwarePlatform').value;
+    if (this.group.get('softwarePlatform').value ) {
+      newRepo.typology = this.group.get('softwarePlatform').value;
+    } else if (this.group.get('platformName').value) {
+      newRepo.typology = this.group.get('platformName').value;
+    }
+    // newRepo.typology = this.group.get('softwarePlatform').value;
     newRepo.description = this.group.get('repoDescription').value.toString();
     newRepo.issn = '';
     newRepo.eissn = '';
