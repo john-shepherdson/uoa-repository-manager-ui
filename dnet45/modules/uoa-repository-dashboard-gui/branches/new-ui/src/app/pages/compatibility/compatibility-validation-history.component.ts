@@ -39,6 +39,8 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
 
   ngOnInit() {
     this.loadTable();
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   loadTable() {
@@ -153,10 +155,18 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
   }
 
   getResultImage(status: string) {
+    // if (status === 'ongoing') {
+    //   return `../../../assets/imgs/icon_colours-question.jpg`;
+    // } else if (status === 'successful') {
+    //     return `../../../assets/imgs/icon_colours-check.jpg`;
+    // } else {
+    //   return `../../../assets/imgs/icon_colours-x.jpg`;
+    // }
+
     if (status === 'ongoing') {
       return `../../../assets/imgs/icon_colours-question.jpg`;
     } else if (status === 'successful') {
-        return `../../../assets/imgs/icon_colours-check.jpg`;
+      return `check_circle`;
     } else {
       return `../../../assets/imgs/icon_colours-x.jpg`;
     }

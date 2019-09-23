@@ -43,6 +43,8 @@ export class CompatibilityValidationResultsComponent implements OnInit {
       this.authService.redirectUrl = '/compatibility/browseHistory/' + id;
       this.authService.loginWithState();
     }
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   getJobInfo() {
