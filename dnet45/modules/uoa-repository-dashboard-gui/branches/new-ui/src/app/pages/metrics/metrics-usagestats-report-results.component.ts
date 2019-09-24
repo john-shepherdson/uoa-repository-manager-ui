@@ -37,6 +37,8 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
     this.pageSize = 10;
     this.readParams();
     this.pageSizeSelect = this.fb.group({selectPageSize: ['']});
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   readParams() {

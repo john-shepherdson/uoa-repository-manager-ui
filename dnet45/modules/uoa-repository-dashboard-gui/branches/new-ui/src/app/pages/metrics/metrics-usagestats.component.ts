@@ -24,6 +24,8 @@ export class MetricsUsagestatsComponent implements OnInit {
 
   ngOnInit() {
     this.getRepo();
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   getRepo() {

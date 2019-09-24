@@ -1,85 +1,89 @@
-<div class="uk-section-default uk-section uk-section-small uk-padding-remove-bottom" style="min-height: 325px">
+<div id="page_content">
+  <div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">Metrics for {{repo.officialName}}</h2>
 
-  <!-- MARGIN-TOP  -->
-  <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="true"></div>
-  <div class="uk-container uk-container-large">
+    <!-- TOP HELP CONTENT -->
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
 
-    <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-      <div class="uk-width-1-1@m uk-first-column">
+    <div class="uk-grid">
 
-        <h1 class="uk-h2">Metrics</h1>
+      <!-- LEFT HELP CONTENT -->
+      <aside-help-content #leftHelperContent [position]="'left'"
+                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
 
-        <!-- TOP HELP CONTENT -->
-        <help-content #topHelperContent [position]="'top'"
-                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-        </help-content>
+      <!-- MIDDLE -->
+      <div class=" uk-width-expand@m">
 
-        <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
-          <div class="uk-grid">
+        <div>
+          <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+          <div *ngIf="loadingMessage" class="loading-big">
+            <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+              {{ loadingMessage }}
+            </div>
+            <div class="transparentFilm"></div>
+          </div>
+          <div *ngIf="repo && !loadingMessage">
 
-            <!-- LEFT HELP CONTENT -->
-            <aside-help-content #leftHelperContent [position]="'left'"
-                                [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-            </aside-help-content>
+            <div class="md-card">
+              <div class="md-card-content large-padding">
+                <div class="uk-article">
 
-            <!-- MIDDLE -->
-            <div class=" uk-width-expand@m">
+                  <p class="uk-article-lead uk-margin-bottom">You don't have metrics enabled for this repository yet. Would you like to enable them?</p>
 
-              <div>
-                <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
-                <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-                <div *ngIf="loadingMessage" class="loading-big">
-                  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-                    {{ loadingMessage }}
-                  </div>
-                  <div class="whiteFilm"></div>
-                </div>
-                <div *ngIf="repo && !loadingMessage">
-                  <div>
-                    <h4>You don't have metrics enabled for this repository yet. Would you like to enable them?</h4>
-                    <p><img src="../../../assets/imgs/metricsWorkflow-new.svg"
-                            style="display:block; margin: 0 auto;"
-                            width="50%"></p>
-                    <p>Once you select to enable metrics for your repository, the following steps need to be performed:</p>
-                    <p><i>On your side</i><br>
-                      1. Download the tracking code for your repository platform<br>
-                      2. Configure the tracking code according to the instructions<br>
-                      3. Deploy the tracking code in your repository platform
-                    </p>
-                    <p><i>On the OpenAIRE's side</i><br>
-                      4. Validate the installation of the tracking code and inform the repository manager accordingly<br>
-                    </p>
-                    <div class="uk-alert uk-alert-info">
-                      For more details about the workflows and tools please consult the
-                      <a target="_blank" href="https://openaire.github.io/usage-statistics-guidelines/">
-                        “Guidelines for Collecting Usage Events and Provision of Usage Statistics”
-                      </a>
-                      .
+                  <div class="uk-grid uk-margin-medium-top uk-margin-medium-bottom">
+                    <figure class="uk-width-1-3 uk-first-column">
+                      <img src="../../../assets/imgs/metricsWorkflow-new.svg" alt="" data-dense-cap="2" class="dense-image dense-ready">
+                      <figcaption class="uk-thumbnail-caption">Usage stats enable workflow</figcaption>
+                    </figure>
+
+                    <div class="info uk-width-2-3">
+                      <p>Once you select to enable metrics for your repository, the following steps need to be performed:</p>
+                      <p><i>On your side</i><br>
+                        1. Download the tracking code for your repository platform<br>
+                        2. Configure the tracking code according to the instructions<br>
+                        3. Deploy the tracking code in your repository platform
+                      </p>
+                      <p><i>On the OpenAIRE's side</i><br>
+                        4. Validate the installation of the tracking code and inform the repository manager accordingly<br>
+                      </p>
                     </div>
-                    <button class="uk-button uk-button-primary" (click)="confirmEnabling()">Enable Metrics</button>
                   </div>
+
+                  <blockquote>
+                    For more details about the workflows and tools please consult the
+                    <a target="_blank" href="https://openaire.github.io/usage-statistics-guidelines/">
+                      “Guidelines for Collecting Usage Events and Provision of Usage Statistics”
+                    </a>
+                    .
+                  </blockquote>
+
+                  <button class="uk-button uk-button-primary uk-margin-top" (click)="confirmEnabling()">Enable Metrics</button>
+
                 </div>
               </div>
-
             </div>
-
-            <!-- RIGHT HELP CONTENT -->
-            <aside-help-content #rightHelperContent [position]="'right'"
-                                [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-            </aside-help-content>
 
           </div>
         </div>
 
-
-        <!-- BOTTOM HELP CONTENT -->
-        <help-content #bottomHelperContent [position]="'bottom'"
-                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-        </help-content>
-
-
       </div>
+
+      <!-- RIGHT HELP CONTENT -->
+      <aside-help-content #rightHelperContent [position]="'right'"
+                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
     </div>
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
   </div>
 </div>
 

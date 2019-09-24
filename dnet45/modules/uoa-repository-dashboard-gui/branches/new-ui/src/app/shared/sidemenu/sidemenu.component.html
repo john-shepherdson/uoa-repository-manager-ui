@@ -2,11 +2,11 @@
 
   <div class="sidebar_main_header">
     <div class="sidebar_logo">
-      <a href="index.html" class="sSidebar_hide sidebar_logo_large">
+      <a [routerLink]="['/landing']" class="sSidebar_hide sidebar_logo_large">
         <img class="logo_regular" src="../../../assets/imgs/OA_PROVIDE_B.png" alt="" height="" width="200"/>
         <img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>
       </a>
-      <a href="index.html" class="sSidebar_show sidebar_logo_small">
+      <a [routerLink]="['/landing']" class="sSidebar_show sidebar_logo_small">
         <img class="logo_regular" src="../../../assets/imgs/OA_PROVIDE_A.png" alt="" height="32" width="32"/>
         <img class="logo_light" src="assets/img/logo_main_small_light.png" alt="" height="32" width="32"/>
       </a>
@@ -32,8 +32,8 @@
           <span class="menu_title">Sources</span>
         </a>
         <ul style="display: block;">
-          <li><a [routerLink]="['/sources/register']">Register</a></li>
-          <li><a [routerLink]="['/sources/update']">Update</a></li>
+          <li><a [routerLink]="['/sources', 'register']">Register</a></li>
+          <li><a [routerLink]="['/sources', 'update']">Update</a></li>
         </ul>
       </li>
       <li class="submenu_trigger act_section" title="Compatibility">

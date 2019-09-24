@@ -1,3 +1,7 @@
+.comment {
+  font-size: 70%;
+}
+
 /********* LOADERS *********/
 
 .loading {
@@ -192,6 +196,16 @@ a.md-card p {
   padding: 20px 10px;
   margin-left: -5px;
   margin-right: -5px;
+}
+
+/************************************/
+
+/********* USAGE STATS *********/
+
+.statsFrame {
+  border: none;
+  width: 100%;
+  height: 400px;
 }
 
 /************************************/

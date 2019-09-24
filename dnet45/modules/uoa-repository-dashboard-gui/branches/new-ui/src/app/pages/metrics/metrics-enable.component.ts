@@ -42,6 +42,8 @@ export class MetricsEnableComponent implements OnInit {
   ngOnInit() {
     this.getRepo();
     this.isModalShown = false;
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   getRepo(): void {

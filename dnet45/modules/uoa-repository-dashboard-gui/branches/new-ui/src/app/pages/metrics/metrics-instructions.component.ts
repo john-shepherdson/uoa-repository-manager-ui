@@ -24,6 +24,8 @@ export class MetricsInstructionsComponent implements OnInit {
 
   ngOnInit() {
     this.getPiwik();
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   getPiwik(): void {

@@ -40,6 +40,8 @@ export class MetricsUsagestatsReportComponent implements OnInit {
     this.getParams();
     this.getUserEmail();
     this.getRepo();
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
   }
 
   getParams() {

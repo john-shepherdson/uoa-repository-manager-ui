@@ -1,32 +1,29 @@
-<div class="uk-section-default uk-section uk-section-small uk-padding-remove-bottom" style="min-height: 325px">
+<div id="page_content">
+  <div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">Metrics Configuration & Software Details for {{piwik.repositoryName}}</h2>
 
-  <!-- MARGIN-TOP  -->
-  <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="true"></div>
-  <div class="uk-container uk-container-large">
+    <!-- TOP HELP CONTENT -->
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
 
-    <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-      <div class="uk-width-1-1@m uk-first-column">
+    <div class="uk-grid">
 
-        <h1 class="uk-h2">Metrics Configuration & Software Details</h1>
+      <!-- LEFT HELP CONTENT -->
+      <aside-help-content #leftHelperContent [position]="'left'"
+                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
 
-        <!-- TOP HELP CONTENT -->
-        <help-content #topHelperContent [position]="'top'"
-                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-        </help-content>
+      <!-- MIDDLE -->
+      <div class=" uk-width-expand@m">
 
-        <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
-          <div class="uk-grid">
+        <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+        <div *ngIf="piwik">
 
-            <!-- LEFT HELP CONTENT -->
-            <aside-help-content #leftHelperContent [position]="'left'"
-                                [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-            </aside-help-content>
+          <div class="md-card">
+            <div class="md-card-content large-padding">
+              <div class="uk-article">
 
-            <!-- MIDDLE -->
-            <div class=" uk-width-expand@m">
-
-              <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-              <div *ngIf="piwik">
                 <p>
                   OpenAIRE’s usage statistic service uses the <i>Piwik Open Source Analytics platform</i> (piwik.org) to track usage activity. When <i>metrics</i>
                   are enabled for a repository, two unique identifiers are generated - a piwik-ID that associates the repository with its usage events in Piwik
@@ -57,27 +54,27 @@
                   <strong>NOTE</strong>
                   - You will be informed by e-mail that the installation of the tracking code has been validated and when the usage statistics will be available.
                 </div>
+
               </div>
-
             </div>
-
-            <!-- RIGHT HELP CONTENT -->
-            <aside-help-content #rightHelperContent [position]="'right'"
-                                [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-            </aside-help-content>
-
           </div>
+
         </div>
 
-
-        <!-- BOTTOM HELP CONTENT -->
-        <help-content #bottomHelperContent [position]="'bottom'"
-                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-        </help-content>
-
-
       </div>
+
+      <!-- RIGHT HELP CONTENT -->
+      <aside-help-content #rightHelperContent [position]="'right'"
+                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
     </div>
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
   </div>
 </div>
 
