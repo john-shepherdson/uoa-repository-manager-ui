@@ -1,130 +1,89 @@
-<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-  <div class="uk-width-1-1@m uk-first-column">
+<div id="top_bar">
+  <div class="md-top-bar">
+    <div class="uk-width-large-8-10 uk-container-center">
+      <ul class="top_bar_nav" id="list_grid_toggle">
+        <li class="{{tilesView ? 'uk-active' : ''}}" data-view="grid_view">
+          <a (click)="changeView('tiles')"><i class="uk-icon-th-large"></i> Grid</a>
+        </li>
+        <li data-view="list_view" class="{{tilesView ? '' : 'uk-active'}}">
+          <a (click)="changeView('list')"><i class="uk-icon-list"></i> List</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-    <h1 class="uk-h2">Enrich Your Content - Browse Events</h1>
+<div id="page_content">
+  <div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">Enrich Your Content - Browse Events</h2>
 
     <!-- TOP HELP CONTENT -->
     <help-content #topHelperContent [position]="'top'"
                   [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
     </help-content>
 
-    <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
-      <div class="uk-grid">
+    <div class="uk-grid">
 
-        <!-- LEFT HELP CONTENT -->
-        <aside-help-content #leftHelperContent [position]="'left'"
-                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
+      <!-- LEFT HELP CONTENT -->
+      <aside-help-content #leftHelperContent [position]="'left'"
+                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
 
-        <!-- MIDDLE -->
-        <div class=" uk-width-expand@m">
+      <!-- MIDDLE -->
+      <div class=" uk-width-expand@m">
 
-          <div>
-            <div class="uk-width-1-1 uk-grid">
-              <div class="uk-width-1-1 uk-first-column uk-margin-bottom">
-                <div class="uk-float-right">
-                  <a class="grid-view" [class.active]="tilesView" (click)="toggleTiles()">
-                    <i class="fa fa-th"></i>
-                  </a>
-                  <a class="grid-view"  [class.active]="!tilesView" (click)="toggleTiles()">
-                    <i class="fa fa-th-list"></i>
-                  </a>
+        <div>
+          <div class="uk-width-1-1 uk-grid">
+            <div class="uk-width-1-1">
+              <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+              <div *ngIf="noDatasourcesMessage" class="uk-alert uk-alert-warning">{{ noDatasourcesMessage }}</div>
+              <div *ngIf="loadingMessage" class="loading-big">
+                <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                  {{ loadingMessage }}
                 </div>
+                <div class="transparentFilm"></div>
               </div>
-              <div class="uk-width-1-1">
-                <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-                <div *ngIf="noDatasourcesMessage" class="uk-alert uk-alert-warning">{{ noDatasourcesMessage }}</div>
-                <div *ngIf="loadingMessage" class="loading-big">
-                  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-                    {{ loadingMessage }}
-                  </div>
-                  <div class="whiteFilm"></div>
-                </div>
 
-                <!--TILES VIEW-->
-                <div *ngIf="tilesView && datasourcesOfUser && datasourcesOfUser.length>0" class="uk-grid-large uk-grid-margin-large uk-grid repos-grid uk-height-1-1">
-                  <div *ngFor="let repo of datasourcesOfUser" class="uk-width-expand@m uk-width-auto\@m uk-first-column uk-margin-bottom" style="min-width: 300px; max-width: 22%;">
-                    <div class="uk-margin uk-grid-match uk-child-width-1-1 uk-grid-small uk-grid-divider uk-grid uk-scrollspy-inview uk-animation-slide-top-medium uk-grid-stack">
-                      <div class="uk-first-column">
-                        <div class="">
-                          <a class="el-link uk-vertical-align-middle uk-height-1-1" (click)="goToRepoEvents(repo['first']['value'])">
-                            <div class="el-item uk-panel uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
-                              <div class="uk-child-width-expand uk-grid-medium uk-flex-middle uk-grid uk-grid-stack" uk-grid="">
-                                <div class="uk-width-1-3@m uk-first-column" style="width: 90px;">
-                                  <img *ngIf="!repo['second']" class="el-image uk-border-rounded" src="../../../assets/imgs/yourLogoHere.jpg" alt="">
-                                  <img *ngIf="repo['second']" class="el-image uk-border-rounded" src="{{ repo['second'] }}" alt="">
-                                </div>
-                                <div class="uk-first-column">
-                                  <h3 class="el-title uk-margin uk-h5 uk-margin-remove-adjacent uk-margin-small-bottom">{{ repo['first']['value'] }}</h3>
-                                  <div class="el-meta uk-margin uk-text-meta">
-                                    <span>({{ repo['first']['size'] }} events)</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
+              <div id="list_grid1" *ngIf="datasourcesOfUser && datasourcesOfUser.length>0"
+                   class="uk-grid uk-grid-match uk-grid-medium uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 {{tilesView ? 'grid_view' : 'list_view'}}">
+                <div *ngFor="let repo of datasourcesOfUser" class="uk-margin-medium-top">
+
+                  <a class="md-card" (click)="goToRepoEvents(repo['first']['value'])">
+                    <div >
+                      <div class="md-card-head uk-text-center uk-position-relative">
+                        <img *ngIf="!repo['second']" class="md-card-head-img dense-image dense-ready" src="../../../assets/imgs/yourLogoHere.jpg" alt="" data-dense-cap="2">
+                        <img *ngIf="repo['second']" class="md-card-head-img dense-image dense-ready" src="{{ repo['second'] }}" alt="" data-dense-cap="2">
+                      </div>
+                      <div class="md-card-content">
+                        <h4 class="heading_c uk-margin-bottom">{{ repo['first']['value'] }}</h4>
+                        <p><span>({{ repo['first']['size'] }} events)</span></p>
+                        <!--<p>{{repo.description}}</p>-->
+                        <!--<a class="md-btn md-btn-small md-btn-success" [routerLink]="[getLinkToNext(repo)]">Add to Cart</a>-->
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </a>
 
-                <!-- LIST VIEW -->
-                <div *ngIf="!tilesView && datasourcesOfUser && datasourcesOfUser.length>0" class="uk-grid-large uk-grid-margin-large uk-grid repos-list">
-                  <div class="uk-width-1-1@m uk-first-column">
-                    <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
-                      <div>
-                        <table class="uk-table uk-table-striped uk-table-middle">
-                          <thead>
-                          <tr>
-                            <th class="uk-text-nowrap">Logo</th>
-                            <th class="uk-text-nowrap">Name</th>
-                            <th class="uk-text-nowrap"># of Events</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <tr class="el-item" *ngFor="let repo of datasourcesOfUser">
-                            <td class="uk-table-shrink">
-                              <img *ngIf="repo['second']" class="el-image uk-preserve-width" src="{{ repo['second'] }}" style="height: 45px;">
-                              <img *ngIf="!repo['second']" class="el-image uk-preserve-width" src="../../../assets/imgs/yourLogoHere.jpg" alt="[Repo Logo]" style="height: 45px;">
-                            </td>
-                            <td class="uk-text-nowrap uk-table-shrink">
-                              <a (click)="goToRepoEvents(repo['first']['value'])">{{ repo['first']['value'] }}</a>
-                            </td>
-                            <td class="uk-text-nowrap uk-table-shrink">
-                              {{ repo['first']['size'] }}
-                            </td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-
               </div>
 
             </div>
+
           </div>
-
-
         </div>
 
-        <!-- RIGHT HELP CONTENT -->
-        <aside-help-content #rightHelperContent [position]="'right'"
-                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
-
       </div>
-    </div>
 
+      <!-- RIGHT HELP CONTENT -->
+      <aside-help-content #rightHelperContent [position]="'right'"
+                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
+    </div>
 
     <!-- BOTTOM HELP CONTENT -->
     <help-content #bottomHelperContent [position]="'bottom'"
                   [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
     </help-content>
 
-
   </div>
 </div>
-

@@ -2,6 +2,11 @@
   font-size: 70%;
 }
 
+.uk-width-expand\@m {
+  flex: 1;
+  min-width: 1px;
+}
+
 /********* LOADERS *********/
 
 .loading {
@@ -209,3 +214,7 @@ a.md-card p {
 }
 
 /************************************/
+
+.md-card.md-card-overlay-active .md-card-content {
+  height: 600px;
+}

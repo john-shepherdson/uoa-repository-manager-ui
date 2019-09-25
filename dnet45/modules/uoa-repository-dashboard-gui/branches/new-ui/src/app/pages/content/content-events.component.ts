@@ -26,6 +26,9 @@ export class ContentEventsComponent implements OnInit {
   ngOnInit() {
     this.tilesView = true;
     this.getDatasourcesOfUser();
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.add("top_bar_active");   //add the class
+    body.classList.remove("page_heading_active");
   }
 
 
@@ -66,6 +69,10 @@ export class ContentEventsComponent implements OnInit {
   goToRepoEvents(repoName: string) {
     const newName = repoName.replace(/\//g, '|');
     this.router.navigate([newName], {relativeTo: this.route});
+  }
+
+  changeView(view: string) {
+    this.tilesView = (view == 'tiles');
   }
 
 }

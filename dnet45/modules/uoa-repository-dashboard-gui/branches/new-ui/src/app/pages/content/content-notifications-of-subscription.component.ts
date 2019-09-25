@@ -26,6 +26,9 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
     this.subId = this.route.snapshot.paramMap.get('id');
     this.currentPage = 0; /* DELETE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
     this.getEventsPage(0);
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
+    body.classList.remove("page_heading_active");
   }
 
   getEventsPage(page: number) {

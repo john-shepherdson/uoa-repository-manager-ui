@@ -17,6 +17,7 @@ export class SourcesUpdateComponent implements OnInit {
   ngOnInit() {
     let body = document.getElementsByTagName('body')[0];
     body.classList.add("top_bar_active");   //add the class
+    body.classList.remove("page_heading_active");
   }
 
   setNoRepositories(norepos: boolean) {

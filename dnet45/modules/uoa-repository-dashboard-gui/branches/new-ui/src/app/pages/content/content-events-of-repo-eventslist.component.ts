@@ -29,6 +29,8 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   eventsPage: EventsPage;
   currentPage: number; /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
 
+  selectedItemIndex: number;
+
   group: FormGroup;
   readonly titleDefinition = { eventTitle: [''] };
   readonly authorDefinition = { eventAuthor: [''] };
@@ -68,6 +70,9 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     this.initForm();
     this.currentPage = 0; /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
     this.getEventsPage(0);
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   //remove the class
+    body.classList.add("page_heading_active");
   }
 
   getParams() {
@@ -305,6 +310,14 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
       );
     } else {
       this.modalErrorMessage = subscribingChooseFrequency;
+    }
+  }
+
+  displayFullResultInfo(i: number) {
+    if (this.selectedItemIndex === i) {
+      this.selectedItemIndex = null;
+    } else {
+      this.selectedItemIndex = i;
     }
   }
 
