@@ -22,6 +22,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   eventsPageInitialized = false;
 
   topic = '';
+  lastTopicEntry = '';
   correctTopic = '';
   repoName = '';
 
@@ -78,8 +79,14 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   getParams() {
     this.topic = this.route.snapshot.paramMap.get('topic');
     console.log(`my topic is: ${this.topic}`);
+    this.lastTopicEntry = this.topic.substring(this.topic.lastIndexOf('|') + 1).toLowerCase();
+    this.lastTopicEntry = this.replaceAll(this.lastTopicEntry, '_', ' ');
     this.getCorrectTopic();
     this.repoName = this.route.snapshot.paramMap.get('name');
+  }
+
+  replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
   }
 
   initQuery() {
