@@ -20,50 +20,50 @@
 
   <div class="menu_section">
     <ul>
-      <li class="" title="Dashboard">
+      <li [routerLinkActive]="['current_section']" class="" title="Dashboard">
         <a [routerLink]="['/dashboard']">
           <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
           <span class="menu_title">Dashboard</span>
         </a>
       </li>
-      <li class="current_section submenu_trigger act_section" title="Sources">
+      <li class="submenu_trigger act_section" [routerLinkActive]="['current_section']" title="Sources">
         <a>
           <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
           <span class="menu_title">Sources</span>
         </a>
         <ul style="display: block;">
-          <li><a [routerLink]="['/sources', 'register']">Register</a></li>
-          <li><a [routerLink]="['/sources', 'update']">Update</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['/sources', 'register']">Register</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['/sources', 'update']">Update</a></li>
         </ul>
       </li>
-      <li class="submenu_trigger act_section" title="Compatibility">
+      <li class="submenu_trigger act_section" [routerLinkActive]="['current_section']" title="Compatibility">
         <a href="#">
           <span class="menu_icon"><i class="material-icons">&#xE158;</i></span>
           <span class="menu_title">Compatibility</span>
         </a>
         <ul style="display: block;">
-          <li><a [routerLink]="['compatibility', 'validate']">Validate</a></li>
-          <li><a [routerLink]="['compatibility', 'browseHistory']">Validation History</a></li>
-          <li><a [routerLink]="['compatibility', 'monitor']">Collection Monitor</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['compatibility', 'validate']">Validate</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['compatibility', 'browseHistory']">Validation History</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['compatibility', 'monitor']">Collection Monitor</a></li>
         </ul>
       </li>
-      <li class="submenu_trigger act_section" title="Content">
+      <li class="submenu_trigger act_section" [routerLinkActive]="['current_section']" title="Content">
         <a href="#">
           <span class="menu_icon"><i class="material-icons">&#xE53E;</i></span>
           <span class="menu_title">Content</span>
         </a>
         <ul style="display: block;">
-          <li><a [routerLink]="['content', 'events']">Events</a></li>
-          <li><a [routerLink]="['content', 'notifications']">Notifications</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['content', 'events']">Events</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['content', 'notifications']">Notifications</a></li>
         </ul>
       </li>
-      <li class="" title="Metrics">
+      <li class="" [routerLinkActive]="['current_section']" title="Metrics">
         <a [routerLink]="['getImpact']">
           <span class="menu_icon"><i class="material-icons">&#xE86F;</i></span>
           <span class="menu_title">Metrics</span>
         </a>
       </li>
-      <li title="User Profile">
+      <li [routerLinkActive]="['current_section']" title="User Profile">
         <a href="page_user_profile.html">
           <span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>
           <span class="menu_title">User Profile</span>
