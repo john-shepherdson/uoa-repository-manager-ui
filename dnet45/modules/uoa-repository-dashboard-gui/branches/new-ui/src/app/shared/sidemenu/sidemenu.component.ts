@@ -21,6 +21,8 @@ export class SideMenuComponent implements OnInit {
 
   inBeta: boolean;
 
+  toggle: number[] = [];
+
   constructor(public authService: AuthenticationService) { }
 
   ngOnInit() {
@@ -61,5 +63,17 @@ export class SideMenuComponent implements OnInit {
     this.isUserAdmin = (this.authService.getUserRole().includes('ROLE_ADMIN') ||
       this.authService.getUserRole().includes('ROLE_PROVIDE_ADMIN'));
     return this.isUserAdmin;
+  }
+
+  setToggle(position: number) {
+    if (this.toggle[position] === position) {
+      this.toggle[position] = 0;
+    } else {
+      this.toggle[position] = position;
+    }
+  }
+
+  checkIfCollapsed(position: number) {
+    return this.toggle[position] === position;
   }
 }
