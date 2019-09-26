@@ -1,113 +1,59 @@
-<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-  <div class="uk-width-1-1@m uk-first-column">
+<div id="page_content">
 
-    <h1 class="uk-h2">{{ repoName }}</h1>
-    <div class="uk-text uk-text-small uk-text-secondary">{{ topic }}</div>
+  <div class="uk-sticky-placeholder" style="height: 81px; margin: 0px;">
+    <div id="page_heading" style="position: fixed; top: 48px; width: 1440px;" class="uk-sticky-init uk-active">
+      <!--<div id="page_heading"  data-uk-sticky="{ top: 48, media: 960 }" style="position: fixed; top: 48px; width: 1440px;" class="uk-sticky-init uk-active">-->
+      <div class="heading_actions">
+        <button id="subscribe" type="button" class="uk-button uk-button-success" (click)="showSubscriptionModal()">Subscribe to these events</button>
+      </div>
+      <h1>{{ repoName }}</h1>
+      <span class="uk-text-upper uk-text-small">{{ topic }}</span>
+    </div>
+  </div>
+
+  <div id="page_content_inner">
 
     <!-- TOP HELP CONTENT -->
-        <help-content #topHelperContent [position]="'top'"
-                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-        </help-content>
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
 
-    <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
-      <div class="uk-grid">
+    <div class="uk-grid">
 
-        <!-- LEFT HELP CONTENT -->
-                <aside-help-content #leftHelperContent [position]="'left'"
-                                    [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-                </aside-help-content>
+      <!-- LEFT HELP CONTENT -->
+      <aside-help-content #leftHelperContent [position]="'left'"
+                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
 
-        <!-- MIDDLE -->
-        <div class=" uk-width-expand@m">
+      <!-- MIDDLE -->
+      <div class=" uk-width-expand@m">
 
-          <div>
-            <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
-            <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{successMessage}}</div>
-            <div *ngIf="loadingMessage" class="loading-big">
-              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
-              <div class="whiteFilm"></div>
-            </div>
-            <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-            <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages>0" class="events-results">
-              <div class="numberOfEventsLabel">
+        <div style="margin-left: -30px">
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+          <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{successMessage}}</div>
+          <div *ngIf="loadingMessage" class="loading-big">
+            <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+            <div class="transparentFilm"></div>
+          </div>
+          <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
+          <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages>0" class="events-results">
 
-                <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-                <!--<span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>-->
+            <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+            <!--<span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>-->
 
-                <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-                <span>Showing {{(currentPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (currentPage+1)*10) ) ? (eventsPage.total) : (currentPage+1)*10 }} of {{ eventsPage.total }} results</span>
+            <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+            <div class="uk-margin-bottom">Showing {{(currentPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (currentPage+1)*10) ) ? (eventsPage.total) : (currentPage+1)*10 }} of {{ eventsPage.total }} results</div>
 
-                <span class="uk-float-right">
-                  <button id="subscribe" type="button" class="uk-button uk-button-primary uk-button-small" (click)="showSubscriptionModal()">Subscribe to these events</button>
-                </span>
-              </div>
-              <div>
-                <ul class="uk-pagination">
-                  <li>
-                    <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
-                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
-                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
-                </span>
-                      Previous
-                    </a>
-                  </li>
-                  <li class="uk-margin-auto-left">
-                    <a class="uk-link uk-link-muted" (click)="goToNextPage()">
-                      Next
-                      <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
-                        <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
-                      </span>
-                    </a>
-                  </li>
-                </ul>
+            <div *ngFor="let event of eventsPage.values; let item_i = index" class="md-card md-card-hover md-card-overlay {{ (selectedItemIndex == item_i) ? 'md-card-overlay-active' : '' }}">
+              <div class="md-card-content truncate-text" style="overflow-wrap: break-word;">
 
-                <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-                <!--<div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>-->
-
-                <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-                <div class="resultsPageLabel">page {{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }} of {{ eventsPage.totalPages }}</div>
-
-              </div>
-              <div *ngFor="let event of eventsPage.values" class="events-list">
-                <div class="uk-card uk-card-default well uk-scrollspy-inview uk-animation-slide-top-medium">
-                  <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-                    <div class="uk-width-1-1@m uk-first-column">
-                      <p class="text-right"><span class="uk-label">Trust: {{ event.trust }}</span></p>
-                      <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
-                        <table class="uk-table uk-table-striped uk-table-middle">
-                          <tbody>
-                          <tr class="el-item">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">ID</strong></td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">{{ event.publication.originalId }}</div>
-                            </td>
-                          </tr>
-                          <tr class="el-item">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Title(s)</strong></td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
-                                <span *ngFor="let t of event.publication.titles; let ti_index = index">
-                                  <br *ngIf="ti_index>0">
-                                  <span>{{ t }}</span>
-                                </span>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr class="el-item">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Author(s)</strong></td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
-                                <span *ngFor="let auth of event.publication.creators; let au_index = index">
-                                  <span *ngIf="au_index>0"> | </span>
-                                  <span>{{ auth }}</span>
-                                </span>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.pids && event.highlight.pids.length>0 }">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">PID(s)</strong></td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
+                <ng-container *ngIf="event.highlight.pids && event.highlight.pids.length>0">
+                  <table class="uk-table uk-table-middle">
+                    <tbody>
+                      <tr class="el-item md-bg-green-50">
+                      <td class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;"><strong class="el-title uk-display-block">PID(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
                                 <span *ngFor="let pid of event.publication.pids; let a_index = index">
                                   <br *ngIf="a_index > 0">
                                   <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b>
@@ -128,16 +74,24 @@
                                     </span>
                                   </span>
                                 </span>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.abstracts && event.highlight.abstracts.length>0 }">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+
+                <ng-container *ngIf="event.highlight.abstracts && event.highlight.abstracts.length>0">
+                  <table class="uk-table uk-table-middle">
+                    <tbody>
+                      <tr class="el-item md-bg-green-50">
+                      <td class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
                                 <span *ngFor="let abs of event.publication.abstracts; let a_index = index">
                                   <br *ngIf="a_index > 1">
-                                  <span>{{ abs }}</span>
+                                  <span><read-more-text [text]="abs" [maxHeight]="80"></read-more-text></span>
+                                  <!--<span>{{ abs }}</span>-->
                                   <span *ngIf="event.highlight.abstracts.indexOf(abs)>=0 && event.highlight.abstracts.length>0 && event.provenance">
                                     <span class="pull-right">
                                       <b>from: </b>
@@ -151,13 +105,20 @@
                                     </span>
                                   </span>
                                 </span>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.projects && event.highlight.projects.length>0 }">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+
+                <ng-container *ngIf="event.highlight.projects && event.highlight.projects.length>0">
+                  <table class="uk-table uk-table-middle">
+                    <tbody>
+                      <tr class="el-item md-bg-green-50">
+                      <td class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
                                 <span *ngFor="let proj of event.publication.projects; let p_index = index">
                                   <br *ngIf="p_index > 0">
                                   <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
@@ -184,13 +145,20 @@
                                     </span>
                                   </span>
                                 </span>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.subjects && event.highlight.subjects.length>0 }">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Subject(s)</strong></td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+
+                <ng-container *ngIf="event.highlight.subjects && event.highlight.subjects.length>0">
+                  <table class="uk-table uk-table-middle">
+                    <tbody>
+                      <tr class="el-item md-bg-green-50">
+                      <td class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;"><strong class="el-title uk-display-block">Subject(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
                                 <span *ngFor="let subj of event.publication.subjects; let s_index = index">
                                   <br *ngIf="s_index > 0">
                                   <span>{{ subj }}</span>
@@ -207,21 +175,26 @@
                                     </span>
                                   </span>
                                 </span>
-                              </div>
-                            </td>
-                          </tr>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
 
-                          <!--Publications-->
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.publications && event.highlight.publications.length>0 }">
-                            <td *ngIf="this.topic.includes('PUBLICATION')" class="uk-table-shrink uk-width-1-4">
-                              <strong class="el-title uk-display-block">{{this.lastTopicEntry}}<br>Publication(s)</strong>
-                            </td>
-                            <td *ngIf="!(this.topic.includes('PUBLICATION'))"
-                                class="uk-table-shrink uk-width-1-4">
-                              <strong class="el-title uk-display-block">Publication(s)</strong>
-                            </td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
+                <ng-container *ngIf="event.highlight.publications && event.highlight.publications.length>0">
+                  <table class="uk-table uk-table-middle">
+                    <tbody>
+                      <tr class="el-item md-bg-green-50">
+                      <td *ngIf="this.topic.includes('PUBLICATION')" class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;">
+                        <strong class="el-title uk-display-block">{{this.lastTopicEntry}}<br>Publication(s)</strong>
+                      </td>
+                      <td *ngIf="!(this.topic.includes('PUBLICATION'))"
+                          class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;">
+                        <strong class="el-title uk-display-block">Publication(s)</strong>
+                      </td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
                                 <span *ngFor="let pub of event.publication.publications; let s_index = index">
                                   <br *ngIf="s_index > 0">
                                   <span>{{ pub.titles[0] }} (ID: {{pub.originalId}})</span>
@@ -240,20 +213,25 @@
                                     </span>
                                   </span>
                                 </span>
-                              </div>
-                            </td>
-                          </tr>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
 
-                          <!--Datasets-->
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.datasets && event.highlight.datasets.length>0 }">
-                            <td *ngIf="this.topic.includes('DATASET')" class="uk-table-shrink uk-width-1-4">
-                              <strong class="el-title uk-display-block">{{this.lastTopicEntry}}<br>Dataset(s)</strong>
-                            </td>
-                            <td *ngIf="!(this.topic.includes('DATASET'))" class="uk-table-shrink uk-width-1-4">
-                              <strong class="el-title uk-display-block">Dataset(s)</strong>
-                            </td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
+                <ng-container *ngIf="event.highlight.datasets && event.highlight.datasets.length>0">
+                  <table class="uk-table uk-table-middle">
+                    <tbody>
+                      <tr class="el-item md-bg-green-50">
+                      <td *ngIf="this.topic.includes('DATASET')" class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;">
+                        <strong class="el-title uk-display-block">{{this.lastTopicEntry}}<br>Dataset(s)</strong>
+                      </td>
+                      <td *ngIf="!(this.topic.includes('DATASET'))" class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;">
+                        <strong class="el-title uk-display-block">Dataset(s)</strong>
+                      </td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
                                 <span *ngFor="let dataset of event.publication.datasets; let s_index = index">
                                   <br *ngIf="s_index > 0">
                                   <span>{{ dataset.titles[0] }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
@@ -272,20 +250,20 @@
                                     </span>
                                   </span>
                                 </span>
-                              </div>
-                            </td>
-                          </tr>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
 
-
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.publicationdate && event.highlight.publicationdate.length>0 }">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Publication date</strong></td>
-                            <td class="uk-table-shrink"><div class="el-title">{{ event.publication.publicationdate }}</div></td>
-                          </tr>
-
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.instances && event.highlight.instances.length>0 }">
-                            <td class="uk-table-shrink uk-width-1-4"><strong class="el-title uk-display-block">Rights</strong></td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
+                <ng-container *ngIf="event.highlight.instances && event.highlight.instances.length>0">
+                  <table class="uk-table uk-table-middle">
+                    <tbody>
+                      <tr class="el-item md-bg-green-50">
+                      <td class="uk-table-shrink uk-width-1-5" style="vertical-align: top !important;"><strong class="el-title uk-display-block">Rights</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
                                 <span *ngFor="let l of event.publication.instances; let l_index = index">
                                   <br *ngIf="l_index > 0">
                                   <span>
@@ -306,143 +284,482 @@
                                     </span>
                                   </span>
                                 </span>
-                              </div>
-                            </td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+
               </div>
-              <div>
-                <ul class="uk-pagination">
-                  <li>
-                    <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
-                <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
-                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-previous" ratio="1"></svg>
-                </span>
-                      Previous
-                    </a>
-                  </li>
-                  <li class="uk-margin-auto-left">
-                    <a class="uk-link uk-link-muted" (click)="goToNextPage()">
-                      Next
-                      <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
-                  <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" icon="pagination-next" ratio="1"></svg>
-                </span>
-                    </a>
-                  </li>
-                </ul>
 
-                <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-                <!--<div class="resultsPageLabel">page {{ eventsPage.currPage+1 }} of {{ eventsPage.totalPages }}</div>-->
+              <div class="md-card-overlay-content">
+                <div class="uk-clearfix md-card-overlay-header">
+                  <i class="md-icon md-icon material-icons md-card-overlay-toggler" (click)="displayFullResultInfo(item_i)">{{ (selectedItemIndex == item_i) ? 'clear' : 'more_vert' }}</i>
 
-                <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-                <div class="resultsPageLabel">page {{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }} of {{ eventsPage.totalPages }}</div>
+                  <h2 *ngIf="event.publication.titles && event.publication.titles.length>0" class="heading_a uk-margin-bottom">
+                    <span class="uk-badge uk-badge-primary uk-margin-small-right">Trust: {{ event.trust }}</span>
+                    {{ event.publication.titles[0] }}
+                    <span *ngIf="event.publication.originalId" class="sub-heading uk-margin-left">({{event.publication.originalId}})</span>
+                  </h2>
+
+                </div>
+                <div class="truncate-text">
+                  <table class="uk-table uk-table-striped uk-table-middle">
+                    <tbody>
+                    <tr class="el-item" *ngIf="event.publication.originalId">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">ID</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">{{ event.publication.originalId }}</div>
+                      </td>
+                    </tr>
+                    <tr class="el-item" *ngIf="event.publication.titles && event.publication.titles.length>0">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">Title(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let t of event.publication.titles; let ti_index = index">
+                                  <br *ngIf="ti_index>0">
+                                  <span>{{ t }}</span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="el-item" *ngIf="event.publication.creators && event.publication.creators.length>0">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">Author(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let auth of event.publication.creators; let au_index = index">
+                                  <span *ngIf="au_index>0"> | </span>
+                                  <span>{{ auth }}</span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="el-item" *ngIf="event.publication.pids && event.publication.pids.length>0"
+                        [ngClass]="{'md-bg-green-50': event.highlight.pids && event.highlight.pids.length>0 }">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">PID(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let pid of event.publication.pids; let a_index = index">
+                                  <br *ngIf="a_index > 0">
+                                  <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b>
+                                    <span *ngFor="let hl_pid of event.highlight.pids">
+                                      <span *ngIf="hl_pid.value.indexOf(pid.value)>=0 && event.highlight.pids.length>0 && event.provenance">
+                                        <span class="uk-label uk-label-success">added</span>
+                                        <span class="pull-right">
+                                          <b>from: </b>
+                                          <ng-container *ngIf="event.provenance.url">
+                                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                          </ng-container>
+                                          <ng-container *ngIf="!event.provenance.url">
+                                            <span>{{ event.provenance.repositoryName }}</span>
+                                          </ng-container>
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="el-item" *ngIf="event.publication.abstracts && event.publication.abstracts.length>0"
+                        [ngClass]="{'md-bg-green-50': event.highlight.abstracts && event.highlight.abstracts.length>0 }">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">Abstract(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let abs of event.publication.abstracts; let a_index = index">
+                                  <br *ngIf="a_index > 1">
+                                  <!--<span>{{ abs }}</span>-->
+                                  <span>
+                                    <read-more-text [text]="abs" [maxHeight]="80"></read-more-text>
+                                  </span>
+                                  <span *ngIf="event.highlight.abstracts.indexOf(abs)>=0 && event.highlight.abstracts.length>0 && event.provenance">
+                                    <span class="pull-right">
+                                      <b>from: </b>
+                                      <ng-container *ngIf="event.provenance.url">
+                                        <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                        <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                      </ng-container>
+                                      <ng-container *ngIf="!event.provenance.url">
+                                        <span>{{ event.provenance.repositoryName }}</span>
+                                      </ng-container>
+                                    </span>
+                                  </span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="el-item" *ngIf="event.publication.projects && event.publication.projects.length>0"
+                        [ngClass]="{'md-bg-green-50': event.highlight.projects && event.highlight.projects.length>0 }">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">Project(s)/Relation(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let proj of event.publication.projects; let p_index = index">
+                                  <br *ngIf="p_index > 0">
+                                  <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
+                                  <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
+                                  <span *ngIf="(proj.funder && proj.funder !=='') ||
+                                               (proj.fundingProgram && proj.fundingProgram !=='')">
+                                    (<span *ngIf="proj.funder && proj.funder !==''">{{ proj.funder }} </span>
+                                    <span *ngIf="(proj.funder && proj.funder !=='') &&
+                                                 (proj.fundingProgram && proj.fundingProgram !=='')">/</span>
+                                    <span *ngIf="proj.fundingProgram && proj.fundingProgram !==''">{{ proj.fundingProgram }}</span>)
+                                  </span>
+                                  <span *ngFor="let hl_proj of event.highlight.projects">
+                                    <span *ngIf="hl_proj.code.indexOf(proj.code)>=0  && event.highlight.projects.length>0 && event.provenance">
+                                      <span class="pull-right">
+                                        <b>from: </b>
+                                        <ng-container *ngIf="event.provenance.url">
+                                          <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                          <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="!event.provenance.url">
+                                          <span>{{ event.provenance.repositoryName }}</span>
+                                        </ng-container>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="el-item" *ngIf="event.publication.subjects && event.publication.subjects.length>0"
+                        [ngClass]="{'md-bg-green-50': event.highlight.subjects && event.highlight.subjects.length>0 }">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">Subject(s)</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let subj of event.publication.subjects; let s_index = index">
+                                  <br *ngIf="s_index > 0">
+                                  <span>{{ subj }}</span>
+                                  <span *ngIf="event.highlight.subjects.indexOf(subj)>=0 && event.highlight.subjects.length>0 && event.provenance">
+                                    <span class="pull-right">
+                                      <b>from: </b>
+                                      <ng-container *ngIf="event.provenance.url">
+                                        <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                        <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                      </ng-container>
+                                      <ng-container *ngIf="!event.provenance.url">
+                                        <span>{{ event.provenance.repositoryName }}</span>
+                                      </ng-container>
+                                    </span>
+                                  </span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!--Publications-->
+                    <tr class="el-item" *ngIf="event.publication.publications && event.publication.publications.length>0"
+                        [ngClass]="{'md-bg-green-50': event.highlight.publications && event.highlight.publications.length>0 }">
+                      <td *ngIf="this.topic.includes('PUBLICATION')" class="uk-table-shrink uk-width-1-5">
+                        <strong class="el-title uk-display-block">{{this.lastTopicEntry}}<br>Publication(s)</strong>
+                      </td>
+                      <td *ngIf="!(this.topic.includes('PUBLICATION'))"
+                          class="uk-table-shrink uk-width-1-5">
+                        <strong class="el-title uk-display-block">Publication(s)</strong>
+                      </td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let pub of event.publication.publications; let s_index = index">
+                                  <br *ngIf="s_index > 0">
+                                  <span>{{ pub.titles[0] }} (ID: {{pub.originalId}})</span>
+                                  <span *ngFor="let hl_pub of event.highlight.publications">
+                                    <span *ngIf="hl_pub.originalId.indexOf(pub.originalId)>=0 && event.highlight.publications.length>0 && event.provenance">
+                                      <span class="pull-right">
+                                        <b>from: </b>
+                                        <ng-container *ngIf="event.provenance.url">
+                                          <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                          <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="!event.provenance.url">
+                                          <span>{{ event.provenance.repositoryName }}</span>
+                                        </ng-container>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!--Datasets-->
+                    <tr class="el-item" *ngIf="event.publication.datasets && event.publication.datasets.length>0"
+                        [ngClass]="{'md-bg-green-50': event.highlight.datasets && event.highlight.datasets.length>0 }">
+                      <td *ngIf="this.topic.includes('DATASET')" class="uk-table-shrink uk-width-1-5">
+                        <strong class="el-title uk-display-block">{{this.lastTopicEntry}}<br>Dataset(s)</strong>
+                      </td>
+                      <td *ngIf="!(this.topic.includes('DATASET'))" class="uk-table-shrink uk-width-1-5">
+                        <strong class="el-title uk-display-block">Dataset(s)</strong>
+                      </td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let dataset of event.publication.datasets; let s_index = index">
+                                  <br *ngIf="s_index > 0">
+                                  <span>{{ dataset.titles[0] }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
+                                  <span *ngFor="let hl_dataset of event.highlight.datasets">
+                                    <span *ngIf="hl_dataset.pids.indexOf(dataset.pids[s_index])>=0 && event.highlight.datasets.length>0 && event.provenance">
+                                      <span class="pull-right">
+                                        <b>from: </b>
+                                        <ng-container *ngIf="event.provenance.url">
+                                          <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                          <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="!event.provenance.url">
+                                          <span>{{ event.provenance.repositoryName }}</span>
+                                        </ng-container>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                    <tr class="el-item" *ngIf="event.publication.publicationdate && event.publication.publicationdate.length>0"
+                        [ngClass]="{'md-bg-green-50': event.highlight.publicationdate && event.highlight.publicationdate.length>0 }">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">Publication date</strong></td>
+                      <td class="uk-table-shrink"><div class="el-title">{{ event.publication.publicationdate }}</div></td>
+                    </tr>
+
+                    <tr class="el-item" *ngIf="event.publication.instances && event.publication.instances.length>0"
+                        [ngClass]="{'md-bg-green-50': event.highlight.instances && event.highlight.instances.length>0 }">
+                      <td class="uk-table-shrink uk-width-1-5"><strong class="el-title uk-display-block">Rights</strong></td>
+                      <td class="uk-table-shrink">
+                        <div class="el-title">
+                                <span *ngFor="let l of event.publication.instances; let l_index = index">
+                                  <br *ngIf="l_index > 0">
+                                  <span>
+                                    {{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b><br>
+                                    <a href="{{ l.url }}" target="_blank">{{ l.url }}</a>
+                                  </span>
+                                  <span *ngFor="let hl of event.highlight.instances">
+                                    <span *ngIf="hl.hostedby.indexOf(l.hostedby)>=0 && event.highlight.instances.length>0 && event.provenance">
+                                      &nbsp;&nbsp;<span class="uk-label uk-label-success">added</span>&nbsp;&nbsp;
+                                      <b>from: </b>
+                                      <ng-container *ngIf="event.provenance.url">
+                                        <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                                        <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                                      </ng-container>
+                                      <ng-container *ngIf="!event.provenance.url">
+                                        <span>{{ event.provenance.repositoryName }}</span>
+                                      </ng-container>
+                                    </span>
+                                  </span>
+                                </span>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
 
               </div>
             </div>
+
+            <!-- BOTTOM PAGINATION LINKS -->
+            <ul class="uk-pagination uk-margin-medium-top">
+              <li class="uk-pagination-previous"><a (click)="goToPreviousPage()"><i class="uk-icon-angle-left"></i><span class="uk-margin-left">Previous</span></a></li>
+              <li class=""><span>page {{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }} of {{ eventsPage.totalPages }}</span></li>
+              <li class="uk-pagination-next"><a (click)="goToNextPage()"><span class="uk-margin-right">Next</span><i class="uk-icon-angle-right"></i></a></li>
+            </ul>
+
           </div>
         </div>
+      </div>
 
-        <!-- RIGHT HELP CONTENT CAN'T BE USED IN THIS PAGE -->
-        <div [formGroup]="group" class="tm-sidebar uk-width-1-4@m">
-          <div class="enrichContentAdvancedSearch uk-card uk-card-body uk-card-default sidemenu">
-            <div>
-              <h6 class="uk-h6 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
-                <span>Tweak and refine events</span>
-              </h6>
+      <!-- RIGHT HELP CONTENT CAN'T BE USED IN THIS PAGE -->
+      <div [formGroup]="group" class="tm-sidebar uk-width-1-4">
+        <div class="enrichContentAdvancedSearch md-card sidemenu">
+          <div class="md-card-toolbar">
+            <div class="md-card-toolbar-actions">
+              <button type="button" (click)="updateQuery()" class="uk-button uk-button-primary advancedSearch uk-margin-small-right">Apply</button>
+              <button type="reset" (click)="clearForm()" class="uk-button uk-button-default clearCriteria">Clear</button>
+              <!--<a href="#" class="md-btn md-btn-small md-btn-flat">Button</a>-->
+              <!--<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary">Button</a>-->
             </div>
+            <h3 class="md-card-toolbar-heading-text">
+              Tweak and refine events
+            </h3>
+          </div>
+          <div class="md-card-content">
             <div role="form" class="uk-form-horizontal">
-              <div class="uk-form-horizontal">
+              <div class="uk-form-horizontal uk-margin-bottom">
                 <div class="form-group">
                   <label class="control-label">Trust [{{group.get('trustMin').value}} - {{group.get('trustMax').value}}]</label><br>
                   <input type="range" min="0" max="1" step="0.05" formControlName="trustMin" class="uk-range"/>
                   <input type="range" min="0" max="1" step="0.05" formControlName="trustMax" class="uk-range"/>
                 </div>
               </div>
-              <div class="uk-form-horizontal">
-                <div class="form-group">
-                  <label class="control-label" style="display: block;">Title</label>
-                  <div formArrayName="eventTitles" *ngFor="let title of eventTitleFormArray; let title_index = index">
-                    <div [formGroupName]="title_index">
-                      <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventTitle">
-                      <a class="inlineBlock deleteIcon" (click)="removeControl('eventTitles',title_index)"><i class="fa fa-remove"></i></a>
-                    </div>
-                  </div>
-                  <a (click)="addControl('eventTitles',titleDefinition)"><i class="fa fa-plus"></i> Add another</a>
-                </div>
-              </div>
-              <div class="uk-form-horizontal">
-                <div class="form-group">
-                  <label class="control-label" style="display: block;">Author</label>
-                  <div formArrayName="eventAuthors" *ngFor="let author of eventAuthorFormArray; let author_index = index">
-                    <div [formGroupName]="author_index">
-                      <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventAuthor">
-                      <a class="inlineBlock deleteIcon" (click)="removeControl('eventAuthors',author_index)"><i class="fa fa-remove"></i></a>
-                    </div>
-                  </div>
-                  <a (click)="addControl('eventAuthors', authorDefinition)"><i class="fa fa-plus"></i> Add another</a>
-                </div>
-              </div>
-              <div class="uk-form-horizontal">
-                <div class="form-group">
-                  <label class="control-label" style="display: block;">Subject</label>
-                  <div formArrayName="eventSubjects" *ngFor="let subject of eventSubjectsFormArray; let subject_index = index">
-                    <div [formGroupName]="subject_index">
-                      <input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventSubject">
-                      <a class="inlineBlock deleteIcon" (click)="removeControl('eventSubjects', subject_index)"><i class="fa fa-remove"></i></a>
-                    </div>
-                  </div>
-                  <a (click)="addControl('eventSubjects', subjectDefinition)"><i class="fa fa-plus"></i> Add another</a>
-                </div>
-              </div>
-              <div>
-                <div class="uk-form-horizontal">
-                  <div class="form-group">
-                    <label class="control-label" style="display: block;">Date</label>
-                    <div formArrayName="eventDateRanges" *ngFor="let date of eventDateRangesFormArray; let date_index = index">
-                      <div class="uk-form" style="position: relative;" [formGroupName]=date_index>
-                        <input class="form-control inlineBlock dateFrom" style="width:88%;"
-                               placeholder="From"
-                               type="text"
-                               onfocus="(this.type='date')"
-                               formControlName=dateFrom>
-                        <input class="form-control inlineBlock dateTo" style="width:88%;"
-                               placeholder="To"
-                               type="text"
-                               onfocus="(this.type='date')"
-                               formControlName=dateTo>
-                        <a class="inlineBlock deleteIcon" (click)="removeControl('eventDateRanges',date_index)"><i class="fa fa-remove" style=""></i></a>
+
+              <div class="uk-form-horizontal uk-margin-small-bottom">
+                <div data-dynamic-fields="field_template_b" dynamic-fields-counter="1">
+                  <div formArrayName="eventTitles" class="uk-grid form_section" *ngFor="let title of eventTitleFormArray; let title_index = index; let last_title = last;">
+                    <div [formGroupName]="title_index" class="uk-width-1-1 uk-margin-small-bottom">
+                      <div class="uk-input-group">
+                        <div class="md-input-wrapper md-input-filled">
+                          <label>Title</label>
+                          <input type="text" class="md-input label-fixed" formControlName="eventTitle">
+                          <span class="md-input-bar "></span>
+                        </div>
+                        <span *ngIf="last_title" class="uk-input-group-addon">
+                          <a (click)="addControl('eventTitles',titleDefinition)" class="btnSectionClone"><i class="material-icons md-24"></i></a>
+                        </span>
+                        <span *ngIf="!last_title" class="uk-input-group-addon">
+                          <a (click)="removeControl('eventTitles',title_index)" class="btnSectionRemove"><i class="material-icons md-24"></i></a>
+                        </span>
                       </div>
                     </div>
-                    <a (click)="addControl('eventDateRanges', dateRangeDefinition)"><i class="fa fa-plus"></i> Add another</a>
                   </div>
                 </div>
+
+                <!--<div class="form-group">-->
+                  <!--<label class="control-label" style="display: block;">Title</label>-->
+                  <!--<div formArrayName="eventTitles" *ngFor="let title of eventTitleFormArray; let title_index = index">-->
+                    <!--<div [formGroupName]="title_index">-->
+                      <!--<input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventTitle">-->
+                      <!--<a class="inlineBlock deleteIcon" (click)="removeControl('eventTitles',title_index)"><i class="fa fa-remove"></i></a>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<a (click)="addControl('eventTitles',titleDefinition)"><i class="fa fa-plus"></i> Add another</a>-->
+                <!--</div>-->
               </div>
-              <div role="form" class="form-horizontal">
-                <div class="form-group">
-                  <div class="actionButtons">
-                    <button type="button" (click)="updateQuery()" class="uk-button uk-button-primary advancedSearch uk-margin-small-right">Apply</button>
-                    <button type="reset" (click)="clearForm()" class="uk-button uk-button-default clearCriteria">Clear</button>
+              <div class="uk-form-horizontal uk-margin-small-bottom">
+                <div data-dynamic-fields="field_template_b" dynamic-fields-counter="1">
+                  <div formArrayName="eventAuthors" class="uk-grid form_section" *ngFor="let author of eventAuthorFormArray; let author_index = index; let last_author = last;">
+                    <div [formGroupName]="author_index" class="uk-width-1-1 uk-margin-small-bottom">
+                      <div class="uk-input-group">
+                        <div class="md-input-wrapper md-input-filled">
+                          <label>Author</label>
+                          <input type="text" class="md-input label-fixed" formControlName="eventAuthor">
+                          <span class="md-input-bar "></span>
+                        </div>
+                        <span *ngIf="last_author" class="uk-input-group-addon">
+                          <a (click)="addControl('eventAuthors',authorDefinition)" class="btnSectionClone"><i class="material-icons md-24"></i></a>
+                        </span>
+                        <span *ngIf="!last_author" class="uk-input-group-addon">
+                          <a (click)="removeControl('eventAuthors',author_index)" class="btnSectionRemove"><i class="material-icons md-24"></i></a>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <!--<div class="form-group">-->
+                  <!--<label class="control-label" style="display: block;">Author</label>-->
+                  <!--<div formArrayName="eventAuthors" *ngFor="let author of eventAuthorFormArray; let author_index = index">-->
+                    <!--<div [formGroupName]="author_index">-->
+                      <!--<input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventAuthor">-->
+                      <!--<a class="inlineBlock deleteIcon" (click)="removeControl('eventAuthors',author_index)"><i class="fa fa-remove"></i></a>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<a (click)="addControl('eventAuthors', authorDefinition)"><i class="fa fa-plus"></i> Add another</a>-->
+                <!--</div>-->
               </div>
+              <div class="uk-form-horizontal uk-margin-small-bottom">
+                <div data-dynamic-fields="field_template_b" dynamic-fields-counter="1">
+                  <div formArrayName="eventSubjects" class="uk-grid form_section" *ngFor="let subject of eventSubjectsFormArray; let subject_index = index; let last_subject = last;">
+                    <div [formGroupName]="subject_index" class="uk-width-1-1 uk-margin-small-bottom">
+                      <div class="uk-input-group">
+                        <div class="md-input-wrapper md-input-filled">
+                          <label>Subject</label>
+                          <input type="text" class="md-input label-fixed" formControlName="eventSubject">
+                          <span class="md-input-bar "></span>
+                        </div>
+                        <span *ngIf="last_subject" class="uk-input-group-addon">
+                          <a (click)="addControl('eventSubjects',subjectDefinition)" class="btnSectionClone"><i class="material-icons md-24"></i></a>
+                        </span>
+                        <span *ngIf="!last_subject" class="uk-input-group-addon">
+                          <a (click)="removeControl('eventSubjects',subject_index)" class="btnSectionRemove"><i class="material-icons md-24"></i></a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--<div class="form-group">-->
+                  <!--<label class="control-label" style="display: block;">Subject</label>-->
+                  <!--<div formArrayName="eventSubjects" *ngFor="let subject of eventSubjectsFormArray; let subject_index = index">-->
+                    <!--<div [formGroupName]="subject_index">-->
+                      <!--<input class="form-control inlineBlock" style="width:88%;" type="text" formControlName="eventSubject">-->
+                      <!--<a class="inlineBlock deleteIcon" (click)="removeControl('eventSubjects', subject_index)"><i class="fa fa-remove"></i></a>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<a (click)="addControl('eventSubjects', subjectDefinition)"><i class="fa fa-plus"></i> Add another</a>-->
+                <!--</div>-->
+              </div>
+
+              <div>
+                <div class="uk-form-horizontal">
+                  <div data-dynamic-fields="field_template_b" dynamic-fields-counter="1">
+                    <div formArrayName="eventDateRanges" class="uk-grid form_section" *ngFor="let date of eventDateRangesFormArray; let date_index = index; let last_date = last;">
+                      <div [formGroupName]="date_index" class="uk-width-1-1 uk-margin-small-bottom">
+                        <div class="uk-input-group">
+                          <div class="md-input-wrapper md-input-filled">
+                            <label>Date From</label>
+                            <input type="text" class="md-input label-fixed" onfocus="(this.type='date')" formControlName="dateFrom">
+                            <span class="md-input-bar "></span>
+                          </div>
+                          <div class="md-input-wrapper md-input-filled">
+                            <label>Date To</label>
+                            <input type="text" class="md-input label-fixed" onfocus="(this.type='date')" formControlName="dateTo">
+                            <span class="md-input-bar "></span>
+                          </div>
+                          <span *ngIf="last_date" class="uk-input-group-addon">
+                            <a (click)="addControl('eventDateRanges',dateRangeDefinition)" class="btnSectionClone"><i class="material-icons md-24"></i></a>
+                          </span>
+                          <span *ngIf="!last_date" class="uk-input-group-addon">
+                          <a (click)="removeControl('eventDateRanges',date_index)" class="btnSectionRemove"><i class="material-icons md-24"></i></a>
+                        </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--<div class="form-group">-->
+                    <!--<label class="control-label" style="display: block;">Date</label>-->
+                    <!--<div formArrayName="eventDateRanges" *ngFor="let date of eventDateRangesFormArray; let date_index = index">-->
+                      <!--<div class="uk-form" style="position: relative;" [formGroupName]=date_index>-->
+                        <!--<input class="form-control inlineBlock dateFrom" style="width:88%;"-->
+                               <!--placeholder="From"-->
+                               <!--type="text"-->
+                               <!--onfocus="(this.type='date')"-->
+                               <!--formControlName=dateFrom>-->
+                        <!--<input class="form-control inlineBlock dateTo" style="width:88%;"-->
+                               <!--placeholder="To"-->
+                               <!--type="text"-->
+                               <!--onfocus="(this.type='date')"-->
+                               <!--formControlName=dateTo>-->
+                        <!--<a class="inlineBlock deleteIcon" (click)="removeControl('eventDateRanges',date_index)"><i class="fa fa-remove" style=""></i></a>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                    <!--<a (click)="addControl('eventDateRanges', dateRangeDefinition)"><i class="fa fa-plus"></i> Add another</a>-->
+                  <!--</div>-->
+                </div>
+              </div>
+              <!--<div role="form" class="form-horizontal">-->
+              <!--<div class="form-group">-->
+              <!--<div class="actionButtons">-->
+              <!--<button type="button" (click)="updateQuery()" class="uk-button uk-button-primary advancedSearch uk-margin-small-right">Apply</button>-->
+              <!--<button type="reset" (click)="clearForm()" class="uk-button uk-button-default clearCriteria">Clear</button>-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--</div>-->
             </div>
           </div>
         </div>
-
       </div>
-    </div>
 
+      <!-- RIGHT HELP CONTENT -->
+      <aside-help-content #rightHelperContent [position]="'right'"
+                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
+    </div>
 
     <!-- BOTTOM HELP CONTENT -->
     <help-content #bottomHelperContent [position]="'bottom'"
                   [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
     </help-content>
-
 
   </div>
 </div>
@@ -453,17 +770,24 @@
   <div *ngIf="eventsPage">
     <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{ modalErrorMessage }}</div>
     <div>
-      <h4 class="uk-h4">{{ eventsPage.datasource }}</h4>
-      <div class="uk-text uk-text-small uk-text-secondary">{{ eventsPage.topic }}</div>
+      <h2 class="heading_c uk-margin-bottom">
+        {{ eventsPage.datasource }}
+        <span class="sub-heading">{{ eventsPage.topic }}</span>
+      </h2>
     </div>
     <div>
-      <div class="form-group">
-        <label class="control-label">Email</label>
-        <div>{{ userEmail }}</div>
+      <div class="md-input-wrapper md-input-filled uk-margin-bottom">
+        <label>Email</label>
+        <input class="md-input label-fixed" type="text" value="{{ userEmail }}" disabled>
+        <span class="md-input-bar "></span>
       </div>
-      <div class="form-group">
-        <label class="control-label">Frequency (*)</label>
-        <select class="form-control" #selectFreq (change)="choseFrequency(selectFreq.value)">
+      <!--<div class="form-group">-->
+        <!--<label class="control-label">Email</label>-->
+        <!--<div>{{ userEmail }}</div>-->
+      <!--</div>-->
+      <div class="md-input-wrapper md-input-filled">
+        <label class="">Frequency (*)</label>
+        <select class="md-input" #selectFreq (change)="choseFrequency(selectFreq.value)">
           <option value="">-- none selected --</option>
           <option value="never">never</option>
           <option value="realtime">realtime</option>
@@ -471,16 +795,54 @@
           <option value="weekly">weekly</option>
           <option value="monthly">monthly</option>
         </select>
+        <span class="md-input-bar"></span>
       </div>
-      <div class="form-group">
-        <label class="control-label">Options</label>
+
+      <div class="uk-margin-top">
+        <div class="uk-margin-small-bottom">Selected Options</div>
         <div>
-          <table class="table table-bordered">
+          <table class="uk-table uk-table-striped">
             <tbody>
-            <tr>
-              <td>Trust</td>
-              <td>[{{advanceSearch.trust.min}}, {{advanceSearch.trust.max}}]</td>
-            </tr>
+              <tr>
+                <td class="uk-width-1-5">Trust</td>
+                <td>[{{advanceSearch.trust.min}}, {{advanceSearch.trust.max}}]</td>
+              </tr>
+              <tr *ngIf="advanceSearch.titles && advanceSearch.titles.length>0">
+                <td class="uk-width-1-5">Titles</td>
+                <td>
+                  <span *ngFor="let title of advanceSearch.titles; let i = index">
+                    <br *ngIf="i>0">
+                    {{title}}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="advanceSearch.authors && advanceSearch.authors.length>0">
+                <td class="uk-width-1-5">Authors</td>
+                <td>
+                  <span *ngFor="let author of advanceSearch.authors; let i = index">
+                    <br *ngIf="i>0">
+                    {{author}}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="advanceSearch.subjects && advanceSearch.subjects.length>0">
+                <td class="uk-width-1-5">Subjects</td>
+                <td>
+                  <span *ngFor="let subject of advanceSearch.subjects; let i = index">
+                    <br *ngIf="i>0">
+                    {{subject}}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="advanceSearch.dates && advanceSearch.dates.length>0">
+                <td class="uk-width-1-5">Dates</td>
+                <td>
+                  <span *ngFor="let date of advanceSearch.dates; let i = index">
+                    <br *ngIf="i>0">
+                    {{date.min}} <span class="uk-margin-small-left uk-margin-small-right">-</span> {{date.max}}
+                  </span>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

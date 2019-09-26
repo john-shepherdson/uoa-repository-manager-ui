@@ -69,7 +69,8 @@ const myGroups = [
     RepositoryTilesComponent,
     ForbiddenPageComponent,
     ...myGroups,
-    ReadMoreComponent
+    ReadMoreComponent,
+    ReadMoreTextComponent
   ],
   providers: [
     HelpContentService
