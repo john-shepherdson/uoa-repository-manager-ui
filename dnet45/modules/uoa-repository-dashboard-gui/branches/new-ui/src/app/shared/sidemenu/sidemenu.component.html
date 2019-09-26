@@ -47,7 +47,7 @@
           <li routerLinkActive="act_item"><a [routerLink]="['/compatibility', 'monitor']">Collection Monitor</a></li>
         </ul>
       </li>
-      <li class="submenu_trigger" [ngClass]="{'act_section': checkIfCollapsed(3) }" [routerLinkActive]="['current_section']" title="Content">
+      <li class="submenu_trigger" [ngClass]="{'act_section': checkIfCollapsed(3) }" [routerLinkActive]="['current_section']">
         <a (click)="setToggle(3)">
           <span class="menu_icon"><i class="material-icons">&#xE53E;</i></span>
           <span class="menu_title">Content</span>
@@ -63,12 +63,24 @@
           <span class="menu_title">Metrics</span>
         </a>
       </li>
-      <li [routerLinkActive]="['current_section']" title="User Profile">
-        <a href="page_user_profile.html">
+      <li class="submenu_trigger" [ngClass]="{'act_section': checkIfCollapsed(4) }" [routerLinkActive]="['current_section']">
+        <a (click)="setToggle(4)">
           <span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>
-          <span class="menu_title">User Profile</span>
+          <span class="menu_title">{{ getUserName() }}</span>
         </a>
+        <ul [ngClass]="{'uk-display-block': checkIfCollapsed(4)}">
+          <li *ngIf="getIsUserAdmin()" [routerLinkActive]="['act_item']"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>
+          <li *ngIf="getIsUserAdmin()" [routerLinkActive]="['act_item']"><a [routerLink]="['/admin/registrations']">Registrations</a></li>
+          <li *ngIf="getIsUserAdmin()" [routerLinkActive]="['act_item']"><a [routerLink]="['/admin/metrics']">Metrics</a></li>
+          <li [routerLinkActive]="['act_item']"><a (click)="logout()">Log out</a></li>
+        </ul>
       </li>
+      <!--<li [routerLinkActive]="['current_section']" title="User Profile">-->
+        <!--<a href="page_user_profile.html">-->
+          <!--<span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>-->
+          <!--<span class="menu_title">User Profile</span>-->
+        <!--</a>-->
+      <!--</li>-->
 
 
 
