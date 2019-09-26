@@ -16,8 +16,11 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
 
   subId: string;
   topic: string;
+  lastTopicEntry = '';
   eventsPage: EventsPage;
   currentPage: number;  /* DELETE WHEN getNotificationsBySubscriptionId IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+
+  selectedItemIndex: number;
 
   constructor(private route: ActivatedRoute,
               private brokerService: BrokerService) {}
@@ -49,8 +52,16 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
           this.noEvents = noEventsForTopic;
         }
         this.getCorrectTopic();
+        // console.log('Topic: ' + this.topic);
+        this.lastTopicEntry = this.topic.substring(this.topic.lastIndexOf('|') + 1).toLowerCase();
+        this.lastTopicEntry = this.replaceAll(this.lastTopicEntry, '_', ' ');
+        // console.log('Last topic entry: ' + this.lastTopicEntry);
       }
     );
+  }
+
+  replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
   }
 
 
@@ -94,6 +105,14 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
     this.topic = temp[0];
     for (let i = 1; i < temp.length; i++) {
       this.topic += ` | ${temp[i]}`;
+    }
+  }
+
+  displayFullResultInfo(i: number) {
+    if (this.selectedItemIndex === i) {
+      this.selectedItemIndex = null;
+    } else {
+      this.selectedItemIndex = i;
     }
   }
 }
