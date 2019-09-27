@@ -17,6 +17,8 @@ export class TopmenuDashboardComponent implements OnInit {
 
   inBeta: boolean;
 
+  showSideBar = true;
+
   constructor(public authService: AuthenticationService) { }
 
   ngOnInit() {
@@ -26,6 +28,16 @@ export class TopmenuDashboardComponent implements OnInit {
 
     const baseUrl = window.location.origin;
     this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
+  }
+
+  toggleSideMenu() {
+    const body = document.getElementsByTagName('body')[0];
+    if (this.showSideBar === true) {
+      body.classList.remove('sidebar_main_open');
+    } else {
+      body.classList.add('sidebar_main_open');
+    }
+    this.showSideBar = !this.showSideBar;
   }
 
   onClick(id: string) {
