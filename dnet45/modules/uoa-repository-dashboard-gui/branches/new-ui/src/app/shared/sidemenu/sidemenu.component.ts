@@ -26,6 +26,18 @@ export class SideMenuComponent implements OnInit {
   constructor(public authService: AuthenticationService) { }
 
   ngOnInit() {
+
+    const pathName = window.location.pathname;
+    if (pathName.includes('sources')) {
+      this.toggle[1] = 1;
+    } else if (pathName.includes('compatibility')) {
+      this.toggle[2] = 2;
+    } else if (pathName.includes('content')) {
+      this.toggle[3] = 3;
+    } else if (pathName.includes('admin')) {
+      this.toggle[4] = 4;
+    }
+
     this.getIsUserLoggedIn();
     this.getUserName();
     this.getIsUserAdmin();
