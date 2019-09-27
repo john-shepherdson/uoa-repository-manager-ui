@@ -654,3 +654,18 @@ export class RepositorySummaryInfo {
   totalViews: string;
   totalDownloads: string;
 }
+
+export class UsageSummary {
+  metricsInfo: MetricsInfo;
+  piwikInfo: PiwikInfo;
+}
+
+export class BrokerSummary {
+  userSubs: Map<string, SimpleSubscriptionDesc[]>;
+  topicsForDatasource: BrowseEntry[];
+}
+
+export class CollectionMonitorSummary {
+  aggregationDetails: AggregationDetails[];
+  lastIndexedVersion: AggregationDetails;
+}

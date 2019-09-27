@@ -11,6 +11,10 @@
   /*margin-left: -50px;*/
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 /********* LOADERS *********/
 
 .loading {

@@ -56,7 +56,7 @@
                       </div>
                       <div class="md-card-content">
                         <h4 class="heading_c uk-margin-bottom">{{ repo['first']['value'] }}</h4>
-                        <p><span>({{ repo['first']['size'] }} events)</span></p>
+                        <p><span>({{ repo['first']['size']  | number }} events)</span></p>
                         <!--<p>{{repo.description}}</p>-->
                         <!--<a class="md-btn md-btn-small md-btn-success" [routerLink]="[getLinkToNext(repo)]">Add to Cart</a>-->
                       </div>

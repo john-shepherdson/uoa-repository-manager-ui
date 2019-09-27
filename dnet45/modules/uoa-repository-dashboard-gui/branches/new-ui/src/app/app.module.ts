@@ -20,6 +20,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { LandingComponent } from './pages/landing/landing.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { MatomoModule } from 'ngx-matomo';
+import { DashboardService } from "./services/dashboard.service";
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { MatomoModule } from 'ngx-matomo';
     MonitorService,
     PiwikService,
     RepositoryService,
+    DashboardService,
     ValidatorService,
     UsagestatsService,
     StatisticsService,
