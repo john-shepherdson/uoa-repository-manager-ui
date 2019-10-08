@@ -107,7 +107,8 @@
                       <tbody>
                       <tr class="el-item" *ngFor="let piwik of piwiks.results">
                         <td class="uk-table-shrink uk-text-truncate" style="min-width: 400px;">
-                          {{ piwik.repositoryName }}<br>(ID: {{ piwik.repositoryId }})
+                          {{ piwik.repositoryName }}<br>
+                          <a class="viewDetails" [routerLink]="['/getImpact/show_metrics/', piwik.repositoryId]">(ID: {{ piwik.repositoryId }})</a>
                         </td>
                         <td class="uk-table-shrink">ID: {{ piwik.siteId }}<br>Authentication Token: {{ piwik.authenticationToken }}</td>
                         <td class="uk-text-nowrap uk-table-shrink">{{ piwik.creationDate | date : "yyyy-MM-dd" }}</td>
