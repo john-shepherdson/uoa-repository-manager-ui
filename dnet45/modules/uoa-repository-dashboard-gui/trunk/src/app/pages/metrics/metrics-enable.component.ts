@@ -60,9 +60,6 @@ export class MetricsEnableComponent implements OnInit {
           this.getOAid();
         }
         this.loadingMessage = '';
-        if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.repo.registeredBy.trim()) ) {
-          this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
-        }
       }
     );
   }

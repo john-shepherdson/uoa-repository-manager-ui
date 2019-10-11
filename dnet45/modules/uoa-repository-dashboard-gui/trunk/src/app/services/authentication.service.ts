@@ -19,8 +19,6 @@ export class AuthenticationService {
 
   private _storage: Storage = sessionStorage;
 
-  public activateFrontAuthorization: boolean = environment.production;
-
   isLoggedIn: boolean = false;
 
   public loginWithState() {

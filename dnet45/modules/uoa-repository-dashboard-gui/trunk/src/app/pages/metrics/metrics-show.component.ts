@@ -51,12 +51,7 @@ export class MetricsShowComponent implements OnInit {
       () => {
         this.loadingMessage = '';
         this.errorMessage = '';
-        if ( this.authService.activateFrontAuthorization &&
-             (this.authService.getUserEmail() !== this.piwik.requestorEmail.trim()) ) {
-          this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
-        } else {
-          this.getMetrics();
-        }
+        this.getMetrics();
       }
     );
   }
