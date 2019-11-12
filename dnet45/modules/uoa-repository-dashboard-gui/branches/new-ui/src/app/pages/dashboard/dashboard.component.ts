@@ -6,18 +6,18 @@ import {
   MetricsInfo, PiwikInfo,
   Repository,
   RepositorySnippet,
-  RepositorySummaryInfo, UsageSummary
+  RepositorySummaryInfo, StoredJob, UsageSummary
 } from '../../domain/typeScriptClasses';
 import {
-  loadingAggregationHistory,
-  loadingAggregationHistoryError, loadingMetrics, loadingMetricsError,
+  loadingAggregationHistory, loadingAggregationHistoryError, loadingMetrics, loadingMetricsError,
   loadingReposMessage, loadingSubscriptions, loadingTopics, loadingTopicsError,
-  loadingUserRepoInfoEmpty, noAggregationHistory, noSubscriptionsFound, noTopicsFound,
-  reposRetrievalError
-} from "../../domain/shared-messages";
-import {DashboardService} from "../../services/dashboard.service";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {PiwikService} from "../../services/piwik.service";
+  loadingUserRepoInfoEmpty, noAggregationHistory, noSubscriptionsFound, noTopicsFound, reposRetrievalError,
+  loadingJobSummary, loadingJobSummaryError
+} from '../../domain/shared-messages';
+import {DashboardService} from '../../services/dashboard.service';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {PiwikService} from '../../services/piwik.service';
+import {ValidatorService} from '../../services/validator.service';
 
 @Component ({
   selector: 'app-dashboard',
@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
               private repositoryService: RepositoryService,
               private dashboardService: DashboardService,
               private piwikService: PiwikService,
+              private validatorService: ValidatorService,
               private sanitizer: DomSanitizer) { }
 
   repositories: RepositorySummaryInfo[] = [];
@@ -65,6 +66,8 @@ export class DashboardComponent implements OnInit {
   totalDownloads = '--';
   viewsUrl: SafeResourceUrl;
   downloadsUrl: SafeResourceUrl;
+  shortSelectedRepoId: string;
+  currentDate: string;
 
   // Broker
   brokerSummary: BrokerSummary;
@@ -80,6 +83,11 @@ export class DashboardComponent implements OnInit {
   totalMore: number = 0;
   totalMissing: number = 0;
 
+  // Validation
+  storedJob: StoredJob[] = [];
+  noValidationsMessage: string;
+  errorValidationsMessage: string;
+  loadingJobSummaryMessage: string;
 
   ngOnInit() {
     // this.getUserEmail();
@@ -91,6 +99,9 @@ export class DashboardComponent implements OnInit {
     let body = document.getElementsByTagName('body')[0];
     body.classList.remove("top_bar_active");
     body.classList.remove("page_heading_active");
+
+    const currentTime = new Date();
+    this.currentDate = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1);
   }
 
   getReposOfUser(): void {
@@ -99,7 +110,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         repos => {
           this.sortRepositoriesByName(repos);
-          if(this.reposOfUser && this.reposOfUser.length>0) {
+          if (this.reposOfUser && this.reposOfUser.length > 0) {
             this.selectedRepo = this.reposOfUser[0];
             this.getSelectedRepositorySummaryInfo(this.reposOfUser[0]);
           }
@@ -132,6 +143,7 @@ export class DashboardComponent implements OnInit {
 
   changeSelectedRepository(repoId: string) {
     this.selectedRepo =  this.reposOfUser.find(x => x.id == repoId);
+    console.log('selectedRepo ' + this.selectedRepo.id);
     this.getSelectedRepositorySummaryInfo(this.selectedRepo);
   }
 
@@ -163,6 +175,7 @@ export class DashboardComponent implements OnInit {
     this.totalDownloads = '--';
     this.viewsUrl = null;
     this.downloadsUrl = null;
+    this.shortSelectedRepoId = null;
     this.dashboardService.getUsageSummary(selectedRepo.id).subscribe(
       usageSummary => this.getUsageSummary(usageSummary),
       error => {
@@ -171,6 +184,7 @@ export class DashboardComponent implements OnInit {
         console.log(error);
       } ,
       () => {
+        this.shortSelectedRepoId = selectedRepo.id.replace('____', '').replace('_____', '').replace('::', ':');
         this.loadingUsageStatsMessage = '';
         this.errorUsageStatsMessage = '';
       }
@@ -202,6 +216,25 @@ export class DashboardComponent implements OnInit {
       }
     );
 
+    // Validation
+    this.loadingJobSummaryMessage = loadingJobSummary;
+    this.noValidationsMessage = '';
+    this.errorValidationsMessage = '';
+    this.validatorService.getValidationSummary(selectedRepo.id).subscribe(
+      validationSummary => {
+        this.storedJob = validationSummary;
+        console.log(validationSummary);
+      },
+      error => {
+        this.errorValidationsMessage = loadingJobSummaryError;
+        this.loadingJobSummaryMessage = '';
+        console.log(error);
+      } ,
+      () => {
+        this.getValidationSummary(this.storedJob);
+        this.loadingJobSummaryMessage = '';
+      }
+    );
   }
 
   getCollectionMonitorSummary(collectionMonitorSummary: CollectionMonitorSummary) {
@@ -249,9 +282,9 @@ export class DashboardComponent implements OnInit {
 
     this.noUsageStats = '';
 
-    if(usageSummary.piwikInfo==null)
-      this.noUsageStats = 'This repository does not have our Usage Statistics service enabled yet.'
-    else {
+    if (usageSummary.piwikInfo == null) {
+      this.noUsageStats = 'This repository does not have our Usage Statistics service enabled yet';
+    } else {
       this.usageSummary = usageSummary;
       this.piwik = usageSummary.piwikInfo;
       this.repoMetrics = usageSummary.metricsInfo;
@@ -267,6 +300,10 @@ export class DashboardComponent implements OnInit {
       this.getViewsUrl();
       this.getDownloadsUrl();
     }
+  }
+
+  getValidationSummary(validationSummary: StoredJob[]) {
+    if (validationSummary == null) { this.noValidationsMessage = 'There is no validation history for this repository at the moment'; }
   }
 
   getViewsUrl () {
@@ -333,7 +370,7 @@ export class DashboardComponent implements OnInit {
   getRepositoriesSummaryInfo(userEmail: string) {
     this.repositoryService.getRepositoriesSummaryInfo(userEmail).subscribe(
       repositories => { this.repositories = repositories; this.loading=false },
-      error => { console.log('Errrrror'); this.loading=false },
+      error => { console.log('getRepSumError'); this.loading=false },
       () => { console.log(this.repositories); this.loading=false }
     );
   }

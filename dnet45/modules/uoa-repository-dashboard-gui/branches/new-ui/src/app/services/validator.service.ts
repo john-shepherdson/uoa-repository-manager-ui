@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { InterfaceInformation, JobForValidation, RuleSet, StoredJob } from '../domain/typeScriptClasses';
+import {InterfaceInformation, JobForValidation, RuleSet, StoredJob} from '../domain/typeScriptClasses';
 
 const headerOptions = {
   headers : new HttpHeaders().set('Content-Type', 'application/json')
@@ -82,4 +82,10 @@ export class ValidatorService {
     return this.httpClient.post<JobForValidation>(url, body, headerOptions);
   }
 
+  getValidationSummary(repoId: string): Observable<StoredJob[]> {
+    const url = `${this.apiUrl}validationSummary/${repoId}/?size=5`;
+    console.log(`knocking on: ${url}`);
+
+    return this.httpClient.get<StoredJob[]>(url, headerOptions);
+  }
 }

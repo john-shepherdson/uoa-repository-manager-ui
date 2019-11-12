@@ -5,6 +5,9 @@ import { Component, DoCheck, OnInit, ViewEncapsulation} from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { environment } from '../../../environments/environment';
 import {FormGroup} from "@angular/forms";
+import {Repository} from '../../domain/typeScriptClasses';
+import {loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError} from '../../domain/shared-messages';
+import {RepositoryService} from '../../services/repository.service';
 
 @Component({
   selector: 'side-menu',
@@ -23,7 +26,12 @@ export class SideMenuComponent implements OnInit {
 
   toggle: number[] = [];
 
-  constructor(public authService: AuthenticationService) { }
+  userEmail: string;
+  reposOfUser: Repository[] = [];
+  private skipGridView = false;
+
+  constructor(public authService: AuthenticationService,
+              private repositoryService: RepositoryService) { }
 
   ngOnInit() {
 
@@ -44,6 +52,8 @@ export class SideMenuComponent implements OnInit {
 
     const baseUrl = window.location.origin;
     this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
+
+    this.getReposOfUser();
   }
 
   onClick(id: string) {
@@ -87,5 +97,14 @@ export class SideMenuComponent implements OnInit {
 
   checkIfCollapsed(position: number) {
     return this.toggle[position] === position;
+  }
+
+  getReposOfUser(): void {
+    this.repositoryService.getRepositoriesOfUser(this.authService.getUserEmail())
+      .subscribe(
+        repos => { this.reposOfUser = repos; },
+        error => { console.log(error); },
+        () => { if (this.reposOfUser.length == 1) { this.skipGridView = true; } }
+      );
   }
 }
