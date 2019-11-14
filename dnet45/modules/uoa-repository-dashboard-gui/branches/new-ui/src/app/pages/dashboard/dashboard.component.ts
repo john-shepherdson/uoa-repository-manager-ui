@@ -184,7 +184,7 @@ export class DashboardComponent implements OnInit {
         console.log(error);
       } ,
       () => {
-        this.shortSelectedRepoId = selectedRepo.id.replace('____', '').replace('_____', '').replace('::', ':');
+        this.shortSelectedRepoId = selectedRepo.id.replace(/_/g, '').replace('::', ':');
         this.loadingUsageStatsMessage = '';
         this.errorUsageStatsMessage = '';
       }

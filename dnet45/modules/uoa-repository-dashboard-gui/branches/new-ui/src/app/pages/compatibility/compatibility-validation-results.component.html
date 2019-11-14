@@ -36,6 +36,14 @@
               <div class="uk-margin-small">by {{jobSummary.userEmail}}</div>
             </div>
 
+            <div id="container" class="md-card tabs">
+              <highcharts-chart
+                [Highcharts] = "Highcharts"
+                [options] = "chartOptions"
+                style="width: 100%; height: 400px; display: block;"
+              ></highcharts-chart>
+            </div>
+
             <div class="md-card tabs">
               <div class="md-card-content">
 

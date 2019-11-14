@@ -6,6 +6,8 @@ import { loadingJobSummary, loadingJobSummaryError, noContentRulesResults,
          noUsageRulesResults } from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 import { AuthenticationService } from '../../services/authentication.service';
+import * as Highcharts from 'highcharts';
+import {text} from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-compatibility-validation-results',
@@ -26,6 +28,14 @@ export class CompatibilityValidationResultsComponent implements OnInit {
 
   modalTitle: string;
   isModalShown: boolean;
+
+  index = 0;
+  ruleName: string[] = [];
+  unprocessedData: string[] = [];
+  processedData: number[] = [];
+
+  Highcharts: typeof Highcharts = Highcharts;
+  chartOptions: Highcharts.Options;
 
   @ViewChild('checkErrors')
   public checkErrors: ConfirmationDialogComponent;
@@ -59,6 +69,8 @@ export class CompatibilityValidationResultsComponent implements OnInit {
             entry => {
               if (entry.type === 'content') {
                 this.contentResults.push(entry);
+                this.ruleName.push(entry.name);
+                this.unprocessedData.push(entry.successes.split('/')[0]);
               } else if (entry.type === 'usage') {
                 this.usageResults.push(entry);
               }
@@ -75,6 +87,14 @@ export class CompatibilityValidationResultsComponent implements OnInit {
         this.loadingMessage = '';
         if (!this.contentResults.length) {
           this.noContent = noContentRulesResults;
+        } else {
+          this.processedData = this.unprocessedData.map(Number);
+          this.chartOptions = {
+            title: { text: 'Number of records'},
+            yAxis: { title: { text: 'Number of records' } },
+            xAxis: { categories: this.ruleName },
+            series: [{ name: 'For content', data: this.processedData, type: 'column' }]
+          };
         }
         if (!this.usageResults.length) {
           this.noUsage = noUsageRulesResults;
