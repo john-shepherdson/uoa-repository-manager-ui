@@ -29,13 +29,17 @@ export class CompatibilityValidationResultsComponent implements OnInit {
   modalTitle: string;
   isModalShown: boolean;
 
-  index = 0;
-  ruleName: string[] = [];
-  unprocessedData: string[] = [];
-  processedData: number[] = [];
+  ruleNameForContent: string[] = [];
+  ruleNameForUsage: string[] = [];
+  unprocessedDataForContent: string[] = [];
+  unprocessedDataForUsage: string[] = [];
+  processedDataForContent: number[] = [];
+  processedDataForUsage: number[] = [];
 
-  Highcharts: typeof Highcharts = Highcharts;
-  chartOptions: Highcharts.Options;
+  HighchartsForContent: typeof Highcharts = Highcharts;
+  HighchartsForUsage: typeof Highcharts = Highcharts;
+  chartOptionsForContent: Highcharts.Options;
+  chartOptionsForUsage: Highcharts.Options;
 
   @ViewChild('checkErrors')
   public checkErrors: ConfirmationDialogComponent;
@@ -69,10 +73,12 @@ export class CompatibilityValidationResultsComponent implements OnInit {
             entry => {
               if (entry.type === 'content') {
                 this.contentResults.push(entry);
-                this.ruleName.push(entry.name);
-                this.unprocessedData.push(entry.successes.split('/')[0]);
+                this.ruleNameForContent.push(entry.name);
+                this.unprocessedDataForContent.push(entry.successes.split('/')[0]);
               } else if (entry.type === 'usage') {
                 this.usageResults.push(entry);
+                this.ruleNameForUsage.push(entry.name);
+                this.unprocessedDataForUsage.push(entry.successes.split('/')[0]);
               }
             }
           );
@@ -88,16 +94,24 @@ export class CompatibilityValidationResultsComponent implements OnInit {
         if (!this.contentResults.length) {
           this.noContent = noContentRulesResults;
         } else {
-          this.processedData = this.unprocessedData.map(Number);
-          this.chartOptions = {
-            title: { text: 'Number of records'},
+          this.processedDataForContent = this.unprocessedDataForContent.map(Number);
+          this.chartOptionsForContent = {
+            title: { text: ''},
             yAxis: { title: { text: 'Number of records' } },
-            xAxis: { categories: this.ruleName },
-            series: [{ name: 'For content', data: this.processedData, type: 'column' }]
+            xAxis: { categories: this.ruleNameForContent },
+            series: [{ name: 'For content', data: this.processedDataForContent, type: 'column' }]
           };
         }
         if (!this.usageResults.length) {
           this.noUsage = noUsageRulesResults;
+        } else {
+          this.processedDataForUsage = this.unprocessedDataForUsage.map(Number);
+          this.chartOptionsForUsage = {
+            title: { text: ''},
+            yAxis: { title: { text: 'Number of records' } },
+            xAxis: { categories: this.ruleNameForUsage },
+            series: [{ name: 'For usage', data: this.processedDataForUsage, type: 'column' }]
+          };
         }
         /*if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.jobSummary.userEmail.trim()) ) {
           this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });

@@ -36,13 +36,33 @@
               <div class="uk-margin-small">by {{jobSummary.userEmail}}</div>
             </div>
 
-            <div id="container" class="md-card tabs">
-              <highcharts-chart
-                [Highcharts] = "Highcharts"
-                [options] = "chartOptions"
-                style="width: 100%; height: 400px; display: block;"
-              ></highcharts-chart>
+            <div class="uk-grid">
+              <div class="uk-width-3-4">
+                <div id="container_C" class="md-card tabs">
+                  <div class="md-card-content">
+                    <highcharts-chart
+                      [Highcharts] = "HighchartsForContent"
+                      [options] = "chartOptionsForContent"
+                      style="width: 100%; height: 400px; display: block; margin-top: 20px"
+                    ></highcharts-chart>
+                  </div>
+                </div>
+              </div>
+              <div class="uk-width-1-4">
+                <div id="container_U" class="md-card tabs">
+                  <div class="md-card-content">
+                    <highcharts-chart
+                      [Highcharts] = "HighchartsForUsage"
+                      [options] = "chartOptionsForUsage"
+                      style="width: 100%; height: 400px; display: block; margin-top: 20px"
+                    ></highcharts-chart>
+                  </div>
+                </div>
+              </div>
             </div>
+
+
+
 
             <div class="md-card tabs">
               <div class="md-card-content">
@@ -50,8 +70,8 @@
                 <div class="uk-grid uk-grid-divider" data-uk-grid-margin="">
                   <div class="uk-width-medium-3-4 uk-row-first">
                     <ul class="uk-tab" data-uk-tab="{connect:'#tabs_anim4', animation:'slide-left'}">
-                      <li class="uk-active" aria-expanded="true"><a href="#">for Content</a></li>
-                      <li aria-expanded="false" class=""><a href="#">for Usage</a></li>
+                      <li id="forContent" class="uk-active" aria-expanded="true"><a href="#">for Content</a></li>
+                      <li id="forUsage" aria-expanded="false" class=""><a href="#">for Usage</a></li>
                     </ul>
                     <ul id="tabs_anim4" class="uk-switcher uk-margin">
                       <li aria-hidden="false" class="uk-active" style="animation-duration: 200ms;">

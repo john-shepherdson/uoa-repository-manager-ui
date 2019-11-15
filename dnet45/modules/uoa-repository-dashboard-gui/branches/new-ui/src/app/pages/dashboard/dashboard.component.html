@@ -28,14 +28,17 @@
       <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler" data-uk-sortable="" data-uk-grid-margin="">
         <div class="uk-row-first" style="">
           <div class="md-card">
-            <a [routerLink]="['/getImpact/show_metrics/', selectedRepo.id]">
+            <a [routerLink]="['/compatibility/monitor/', selectedRepo.id]">
               <div class="md-card-content">
-                <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_visitors peity_data" style="display: none;">5,3,9,6,5,9,7</span><svg class="peity" height="28" width="48"><rect data-value="5" fill="#d84315" x="1.3714285714285717" y="12.444444444444443" width="4.114285714285715" height="15.555555555555557"></rect><rect data-value="3" fill="#d84315" x="8.228571428571428" y="18.666666666666668" width="4.114285714285716" height="9.333333333333332"></rect><rect data-value="9" fill="#d84315" x="15.085714285714287" y="0" width="4.1142857142857086" height="28"></rect><rect data-value="6" fill="#d84315" x="21.942857142857147" y="9.333333333333336" width="4.114285714285707" height="18.666666666666664"></rect><rect data-value="5" fill="#d84315" x="28.800000000000004" y="12.444444444444443" width="4.114285714285707" height="15.555555555555557"></rect><rect data-value="9" fill="#d84315" x="35.65714285714286" y="0" width="4.114285714285707" height="28"></rect><rect data-value="7" fill="#d84315" x="42.51428571428572" y="6.222222222222221" width="4.114285714285707" height="21.77777777777778"></rect></svg></div>
-                <span class="uk-text-muted uk-text-small">Views</span>
-                <h2 class="uk-margin-remove">
-                  <span *ngIf="pageViews == '--'" class="countUpMe">{{ pageViews }}</span>
-                  <span *ngIf="pageViews != '--'" class="countUpMe">{{ pageViews | number }}</span>
-                </h2>
+                <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_live peity_data" style="display: none;">7,5,8,7,6,5,2,5,3,10,10,3,6,5,6,3,3,6,8,3</span><svg class="peity" height="28" width="64"><polygon fill="#efebe9" points="0 27.5 0 8.600000000000001 3.3684210526315788 14 6.7368421052631575 5.899999999999999 10.105263157894736 8.600000000000001 13.473684210526315 11.3 16.842105263157894 14 20.210526315789473 22.1 23.57894736842105 14 26.94736842105263 19.4 30.31578947368421 0.5 33.68421052631579 0.5 37.05263157894737 19.4 40.421052631578945 11.3 43.78947368421052 14 47.1578947368421 11.3 50.526315789473685 19.4 53.89473684210526 19.4 57.263157894736835 11.3 60.63157894736842 5.899999999999999 64 19.4 64 27.5"></polygon><polyline fill="none" points="0 8.600000000000001 3.3684210526315788 14 6.7368421052631575 5.899999999999999 10.105263157894736 8.600000000000001 13.473684210526315 11.3 16.842105263157894 14 20.210526315789473 22.1 23.57894736842105 14 26.94736842105263 19.4 30.31578947368421 0.5 33.68421052631579 0.5 37.05263157894737 19.4 40.421052631578945 11.3 43.78947368421052 14 47.1578947368421 11.3 50.526315789473685 19.4 53.89473684210526 19.4 57.263157894736835 11.3 60.63157894736842 5.899999999999999 64 19.4" stroke="#5d4037" stroke-width="1" stroke-linecap="square"></polyline></svg></div>
+                <ng-container *ngIf="lastIndexedVersion">
+                  <span class="uk-text-muted uk-text-small">Records collected <span *ngIf="lastIndexedVersion.date">on {{lastIndexedVersion.date | date : "yyyy-MM-dd"}}</span></span>
+                  <h2 class="uk-margin-remove">{{lastIndexedVersion.numberOfRecords | number}}</h2>
+                </ng-container>
+                <ng-container *ngIf="!lastIndexedVersion">
+                  <span class="uk-text-muted uk-text-small">Records collected</span>
+                  <h2 class="uk-margin-remove">no data available</h2>
+                </ng-container>
               </div>
             </a>
           </div>
@@ -69,17 +72,14 @@
         </div>
         <div style="">
           <div class="md-card">
-            <a [routerLink]="['/compatibility/monitor/', selectedRepo.id]">
+            <a [routerLink]="['/getImpact/show_metrics/', selectedRepo.id]">
               <div class="md-card-content">
-                <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_live peity_data" style="display: none;">7,5,8,7,6,5,2,5,3,10,10,3,6,5,6,3,3,6,8,3</span><svg class="peity" height="28" width="64"><polygon fill="#efebe9" points="0 27.5 0 8.600000000000001 3.3684210526315788 14 6.7368421052631575 5.899999999999999 10.105263157894736 8.600000000000001 13.473684210526315 11.3 16.842105263157894 14 20.210526315789473 22.1 23.57894736842105 14 26.94736842105263 19.4 30.31578947368421 0.5 33.68421052631579 0.5 37.05263157894737 19.4 40.421052631578945 11.3 43.78947368421052 14 47.1578947368421 11.3 50.526315789473685 19.4 53.89473684210526 19.4 57.263157894736835 11.3 60.63157894736842 5.899999999999999 64 19.4 64 27.5"></polygon><polyline fill="none" points="0 8.600000000000001 3.3684210526315788 14 6.7368421052631575 5.899999999999999 10.105263157894736 8.600000000000001 13.473684210526315 11.3 16.842105263157894 14 20.210526315789473 22.1 23.57894736842105 14 26.94736842105263 19.4 30.31578947368421 0.5 33.68421052631579 0.5 37.05263157894737 19.4 40.421052631578945 11.3 43.78947368421052 14 47.1578947368421 11.3 50.526315789473685 19.4 53.89473684210526 19.4 57.263157894736835 11.3 60.63157894736842 5.899999999999999 64 19.4" stroke="#5d4037" stroke-width="1" stroke-linecap="square"></polyline></svg></div>
-                <ng-container *ngIf="lastIndexedVersion">
-                  <span class="uk-text-muted uk-text-small">Records collected <span *ngIf="lastIndexedVersion.date">on {{lastIndexedVersion.date | date : "yyyy-MM-dd"}}</span></span>
-                  <h2 class="uk-margin-remove">{{lastIndexedVersion.numberOfRecords | number}}</h2>
-                </ng-container>
-                <ng-container *ngIf="!lastIndexedVersion">
-                  <span class="uk-text-muted uk-text-small">Records collected</span>
-                  <h2 class="uk-margin-remove">no data available</h2>
-                </ng-container>
+                <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_visitors peity_data" style="display: none;">5,3,9,6,5,9,7</span><svg class="peity" height="28" width="48"><rect data-value="5" fill="#d84315" x="1.3714285714285717" y="12.444444444444443" width="4.114285714285715" height="15.555555555555557"></rect><rect data-value="3" fill="#d84315" x="8.228571428571428" y="18.666666666666668" width="4.114285714285716" height="9.333333333333332"></rect><rect data-value="9" fill="#d84315" x="15.085714285714287" y="0" width="4.1142857142857086" height="28"></rect><rect data-value="6" fill="#d84315" x="21.942857142857147" y="9.333333333333336" width="4.114285714285707" height="18.666666666666664"></rect><rect data-value="5" fill="#d84315" x="28.800000000000004" y="12.444444444444443" width="4.114285714285707" height="15.555555555555557"></rect><rect data-value="9" fill="#d84315" x="35.65714285714286" y="0" width="4.114285714285707" height="28"></rect><rect data-value="7" fill="#d84315" x="42.51428571428572" y="6.222222222222221" width="4.114285714285707" height="21.77777777777778"></rect></svg></div>
+                <span class="uk-text-muted uk-text-small">Views</span>
+                <h2 class="uk-margin-remove">
+                  <span *ngIf="pageViews == '--'" class="countUpMe">{{ pageViews }}</span>
+                  <span *ngIf="pageViews != '--'" class="countUpMe">{{ pageViews | number }}</span>
+                </h2>
               </div>
             </a>
           </div>
