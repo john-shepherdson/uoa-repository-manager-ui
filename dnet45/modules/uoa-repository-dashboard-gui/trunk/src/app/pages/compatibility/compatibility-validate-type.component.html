@@ -17,7 +17,7 @@
         </aside-help-content>
 
         <!-- MIDDLE -->
-        <div class=" uk-width-expand@m">
+        <div class="uk-width-expand@m">
 
           <div class="wizard">
             <div class="wizardBreadcrumbs">
@@ -30,17 +30,17 @@
                 </div>
                 <div class="step {{ (currentStep > 0) ? 'active' : '' }}">
                   <div>
-                    Select guidelines
+                    {{ (type === 'cris') ? 'Finish' : 'Next' }}
                     <span></span>
                   </div>
                 </div>
-                <div class="step {{ (currentStep > 1) ? 'active' : '' }}">
+                <div *ngIf="(type !== 'cris')" class="step {{ (currentStep > 1) ? 'active' : '' }}">
                   <div>
                     Select parameters
                     <span></span>
                   </div>
                 </div>
-                <div class="step {{ (currentStep > 2) ? 'active' : '' }}">
+                <div *ngIf="(type !== 'cris')" class="step {{ (currentStep > 2) ? 'active' : '' }} ">
                   <div>
                     Finish
                     <span></span>
@@ -51,7 +51,7 @@
             <div class="content">
               <div>
                 <div class="animated fadeInRight stepContent">
-                  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+                  <div *ngIf="errorMessage && (type!=='cris' && errorMessage!=='No rule sets were found')" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
                   <div *ngIf="loadingMessage" class="loading-big">
                     <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
                       {{ loadingMessage }}
@@ -95,21 +95,19 @@
               </div>
             </div>
             <div *ngIf="!loadingMessage" class="wizardActions">
-              <button *ngIf="((currentStep === 1) || (currentStep === 2)) && !loadingMessage"
+              <button *ngIf="((currentStep === 1) || (currentStep === 2)) && (type !== 'cris') && !loadingMessage"
                       class="uk-button uk-button-grey-light uk-margin-small-right" type="button"
                       (click)="moveBackAStep()">
                 <i class="fa fa-angle-double-left"></i>
                 Back
               </button>
-              <button *ngIf="(currentStep < 3) && !loadingMessage"
+              <button *ngIf="((currentStep < 3) && !loadingMessage)"
                       class="uk-button uk-button-grey-light uk-margin-small-left" type="button"
-                      (click)="moveAStep()">
-
-                <span class="{{(currentStep === 2) ? 'uk-link' : ''}}">
-                  {{ (currentStep < 2) ? 'Next' : 'Finish' }}
+                      (click)="(type !== 'cris') ? moveAStep() : (moveAStep() + submitForValidation())">
+                <span class="{{((currentStep === 2) || ((type === 'cris') && (currentStep === 1))) ? 'uk-link' : ''}}">
+                  {{ ((currentStep < 2) && (type !== 'cris')) || (currentStep === 0) ? 'Next' : 'Finish' }}
                 </span>
                 <i class="fa fa-angle-double-right"></i>
-
               </button>
             </div>
           </div>
