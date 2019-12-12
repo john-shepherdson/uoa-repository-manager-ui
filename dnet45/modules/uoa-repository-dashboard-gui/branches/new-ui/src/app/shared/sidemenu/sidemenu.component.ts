@@ -28,7 +28,7 @@ export class SideMenuComponent implements OnInit {
 
   userEmail: string;
   reposOfUser: Repository[] = [];
-  private skipGridView = false;
+  skipGridView = false;
 
   constructor(public authService: AuthenticationService,
               private repositoryService: RepositoryService) { }
