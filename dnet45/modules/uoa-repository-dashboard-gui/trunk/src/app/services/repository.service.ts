@@ -74,10 +74,10 @@ export class RepositoryService {
     return this.httpClient.get<RepositorySnippet[]>(url, headerOptions);
   }
 
-  getRepositoriesOfUser(userEmail: string): Observable<Repository[]> {
+  getRepositoriesOfUser(userEmail: string): Observable<RepositorySnippet[]> {
     const url = `${this.apiUrl}getRepositoriesOfUser/${userEmail}/0/100`;
     console.log(`knocking on: ${url}`);
-    return this.httpClient.get<Repository[]>(url, headerOptions);
+    return this.httpClient.get<RepositorySnippet[]>(url, headerOptions);
   }
 
 
