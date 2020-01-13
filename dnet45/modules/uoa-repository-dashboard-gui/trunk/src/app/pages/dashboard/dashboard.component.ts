@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     // this.getUserEmail();
     this.userEmail = sessionStorage.getItem('email');
     if (this.userEmail) {
-      this.getRepositoriesSummaryInfo(this.userEmail);
+      this.getRepositoriesSummaryInfo();
     }
   }
 
@@ -36,11 +36,11 @@ export class DashboardComponent implements OnInit {
 
   getRepos() {
     console.log('in getRepos');
-    this.getRepositoriesSummaryInfo(this.userEmail);
+    this.getRepositoriesSummaryInfo();
   }
 
-  getRepositoriesSummaryInfo(userEmail: string) {
-    this.repositoryService.getRepositoriesSummaryInfo(userEmail).subscribe(
+  getRepositoriesSummaryInfo() {
+    this.repositoryService.getRepositoriesSummaryInfo().subscribe(
       repositories => { this.repositories = repositories; this.loading=false },
       error => { console.log('Errrrror'); this.loading=false },
       () => { console.log(this.repositories); this.loading=false }

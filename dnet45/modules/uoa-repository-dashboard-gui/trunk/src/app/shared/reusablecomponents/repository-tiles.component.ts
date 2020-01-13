@@ -29,7 +29,7 @@ export class RepositoryTilesComponent implements OnInit {
 
   getReposOfUser(): void {
     this.loadingMessage = loadingReposMessage;
-    this.repoService.getRepositoriesOfUser(this.authService.getUserEmail())
+    this.repoService.getRepositoriesOfUser()
       .subscribe(
         repos => this.reposOfUser = repos.sort( function(a, b) {
           if (a.officialname < b.officialname) {

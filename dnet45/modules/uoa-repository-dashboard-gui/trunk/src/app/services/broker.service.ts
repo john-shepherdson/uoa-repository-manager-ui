@@ -31,8 +31,8 @@ export class BrokerService {
     return this.httpClient.post<EventsPage>(url, body, headerOptions);
   }
 
-  getDatasourcesOfUser(userEmail: string) {
-    const url = `${this.apiUrl}getDatasourcesOfUser?user=${userEmail}&includeShared=false&includeByOthers=false`;
+  getDatasourcesOfUser() {
+    const url = `${this.apiUrl}getDatasourcesOfUser?includeShared=false&includeByOthers=false`;
     console.log(`knocking on: ${url}`);
 
     return this.httpClient.get(url, headerOptions);
@@ -52,8 +52,8 @@ export class BrokerService {
     return this.httpClient.get<EventsPage>(url, headerOptions);
   }
 
-  getSimpleSubscriptionsOfUser(userEmail: string): Observable<Map<string, SimpleSubscriptionDesc[]>> {
-    const url = `${this.apiUrl}getSimpleSubscriptionsOfUser/${userEmail}/`;
+  getSimpleSubscriptionsOfUser(): Observable<Map<string, SimpleSubscriptionDesc[]>> {
+    const url = `${this.apiUrl}getSimpleSubscriptionsOfUser/`;
     console.log(`knocking on: ${url}`);
 
     return this.httpClient.get<Map<string, SimpleSubscriptionDesc[]>>(url, headerOptions);

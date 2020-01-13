@@ -30,7 +30,7 @@ export class ContentNotificationsComponent implements OnInit {
     this.errorMessage = '';
     this.loadingMessage = loadingSubscriptions;
     this.subKeys = [];
-    this.brokerService.getSimpleSubscriptionsOfUser(this.authService.getUserEmail()).subscribe(
+    this.brokerService.getSimpleSubscriptionsOfUser().subscribe(
       subscrs => this.subscrOfUser = subscrs,
       error => {
         console.log(`getSimpleSubscriptions returned error`);

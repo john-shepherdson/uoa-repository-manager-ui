@@ -31,7 +31,7 @@ export class MonitorService {
   getJobsOfUser(params: URLParameter[]): Observable<JobsOfUser> {
     let url = `${this.apiUrl}getJobsOfUser`;
     for (const param of params) {
-      if (param.key === 'user') {
+      if (param.key === 'offset') {
         url += `?${param.key}=${param.value[0]}`;
       } else {
         url += `&${param.key}=${param.value[0]}`;
