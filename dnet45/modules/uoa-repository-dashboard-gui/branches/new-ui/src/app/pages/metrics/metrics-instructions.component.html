@@ -25,24 +25,26 @@
               <div class="uk-article">
 
                 <p>
-                  OpenAIRE’s usage statistic service uses the <i>Piwik Open Source Analytics platform</i> (piwik.org) to track usage activity. When <i>metrics</i>
-                  are enabled for a repository, two unique identifiers are generated - a piwik-ID that associates the repository with its usage events in Piwik
-                  and an authentication-ID that allows to track usage activity on the Piwik platform. Metadata views and item downloads are tracked and automatically sent to Piwik. Statistics are generated using the COUNTER Code of practice directives.
+                  OpenAIRE’s usage statistic service uses the <i>Matomo Open Source Analytics platform</i> (matomo.org) to track usage activity. When <i>metrics</i>
+                  are enabled for a repository, two unique identifiers are generated - a matomo-ID that associates the repository with its usage events in Matomo
+                  and an authentication-ID that allows to track usage activity on the Matomo platform. Metadata views and item downloads are tracked and automatically sent to Matomo. Statistics are generated using the COUNTER Code of practice directives.
                 </p>
                 <p>
-                  OpenAIRE's usage statistics service tracking code exploits Piwik’s API. In order to make the tracking of usage events from repositories more robust, it was necessary to implement repository platform specific patches and plugins starting with DSpace and EPrints. The code is maintained on Github:
+                  OpenAIRE's usage statistics service tracking code exploits Matomo’s API. In order to make the tracking of usage events from repositories more robust, it was necessary to implement repository platform specific patches and plugins starting with DSpace and EPrints. The code is maintained on Github:
                 </p>
                 <ul>
                   <li>as a patch for various versions of DSpace
                     (<a target="_blank" href="https://github.com/openaire/OpenAIRE-Piwik-DSpace">https://github.com/openaire/OpenAIRE-Piwik-DSpace</a>)</li>
                   <li>as an Eprints plugin for version 3
                     (<a target="_blank" href="https://github.com/openaire/EPrints-OAPiwik">https://github.com/openaire/EPrints-OAPiwik</a>)</li>
+                  <li>as a python script for all other cases
+                    (<a target="_blank" href="https://github.com/openaire/Generic-Matomo-Tracker">https://github.com/openaire/Generic-Matomo-Tracker</a>)</li>
                 </ul>
                 <p>
-                  To configure your repository to allow tracking in Piwik platform, please change the configuration files with the following parameters and values, generated for your site:
+                  To configure your repository to allow tracking in Matomo platform, please change the configuration files with the following parameters and values, generated for your site:
                 </p>
                 <dl class="uk-description-list">
-                  <dt>PiwikID</dt>
+                  <dt>MatomoID</dt>
                   <dd>{{ piwik.siteId }}</dd>
                   <dt>AuthenticationToken</dt>
                   <dd>{{ piwik.authenticationToken }}</dd>
