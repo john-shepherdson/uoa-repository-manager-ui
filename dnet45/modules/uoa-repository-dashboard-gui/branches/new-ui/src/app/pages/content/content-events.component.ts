@@ -34,7 +34,7 @@ export class ContentEventsComponent implements OnInit {
 
   getDatasourcesOfUser() {
     this.loadingMessage = loadingRepoMessage;
-    this.brokerService.getDatasourcesOfUser().subscribe(
+    this.brokerService.getDatasourcesOfUser(this.authService.getUserEmail()).subscribe(
       res => {
         this.datasourcesOfUser = res['datasourcesOfUser'];
       },

@@ -516,40 +516,6 @@
                       </td>
                     </tr>
 
-                          <!--Software-->
-                          <tr class="el-item" [ngClass]="{'success': event.highlight.softwares && event.highlight.softwares.length>0 }">
-                            <td *ngIf="this.topic.includes('SOFTWARE')" class="uk-table-shrink uk-width-1-4">
-                              <strong class="el-title uk-display-block">Software</strong>
-                            </td>
-                            <td *ngIf="!(this.topic.includes('SOFTWARE'))" class="uk-table-shrink uk-width-1-4">
-                              <strong class="el-title uk-display-block">Software</strong>
-                            </td>
-                            <td class="uk-table-shrink">
-                              <div class="el-title">
-                                <span *ngFor="let software of event.publication.softwares; let s_index = index">
-                                  <br *ngIf="s_index > 0">
-                                  <span>{{ software.name }}</span>
-                                  <span *ngIf="software.description"> <br> {{ software.description }}</span>
-                                  <span><br><a href="{{ software.landingPage }}" target="_blank">{{ software.landingPage }}</a></span>
-                                  <span *ngIf="software.landingPage !== software.repository"><br><a href="{{ software.repository }}" target="_blank">{{ software.repository }}</a></span>
-                                  <span *ngFor="let hl_software of event.highlight.softwares">
-                                    <span *ngIf="hl_software.name.indexOf(software.name)>=0 && event.highlight.softwares.length>0 && event.provenance">
-                                      <span class="pull-right">
-                                        <b>from: </b>
-                                        <ng-container *ngIf="event.provenance.url">
-                                          <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                                          <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                                        </ng-container>
-                                        <ng-container *ngIf="!event.provenance.url">
-                                          <span>{{ event.provenance.repositoryName }}</span>
-                                        </ng-container>
-                                      </span>
-                                    </span>
-                                  </span>
-                                </span>
-                              </div>
-                            </td>
-                          </tr>
 
                     <tr class="el-item" *ngIf="event.publication.publicationdate && event.publication.publicationdate.length>0"
                         [ngClass]="{'md-bg-green-50': event.highlight.publicationdate && event.highlight.publicationdate.length>0 }">

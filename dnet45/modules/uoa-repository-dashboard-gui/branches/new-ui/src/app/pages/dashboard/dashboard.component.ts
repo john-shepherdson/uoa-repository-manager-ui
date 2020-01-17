@@ -93,7 +93,8 @@ export class DashboardComponent implements OnInit {
     // this.getUserEmail();
     this.userEmail = sessionStorage.getItem('email');
     if (this.userEmail) {
-      this.getRepositoriesSummaryInfo();
+      this.getReposOfUser();
+      // this.getRepositoriesSummaryInfo(this.userEmail);
     }
     let body = document.getElementsByTagName('body')[0];
     body.classList.remove("top_bar_active");
@@ -363,11 +364,11 @@ export class DashboardComponent implements OnInit {
 
   getRepos() {
     console.log('in getRepos');
-    this.getRepositoriesSummaryInfo();
+    this.getRepositoriesSummaryInfo(this.userEmail);
   }
 
-  getRepositoriesSummaryInfo() {
-    this.repositoryService.getRepositoriesSummaryInfo().subscribe(
+  getRepositoriesSummaryInfo(userEmail: string) {
+    this.repositoryService.getRepositoriesSummaryInfo(userEmail).subscribe(
       repositories => { this.repositories = repositories; this.loading=false },
       error => { console.log('getRepSumError'); this.loading=false },
       () => { console.log(this.repositories); this.loading=false }
