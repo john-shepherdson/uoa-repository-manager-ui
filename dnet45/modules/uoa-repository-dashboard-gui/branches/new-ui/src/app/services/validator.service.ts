@@ -37,15 +37,8 @@ export class ValidatorService {
     return this.httpClient.get<string[]>(url, headerOptions);
   }
 
-  getStoredJobsNew(userEmail: string,
-                   jobType: string,
-                   offset: string,
-                   limit: string,
-                   dateFrom: string,
-                   dateTo: string,
-                   validationStatus: string): Observable<StoredJob[]> {
-    let url = `${this.apiUrl}getStoredJobsNew?user=${userEmail}&jobType=${encodeURI(jobType)}`;
-    url = `${url}&offset=${offset}&limit=${limit}&dateFrom=${dateFrom}&dateTo=${dateTo}&validationStatus=${validationStatus}`;
+  getStoredJobsNew(): Observable<StoredJob[]> {
+    const url = `${this.apiUrl}`;
     console.log(`knocking on: ${url}`);
 
     return this.httpClient.get<StoredJob[]>(url, headerOptions);
@@ -66,8 +59,8 @@ export class ValidatorService {
     return this.httpClient.get<InterfaceInformation>(url, headerOptions);
   }
 
-  reSubmitJobForValidation(id: string, userEmail: string) {
-    const url = `${this.apiUrl}reSubmitJobForValidation/${userEmail}/${id}`;
+  reSubmitJobForValidation(id: string) {
+    const url = `${this.apiUrl}reSubmitJobForValidation/${id}`;
     console.log(`knocking on: ${url}`);
     const body = {};
 

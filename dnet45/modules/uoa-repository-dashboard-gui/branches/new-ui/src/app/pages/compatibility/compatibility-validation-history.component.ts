@@ -95,13 +95,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
 
 
   storedJobs () {
-    this.valService.getStoredJobsNew('ant.lebesis@gmail.com',
-                                    'Compatibility Test',
-                                    '0',
-                                    '10',
-                                    '2018-02-01',
-                                    '2018-02-28',
-                                    'successful').subscribe(
+    this.valService.getStoredJobsNew().subscribe(
       jobs => this.jobs = jobs,
       error => console.log(error.status),
       () => {
@@ -118,7 +112,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     this.successMessage = '';
     this.failureMessage = '';
     const params: URLParameter[] = [];
-    params.push({key: 'user', value: [this.userEmail]});
+    // params.push({key: 'user', value: [this.userEmail]});
     if ( this.chosenJobType ) {
       params.push({key: 'jobType', value: [this.chosenJobType]});
     }
@@ -173,8 +167,8 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     }
   }
 
-  resubmitJob (id: string, email: string) {
-    this.valService.reSubmitJobForValidation(id, email).subscribe(
+  resubmitJob (id: string) {
+    this.valService.reSubmitJobForValidation(id).subscribe(
       res => this.successMessage = `The job with id ${id} was successfully resubmitted`,
       error => {
         this.failureMessage = `Could not resubmit the job with id ${id}`;

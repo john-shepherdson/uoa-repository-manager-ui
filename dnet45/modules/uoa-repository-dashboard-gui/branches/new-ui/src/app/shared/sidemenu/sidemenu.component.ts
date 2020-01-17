@@ -5,7 +5,7 @@ import { Component, DoCheck, OnInit, ViewEncapsulation} from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { environment } from '../../../environments/environment';
 import {FormGroup} from "@angular/forms";
-import {Repository} from '../../domain/typeScriptClasses';
+import {RepositorySnippet} from '../../domain/typeScriptClasses';
 import {loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError} from '../../domain/shared-messages';
 import {RepositoryService} from '../../services/repository.service';
 
@@ -27,7 +27,7 @@ export class SideMenuComponent implements OnInit {
   toggle: number[] = [];
 
   userEmail: string;
-  reposOfUser: Repository[] = [];
+  reposOfUser: RepositorySnippet[] = [];
   skipGridView = false;
 
   constructor(public authService: AuthenticationService,
@@ -100,7 +100,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   getReposOfUser(): void {
-    this.repositoryService.getRepositoriesOfUser(this.authService.getUserEmail())
+    this.repositoryService.getRepositoriesOfUser()
       .subscribe(
         repos => { this.reposOfUser = repos; },
         error => { console.log(error); },

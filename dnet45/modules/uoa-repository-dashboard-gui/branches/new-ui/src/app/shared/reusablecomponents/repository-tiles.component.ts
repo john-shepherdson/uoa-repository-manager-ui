@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Repository } from '../../domain/typeScriptClasses';
+import { RepositorySnippet } from '../../domain/typeScriptClasses';
 import { RepositoryService } from '../../services/repository.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError } from '../../domain/shared-messages';
@@ -10,7 +10,7 @@ import { loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError } fr
 })
 
 export class RepositoryTilesComponent implements OnInit {
-  reposOfUser: Repository[] = [];
+  reposOfUser: RepositorySnippet[] = [];
   // tilesView: boolean;
   errorMessage: string;
   warningMessage: string;
@@ -30,12 +30,12 @@ export class RepositoryTilesComponent implements OnInit {
 
   getReposOfUser(): void {
     this.loadingMessage = loadingReposMessage;
-    this.repoService.getRepositoriesOfUser(this.authService.getUserEmail())
+    this.repoService.getRepositoriesOfUser()
       .subscribe(
         repos => this.reposOfUser = repos.sort( function(a, b) {
-          if (a.officialName < b.officialName) {
+          if (a.officialname < b.officialname) {
             return -1;
-          } else if (a.officialName > b.officialName) {
+          } else if (a.officialname > b.officialname) {
             return 1;
           } else {
             return 0;
@@ -58,7 +58,7 @@ export class RepositoryTilesComponent implements OnInit {
       );
   }
 
-  getLinkToNext(repo: Repository): string {
+  getLinkToNext(repo: RepositorySnippet): string {
     if (this.parent === 'metrics') {
       if (repo.piwikInfo) {
         if (repo.piwikInfo.validated === true) {
@@ -74,7 +74,7 @@ export class RepositoryTilesComponent implements OnInit {
     }
   }
 
-  getBadgeCSS(repo: Repository): string {
+  getBadgeCSS(repo: RepositorySnippet): string {
     if (this.parent === 'metrics') {
       if (repo.piwikInfo) {
         if (repo.piwikInfo.validated === true) {
@@ -88,7 +88,7 @@ export class RepositoryTilesComponent implements OnInit {
     }
   }
 
-  getBadgeText(repo: Repository): string {
+  getBadgeText(repo: RepositorySnippet): string {
     if (this.parent === 'metrics') {
       if (repo.piwikInfo) {
         if (repo.piwikInfo.validated === true) {

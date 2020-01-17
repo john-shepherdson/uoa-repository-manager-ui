@@ -26,8 +26,8 @@ import {ValidatorService} from '../../services/validator.service';
 
 export class DashboardComponent implements OnInit {
 
-  reposOfUser: Repository[] = [];
-  selectedRepo: Repository = null;
+  reposOfUser: RepositorySnippet[] = [];
+  selectedRepo: RepositorySnippet = null;
   // tilesView: boolean;
   errorMessage: string;
   noRepos: string;
@@ -106,7 +106,7 @@ export class DashboardComponent implements OnInit {
 
   getReposOfUser(): void {
     this.loadingMessage = loadingReposMessage;
-    this.repositoryService.getRepositoriesOfUser(this.authService.getUserEmail())
+    this.repositoryService.getRepositoriesOfUser()
       .subscribe(
         repos => {
           this.sortRepositoriesByName(repos);
@@ -129,11 +129,11 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  sortRepositoriesByName(repos: Repository[]) {
+  sortRepositoriesByName(repos: RepositorySnippet[]) {
     this.reposOfUser = repos.sort( function(a, b) {
-      if (a.officialName < b.officialName) {
+      if (a.officialname < b.officialname) {
         return -1;
-      } else if (a.officialName > b.officialName) {
+      } else if (a.officialname > b.officialname) {
         return 1;
       } else {
         return 0;
@@ -147,7 +147,7 @@ export class DashboardComponent implements OnInit {
     this.getSelectedRepositorySummaryInfo(this.selectedRepo);
   }
 
-  getSelectedRepositorySummaryInfo(selectedRepo: Repository) {
+  getSelectedRepositorySummaryInfo(selectedRepo: RepositorySnippet) {
 
     // Aggregations
     this.loadingAggregationsMessage = loadingAggregationHistory;
@@ -343,7 +343,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getCorrectName() {
-    const temp = this.selectedRepo.officialName.split('|');
+    const temp = this.selectedRepo.officialname.split('|');
     let correctName = temp[0];
     let repoName = temp[0];
     for (let i = 1; i < temp.length; i++) {
@@ -368,7 +368,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getRepositoriesSummaryInfo(userEmail: string) {
-    this.repositoryService.getRepositoriesSummaryInfo(userEmail).subscribe(
+    this.repositoryService.getRepositoriesSummaryInfo().subscribe(
       repositories => { this.repositories = repositories; this.loading=false },
       error => { console.log('getRepSumError'); this.loading=false },
       () => { console.log(this.repositories); this.loading=false }

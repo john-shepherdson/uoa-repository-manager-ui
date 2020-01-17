@@ -107,7 +107,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   /* retrieves the baseUrl list for the registered repositories of the user */
   getBaseUrlList() {
     this.loadingMessage = loadingReposMessage;
-    this.repoService.getUrlsOfUserRepos(this.authService.getUserEmail())
+    this.repoService.getUrlsOfUserRepos()
       .subscribe(
         repos => this.baseUrlList = repos.sort( function(a , b) {
           if (a < b ) {
