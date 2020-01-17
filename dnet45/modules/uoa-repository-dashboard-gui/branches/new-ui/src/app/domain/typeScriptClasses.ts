@@ -162,6 +162,12 @@ export class RepositorySnippet {
   registeredby: string;
   organizations: Organization[];
   registrationdate: Date;
+  piwikInfo: PiwikInfo;
+  logoUrl: string;
+  description: string;
+  consentTermsOfUse: string;
+  consentTermsOfUseDate: Date;
+  fullTextDownload: string;
 }
 
 export class Organization {
