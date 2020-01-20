@@ -266,8 +266,7 @@
                     <a class="md-btn md-btn-large md-btn-block md-btn-wave-light waves-effect waves-button waves-light"
                        [routerLink]="['/getImpact/usagestats-report-results']" [queryParams]="{ report:'BR2', beginDate: currentDate, endDate: currentDate, repoId: shortSelectedRepoId, granularity:'Monthly'}">BR2</a>
                   </div>
-<!--                  <div *ngIf="selectedRepo && selectedRepo.datasourceType === 'journal'" class="uk-margin-top">-->
-                  <div class="uk-margin-top">
+                  <div *ngIf="selectedRepo && selectedRepo.typology.includes('journal')" class="uk-margin-top">
                     <a class="md-btn md-btn-large md-btn-block md-btn-wave-light waves-effect waves-button waves-light"
                        [routerLink]="['/getImpact/usagestats-report-results']" [queryParams]="{ report:'RR1', beginDate: currentDate, endDate: currentDate, repoId: shortSelectedRepoId, granularity:'Monthly'}">RR1</a>
                   </div>
