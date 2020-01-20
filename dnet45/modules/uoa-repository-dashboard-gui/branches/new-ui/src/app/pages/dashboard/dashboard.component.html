@@ -17,7 +17,7 @@
           <div class="md-input-wrapper md-input-filled">
             <label class="">Select repository</label>
             <select class="md-input" (change)="changeSelectedRepository($event.target.value)">
-              <option *ngFor="let repo of reposOfUser; let i = index" value="{{ repo.id }}">{{ repo.officialName }}</option>
+              <option *ngFor="let repo of reposOfUser; let i = index" value="{{ repo.id }}">{{ repo.officialname }}</option>
             </select>
             <span class="md-input-bar"></span>
           </div>
@@ -266,7 +266,8 @@
                     <a class="md-btn md-btn-large md-btn-block md-btn-wave-light waves-effect waves-button waves-light"
                        [routerLink]="['/getImpact/usagestats-report-results']" [queryParams]="{ report:'BR2', beginDate: currentDate, endDate: currentDate, repoId: shortSelectedRepoId, granularity:'Monthly'}">BR2</a>
                   </div>
-                  <div *ngIf="selectedRepo && selectedRepo.datasourceType === 'journal'" class="uk-margin-top">
+<!--                  <div *ngIf="selectedRepo && selectedRepo.datasourceType === 'journal'" class="uk-margin-top">-->
+                  <div class="uk-margin-top">
                     <a class="md-btn md-btn-large md-btn-block md-btn-wave-light waves-effect waves-button waves-light"
                        [routerLink]="['/getImpact/usagestats-report-results']" [queryParams]="{ report:'RR1', beginDate: currentDate, endDate: currentDate, repoId: shortSelectedRepoId, granularity:'Monthly'}">RR1</a>
                   </div>
@@ -374,7 +375,7 @@
               <div *ngIf="!brokerSummary || !brokerSummary.userSubs">No notifications were found</div>
               <div *ngIf="brokerSummary && brokerSummary.userSubs">
                 <ul class="md-list md-list-addon gmap_list">
-                  <li *ngFor="let sub of brokerSummary.userSubs[selectedRepo.officialName]">
+                  <li *ngFor="let sub of brokerSummary.userSubs[selectedRepo.officialname]">
                     <div class="md-list-addon-element">
                       <span>{{ sub.count | number }}</span>
                       <!--<img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt="">-->

@@ -44,8 +44,8 @@ export class DashboardService {
     return this.httpClient.get<UsageSummary>(url, headerOptions);
   }
 
-  getBrokerSummary(userEmail: string, repoName: string): Observable<BrokerSummary> {
-    const url = `${this.dashboardAPIUrl}brokerSummary/${userEmail}/${encodeURIComponent(repoName)}`;
+  getBrokerSummary(repoName: string): Observable<BrokerSummary> {
+    const url = `${this.dashboardAPIUrl}brokerSummary/${encodeURIComponent(repoName)}`;
     console.log(`knocking on: ${url}`);
     return this.httpClient.get<BrokerSummary>(url, headerOptions);
   }

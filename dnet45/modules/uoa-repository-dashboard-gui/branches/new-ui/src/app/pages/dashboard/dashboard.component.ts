@@ -199,7 +199,7 @@ export class DashboardComponent implements OnInit {
     this.missingList = [];
     this.totalMore = 0;
     this.totalMissing = 0;
-    this.dashboardService.getBrokerSummary(this.userEmail, this.getCorrectName()).subscribe(
+    this.dashboardService.getBrokerSummary(this.getCorrectName()).subscribe(
       brokerSummary => this.getBrokerSummary(brokerSummary),
       error => {
         this.loadingTopicsMessage = '';
