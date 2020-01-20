@@ -34,12 +34,7 @@ export class MetricsInstructionsComponent implements OnInit {
     this.piwikService.getPiwikInfo(id).subscribe(
       piwik => this.piwik = piwik,
       error => console.log(error),
-      () => {
-        if ( this.authService.activateFrontAuthorization &&
-             (this.authService.getUserEmail() !== this.piwik.requestorEmail.trim()) ) {
-          this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
-        }
-      }
+      () => {}
     );
   }
 

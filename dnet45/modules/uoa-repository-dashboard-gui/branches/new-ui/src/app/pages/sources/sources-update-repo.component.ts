@@ -67,12 +67,8 @@ export class SourcesUpdateRepoComponent implements OnInit {
           this.errorMessage = loadingRepoError;
         },
         () => {
-          if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.repo.registeredBy.trim()) ) {
-            this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
-          } else {
             this.logoURL = this.repo.logoUrl;
             this.getRepoInterfaces();
-          }
         }
       );
     }

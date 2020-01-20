@@ -57,12 +57,7 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
           this.loadingMessage = '';
           if (this.repo) {
             this.repoName = this.repo.officialName;
-            if ( this.authService.activateFrontAuthorization &&
-                 (this.authService.getUserEmail() !== this.repo.registeredBy.trim()) ) {
-              this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
-            } else {
               this.getAllAggregationHistory();
-            }
           } else {
             this.errorMessage = loadingRepoError;
           }
