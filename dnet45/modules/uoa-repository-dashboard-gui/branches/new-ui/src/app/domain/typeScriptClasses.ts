@@ -484,6 +484,7 @@ export class Publication implements IsSerializable {
     publications: Publication[];
     projects: Project[];
     datasets: Dataset[];
+    softwares: Software[];
 }
 
 export class Range implements IsSerializable {
@@ -498,6 +499,13 @@ export class SimpleSubscriptionDesc implements IsSerializable {
     count: number;
     creationDate: Date;
     lastNotificationDate: Date;
+}
+
+export class Software implements IsSerializable {
+  name: string;
+  description: string;
+  landingPage: string;
+  repository: string;
 }
 
 export class Subscription implements IsSerializable {
