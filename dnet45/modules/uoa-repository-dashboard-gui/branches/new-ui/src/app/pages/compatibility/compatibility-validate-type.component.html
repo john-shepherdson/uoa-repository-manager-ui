@@ -34,16 +34,16 @@
                     <li role="tab" class="{{ (currentStep < 1) ? 'disabled' : '' }} {{ (currentStep == 1) ? 'current' : '' }}" aria-disabled="true">
                       <a id="wizard_advanced-t-1" href="#wizard_advanced-h-1" aria-controls="wizard_advanced-p-1">
                         <span class="number">2</span>
-                        <span class="title">Select guidelines</span>
+                        <span class="title">{{ (type === 'cris') ? 'Finish' : 'Select guidelines' }}</span>
                       </a>
                     </li>
-                    <li role="tab" class=" {{ (currentStep < 2) ? 'disabled' : '' }} {{ (currentStep == 2) ? 'current' : '' }}" aria-disabled="true">
+                    <li *ngIf="(type !== 'cris')" role="tab" class=" {{ (currentStep < 2) ? 'disabled' : '' }} {{ (currentStep == 2) ? 'current' : '' }}" aria-disabled="true">
                       <a id="wizard_advanced-t-2" href="#wizard_advanced-h-2" aria-controls="wizard_advanced-p-2">
                         <span class="number">3</span>
                         <span class="title">Select parameters</span>
                       </a>
                     </li>
-                    <li role="tab" class="last {{ (currentStep < 3) ? 'disabled' : '' }} {{ (currentStep == 3) ? 'current' : '' }}" aria-disabled="true">
+                    <li *ngIf="(type !== 'cris')" role="tab" class="last {{ (currentStep < 3) ? 'disabled' : '' }} {{ (currentStep == 3) ? 'current' : '' }}" aria-disabled="true">
                       <a id="wizard_advanced-t-3" href="#wizard_advanced-h-3" aria-controls="wizard_advanced-p-3">
                         <span class="number">4</span>
                         <span class="title">Finish</span>
@@ -129,11 +129,11 @@
                     <li class="button_previous {{ (currentStep < 1) ? 'disabled' : '' }}" aria-disabled="true">
                       <a (click)="moveBackAStep()" role="menuitem"><i class="material-icons"></i> Previous</a>
                     </li>
-                    <li *ngIf="currentStep < 2" class="button_next" aria-hidden="false" aria-disabled="false">
+                    <li *ngIf="(((currentStep < 2) && (type !== 'cris')) || ((type === 'cris') && (currentStep == 0)))" class="button_next" aria-hidden="false" aria-disabled="false">
                       <a (click)="moveAStep()" role="menuitem">Next<i class="material-icons"></i></a>
                     </li>
-                    <li *ngIf="currentStep == 2" class="button_finish" aria-hidden="true">
-                      <a (click)="moveAStep()" role="menuitem">Finish</a>
+                    <li *ngIf="((currentStep == 2) || ((type === 'cris') && (currentStep == 1)))" class="button_finish" aria-hidden="true">
+                      <a (click)="(type !== 'cris') ? moveAStep() : moveAStep() + submitForValidation()" role="menuitem">Finish</a>
                     </li>
                   </ul>
                 </div>
