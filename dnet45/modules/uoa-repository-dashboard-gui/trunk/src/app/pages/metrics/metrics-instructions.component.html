@@ -26,6 +26,12 @@
             <div class=" uk-width-expand@m">
 
               <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+              <div *ngIf="loadingMessage" class="loading-big">
+                <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                  {{ loadingMessage }}
+                </div>
+                <div class="whiteFilm"></div>
+              </div>
               <div *ngIf="piwik">
                 <p>
                   OpenAIRE’s usage statistic service uses the <i>Matomo Open Source Analytics platform</i> (matomo.org) to track usage activity. When <i>metrics</i>
