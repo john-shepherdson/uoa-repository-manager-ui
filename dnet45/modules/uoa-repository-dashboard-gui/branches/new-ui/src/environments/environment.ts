@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   API_ENDPOINT: '/uoa-repository-manager-service',
-  FAQ_ENDPOINT: 'http://audrey.athenarc.gr:5555/api',
-  FAQ_HOMEPAGE: 'http://audrey.athenarc.gr:5555'
+  FAQ_ENDPOINT: 'http://88.197.53.69:5555/api',
+  FAQ_HOMEPAGE: 'http://88.197.53.69:5555'
 };
 
 /*

@@ -28,12 +28,38 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/css/uikit.almost-flat.min.css" media="all">
-    <link type="text/css" rel="stylesheet" href="assets/css/style_switcher.min.css">
-    <link type="text/css" rel="stylesheet" href="assets/css/main.min.css">
-    <link type="text/css" rel="stylesheet" href="assets/css/themes/themes_combined.min.css">
+    <!--<link rel="stylesheet" href="assets/css/uikit.almost-flat.min.css" media="all">-->
 
+
+
+    <link rel="stylesheet" href="assets/theme-assets/dashboard-custom.css?v=1">
     <link type="text/css" rel="stylesheet" href="assets/css/provide-custom.css">
+    <!-- uikit -->
+    <link rel="stylesheet" href="assets/theme-assets/uikit/css/uikit.min.css" media="all">
+    <!--    <link rel="stylesheet" href="assets/theme-assets/uikit/css/uikit.almost-flat.min.css" media="all">-->
+    <!-- flag icons -->
+    <link rel="stylesheet" href="assets/theme-assets/icons/flags/flags.min.css" media="all">
+
+    <!-- style switcher -->
+    <link rel="stylesheet" href="assets/theme-assets/css/style_switcher.min.css" media="all">
+
+    <!-- altair admin -->
+    <link rel="stylesheet" href="assets/theme-assets/css/main.min.css" media="all">
+
+    <!-- themes -->
+    <link rel="stylesheet" href="assets/theme-assets/css/themes/my_theme.min.css" media="all">
+
+
+
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/css/uikit.min.css" />-->
+
+    <!--<link type="text/css" rel="stylesheet" href="assets/css/style_switcher.min.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="assets/css/main.min.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="assets/css/themes/themes_combined.min.css">-->
+
+    <!--<link type="text/css" rel="stylesheet" href="assets/css/provide-custom.css">-->
+
+
 
     <!--<link type="text/css" rel="stylesheet" href="assets/css/codemirror_themes.min.css">-->
     <!--<link type="text/css" rel="stylesheet" href="assets/css/ie.css">-->
@@ -58,7 +84,8 @@
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
   </head>
-  <body class="sidebar_main_open sidebar_main_swipe">
+  <!--<body class="provide app_my_theme dashboard sidebar_main_open sidebar_main_swipe">-->
+  <body class="provide app_my_theme dashboard">
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
     <noscript>
@@ -72,14 +99,57 @@
       <div uk-spinner="ratio: 2" class="uk-overlay uk-position-center uk-dark" style="margin: auto"></div>
     </oa-repo-manager>
 
-    <!-- common functions -->
-    <script src="assets/js/common.min.js"></script>
-    <!--&lt;!&ndash; uikit functions &ndash;&gt;-->
-    <script src="assets/js/uikit_custom.min.js"></script>
-    <!-- altair common functions/helpers -->
-    <script src="assets/js/altair_admin_common.js"></script>
+    <script>
+      window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+        // console.log(errorMsg + " __" + url + " __" +  lineNumber + " __" +  column + " __" +  errorObj);
+        if((errorMsg && errorMsg.indexOf("uikit.js") != -1) || url.indexOf("uikit.js") != -1 ){
+          console.log("********UIKIT Error ***********");
+          $.getScript("assets/theme-assets/uikit/js/uikit.min.js");
+          $.getScript("assets/theme-assets/uikit/js/uikit-icons.min.js");
+        }
 
+      }
+    </script>
+    <script>
+      $(document).ready(function(){
+        console.log("Is ready - load uikit ***")
+        $.getScript("assets/theme-assets/uikit/js/uikit.min.js");
+        $.getScript("assets/theme-assets/uikit/js/uikit-icons.min.js");
+      });
+
+    </script>
+    <script src="assets/theme-assets/js/common.min.js"></script>
+    <script src="assets/theme-assets/js/altair_admin_common.min.js"></script>
+    <script src="assets/theme-assets/uikit/js/uikit.min.js"></script>
     <script src="assets/js/pages/forms_wizard.js"></script>
+    <!--  <script src="assets/theme-assets/js/uikit_custom.min.js"></script>-->
+
+
+    <!--<script>-->
+      <!--if(isHighDensity) {-->
+        <!--$.getScript( "assets/theme-assets/js/custom/dense.min.js", function(data) {-->
+          <!--// enable hires images-->
+          <!--altair_helpers.retina_images();-->
+        <!--});-->
+      <!--}-->
+      <!--if(Modernizr.touch) {-->
+        <!--// fastClick (touch devices)-->
+        <!--FastClick.attach(document.body);-->
+      <!--}-->
+      <!--$window.load(function() {-->
+        <!--// ie fixes-->
+        <!--altair_helpers.ie_fix();-->
+      <!--});-->
+    <!--</script>-->
+
+    <!--&lt;!&ndash; common functions &ndash;&gt;-->
+    <!--<script src="assets/js/common.min.js"></script>-->
+    <!--&lt;!&ndash;&lt;!&ndash; uikit functions &ndash;&gt;&ndash;&gt;-->
+    <!--<script src="assets/js/uikit_custom.min.js"></script>-->
+    <!--&lt;!&ndash; altair common functions/helpers &ndash;&gt;-->
+    <!--<script src="assets/js/altair_admin_common.js"></script>-->
+
+    <!--<script src="assets/js/pages/forms_wizard.js"></script>-->
 
   </body>
 

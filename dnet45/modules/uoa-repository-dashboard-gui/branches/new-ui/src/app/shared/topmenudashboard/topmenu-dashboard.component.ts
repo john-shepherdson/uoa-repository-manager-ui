@@ -65,6 +65,13 @@ export class TopmenuDashboardComponent implements OnInit {
     return this.userLoggedIn;
   }
 
+  parseUsername() {
+    let firstLetters = "";
+    let matches = this.getUserName().match(/\b(\w)/g);
+    firstLetters += matches.join('');
+    return firstLetters;
+  }
+
   getIsUserAdmin() {
     this.isUserAdmin = (this.authService.getUserRole().includes('ROLE_ADMIN') ||
       this.authService.getUserRole().includes('ROLE_PROVIDE_ADMIN'));

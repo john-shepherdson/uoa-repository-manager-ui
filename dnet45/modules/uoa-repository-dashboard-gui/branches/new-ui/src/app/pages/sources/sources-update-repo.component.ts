@@ -11,7 +11,7 @@ import { DatasourceNewInterfaceFormComponent } from './sources-forms/datasource-
 
 @Component ({
   selector: 'sources-update-repo',
-  templateUrl: 'sources-update-repo.component.html'
+  templateUrl: 'sources-update-repo.component.html',
 })
 
 export class SourcesUpdateRepoComponent implements OnInit {
@@ -46,6 +46,8 @@ export class SourcesUpdateRepoComponent implements OnInit {
     let body = document.getElementsByTagName('body')[0];
     body.classList.remove("top_bar_active");   //remove the class
     body.classList.remove("page_heading_active");
+    body.classList.remove("landing");
+    body.classList.add("dashboard");
   }
 
   readRepoId() {

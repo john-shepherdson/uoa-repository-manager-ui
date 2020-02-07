@@ -99,6 +99,8 @@ export class DashboardComponent implements OnInit {
     let body = document.getElementsByTagName('body')[0];
     body.classList.remove("top_bar_active");
     body.classList.remove("page_heading_active");
+    body.classList.remove("landing");
+    body.classList.add("dashboard");
 
     const currentTime = new Date();
     this.currentDate = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1);

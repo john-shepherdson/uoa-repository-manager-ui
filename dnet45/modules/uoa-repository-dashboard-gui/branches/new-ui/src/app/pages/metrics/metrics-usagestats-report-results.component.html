@@ -31,7 +31,7 @@
             <div class="uk-margin-bottom" data-uk-margin="">
 
               <div class="uk-grid">
-                <div class="uk-width-medium-8-10">
+                <div class="uk-width-4-5@m">
                   <h3>{{ repoResponse.ReportDefinition['@Name'] }} Report Results
                     <span *ngIf="repoResponse.Report &&
                               repoResponse.Report.Report &&
@@ -40,7 +40,7 @@
                               repoResponse.Report.Report.Customer.ReportItems.length > 0">for {{ repoResponse.Report.Report.Customer.ReportItems[0].ItemPlatform }}</span>
                   </h3>
                 </div>
-                <div class="uk-width-medium-2-10">
+                <div class="uk-width-1-5@m">
                   <div [formGroup]="pageSizeSelect" class="md-input-wrapper md-input-filled">
                     <label class="">Results per page</label>
                     <select class="md-input" formControlName="selectPageSize" (change)="getPageSize()">
@@ -60,19 +60,19 @@
 
             <div class="uk-grid uk-grid-divider" data-uk-grid-margin="">
 
-              <div class="uk-width-medium-3-4 uk-row-first">
+              <div class="uk-width-3-4@m uk-row-first">
 
                 <!-- RESULTS TABLE -->
                 <div class="uk-overflow-container">
                   <table class="uk-table table_check" style="overflow-wrap: anywhere;">
                     <thead>
                       <tr>
-                        <th class="uk-width-2-10" *ngIf="chosenReport !== 'RR1'">Title</th>
-                        <th class="uk-width-2-10" *ngIf="chosenReport !== 'RR1'">Publisher</th>
-                        <th class="uk-width-2-10" *ngIf="chosenReport === 'RR1'">Platform name</th>
-                        <th class="uk-width-4-10">{{ (chosenReport !== 'RR1') ? 'Item Urls' : 'Url' }}</th>
-                        <th class="uk-width-1-10">Type</th>
-                        <th class="uk-width-2-10" colspan="2">Downloads/Views</th>
+                        <th class="uk-width-1-6" *ngIf="chosenReport !== 'RR1'">Title</th>
+                        <th class="uk-width-1-6" *ngIf="chosenReport !== 'RR1'">Publisher</th>
+                        <th class="uk-width-1-6" *ngIf="chosenReport === 'RR1'">Platform name</th>
+                        <th class="uk-width-1-6">{{ (chosenReport !== 'RR1') ? 'Item Urls' : 'Url' }}</th>
+                        <th class="uk-width-1-6">Type</th>
+                        <th class="uk-width-1-6" colspan="2">Downloads/Views</th>
                         <!--<th class="uk-width-2-10">Repository</th>-->
                         <!--<th class="uk-width-1-10">Validation Type</th>-->
                         <!--<th class="uk-width-1-10">Status</th>-->
@@ -216,7 +216,7 @@
 
               </div>
 
-              <div class="uk-width-medium-1-4">
+              <div class="uk-width-1-4@m">
 
                 <div class="uk-margin-medium-bottom">
                   <p>

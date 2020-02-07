@@ -8,8 +8,8 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'top-menu-landing',
   templateUrl: './topmenu-landing.component.html',
-  styleUrls: ['./topmenu-landing.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['../../../assets/css/landingpage/theme.css','../../../assets/css/landingpage/custom.css','../../../assets/css/landingpage/custom-provide.css','./topmenu-landing.component.css'],
+  // encapsulation: ViewEncapsulation.None
 })
 
 export class TopmenuLandingComponent implements OnInit {

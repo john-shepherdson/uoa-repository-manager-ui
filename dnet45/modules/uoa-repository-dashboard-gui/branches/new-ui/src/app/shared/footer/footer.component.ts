@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'footer',
   templateUrl: './footer.component.html',
-  styleUrls: ["./footer.component.css"]
+  styleUrls: ['../../../assets/css/landingpage/theme.css','../../../assets/css/landingpage/custom.css','../../../assets/css/landingpage/custom-provide.css','./footer.component.css']
 })
 
 export class FooterComponent implements OnInit {

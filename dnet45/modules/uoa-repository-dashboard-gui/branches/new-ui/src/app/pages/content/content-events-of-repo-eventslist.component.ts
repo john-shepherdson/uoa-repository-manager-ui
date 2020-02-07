@@ -74,6 +74,8 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     let body = document.getElementsByTagName('body')[0];
     body.classList.remove("top_bar_active");   //remove the class
     body.classList.add("page_heading_active");
+    body.classList.remove("landing");
+    body.classList.add("dashboard");
   }
 
   getParams() {

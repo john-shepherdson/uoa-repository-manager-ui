@@ -1,25 +1,40 @@
 <aside id="sidebar_main">
 
-  <div class="sidebar_main_header">
-    <div class="sidebar_logo">
-      <a [routerLink]="['/landing']" class="sSidebar_hide sidebar_logo_large">
-        <img class="logo_regular" src="../../../assets/imgs/OA_PROVIDE_B.png" alt="" height="" width="200"/>
-        <img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>
-      </a>
-      <a [routerLink]="['/landing']" class="sSidebar_show sidebar_logo_small">
-        <img class="logo_regular" src="../../../assets/imgs/OA_PROVIDE_A.png" alt="" height="32" width="32"/>
-        <img class="logo_light" src="assets/img/logo_main_small_light.png" alt="" height="32" width="32"/>
-      </a>
+  <div class="sidebar_main_header uk-margin-remove-bottom">
+    <div class="uk-padding-small"><!---->
+      <img class="uk-margin-bottom" src="../../../assets/imgs/OA_PROVIDE_B.png">
+      <h4 class="uk-text-bold uk-margin-remove">Repository manager's</h4>
+      <span class="uk-text-large">Admin Dashboard</span>
     </div>
-    <!--<div class="sidebar_actions">-->
-      <!--<select id="lang_switcher" name="lang_switcher">-->
-        <!--<option value="gb" selected>English</option>-->
-      <!--</select>-->
-    <!--</div>-->
   </div>
+  <!--<div class="sidebar_main_header">-->
+    <!--<div class="sidebar_logo">-->
+      <!--<a [routerLink]="['/landing']" class="sSidebar_hide sidebar_logo_large">-->
+        <!--<img class="logo_regular" src="../../../assets/imgs/OA_PROVIDE_B.png" alt="" height="" width="200"/>-->
+        <!--<img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>-->
+      <!--</a>-->
+      <!--<a [routerLink]="['/landing']" class="sSidebar_show sidebar_logo_small">-->
+        <!--<img class="logo_regular" src="../../../assets/imgs/OA_PROVIDE_A.png" alt="" height="32" width="32"/>-->
+        <!--<img class="logo_light" src="assets/img/logo_main_small_light.png" alt="" height="32" width="32"/>-->
+      <!--</a>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="sidebar_actions">&ndash;&gt;-->
+      <!--&lt;!&ndash;<select id="lang_switcher" name="lang_switcher">&ndash;&gt;-->
+        <!--&lt;!&ndash;<option value="gb" selected>English</option>&ndash;&gt;-->
+      <!--&lt;!&ndash;</select>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--</div>-->
 
   <div class="menu_section">
     <ul>
+
+      <!--<li class="uk-margin-bottom md-bg-blue-900 uk-padding-small">-->
+        <!--<a class="md-color-white" [routerLink]="['/landing']">-->
+          <!--<span class="menu_icon"><i class="material-icons md-color-white">arrow_back</i></span>-->
+          <!--<div class="menu_title uk-width-expand uk-text-uppercase"> Landing page </div>-->
+        <!--</a>-->
+      <!--</li>-->
+
       <li [routerLinkActive]="['current_section']" class="">
         <a [routerLink]="['/dashboard']">
           <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
@@ -70,18 +85,22 @@
           <span class="menu_title">Metrics</span>
         </a>
       </li>
-      <li class="submenu_trigger" [ngClass]="{'act_section': checkIfCollapsed(4) }" [routerLinkActive]="['current_section']">
+
+      <li *ngIf="getIsUserAdmin()" class="submenu_trigger uk-margin-top" [ngClass]="{'act_section': checkIfCollapsed(4) }" [routerLinkActive]="['current_section']">
         <a (click)="setToggle(4)">
           <span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>
-          <span class="menu_title">{{ getUserName() }}</span>
+          <!--<span class="menu_title">{{ getUserName() }}</span>-->
+          <span class="menu_title">Admin</span>
         </a>
         <ul [ngClass]="{'uk-display-block': checkIfCollapsed(4)}">
-          <li *ngIf="getIsUserAdmin()" [routerLinkActive]="['act_item']"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>
-          <li *ngIf="getIsUserAdmin()" [routerLinkActive]="['act_item']"><a [routerLink]="['/admin/registrations']">Registrations</a></li>
-          <li *ngIf="getIsUserAdmin()" [routerLinkActive]="['act_item']"><a [routerLink]="['/admin/metrics']">Metrics</a></li>
-          <li [routerLinkActive]="['act_item']"><a (click)="logout()">Log out</a></li>
+          <li [routerLinkActive]="['act_item']"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['/admin/registrations']">Registrations</a></li>
+          <li [routerLinkActive]="['act_item']"><a [routerLink]="['/admin/metrics']">Metrics</a></li>
+          <!--<li [routerLinkActive]="['act_item']"><a (click)="logout()">Log out</a></li>-->
         </ul>
       </li>
+
+
       <!--<li [routerLinkActive]="['current_section']" title="User Profile">-->
         <!--<a href="page_user_profile.html">-->
           <!--<span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>-->

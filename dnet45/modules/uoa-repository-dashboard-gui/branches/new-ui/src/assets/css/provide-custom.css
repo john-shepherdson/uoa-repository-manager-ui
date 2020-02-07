@@ -1,3 +1,19 @@
+:root {
+  /* Dashboard variables*/
+  --sidebar-width: 320px;
+  --sidebar-font-size: 16px;
+  --header-height: 70px;
+  --primary-color: #0d47a1;
+  --secondary-color: #1CA9D5;
+
+  --monitor-header-menu-height: 100px;
+}
+
+.clear-style {
+  padding-left: 0px !important;
+}
+
+
 .comment {
   font-size: 70%;
 }
@@ -13,6 +29,10 @@
 
 .inline-block {
   display: inline-block;
+}
+
+body.landing {
+  padding-top: 0px;
 }
 
 /********* LOADERS *********/
@@ -77,12 +97,12 @@
 
 /********* FORM WIZARD *********/
 
-.wizard > .content {
+.provide .wizard > .content {
   overflow: scroll;
   min-height: 480px;
 }
 
-.wizard .content .body .uk-form-label {
+.provide .wizard .content .body .uk-form-label {
   display: block;
   font-weight: 500;
   font-size: 14px;
@@ -149,12 +169,12 @@
 
 /********** REPOSITORY LIST/GRID VIEW **********/
 
-.md-card .md-card-head-img {
+.provide .md-card .md-card-head-img {
   height: 80%;
   margin-top: 5%;
 }
 
-a.md-card p {
+.provide a.md-card p {
   color: #444;
 }
 

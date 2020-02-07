@@ -7,9 +7,12 @@ import { MatomoInjector, MatomoTracker } from 'ngx-matomo';
 @Component({
   selector: 'oa-repo-manager',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+
+  open: boolean = true;
+
   constructor(private router: Router,
               private authService: AuthenticationService,
               private matomoInjector: MatomoInjector,
@@ -62,6 +65,11 @@ export class AppComponent implements OnInit {
   isHomeRoute() {
     console.log('Is home route? Route is: ' + this.router.url);
     return (this.router.url === '/') || (this.router.url === '/landing');
+  }
+
+  public toggleOpen(event: MouseEvent) {
+    event.preventDefault();
+    this.open = !this.open;
   }
 
   // ngAfterContentInit() {
