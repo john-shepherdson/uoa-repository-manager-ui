@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { AsideHelpContentComponent, HelpContentComponent } from '../../../shared/reusablecomponents/help-content.component';
 import { RepositoryService } from '../../../services/repository.service';
-import { DatasourceNewInterfaceFormComponent } from '../sources-forms/datasource-new-interface-form.component';
+import { DatasourceNewInterfaceFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
 import { from, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import {
@@ -17,7 +17,7 @@ import {
   formInfoLoading, formInterfacesLoading, loadingInterfacesError, loadingRepoError,
   noInterfacesSaved
 } from '../../../domain/shared-messages';
-import { DatasourceUpdateFormComponent } from '../sources-forms/datasource-update-form.component';
+import { DatasourceUpdateFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-update-form.component';
 import { RegisterDatasourceSelectExistingComponent } from './register-datasource-select-existing.component';
 
 @Component({

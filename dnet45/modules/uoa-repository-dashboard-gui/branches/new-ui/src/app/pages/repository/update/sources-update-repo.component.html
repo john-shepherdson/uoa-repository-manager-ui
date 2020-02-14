@@ -1,0 +1,116 @@
+<div id="page_content_inner">
+  <!--<h2 class="heading_b uk-margin-bottom">Manage your datasources</h2>-->
+
+  <!-- TOP HELP CONTENT -->
+  <help-content #topHelperContent [position]="'top'"
+                [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+  </help-content>
+
+  <div class="uk-grid">
+
+    <!-- LEFT HELP CONTENT -->
+    <aside-help-content #leftHelperContent [position]="'left'"
+                        [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+    </aside-help-content>
+
+    <!-- MIDDLE -->
+    <div class=" uk-width-expand@m">
+
+      <div *ngIf="loadingMessage" class="loading-big">
+        <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+          {{ loadingMessage }}
+        </div>
+        <div class="transparentFilm"></div>
+      </div>
+
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+
+      <!--<div *ngIf="!loadingMessage && (repo !== null)" class="uk-margin-medium-bottom">-->
+        <!--<h3 class="heading_b uk-margin-bottom">-->
+          <!--<a id="updateLogoURL" (click)="updateLogoUrl(repo.logoUrl)">-->
+            <!--<img *ngIf="!logoURL" src="../../../../assets/imgs/yourLogoHere.jpg" style="margin-right: 15px; margin-top:-8px" width="60">-->
+            <!--<img *ngIf="logoURL" src="{{ logoURL }}" style="margin-right: 15px; margin-top:-8px" width="60">-->
+          <!--</a>-->
+          <!--{{ repo.officialName }}-->
+        <!--</h3>-->
+      <!--</div>-->
+
+      <div *ngIf="!loadingMessage && (repo !== null) && (repoInterfaces !== null)" class="uk-grid">
+        <div class="uk-width-medium-1-1">
+          <div class="md-card tabs" data-uk-grid-margin="">
+            <div class="md-card-content uk-row-first">
+              <ul class="uk-tab" data-uk-tab="{connect:'#tabs_anim4', animation:'slide-left'}">
+                <li class="uk-active" aria-expanded="true"><a href="#">Update Information</a></li>
+                <li aria-expanded="false" class=""><a href="#">Update Interfaces</a></li>
+              </ul>
+              <ul id="tabs_anim4" class="uk-switcher uk-margin">
+                <li aria-hidden="false" class="uk-active" style="animation-duration: 200ms;">
+                  <datasource-update-form #datasourceUpdateForm
+                                          [selectedRepo]="repo"
+                                          [showButton]=true
+                                          (emittedUrl)="getNewLogoUrl($event)"></datasource-update-form>
+                </li>
+                <li aria-hidden="true" style="animation-duration: 200ms;" class="">
+                  <div *ngIf="repo && repoInterfaces && !loadingMessage" class="uk-grid uk-grid-match uk-margin-top" style="padding: 0px 3px 0px 3px;">
+                    <div *ngFor="let inter of dataForInterfaceComp" class="uk-width-1-2@m uk-margin-bottom">
+                      <div>
+                        <div class="md-card" style="height: 100%">
+                          <app-repository-interface-form #interfacesArray
+                                                         [data]="inter"
+                                                         (emitDeleteInterface)="removeInterfaceFromList($event)">
+                          </app-repository-interface-form>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="uk-width-1-2@m uk-margin-bottom">
+                      <div>
+                        <div class="md-card" style="height: 100%">
+                          <div class="md-card-toolbar">
+                          </div>
+                          <div class="md-card-content">
+                            <div class="interface-box new" style="text-align: center">
+                              <a class="add-new-element add-new-group" (click)="addInterfaceToList()">
+                                <i class="far fa-plus-square" aria-hidden="true"></i>
+                                <span class="info">Add New Interface</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- RIGHT HELP CONTENT -->
+    <aside-help-content #rightHelperContent [position]="'right'"
+                        [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+    </aside-help-content>
+
+  </div>
+
+  <!-- BOTTOM HELP CONTENT -->
+  <help-content #bottomHelperContent [position]="'bottom'"
+                [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+  </help-content>
+
+</div>
+
+
+
+<confirmation-dialog #updateLogoUrlModal [title]="'Update Logo URL'" [isModalShown]="isModalShown"
+                     [confirmActionButton]="'Update'" (emitObject)="updatedLogoUrl($event)">
+  <div class="md-input-wrapper uk-margin-top">
+    <input type="text" name="logoUrl" placeholder="Logo URL" class="md-input" value="{{ logoURL }}" (change)="getNewLogoUrl($event)">
+    <span class="md-input-bar"></span>
+  </div>
+</confirmation-dialog>
+

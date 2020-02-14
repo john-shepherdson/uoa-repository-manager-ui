@@ -61,6 +61,13 @@ export class RepositoryService {
     return this.httpClient.post<Repository>(url, newRepository, headerOptions);
   }
 
+  // updateRepository(repoInfo: Repository): Observable<Repository> {
+  //   const url = `${this.apiUrl}updateRepository`;
+  //   console.log(`knocking on: ${url}`);
+  //   console.log(`sending ${JSON.stringify(repoInfo)}`);
+  //   return this.httpClient.post<Repository>(url, repoInfo, headerOptions);
+  // }
+
   updateRepository(repoInfo: Repository): Observable<Repository> {
     const url = `${this.apiUrl}updateRepository`;
     console.log(`knocking on: ${url}`);

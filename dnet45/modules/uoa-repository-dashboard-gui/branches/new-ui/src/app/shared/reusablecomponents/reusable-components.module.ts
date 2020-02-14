@@ -19,7 +19,10 @@ import { TopmenuLandingComponent } from '../topmenulanding/topmenu-landing.compo
 import { FooterComponent } from '../footer/footer.component';
 import { ReadMoreComponent, ReadMoreTextComponent } from './read-more.component';
 import { SideMenuComponent } from "../sidemenu/sidemenu.component";
-import {TopmenuDashboardComponent} from "../topmenudashboard/topmenu-dashboard.component";
+import { TopmenuDashboardComponent} from "../topmenudashboard/topmenu-dashboard.component";
+import { DatasourceUpdateFormComponent } from "./sources-forms/datasource-update-form.component";
+import { DatasourceCreateFormComponent } from "./sources-forms/datasource-create-form.component";
+import { DatasourceNewInterfaceFormComponent } from "./sources-forms/datasource-new-interface-form.component";
 
 const myGroups = [
   MyGroup,
@@ -56,6 +59,9 @@ const myGroups = [
     ForbiddenPageComponent,
     ReadMoreComponent,
     ReadMoreTextComponent,
+    DatasourceUpdateFormComponent,
+    DatasourceCreateFormComponent,
+    DatasourceNewInterfaceFormComponent,
     ...myGroups
   ],
   exports: [
@@ -70,7 +76,10 @@ const myGroups = [
     ForbiddenPageComponent,
     ...myGroups,
     ReadMoreComponent,
-    ReadMoreTextComponent
+    ReadMoreTextComponent,
+    DatasourceUpdateFormComponent,
+    DatasourceCreateFormComponent,
+    DatasourceNewInterfaceFormComponent,
   ],
   providers: [
     HelpContentService

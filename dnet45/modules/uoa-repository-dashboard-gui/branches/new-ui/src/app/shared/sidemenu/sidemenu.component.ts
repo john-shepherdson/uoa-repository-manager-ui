@@ -1,19 +1,17 @@
 /**
  * Created by stefania on 7/5/16.
  */
-import { Component, DoCheck, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { environment } from '../../../environments/environment';
-import {FormGroup} from "@angular/forms";
-import {RepositorySnippet} from '../../domain/typeScriptClasses';
-import {loadingReposMessage, loadingUserRepoInfoEmpty, reposRetrievalError} from '../../domain/shared-messages';
-import {RepositoryService} from '../../services/repository.service';
+import {Repository, RepositorySnippet} from '../../domain/typeScriptClasses';
+import { RepositoryService } from '../../services/repository.service';
+import { ActivatedRoute, Router } from "@angular/router";
+import { SharedService } from "../../services/shared.service";
 
 @Component({
   selector: 'side-menu',
   templateUrl: './sidemenu.component.html',
-  // styleUrls: ['./sidemenu.component.css'],
-  encapsulation: ViewEncapsulation.None
 })
 
 export class SideMenuComponent implements OnInit {
@@ -28,10 +26,14 @@ export class SideMenuComponent implements OnInit {
 
   userEmail: string;
   reposOfUser: RepositorySnippet[] = [];
-  skipGridView = false;
+  visibleReposOfUser: RepositorySnippet[] = [];
+  allReposVisible: boolean = false;
 
   constructor(public authService: AuthenticationService,
-              private repositoryService: RepositoryService) { }
+              private repositoryService: RepositoryService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private sharedService: SharedService) { }
 
   ngOnInit() {
 
@@ -53,7 +55,21 @@ export class SideMenuComponent implements OnInit {
     const baseUrl = window.location.origin;
     this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
 
-    this.getReposOfUser();
+    if(this.sharedService.getRepositoriesOfUser() && this.sharedService.getRepositoriesOfUser().length>0) {
+      this.reposOfUser = this.sharedService.getRepositoriesOfUser();
+      this.initSideMenuRepos();
+    } else {
+      this.getReposOfUser();
+    }
+
+    this.sharedService.repositoriesOfUser$.subscribe(
+      r => {
+        this.reposOfUser = r;
+        this.initSideMenuRepos();
+      }
+    );
+
+    // this.getReposOfUser();
   }
 
   onClick(id: string) {
@@ -102,9 +118,55 @@ export class SideMenuComponent implements OnInit {
   getReposOfUser(): void {
     this.repositoryService.getRepositoriesOfUser()
       .subscribe(
-        repos => { this.reposOfUser = repos; },
-        error => { console.log(error); },
-        () => { if (this.reposOfUser.length == 1) { this.skipGridView = true; } }
+        repos => {
+            this.reposOfUser = repos;
+            // this.sharedService.setRepositoriesOfUser(repos);
+            this.initSideMenuRepos();
+          },
+        error => { console.log(error); }
       );
+  }
+
+  initSideMenuRepos() {
+
+    let index: number = 0;
+
+    if(this.reposOfUser.length>5) {
+      for(let _i = 0; _i < 5; _i++) {
+        this.visibleReposOfUser.push(this.reposOfUser[_i]);
+      }
+    } else {
+      this.visibleReposOfUser = Object.assign([], this.reposOfUser);
+    }
+
+    let route = this.router.url;
+    let repositoryID = '';
+    if(route.includes('repository') || route.includes('repositoryAdmin')) {
+      let repositoryIndex = route.indexOf('repository');
+      repositoryID = route.substr(repositoryIndex).split('/')[1];
+
+      if(!route.includes('repositoryAdmin')) {
+        index = this.reposOfUser.findIndex(x => x.id === repositoryID);
+        if(index>5)
+          this.showMoreRepos();
+      }
+
+      if(route.includes('repositoryAdmin')) {
+
+      }
+    }
+  }
+
+  showMoreRepos() {
+    this.visibleReposOfUser = Object.assign([], this.reposOfUser);
+    this.allReposVisible = true;
+  }
+
+  showLessRepos() {
+    this.visibleReposOfUser = [];
+    for(let _i = 0; _i < 5; _i++) {
+      this.visibleReposOfUser.push(this.reposOfUser[_i]);
+    }
+    this.allReposVisible = false;
   }
 }

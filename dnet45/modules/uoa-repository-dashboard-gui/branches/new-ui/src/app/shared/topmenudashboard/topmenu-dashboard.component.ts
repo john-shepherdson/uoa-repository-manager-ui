@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
   selector: 'top-menu-dashboard',
   templateUrl: './topmenu-dashboard.component.html',
   // styleUrls: ['./topmenu-dashboard.component.css'],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 
 export class TopmenuDashboardComponent implements OnInit {

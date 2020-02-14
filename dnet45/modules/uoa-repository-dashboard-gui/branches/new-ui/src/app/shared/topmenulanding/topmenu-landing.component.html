@@ -26,43 +26,46 @@
                 <span *ngIf="getIsUserLoggedIn()">{{getUserName()}}</span>
                 <ul *ngIf="getIsUserLoggedIn()" class="uk-list uk-margin-top">
                   <li>
-                    <a class="uk-search-input" [routerLink]="['landing']" [routerLinkActive]="['uk-active']">Home</a>
+                    <a class="uk-search-input" [routerLink]="['emptyPage']" [routerLinkActive]="['uk-active']">Dashboard</a>
                   </li>
-                  <li>
-                    <a class="uk-search-input" [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">Dashboard</a>
-                  </li>
-                  <li>
-                    Sources
-                    <ul>
-                      <li><a [routerLink]="['sources', 'register']" [routerLinkActive]="['uk-active']">Register</a></li>
-                      <li><a [routerLink]="['sources', 'update']" [routerLinkActive]="['uk-active']">Update</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    Compatibility
-                    <ul>
-                      <li><a [routerLink]="['compatibility', 'validate']" [routerLinkActive]="['uk-active']">Validate</a></li>
-                      <li><a [routerLink]="['compatibility', 'browseHistory']" [routerLinkActive]="['uk-active']">Validation History</a></li>
-                      <li><a [routerLink]="['compatibility', 'monitor']" [routerLinkActive]="['uk-active']">Collection Monitor</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    Content
-                    <ul>
-                      <li><a [routerLink]="['content', 'events']" [routerLinkActive]="['uk-active']">Events</a></li>
-                      <li><a [routerLink]="['content', 'notifications']" [routerLinkActive]="['uk-active']">Notifications</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a class="uk-search-input" [routerLink]="['getImpact']" [routerLinkActive]="['uk-active']">Metrics</a>
-                  </li>
-                  <li *ngIf="getIsUserAdmin()">
-                    Admin
-                    <ul>
-                      <li><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>
-                      <li><a [routerLink]="['admin', 'metrics']" [routerLinkActive]="['uk-active']">Validate</a></li>s
-                    </ul>
-                  </li>
+                  <!--<li>-->
+                    <!--<a class="uk-search-input" [routerLink]="['landing']" [routerLinkActive]="['uk-active']">Home</a>-->
+                  <!--</li>-->
+                  <!--<li>-->
+                    <!--<a class="uk-search-input" [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">Dashboard</a>-->
+                  <!--</li>-->
+                  <!--<li>-->
+                    <!--Sources-->
+                    <!--<ul>-->
+                      <!--<li><a [routerLink]="['sources', 'register']" [routerLinkActive]="['uk-active']">Register</a></li>-->
+                      <!--<li><a [routerLink]="['sources', 'update']" [routerLinkActive]="['uk-active']">Update</a></li>-->
+                    <!--</ul>-->
+                  <!--</li>-->
+                  <!--<li>-->
+                    <!--Compatibility-->
+                    <!--<ul>-->
+                      <!--<li><a [routerLink]="['compatibility', 'validate']" [routerLinkActive]="['uk-active']">Validate</a></li>-->
+                      <!--<li><a [routerLink]="['compatibility', 'browseHistory']" [routerLinkActive]="['uk-active']">Validation History</a></li>-->
+                      <!--<li><a [routerLink]="['compatibility', 'monitor']" [routerLinkActive]="['uk-active']">Collection Monitor</a></li>-->
+                    <!--</ul>-->
+                  <!--</li>-->
+                  <!--<li>-->
+                    <!--Content-->
+                    <!--<ul>-->
+                      <!--<li><a [routerLink]="['content', 'events']" [routerLinkActive]="['uk-active']">Events</a></li>-->
+                      <!--<li><a [routerLink]="['content', 'notifications']" [routerLinkActive]="['uk-active']">Notifications</a></li>-->
+                    <!--</ul>-->
+                  <!--</li>-->
+                  <!--<li>-->
+                    <!--<a class="uk-search-input" [routerLink]="['getImpact']" [routerLinkActive]="['uk-active']">Metrics</a>-->
+                  <!--</li>-->
+                  <!--<li *ngIf="getIsUserAdmin()">-->
+                    <!--Admin-->
+                    <!--<ul>-->
+                      <!--<li><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>-->
+                      <!--<li><a [routerLink]="['admin', 'metrics']" [routerLinkActive]="['uk-active']">Validate</a></li>s-->
+                    <!--</ul>-->
+                  <!--</li>-->
                   <li><a (click)="logout()">Logout</a></li>
                 </ul>
               </div>
@@ -123,58 +126,63 @@
 
               <ul class="uk-navbar-nav" *ngIf="getIsUserLoggedIn()" >
                 <li class="uk-parent" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">
+                  <a [routerLink]="['emptyPage']" [routerLinkActive]="['uk-active']">
                     Dashboard
                   </a>
                 </li>
-                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
-                                                                            aria-expanded="false">Sources</a>
-                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="sourcesMenu" (click)="onClick('sourcesMenu')">
-                    <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-                      <div class="uk-first-column">
-                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/sources','register']" id="registerLink">Register</a></li>
-                          <li><a [routerLink]="['/sources', 'update']">Update</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
-                                                                            aria-expanded="false">Compatibility</a>
-                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="compatibilityMenu" (click)="onClick('compatibilityMenu')">
-                    <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-                      <div class="uk-first-column">
-                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/compatibility','validate']">Validate</a></li>
-                          <li><a [routerLink]="['/compatibility','browseHistory']">Validation History</a></li>
-                          <li><a [routerLink]="['/compatibility','monitor']">Collection Monitor</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""
-                                                                            aria-expanded="false">Content</a>
-                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                       id="contentMenu" (click)="onClick('contentMenu')">
-                    <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-                      <div class="uk-first-column">
-                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li><a [routerLink]="['/content','events']">Events</a></li>
-                          <li><a [routerLink]="['/content','notifications']">Notifications</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="uk-parent">
-                  <a [routerLink]="['/getImpact']" [routerLinkActive]="['uk-active']">
-                    Metrics
-                  </a>
-                </li>
+                <!--<li class="uk-parent" [routerLinkActive]="['uk-active']">-->
+                  <!--<a [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">-->
+                    <!--Dashboard-->
+                  <!--</a>-->
+                <!--</li>-->
+                <!--<li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""-->
+                                                                            <!--aria-expanded="false">Sources</a>-->
+                  <!--<div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"-->
+                       <!--id="sourcesMenu" (click)="onClick('sourcesMenu')">-->
+                    <!--<div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">-->
+                      <!--<div class="uk-first-column">-->
+                        <!--<ul class="uk-nav uk-navbar-dropdown-nav">-->
+                          <!--<li><a [routerLink]="['/sources','register']" id="registerLink">Register</a></li>-->
+                          <!--<li><a [routerLink]="['/sources', 'update']">Update</a></li>-->
+                        <!--</ul>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</li>-->
+                <!--<li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""-->
+                                                                            <!--aria-expanded="false">Compatibility</a>-->
+                  <!--<div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"-->
+                       <!--id="compatibilityMenu" (click)="onClick('compatibilityMenu')">-->
+                    <!--<div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">-->
+                      <!--<div class="uk-first-column">-->
+                        <!--<ul class="uk-nav uk-navbar-dropdown-nav">-->
+                          <!--<li><a [routerLink]="['/compatibility','validate']">Validate</a></li>-->
+                          <!--<li><a [routerLink]="['/compatibility','browseHistory']">Validation History</a></li>-->
+                          <!--<li><a [routerLink]="['/compatibility','monitor']">Collection Monitor</a></li>-->
+                        <!--</ul>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</li>-->
+                <!--<li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""-->
+                                                                            <!--aria-expanded="false">Content</a>-->
+                  <!--<div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"-->
+                       <!--id="contentMenu" (click)="onClick('contentMenu')">-->
+                    <!--<div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">-->
+                      <!--<div class="uk-first-column">-->
+                        <!--<ul class="uk-nav uk-navbar-dropdown-nav">-->
+                          <!--<li><a [routerLink]="['/content','events']">Events</a></li>-->
+                          <!--<li><a [routerLink]="['/content','notifications']">Notifications</a></li>-->
+                        <!--</ul>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</li>-->
+                <!--<li class="uk-parent">-->
+                  <!--<a [routerLink]="['/getImpact']" [routerLinkActive]="['uk-active']">-->
+                    <!--Metrics-->
+                  <!--</a>-->
+                <!--</li>-->
               </ul>
 
               <div class="uk-navbar-item">
@@ -209,12 +217,12 @@
                       <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
                         <div class="uk-first-column">
                           <ul class="uk-nav uk-navbar-dropdown-nav">
-                            <ul *ngIf="getIsUserAdmin()" class="uk-nav uk-navbar-dropdown-nav">
-                              <li class="uk-nav-header" style="display: block;">Admin</li>
-                              <li style="display: block"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>
-                              <li style="display: block"><a [routerLink]="['/admin/metrics']">Metrics</a></li>
-                              <li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin/registrations']">Registrations</a></li>
-                            </ul>
+                            <!--<ul *ngIf="getIsUserAdmin()" class="uk-nav uk-navbar-dropdown-nav">-->
+                              <!--<li class="uk-nav-header" style="display: block;">Admin</li>-->
+                              <!--<li style="display: block"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>-->
+                              <!--<li style="display: block"><a [routerLink]="['/admin/metrics']">Metrics</a></li>-->
+                              <!--<li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin/registrations']">Registrations</a></li>-->
+                            <!--</ul>-->
                             <li><a class="" (click)="logout()">Log out</a></li>
                           </ul>
                         </div>

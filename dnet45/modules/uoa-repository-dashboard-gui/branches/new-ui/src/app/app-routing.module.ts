@@ -2,8 +2,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { LandingComponent } from './pages/landing/landing.component';
 import { AuthGuardService } from './services/auth-guard.service';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardComponent } from './pages/repository/dashboard/dashboard.component';
 import { ForbiddenPageComponent } from './shared/reusablecomponents/403-forbidden-page.component';
+import {EmptyPageComponent} from "./pages/emptypage/empty-page.component";
 
 const appRoutes: Routes = [
   {
@@ -16,10 +17,23 @@ const appRoutes: Routes = [
     component: LandingComponent
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent,
+    path: 'emptyPage',
+    component: EmptyPageComponent,
     canActivate: [AuthGuardService]
   },
+  {
+    path: 'repository',
+    loadChildren: './pages/repository/repository.module#RepositoryModule',
+    // loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
+    canActivate: [AuthGuardService]
+  },
+
+
+  // {
+  //   path: 'dashboard',
+  //   component: DashboardComponent,
+  //   canActivate: [AuthGuardService]
+  // },
   {
     path: 'sources',
     loadChildren: './pages/sources/sources.module#SourcesModule',
@@ -34,11 +48,11 @@ const appRoutes: Routes = [
     loadChildren: './pages/content/content.module#ContentModule',
     canActivate: [AuthGuardService]
   },
-  {
-    path: 'getImpact',
-    loadChildren: './pages/metrics/metrics.module#MetricsModule',
-    canActivate: [AuthGuardService]
-  },
+  // {
+  //   path: 'getImpact',
+  //   loadChildren: './pages/metrics/metrics.module#MetricsModule',
+  //   canActivate: [AuthGuardService]
+  // },
   {
     path: 'admin',
     loadChildren: './pages/adminPg/adminPg.module#AdminPgModule',
@@ -47,9 +61,16 @@ const appRoutes: Routes = [
     path: '403-forbidden',
     component: ForbiddenPageComponent
   },
+  // {
+  //   path: '',
+  //   redirectTo: '/landing',
+  //   pathMatch: 'full'
+  // },
   {
+    //fixme redirect to 404
     path: '**',
-    redirectTo: '/landing'
+    redirectTo: '/403-forbidden',
+    // component: ForbiddenPageComponent
   }
 ];
 

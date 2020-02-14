@@ -17,15 +17,15 @@
           <div>
             <a class="uk-icon ng-star-inserted" aria-expanded="false">
               <svg height="60" width="60">
-                <circle cx="30" cy="30" r="20" stroke-width="2"></circle>
-                <text dy=".4em" font-size="1.5em" text-anchor="middle" x="50%" y="50%" class="ng-star-inserted"> {{ parseUsername() }} </text>
+                <circle cx="30" cy="30" r="20" stroke-width="1"></circle>
+                <text dy=".4em" font-size="16" text-anchor="middle" x="50%" y="50%" class="ng-star-inserted"> {{ parseUsername() }} </text>
               </svg>
-              <i class="material-icons">keyboard_arrow_down</i>
+              <!--<i class="material-icons">keyboard_arrow_down</i>-->
             </a>
             <div class="uk-padding-remove-horizontal ng-star-inserted uk-dropdown" uk-dropdown="mode: click; offset: -2; delay-hide: 0; flip: false; pos: bottom-right">
               <ul class="uk-nav uk-dropdown-nav">
                 <li>
-                  <a id="logout">Log out</a>
+                  <a id="logout" (click)="logout()">Log out</a>
                 </li>
               </ul>
             </div><!---->

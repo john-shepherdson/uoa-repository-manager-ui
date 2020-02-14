@@ -1,0 +1,58 @@
+<div id="page_content">
+
+  <div *ngIf="loadingMessage" class="loading-big">
+    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+      {{ loadingMessage }}
+    </div>
+    <div class="transparentFilm"></div>
+  </div>
+
+  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="!loadingMessage && !errorMessage">
+    <div class="repositoryMenu">
+
+      <div class="uk-margin-medium-left uk-margin-medium-right">
+        <div class="uk-padding-small">
+          <h3 *ngIf="repository" class="heading_b">
+            <img *ngIf="!repository.logoUrl" src="../../../assets/imgs/yourLogoHere.jpg" style="margin-right: 15px; margin-top:-8px" width="60">
+            <img *ngIf="repository.logoUrl" src="{{ repository.logoUrl }}" style="margin-right: 15px; margin-top:-8px" width="60">
+            {{ repository.officialName }}
+          </h3>
+        </div>
+
+        <div id="top_bar">
+          <div class="md-top-bar">
+            <div class="uk-width-4-5@l uk-container-center">
+              <ul *ngIf="repository" class="top_bar_nav" id="snippets_grid_filter">
+                <!--<li class="uk-active" data-uk-filter="">-->
+                <li [routerLinkActive]="['uk-active']" data-uk-filter="">
+                  <a [routerLink]="['/repository/' + repository.id + '/dashboard']">DASHBOARD</a>
+                </li>
+                <li [routerLinkActive]="['uk-active']" data-uk-filter="snippets-lang-php">
+                  <a [routerLink]="['/repository/' + repository.id + '/update']">UPDATE</a>
+                </li>
+                <li data-uk-filter="snippets-lang-php" [routerLinkActive]="['uk-active']">
+                  <!--<a [routerLink]="['/repository/' + repository.id + '/getImpact']">METRICS</a>-->
+                  <a *ngIf="repository.piwikInfo && repository.piwikInfo.validated" [routerLink]="['/repository/' + repository.id + '/getImpact/show_metrics']">METRICS</a>
+                  <a *ngIf="repository.piwikInfo && !repository.piwikInfo.validated" [routerLink]="['/repository/' + repository.id + '/getImpact/instructions']">METRICS</a>
+                  <a *ngIf="!repository.piwikInfo" [routerLink]="['/repository/' + repository.id + '/getImpact/enable']">METRICS</a>
+                </li>
+                <li data-uk-filter="snippets-lang-css" [routerLinkActive]="['uk-active']">
+                  <a [routerLink]="['/repository/' + repository.id + '/aggregationHistory']">AGREGGATION HISTORY</a>
+                </li>
+                <li data-uk-filter="snippets-lang-javascript" [routerLinkActive]="['uk-active']">
+                  <a [routerLink]="['/repository/' + repository.id + '/events']">EVENTS</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

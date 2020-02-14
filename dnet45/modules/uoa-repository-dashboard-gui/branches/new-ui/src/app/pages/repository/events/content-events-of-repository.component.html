@@ -1,0 +1,131 @@
+<div id="page_content_inner">
+  <h2 class="heading_b uk-margin-bottom">Enrich Your Content - Browse Events</h2>
+
+  <!-- TOP HELP CONTENT -->
+  <help-content #topHelperContent [position]="'top'"
+                [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+  </help-content>
+
+  <div class="uk-grid">
+
+    <!-- LEFT HELP CONTENT -->
+    <aside-help-content #leftHelperContent [position]="'left'"
+                        [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+    </aside-help-content>
+
+    <!-- MIDDLE -->
+    <div class=" uk-width-expand@m">
+
+      <div>
+        <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+        <div *ngIf="loadingMessage" class="loading-big">
+          <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+          <div class="transparentFilm"></div>
+        </div>
+        <div *ngIf="noTopics" class="uk-alert">{{ noTopics }}</div>
+        <div *ngIf="repoTopics && repoTopics.length > 0" class="uk-grid-margin uk-grid uk-grid-stack repos-list">
+
+          <div class="uk-width-1-2 uk-first-column">
+            <div class="md-card">
+              <div class="md-card-toolbar">
+                <!--<div class="md-card-toolbar-actions">-->
+                <!--<a href="#" class="md-btn md-btn-small md-btn-flat">Button</a>-->
+                <!--<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary">Button</a>-->
+                <!--</div>-->
+                <h3 class="md-card-toolbar-heading-text">
+                  More
+                </h3>
+              </div>
+              <div class="md-card-content">
+                <table class="uk-table uk-table-striped uk-table-middle">
+                  <thead>
+                  <tr>
+                    <th>Events that may enrich {{ repoName }} content</th>
+                    <th class="uk-text-nowrap uk-text-right"># of events</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="el-item" *ngFor="let moreTopic of moreList">
+                    <td class="uk-table-shrink uk-width-4-5">
+                      <a (click)="goToEventsList(moreTopic.value)" class="el-link">{{ moreTopic.value }}</a>
+                      <div *ngIf="topics[moreTopic.value]" class="uk-text uk-text-small">{{ topics[moreTopic.value]['englishName'] }}</div>
+                    </td>
+                    <td class="uk-text-nowrap uk-table-shrink uk-width-1-5 uk-text-right">
+                      <div class="el-title">{{ moreTopic.size }}</div>
+                    </td>
+                  </tr>
+                  <tr class="el-item uk-text-bold">
+                    <td class="uk-text-nowrap uk-table-shrink uk-width-4-5">
+                      <div class="el-title">Total</div>
+                    </td>
+                    <td class="uk-text-nowrap uk-table-shrink uk-width-1-5 uk-text-right">
+                      <div class="el-title">{{ totalMore }}</div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="uk-width-1-2 uk-first-column">
+            <div class="md-card">
+              <div class="md-card-toolbar">
+                <!--<div class="md-card-toolbar-actions">-->
+                <!--<a href="#" class="md-btn md-btn-small md-btn-flat">Button</a>-->
+                <!--<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary">Button</a>-->
+                <!--</div>-->
+                <h3 class="md-card-toolbar-heading-text">
+                  Missing
+                </h3>
+              </div>
+              <div class="md-card-content">
+                <table class="uk-table uk-table-striped uk-table-middle">
+                  <thead>
+                  <tr>
+                    <th>Events that may enrich {{ repoName }} content</th>
+                    <th class="uk-text-nowrap uk-text-right"># of events</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="el-item" *ngFor="let missingTopic of missingList">
+                    <td class="uk-table-shrink uk-width-4-5">
+                      <a (click)="goToEventsList(missingTopic.value)" class="el-link">{{ missingTopic.value }}</a>
+                      <div *ngIf="topics[missingTopic.value]" class="uk-text uk-text-small">{{ topics[missingTopic.value]['englishName'] }}</div>
+                    </td>
+                    <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
+                      <div class="el-title uk-text-right">{{ missingTopic.size }}</div>
+                    </td>
+                  </tr>
+                  <tr class="el-item uk-text-bold">
+                    <td class="uk-text-nowrap uk-table-shrink uk-width-4-5">
+                      <div class="el-title">Total</div>
+                    </td>
+                    <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
+                      <div class="el-title uk-text-right">{{ totalMissing }}</div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT HELP CONTENT -->
+    <aside-help-content #rightHelperContent [position]="'right'"
+                        [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+    </aside-help-content>
+
+  </div>
+
+  <!-- BOTTOM HELP CONTENT -->
+  <help-content #bottomHelperContent [position]="'bottom'"
+                [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+  </help-content>
+
+</div>
