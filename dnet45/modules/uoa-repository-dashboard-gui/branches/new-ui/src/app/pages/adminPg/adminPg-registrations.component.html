@@ -1,169 +1,216 @@
-<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-  <div class="uk-width-1-1@m uk-first-column">
+<div id="page_content">
 
-    <h1 class="uk-h2">Registrations Admin</h1>
+  <div class="repositoryAdminMenu">
+
+    <div class="uk-margin-medium-left uk-margin-medium-right">
+      <div class="uk-padding-small">
+        <h3 class="heading_b">
+          Registrations Admin
+        </h3>
+      </div>
+
+      <div id="top_bar">
+        <div class="md-top-bar">
+          <div class="uk-width-1-2@l uk-margin-auto">
+            <form [formGroup]="dataForm" (ngSubmit)="handleChangeAndResetPage()" class="uk-search uk-search-default uk-width-1-1@m">
+              <div class="md-input-wrapper">
+                <label for="repository_name_search">Search (official name) ...</label>
+                <input class="md-input" type="search" id="repository_name_search" formControlName="officialName">
+                <span class="md-input-bar"></span>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="page_content_inner">
+
+
 
     <!-- TOP HELP CONTENT -->
     <help-content #topHelperContent [position]="'top'"
                   [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
     </help-content>
 
-    <div class="uk-container uk-container-expand uk-margin-medium-top uk-margin-medium-bottom">
-      <div class="uk-grid">
+    <div class="uk-grid">
 
-        <!-- LEFT HELP CONTENT -->
-        <aside-help-content #leftHelperContent [position]="'left'"
-                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
+      <!-- LEFT HELP CONTENT -->
+      <aside-help-content #leftHelperContent [position]="'left'"
+                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
 
-        <!-- MIDDLE -->
-        <div class="uk-width-expand@m">
+      <!-- MIDDLE -->
+      <div class="uk-width-expand@m">
 
-          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-          <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+        <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
 
+        <div *ngIf="!errorMessage" class="uk-container">
 
-          <div class="uk-grid">
-            <div class="uk-width-1-1@m uk-padding" style="background-color: #fff; text-align: center">
-              <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
-                <input class="uk-width-1-2 uk-search-input" type="search" formControlName="officialName" placeholder="Search (official name) ..." style="background-color: #fff">
-                <button class="uk-button" (click)="handleChangeAndResetPage()">Search</button>
-              </form>
-            </div>
-          </div>
+          <div class="">
+            <div class="">
 
-          <div class="uk-grid">
-            <div class="uk-width-1-4@m">
-              <form [formGroup]="dataForm" class="uk-form-stacked">
+              <div class="uk-margin-medium uk-margin-top repositoryAdminActions">
+                <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid">
 
-                <div class="uk-form-label uk-text-large">Filtered By</div>
-
-                <div class="uk-margin">
-                  <div class="uk-form-label uk-text-large">Datasource Type</div>
-                  <div class="uk-form-controls">
-                    <label><input class="uk-radio" type="radio" value="" (change)="handleChangeAndResetPage()" formControlName="typology"> Any</label><br>
-                    <label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChangeAndResetPage()" formControlName="typology"> Aggregator</label><br>
-                    <label><input class="uk-radio" type="radio" value="Journal" (change)="handleChangeAndResetPage()" formControlName="typology"> Journal</label><br>
-                    <label><input class="uk-radio" type="radio" value="datarepository" (change)="handleChangeAndResetPage()" formControlName="typology"> Data Repository</label><br>
-                    <label><input class="uk-radio" type="radio" value="pubsrepository" (change)="handleChangeAndResetPage()" formControlName="typology"> Public Repository</label><br>
-                    <label><input class="uk-radio" type="radio" value="entityregistry" (change)="handleChangeAndResetPage()" formControlName="typology"> Entity Registry</label><br>
-                    <label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChangeAndResetPage()" formControlName="typology"> Institutional</label><br>
-                    <label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChangeAndResetPage()" formControlName="typology"> Thematic</label><br>
-                    <label><input class="uk-radio" type="radio" value="Products" (change)="handleChangeAndResetPage()" formControlName="typology"> Products</label><br>
-                    <label><input class="uk-radio" type="radio" value="Unknown" (change)="handleChangeAndResetPage()" formControlName="typology"> Unknown</label>
+                  <div class="uk-inline">
+                    <div class="uk-margin">
+                      <label class="" for="size">Results per page </label>
+                      <div class="uk-inline">
+                        <select class="uk-select" id="size" (change)="handleChangeAndResetPage()" formControlName="size">
+                          <option value="10">10</option>
+                          <option value="25" selected>25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                </div>
 
-                <div class="uk-margin">
-                  <div class="uk-form-label uk-text-large">Countries</div>
-                  <div class="uk-form-controls">
-                    <ng-container *ngIf="countries && countries.length>0">
-                      <read-more [maxHeight]="238">
-                        <div><input class="uk-radio" type="radio" value="" (change)="handleChangeAndResetPage()" formControlName="country"> Any</div>
-                        <ng-container *ngFor="let country of countries">
-                          <div class="">
-                            <input class="uk-radio" type="radio" value="{{country.code}}"
-                                   (change)="handleChangeAndResetPage()" formControlName="country"> {{country.name}}
-                          </div>
-                        </ng-container>
-                      </read-more>
-                    </ng-container>
-                  </div>
-                </div>
+                  <div class="uk-inline">
 
-              </form>
-            </div>
-            <div class="uk-width-expand@m">
-              <div class="uk-grid">
-                <div class="uk-width-1-1@m uk-margin-medium">
-                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid">
-
-                    <div class="uk-width-2-5@m">
-                      <div class="uk-margin">
-                        <label class="uk-form-label uk-text-right" for="size">Items per page: </label>
-                        <div class="uk-form-controls">
-                          <select class="uk-select" id="size" (change)="handleChangeAndResetPage()" formControlName="size">
-                            <option value="10">10</option>
-                            <option value="25" selected>25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                          </select>
-                        </div>
+                    <div class="uk-inline uk-margin-right">
+                      <label class="" for="orderBy">Order by </label>
+                      <div class="uk-inline">
+                        <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
+                          <option value="DESCENDING" selected>Descending</option>
+                          <option value="ASCENDING">Ascending</option>
+                        </select>
                       </div>
                     </div>
 
-                    <div class="uk-width-expand@m ">
-
-                      <div class="uk-float-right">
-                        <label class="uk-form-label uk-text-right" for="orderBy">Order by: </label>
-                        <div class="uk-form-controls">
-                          <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
-                            <option value="DESCENDING" selected>Descending</option>
-                            <option value="ASCENDING">Ascending</option>
-                          </select>
-                        </div>
+                    <div class="uk-inline">
+                      <label class="" for="sortBy">Sort by </label>
+                      <div class="uk-inline">
+                        <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="requestSortBy">
+                          <option value="registrationdate" selected>Date</option>
+                          <option value="officialname">Name</option>
+                        </select>
                       </div>
-
-                      <div class="uk-float-right">
-                        <label class="uk-form-label uk-text-right" for="sortBy">Sort by: </label>
-                        <div class="uk-form-controls">
-                          <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="requestSortBy">
-                            <option value="registrationdate" selected>Date</option>
-                            <option value="officialname">Name</option>
-                          </select>
-                        </div>
-                      </div>
-
                     </div>
 
-
-                  </form>
-                </div>
-
-                <div class="uk-width-1-1@m">
-
-                  <div *ngIf="loadingMessage" class="loading-big">
-                    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-                      {{ loadingMessage }}
-
-                    </div>
-                    <div class="whiteFilm"></div>
                   </div>
 
-                  <!-- TABLE -->
-                  <table class="uk-table uk-table-striped">
-                    <thead>
-                    <tr>
-                      <th>Repository</th>
-                      <th>Date</th>
-                      <th>Organization</th>
-                      <th>Type</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let res of repositorySnippet">
-                      <td class="uk-width-1-6@m">{{res.officialname}} <br> ({{res.id}}) <br> {{res.registeredby}}</td>
-                      <td >{{res.registrationdate}}</td>
-                      <td> <div *ngFor="let organization of res.organizations">{{organization.legalname + ' (' + getCountryName(organization.country) + ')'}}<br></div></td>
-                      <td>{{res.typology.split('::')[0]}}<br>{{res.typology.split('::')[1]}}<br>{{res.typology.split('::')[2]}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
 
-                  <ul class="uk-pagination uk-flex-center" uk-margin>
-                    <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
-                    <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
-                    <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
-                  </ul>
+                </form>
+              </div>
 
+              <div class="uk-width-1-1@m">
+
+                <ul class="uk-pagination uk-flex-right" uk-margin>
+                  <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
+                  <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
+                  <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
+                </ul>
+
+                <hr class="adminResultsHeader">
+
+                <div *ngIf="loadingMessage" class="loading-big">
+                  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                    {{ loadingMessage }}
+
+                  </div>
+                  <div class="transparentFilm"></div>
                 </div>
+
+                <!-- REPOSITORY CARD -->
+                <div *ngFor="let res of repositorySnippet" class="md-card repositoryCard">
+                  <div class="md-card-content large-padding">
+                    <div class="uk-text-meta">{{res.typology.split('::')[0]}}  {{res.typology.split('::')[1]}}  {{res.typology.split('::')[2]}}</div>
+                    <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top"><a [routerLink]="['/repositoryAdmin/' + res.id]">{{res.officialname}}</a></div>
+                    <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>{{res.id}}</div>
+                    <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>{{res.registeredby}}</div>
+                    <div class="uk-margin-small-bottom"><span class="mute-title">Date: </span><span class="small-content">{{res.registrationdate}}</span></div>
+                    <div><span class="mute-title">Organization: </span><span *ngFor="let organization of res.organizations; let i=index" class="small-content"><span *ngIf="i>0">, </span>{{organization.legalname + ' (' + getCountryName(organization.country) + ')'}}</span></div>
+                  </div>
+                </div>
+
+                <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>
+                  <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
+                  <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
+                  <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
+                </ul>
 
               </div>
+
             </div>
           </div>
-
         </div>
+
       </div>
+
+      <!-- RIGHT HELP CONTENT -->
+      <aside-help-content #rightHelperContent [position]="'right'"
+                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
     </div>
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
   </div>
 </div>
+
+<div class="filter-overlay-toolbar uk-animation-scale-up ng-star-inserted">
+  <button class="uk-button filter-overlay-button" type="button" uk-toggle="target: #offcanvas-overlay">
+    <span class=""><i class="fas fa-filter"></i></span>
+  </button>
+</div>
+
+<div class="offcanvas-filters" id="offcanvas-overlay" uk-offcanvas="overlay: true">
+  <div class="uk-offcanvas-bar uk-light">
+
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+
+    <h4>Filters</h4>
+
+    <form [formGroup]="dataForm" class="uk-form-stacked">
+
+      <div class="uk-margin">
+        <h5 class="">Datasource Type</h5>
+        <div class="uk-form-controls">
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="" (change)="handleChangeAndResetPage()" formControlName="typology"> Any</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="Aggregator" (change)="handleChangeAndResetPage()" formControlName="typology"> Aggregator</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="Journal" (change)="handleChangeAndResetPage()" formControlName="typology"> Journal</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="datarepository" (change)="handleChangeAndResetPage()" formControlName="typology"> Data Repository</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="pubsrepository" (change)="handleChangeAndResetPage()" formControlName="typology"> Public Repository</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="entityregistry" (change)="handleChangeAndResetPage()" formControlName="typology"> Entity Registry</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="Institutional" (change)="handleChangeAndResetPage()" formControlName="typology"> Institutional</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="Thematic" (change)="handleChangeAndResetPage()" formControlName="typology"> Thematic</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="Products" (change)="handleChangeAndResetPage()" formControlName="typology"> Products</label></div>
+          <div class="uk-margin-small-bottom"><label><input class="uk-radio" type="radio" value="Unknown" (change)="handleChangeAndResetPage()" formControlName="typology"> Unknown</label></div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="uk-margin">
+        <h5 class="">Countries</h5>
+        <div class="uk-form-controls">
+          <ng-container *ngIf="countries && countries.length>0">
+            <read-more [maxHeight]="238">
+              <div class="uk-margin-small-bottom"><input class="uk-radio" type="radio" value="" (change)="handleChangeAndResetPage()" formControlName="country"> Any</div>
+              <ng-container *ngFor="let country of countries">
+                <div class="uk-margin-small-bottom">
+                  <input class="uk-radio" type="radio" value="{{country.code}}"
+                         (change)="handleChangeAndResetPage()" formControlName="country"> {{country.name}}
+                </div>
+              </ng-container>
+            </read-more>
+          </ng-container>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+

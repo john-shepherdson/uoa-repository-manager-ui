@@ -25,7 +25,7 @@
     <!--&lt;!&ndash;</div>&ndash;&gt;-->
   <!--</div>-->
 
-  <div *ngIf="reposOfUser.length>0" class="menu_section uk-margin-top">
+  <div class="menu_section uk-margin-top">
     <ul>
 
       <li [routerLinkActive]="['current_section']" class="">
@@ -48,7 +48,7 @@
         </ul>
       </li>
 
-      <li [routerLinkActive]="['current_section']" class="">
+      <li *ngIf="reposOfUser && reposOfUser.length>0" [routerLinkActive]="['current_section']" class="">
         <a [routerLink]="['/content', 'notifications']">
           <span class="menu_icon_circle_letter">S</span>
           <span class="menu_title">Subscriptions</span>
@@ -58,7 +58,7 @@
     </ul>
   </div>
 
-  <div *ngIf="reposOfUser.length>0" class="menu_section border_top">
+  <div *ngIf="reposOfUser && reposOfUser.length>0" class="menu_section border_top">
     <div class="sidebar_heading">REPOSITORIES</div>
     <ul>
 
@@ -103,11 +103,18 @@
           <span class="menu_title">Help Texts</span>
         </a>
       </li>
+      <!--<li class="">-->
       <li [routerLinkActive]="['current_section']" class="">
         <a [routerLink]="['/admin/registrations']">
           <span class="menu_icon_circle_letter">R</span>
           <span class="menu_title">Registrations</span>
         </a>
+        <ul [ngClass]="{'uk-display-block': visibleAdminRepo}">
+          <li class="act_item">
+            <a *ngIf="adminRepository?.officialName && adminRepository.officialName.length>30" [routerLink]="['/repositoryAdmin/' + adminRepository.id]">{{adminRepository.officialName.substr(0,30)}}...</a>
+            <a *ngIf="adminRepository?.officialName && adminRepository.officialName.length<=30" [routerLink]="['/repositoryAdmin/' + adminRepository.id]">{{adminRepository.officialName}}</a>
+          </li>
+        </ul>
       </li>
       <li [routerLinkActive]="['current_section']" class="">
         <a [routerLink]="['/admin/metrics']">

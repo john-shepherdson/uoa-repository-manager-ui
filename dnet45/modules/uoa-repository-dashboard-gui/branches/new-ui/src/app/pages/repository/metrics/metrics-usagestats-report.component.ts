@@ -139,7 +139,8 @@ export class MetricsUsagestatsReportComponent implements OnInit {
 
   goToReport() {
     if (!this.useCurrentRepo) { this.shownRepoId = ''; }
-    this.router.navigate(['/repository/' + this.repo.id +'/getImpact/usagestats-report-results'], {
+    this.router.navigate(['usagestats-report-results'], {
+      relativeTo: this.route.parent,
       queryParams: {
         report: this.chosen_report,
         beginDate: this.beginDate,

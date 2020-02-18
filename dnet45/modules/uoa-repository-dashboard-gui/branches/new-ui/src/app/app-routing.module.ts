@@ -27,6 +27,12 @@ const appRoutes: Routes = [
     // loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
     canActivate: [AuthGuardService]
   },
+  {
+    path: 'repositoryAdmin',
+    loadChildren: './pages/repository/repository.module#RepositoryModule',
+    // loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
+    canActivate: [AuthGuardService]
+  },
 
 
   // {

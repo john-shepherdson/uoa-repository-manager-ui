@@ -11,6 +11,8 @@ export class SharedService {
   private repositoriesOfUserCopy: RepositorySnippet[];
   private repositoriesOfUser: Subject<RepositorySnippet[]> = new Subject<RepositorySnippet[]>();
 
+
+
   get repository$() {
     return this.repository.asObservable();
   }

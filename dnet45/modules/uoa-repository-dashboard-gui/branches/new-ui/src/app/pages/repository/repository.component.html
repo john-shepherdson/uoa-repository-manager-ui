@@ -27,22 +27,24 @@
               <ul *ngIf="repository" class="top_bar_nav" id="snippets_grid_filter">
                 <!--<li class="uk-active" data-uk-filter="">-->
                 <li [routerLinkActive]="['uk-active']" data-uk-filter="">
-                  <a [routerLink]="['/repository/' + repository.id + '/dashboard']">DASHBOARD</a>
+                  <!--<a [routerLink]="['/repository/' + repository.id + '/dashboard']">DASHBOARD</a>-->
+                  <a [routerLink]="['./dashboard']">DASHBOARD</a>
                 </li>
                 <li [routerLinkActive]="['uk-active']" data-uk-filter="snippets-lang-php">
-                  <a [routerLink]="['/repository/' + repository.id + '/update']">UPDATE</a>
+                  <!--<a [routerLink]="['/repository/' + repository.id + '/update']">UPDATE</a>-->
+                  <a [routerLink]="['./update']">UPDATE</a>
                 </li>
                 <li data-uk-filter="snippets-lang-php" [routerLinkActive]="['uk-active']">
                   <!--<a [routerLink]="['/repository/' + repository.id + '/getImpact']">METRICS</a>-->
-                  <a *ngIf="repository.piwikInfo && repository.piwikInfo.validated" [routerLink]="['/repository/' + repository.id + '/getImpact/show_metrics']">METRICS</a>
-                  <a *ngIf="repository.piwikInfo && !repository.piwikInfo.validated" [routerLink]="['/repository/' + repository.id + '/getImpact/instructions']">METRICS</a>
-                  <a *ngIf="!repository.piwikInfo" [routerLink]="['/repository/' + repository.id + '/getImpact/enable']">METRICS</a>
+                  <a *ngIf="repository.piwikInfo && repository.piwikInfo.validated" [routerLink]="['./getImpact/show_metrics']">METRICS</a>
+                  <a *ngIf="repository.piwikInfo && !repository.piwikInfo.validated" [routerLink]="['./getImpact/instructions']">METRICS</a>
+                  <a *ngIf="!repository.piwikInfo" [routerLink]="['./getImpact/enable']">METRICS</a>
                 </li>
                 <li data-uk-filter="snippets-lang-css" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['/repository/' + repository.id + '/aggregationHistory']">AGREGGATION HISTORY</a>
+                  <a [routerLink]="['./aggregationHistory']">AGREGGATION HISTORY</a>
                 </li>
                 <li data-uk-filter="snippets-lang-javascript" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['/repository/' + repository.id + '/events']">EVENTS</a>
+                  <a [routerLink]="['./events']">EVENTS</a>
                 </li>
               </ul>
             </div>

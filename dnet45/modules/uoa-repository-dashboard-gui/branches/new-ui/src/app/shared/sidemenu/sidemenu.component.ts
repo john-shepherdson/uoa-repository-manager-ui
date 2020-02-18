@@ -29,6 +29,9 @@ export class SideMenuComponent implements OnInit {
   visibleReposOfUser: RepositorySnippet[] = [];
   allReposVisible: boolean = false;
 
+  visibleAdminRepo: boolean = false;
+  adminRepository: Repository;
+
   constructor(public authService: AuthenticationService,
               private repositoryService: RepositoryService,
               private route: ActivatedRoute,
@@ -36,6 +39,41 @@ export class SideMenuComponent implements OnInit {
               private sharedService: SharedService) { }
 
   ngOnInit() {
+
+    // this.router.events.subscribe((val) => {
+    //
+    //   console.log("*******************  Router changed to: " + this.router.url);
+    //
+    //   let route = this.router.url;
+    //   let repositoryID = '';
+    //   let index: number = 0;
+    //
+    //   if(route.includes('repository') || route.includes('repositoryAdmin')) {
+    //     let repositoryIndex = route.indexOf('repository');
+    //     repositoryID = route.substr(repositoryIndex).split('/')[1];
+    //
+    //     if(!route.includes('repositoryAdmin')) {
+    //       this.visibleAdminRepo = false;
+    //       index = this.reposOfUser.findIndex(x => x.id === repositoryID);
+    //       if(index>5)
+    //         this.showMoreRepos();
+    //     }
+    //
+    //     if(route.includes('repositoryAdmin')) {
+    //       //fixme make it work with the subject below
+    //       this.repositoryService.getRepositoryById(repositoryID).subscribe(
+    //         r => {
+    //           this.adminRepository = r;
+    //           this.visibleAdminRepo = true;
+    //         },error => { console.log(error); }
+    //       );
+    //     }
+    //   } else {
+    //     this.visibleAdminRepo = false;
+    //   }
+    //
+    //   console.log("******************  this.visibleAdminRepo: " + this.visibleAdminRepo);
+    // });
 
     const pathName = window.location.pathname;
     if (pathName.includes('sources')) {
@@ -129,8 +167,6 @@ export class SideMenuComponent implements OnInit {
 
   initSideMenuRepos() {
 
-    let index: number = 0;
-
     if(this.reposOfUser.length>5) {
       for(let _i = 0; _i < 5; _i++) {
         this.visibleReposOfUser.push(this.reposOfUser[_i]);
@@ -139,22 +175,23 @@ export class SideMenuComponent implements OnInit {
       this.visibleReposOfUser = Object.assign([], this.reposOfUser);
     }
 
-    let route = this.router.url;
-    let repositoryID = '';
-    if(route.includes('repository') || route.includes('repositoryAdmin')) {
-      let repositoryIndex = route.indexOf('repository');
-      repositoryID = route.substr(repositoryIndex).split('/')[1];
 
-      if(!route.includes('repositoryAdmin')) {
-        index = this.reposOfUser.findIndex(x => x.id === repositoryID);
-        if(index>5)
-          this.showMoreRepos();
-      }
+    // let repository: Repository;
+    // this.sharedService.repository$.subscribe(
+    //   r => {
+    //     repository = r;
+    //     console.log("************ initSideMenu got repo from subject *****************")
+    //     // console.log("RepositoryID: ", this.repository.id);
+    //   }
+    // );
+    //
+    // if(this.sharedService.getRepository()) {
+    //   repository = this.sharedService.getRepository();
+    //   console.log("************ initSideMenu got repo from copy *****************")
+    // }
 
-      if(route.includes('repositoryAdmin')) {
 
-      }
-    }
+
   }
 
   showMoreRepos() {

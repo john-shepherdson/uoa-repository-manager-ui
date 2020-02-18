@@ -137,7 +137,7 @@ export class MetricsEnableComponent implements OnInit {
           this.loadingMessage = '';
         },
         () => {
-          this.router.navigate([`/repository/${this.repo.id}/getImpact/instructions/`]);
+          this.router.navigate([`../instructions/`]);
           // this.router.navigate([`/getImpact/instructions/${this.repo.id}`]);
         }
       );

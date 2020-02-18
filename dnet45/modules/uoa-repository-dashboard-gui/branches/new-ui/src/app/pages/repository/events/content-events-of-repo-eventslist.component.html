@@ -95,7 +95,7 @@
                     <td class="uk-table-shrink">
                       <div class="el-title">
                                 <span *ngFor="let abs of event.publication.abstracts; let a_index = index">
-                                  <br *ngIf="a_index > 1">
+                                  <br *ngIf="a_index > 0 && event.publication.abstracts[a_index-1].length > 0">
                                   <span><read-more-text [text]="abs" [maxHeight]="80"></read-more-text></span>
                                   <!--<span>{{ abs }}</span>-->
                                   <span *ngIf="event.highlight.abstracts.indexOf(abs)>=0 && event.highlight.abstracts.length>0 && event.provenance">

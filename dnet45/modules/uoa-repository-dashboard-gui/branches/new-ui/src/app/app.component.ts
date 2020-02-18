@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
   }
 
   isHomeRoute() {
-    console.log('Is home route? Route is: ' + this.router.url);
+    // console.log('Is home route? Route is: ' + this.router.url);
     return (this.router.url === '/') || (this.router.url === '/landing');
   }
 
