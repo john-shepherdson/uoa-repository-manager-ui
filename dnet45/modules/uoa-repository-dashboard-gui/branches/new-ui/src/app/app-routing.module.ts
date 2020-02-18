@@ -1,20 +1,25 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { LandingComponent } from './pages/landing/landing.component';
+import { HomeComponent } from './pages/landing/home/home.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { ForbiddenPageComponent } from './shared/reusablecomponents/403-forbidden-page.component';
 import { EmptyPageComponent } from "./pages/emptypage/empty-page.component";
 import { JoinComponent } from "./pages/join/join.component";
+import { AboutComponent } from "./pages/landing/about/about.component";
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/landing',
+    redirectTo: '/home',
     pathMatch: 'full'
   },
   {
-    path: 'landing',
-    component: LandingComponent
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
   },
   {
     path: 'join',
@@ -74,7 +79,7 @@ const appRoutes: Routes = [
   },
   // {
   //   path: '',
-  //   redirectTo: '/landing',
+  //   redirectTo: '/home',
   //   pathMatch: 'full'
   // },
   {

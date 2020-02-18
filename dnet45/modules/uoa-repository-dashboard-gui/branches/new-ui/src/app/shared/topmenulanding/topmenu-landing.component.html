@@ -24,17 +24,18 @@
               <div>
                 <a *ngIf="!getIsUserLoggedIn()" (click)="login()">Sign in| Register</a>
                 <span *ngIf="getIsUserLoggedIn()">{{getUserName()}}</span>
-                <ul *ngIf="getIsUserLoggedIn()" class="uk-list uk-margin-top">
+                <ul  class="uk-list uk-margin-top">
                   <li>
+                    <a class="uk-search-input" [routerLink]="['home']" [routerLinkActive]="['uk-active']">Home</a>
+                  </li>
+                  <li>
+                    <a class="uk-search-input" [routerLink]="['about']" [routerLinkActive]="['uk-active']">About</a>
+                  </li>
+                  <li>
+                  <li *ngIf="getIsUserLoggedIn()">
                     <a class="uk-search-input" [routerLink]="['emptyPage']" [routerLinkActive]="['uk-active']">Dashboard</a>
                   </li>
-                  <!--<li>-->
-                    <!--<a class="uk-search-input" [routerLink]="['landing']" [routerLinkActive]="['uk-active']">Home</a>-->
-                  <!--</li>-->
-                  <!--<li>-->
-                    <!--<a class="uk-search-input" [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">Dashboard</a>-->
-                  <!--</li>-->
-                  <!--<li>-->
+
                     <!--Sources-->
                     <!--<ul>-->
                       <!--<li><a [routerLink]="['sources', 'register']" [routerLinkActive]="['uk-active']">Register</a></li>-->
@@ -124,114 +125,111 @@
 
             <div class="uk-navbar-right">
 
-              <ul class="uk-navbar-nav" *ngIf="getIsUserLoggedIn()" >
-                <li class="uk-parent" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['emptyPage']" [routerLinkActive]="['uk-active']">
+              <ul class="uk-navbar-nav" >
+                <li *ngIf="getIsUserLoggedIn()" class="uk-parent" [routerLinkActive]="['uk-active']">
+                  <a [routerLink]="['home']" [routerLinkActive]="['uk-active']">
+                    Home
+                  </a>
+                </li>
+                <li *ngIf="getIsUserLoggedIn()" class="uk-parent" [routerLinkActive]="['uk-active']">
+                  <a [routerLink]="['about']" [routerLinkActive]="['uk-active']">
+                    About
+                  </a>
+                </li>
+                <li *ngIf="getIsUserLoggedIn()" class="uk-parent" [routerLinkActive]="['uk-active']">
+                  <a [routerLink]="['join']" [routerLinkActive]="['uk-active']">
                     Dashboard
                   </a>
                 </li>
-                <!--<li class="uk-parent" [routerLinkActive]="['uk-active']">-->
-                  <!--<a [routerLink]="['dashboard']" [routerLinkActive]="['uk-active']">-->
-                    <!--Dashboard-->
-                  <!--</a>-->
-                <!--</li>-->
-                <!--<li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""-->
-                                                                            <!--aria-expanded="false">Sources</a>-->
-                  <!--<div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"-->
-                       <!--id="sourcesMenu" (click)="onClick('sourcesMenu')">-->
-                    <!--<div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">-->
-                      <!--<div class="uk-first-column">-->
-                        <!--<ul class="uk-nav uk-navbar-dropdown-nav">-->
-                          <!--<li><a [routerLink]="['/sources','register']" id="registerLink">Register</a></li>-->
-                          <!--<li><a [routerLink]="['/sources', 'update']">Update</a></li>-->
-                        <!--</ul>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</li>-->
-                <!--<li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""-->
-                                                                            <!--aria-expanded="false">Compatibility</a>-->
-                  <!--<div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"-->
-                       <!--id="compatibilityMenu" (click)="onClick('compatibilityMenu')">-->
-                    <!--<div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">-->
-                      <!--<div class="uk-first-column">-->
-                        <!--<ul class="uk-nav uk-navbar-dropdown-nav">-->
-                          <!--<li><a [routerLink]="['/compatibility','validate']">Validate</a></li>-->
-                          <!--<li><a [routerLink]="['/compatibility','browseHistory']">Validation History</a></li>-->
-                          <!--<li><a [routerLink]="['/compatibility','monitor']">Collection Monitor</a></li>-->
-                        <!--</ul>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</li>-->
-                <!--<li class="uk-parent" [routerLinkActive]="['uk-active']"><a href="#" class=""-->
-                                                                            <!--aria-expanded="false">Content</a>-->
-                  <!--<div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"-->
-                       <!--id="contentMenu" (click)="onClick('contentMenu')">-->
-                    <!--<div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">-->
-                      <!--<div class="uk-first-column">-->
-                        <!--<ul class="uk-nav uk-navbar-dropdown-nav">-->
-                          <!--<li><a [routerLink]="['/content','events']">Events</a></li>-->
-                          <!--<li><a [routerLink]="['/content','notifications']">Notifications</a></li>-->
-                        <!--</ul>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</li>-->
-                <!--<li class="uk-parent">-->
-                  <!--<a [routerLink]="['/getImpact']" [routerLinkActive]="['uk-active']">-->
-                    <!--Metrics-->
-                  <!--</a>-->
-                <!--</li>-->
-              </ul>
 
-              <div class="uk-navbar-item">
-
-                <ul *ngIf="!getIsUserLoggedIn()" class="uk-navbar-nav">
-                  <li class="uk-parent">
-                    <a class="" (click)="login()">
-                      Sign in
-                      <span class="uk-margin-small-left uk-icon">
+                <li *ngIf="!getIsUserLoggedIn()" class="uk-parent">
+                  <a class="" (click)="login()">
+                    Sign in
+                    <span class="uk-margin-small-left uk-icon">
                       <svg height="20" ratio="1" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="9.9" cy="6.4" fill="none" r="4.4" stroke="#000" stroke-width="1.1"></circle>
                         <path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>
                       </svg>
                     </span>
-                    </a>
-                  </li>
-                </ul>
-
-                <ul *ngIf="getIsUserLoggedIn()" class="uk-navbar-nav">
-                  <li class="uk-parent">
-                    <a class="" aria-expanded="false">
-                      {{ getUserName() }}
-                      <span class="uk-margin-small-left uk-icon">
+                  </a>
+                </li>
+                <li *ngIf="getIsUserLoggedIn()" class="uk-parent">
+                  <a class="" aria-expanded="false">
+                    {{ getUserName() }}
+                    <span class="uk-margin-small-left uk-icon">
                       <svg height="20" ratio="1" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="9.9" cy="6.4" fill="none" r="4.4" stroke="#000" stroke-width="1.1"></circle>
                         <path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>
                       </svg>
                     </span>
-                    </a>
-                    <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
-                         id="userMenu" (click)="onClick('userMenu')">
-                      <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
-                        <div class="uk-first-column">
-                          <ul class="uk-nav uk-navbar-dropdown-nav">
-                            <!--<ul *ngIf="getIsUserAdmin()" class="uk-nav uk-navbar-dropdown-nav">-->
-                              <!--<li class="uk-nav-header" style="display: block;">Admin</li>-->
-                              <!--<li style="display: block"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>-->
-                              <!--<li style="display: block"><a [routerLink]="['/admin/metrics']">Metrics</a></li>-->
-                              <!--<li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin/registrations']">Registrations</a></li>-->
-                            <!--</ul>-->
-                            <li><a class="" (click)="logout()">Log out</a></li>
-                          </ul>
-                        </div>
+                  </a>
+                  <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"
+                       id="userMenu" (click)="onClick('userMenu')">
+                    <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+                      <div class="uk-first-column">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                          <!--<ul *ngIf="getIsUserAdmin()" class="uk-nav uk-navbar-dropdown-nav">-->
+                          <!--<li class="uk-nav-header" style="display: block;">Admin</li>-->
+                          <!--<li style="display: block"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>-->
+                          <!--<li style="display: block"><a [routerLink]="['/admin/metrics']">Metrics</a></li>-->
+                          <!--<li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin/registrations']">Registrations</a></li>-->
+                          <!--</ul>-->
+                          <li><a class="" (click)="logout()">Log out</a></li>
+                        </ul>
                       </div>
                     </div>
-                  </li>
-                </ul>
+                  </div>
+                </li>
 
-              </div>
+              </ul>
+
+              <!--<div class="uk-navbar-item">-->
+
+                <!--<ul *ngIf="!getIsUserLoggedIn()" class="uk-navbar-nav">-->
+                  <!--<li class="uk-parent">-->
+                    <!--<a class="" (click)="login()">-->
+                      <!--Sign in-->
+                      <!--<span class="uk-margin-small-left uk-icon">-->
+                      <!--<svg height="20" ratio="1" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">-->
+                        <!--<circle cx="9.9" cy="6.4" fill="none" r="4.4" stroke="#000" stroke-width="1.1"></circle>-->
+                        <!--<path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>-->
+                      <!--</svg>-->
+                    <!--</span>-->
+                    <!--</a>-->
+                  <!--</li>-->
+                <!--</ul>-->
+
+                <!--<ul *ngIf="getIsUserLoggedIn()" class="uk-navbar-nav">-->
+                  <!--<li class="uk-parent">-->
+                    <!--<a class="" aria-expanded="false">-->
+                      <!--{{ getUserName() }}-->
+                      <!--<span class="uk-margin-small-left uk-icon">-->
+                      <!--<svg height="20" ratio="1" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">-->
+                        <!--<circle cx="9.9" cy="6.4" fill="none" r="4.4" stroke="#000" stroke-width="1.1"></circle>-->
+                        <!--<path d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" fill="none" stroke="#000" stroke-width="1.1"></path>-->
+                      <!--</svg>-->
+                    <!--</span>-->
+                    <!--</a>-->
+                    <!--<div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="top: 80px; left: 106.55px;"-->
+                         <!--id="userMenu" (click)="onClick('userMenu')">-->
+                      <!--<div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">-->
+                        <!--<div class="uk-first-column">-->
+                          <!--<ul class="uk-nav uk-navbar-dropdown-nav">-->
+                            <!--&lt;!&ndash;<ul *ngIf="getIsUserAdmin()" class="uk-nav uk-navbar-dropdown-nav">&ndash;&gt;-->
+                              <!--&lt;!&ndash;<li class="uk-nav-header" style="display: block;">Admin</li>&ndash;&gt;-->
+                              <!--&lt;!&ndash;<li style="display: block"><a href="{{adminHomePage}}" target="_blank">Help Texts</a></li>&ndash;&gt;-->
+                              <!--&lt;!&ndash;<li style="display: block"><a [routerLink]="['/admin/metrics']">Metrics</a></li>&ndash;&gt;-->
+                              <!--&lt;!&ndash;<li style="display: block" class="uk-margin-small-bottom"><a [routerLink]="['/admin/registrations']">Registrations</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                            <!--<li><a class="" (click)="logout()">Log out</a></li>-->
+                          <!--</ul>-->
+                        <!--</div>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</li>-->
+                <!--</ul>-->
+
+              <!--</div>-->
 
 
             </div>

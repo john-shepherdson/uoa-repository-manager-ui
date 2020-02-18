@@ -62,9 +62,9 @@ export class AppComponent implements OnInit {
     });
   }
 
-  isHomeRoute() {
+  isLandingRoute() {
     // console.log('Is home route? Route is: ' + this.router.url);
-    return (this.router.url === '/') || (this.router.url === '/landing');
+    return (this.router.url === '/') || (this.router.url === '/home') || (this.router.url === '/about');
   }
 
   public toggleOpen(event: MouseEvent) {

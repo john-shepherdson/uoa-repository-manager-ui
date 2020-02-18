@@ -12,8 +12,28 @@
   --develop-portal-color: #DA65AB;
 }
 
-.provide.uk-heading-hero {
-  color: #37C7E9;
+h1.provideLanding {
+  /*color: #37C7E9;*/
+  font: Bold 42px/20px Open Sans;
+  letter-spacing: -2.1px;
+  color: #212121;
+  opacity: 1;
+}
+
+h2.provideLanding {
+  /*color: #37C7E9;*/
+  font: Bold 30px/82px Open Sans;
+  letter-spacing: -0.75px;
+  color: #212121;
+  opacity: 1;
+}
+
+h3.provideLanding {
+  /*color: #37C7E9;*/
+  font: Bold 24px/33px Open Sans;
+  letter-spacing: -0.24px;
+  color: #212121;
+  opacity: 1;
 }
 
 .uk-button-primary {
@@ -109,6 +129,26 @@
   background-color: #9f4e7e;
   border-color: #9f4e7e;
 }
+
+
+.uk-section-secondary {
+  background-color: #F7F7F7;
+}
+
+/************ ABOUT PAGE ***********/
+
+.aboutPage .uk-grid > *, .aboutPage .uk-grid-large > *{
+  padding-left: 0px;
+}
+
+.validationAndRegistrationSection {
+  background-color: #FFE8EB;
+}
+
+/****************************************/
+
+
+
 
 
 

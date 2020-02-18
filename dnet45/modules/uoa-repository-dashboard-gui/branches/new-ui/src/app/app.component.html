@@ -1,5 +1,5 @@
-<div *ngIf="!isHomeRoute() ; else landing" class="sidebar_main_swipe" [class.sidebar_main_active]="open">
-  <!--<div *ngIf="!isHomeRoute() ; else landing" class="sidebar_main_open sidebar_main_swipe uk-height-1-1">-->
+<div *ngIf="!isLandingRoute() ; else landing" class="sidebar_main_swipe" [class.sidebar_main_active]="open">
+  <!--<div *ngIf="!isHomeRoute() ; else home" class="sidebar_main_open sidebar_main_swipe uk-height-1-1">-->
   <top-menu-dashboard></top-menu-dashboard>
   <side-menu></side-menu>
   <div id="hide_controls">

@@ -346,6 +346,10 @@
   color: #6299EC;
 }
 
+.uk-pagination > li {
+  text-align: center;
+}
+
 /****************************************/
 
 

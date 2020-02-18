@@ -93,7 +93,7 @@ export class AuthenticationService {
             deleteCookie('openAIREUser');
             deleteCookie('AccessToken');
             this.isLoggedIn = false;
-            this.router.navigate(['/landing']);
+            this.router.navigate(['/home']);
           },
           () => {
             if ( sessionStorage.getItem('state.location') ) {
@@ -101,8 +101,8 @@ export class AuthenticationService {
               sessionStorage.removeItem('state.location');
               console.log(`tried to login - returning to state: ${state}`);
               if ( !this.getIsUserLoggedIn() ) {
-                console.log('user hasn\'t logged in yet -- going to landing');
-                this.router.navigate(['/landing']);
+                console.log('user hasn\'t logged in yet -- going to home');
+                this.router.navigate(['/home']);
               } else {
                 this.router.navigate([state]);
               }

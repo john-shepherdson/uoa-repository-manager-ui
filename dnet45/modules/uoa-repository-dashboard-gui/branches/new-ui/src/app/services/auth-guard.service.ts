@@ -28,7 +28,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
     // this.authenticationService.redirectUrl = state.url;
     // this.authenticationService.loginWithState();
 
-    this.router.navigate(['/landing']);
+    this.router.navigate(['/home']);
 
     return false;
   }
@@ -42,7 +42,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
       return true;
     }
 
-    this.router.navigate(['/landing']);
+    this.router.navigate(['/home']);
 
     return false;
   }

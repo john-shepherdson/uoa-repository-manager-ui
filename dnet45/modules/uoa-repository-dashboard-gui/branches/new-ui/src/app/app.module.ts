@@ -17,18 +17,20 @@ import { UsagestatsService } from './services/usagestats.service';
 import { StatisticsService } from './services/statistics.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthenticationService } from './services/authentication.service';
-import { LandingComponent } from './pages/landing/landing.component';
+import { HomeComponent } from './pages/landing/home/home.component';
 import { MatomoModule } from 'ngx-matomo';
 import { DashboardService } from "./services/dashboard.service";
 import { EmptyPageComponent } from "./pages/emptypage/empty-page.component";
 import { SharedService } from "./services/shared.service";
 import { JoinComponent } from "./pages/join/join.component";
+import { AboutComponent } from "./pages/landing/about/about.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingComponent,
+    HomeComponent,
+    AboutComponent,
     EmptyPageComponent,
     JoinComponent
   ],

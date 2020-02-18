@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UsageStatsSummary } from '../../domain/typeScriptClasses';
-import { AuthenticationService } from '../../services/authentication.service';
-import { StatisticsService } from '../../services/statistics.service';
+import { Component, OnInit } from '@angular/core';
+import { UsageStatsSummary } from '../../../domain/typeScriptClasses';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { StatisticsService } from '../../../services/statistics.service';
 import { Router } from '@angular/router';
 
 @Component ({
   selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['../../../assets/css/landingpage/theme.css','../../../assets/css/landingpage/custom.css','../../../assets/css/landingpage/custom-provide.css'],
+  templateUrl: './home.component.html',
+  styleUrls: ['../../../../assets/css/landingpage/theme.css','../../../../assets/css/landingpage/custom.css','../../../../assets/css/landingpage/custom-provide.css'],
 })
 
-export class LandingComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   statisticsNumbers: UsageStatsSummary;
   inBeta: boolean;

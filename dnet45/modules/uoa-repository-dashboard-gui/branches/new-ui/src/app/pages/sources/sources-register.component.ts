@@ -1,8 +1,3 @@
-/*
-*  created by myrto
-*/
-
-
 import { Component, OnInit } from '@angular/core';
 
 @Component({
