@@ -2,9 +2,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { LandingComponent } from './pages/landing/landing.component';
 import { AuthGuardService } from './services/auth-guard.service';
-import { DashboardComponent } from './pages/repository/dashboard/dashboard.component';
 import { ForbiddenPageComponent } from './shared/reusablecomponents/403-forbidden-page.component';
-import {EmptyPageComponent} from "./pages/emptypage/empty-page.component";
+import { EmptyPageComponent } from "./pages/emptypage/empty-page.component";
+import { JoinComponent } from "./pages/join/join.component";
 
 const appRoutes: Routes = [
   {
@@ -15,6 +15,11 @@ const appRoutes: Routes = [
   {
     path: 'landing',
     component: LandingComponent
+  },
+  {
+    path: 'join',
+    component: JoinComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'emptyPage',

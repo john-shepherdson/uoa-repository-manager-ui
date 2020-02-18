@@ -22,6 +22,7 @@ import { MatomoModule } from 'ngx-matomo';
 import { DashboardService } from "./services/dashboard.service";
 import { EmptyPageComponent } from "./pages/emptypage/empty-page.component";
 import { SharedService } from "./services/shared.service";
+import { JoinComponent } from "./pages/join/join.component";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { SharedService } from "./services/shared.service";
     AppComponent,
     LandingComponent,
     EmptyPageComponent,
+    JoinComponent
   ],
   imports: [
     BrowserModule,
