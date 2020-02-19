@@ -6,44 +6,71 @@
   --openaire-main-color: #313179;
 
   --explore-portal-color: #D95F2D;
-  --provide-portal-color: #37C7E9;
+  /*--provide-portal-color: #37C7E9;*/
+  --provide-portal-color: #5ABDF9;
   --monitor-portal-color: #9ABB55;
   --connect-portal-color: #EBB13E;
   --develop-portal-color: #DA65AB;
 }
 
-h1.provideLanding {
-  /*color: #37C7E9;*/
-  font: Bold 42px/20px Open Sans;
+.provideLanding {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 0;
+  color: #212121;
+}
+
+.provideLanding .text-muted {
+  color: #707070;
+}
+
+.provideLanding .text-small {
+  font-size: 14px;
+}
+
+.provideLanding h1{
+  font-weight: 700;
+  font-size: 42px;
+  font-family: "Open Sans", sans-serif;
   letter-spacing: -2.1px;
   color: #212121;
   opacity: 1;
 }
 
-h2.provideLanding {
-  /*color: #37C7E9;*/
-  font: Bold 30px/82px Open Sans;
+.provideLanding h2{
+  font-weight: 700;
+  font-size: 30px;
+  font-family: "Open Sans", sans-serif;
   letter-spacing: -0.75px;
   color: #212121;
   opacity: 1;
 }
 
-h3.provideLanding {
-  /*color: #37C7E9;*/
-  font: Bold 24px/33px Open Sans;
+.provideLanding h3{
+  font-weight: 700;
+  font-size: 24px;
+  font-family: "Open Sans", sans-serif;
   letter-spacing: -0.24px;
   color: #212121;
   opacity: 1;
 }
 
+.uk-section-muted {
+  background-color: #F7F7F7;
+}
+
 .uk-button-primary {
-  background-color: #37C7E9;
+  /*background-color: #3EC8FE;*/
+  background-color: #5ABDF9;
+  opacity: 1;
 }
 
 .uk-button-primary:hover {
-  background-color: #3a8fa3;
+  /*background-color: #3EC8FE;*/
+  background-color: #5ABDF9;
   color: #fff;
-  border-color: #3a8fa3;
+  border-color: #5ABDF9;
+  opacity: 0.8;
 }
 
 .explore .uk-h4 {
@@ -134,6 +161,52 @@ h3.provideLanding {
 .uk-section-secondary {
   background-color: #F7F7F7;
 }
+
+/************ HOME PAGE ***********/
+
+.statsSection {
+  background: transparent url('../../imgs/landing/abstract.svg') 0% 0% no-repeat padding-box;
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+.provideLanding .bigNumber {
+  font-weight: 700;
+  font-size: 42px;
+  font-family: "Open Sans", sans-serif;
+  color: #5ABDF9;
+}
+
+.openAIREGuidelinesBox {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #212121;
+  border-radius: 12px;
+  opacity: 1;
+  padding: 30px;
+}
+
+.openAIREGuidelinesBox > div {
+  background: #EDF5FC 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+
+.provideLanding .uk-grid-divider > :not(.uk-first-column)::before {
+  border-left: 1px solid #BFBFBF;
+}
+
+.provideLanding .padding {
+  padding: 30px;
+}
+
+.provideLanding .paddingLargeLeft {
+  padding-left: 60px;
+}
+
+.provideLanding .paddingLargeRight {
+  padding-right: 60px;
+}
+
+/****************************************/
 
 /************ ABOUT PAGE ***********/
 

@@ -1,8 +1,9 @@
-<div>
+<div class="provideLanding">
   <div class="image-front-topbar  uk-section-default"
        uk-scrollspy="{&quot;target&quot;:&quot;[uk-scrollspy-class]&quot;,&quot;cls&quot;:&quot;uk-animation-fade&quot;,&quot;delay&quot;:false}" tm-header-transparent="light">
-    <!--<div style="background-image: url('../../../../assets/imgs/KOJu48AA.jpeg'); background-color: rgb(255, 255, 255); box-sizing: border-box; min-height: calc(-101.35px + 100vh);"-->
-    <div style="background: transparent linear-gradient(0deg, #F7F7F7 0%, #E2EEFA 100%) 0% 0% no-repeat padding-box; box-sizing: border-box; min-height: calc(-101.35px + 100vh);"
+    <!--<div style="background-image: url('../../../../assets/imgs/landing/Group 1149.svg'); background-color: rgb(255, 255, 255); box-sizing: border-box; min-height: calc(-101.35px + 100vh);"-->
+    <!--<div style="background-image: url('../../../../assets/imgs/landing/Group 1149.svg'); background-color: rgb(255, 255, 255); box-sizing: border-box; min-height: calc(-101.35px + 100vh);"-->
+    <div style="background: transparent linear-gradient(0deg, #F7F7F7 20%, #E2EEFA 30%) 0% 0% no-repeat padding-box; box-sizing: border-box; min-height: calc(-101.35px + 100vh);"
          class="uk-background-norepeat uk-background-cover uk-background-top-center uk-background-fixed uk-section uk-padding-remove-bottom uk-flex uk-flex-middle" uk-height-viewport="offset-top: true;offset-bottom: 20">
       <div class="uk-width-1-1">
         <div class="uk-margin-medium uk-grid uk-grid-stack" uk-grid="">
@@ -14,19 +15,24 @@
           <div class="search_box_bg uk-grid-large uk-flex-middle uk-grid uk-grid-stack" uk-grid="">
             <div class="el-overlay uk-panel uk-width-1-1 uk-dark uk-text-center">
 
-              <h1 class="uk-margin provideLanding">Find, Share and Enrich your content.</h1>
+              <h1 class="uk-margin">Find, Share and Enrich your content.</h1>
 
               <div class="uk-container uk-container-xsmall uk-container-center">
-                <div class="uk-margin-medium-top uk-margin-medium-left uk-margin-medium-right" style="color:#707070!important; font-size: 16px;">The Provide Dashboard is a one-stop-shop web service where the OpenAIRE content providers interact with OpenAIRE research graph and infrastructure.</div>
+                <div class="uk-margin-medium-top uk-margin-medium-left uk-margin-medium-right text-muted">
+                  The Provide Dashboard is a one-stop-shop web service where the OpenAIRE content providers interact with OpenAIRE research graph and infrastructure.
+                </div>
               </div>
 
               <div class="uk-container uk-container-large uk-container-center">
-                <div class="uk-grid uk-child-width-1-3@l">
-                  <div class="">
-                    <img src="../../../../assets/imgs/landing/provide.png">
-                  </div>
-                  <div style="display: flex; align-items: center; justify-content: center">
-                    <a (click)="goToPage('/dashboard')" class="el-link uk-button uk-button-primary">Sign In</a>
+
+                <div class="uk-margin-large-left uk-margin-large-right uk-margin-top">
+                  <div class="uk-grid uk-child-width-1-3@l uk-child-width-1-3@m uk-child-width-1-3@s">
+                    <div class="">
+                      <img src="../../../../assets/imgs/landing/provide.png">
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center">
+                      <a (click)="goToPage('/dashboard')" class="el-link uk-button uk-button-primary">SIGN IN</a>
+                    </div>
                   </div>
                 </div>
 
@@ -41,209 +47,213 @@
     </div>
   </div>
 
-  <div class="uk-section-default uk-section uk-section-small">
+  <div class="uk-section-muted uk-section uk-section-large">
+
+    <h2 class="uk-text-center">PROVIDE Dashboard brings all your data together</h2>
+
+    <div class="uk-margin-medium-left uk-margin-medium-right uk-text-center text-muted">Get front-end access to many of OpenAIRE’s backend services!</div>
+
+    <div class="uk-container uk-container-large uk-margin-medium-top">
+      <div class="uk-grid uk-child-width-1-2@l uk-margin-large-left uk-margin-large-right">
+
+        <div>
+          <img src="../../../../assets/imgs/landing/Image%2036.png">
+        </div>
+
+        <div>
+          <h3 class="">Validate</h3>
+          <div>Interoperable metadata is key for effective content sharing.</div>
+          <ul>
+            <li>Use our validation service and see how you can apply the OpenAIRE Guidelines to expose your content using global standards.</li>
+          </ul>
+          <button class="uk-button uk-button-primary uk-margin-top">LEARN MORE</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="uk-section uk-section-muted uk-section-large uk-preserve-color uk-background-norepeat uk-background-cover uk-background-top-center"
+       style="background-image: url('../../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);" uk-height-viewport="offset-top: true; offset-bottom: 20;">
+    <div class="uk-container uk-container-expand">
+
+      <div class="uk-grid uk-child-width-1-3@l">
+        <div>
+          <img src="../../../../assets/imgs/landing/avakas.png">
+        </div>
+        <div class="uk-width-expand">
+          <h1 class="uk-text-center">Do numbers make you happy?</h1>
+
+          <div class="uk-grid uk-child-width-1-4@l uk-margin-medium-left uk-margin-medium-right" style="display: flex;align-items: center;height: 70%;">
+
+            <div>
+              <div class="bigNumber">{{ (statisticsNumbers && statisticsNumbers.literature) ? (statisticsNumbers.literature | number) : 'N/A' }}</div>
+              <div class="uk-text-uppercase">Literature repositories</div>
+            </div>
+
+            <div>
+              <div class="bigNumber">{{ (statisticsNumbers && statisticsNumbers.journal) ? (statisticsNumbers.journal | number) : 'N/A' }}</div>
+              <div class="uk-text-uppercase">Data repositories</div>
+            </div>
+
+            <div>
+              <div class="bigNumber">{{ (statisticsNumbers && statisticsNumbers.dataRepositories) ? (statisticsNumbers.dataRepositories | number) : 'N/A' }}</div>
+              <div class="uk-text-uppercase">OA journals</div>
+            </div>
+
+            <div>
+              <div class="bigNumber">{{ (statisticsNumbers && statisticsNumbers.aggregators) ? (statisticsNumbers.aggregators | number) : 'N/A' }}</div>
+              <div class="uk-text-uppercase">Aggregators</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
     <div class="uk-container uk-container-large">
-      <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-        <div class="uk-width-1-1@m uk-first-column">
-          <div class="uk-margin uk-text-center uk-child-width-1-1 uk-grid-match uk-child-width-1-1@s uk-child-width-1-4@m uk-child-width-1-4@l uk-grid-large uk-grid" uk-grid="">
+      <div class="uk-grid uk-child-width-1-5@l uk-margin-medium-left">
+
+        <div>
+          <h3>{{ (statisticsNumbers && statisticsNumbers.publications) ? (statisticsNumbers.publications | number) : 'N/A' }}</h3>
+          <div class="uk-text-uppercase text-small">publications</div>
+        </div>
+        <div>
+          <h3>{{ (statisticsNumbers && statisticsNumbers.datasets) ? (statisticsNumbers.datasets | number) : 'N/A' }}</h3>
+          <div class="uk-text-uppercase text-small">datasets</div>
+        </div>
+        <div>
+          <h3>{{ (statisticsNumbers && statisticsNumbers.software) ? (statisticsNumbers.software | number) : 'N/A' }}</h3>
+          <div class="uk-text-uppercase text-small">software</div>
+        </div>
+        <div>
+          <h3>{{ statisticsNumbers ? (statisticsNumbers.lastYearUsagestats.number | number) : 'N/A' }}</h3>
+          <div class="uk-text-uppercase text-small">usage events ({{ statisticsNumbers ? statisticsNumbers.lastYearUsagestats.year : 'N/A' }})</div>
+        </div>
+        <div>
+          <h3>{{ (statisticsNumbers && statisticsNumbers.usagestats) ? statisticsNumbers.usagestats : 'N/A' }}</h3>
+          <div class="uk-text-uppercase text-small">metadata exchange events</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="uk-section uk-section-muted uk-section-large text-small" style="background: transparent url('../../../../assets/imgs/landing/kathisto%20paidaki.png') 0% 0% no-repeat padding-box;">-->
+  <div class="uk-section uk-section-muted uk-padding-remove-top text-small">
+
+    <div style="position: relative; top: 86px; text-align: right;right: 195px;">
+      <img src="../../../../assets/imgs/landing/kathisto%20paidaki.png" width="130">
+    </div>
+
+
+    <div class="uk-container uk-container-large openAIREGuidelinesBox">
+      <div>
+
+        <div class="">
+          <h5 class="uk-text-uppercase uk-text-center uk-margin-remove">
+            <img src="../../../../assets/imgs/landing/Arrow%20left.svg" style="margin-top: 35px; margin-right: 25px">
+            <span>Follow OpenAIRE Guidelines</span>
+            <img src="../../../../assets/imgs/landing/Arrow%20right.svg" style="margin-top: 35px; margin-left: 25px">
+          </h5>
+        </div>
+
+        <div style="border-bottom: 1px solid #BFBFBF;border-top: 1px solid #BFBFBF;margin-top: -15px;">
+          <div class="uk-grid uk-child-width-1-2@l uk-grid-divider">
             <div class="uk-first-column">
-              <div class="el-item uk-card uk-card-hover uk-card-small uk-card-body">
-                <a (click)="goToPage('/compatibility/validate')" class="el-link uk-margin-remove-adjacent"></a>
-                <img src="../../../../assets/imgs/Path%20163.svg" class="el-image" alt="" uk-svg="" hidden="true">
-                <h3 class="el-title uk-margin uk-h3">Validate</h3>
-                <!--<div class="el-content uk-margin uk-text-lead">-->
-                <div class="el-content uk-margin">
-                  <p><strong>Interoperable metadata is key for effective content sharing.</strong></p>
-                  <p>Use our validation service and see how you can apply the OpenAIRE Guidelines to expose your content using global standards.</p>
-                </div>
+              <div class="uk-margin-medium-left uk-margin-medium-top uk-margin-medium-bottom">
+                <img width="56" src="../../../../assets/imgs/landing/Guidelines%20color.svg">
+                <div class="uk-margin-bottom uk-margin-top" style="font-weight: 600">OpenAIRE Guidelines</div>
+                <p>Follow the OpenAIRE <strong>Guidelines</strong> to expose your metadata in order to integrate with OpenAIRE infrastructure. Learn more:
+                  <a href="https://guidelines.openaire.eu/en/latest/" target="_blank">https://guidelines.openaire.eu/en/latest/</a></p>
+                <p>Follow the OpenAIRE <strong>Usage Statistics Guidelines</strong> to get ready to track the usage activity of your data source. Learn more:
+                  <a href="https://openaire.github.io/usage-statistics-guidelines/" target="_blank">https://openaire.github.io/usage-statistics-guidelines/</a></p>
               </div>
+
             </div>
+
             <div class="">
-              <div class="el-item uk-card uk-card-hover uk-card-small uk-card-body">
-                <a (click)="goToPage('/sources/register')" class="el-link uk-margin-remove-adjacent"></a>
-                <img src="../../../../assets/imgs/Group%20987.svg" class="el-image" alt="" uk-svg="" hidden="true">
-                <h3 class="el-title uk-margin uk-h3" style="margin-top: 26px !important;">Register</h3>
-                <div class="el-content uk-margin">
-                  <p><strong>Reach a wider audience around the world</strong></p>
-                  <p>Register your literature or data repository, OA Journal, CRIS in OpenAIRE and be part of a global interlinked network. Start now!</p>
-                </div>
+              <div class="uk-margin-medium-right uk-margin-medium-top uk-margin-medium-bottom">
+                <img width="43" src="../../../../assets/imgs/landing/Data%20color.svg">
+                <div class="uk-margin-bottom uk-margin-top" style="font-weight: 600">Our Data Policies</div>
+                <p>
+                  <strong>Data Acquisition</strong> - How we retrieve data, how often, what processes it goes through (aggregating cleaning, transforming, inferring, de-duplicating), what are the quality checks along all data processing stages.
+                </p>
+                <p>
+                  <strong>Data usage</strong> - Who is able to retrieve our data, what are the licences, what about specific SLAs. Learn more:
+                  <a href="https://www.openaire.eu/data-aquisition-policy" target="_blank">https://www.openaire.eu/data-aquisition-policy</a>
+                </p>
               </div>
-            </div>
-            <div class="">
-              <div class="el-item uk-card uk-card-hover uk-card-small uk-card-body">
-                <a (click)="goToPage('/content/events')" class="el-link uk-margin-remove-adjacent"></a>
-                <img src="../../../../assets/imgs/Group%20409.svg" class="el-image" alt="" uk-svg="" hidden="true">
-                <h3 class="el-title uk-margin uk-h3">Enrich</h3>
-                <div class="el-content uk-margin">
-                  <p><strong>Improve your metadata. Get more connections</strong></p>
-                  <p>Our newly released OA Broker service offers a wealth of information on scholarly communication data. Find out what interests you and subscribe to enrich your records. Learn more!</p>
-                </div>
-              </div>
-            </div>
-            <div class="">
-              <div class="el-item uk-card uk-card-hover uk-card-small uk-card-body">
-                <a (click)="goToPage('/getImpact')" class="el-link uk-margin-remove-adjacent"></a>
-                <img src="../../../../assets/imgs/Group%20410.svg" class="el-image" alt="" uk-svg="" hidden="true">
-                <h3 class="el-title uk-margin uk-h3" style="margin-top: 34px !important;">Measure</h3>
-                <div class="el-content uk-margin">
-                  <p><strong>Open research impact empowers Open Science</strong></p>
-                  <p>Participate in the Open Metrics service by sharing your usage data. Get the benefit of an aggregated environment to broaden the mechanisms for impact assesment. Learn more!</p>
-                </div>
-              </div>
+
             </div>
           </div>
-          <div class="uk-margin-medium uk-text-center uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" style="">
-            <a (click)="goToPage('/dashboard')" class="el-content uk-button uk-button-primary">
-              Get Started
-            </a>
+        </div>
+
+
+        <div class="uk-grid uk-child-width-1-2@l uk-grid-divider">
+          <div class="uk-first-column">
+            <div class="uk-margin-medium-left uk-margin-medium-top uk-margin-medium-bottom">
+              <img width="55" src="../../../../assets/imgs/landing/Agreement%20color.svg">
+              <div class="uk-margin-bottom uk-margin-top" style="font-weight: 600">Terms of Agreement for Content Providers</div>
+              <p>Learn more: <a href="https://www.openaire.eu/terms-of-use-for-content-providers" target="_blank">https://www.openaire.eu/terms-of-use-for-content-providers</a></p>
+            </div>
+
           </div>
+
+          <div class="">
+            <div class="uk-margin-medium-right uk-margin-medium-top uk-margin-medium-bottom">
+              <img width="38" src="../../../../assets/imgs/landing/Support%20color.svg">
+              <div class="uk-margin-bottom uk-margin-top" style="font-weight: 600">Support</div>
+              <p>
+                <strong>Validate</strong> and <strong>register</strong> your repository.<br>
+                Learn more: <a href="https://www.openaire.eu/validator-registration-guide" target="_blank">https://www.openaire.eu/validator-registration-guide</a>
+              </p>
+              <p>
+                <strong>Enrich</strong> research artifacts with additional metadata.<br>
+                Learn more: <a href="https://openaire.github.io/usage-statistics-guidelines/" target="_blank">https://openaire.github.io/usage-statistics-guidelines/</a>
+              </p>
+              <p>
+                <strong>Track</strong> the usage activity of your repository.<br>
+                Learn more: <a href="https://www.openaire.eu/guides-usage-statistics" target="_blank">https://www.openaire.eu/guides-usage-statistics</a>
+              </p>
+              <p>
+                Open Science checklist on <strong>how to license</strong> repositories.<br>
+                Learn more: <a href="https://www.openaire.eu/making-your-repository-open" target="_blank">https://www.openaire.eu/making-your-repository-open</a>
+              </p>
+              <p>
+                <strong>Training material</strong> for Content Providers.<br>
+                Learn more: <a href="https://www.openaire.eu/category/content-providers" target="_blank">https://www.openaire.eu/category/content-providers</a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="uk-section uk-section-muted" style="background: transparent linear-gradient(0deg, #E2EEFA 20%, #F7F7F7 70%) 0% 0% no-repeat padding-box; box-sizing: border-box;"
+       class="uk-background-norepeat uk-background-cover uk-background-top-center uk-background-fixed uk-section uk-flex uk-flex-middle">
+    <!--<div style="background: transparent linear-gradient(0deg, #E2EEFA 20%, #F7F7F7 30%) 0% 0% no-repeat padding-box; box-sizing: border-box;"-->
+         <!--class="uk-background-norepeat uk-background-cover uk-background-top-center uk-background-fixed uk-section uk-padding-remove-bottom uk-flex uk-flex-middle">-->
+    <!--</div>-->
+    <div class="uk-container uk-container-xlarge">
+      <div class="uk-grid uk-flex" style="align-items: center">
+        <div class="uk-width-3-4@l">
+          <h2>Contact us to help you.</h2>
+          <p class="text-muted">Are you looking for more? Get in touch with our team and let us help you.</p>
+          <button class="uk-margin-large-top uk-text-uppercase uk-button uk-button-primary">Get in touch</button>
+        </div>
+        <div class="uk-width-1-4@l">
+          <img src="../../../../assets/imgs/landing/contact%20us%20provide.png">
         </div>
       </div>
     </div>
   </div>
 
-  <div class="uk-section-muted uk-section uk-section-small">
-    <div class="uk-container uk-container-large">
-      <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
-        <div class="uk-width-1-1@m uk-first-column">
-          <div class="uk-margin uk-child-width-1-1 uk-grid-match uk-child-width-1-1@s uk-child-width-1-2@m
-            uk-child-width-1-2@l uk-grid-large uk-grid uk-grid-divider provide" uk-grid="">
-            <div class="uk-first-column uk-text-center">
-              <div class="el-item uk-card uk-card-small uk-card-body">
-                <img src="../../../../assets/imgs/Group%20599.svg" class="el-image" alt="" uk-svg="" hidden="true">
-                <h3 class="el-title uk-margin uk-h3">Have more questions?</h3>
-              </div>
-            </div>
-            <div class="questions">
-              <div class="el-item uk-card uk-card-small uk-card-body">
-                <ul class="uk-list uk-list-divider">
-                  <!--<li><a href="https://www.openaire.eu/os-primers">Learn about open science policies and how to align</a></li>-->
-                  <!--<li><a href="https://www.openaire.eu/rdm-handbook">Learn more on how to manage your data in the open science era</a></li>-->
-                  <!--<li><a href="https://www.openaire.eu/guides/">Find out how to use OpenAIRE to best serve your needs</a></li>-->
-                  <!--<li><a href="https://www.openaire.eu/webinars/">View our training material on a variety of related topics</a></li>-->
-                  <!--<li><a href="https://www.openaire.eu/contact-us/">Contact us</a></li>-->
-                  <li><a href="https://www.openaire.eu/validator-registration-guide">Learn how to validate and register your repository</a></li>
-                  <li><a href="https://www.openaire.eu/guides">Find out how to use OpenAIRE to best serve your needs</a></li>
-                  <li><a href="https://www.openaire.eu/category/content-providers">View our training material for Content Providers</a></li>
-                  <li><a href="https://guidelines.openaire.eu/en/latest/">Follow the OpenAIRE Guidelines</a></li>
-                  <li><a href="https://www.openaire.eu/contact-us/">Contact us</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="uk-section-default uk-section">
-    <div class="uk-container">
-      <div class="uk-grid-medium uk-margin-medium uk-grid" uk-grid="">
-        <div class="uk-width-2-3@m uk-first-column">
-          <div class="uk-margin-medium-top uk-panel">
-            <h3 class="el-title uk-margin uk-h3">
-              Our community
-            </h3>
-            <hr class="uk-divider-small uk-text-left provide">
-
-            <div class="uk-grid uk-margin-medium-top">
-
-              <div class="uk-width-expand@m">
-                <p class="uk-margin-medium-bottom">
-                  <span class="emphasis provide">{{ (statisticsNumbers && statisticsNumbers.literature) ? (statisticsNumbers.literature | number) : 'N/A' }}</span><br>
-                  <span class="uk-text-uppercase">literature repositories</span>
-                </p>
-                <p>
-                  <span class="emphasis provide">{{ (statisticsNumbers && statisticsNumbers.journal) ? (statisticsNumbers.journal | number) : 'N/A' }}</span><br>
-                  <span class="uk-text-uppercase">OA Journals</span>
-                </p>
-              </div>
-              <div class="uk-width-expand@m">
-                <p class="uk-margin-medium-bottom">
-                  <span class="emphasis provide">{{ (statisticsNumbers && statisticsNumbers.dataRepositories) ? (statisticsNumbers.dataRepositories | number) : 'N/A' }}</span><br>
-                  <span class="uk-text-uppercase">data repositories</span>
-                </p>
-                <p>
-                  <span class="emphasis provide">{{ (statisticsNumbers && statisticsNumbers.aggregators) ? (statisticsNumbers.aggregators | number) : 'N/A' }}</span><br>
-                  <span class="uk-text-uppercase">aggregators</span>
-                </p>
-              </div>
-
-            </div>
-
-            <div class="uk-grid">
-
-              <div class="uk-width-expand@m">
-                <p>
-                  <span class="emphasis">{{ (statisticsNumbers && statisticsNumbers.publications) ? (statisticsNumbers.publications | number) : 'N/A' }}</span>
-                  <span class="uk-text-uppercase"> publications</span>
-                </p>
-                <p>
-                  <span class="emphasis">{{ (statisticsNumbers && statisticsNumbers.datasets) ? (statisticsNumbers.datasets | number) : 'N/A' }}</span>
-                  <span class="uk-text-uppercase"> datasets</span>
-                </p>
-                <p>
-                  <span class="emphasis">{{ (statisticsNumbers && statisticsNumbers.software) ? (statisticsNumbers.software | number) : 'N/A' }}</span>
-                  <span class="uk-text-uppercase"> software</span>
-                </p>
-              </div>
-              <div class="uk-width-expand@m">
-                <p>
-                  <span class="emphasis">{{ statisticsNumbers ? (statisticsNumbers.lastYearUsagestats.number | number) : 'N/A' }}</span>
-                  <span class="uk-text-uppercase"> usage events
-                  ({{ statisticsNumbers ? statisticsNumbers.lastYearUsagestats.year : 'N/A' }})</span>
-                </p>
-                <p>
-                  <span class="emphasis">
-                    {{ (statisticsNumbers && statisticsNumbers.usagestats) ? statisticsNumbers.usagestats : 'N/A' }}
-                  </span>
-                  <span class="uk-text-uppercase"> metadata exchange events</span>
-                </p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <div class="uk-width-expand@m">
-
-          <div class="uk-card uk-card-body uk-card-provide">
-
-            <h3 class="uk-margin-remove-top uk-h3">
-              <span class="">Our data policies</span>
-            </h3>
-            <hr class="uk-divider-small uk-text-left">
-
-            <ul class="uk-margin-small uk-list uk-list-large uk-margin-medium-bottom">
-              <li class="el-item uk-margin-medium-bottom">
-                <h5 class="el-title uk-h5">Data acquisition</h5>
-                <div class="el-content">
-                  <span>How we retrieve data, how often, what processes it goes through (aggregating cleaning, transforming, inferring, de-duplicating), what are the quality checks&nbsp;along all&nbsp; data processing stages.</span>
-                </div>
-              </li>
-              <li class="el-item">
-                <h5 class="el-title uk-h5">Data usage</h5>
-                <div class="el-content">
-                  <span>Who is able to retrieve our data, what are the licences, what about specific SLAs.</span>
-                </div>
-              </li>
-            </ul>
-            <div class="uk-margin uk-margin-remove-bottom uk-text-left">
-              <h6 class="uk-h6">
-                <a class="el-content uk-link-text" href="https://www.openaire.eu/data-aquisition-policy" target="_blank">
-                  Learn more
-                </a>
-              </h6>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="uk-section-muted" uk-scrollspy="{&quot;target&quot;:&quot;[uk-scrollspy-class]&quot;,&quot;cls&quot;:&quot;uk-animation-fade&quot;,&quot;delay&quot;:false}">
+  <div class="uk-section uk-section-muted" uk-scrollspy="{&quot;target&quot;:&quot;[uk-scrollspy-class]&quot;,&quot;cls&quot;:&quot;uk-animation-fade&quot;,&quot;delay&quot;:false}">
     <div class="uk-container uk-container-large">
       <div class="uk-grid uk-margin-large-top uk-margin-large-bottom" uk-grid="">
         <div class="uk-width-expand@m uk-width-1-2@s uk-dark uk-grid-item-match uk-first-column explore">

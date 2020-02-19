@@ -1,12 +1,15 @@
 .tm-toolbar .uk-subnav-line .custom-provide-li {
-  background:#37C7E9 !important;
+  /*background:#37C7E9 !important;*/
+  background:#5ABDF9 !important;
 }
 
 .tm-toolbar .uk-subnav-line li:hover, .tm-toolbar .uk-subnav li:hover {
-  background: #37C7E9 !important;
+  /*background: #37C7E9 !important;*/
+  background: #5ABDF9 !important;
 }
 
 .tm-toolbar .uk-subnav-line li a:hover, .tm-toolbar .uk-subnav li a:hover, .tm-toolbar .uk-subnav-line li:hover a, .tm-toolbar .uk-subnav li:hover a {
-  background:  #37C7E9 !important;
+  /*background:  #37C7E9 !important;*/
+  background: #5ABDF9 !important;
   color:white !important;
 }
