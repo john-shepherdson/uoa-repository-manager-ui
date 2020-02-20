@@ -199,11 +199,11 @@
 }
 
 .provideLanding .paddingLargeLeft {
-  padding-left: 60px;
+  padding-left: 80px;
 }
 
 .provideLanding .paddingLargeRight {
-  padding-right: 60px;
+  padding-right: 80px;
 }
 
 /****************************************/
@@ -217,6 +217,15 @@
 .validationAndRegistrationSection {
   background-color: #FFE8EB;
 }
+
+.enrichmentsSection {
+  background-color: #99CDE6;
+}
+
+.measureSection {
+  background-color: #FFE8C4;
+  margin-top: 200px;
+ }
 
 /****************************************/
 
