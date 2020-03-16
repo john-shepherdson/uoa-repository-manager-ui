@@ -163,7 +163,7 @@
        style="background-image: url('../../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);" uk-height-viewport="offset-top: true; offset-bottom: 20;">
     <div class="uk-container uk-container-expand">
 
-      <div *ngIf="statisticsNumbers" class="uk-grid uk-child-width-1-3@l">
+      <div class="uk-grid uk-child-width-1-3@l">
         <div>
           <img src="../../../../assets/imgs/landing/avakas.png">
         </div>
@@ -199,7 +199,7 @@
     </div>
 
     <div class="uk-container uk-container-large">
-      <div *ngIf="statisticsNumbers" class="uk-grid uk-child-width-1-5@l uk-margin-medium-left">
+      <div class="uk-grid uk-child-width-1-5@l uk-margin-medium-left">
 
         <div>
           <h3>{{ (statisticsNumbers && statisticsNumbers.publications) ? (statisticsNumbers.publications | number) : 'N/A' }}</h3>
