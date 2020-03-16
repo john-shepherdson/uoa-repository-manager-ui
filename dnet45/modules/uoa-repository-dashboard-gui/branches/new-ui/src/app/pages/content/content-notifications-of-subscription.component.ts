@@ -79,6 +79,8 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
       this.currentPage = this.currentPage + 1;
       console.log(`Get me page ${this.currentPage}!`);
       this.getEventsPage(this.currentPage);
+
+      window.scrollTo(0, 0);
     }
   }
 
@@ -94,6 +96,8 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
       this.currentPage = this.currentPage - 1;
       console.log(`Get me page ${this.currentPage}!`);
       this.getEventsPage(this.currentPage);
+
+      window.scrollTo(0, 0);
     }
   }
 
@@ -116,5 +120,13 @@ export class ContentNotificationsOfSubscriptionComponent implements OnInit {
     } else {
       this.selectedItemIndex = i;
     }
+  }
+
+  showMore(i: number) {
+    this.selectedItemIndex = i;
+  }
+
+  showLess(i: number) {
+    this.selectedItemIndex = null;
   }
 }

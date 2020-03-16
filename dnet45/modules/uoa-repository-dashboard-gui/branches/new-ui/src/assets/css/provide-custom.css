@@ -37,6 +37,10 @@
   border-color: #13BDFF;
 }
 
+.whiteBackground {
+  background-color: #fff;
+}
+
 /************ TOPMENU-DASHBOARD ***********/
 
 .app_my_theme #header_main {
@@ -165,6 +169,10 @@
   background: #DEDEDE 0% 0% no-repeat padding-box;
 }
 
+.dashboard .sidebar_main_active #hide_controls {
+  width: 319px;
+}
+
 
 /*********************************/
 
@@ -213,13 +221,13 @@
 
 /****************************************/
 
-/************ ADMIN RESULTS ***********/
+/************ ADMIN RESULTS + RESULTS GENERAL ***********/
 
 .adminResultsHeader {
   border-top: 1px solid #6299EC;
 }
 
-.repositoryCard .uk-text-meta {
+.repositoryCard .uk-text-meta, .eventCard .uk-text-meta {
   font-size: 12px;
   color: #000;
   opacity: 0.6;
@@ -237,16 +245,31 @@
   opacity: 1;
 }
 
-.repositoryCard .uk-badge-primary {
+.repositoryCard .uk-badge-primary, .eventCard .uk-badge-primary {
   background: #6299EC;
 }
 
-.repositoryCard .mute-title {
+.repositoryCard .uk-badge-success, .eventCard .uk-badge-success {
+  background: #34AA34;
+  opacity: 0.8;
+}
+
+.eventCard .highlightIndex {
+  color: #34AA34;
+}
+
+.eventCard hr {
+  border-top: 1px solid #000000;
+  opacity: 0.5;
+  /*margin: 30px 0 30px 0;*/
+}
+
+.repositoryCard .mute-title, .eventCard .mute-title {
   font-size: 12px;
   color: #A4A4A4;
 }
 
-.repositoryCard .small-content {
+.repositoryCard .small-content, .eventCard .small-content {
   font-size: 12px;
 }
 
@@ -348,6 +371,23 @@
 
 .uk-pagination > li {
   text-align: center;
+}
+
+.app_my_theme .uk-pagination>li>a:hover {
+  color: #fff;
+}
+
+.app_my_theme .uk-pagination>li>a.pagination_arrow:hover {
+  color: #5693f1;
+  background: none;
+}
+
+/****************************************/
+
+/************ FILTERS OFF-CANVAS ***********/
+
+.advancedSearch, .clearCriteria {
+  color: #6299EC !important;
 }
 
 /****************************************/

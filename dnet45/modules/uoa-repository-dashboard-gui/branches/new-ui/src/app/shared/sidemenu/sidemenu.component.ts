@@ -175,6 +175,25 @@ export class SideMenuComponent implements OnInit {
       this.visibleReposOfUser = Object.assign([], this.reposOfUser);
     }
 
+    let route = this.router.url;
+    let repositoryID = '';
+    let index: number = 0;
+    if(route.includes('repository')) {
+
+      console.log('************* route: '+ route);
+      let repositoryIndex = route.indexOf('repository');
+      repositoryID = route.substr(repositoryIndex).split('/')[1];
+
+      console.log('************* repositoryID: '+ repositoryID);
+
+      if(!route.includes('repositoryAdmin')) {
+        this.visibleAdminRepo = false;
+        index = this.reposOfUser.findIndex(x => x.id === repositoryID);
+        console.log('************* index: '+ index);
+        if (index > 5)
+          this.showMoreRepos();
+      }
+    }
 
     // let repository: Repository;
     // this.sharedService.repository$.subscribe(
@@ -195,6 +214,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   showMoreRepos() {
+    console.log('************* show more repos');
     this.visibleReposOfUser = Object.assign([], this.reposOfUser);
     this.allReposVisible = true;
   }

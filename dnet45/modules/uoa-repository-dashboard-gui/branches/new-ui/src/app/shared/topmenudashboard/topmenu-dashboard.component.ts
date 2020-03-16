@@ -68,7 +68,8 @@ export class TopmenuDashboardComponent implements OnInit {
   parseUsername() {
     let firstLetters = "";
     let matches = this.getUserName().match(/\b(\w)/g);
-    firstLetters += matches.join('');
+    if(matches)
+      firstLetters += matches.join('');
     return firstLetters;
   }
 

@@ -206,6 +206,11 @@
   padding-right: 80px;
 }
 
+.iconsWithText {
+  display: flex;
+  /*align-items: center;*/
+}
+
 /****************************************/
 
 /************ ABOUT PAGE ***********/

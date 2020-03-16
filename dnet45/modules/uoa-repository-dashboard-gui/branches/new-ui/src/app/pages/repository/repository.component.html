@@ -34,18 +34,19 @@
                   <!--<a [routerLink]="['/repository/' + repository.id + '/update']">UPDATE</a>-->
                   <a [routerLink]="['./update']">UPDATE</a>
                 </li>
-                <li data-uk-filter="snippets-lang-php" [routerLinkActive]="['uk-active']">
-                  <!--<a [routerLink]="['/repository/' + repository.id + '/getImpact']">METRICS</a>-->
-                  <a *ngIf="repository.piwikInfo && repository.piwikInfo.validated" [routerLink]="['./getImpact/show_metrics']">METRICS</a>
-                  <a *ngIf="repository.piwikInfo && !repository.piwikInfo.validated" [routerLink]="['./getImpact/instructions']">METRICS</a>
-                  <a *ngIf="!repository.piwikInfo" [routerLink]="['./getImpact/enable']">METRICS</a>
-                </li>
                 <li data-uk-filter="snippets-lang-css" [routerLinkActive]="['uk-active']">
                   <a [routerLink]="['./aggregationHistory']">AGREGGATION HISTORY</a>
                 </li>
                 <li data-uk-filter="snippets-lang-javascript" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['./events']">EVENTS</a>
+                  <a [routerLink]="['./events']">ENRICHMENTS</a>
                 </li>
+                <li data-uk-filter="snippets-lang-php" [routerLinkActive]="['uk-active']">
+                  <!--<a [routerLink]="['/repository/' + repository.id + '/getImpact']">METRICS</a>-->
+                  <a *ngIf="repository.piwikInfo && repository.piwikInfo.validated" [routerLink]="['./getImpact/show_metrics']">USAGE STATISTICS</a>
+                  <a *ngIf="repository.piwikInfo && !repository.piwikInfo.validated" [routerLink]="['./getImpact/instructions']">USAGE STATISTICS</a>
+                  <a *ngIf="!repository.piwikInfo" [routerLink]="['./getImpact/enable']">USAGE STATISTICS</a>
+                </li>
+
               </ul>
             </div>
           </div>

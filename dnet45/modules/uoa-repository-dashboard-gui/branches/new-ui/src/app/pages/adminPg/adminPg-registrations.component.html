@@ -27,133 +27,135 @@
 
   </div>
 
-  <div id="page_content_inner">
+  <div id="page_content_inner" class="whiteBackground uk-padding-remove-left uk-padding-remove-right">
 
+    <div class="uk-section uk-background-norepeat uk-background-contain uk-background-bottom-center"
+         style="background-image: url('../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);" uk-height-viewport="offset-top: true; offset-bottom: 20;">
 
+      <!-- TOP HELP CONTENT -->
+      <help-content #topHelperContent [position]="'top'"
+                    [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+      </help-content>
 
-    <!-- TOP HELP CONTENT -->
-    <help-content #topHelperContent [position]="'top'"
-                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-    </help-content>
+      <div class="uk-grid">
 
-    <div class="uk-grid">
+        <!-- LEFT HELP CONTENT -->
+        <aside-help-content #leftHelperContent [position]="'left'"
+                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
 
-      <!-- LEFT HELP CONTENT -->
-      <aside-help-content #leftHelperContent [position]="'left'"
-                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-      </aside-help-content>
+        <!-- MIDDLE -->
+        <div class="uk-width-expand@m">
 
-      <!-- MIDDLE -->
-      <div class="uk-width-expand@m">
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+          <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
 
-        <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-        <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+          <div *ngIf="!errorMessage" class="uk-container">
 
-        <div *ngIf="!errorMessage" class="uk-container">
-
-          <div class="">
             <div class="">
+              <div class="">
 
-              <div class="uk-margin-medium uk-margin-top repositoryAdminActions">
-                <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid">
+                <div class="uk-margin-medium uk-margin-top repositoryAdminActions">
+                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid">
 
-                  <div class="uk-inline">
-                    <div class="uk-margin">
-                      <label class="" for="size">Results per page </label>
-                      <div class="uk-inline">
-                        <select class="uk-select" id="size" (change)="handleChangeAndResetPage()" formControlName="size">
-                          <option value="10">10</option>
-                          <option value="25" selected>25</option>
-                          <option value="50">50</option>
-                          <option value="100">100</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="uk-inline">
-
-                    <div class="uk-inline uk-margin-right">
-                      <label class="" for="orderBy">Order by </label>
-                      <div class="uk-inline">
-                        <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
-                          <option value="DESCENDING" selected>Descending</option>
-                          <option value="ASCENDING">Ascending</option>
-                        </select>
+                    <div class="uk-inline">
+                      <div class="uk-margin">
+                        <label class="" for="size">Results per page </label>
+                        <div class="uk-inline">
+                          <select class="uk-select" id="size" (change)="handleChangeAndResetPage()" formControlName="size">
+                            <option value="10">10</option>
+                            <option value="25" selected>25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
 
                     <div class="uk-inline">
-                      <label class="" for="sortBy">Sort by </label>
-                      <div class="uk-inline">
-                        <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="requestSortBy">
-                          <option value="registrationdate" selected>Date</option>
-                          <option value="officialname">Name</option>
-                        </select>
+
+                      <div class="uk-inline uk-margin-right">
+                        <label class="" for="orderBy">Order by </label>
+                        <div class="uk-inline">
+                          <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
+                            <option value="DESCENDING" selected>Descending</option>
+                            <option value="ASCENDING">Ascending</option>
+                          </select>
+                        </div>
                       </div>
+
+                      <div class="uk-inline">
+                        <label class="" for="sortBy">Sort by </label>
+                        <div class="uk-inline">
+                          <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="requestSortBy">
+                            <option value="registrationdate" selected>Date</option>
+                            <option value="officialname">Name</option>
+                          </select>
+                        </div>
+                      </div>
+
                     </div>
 
-                  </div>
 
-
-                </form>
-              </div>
-
-              <div class="uk-width-1-1@m">
-
-                <ul class="uk-pagination uk-flex-right" uk-margin>
-                  <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
-                  <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
-                  <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
-                </ul>
-
-                <hr class="adminResultsHeader">
-
-                <div *ngIf="loadingMessage" class="loading-big">
-                  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-                    {{ loadingMessage }}
-
-                  </div>
-                  <div class="transparentFilm"></div>
+                  </form>
                 </div>
 
-                <!-- REPOSITORY CARD -->
-                <div *ngFor="let res of repositorySnippet" class="md-card repositoryCard">
-                  <div class="md-card-content large-padding">
-                    <div class="uk-text-meta">{{res.typology.split('::')[0]}}  {{res.typology.split('::')[1]}}  {{res.typology.split('::')[2]}}</div>
-                    <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top"><a [routerLink]="['/repositoryAdmin/' + res.id]">{{res.officialname}}</a></div>
-                    <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>{{res.id}}</div>
-                    <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>{{res.registeredby}}</div>
-                    <div class="uk-margin-small-bottom"><span class="mute-title">Date: </span><span class="small-content">{{res.registrationdate}}</span></div>
-                    <div><span class="mute-title">Organization: </span><span *ngFor="let organization of res.organizations; let i=index" class="small-content"><span *ngIf="i>0">, </span>{{organization.legalname + ' (' + getCountryName(organization.country) + ')'}}</span></div>
+                <div class="uk-width-1-1@m">
+
+                  <ul class="uk-pagination uk-flex-right" uk-margin>
+                    <li><a (click)="previousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>
+                    <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
+                    <li><a (click)="nextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>
+                  </ul>
+
+                  <hr class="adminResultsHeader">
+
+                  <div *ngIf="loadingMessage" class="loading-big">
+                    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                      {{ loadingMessage }}
+
+                    </div>
+                    <div class="transparentFilm"></div>
                   </div>
+
+                  <!-- REPOSITORY CARD -->
+                  <div *ngFor="let res of repositorySnippet" class="md-card repositoryCard">
+                    <div class="md-card-content large-padding">
+                      <div class="uk-text-meta">{{res.typology.split('::')[0]}}  {{res.typology.split('::')[1]}}  {{res.typology.split('::')[2]}}</div>
+                      <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top"><a [routerLink]="['/repositoryAdmin/' + res.id]">{{res.officialname}}</a></div>
+                      <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>{{res.id}}</div>
+                      <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>{{res.registeredby}}</div>
+                      <div class="uk-margin-small-bottom"><span class="mute-title">Date: </span><span class="small-content">{{res.registrationdate}}</span></div>
+                      <div><span class="mute-title">Organization: </span><span *ngFor="let organization of res.organizations; let i=index" class="small-content"><span *ngIf="i>0">, </span>{{organization.legalname + ' (' + getCountryName(organization.country) + ')'}}</span></div>
+                    </div>
+                  </div>
+
+                  <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>
+                    <li><a (click)="previousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>
+                    <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
+                    <li><a (click)="nextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>
+                  </ul>
+
                 </div>
 
-                <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>
-                  <li><a (click)="previousPage()"><span uk-pagination-previous></span></a></li>
-                  <li class="uk-active"><span>{{+dataForm.get('page').value + 1}}</span></li>
-                  <li><a (click)="nextPage()"><span uk-pagination-next></span></a></li>
-                </ul>
-
               </div>
-
             </div>
           </div>
+
         </div>
+
+        <!-- RIGHT HELP CONTENT -->
+        <aside-help-content #rightHelperContent [position]="'right'"
+                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+        </aside-help-content>
 
       </div>
 
-      <!-- RIGHT HELP CONTENT -->
-      <aside-help-content #rightHelperContent [position]="'right'"
-                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-      </aside-help-content>
-
+      <!-- BOTTOM HELP CONTENT -->
+      <help-content #bottomHelperContent [position]="'bottom'"
+                    [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+      </help-content>
     </div>
-
-    <!-- BOTTOM HELP CONTENT -->
-    <help-content #bottomHelperContent [position]="'bottom'"
-                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-    </help-content>
 
   </div>
 </div>

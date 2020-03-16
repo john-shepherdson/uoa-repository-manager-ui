@@ -13,12 +13,16 @@ export class JoinComponent implements OnInit {
 
   repositoriesOfUser: RepositorySnippet[];
 
+  loadingMessage: string;
+
   constructor(private repositoryService: RepositoryService,
               private sharedService: SharedService,
               private router: Router) {
   }
 
   ngOnInit() {
+
+    this.loadingMessage = ' ';
 
     let body = document.getElementsByTagName('body')[0];
     body.classList.remove("landing");
@@ -28,6 +32,8 @@ export class JoinComponent implements OnInit {
       this.repositoriesOfUser = this.sharedService.getRepositoriesOfUser();
       if(this.repositoriesOfUser.length>0)
         this.router.navigate([`/repository/${this.repositoriesOfUser[0].id}/dashboard`]);
+      else
+        this.loadingMessage = null;
     } else {
       this.getReposOfUser();
     }
@@ -41,6 +47,8 @@ export class JoinComponent implements OnInit {
           this.repositoriesOfUser = repos;
           if(this.repositoriesOfUser.length>0)
             this.router.navigate([`/repository/${this.repositoriesOfUser[0].id}/dashboard`]);
+          else
+            this.loadingMessage = null;
         },
         error => { console.log(error); }
       );

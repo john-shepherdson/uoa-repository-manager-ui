@@ -36,7 +36,7 @@
               <div class="md-card-content">
                 <div class="uk-grid" data-uk-grid-margin="">
 
-                  <div class="uk-width-medium-3-10 uk-row-first">
+                  <div class="uk-width-1-5 uk-row-first">
                     <div class="uk-margin-small-top">
                       <div class="md-input-wrapper md-input-filled">
                         <label class="">Filter by job type</label>
@@ -57,10 +57,10 @@
                     </div>
                   </div>
 
-                  <div class="uk-width-medium-5-10 uk-row-first">
+                  <div class="uk-width-3-5">
                   </div>
 
-                  <div class="uk-width-medium-2-10">
+                  <div class="uk-width-1-5">
                     <div class="uk-margin-small-top">
 
                       <div class="md-input-wrapper md-input-filled">
@@ -167,11 +167,17 @@
                   </tbody>
                 </table>
               </div>
-              <ul class="uk-pagination uk-margin-medium-top">
-                <li class="uk-pagination-previous"><a (click)="goToPreviousPage()"><i class="uk-icon-angle-left"></i><span class="uk-margin-left">Previous</span></a></li>
-                <li class=""><span>page {{ (totalPages > 0) ? currentPage+1 : 0 }} of {{ totalPages }}</span></li>
-                <li class="uk-pagination-next"><a (click)="goToNextPage()"><span class="uk-margin-right">Next</span><i class="uk-icon-angle-right"></i></a></li>
+
+              <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>
+                <li><a (click)="goToPreviousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>
+                <li class="uk-active"><span>{{ (totalPages > 0) ? currentPage+1 : 0 }}</span></li>
+                <li><a (click)="goToNextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>
               </ul>
+              <!--<ul class="uk-pagination uk-margin-medium-top">-->
+                <!--<li class="uk-pagination-previous"><a (click)="goToPreviousPage()"><i class="uk-icon-angle-left"></i><span class="uk-margin-left">Previous</span></a></li>-->
+                <!--<li class=""><span>page {{ (totalPages > 0) ? currentPage+1 : 0 }} of {{ totalPages }}</span></li>-->
+                <!--<li class="uk-pagination-next"><a (click)="goToNextPage()"><span class="uk-margin-right">Next</span><i class="uk-icon-angle-right"></i></a></li>-->
+              <!--</ul>-->
             </div>
           </div>
 

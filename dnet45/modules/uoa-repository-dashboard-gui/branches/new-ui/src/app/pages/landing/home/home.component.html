@@ -163,7 +163,7 @@
        style="background-image: url('../../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);" uk-height-viewport="offset-top: true; offset-bottom: 20;">
     <div class="uk-container uk-container-expand">
 
-      <div class="uk-grid uk-child-width-1-3@l">
+      <div *ngIf="statisticsNumbers" class="uk-grid uk-child-width-1-3@l">
         <div>
           <img src="../../../../assets/imgs/landing/avakas.png">
         </div>
@@ -199,27 +199,42 @@
     </div>
 
     <div class="uk-container uk-container-large">
-      <div class="uk-grid uk-child-width-1-5@l uk-margin-medium-left">
+      <div *ngIf="statisticsNumbers" class="uk-grid uk-child-width-1-5@l uk-margin-medium-left">
 
         <div>
           <h3>{{ (statisticsNumbers && statisticsNumbers.publications) ? (statisticsNumbers.publications | number) : 'N/A' }}</h3>
-          <div class="uk-text-uppercase text-small">publications</div>
+          <div class="uk-text-uppercase text-small iconsWithText">
+            <span><i class="fas fa-book fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
+            <span>publications</span>
+          </div>
         </div>
         <div>
           <h3>{{ (statisticsNumbers && statisticsNumbers.datasets) ? (statisticsNumbers.datasets | number) : 'N/A' }}</h3>
-          <div class="uk-text-uppercase text-small">datasets</div>
+          <div class="uk-text-uppercase text-small iconsWithText">
+            <span><i class="fas fa-database fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
+            <span>datasets</span>
+          </div>
         </div>
         <div>
           <h3>{{ (statisticsNumbers && statisticsNumbers.software) ? (statisticsNumbers.software | number) : 'N/A' }}</h3>
-          <div class="uk-text-uppercase text-small">software</div>
+          <div class="uk-text-uppercase text-small iconsWithText">
+            <span><i class="fas fa-cog fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
+            <span>software</span>
+          </div>
         </div>
         <div>
           <h3>{{ (statisticsNumbers && statisticsNumbers.usagestats) ? statisticsNumbers.usagestats : 'N/A' }}</h3>
-          <div class="uk-text-uppercase text-small">metadata exchange events</div>
+          <div class="uk-text-uppercase text-small iconsWithText">
+            <span><i class="fas fa-globe-americas fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
+            <span>metadata exchange events</span>
+          </div>
         </div>
         <div>
           <h3>{{ statisticsNumbers ? (statisticsNumbers.lastYearUsagestats.number | number) : 'N/A' }}</h3>
-          <div class="uk-text-uppercase text-small">usage statistics views & downloads ({{ statisticsNumbers ? statisticsNumbers.lastYearUsagestats.year : 'N/A' }})</div>
+          <div class="uk-text-uppercase text-small iconsWithText">
+            <span><i class="fas fa-globe-americas fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
+            <span>usage statistics views & downloads ({{ statisticsNumbers ? statisticsNumbers.lastYearUsagestats.year : 'N/A' }})</span>
+          </div>
         </div>
       </div>
     </div>

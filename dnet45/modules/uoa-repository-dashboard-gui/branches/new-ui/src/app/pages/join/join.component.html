@@ -1,46 +1,160 @@
 <div id="page_content">
-  <div id="page_content_inner">
+  <div id="page_content_inner" class="whiteBackground uk-padding-remove-left uk-padding-remove-right">
 
-    <div class="uk-margin-large-top uk-margin-medium-left uk-margin-medium-right">
-
-      <h3 class="heading_b">You have not yet registered any repositories</h3>
-
-      <div class="uk-grid uk-child-width-1-3@l uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match">
-
-        <div class="">
-          <div class="md-card md-card-hover">
-            <a [routerLink]="['/sources/register']">
-              <div class="md-card-content large-padding" style="min-height: 150px;">
-                <div class="">
-                  <strong>Register</strong>
-                </div>
-                <p>Register data sources in the OpenAIRE infrastructure.</p>
-              </div>
-            </a>
-          </div>
-        </div>
-
-
-        <div class="">
-          <div class="md-card md-card-hover">
-            <a [routerLink]="['/compatibility/validate']">
-              <div class="md-card-content large-padding" style="min-height: 150px;">
-                <div class="">
-                  <strong>Validate</strong>
-                </div>
-                <p>Validate data sources against OpenAIRE guidelines.</p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="uk-margin-large-top">
-        <h3>Take a look at the Provide Dashboard and functionalities</h3>
-
-
-      </div>
-
+    <div *ngIf="loadingMessage" class="loading-big">
+      <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+      <div class="transparentFilm"></div>
     </div>
+
+    <div *ngIf="!loadingMessage" class="uk-margin-top">
+      <div class="uk-section">
+        <div class="uk-margin-large-left uk-margin-large-right">
+          <h3 class="heading_b" style="font-weight: 500">You have not yet registered any repositories</h3>
+
+          <div class="uk-grid uk-child-width-1-3@l uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match">
+
+            <div class="">
+              <div class="md-card md-card-hover">
+                <a [routerLink]="['/sources/register']">
+                  <div class="md-card-content large-padding" style="min-height: 150px;">
+                    <div class="">
+                      <strong>Register</strong>
+                    </div>
+                    <p>Register data sources in the OpenAIRE infrastructure.</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+
+            <div class="">
+              <div class="md-card md-card-hover">
+                <a [routerLink]="['/compatibility/validate']">
+                  <div class="md-card-content large-padding" style="min-height: 150px;">
+                    <div class="">
+                      <strong>Validate</strong>
+                    </div>
+                    <p>Validate data sources against OpenAIRE guidelines.</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="uk-section uk-background-norepeat uk-background-cover uk-background-top-center"
+           style="background-image: url('../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);" uk-height-viewport="offset-top: true; offset-bottom: 20;">
+        <div class="uk-margin-large-top uk-margin-large-left uk-margin-large-right">
+          <h3 class="heading_b" style="font-weight: 700">Take a look at the Provide Dashboard and functionalities</h3>
+
+          <div class="uk-container uk-container-large uk-margin-medium-top">
+
+            <div class="uk-slider" tabindex="-1" uk-slider="velocity: 0;autoplay: true;autoplay-interval: 5000;pause-on-hover: false;center: true">
+              <div class="uk-position-relative">
+                <div class="uk-slider-container">
+                  <ul class="uk-slider-items uk-child-width-1-1" style="transform: translateX(-1300px);">
+                    <li class="ng-star-inserted uk-active" tabindex="-1" style="order: 1;">
+                      <div class="uk-flex uk-padding uk-child-width-1-2@m uk-child-width-1-1@s uk-grid" uk-grid="">
+                        <div class="uk-first-column">
+                          <img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/validate.gif">
+                        </div>
+                        <div class="uk-margin-top">
+                          <div>
+                            <div class="uk-text-bold uk-h4">Validate</div>
+                            <div class="uk-margin-medium">
+                              Interoperable metadata is key for effective content sharing.
+                              <ul class="uk-margin-top">
+                                <li>Use our validation service and see how you can apply the OpenAIRE Guidelines to expose your content using global standards.</li>
+                              </ul>
+                            </div>
+                            <div class="uk-inline">
+                              <a class="uk-button uk-button-primary uk-text-uppercase" [routerLink]="['/about']">learn more</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li tabindex="-1" style="order: 1;">
+                      <div class="uk-flex uk-padding uk-child-width-1-2@m uk-child-width-1-1@s uk-grid" uk-grid="">
+                        <div class="uk-first-column">
+                          <img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/register.gif">
+                        </div>
+                        <div class="uk-margin-top">
+                          <div>
+                            <div class="uk-text-bold uk-h4">Register</div>
+                            <div class="uk-margin-medium">
+                              Reach a wider audience around the world
+                              <ul class="uk-margin-top">
+                                <li>Register your literature or data repository, OA Journal, CRIS in OpenAIRE and be part of a global interlinked network. Start now!</li>
+                              </ul>
+                            </div>
+                            <div class="uk-inline">
+                              <a class="uk-button uk-button-primary uk-text-uppercase" [routerLink]="['/about']">learn more</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li tabindex="-1" style="order: 1;">
+                      <div class="uk-flex uk-padding uk-child-width-1-2@m uk-child-width-1-1@s uk-grid" uk-grid="">
+                        <div class="uk-first-column">
+                          <img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/enrichments.gif">
+                        </div>
+                        <div class="uk-margin-top">
+                          <div>
+                            <div class="uk-text-bold uk-h4">Enrich</div>
+                            <div class="uk-margin-medium">
+                              Improve your metadata. Get more connections
+                              <ul class="uk-margin-top">
+                                <li>Our newly released OA Broker service offers a wealth of information on scholarly communication data. Find out what interests you and subscribe to enrich your records. Learn more!</li>
+                              </ul>
+                            </div>
+                            <div class="uk-inline">
+                              <a class="uk-button uk-button-primary uk-text-uppercase" [routerLink]="['/about']">learn more</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li tabindex="-1" style="order: 1;">
+                      <div class="uk-flex uk-padding uk-child-width-1-2@m uk-child-width-1-1@s uk-grid" uk-grid="">
+                        <div class="uk-first-column">
+                          <img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/usageStats.gif">
+                        </div>
+                        <div class="uk-margin-top">
+                          <div>
+                            <div class="uk-text-bold uk-h4">Measure</div>
+                            <div class="uk-margin-medium">
+                              Open research impact empowers Open Science
+                              <ul class="uk-margin-top">
+                                <li>Participate in the Open Metrics service by sharing your usage data. Get the benefit of an aggregated environment to broaden the mechanisms for impact assessment.</li>
+                              </ul>
+                            </div>
+                            <div class="uk-inline">
+                              <a class="uk-button uk-button-primary uk-text-uppercase" [routerLink]="['/about']">learn more</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <ul class="uk-position-relative uk-slider-nav uk-dotnav uk-flex-center uk-margin">
+                <li uk-slider-item="0" class="uk-active"><a href="#"></a></li>
+                <li uk-slider-item="1" class=""><a href="#"></a></li>
+                <li uk-slider-item="2" class=""><a href="#"></a></li>
+                <li uk-slider-item="3" class=""><a href="#"></a></li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

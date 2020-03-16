@@ -282,6 +282,8 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
       this.currentPage = this.currentPage + 1;
       console.log(`Get me page ${this.currentPage}!`);
       this.getEventsPage(this.currentPage);
+
+      window.scrollTo(0, 0);
     }
 
   }
@@ -298,6 +300,8 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
       this.currentPage = this.currentPage - 1;
       console.log(`Get me page ${this.currentPage}!`);
       this.getEventsPage(this.currentPage);
+
+      window.scrollTo(0, 0);
     }
   }
 
@@ -344,12 +348,20 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     }
   }
 
-  displayFullResultInfo(i: number) {
-    if (this.selectedItemIndex === i) {
-      this.selectedItemIndex = null;
-    } else {
-      this.selectedItemIndex = i;
-    }
+  // displayFullResultInfo(i: number) {
+  //   if (this.selectedItemIndex === i) {
+  //     this.selectedItemIndex = null;
+  //   } else {
+  //     this.selectedItemIndex = i;
+  //   }
+  // }
+
+  showMore(i: number) {
+    this.selectedItemIndex = i;
+  }
+
+  showLess(i: number) {
+    this.selectedItemIndex = null;
   }
 
 }
