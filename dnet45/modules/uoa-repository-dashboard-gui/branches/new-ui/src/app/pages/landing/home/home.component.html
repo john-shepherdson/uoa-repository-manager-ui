@@ -63,7 +63,10 @@
               <li class="ng-star-inserted uk-active" tabindex="-1" style="order: 1;">
                 <div class="uk-flex uk-padding uk-child-width-1-2@m uk-child-width-1-1@s uk-grid" uk-grid="">
                   <div class="uk-first-column">
-                    <img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/validate.gif">
+                    <video class="uk-box-shadow-large uk-border-rounded" autoplay loop>
+                      <source src="../../../../assets/mp4/validate.mp4" type="video/mp4">
+                    </video>
+                    <!--<img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/validate.gif">-->
                   </div>
                   <div class="uk-margin-top">
                     <div>
@@ -84,7 +87,10 @@
               <li tabindex="-1" style="order: 1;">
                 <div class="uk-flex uk-padding uk-child-width-1-2@m uk-child-width-1-1@s uk-grid" uk-grid="">
                   <div class="uk-first-column">
-                    <img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/register.gif">
+                    <video class="uk-box-shadow-large uk-border-rounded" autoplay loop>
+                      <source src="../../../../assets/mp4/register.mp4" type="video/mp4">
+                    </video>
+                    <!--<img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/register.gif">-->
                   </div>
                   <div class="uk-margin-top">
                     <div>
@@ -105,7 +111,10 @@
               <li tabindex="-1" style="order: 1;">
                 <div class="uk-flex uk-padding uk-child-width-1-2@m uk-child-width-1-1@s uk-grid" uk-grid="">
                   <div class="uk-first-column">
-                    <img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/enrichments.gif">
+                    <video class="uk-box-shadow-large uk-border-rounded" autoplay loop>
+                      <source src="../../../../assets/mp4/enrich.mp4" type="video/mp4">
+                    </video>
+                    <!--<img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/enrichments.gif">-->
                   </div>
                   <div class="uk-margin-top">
                     <div>
@@ -126,7 +135,10 @@
               <li tabindex="-1" style="order: 1;">
                 <div class="uk-flex uk-padding uk-child-width-1-2@m uk-child-width-1-1@s uk-grid" uk-grid="">
                   <div class="uk-first-column">
-                    <img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/usageStats.gif">
+                    <video class="uk-box-shadow-large uk-border-rounded" autoplay loop>
+                      <source src="../../../../assets/mp4/usage-stat.mp4" type="video/mp4">
+                    </video>
+                    <!--<img class="uk-box-shadow-large uk-border-rounded" src="../../../../assets/gifs/usageStats.gif">-->
                   </div>
                   <div class="uk-margin-top">
                     <div>
@@ -170,24 +182,24 @@
         <div class="uk-width-expand">
           <h1 class="uk-text-center">Do numbers make you happy?</h1>
 
-          <div class="uk-grid uk-child-width-1-4@l uk-margin-medium-left uk-margin-medium-right uk-text-center" style="display: flex;align-items: center;height: 70%;">
+          <div class="uk-grid uk-child-width-1-4@l uk-child-width-1-1@s uk-margin-medium-left uk-margin-medium-right uk-text-center" style="display: flex;align-items: center;height: 70%;">
 
-            <div>
+            <div class="uk-margin-top">
               <div class="bigNumber">{{ (statisticsNumbers && statisticsNumbers.literature) ? (statisticsNumbers.literature | number) : 'N/A' }}</div>
               <div class="uk-text-uppercase">Literature repositories</div>
             </div>
 
-            <div>
+            <div class="uk-margin-top">
               <div class="bigNumber">{{ (statisticsNumbers && statisticsNumbers.journal) ? (statisticsNumbers.journal | number) : 'N/A' }}</div>
               <div class="uk-text-uppercase">Data repositories</div>
             </div>
 
-            <div>
+            <div class="uk-margin-top">
               <div class="bigNumber">{{ (statisticsNumbers && statisticsNumbers.dataRepositories) ? (statisticsNumbers.dataRepositories | number) : 'N/A' }}</div>
               <div class="uk-text-uppercase">OA journals</div>
             </div>
 
-            <div>
+            <div class="uk-margin-top">
               <div class="bigNumber">{{ (statisticsNumbers && statisticsNumbers.aggregators) ? (statisticsNumbers.aggregators | number) : 'N/A' }}</div>
               <div class="uk-text-uppercase">Aggregators</div>
             </div>
@@ -198,38 +210,38 @@
 
     </div>
 
-    <div class="uk-container uk-container-large">
-      <div class="uk-grid uk-child-width-1-5@l uk-margin-medium-left">
+    <div class="uk-container uk-container-large uk-margin-top">
+      <div class="uk-grid uk-child-width-1-5@l uk-child-width-1-1@s uk-margin-medium-left">
 
-        <div>
+        <div class="uk-margin-top">
           <h3>{{ (statisticsNumbers && statisticsNumbers.publications) ? (statisticsNumbers.publications | number) : 'N/A' }}</h3>
           <div class="uk-text-uppercase text-small iconsWithText">
             <span><i class="fas fa-book fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
             <span>publications</span>
           </div>
         </div>
-        <div>
+        <div class="uk-margin-top">
           <h3>{{ (statisticsNumbers && statisticsNumbers.datasets) ? (statisticsNumbers.datasets | number) : 'N/A' }}</h3>
           <div class="uk-text-uppercase text-small iconsWithText">
             <span><i class="fas fa-database fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
             <span>datasets</span>
           </div>
         </div>
-        <div>
+        <div class="uk-margin-top">
           <h3>{{ (statisticsNumbers && statisticsNumbers.software) ? (statisticsNumbers.software | number) : 'N/A' }}</h3>
           <div class="uk-text-uppercase text-small iconsWithText">
             <span><i class="fas fa-cog fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
             <span>software</span>
           </div>
         </div>
-        <div>
+        <div class="uk-margin-top">
           <h3>{{ (statisticsNumbers && statisticsNumbers.usagestats) ? statisticsNumbers.usagestats : 'N/A' }}</h3>
           <div class="uk-text-uppercase text-small iconsWithText">
             <span><i class="fas fa-globe-americas fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>
             <span>metadata exchange events</span>
           </div>
         </div>
-        <div>
+        <div class="uk-margin-top">
           <h3>{{ statisticsNumbers ? (statisticsNumbers.lastYearUsagestats.number | number) : 'N/A' }}</h3>
           <div class="uk-text-uppercase text-small iconsWithText">
             <span><i class="fas fa-globe-americas fa-2x uk-margin-small-right" style="color: #3EC8FE"></i></span>

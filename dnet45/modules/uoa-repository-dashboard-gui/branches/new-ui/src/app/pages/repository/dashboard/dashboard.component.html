@@ -44,13 +44,12 @@
       </div>
       <div style="">
         <div class="md-card">
-          <a [routerLink]="['/repository/' + repository.id + '/getImpact/show_metrics']">
+          <a [routerLink]="['/repository/' + repository.id + '/events']">
             <div class="md-card-content">
-              <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_sale peity_data" style="display: none;">5,3,9,6,5,9,7,3,5,2</span><svg class="peity" height="28" width="64"><polygon fill="#d1e4f6" points="0 27.5 0 12.5 7.111111111111111 18.5 14.222222222222221 0.5 21.333333333333332 9.5 28.444444444444443 12.5 35.55555555555556 0.5 42.666666666666664 6.5 49.77777777777777 18.5 56.888888888888886 12.5 64 21.5 64 27.5"></polygon><polyline fill="none" points="0 12.5 7.111111111111111 18.5 14.222222222222221 0.5 21.333333333333332 9.5 28.444444444444443 12.5 35.55555555555556 0.5 42.666666666666664 6.5 49.77777777777777 18.5 56.888888888888886 12.5 64 21.5" stroke="#0288d1" stroke-width="1" stroke-linecap="square"></polyline></svg></div>
-              <span class="uk-text-muted uk-text-small">Downloads</span>
+              <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_orders peity_data" style="display: none;">64/100</span><svg class="peity" height="24" width="24"><path d="M 12 0 A 12 12 0 1 1 2.7538410866905263 19.649087876984275 L 7.376920543345263 15.824543938492138 A 6 6 0 1 0 12 6" data-value="64" fill="#8bc34a"></path><path d="M 2.7538410866905263 19.649087876984275 A 12 12 0 0 1 11.999999999999998 0 L 11.999999999999998 6 A 6 6 0 0 0 7.376920543345263 15.824543938492138" data-value="36" fill="#eee"></path></svg></div>
+              <span class="uk-text-muted uk-text-small">Enrichments</span>
               <h2 class="uk-margin-remove">
-                <span *ngIf="totalDownloads == '--'">{{ totalDownloads }}</span>
-                <span *ngIf="totalDownloads != '--'">{{ totalDownloads | number }}</span>
+                <span class="countUpMe">{{ totalNumberOfEvents | number }}</span>
               </h2>
             </div>
           </a>
@@ -58,12 +57,13 @@
       </div>
       <div style="">
         <div class="md-card">
-          <a [routerLink]="['/repository/' + repository.id + '/events']">
+          <a [routerLink]="['/repository/' + repository.id + '/getImpact/show_metrics']">
             <div class="md-card-content">
-              <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_orders peity_data" style="display: none;">64/100</span><svg class="peity" height="24" width="24"><path d="M 12 0 A 12 12 0 1 1 2.7538410866905263 19.649087876984275 L 7.376920543345263 15.824543938492138 A 6 6 0 1 0 12 6" data-value="64" fill="#8bc34a"></path><path d="M 2.7538410866905263 19.649087876984275 A 12 12 0 0 1 11.999999999999998 0 L 11.999999999999998 6 A 6 6 0 0 0 7.376920543345263 15.824543938492138" data-value="36" fill="#eee"></path></svg></div>
-              <span class="uk-text-muted uk-text-small">Enrichments</span>
+              <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_sale peity_data" style="display: none;">5,3,9,6,5,9,7,3,5,2</span><svg class="peity" height="28" width="64"><polygon fill="#d1e4f6" points="0 27.5 0 12.5 7.111111111111111 18.5 14.222222222222221 0.5 21.333333333333332 9.5 28.444444444444443 12.5 35.55555555555556 0.5 42.666666666666664 6.5 49.77777777777777 18.5 56.888888888888886 12.5 64 21.5 64 27.5"></polygon><polyline fill="none" points="0 12.5 7.111111111111111 18.5 14.222222222222221 0.5 21.333333333333332 9.5 28.444444444444443 12.5 35.55555555555556 0.5 42.666666666666664 6.5 49.77777777777777 18.5 56.888888888888886 12.5 64 21.5" stroke="#0288d1" stroke-width="1" stroke-linecap="square"></polyline></svg></div>
+              <span class="uk-text-muted uk-text-small">Downloads</span>
               <h2 class="uk-margin-remove">
-                <span class="countUpMe">{{ totalNumberOfEvents | number }}</span>
+                <span *ngIf="totalDownloads == '--'">{{ totalDownloads }}</span>
+                <span *ngIf="totalDownloads != '--'">{{ totalDownloads | number }}</span>
               </h2>
             </div>
           </a>
@@ -88,7 +88,7 @@
     <div class="uk-grid uk-grid-medium uk-grid-match" data-uk-grid-margin="" data-uk-grid-match="{target:'.md-card-content'}">
 
       <!--COLLECTION MONITOR-->
-      <div class="uk-width-1-5@m uk-row-first">
+      <div class="uk-width-1-4@m uk-row-first">
         <div class="md-card" style="min-height: 600px">
           <div class="md-card-content">
             <h3 class="heading_a uk-margin-bottom">Aggregation History</h3>
@@ -168,58 +168,58 @@
 
       <div class="uk-width-expand@m">
 
-        <!--VALIDATIONS-->
-        <div class="md-card"  style="min-height: 300px">
-          <div class="md-card-content">
-            <h3 class="heading_a uk-margin-bottom">Validation History</h3>
-            <div class="uk-overflow-container">
-              <div *ngIf="noValidationsMessage">{{ noValidationsMessage }}</div>
-              <div *ngIf="errorValidationsMessage" class="uk-alert uk-alert-danger">{{ errorValidationsMessage }}</div>
-              <div *ngIf="loadingJobSummaryMessage" class="loading-big">
-                <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-                  {{ loadingJobSummaryMessage }}
-                </div>
-                <div class="whiteFilm"></div>
-              </div>
+        <!--&lt;!&ndash;VALIDATIONS&ndash;&gt;-->
+        <!--<div class="md-card"  style="min-height: 300px">-->
+          <!--<div class="md-card-content">-->
+            <!--<h3 class="heading_a uk-margin-bottom">Validation History</h3>-->
+            <!--<div class="uk-overflow-container">-->
+              <!--<div *ngIf="noValidationsMessage">{{ noValidationsMessage }}</div>-->
+              <!--<div *ngIf="errorValidationsMessage" class="uk-alert uk-alert-danger">{{ errorValidationsMessage }}</div>-->
+              <!--<div *ngIf="loadingJobSummaryMessage" class="loading-big">-->
+                <!--<div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">-->
+                  <!--{{ loadingJobSummaryMessage }}-->
+                <!--</div>-->
+                <!--<div class="whiteFilm"></div>-->
+              <!--</div>-->
 
-              <table *ngIf="storedJob && (storedJob.length > 0) && !noValidationsMessage" class="uk-table">
-                <thead>
-                <tr>
-                  <th class="uk-text-nowrap">Base URL</th>
-                  <th class="uk-text-nowrap">Validation Type</th>
-                  <th class="uk-text-nowrap">Status</th>
-                  <th class="uk-text-nowrap">Score</th>
-                  <th class="uk-text-nowrap uk-text-right">Guidelines</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let job of storedJob" class="uk-table-middle uk-text-muted">
-                  <td class="uk-width-3-10 uk-text-nowrap"><div>{{ job.baseUrl }}</div></td>
-                  <td>
-                    <div *ngIf="job.validationType.includes('C')" class="">OAI Content</div>
-                    <div *ngIf="job.validationType.includes('U')" class="">OAI Usage</div>
-                  </td>
-                  <td class="uk-text-nowrap">
-                    <div [ngClass]="job.contentJobStatus == 'finished' ? 'uk-badge uk-badge-success':
-                      ( job.contentJobStatus == 'ongoing' ) ? 'uk-badge' :
-                      ( job.contentJobStatus == 'none' ) ? 'uk-badge uk-badge-warning' : 'clear-style' ">{{ job.contentJobStatus }}</div>
-                    <br *ngIf="job.contentJobStatus == 'finished' || 'ongoing' || 'none' ">
-                    <div [ngClass]="job.usageJobStatus == 'finished' ? 'uk-badge uk-badge-success':
-                      ( job.usageJobStatus == 'ongoing' ) ? 'uk-badge' :
-                      ( job.usageJobStatus == 'none' ) ? 'uk-badge uk-badge-warning' : 'clear-style' ">{{ job.usageJobStatus }}</div>
-                  </td>
-                  <td>
-                    <div>{{ job.contentJobScore }}</div>
-                    <div>{{ job.usageJobScore }}</div>
-                  </td>
-                  <td class="uk-width-3-10 uk-text-right"><div>{{ job.guidelinesShortName }}</div></td>
-                </tr>
-                </tbody>
-              </table>
-              <div class="uk-position-bottom-right" style="margin-bottom: 10px; margin-right: 10px"><a [routerLink]="['/compatibility/browseHistory/']">view more..</a></div>
-            </div>
-          </div>
-        </div>
+              <!--<table *ngIf="storedJob && (storedJob.length > 0) && !noValidationsMessage" class="uk-table">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                  <!--<th class="uk-text-nowrap">Base URL</th>-->
+                  <!--<th class="uk-text-nowrap">Validation Type</th>-->
+                  <!--<th class="uk-text-nowrap">Status</th>-->
+                  <!--<th class="uk-text-nowrap">Score</th>-->
+                  <!--<th class="uk-text-nowrap uk-text-right">Guidelines</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr *ngFor="let job of storedJob" class="uk-table-middle uk-text-muted">-->
+                  <!--<td class="uk-width-3-10 uk-text-nowrap"><div>{{ job.baseUrl }}</div></td>-->
+                  <!--<td>-->
+                    <!--<div *ngIf="job.validationType.includes('C')" class="">OAI Content</div>-->
+                    <!--<div *ngIf="job.validationType.includes('U')" class="">OAI Usage</div>-->
+                  <!--</td>-->
+                  <!--<td class="uk-text-nowrap">-->
+                    <!--<div [ngClass]="job.contentJobStatus == 'finished' ? 'uk-badge uk-badge-success':-->
+                      <!--( job.contentJobStatus == 'ongoing' ) ? 'uk-badge' :-->
+                      <!--( job.contentJobStatus == 'none' ) ? 'uk-badge uk-badge-warning' : 'clear-style' ">{{ job.contentJobStatus }}</div>-->
+                    <!--<br *ngIf="job.contentJobStatus == 'finished' || 'ongoing' || 'none' ">-->
+                    <!--<div [ngClass]="job.usageJobStatus == 'finished' ? 'uk-badge uk-badge-success':-->
+                      <!--( job.usageJobStatus == 'ongoing' ) ? 'uk-badge' :-->
+                      <!--( job.usageJobStatus == 'none' ) ? 'uk-badge uk-badge-warning' : 'clear-style' ">{{ job.usageJobStatus }}</div>-->
+                  <!--</td>-->
+                  <!--<td>-->
+                    <!--<div>{{ job.contentJobScore }}</div>-->
+                    <!--<div>{{ job.usageJobScore }}</div>-->
+                  <!--</td>-->
+                  <!--<td class="uk-width-3-10 uk-text-right"><div>{{ job.guidelinesShortName }}</div></td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+              <!--</table>-->
+              <!--<div class="uk-position-bottom-right" style="margin-bottom: 10px; margin-right: 10px"><a [routerLink]="['/compatibility/browseHistory/']">view more..</a></div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
 
         <!--USAGE STATISTICS-->
         <div class="md-card" style="min-height: 300px">
