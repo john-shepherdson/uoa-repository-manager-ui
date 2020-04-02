@@ -392,6 +392,17 @@
 
 /****************************************/
 
+/************ DATASOURCE TYPE SELECTION ***********/
+
+.datasourceTypeCard {
+  background: #F6FAFD 0% 0% no-repeat padding-box;
+  box-shadow: 1px 1px 6px #00000029;
+  border-radius: 5px;
+  opacity: 1;
+}
+
+/****************************************/
+
 
 .comment {
   font-size: 70%;

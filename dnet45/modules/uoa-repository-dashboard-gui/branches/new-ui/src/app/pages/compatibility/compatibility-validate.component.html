@@ -17,46 +17,56 @@
       <!-- MIDDLE -->
       <div class=" uk-width-expand@m">
 
-        <div class="uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection" data-uk-grid-margin="">
-          <div class="uk-width-1-3@m uk-row-first">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
+        <div class="uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m" data-uk-grid-margin="">
+
+          <div class="uk-row-first">
+            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
               <a [routerLink]="['literature']" [queryParams]="{ step: 'baseUrl' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-              <div class="uk-card-media-top">
-                <img class="el-image" src="../../../assets/imgs/Literature_repos_wide.png" alt="" style="width: 100%;">
-              </div>
-              <div class="uk-card-body">
-                <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom">
-                  Run compatibility test against the OpenAIRE literature guidelines.
-                </h3>
-              </div>
-            </div>
-          </div>
-          <div class="uk-width-1-3@m">
-            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-              <a [routerLink]="['data']" [queryParams]="{ step: 'baseUrl' }" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
-              <div class="uk-card-media-top">
-                <img class="el-image" class="el-image" src="../../../assets/imgs/Data_repos_wide.png" alt="" style="width:100%;">
-              </div>
-              <div class="uk-card-body">
-                <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom" >
-                  Run compatibility test against the OpenAIRE Guidelines for Data Archives.
-                </h3>
+              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
+                <div class="">
+                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Asset%203.svg" alt="" width="50">
+                </div>
+                <h3>Literature repository</h3>
+                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+                  <p class="uk-margin-remove">Run compatibility test against the OpenAIRE literature guidelines.</p>
+                </div>
               </div>
             </div>
           </div>
-          <div class="uk-width-1-3@m">
-            <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
+
+          <div class="">
+            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
+              <a [routerLink]="['data']" [queryParams]="{ step: 'baseUrl' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
+                <div class="">
+                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Asset%202.svg" alt="" width="50">
+                </div>
+                <h3>Data repository</h3>
+                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+                  <p class="uk-margin-remove">Run compatibility test against the OpenAIRE Guidelines for Data Archives.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="">
+            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
               <a [routerLink]="['cris']" [queryParams]="{ step: 'baseUrl' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-              <div class="uk-card-media-top">
-                <img class="el-image" src="../../../assets/imgs/CRIS_wide.png" alt="" style="width:100%;">
-              </div>
-              <div class="uk-card-body">
-                <h3 class="el-title uk-margin uk-card-title uk-margin-remove-adjacent uk-margin-small-bottom">
-                  Run compatibility test against the OpenAIRE Guidelines for CRIS Managers based on CERIF-XML.
-                </h3>
+              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
+                <div class="">
+                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Asset%201.svg" alt="" width="50">
+                </div>
+                <h3>CRIS systems</h3>
+                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+                  <p class="uk-margin-remove">Run compatibility test against the OpenAIRE Guidelines for CRIS Managers based on CERIF-XML.</p>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
 
       </div>
