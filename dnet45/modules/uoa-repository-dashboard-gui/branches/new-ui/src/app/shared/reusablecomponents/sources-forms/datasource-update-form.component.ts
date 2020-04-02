@@ -133,7 +133,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('country').disable();
         // this.updateGroup.get('longtitude').disable();
         // this.updateGroup.get('latitude').disable();
-        this.updateGroup.get('websiteUrl').disable();
+        // this.updateGroup.get('websiteUrl').disable();
         // this.updateGroup.get('institutionName').disable();
 
       }
