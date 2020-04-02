@@ -2,7 +2,9 @@
 
   <div class="sidebar_main_header uk-margin-remove-bottom">
     <div class="uk-padding-small">
-      <img class="provideLogo" src="../../../assets/imgs/OA_PROVIDE_B.png">
+      <a [routerLink]="['/home']" class="sSidebar_hide sidebar_logo_large">
+        <img class="provideLogo" src="../../../assets/imgs/OA_PROVIDE_B.png">
+      </a>
       <!--<h4 class="uk-text-bold uk-margin-remove">Repository manager's</h4>-->
       <!--<span class="uk-text-large">Admin Dashboard</span>-->
     </div>
@@ -25,7 +27,7 @@
     <!--&lt;!&ndash;</div>&ndash;&gt;-->
   <!--</div>-->
 
-  <div class="menu_section uk-margin-top">
+  <div class="menu_section uk-margin-large-top">
     <ul>
 
       <li [routerLinkActive]="['current_section']" class="">

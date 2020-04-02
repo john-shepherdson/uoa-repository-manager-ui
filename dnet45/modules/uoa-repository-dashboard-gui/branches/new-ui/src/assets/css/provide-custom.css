@@ -2,7 +2,7 @@
   /* Dashboard variables*/
   --sidebar-width: 320px;
   --sidebar-font-size: 16px;
-  --header-height: 70px;
+  --header-height: 53px;
   --primary-color: #0d47a1;
   --secondary-color: #1CA9D5;
 
@@ -45,15 +45,20 @@
 
 .app_my_theme #header_main {
   background: #fff;
-  border-bottom: 1px solid #6299EC;
+  border-bottom: 1px solid #23C1FF;
+  box-shadow: 0px 1px 6px #0000004D;
 }
 
 .dashboard #header_main circle, .dashboard #header_main .login svg {
-  stroke: #707070;
+  /*stroke: #707070;*/
+  stroke: #23C1FF;
+  fill: #23C1FF;
 }
 
 .dashboard #header_main text {
-  stroke: #707070;
+  /*stroke: #707070;*/
+  stroke: white;
+  fill: white;
 }
 
 /*********************************/
@@ -61,11 +66,12 @@
 /************ SIDEBAR ***********/
 
 .provideLogo {
-  width: 151px;
+  width: 90%;
 }
 
 .dashboard #sidebar_main {
   overflow: auto;
+  box-shadow: 1px 0px 6px #0000004D;
 }
 
 .dashboard #sidebar_main .menu_section {
@@ -124,13 +130,16 @@
   border-radius: 50%;
   text-align: center;
   font-size: 16px;
-  border: 1px solid #000;
   margin-right: 25px;
+  /*border: 1px solid #000;*/
+  border: 1px solid #23C1FF;
+  background-color: #23C1FF;
+  color: #fff;
 }
 
 .dashboard #sidebar_main .menu_section .menu_icon_circle {
   /*background: #FFFFFF 0% 0% no-repeat padding-box;*/
-  border: 1px solid #000000;
+  border: 1px solid #cccccc;
   opacity: 1;
   border-radius: 50%;
   /*padding: 0px 8px;*/
