@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-sources-register',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class SourcesRegisterComponent implements OnInit {
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
@@ -16,5 +17,18 @@ export class SourcesRegisterComponent implements OnInit {
     body.classList.remove("page_heading_active");
     body.classList.remove("landing");
     body.classList.add("dashboard");
+  }
+
+  // fixme still when I click the link inside the text in overlay, this event happens as well (I go to the first step of the wizard)
+  goTo(datasourceType: string) {
+    if(datasourceType==='literature') {
+      this.router.navigateByUrl(`/sources/register/${datasourceType}?step=selectDatasource`);
+    } else if(datasourceType==='data') {
+      this.router.navigateByUrl(`/sources/register/${datasourceType}?step=selectDatasource`);
+    } else if(datasourceType==='journal') {
+      this.router.navigateByUrl(`/sources/register/${datasourceType}?step=basicInformation`);
+    } else if(datasourceType==='aggregator') {
+      this.router.navigateByUrl(`/sources/register/${datasourceType}?step=basicInformation`);
+    }
   }
 }
