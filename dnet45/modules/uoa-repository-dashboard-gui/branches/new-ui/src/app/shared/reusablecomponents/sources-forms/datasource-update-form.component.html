@@ -12,12 +12,12 @@
       Basic information
     </h4>
   </div>
-  <div *ngIf="selectedRepo.datasourceType === 'opendoar'" class="uk-alert uk-alert-primary">
+  <div *ngIf="selectedRepo.datasourceType === 'opendoar'" class="uk-alert uk-alert-info">
     The following fields are completed by OpenDOAR.<br>
     If you want to edit them, you can do it by using this
     <a target="_blank" href="{{ 'http://v2.sherpa.ac.uk/id/repository/' + repoId }}">OpenDOAR link</a>
   </div>
-  <div *ngIf="selectedRepo.datasourceType === 're3data'" class="uk-alert uk-alert-primary">
+  <div *ngIf="selectedRepo.datasourceType === 're3data'" class="uk-alert uk-alert-info">
     The following fields are completed by Re3data.<br>
     If you want to edit them, you can do it by using this
     <a target="_blank" href="{{ 'http://service.re3data.org/repository/' + repoId }}">Re3data link</a>

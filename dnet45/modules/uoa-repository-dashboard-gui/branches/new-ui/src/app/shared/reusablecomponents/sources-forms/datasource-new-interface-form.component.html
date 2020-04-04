@@ -111,7 +111,7 @@
       <!--</div>-->
 
       <div class="md-input-wrapper md-input-filled uk-margin-medium-top">
-        <label class="" for="compLvl" title="{{ compatibilityLevelDesc.desc }}">Desired Compatibility Level (*)</label>
+        <label style="top: -16px" class="" for="compLvl" title="{{ compatibilityLevelDesc.desc }}">Desired Compatibility Level (*)</label>
         <select class="md-input" id="compLvl" formControlName="compatibilityLevel" (change)="checkIfValid()">
           <option value="">-- none selected --</option>
           <option *ngFor="let key of classCodes" value="{{key}}">{{compClasses[key]}}</option>

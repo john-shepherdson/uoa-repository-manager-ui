@@ -28,14 +28,17 @@
                   <img class="el-image" src="../../../assets/imgs/datasourcetypes/Asset%203.svg" alt="" width="51">
                 </div>
                 <h3>Literature repository</h3>
+                <a [routerLink]="['literature']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
                 <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
-                  <p class="uk-margin-remove">Make sure your repository is already registered in OpenDOAR, the authoritative directory of institutional and thematic OA repositories.</p>
+                  <p class="uk-margin-remove">Make sure your repository is already registered in OpenDOAR, the authoritative
+                    directory of institutional and thematic OA repositories, and is compatible with the OpenAIRE Guidelines for Literature Repositories.</p>
                   <a href="http://v2.sherpa.ac.uk/opendoar/" target="_blank">
                   List provided by
                   <br>
                   OpenDOAR<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
                   </a>
                 </div>
+
               </div>
             </div>
           </div>
@@ -49,14 +52,17 @@
                   <img class="el-image" src="../../../assets/imgs/datasourcetypes/Asset%202.svg" alt="" width="51">
                 </div>
                 <h3>Data repository</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
-                  <p class="uk-margin-remove">Make sure your data repository is registered in Re3Data, the global registry of research data repositories from different academic disciplines.</p>
-                  <a href="http://www.re3data.org" target="_blank">
-                    List provided by
-                    <br>
-                    Re3data<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
-                  </a>
-                </div>
+                <a [routerLink]="['data']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent">
+                  <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+                    <p class="uk-margin-remove">Make sure your data repository is registered in Re3Data, the global registry
+                      of research data repositories from different academic disciplines, and is  compatible with the OpenAIRE Guidelines for Data Archives.</p>
+                    <a href="http://www.re3data.org" target="_blank">
+                      List provided by
+                      <br>
+                      Re3data<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
+                    </a>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
@@ -71,7 +77,7 @@
                 </div>
                 <h3>Journal</h3>
                 <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
-                  <p class="uk-margin-remove">Make sure that your Open Access Journal is compatible with the OpenAIRE literature Guidelines.</p>
+                  <p class="uk-margin-remove">Make sure that your Journal is compatible with the OpenAIRE Guidelines for Literature Repositories.</p>
                   <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
                     For any questions please contact the OpenAIRE helpdesk.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
                   </a>
@@ -92,9 +98,9 @@
                 <div class="">
                   <img class="el-image" src="../../../assets/imgs/datasourcetypes/Asset%204.svg" alt="" width="50">
                 </div>
-                <h3>Journal</h3>
+                <h3>Aggregator</h3>
                 <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
-                  <p class="uk-margin-remove">Make sure that your publications aggregator is compatible with the OpenAIRE literature Guidelines.</p>
+                  <p class="uk-margin-remove">Make sure that your publications' aggregator is compatible with the OpenAIRE Guidelines for Literature Repositories.</p>
                   <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
                     For any questions please contact the OpenAIRE helpdesk.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
                   </a>

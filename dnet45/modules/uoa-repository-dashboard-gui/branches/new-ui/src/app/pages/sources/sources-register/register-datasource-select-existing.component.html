@@ -16,7 +16,7 @@
       </div>
       <div class="uk-margin-medium-top">
         <div class="md-input-wrapper md-input-filled">
-          <label class="">Select repository's country</label>
+          <label style="top: -16px;" class="">Select country</label>
           <select class="md-input" (change)="getReposInCountry($event.target.value)">
             <option value="" disabled>-- none selected --</option>
             <option *ngFor="let country of countries; let i = index" value="{{ i }}">{{ country.name ? country.name :
@@ -25,12 +25,7 @@
           </select>
           <span class="md-input-bar"></span>
         </div>
-        <div class="md-input-wrapper uk-margin-top">
-          <label class="">Start typing in the name of your repository to narrow down the view</label>
-          <input #searchInput id="searchInput" class="md-input" type="text"
-                 [disabled]="(!hasSelectedCountry)" (keyup)="searchTerm($event)"/>
-          <span class="md-input-bar"></span>
-        </div>
+
       </div>
       <div *ngIf="selectedCountry">
         <div>
@@ -46,6 +41,15 @@
         </div>
         <div class="uk-alert uk-alert-warning" *ngIf="noRepositories">{{ noRepositories }}</div>
         <div class="radioButtonForm" *ngIf="countryRepos && !loadingMessage">
+
+
+          <div class="md-input-wrapper md-input-filled uk-margin-medium-top uk-margin-bottom">
+            <label class="">Name of repository</label>
+            <input #searchInput id="searchInput" class="md-input" type="text"
+                   [disabled]="(!hasSelectedCountry)" (keyup)="searchTerm($event)"/>
+            <span class="md-input-bar"></span>
+          </div>
+
 
           <div class="form-group"
                *ngFor="let repo of countryRepos | repoFilter: searchBox">

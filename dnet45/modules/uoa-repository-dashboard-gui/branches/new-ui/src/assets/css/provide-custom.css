@@ -41,6 +41,42 @@
   background-color: #fff;
 }
 
+.uk-alert-info {
+  background: #CCF1FF 0% 0% no-repeat padding-box !important;
+  border: 1px solid #23C1FF;
+  color: #1987B3;
+  box-shadow: 1px 1px 6px #00000029;
+  border-radius: 3px;
+  opacity: 1;
+}
+
+.uk-alert-success {
+  background: #F2FFFE 0% 0% no-repeat padding-box !important;
+  box-shadow: 1px 1px 6px #00000029;
+  border: 1px solid #278A85;
+  color: #278A85;
+  border-radius: 3px;
+  opacity: 1;
+}
+
+.uk-alert-warning {
+  background: #FCF7CA 0% 0% no-repeat padding-box !important;
+  box-shadow: 1px 1px 6px #00000029;
+  border: 1px solid #807B24;
+  color: #807B24;
+  border-radius: 3px;
+  opacity: 1;
+}
+
+.uk-alert-danger {
+  background: #FFD9D9 0% 0% no-repeat padding-box !important;
+  box-shadow: 1px 1px 6px #00000029;
+  border: 1px solid #B31B1B;
+  color: #B31B1B;
+  border-radius: 3px;
+  opacity: 1;
+}
+
 /************ TOPMENU-DASHBOARD ***********/
 
 .app_my_theme #header_main {
@@ -409,6 +445,27 @@
   border-radius: 5px;
   opacity: 1;
 }
+
+/****************************************/
+
+/************ WIZARD ***********/
+
+.app_my_theme .wizard>.steps>ul>li.current a, .app_my_theme .wizard>.steps>ul>li.current a:active, .app_my_theme .wizard>.steps>ul>li.current a:hover {
+  background: #34BDB6 0% 0% no-repeat padding-box;
+  border-right: 1px solid #24847F;
+}
+
+.wizard>.steps>ul>li a, .wizard>.steps>ul>li a:active, .wizard>.steps>ul>li a:hover {
+  background: #299791 0% 0% no-repeat padding-box;
+  border-right: 1px solid #24847F;
+  /*border-right: #299791;*/
+}
+
+.wizard>.steps>ul>li+li a {
+  border-right: 1px solid #24847F;
+}
+
+
 
 /****************************************/
 
