@@ -42,8 +42,17 @@
                       </a>
                     </li>
                     <li role="tab" class="last {{ (currentStep < 3) ? 'disabled' : '' }} {{ (currentStep == 3) ? 'current' : '' }}" aria-disabled="true">
+                    <!-- ToU: replace above line with below line -->
+                    <!--<li role="tab" class=" {{ (currentStep < 3) ? 'disabled' : '' }} {{ (currentStep == 3) ? 'current' : '' }}" aria-disabled="true">-->
                       <a id="wizard_advanced-t-3" href="#wizard_advanced-h-3" aria-controls="wizard_advanced-p-3">
                         <span class="number">4</span>
+                        <!-- ToU: uncomment this section -->
+                        <!--<span class="title">Terms of Use</span>
+                      </a>
+                    </li>
+                    <li role="tab" class="last {{ (currentStep < 4) ? 'disabled' : '' }} {{ (currentStep == 4) ? 'current' : '' }}" aria-disabled="true">
+                      <a id="wizard_advanced-t-4" href="#wizard_advanced-h-4" aria-controls="wizard_advanced-p-4">
+                        <span class="number">5</span>-->
                         <span class="title">Finish</span>
                       </a>
                     </li>
@@ -123,10 +132,27 @@
 
                   <!-- fourth section -->
                   <h3 id="wizard_advanced-h-3" tabindex="-1" class="title {{ (currentStep == 3) ? 'current' : '' }}">Finish</h3>
+                  <!-- ToU: replace line above with line below -->
+                  <!--<h3 id="wizard_advanced-h-3" tabindex="-1" class="title {{ (currentStep == 3) ? 'current' : '' }}">Terms of Use</h3>-->
                   <section id="wizard_advanced-p-3" role="tabpanel" aria-labelledby="wizard_advanced-h-3"
                            class="body step-3 {{ (currentStep == 3) ? 'current' : '' }}" data-step="2"  aria-hidden="true">
 
                     <div *ngIf="(currentStep === 3) && !loadingMessage" class="row openAIRECompliantLogoDownload">
+                  <!-- ToU: replace above 3 lines (starting at class="body step-3) with commented section below -->
+                  <!--class="body step-3 {{ (currentStep == 3) ? 'current' : '' }}" data-step="3"  aria-hidden="true">
+                    <div *ngIf="(currentStep === 3) && !loadingMessage" class="uk-grid uk-grid-match">
+                      <datasource-update-terms-form #updateTermsForm
+                                                    [selectedRepo]="repo"
+                                                    [showButton]=false></datasource-update-terms-form>
+                    </div>
+                  </section>
+
+                  &lt;!&ndash; fifth section &ndash;&gt;
+                  <h3 id="wizard_advanced-h-4" tabindex="-1" class="title {{ (currentStep == 4) ? 'current' : '' }}">Finish</h3>
+                  <section id="wizard_advanced-p-4" role="tabpanel" aria-labelledby="wizard_advanced-h-4"
+                           class="body step-4 {{ (currentStep == 4) ? 'current' : '' }}" data-step="3"  aria-hidden="true">
+
+                    <div *ngIf="(currentStep === 4) && !loadingMessage" class="row openAIRECompliantLogoDownload">-->
                       <div class="col-lg-12">
                         <div class="col-md-12">
                           <div>
@@ -158,6 +184,20 @@
                     </li>
                   </ul>
                 </div>
+                <!-- ToU: replace above <div> with commented section below -->
+                <!--<div *ngIf="currentStep != 4" class="actions clearfix">
+                  <ul role="menu" aria-label="Pagination">
+                    <li class="button_previous {{ (currentStep < 1) ? 'disabled' : '' }}" aria-disabled="true">
+                      <a (click)="moveBackAStep()" role="menuitem"><i class="material-icons"></i> Previous</a>
+                    </li>
+                    <li *ngIf="currentStep < 3" class="button_next" aria-hidden="false" aria-disabled="false">
+                      <a (click)="moveAStep()" role="menuitem">Next<i class="material-icons"></i></a>
+                    </li>
+                    <li *ngIf="currentStep == 3" class="button_finish" aria-hidden="true">
+                      <a (click)="moveAStep()" role="menuitem">Finish</a>
+                    </li>
+                  </ul>
+                </div>-->
               </div>
             </form>
           </div>

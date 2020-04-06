@@ -38,6 +38,13 @@
                     <li role="tab" class=" {{ (currentStep < 3) ? 'disabled' : '' }} {{ (currentStep == 3) ? 'current' : '' }}" aria-disabled="true">
                       <a id="wizard_advanced-t-2" href="#wizard_advanced-h-2" aria-controls="wizard_advanced-p-2">
                         <span class="number">3</span>
+                    <!-- ToU: uncomment this section -->
+                        <!--<span class="title">Terms of Use</span>
+                      </a>
+                    </li>
+                    <li role="tab" class=" {{ (currentStep < 4) ? 'disabled' : '' }} {{ (currentStep == 4) ? 'current' : '' }}" aria-disabled="true">
+                      <a id="wizard_advanced-t-3" href="#wizard_advanced-h-3" aria-controls="wizard_advanced-p-2">
+                        <span class="number">4</span>-->
                         <span class="title">Finish</span>
                       </a>
                     </li>
@@ -54,7 +61,7 @@
                   <div *ngIf="errorMessage" class="uk-alert uk-alert-danger uk-margin-top">{{ errorMessage }}</div>
 
                   <!-- first section -->
-                  <h3 id="wizard_advanced-h-0" tabindex="-1" class="title {{ (currentStep == 1) ? 'current' : '' }}">Select Repository</h3>
+                  <h3 id="wizard_advanced-h-0" tabindex="-1" class="title {{ (currentStep == 1) ? 'current' : '' }}">Enter Information</h3>
                   <section id="wizard_advanced-p-0" role="tabpanel" aria-labelledby="wizard_advanced-h-0"
                            class="body step-0 {{ (currentStep == 1) ? 'current' : '' }}" data-step="0" aria-hidden="false">
                     <!--<h2 class="heading_a">-->
@@ -70,7 +77,7 @@
                   </section>
 
                   <!-- second section -->
-                  <h3 id="wizard_advanced-h-1" tabindex="-1" class="title {{ (currentStep == 2) ? 'current' : '' }}">Enter Information</h3>
+                  <h3 id="wizard_advanced-h-1" tabindex="-1" class="title {{ (currentStep == 2) ? 'current' : '' }}">Add Interfaces</h3>
                   <section id="wizard_advanced-p-1" role="tabpanel" aria-labelledby="wizard_advanced-h-1"
                            class="body step-1 {{ (currentStep == 2) ? 'current' : '' }}" data-step="1"  aria-hidden="true">
                     <!--<h2 class="heading_a">-->
@@ -115,10 +122,25 @@
                   </section>
 
                   <!-- third section -->
-                  <h3 id="wizard_advanced-h-2" tabindex="-1" class="title {{ (currentStep == 3) ? 'current' : '' }}">Add Interfaces</h3>
+                  <h3 id="wizard_advanced-h-2" tabindex="-1" class="title {{ (currentStep == 3) ? 'current' : '' }}">Finish</h3>
+                  <!-- ToU: replace line above with line below -->
+                  <!--                  <h3 id="wizard_advanced-h-2" tabindex="-1" class="title {{ (currentStep == 3) ? 'current' : '' }}">Terms of Use</h3>-->
                   <section id="wizard_advanced-p-2" role="tabpanel" aria-labelledby="wizard_advanced-h-2"
                            class="body step-2 {{ (currentStep == 3) ? 'current' : '' }}" data-step="2" aria-hidden="true">
                     <div *ngIf="(currentStep === 3) && !loadingMessage" class="row openAIRECompliantLogoDownload">
+                    <!-- ToU: delete line above and uncomment section below -->
+                    <!--<div *ngIf="(currentStep === 3) && !loadingMessage" class="uk-grid">
+                      <datasource-update-terms-form #updateTermsForm
+                                                    [selectedRepo]="repo"
+                                                    [showButton]=false></datasource-update-terms-form>
+                    </div>
+                  </section>
+
+                  &lt;!&ndash; fourth section &ndash;&gt;
+                  <h3 id="wizard_advanced-h-3" tabindex="-1" class="title {{ (currentStep == 4) ? 'current' : '' }}">Finish</h3>
+                  <section id="wizard_advanced-p-3" role="tabpanel" aria-labelledby="wizard_advanced-h-3"
+                           class="body step-3 {{ (currentStep == 4) ? 'current' : '' }}" data-step="3" aria-hidden="true">
+                    <div *ngIf="(currentStep === 4) && !loadingMessage" class="row openAIRECompliantLogoDownload">-->
                       <div class="col-lg-12">
                         <div class="col-md-12">
                           <div>
@@ -155,6 +177,20 @@
                     </li>
                   </ul>
                 </div>
+                <!-- ToU: replace above <div> with commented section below -->
+                <!--<div *ngIf="currentStep != 4" class="actions clearfix">
+                  <ul role="menu" aria-label="Pagination">
+                    <li class="button_previous {{ (currentStep <= 1) ? 'disabled' : '' }}" aria-disabled="true">
+                      <a (click)="moveBackAStep()" role="menuitem"><i class="material-icons"></i> Previous</a>
+                    </li>
+                    <li *ngIf="currentStep < 3" class="button_next" aria-hidden="false" aria-disabled="false">
+                      <a (click)="moveAStep()" role="menuitem">Next<i class="material-icons"></i></a>
+                    </li>
+                    <li *ngIf="currentStep == 3" class="button_finish" aria-hidden="true">
+                      <a (click)="moveAStep()" role="menuitem">Finish</a>
+                    </li>
+                  </ul>
+                </div>-->
               </div>
             </form>
           </div>

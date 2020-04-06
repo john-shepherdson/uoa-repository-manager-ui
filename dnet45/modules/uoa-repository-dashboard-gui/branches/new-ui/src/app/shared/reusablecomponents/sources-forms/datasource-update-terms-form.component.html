@@ -1,0 +1,25 @@
+<div *ngIf="loadingMessage" class="loading-big">
+  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+    {{ loadingMessage }}
+  </div>
+  <div class="whiteFilm"></div>
+</div>
+<div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+
+<form *ngIf="selectedRepo && !loadingMessage" [formGroup]="agreementForm">
+  <br>
+<!--  {{agreementForm.get('acceptTerms').value}}-->
+  <form-inline>
+    <label><input formControlName="acceptTerms" class="uk-checkbox" type="checkbox" checked> I Agree with the </label>
+    <a href="https://zenodo.org/record/1446384#.XiGIAdmxU5n" target="_blank">OpenAIRE's Terms of Agreement for Content Providers</a>
+  </form-inline>
+<!--  {{agreementForm.get('optOut').value}}-->
+  <form-inline>
+    <label><input formControlName="optOut" class="uk-checkbox" type="checkbox"> I would like to opt out from "data mining of Open Access publications in my repository"</label>
+  </form-inline>
+  <br>
+  <div *ngIf="showButton" class="form-group">
+    <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
+  </div>
+</form>

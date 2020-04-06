@@ -14,6 +14,7 @@ import { SrJournalComponent } from './sources-register/sr-journal.component';
 import { SrAggregatorComponent } from './sources-register/sr-aggregator.component';
 import { RegisterNewDatasourceComponent } from './sources-register/register-new-datasource.component';
 import { RegisterExistingDatasourceComponent } from './sources-register/register-existing-datasource.component';
+import { DatasourceUpdateTermsFormComponent } from '../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
 
 @NgModule ({
   imports: [
@@ -23,6 +24,9 @@ import { RegisterExistingDatasourceComponent } from './sources-register/register
     ReactiveFormsModule,
     SourcesRouting,
     ReusableComponentsModule
+  ],
+  exports: [
+    DatasourceUpdateTermsFormComponent
   ],
   declarations: [
     SourcesComponent,
@@ -34,6 +38,7 @@ import { RegisterExistingDatasourceComponent } from './sources-register/register
     SrJournalComponent,
     SrAggregatorComponent,
     RegisterDatasourceSelectExistingComponent,
+    DatasourceUpdateTermsFormComponent,
     RepoFilter                           // a pipe that searches for string in repository name
   ]
 })

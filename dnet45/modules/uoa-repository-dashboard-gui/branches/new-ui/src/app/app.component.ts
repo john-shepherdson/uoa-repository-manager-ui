@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { environment } from '../environments/environment';
 import { MatomoInjector, MatomoTracker } from 'ngx-matomo';
+import { ConfirmationDialogComponent } from './shared/reusablecomponents/confirmation-dialog.component';
+import { RepositoryService } from './services/repository.service';
+import { RepositorySnippet } from './domain/typeScriptClasses';
+import {FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
+import {element} from 'protractor';
+import {timestamp} from 'rxjs/operators';
 
 @Component({
   selector: 'oa-repo-manager',
@@ -10,13 +16,28 @@ import { MatomoInjector, MatomoTracker } from 'ngx-matomo';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  reposOfUser: RepositorySnippet[] = [];
+  modalTitle = 'Terms of Use';
+  isModalShown: boolean;
+  modalButton = 'OK';
+
+  agreementForm = this.fb.group({
+    terms: this.fb.array([])
+  });
+
+  consentTermsOfUseDate: Date;
+
+  @ViewChild('subscribeToTermsModal')
+  public subscribeToTermsModal: ConfirmationDialogComponent;
 
   open: boolean = true;
 
   constructor(private router: Router,
               private authService: AuthenticationService,
               private matomoInjector: MatomoInjector,
-              private matomoTracker: MatomoTracker) {
+              private matomoTracker: MatomoTracker,
+              private repositoryService: RepositoryService,
+              private fb: FormBuilder) {
 
     console.log('21-06-2019. Fixed matomo to log userIds?');
 
@@ -50,6 +71,39 @@ export class AppComponent implements OnInit {
     this.authService.tryLogin();
   }
 
+  getReposOfUser(): void {
+    this.repositoryService.getRepositoriesOfUser()
+      .subscribe(
+        repos => { this.reposOfUser = repos; },
+        error => { console.log(error); },
+        () => {
+          console.log(this.reposOfUser);
+          this.reposOfUser.forEach( repo => {
+            // TODO: change !repo.consentTermsOfUse check when it gets a non-null value
+            if (this.authService.isLoggedIn && !repo.consentTermsOfUse) {
+              this.addTerm(repo.officialname, repo.id, repo.consentTermsOfUse);
+              this.isModalShown = true;
+            }
+          });
+        }
+      );
+  }
+
+  updateTerms() {
+    /*   update consentTermsOfUse, consentTermsOfUseDate(?)
+         depending on  what value will consentTermsOfUse hold
+         Also what type of consentTermsOfUse will be? boolean or string */
+    for (let i = 0; i < this.terms.length; i++) {
+      const  id = this.terms.controls[i].get('id').value;
+      if (this.terms.controls[i].get('accept').value === true) {
+        console.log(`Agreed to the Terms of Use for: `, id);
+      }
+    }
+    this.consentTermsOfUseDate = new Date(Date.now());
+    console.log(this.consentTermsOfUseDate);
+    console.log('will POST when backend is ready');
+  }
+
   ngOnInit() {
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
@@ -60,6 +114,25 @@ export class AppComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
+
+    // this.getReposOfUser();
+
+  }
+
+  addTerm(name: string, id: string, consent: string) {
+    this.terms.push(this.newTerm(name, id, consent));
+  }
+
+  newTerm(name: string, id: string, consent: string): FormGroup {
+    return this.fb.group({
+      id: [id],
+      name: [name],
+      accept: [(consent ? consent : true)]
+    });
+  }
+
+  get terms() {
+    return this.agreementForm.get('terms') as FormArray;
   }
 
   isLandingRoute() {

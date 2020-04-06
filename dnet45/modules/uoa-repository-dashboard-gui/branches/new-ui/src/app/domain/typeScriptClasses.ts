@@ -151,6 +151,9 @@ export class Repository extends DriverResource implements IsSerializable {
   registrationDate: Date;
   verified: boolean;
   dataCollectionTypes: DataCollectionType[];
+  consentTermsOfUse: string;
+  consentTermsOfUseDate: Date;
+  fullTextDownload: string;
 }
 
 export class RepositorySnippet {

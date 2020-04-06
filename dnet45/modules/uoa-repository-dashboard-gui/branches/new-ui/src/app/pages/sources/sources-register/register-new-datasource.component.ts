@@ -49,6 +49,8 @@ export class RegisterNewDatasourceComponent implements OnInit {
               private router: Router,
               private repoService: RepositoryService) {}
 
+  // @ViewChild('updateTermsForm')
+
   ngOnInit() {
     if (this.datasourceType) {
 
@@ -76,6 +78,15 @@ export class RegisterNewDatasourceComponent implements OnInit {
         }
       } else if (stepName === 'finish') {
         this.currentStep = 3;
+        // ToU: to enable ToU delete the 2 lines above and uncomment the section below
+      /*} else if (stepName === 'termsOfUse') {
+        if (this.interfacesArray && this.interfacesArray.length === 0) {
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`);
+        } else {
+          this.currentStep = 3;
+        }
+      } else if (stepName === 'finish') {
+        this.currentStep = 4;*/
       }
     }
     this.rightHelperContent.ngOnInit();
@@ -97,6 +108,8 @@ export class RegisterNewDatasourceComponent implements OnInit {
           } else {
             if (this.repoInterfaces.length > 0) {
               this.addRepository();
+// ToU: replace above line with the comment below
+//               this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=termsOfUse`);
             } else {
               this.errorMessage = noInterfacesSaved;
               window.scrollTo(1, 1);
@@ -104,6 +117,9 @@ export class RegisterNewDatasourceComponent implements OnInit {
           }
         }
       );
+      // ToU: uncomment these lines
+    // } else if ( this.currentStep === 3 ) {
+    //   this.addRepository();
     }
   }
 
@@ -113,6 +129,9 @@ export class RegisterNewDatasourceComponent implements OnInit {
       of(this.getInterfaces()).subscribe(
         () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`)
       );
+      // ToU: uncomment these lines
+    // } else if (this.currentStep === 3) {
+    //   this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`);
     }
   }
 
@@ -207,6 +226,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
         },
         () => {
           this.saveNewInterfaces();
+          // TODO: update terms when backend is ready, maybe POST with updateRepository
         }
       );
     }

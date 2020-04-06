@@ -19,17 +19,19 @@ import {BrokerService} from "../../services/broker.service";
 import {DashboardService} from "../../services/dashboard.service";
 import { SharedService } from "../../services/shared.service";
 import { SourcesUpdateRepoComponent } from "./update/sources-update-repo.component";
+import {SourcesModule} from '../sources/sources.module';
 
 @NgModule ({
-  imports: [
-    CommonModule,
-    TabsModule.forRoot(),
-    FormsModule,
-    ReactiveFormsModule,
-    // SourcesRouting,
-    RepositoryRoutingModule,
-    ReusableComponentsModule
-  ],
+    imports: [
+        CommonModule,
+        TabsModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        // SourcesRouting,
+        RepositoryRoutingModule,
+        ReusableComponentsModule,
+        SourcesModule
+    ],
   declarations: [
     RepositoryComponent,
     DashboardComponent,

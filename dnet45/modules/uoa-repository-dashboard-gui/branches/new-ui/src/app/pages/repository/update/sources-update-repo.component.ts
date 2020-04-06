@@ -42,6 +42,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
                 private sharedService: SharedService,
                 private router: Router) { }
 
+  @ViewChild('updateTermsForm')
 
   ngOnInit() {
 

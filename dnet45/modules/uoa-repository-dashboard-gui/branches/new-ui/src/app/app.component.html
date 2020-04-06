@@ -48,3 +48,28 @@
   })();
 </script>-->
 <!-- End Matomo Code -->
+
+
+<!--&lt;!&ndash; Terms of Use (modal) &ndash;&gt;-->
+<!--<confirmation-dialog #subscribeToTermsModal [title]=modalTitle [isModalShown]=isModalShown-->
+<!--                     [confirmActionButton]=modalButton (emitObject)="updateTerms()">-->
+<!--  <form class="" [formGroup]="agreementForm">-->
+<!--    <div formArrayName="terms">-->
+<!--      <table class="table">-->
+<!--        <tr class="uk-text-nowrap">Do you agree with the <a href="https://zenodo.org/record/1446384#.XiGIAdmxU5n" target="_blank">terms of use</a>?</tr>-->
+<!--        <tbody>-->
+<!--        <tr class="el-item" *ngFor="let term of terms.controls; let i=index">-->
+<!--&lt;!&ndash;          {{term.get('accept').value}}&ndash;&gt;-->
+<!--          <br> {{term.get('name').value}} <br>-->
+<!--          <div [formGroupName]="i">-->
+<!--            <label>-->
+<!--              <input id="i" type="checkbox" formControlName="accept"> Yes, I agree to the terms of use.-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--  &lt;!&ndash;    <pre>{{this.agreementForm.value | json}}</pre>&ndash;&gt;-->
+<!--</confirmation-dialog>-->
