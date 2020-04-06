@@ -465,7 +465,9 @@
   border-right: 1px solid #24847F;
 }
 
-
+.app_my_theme .wizard>.steps {
+  background: #24847F;
+}
 
 /****************************************/
 
