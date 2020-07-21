@@ -184,3 +184,10 @@ export const compatibilityLevelDesc = {
   mandatory: true,
   recommended: false
 };
+
+export const commentsDesc = {
+  desc: 'Add your comments regarding the interface.',
+  label: 'Comments',
+  mandatory: false,
+  recommended: false
+};

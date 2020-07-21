@@ -26,11 +26,12 @@
 
     <div class="md-card-content">
       <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="clear: both">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="uk-alert uk-alert-danger" style="clear: both">{{ errorMessage }}</div>
+      <div *ngIf="errorMessage" class="uk-alert" [ngClass]="{'uk-alert-warning': errorMessage == invalidCustomBaseUrl,
+                'uk-alert-danger': errorMessage != invalidCustomBaseUrl}" style="clear: both">{{ errorMessage }}</div>
 
       <div class="md-input-wrapper uk-margin-medium-top {{ (repoInterfaceForm.get('baseUrl') != null) ? 'md-input-filled' : '' }}">
         <label class="" for="baseUrl" title="{{ baseUrlDesc.desc }}">Base OAI-PMH URL (*)</label>
-        <span *ngIf="identifiedBaseUrl" class="help-block inline" style="margin-top: 8px; margin-bottom: 0px; padding-left: 10px; display: block;">
+        <span *ngIf="showIdentifiedBaseUrl" class="help-block inline" style="margin-top: 8px; margin-bottom: 0px; padding-left: 10px; display: block;">
           Identified
         </span>
         <input id="baseUrl" type="text" class="md-input" formControlName="baseUrl" (blur)="getInterfaceInfo()">
@@ -136,6 +137,12 @@
         <!--<label class="uk-form-controls-text control-label">Current Compatibility Level</label>-->
         <!--<div *ngIf="existingCompLevel">{{ existingCompLevel ? existingCompLevel : 'not available' }}</div>-->
       <!--</div>-->
+
+      <div class="uk-margin-medium-top">
+        <label class="" for="comments" title="{{ commentsDesc.desc }}">Comments</label>
+        <textarea id="comments" class="uk-textarea" rows="3" formControlName="comments"></textarea>
+      </div>
+
     </div>
 
   </div>

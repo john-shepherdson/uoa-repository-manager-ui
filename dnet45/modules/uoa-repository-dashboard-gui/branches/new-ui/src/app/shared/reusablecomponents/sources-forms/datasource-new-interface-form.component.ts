@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description, existingValSetDesc } from '../../../domain/oa-description';
+import { baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description, existingValSetDesc, commentsDesc } from '../../../domain/oa-description';
 import { InterfaceInformation, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { ValidatorService } from '../../../services/validator.service';
 import { RepositoryService } from '../../../services/repository.service';
@@ -22,6 +22,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   loadingMessage: string;
   successMessage: string;
   errorMessage: string;
+  invalidCustomBaseUrl = invalidCustomBaseUrl;
 
   @Input() data: any[] = []; // expects an array containing at least 3 of the 4 below fields in this order
   inRegister: boolean;
@@ -37,14 +38,17 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     baseUrl: ['', Validators.required],
     selectValidationSet: [''],
     customValidationSet: [''],
-    compatibilityLevel: ['']
+    compatibilityLevel: [''],
+    comments: ['']
   };
   baseUrlDesc: Description = baseUrlDesc;
   existingValSetDesc: Description = existingValSetDesc;
   customValSetDesc: Description = customValSetDesc;
   compatibilityLevelDesc: Description = compatibilityLevelDesc;
+  commentsDesc: Description = commentsDesc;
 
   identifiedBaseUrl: boolean;
+  showIdentifiedBaseUrl: boolean;
   valsetList: string[] = [];
   existingCompLevel: string;
   classCodes: string[] = [];
@@ -67,6 +71,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
         this.currentInterface = this.data[3];
         this.repoInterfaceForm.get('baseUrl').setValue(this.currentInterface.baseUrl);
         this.repoInterfaceForm.get('compatibilityLevel').setValue(this.currentInterface.desiredCompatibilityLevel);
+        this.repoInterfaceForm.get('comments').setValue(this.currentInterface.comments);
       }
       this.getInterfaceInfo();
       this.getCompatibilityClasses();
@@ -86,8 +91,11 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
           this.interfaceInfo = info;
           if (this.interfaceInfo.identified) {
             this.identifiedBaseUrl = true;
+            this.showIdentifiedBaseUrl = true;
           } else {
             this.errorMessage = invalidCustomBaseUrl;
+            this.identifiedBaseUrl = true;  // pass interface without baseUrl identification
+            this.showIdentifiedBaseUrl = false;
           }
           if (this.interfaceInfo.sets) {
             this.valsetList = this.interfaceInfo.sets;
@@ -97,7 +105,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
         error => {
           console.log(error);
           this.loadingMessage = '';
-          this.identifiedBaseUrl = false;
+          // this.identifiedBaseUrl = false;
           this.errorMessage = noServiceMessage;
         },
         () => {
@@ -200,11 +208,15 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       } else {
         compLvl = this.existingCompLevel;
       }
+      let comment = '';
+      if (this.repoInterfaceForm.get('comments').value) {
+        comment = this.repoInterfaceForm.get('comments').value;
+      }
 
       if (this.currentInterface) {
-        this.updateCurrent(baseUrl, valset, compLvl);
+        this.updateCurrent(baseUrl, valset, compLvl, comment);
       } else {
-        this.addCurrent(baseUrl, valset, compLvl);
+        this.addCurrent(baseUrl, valset, compLvl, comment);
       }
     } else {
       this.interfaceToExport = null;
@@ -237,7 +249,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     return intrf;
   }
 
-  addCurrent (baseUrl: string, valset: string, compLvl: string) {
+  addCurrent (baseUrl: string, valset: string, compLvl: string, comment: string) {
     const currentInterface = new RepositoryInterface();
     currentInterface.baseUrl = baseUrl;
     currentInterface.accessSet = valset;
@@ -245,6 +257,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     currentInterface.desiredCompatibilityLevel = compLvl;
     currentInterface.compliance = compLvl;
     currentInterface.typology = this.currentRepo.datasourceClass;
+    currentInterface.comments = comment;
+
     if (!this.inRegister) {
       this.addInterface(currentInterface);
     } else {
@@ -284,13 +298,14 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   }
 
 
-  updateCurrent (baseUrl: string, valset: string, compLvl: string) {
+  updateCurrent (baseUrl: string, valset: string, compLvl: string, comment: string) {
     this.currentInterface.baseUrl = baseUrl;
     this.currentInterface.accessSet = valset;
     this.currentInterface.accessParams['set'] = valset;
     this.currentInterface.desiredCompatibilityLevel = compLvl;
     this.currentInterface.compliance = compLvl;
     this.currentInterface.typology = this.currentRepo.datasourceClass;
+    this.currentInterface.comments = comment;
 
     if (!this.inRegister) {
       this.updateInterface();
