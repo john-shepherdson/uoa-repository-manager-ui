@@ -226,7 +226,6 @@ export class RepositoryInterface implements Serializable, IsSerializable {
   removable: boolean;
   accessParams: { [index: string]: string };
   extraFields: { [index: string]: string };
-  comments: string;
 }
 
 export class SearchCriteriaImpl implements SearchCriteria {

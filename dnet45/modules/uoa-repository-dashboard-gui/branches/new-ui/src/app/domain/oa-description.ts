@@ -185,7 +185,7 @@ export const compatibilityLevelDesc = {
   recommended: false
 };
 
-export const commentsDesc = {
+export const commentDesc = {
   desc: 'Add your comments regarding the interface.',
   label: 'Comments',
   mandatory: false,

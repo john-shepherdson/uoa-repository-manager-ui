@@ -22,6 +22,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
   repo: Repository = null;
   repoInterfaces: RepositoryInterface[] = [];
   interfacesToDelete: string[] = [];
+  // comments: string;
 
   /* queryParams are used to follow the steps without refreshing the page
    * This was needed for Help Service [which sends back info according to the current router.url].
@@ -40,6 +41,9 @@ export class RegisterNewDatasourceComponent implements OnInit {
 
   @ViewChild ('registerDatasource')
   registerDatasource: DatasourceCreateFormComponent;
+
+  @ViewChild ('interfaceComments')
+  interfaceComments: DatasourceNewInterfaceFormComponent;
 
   @ViewChildren('interfacesArray') interfacesArray: QueryList<DatasourceNewInterfaceFormComponent>;
   dataForInterfaceComp: any[] = [];
@@ -237,9 +241,11 @@ export class RegisterNewDatasourceComponent implements OnInit {
       from(this.repoInterfaces).pipe(
         concatMap(intrf => {
           if (intrf.id) {
-            return this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, intrf);
+            const comments = this.interfaceComments.getComments();
+            return this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, comments, intrf);
           } else {
-            return this.repoService.addInterface(this.repo.datasourceType, this.repo.id, this.repo.registeredBy, intrf);
+            const comments = this.interfaceComments.getComments();
+            return this.repoService.addInterface(this.repo.datasourceType, this.repo.id, this.repo.registeredBy, comments, intrf);
           }
         })
       ).subscribe(
