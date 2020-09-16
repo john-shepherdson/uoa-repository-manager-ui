@@ -78,11 +78,11 @@
           <div *ngFor="let event of eventsPage.values; let item_i = index" class="md-card md-card-hover eventCard">
             <div class="md-card-content large-padding">
 
-              <div *ngIf="event.publication.originalId" class="uk-text-meta">ID: {{event.publication.originalId}}</div>
+              <div *ngIf="event.result.originalId" class="uk-text-meta">ID: {{event.result.originalId}}</div>
 
-              <div *ngIf="event.publication.titles && event.publication.titles.length>0">
+              <div *ngIf="event.result.titles && event.result.titles.length>0">
                 <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top">
-                  <h4>{{ event.publication.titles[0] }}</h4>
+                  <h4>{{ event.result.titles[0] }}</h4>
                 </div>
               </div>
 
@@ -180,7 +180,7 @@
                 <div class="uk-margin-top uk-margin-medium-bottom small-content">
                   <div *ngFor="let subj of event.highlight.subjects; let s_index = index" class="uk-margin-small-bottom">
                     <span class="highlightIndex">{{(s_index + 1)}}. </span>
-                    <span>{{ subj }}</span>
+                    <span>{{ subj.value }}</span>
                   </div>
                 </div>
 
@@ -203,7 +203,7 @@
                 <div class="uk-margin-top uk-margin-medium-bottom small-content">
                   <div *ngFor="let pub of event.highlight.publications; let p_index = index" class="uk-margin-small-bottom">
                     <span class="highlightIndex">{{(p_index + 1)}}. </span>
-                    <span>{{ pub.titles[0] }} (ID: {{pub.originalId}})</span>
+                    <span>{{ pub.title }} (ID: {{pub.originalId}})</span>
                   </div>
                 </div>
 
@@ -226,7 +226,7 @@
                 <div class="uk-margin-top uk-margin-medium-bottom small-content">
                   <div *ngFor="let dataset of event.highlight.datasets; let d_index = index" class="uk-margin-small-bottom">
                     <span class="highlightIndex">{{(d_index + 1)}}. </span>
-                    <span>{{ dataset.titles[0] }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
+                    <span>{{ dataset.title }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
                   </div>
                 </div>
 
@@ -295,27 +295,27 @@
                 <hr>
 
                 <!--AUTHORS-->
-                <div *ngIf="event.publication.creators && event.publication.creators.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.creators && event.result.creators.length>0" class="uk-margin-small-bottom">
                   <span class="mute-title">Author(s): </span>
-                  <span *ngFor="let auth of event.publication.creators; let au_index = index" class="small-content">
+                  <span *ngFor="let auth of event.result.creators; let au_index = index" class="small-content">
                     <span *ngIf="au_index>0"> | </span>
-                    <span>{{ auth }}</span>
+                    <span>{{ auth.fullname }}</span>
                   </span>
                 </div>
 
                 <!--PIDs-->
-                <div *ngIf="event.publication.pids && event.publication.pids.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.pids && event.result.pids.length>0" class="uk-margin-small-bottom">
                   <span class="mute-title">PID(s): </span>
-                  <span *ngFor="let pid of event.publication.pids; let p_index = index" class="small-content">
+                  <span *ngFor="let pid of event.result.pids; let p_index = index" class="small-content">
                     <br *ngIf="p_index > 0">
                     <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b></span>
                   </span>
                 </div>
 
                 <!--Abstracts-->
-                <div *ngIf="event.publication.abstracts && event.publication.abstracts.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.abstracts && event.result.abstracts.length>0" class="uk-margin-small-bottom">
                   <span class="mute-title">Abstract(s): </span>
-                  <span *ngFor="let abs of event.publication.abstracts; let a_index = index" class="small-content">
+                  <span *ngFor="let abs of event.result.abstracts; let a_index = index" class="small-content">
                     <br *ngIf="a_index > 0">
                     <span>
                       <read-more-text [text]="abs" [maxHeight]="83"></read-more-text>
@@ -324,9 +324,9 @@
                 </div>
 
                 <!--Projects/Relations-->
-                <div *ngIf="event.publication.projects && event.publication.projects.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.projects && event.result.projects.length>0" class="uk-margin-small-bottom">
                   <span class="mute-title">Project(s)/Relation(s): </span>
-                  <span *ngFor="let proj of event.publication.projects; let p_index = index" class="small-content">
+                  <span *ngFor="let proj of event.result.projects; let p_index = index" class="small-content">
                     <br *ngIf="p_index > 0">
                     <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
                     <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
@@ -341,39 +341,39 @@
                 </div>
 
                 <!--Subjects-->
-                <div *ngIf="event.publication.subjects && event.publication.subjects.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.subjects && event.result.subjects.length>0" class="uk-margin-small-bottom">
                   <span class="mute-title">Subject(s): </span>
-                  <span *ngFor="let subj of event.publication.subjects; let s_index = index" class="small-content">
+                  <span *ngFor="let subj of event.result.subjects; let s_index = index" class="small-content">
                     <span *ngIf="s_index>0"> | </span>
-                    <span>{{ subj }}</span>
+                    <span>{{ subj.value }}</span>
                   </span>
                 </div>
 
                 <!--Publications-->
-                <div *ngIf="event.publication.publications && event.publication.publications.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.publications && event.result.publications.length>0" class="uk-margin-small-bottom">
                   <span *ngIf="this.topic.includes('PUBLICATION')" class="mute-title">{{this.lastTopicEntry}} Publication(s): </span>
                   <span *ngIf="!this.topic.includes('PUBLICATION')" class="mute-title">Publication(s): </span>
-                  <span *ngFor="let pub of event.publication.publications; let p_index = index" class="small-content">
+                  <span *ngFor="let pub of event.result.publications; let p_index = index" class="small-content">
                     <br *ngIf="p_index > 0">
-                    <span>{{ pub.titles[0] }} (ID: {{pub.originalId}})</span>
+                    <span>{{ pub.title }} (ID: {{pub.originalId}})</span>
                   </span>
                 </div>
 
                 <!--Datasets-->
-                <div *ngIf="event.publication.datasets && event.publication.datasets.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.datasets && event.result.datasets.length>0" class="uk-margin-small-bottom">
                   <span *ngIf="this.topic.includes('DATASET')" class="mute-title">{{this.lastTopicEntry}} Dataset(s): </span>
                   <span *ngIf="!this.topic.includes('DATASET')" class="mute-title">Dataset(s): </span>
-                  <span *ngFor="let dataset of event.publication.datasets; let d_index = index" class="small-content">
+                  <span *ngFor="let dataset of event.result.datasets; let d_index = index" class="small-content">
                     <br *ngIf="d_index > 0">
                     <span>{{ dataset.titles[0] }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
                   </span>
                 </div>
 
                 <!--Software-->
-                <div *ngIf="event.publication.softwares && event.publication.softwares.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.softwares && event.result.softwares.length>0" class="uk-margin-small-bottom">
                   <span *ngIf="this.topic.includes('SOFTWARE')" class="mute-title">{{this.lastTopicEntry}} Software(s): </span>
                   <span *ngIf="!this.topic.includes('SOFTWARE')" class="mute-title">Software(s): </span>
-                  <span *ngFor="let software of event.publication.softwares; let s_index = index" class="small-content">
+                  <span *ngFor="let software of event.result.softwares; let s_index = index" class="small-content">
                     <br *ngIf="s_index > 0">
                     <span>{{ software.name }}</span>
                     <span *ngIf="software.description"> <br> {{ software.description }}</span>
@@ -383,17 +383,17 @@
                 </div>
 
                 <!--Publication Date-->
-                <div *ngIf="event.publication.publicationdate && event.publication.publicationdate.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.publicationdate && event.result.publicationdate.length>0" class="uk-margin-small-bottom">
                   <span class="mute-title">Publication date(s): </span>
                   <span class="small-content">
-                    {{ event.publication.publicationdate }}
+                    {{ event.result.publicationdate }}
                   </span>
                 </div>
 
                 <!--Rights-->
-                <div *ngIf="event.publication.instances && event.publication.instances.length>0" class="uk-margin-small-bottom">
+                <div *ngIf="event.result.instances && event.result.instances.length>0" class="uk-margin-small-bottom">
                   <span class="mute-title">Rights: </span>
-                  <span *ngFor="let l of event.publication.instances; let l_index = index" class="small-content">
+                  <span *ngFor="let l of event.result.instances; let l_index = index" class="small-content">
                     <br *ngIf="l_index > 0">
                     <span>
                       {{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b> - <a class="" href="{{ l.url }}" target="_blank">{{ l.url }}</a>

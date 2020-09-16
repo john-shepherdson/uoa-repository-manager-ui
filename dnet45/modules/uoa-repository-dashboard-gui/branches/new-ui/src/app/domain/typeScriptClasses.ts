@@ -384,11 +384,13 @@ export class ConditionParams implements IsSerializable {
     otherValue: string;
 }
 
-export class Dataset implements IsSerializable {
-    titles: string[];
-    collectedFrom: string[];
-    pids: Pid[];
-    instances: Instance[];
+export class OaBrokerRelatedDataset implements IsSerializable {
+    openaireId: string;
+    originalId: string;
+    title: string;
+    collectedFrom: string;
+    pids: OaBrokerTypedValue[];
+    instances: OaBrokerInstance[];
 }
 
 export class DatasourcesBroker implements IsSerializable {
@@ -397,30 +399,37 @@ export class DatasourcesBroker implements IsSerializable {
     datasourcesOfOthers: Tuple<BrowseEntry, string>[];
 }
 
+export class OaBrokerRelatedDatasource implements IsSerializable {
+  openaireId: string;
+  name: string;
+  type: string;
+  relType: string;
+}
+
 export class EventsPage implements IsSerializable {
     datasource: string;
     topic: string;
     currPage: number;
     totalPages: number;
     total: number;
-    values: OpenAireEventPayload[];
+    values: OaBrokerEventPayload[];
 }
 
-export class ExternalReference implements IsSerializable {
+export class OaBrokerExternalReference implements IsSerializable {
     url: string;
     sitename: string;
     type: string;
     refidentifier: string;
 }
 
-export class Instance implements IsSerializable {
+export class OaBrokerInstance implements IsSerializable {
     url: string;
     license: string;
     hostedby: string;
     instancetype: string;
 }
 
-export class Journal implements IsSerializable {
+export class OaBrokerJournal implements IsSerializable {
     name: string;
     issn: string;
     eissn: string;
@@ -434,11 +443,16 @@ export class MapConditions implements IsSerializable {
     listParams: ConditionParams[];
 }
 
-export class OpenAireEventPayload implements IsSerializable {
-    publication: Publication;
-    highlight: Publication;
-    provenance: Provenance;
+export class OaBrokerEventPayload implements IsSerializable {
+    result: OaBrokerMainEntity; // old publication: Publication; ??
+    highlight: OaBrokerMainEntity;
+    provenance: OaBrokerProvenance;
     trust: number;
+}
+
+export class OaBrokerAuthor implements IsSerializable {
+  fullname: string;
+  orcid: string;
 }
 
 export class OpenaireSubscription implements IsSerializable {
@@ -448,12 +462,13 @@ export class OpenaireSubscription implements IsSerializable {
     query: AdvQueryObject;
 }
 
-export class Pid implements IsSerializable {
+export class OaBrokerTypedValue implements IsSerializable {
     value: string;
     type: string;
 }
 
-export class Project implements IsSerializable {
+export class OaBrokerProject implements IsSerializable {
+    openaireId: string;
     code: string;
     acronym: string;
     title: string;
@@ -462,32 +477,45 @@ export class Project implements IsSerializable {
     jurisdiction: string;
 }
 
-export class Provenance implements IsSerializable {
+export class OaBrokerProvenance implements IsSerializable {
     repositoryName: string;
+    repositoryType: string;
     url: string;
     id: string;
 }
 
-export class Publication implements IsSerializable {
+export class OaBrokerRelatedPublication implements IsSerializable {
+  openaireId: string;
+  originalId: string;
+  title: string;
+  collectedFrom: string;
+  pids: OaBrokerTypedValue[];
+  instances: OaBrokerInstance[];
+  relType: string;
+}
+
+export class OaBrokerMainEntity implements IsSerializable {
+    openaireId: string;
     originalId: string;
+    typology: string;
     titles: string[];
     abstracts: string[];
     language: string;
-    subjects: string[];
-    creators: string[];
+    subjects: OaBrokerTypedValue[];
+    creators: OaBrokerAuthor[];
     publicationdate: string;
     publisher: string;
     embargoenddate: string;
     contributor: string[];
-    journal: Journal;
-    collectedFrom: string[];
-    pids: Pid[];
-    instances: Instance[];
-    externalReferences: ExternalReference[];
-    publications: Publication[];
-    projects: Project[];
-    datasets: Dataset[];
-    softwares: Software[];
+    journal: OaBrokerJournal;
+    pids: OaBrokerTypedValue[];
+    instances: OaBrokerInstance[];
+    externalReferences: OaBrokerExternalReference[];
+    publications: OaBrokerRelatedPublication[];
+    projects: OaBrokerProject[];
+    datasets: OaBrokerRelatedDataset[];
+    softwares: OaBrokerRelatedSoftware[];
+    datasources: OaBrokerRelatedDatasource[];
 }
 
 export class Range implements IsSerializable {
@@ -504,7 +532,8 @@ export class SimpleSubscriptionDesc implements IsSerializable {
     lastNotificationDate: Date;
 }
 
-export class Software implements IsSerializable {
+export class OaBrokerRelatedSoftware implements IsSerializable {
+  openaireId: string;
   name: string;
   description: string;
   landingPage: string;
