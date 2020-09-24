@@ -52,7 +52,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   eventSubjectsFormArray: any;
   eventDateRangesFormArray: any;
 
-  frequencyChoice: string;
+  frequencyChoice = 'daily';
   userEmail: string;
   modalErrorMessage: string;
 
