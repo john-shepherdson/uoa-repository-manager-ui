@@ -23,95 +23,104 @@
           <div class="transparentFilm"></div>
         </div>
         <div *ngIf="noTopics" class="uk-alert">{{ noTopics }}</div>
-        <div *ngIf="repoTopics && repoTopics.length > 0" class="uk-grid-margin uk-grid uk-grid-stack repos-list">
 
-          <div class="uk-width-1-2 uk-first-column">
-            <div class="md-card">
-              <div class="md-card-toolbar">
-                <!--<div class="md-card-toolbar-actions">-->
-                <!--<a href="#" class="md-btn md-btn-small md-btn-flat">Button</a>-->
-                <!--<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary">Button</a>-->
-                <!--</div>-->
-                <h3 class="md-card-toolbar-heading-text">
-                  More
-                </h3>
-              </div>
-              <div class="md-card-content">
-                <table class="uk-table uk-table-striped uk-table-middle">
-                  <thead>
-                  <tr>
-                    <th>Additional metadata information that may enrich or supplement {{ repoName }} content</th>
-                    <th class="uk-text-nowrap uk-text-right"># of events</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="el-item" *ngFor="let moreTopic of moreList">
-                    <td class="uk-table-shrink uk-width-4-5">
-                      <a (click)="goToEventsList(moreTopic.value)" class="el-link">{{ moreTopic.value }}</a>
-                      <div *ngIf="topics[moreTopic.value]" class="uk-text uk-text-small">{{ topics[moreTopic.value]['englishName'] }}</div>
-                    </td>
-                    <td class="uk-text-nowrap uk-table-shrink uk-width-1-5 uk-text-right">
-                      <div class="el-title">{{ moreTopic.size }}</div>
-                    </td>
-                  </tr>
-                  <tr class="el-item uk-text-bold">
-                    <td class="uk-text-nowrap uk-table-shrink uk-width-4-5">
-                      <div class="el-title">Total</div>
-                    </td>
-                    <td class="uk-text-nowrap uk-table-shrink uk-width-1-5 uk-text-right">
-                      <div class="el-title">{{ totalMore }}</div>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <ng-container *ngIf="repoTopics && repoTopics.length > 0">
+
+          <div class="uk-alert uk-alert-info">
+            For each topic a sample of 100 events will be displayed, as well as the total number that can be potentially built for your data source. If you are interested to receive the full list, you can subscribe to these events and then be notified about the new enrichment events.
           </div>
 
-          <div class="uk-width-1-2 uk-first-column">
-            <div class="md-card">
-              <div class="md-card-toolbar">
-                <!--<div class="md-card-toolbar-actions">-->
-                <!--<a href="#" class="md-btn md-btn-small md-btn-flat">Button</a>-->
-                <!--<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary">Button</a>-->
-                <!--</div>-->
-                <h3 class="md-card-toolbar-heading-text">
-                  Missing
-                </h3>
-              </div>
-              <div class="md-card-content">
-                <table class="uk-table uk-table-striped uk-table-middle">
-                  <thead>
-                  <tr>
-                    <th>Missing metadata information that may enrich or complete {{ repoName }} content</th>
-                    <th class="uk-text-nowrap uk-text-right"># of events</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="el-item" *ngFor="let missingTopic of missingList">
-                    <td class="uk-table-shrink uk-width-4-5">
-                      <a (click)="goToEventsList(missingTopic.value)" class="el-link">{{ missingTopic.value }}</a>
-                      <div *ngIf="topics[missingTopic.value]" class="uk-text uk-text-small">{{ topics[missingTopic.value]['englishName'] }}</div>
-                    </td>
-                    <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
-                      <div class="el-title uk-text-right">{{ missingTopic.size }}</div>
-                    </td>
-                  </tr>
-                  <tr class="el-item uk-text-bold">
-                    <td class="uk-text-nowrap uk-table-shrink uk-width-4-5">
-                      <div class="el-title">Total</div>
-                    </td>
-                    <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
-                      <div class="el-title uk-text-right">{{ totalMissing }}</div>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+          <div class="uk-grid-margin uk-grid uk-grid-stack repos-list">
+
+            <div class="uk-width-1-2 uk-first-column">
+              <div class="md-card">
+                <div class="md-card-toolbar">
+                  <!--<div class="md-card-toolbar-actions">-->
+                  <!--<a href="#" class="md-btn md-btn-small md-btn-flat">Button</a>-->
+                  <!--<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary">Button</a>-->
+                  <!--</div>-->
+                  <h3 class="md-card-toolbar-heading-text">
+                    More
+                  </h3>
+                </div>
+                <div class="md-card-content">
+                  <table class="uk-table uk-table-striped uk-table-middle">
+                    <thead>
+                    <tr>
+                      <th>Additional metadata information that may enrich or supplement {{ repoName }} content</th>
+                      <th class="uk-text-nowrap uk-text-right"># of events</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="el-item" *ngFor="let moreTopic of moreList">
+                      <td class="uk-table-shrink uk-width-4-5">
+                        <a (click)="goToEventsList(moreTopic.value)" class="el-link">{{ moreTopic.value }}</a>
+                        <div *ngIf="topics[moreTopic.value]" class="uk-text uk-text-small">{{ topics[moreTopic.value]['englishName'] }}</div>
+                      </td>
+                      <td class="uk-text-nowrap uk-table-shrink uk-width-1-5 uk-text-right">
+                        <div class="el-title">{{ moreTopic.size }}</div>
+                      </td>
+                    </tr>
+                    <tr class="el-item uk-text-bold">
+                      <td class="uk-text-nowrap uk-table-shrink uk-width-4-5">
+                        <div class="el-title">Total</div>
+                      </td>
+                      <td class="uk-text-nowrap uk-table-shrink uk-width-1-5 uk-text-right">
+                        <div class="el-title">{{ totalMore }}</div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
 
-        </div>
+            <div class="uk-width-1-2 uk-first-column">
+              <div class="md-card">
+                <div class="md-card-toolbar">
+                  <!--<div class="md-card-toolbar-actions">-->
+                  <!--<a href="#" class="md-btn md-btn-small md-btn-flat">Button</a>-->
+                  <!--<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary">Button</a>-->
+                  <!--</div>-->
+                  <h3 class="md-card-toolbar-heading-text">
+                    Missing
+                  </h3>
+                </div>
+                <div class="md-card-content">
+                  <table class="uk-table uk-table-striped uk-table-middle">
+                    <thead>
+                    <tr>
+                      <th>Missing metadata information that may enrich or complete {{ repoName }} content</th>
+                      <th class="uk-text-nowrap uk-text-right"># of events</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="el-item" *ngFor="let missingTopic of missingList">
+                      <td class="uk-table-shrink uk-width-4-5">
+                        <a (click)="goToEventsList(missingTopic.value)" class="el-link">{{ missingTopic.value }}</a>
+                        <div *ngIf="topics[missingTopic.value]" class="uk-text uk-text-small">{{ topics[missingTopic.value]['englishName'] }}</div>
+                      </td>
+                      <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
+                        <div class="el-title uk-text-right">{{ missingTopic.size }}</div>
+                      </td>
+                    </tr>
+                    <tr class="el-item uk-text-bold">
+                      <td class="uk-text-nowrap uk-table-shrink uk-width-4-5">
+                        <div class="el-title">Total</div>
+                      </td>
+                      <td class="uk-text-nowrap uk-table-shrink uk-width-1-5">
+                        <div class="el-title uk-text-right">{{ totalMissing }}</div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
+
       </div>
 
     </div>
