@@ -88,10 +88,12 @@ errorRegisterRepo = errorRegisterRepo + 'We\'re sorry for the inconvenience.';
 export const formErrorRegisterRepo = errorRegisterRepo;
 export const formSuccessUpdatedRepo = 'The datasource was updated successfully.';
 export const formSuccessRegisteredDatasource = 'The datasource was registered successfully';
-export const formSuccessAddedInterface = 'The interface was added successfully.';
-export const formSuccessUpdatedInterface = 'The interface was updated successfully.';
+// export const formSuccessAddedInterface = 'The interface was added successfully.';
+// export const formSuccessUpdatedInterface = 'The interface was updated successfully.';
+export const formSuccessAddedInterface = 'The harvesting settings are valid!';
+export const formSuccessUpdatedInterface = 'The harvesting settings are valid!';
 
 /* BaseUrl validation Messages */
 export const didntChooseBaseUrl = 'You need to select a base URL';
-export const invalidCustomBaseUrl = 'The url is not responding or is not a valid OAI-PMH url. Please, make sure that you are using the correct protocol ("http" or "https"), as the service is currently unable to follow url redirects.';
+export const invalidCustomBaseUrl = 'The base URL could not be confirmed. Μake sure that you are using the correct protocol ("http" or "https"), as the service is currently unable to follow url redirects. If the warning persists, leave us a note in the comments section. We will check your interface and contact you if there are any problems.';
 export const identifyingUrl = 'Identifying Url ...';

@@ -179,7 +179,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   checkIfValid() {
     if (this.formIsValid()) {
       if (this.inRegister) {
-        this.successMessage = 'The interface will be stored when the registration procedure is completed.';
+        // this.successMessage = 'The interface will be stored when the registration procedure is completed.';
+        this.successMessage = 'The harvesting settings are valid!';
         this.saveInterface();
       }
     } else {
@@ -262,7 +263,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     if (!this.inRegister) {
       this.addInterface(currentInterface);
     } else {
-      this.successMessage = 'The interface will be stored when the registration procedure is completed';
+      this.successMessage = 'The harvesting settings are valid!';
       console.log('SAVED !');
       this.interfaceToExport = currentInterface;
     }
@@ -311,7 +312,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     if (!this.inRegister) {
       this.updateInterface();
     } else {
-      this.successMessage = 'The interface will be stored when the registration procedure is completed';
+      this.successMessage = 'The harvesting settings are valid!';
       console.log('SAVED !');
       this.interfaceToExport = this.currentInterface;
     }
