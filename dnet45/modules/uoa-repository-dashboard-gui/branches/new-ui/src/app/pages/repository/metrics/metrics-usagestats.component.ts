@@ -13,7 +13,7 @@ import { SharedService } from "../../../services/shared.service";
 export class MetricsUsagestatsComponent implements OnInit {
 
   errorMessage: string;
-  title = 'Get usage statistics report';
+  title = 'Get usage counts report';
 
   repo: Repository;
 

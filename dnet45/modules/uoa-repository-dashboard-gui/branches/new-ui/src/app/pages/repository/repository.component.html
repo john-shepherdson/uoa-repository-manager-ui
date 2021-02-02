@@ -42,9 +42,9 @@
                 </li>
                 <li data-uk-filter="snippets-lang-php" [routerLinkActive]="['uk-active']">
                   <!--<a [routerLink]="['/repository/' + repository.id + '/getImpact']">METRICS</a>-->
-                  <a *ngIf="repository.piwikInfo && repository.piwikInfo.validated" [routerLink]="['./getImpact/show_metrics']">USAGE STATISTICS</a>
-                  <a *ngIf="repository.piwikInfo && !repository.piwikInfo.validated" [routerLink]="['./getImpact/instructions']">USAGE STATISTICS</a>
-                  <a *ngIf="!repository.piwikInfo" [routerLink]="['./getImpact/enable']">USAGE STATISTICS</a>
+                  <a *ngIf="repository.piwikInfo && repository.piwikInfo.validated" [routerLink]="['./getImpact/show_metrics']">USAGE COUNTS</a>
+                  <a *ngIf="repository.piwikInfo && !repository.piwikInfo.validated" [routerLink]="['./getImpact/instructions']">USAGE COUNTS</a>
+                  <a *ngIf="!repository.piwikInfo" [routerLink]="['./getImpact/enable']">USAGE COUNTS</a>
                 </li>
 
               </ul>
