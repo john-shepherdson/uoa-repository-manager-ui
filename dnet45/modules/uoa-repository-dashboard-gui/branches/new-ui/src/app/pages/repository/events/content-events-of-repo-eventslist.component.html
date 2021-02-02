@@ -90,6 +90,29 @@
                 </div>
               </div>
 
+              <ng-container *ngIf="event.highlight.creators && event.highlight.creators.length>0">
+
+                <div class="small-content">
+                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.creators.length}} author ORCID(s) added</span>
+                  <span class="mute-title">FROM: </span>
+                  <ng-container *ngIf="event.provenance.url">
+                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                  </ng-container>
+                  <ng-container *ngIf="!event.provenance.url">
+                    <span>{{ event.provenance.repositoryName }}</span>
+                  </ng-container>
+                </div>
+
+                <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                  <div *ngFor="let author of event.highlight.creators; let p_index = index" class="uk-margin-small-bottom">
+                    <span class="highlightIndex">{{(p_index + 1)}}. </span>
+                    <span>{{ author.fullname }} <b>&nbsp;&nbsp;({{ author.orcid }})&nbsp;&nbsp;</b></span>
+                  </div>
+                </div>
+
+              </ng-container>
+
               <ng-container *ngIf="event.highlight.pids && event.highlight.pids.length>0">
 
                 <div class="small-content">
@@ -303,7 +326,7 @@
                   <span class="mute-title">Author(s): </span>
                   <span *ngFor="let auth of event.result.creators; let au_index = index" class="small-content">
                     <span *ngIf="au_index>0"> | </span>
-                    <span>{{ auth.fullname }}</span>
+                    <span>{{ auth.fullname }} <b>&nbsp;({{ auth.orcid }})&nbsp;&nbsp;</b></span>
                   </span>
                 </div>
 
