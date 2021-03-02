@@ -271,39 +271,15 @@ export class DashboardComponent implements OnInit {
   }
 
   getViewsUrl () {
-    this.viewsUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `${this.repoMetrics.diagramsBaseURL}merge.php?com=query
-      &data=[{"query":"dtsrcRepoViews","dtsrcName":"${this.piwik.openaireId}",
-      "table":"","fields":[{"fld":"sum","agg":"sum","type":"chart","yaxis":1,"c":false}],
-      "xaxis":{"name":"month","agg":"sum"},"group":"","color":"","type":"chart","size":30,
-      "sort":"xaxis","xStyle":{"r":-30,"s":"0","l":"-","ft":"-","wt":"-"},"title":"","subtitle":"",
-      "xaxistitle":"","yaxisheaders":["Monthly views"],"generalxaxis":"","theme":0,"in":[]}]
-      &info_types=["spline"]&stacking=&steps=false&fontFamily=Courier&spacing=[5,0,0,0]
-      &style=[{"color":"rgba(0, 0, 0, 1)","size":"18"},{"color":"rgba(0, 0, 0, 1)","size":"18"},
-      {"color":"000000","size":""},{"color":"000000","size":""}]&backgroundColor=rgba(255,255,255,1)
-      &colors[]=rgba(124,181, 236, 1)&colors[]=rgba(67, 67, 72, 1)&colors[]=rgba(144, 237, 125,1)
-      &colors[]=rgba(247, 163, 92, 1)&colors[]=rgba(128, 133, 233,1)&colors[]=rgba(241, 92, 128, 1)
-      &colors[]=rgba(228, 211, 84,1)&colors[]=rgba(43, 144, 143, 1)&colors[]=rgba(244, 91, 91,1)
-      &colors[]=rgba(145, 232, 225,1)&xlinew=0&ylinew=1&legends=true&tooltips=true&persistent=false`
-    );
+
+    let encodedURL = encodeURIComponent('{"library":"HighCharts","chartDescription":{"queries":[{"name":"Monthly views","type":"line","query":{"name":"usagestats.views.monthly", "parameters":["' + this.piwik.openaireId + '"], "profile":"OpenAIRE All-inclusive" }}],"chart":{"backgroundColor":"#FFFFFFFF","borderColor":"#335cadff","borderRadius":0,"borderWidth":0,"plotBorderColor":"#ccccccff","plotBorderWidth":0},"title":{"text":""},"subtitle":{},"yAxis":{"title":{"text":"Monthly views"}},"xAxis":{"title":{}},"lang":{"noData":"No Data available for the Query"},"exporting":{"enabled":false},"plotOptions":{"series":{"dataLabels":{"enabled":false}}},"legend":{"enabled":false},"credits":{"href":null,"enabled":true,"text":"Created by OpenAIRE via HighCharts"}}}');
+    this.viewsUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${this.repoMetrics.diagramsBaseURL}chart?json=${encodedURL}`);
   }
 
   getDownloadsUrl () {
-    this.downloadsUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `${this.repoMetrics.diagramsBaseURL}merge.php?com=query
-      &data=[{"query":"dtsrcRepoDownloads","dtsrcName":"${this.piwik.openaireId}",
-      "table":"","fields":[{"fld":"sum","agg":"sum","type":"chart","yaxis":1,"c":false}],
-      "xaxis":{"name":"month","agg":"sum"},"group":"","color":"","type":"chart","size":30,
-      "sort":"xaxis","xStyle":{"r":-30,"s":"0","l":"-","ft":"-","wt":"-"},"title":"","subtitle":"",
-      "xaxistitle":"","yaxisheaders":["Monthly downloads"],"generalxaxis":"","theme":0,"in":[]}]
-      &info_types=["spline"]&stacking=&steps=false&fontFamily=Courier&spacing=[5,0,0,0]
-      &style=[{"color":"rgba(0, 0, 0, 1)","size":"18"},{"color":"rgba(0, 0, 0,1)","size":"18"},
-      {"color":"000000","size":""},{"color":"000000","size":""}]&backgroundColor=rgba(255,255,255,1)
-      &colors[]=rgba(124, 181, 236, 1)&colors[]=rgba(67, 67, 72, 1)&colors[]=rgba(144, 237, 125,1)
-      &colors[]=rgba(247, 163, 92, 1)&colors[]=rgba(128, 133, 233,1)&colors[]=rgba(241, 92, 128, 1)
-      &colors[]=rgba(228, 211, 84,1)&colors[]=rgba(43, 144, 143, 1)&colors[]=rgba(244, 91, 91,1)
-      &colors[]=rgba(145, 232, 225,1)&xlinew=0&ylinew=1&legends=true&tooltips=true&persistent=false`
-    );
+
+    let encodedURL = encodeURIComponent('{"library":"HighCharts","chartDescription":{"queries":[{"name":"Monthly views","type":"line","query":{"name":"usagestats.downloads.monthly", "parameters":["' + this.piwik.openaireId + '"], "profile":"OpenAIRE All-inclusive" }}],"chart":{"backgroundColor":"#FFFFFFFF","borderColor":"#335cadff","borderRadius":0,"borderWidth":0,"plotBorderColor":"#ccccccff","plotBorderWidth":0},"title":{"text":""},"subtitle":{},"yAxis":{"title":{"text":"Monthly views"}},"xAxis":{"title":{}},"lang":{"noData":"No Data available for the Query"},"exporting":{"enabled":false},"plotOptions":{"series":{"dataLabels":{"enabled":false}}},"legend":{"enabled":false},"credits":{"href":null,"enabled":true,"text":"Created by OpenAIRE via HighCharts"}}}');
+    this.downloadsUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${this.repoMetrics.diagramsBaseURL}chart?json=${encodedURL}`);
   }
 
   getCorrectName() {
