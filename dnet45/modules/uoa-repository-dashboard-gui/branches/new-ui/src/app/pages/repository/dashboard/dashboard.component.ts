@@ -278,7 +278,7 @@ export class DashboardComponent implements OnInit {
 
   getDownloadsUrl () {
 
-    let encodedURL = encodeURIComponent('{"library":"HighCharts","chartDescription":{"queries":[{"name":"Monthly views","type":"line","query":{"name":"usagestats.downloads.monthly", "parameters":["' + this.piwik.openaireId + '"], "profile":"OpenAIRE All-inclusive" }}],"chart":{"backgroundColor":"#FFFFFFFF","borderColor":"#335cadff","borderRadius":0,"borderWidth":0,"plotBorderColor":"#ccccccff","plotBorderWidth":0},"title":{"text":""},"subtitle":{},"yAxis":{"title":{"text":"Monthly views"}},"xAxis":{"title":{}},"lang":{"noData":"No Data available for the Query"},"exporting":{"enabled":false},"plotOptions":{"series":{"dataLabels":{"enabled":false}}},"legend":{"enabled":false},"credits":{"href":null,"enabled":true,"text":"Created by OpenAIRE via HighCharts"}}}');
+    let encodedURL = encodeURIComponent('{"library":"HighCharts","chartDescription":{"queries":[{"name":"Monthly downloads","type":"line","query":{"name":"usagestats.downloads.monthly", "parameters":["' + this.piwik.openaireId + '"], "profile":"OpenAIRE All-inclusive" }}],"chart":{"backgroundColor":"#FFFFFFFF","borderColor":"#335cadff","borderRadius":0,"borderWidth":0,"plotBorderColor":"#ccccccff","plotBorderWidth":0},"title":{"text":""},"subtitle":{},"yAxis":{"title":{"text":"Monthly views"}},"xAxis":{"title":{}},"lang":{"noData":"No Data available for the Query"},"exporting":{"enabled":false},"plotOptions":{"series":{"dataLabels":{"enabled":false}}},"legend":{"enabled":false},"credits":{"href":null,"enabled":true,"text":"Created by OpenAIRE via HighCharts"}}}');
     this.downloadsUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${this.repoMetrics.diagramsBaseURL}chart?json=${encodedURL}`);
   }
 
