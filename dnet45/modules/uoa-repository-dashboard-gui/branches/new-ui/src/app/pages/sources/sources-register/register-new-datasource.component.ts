@@ -241,11 +241,11 @@ export class RegisterNewDatasourceComponent implements OnInit {
       from(this.repoInterfaces).pipe(
         concatMap(intrf => {
           if (intrf.id) {
-            const comments = this.interfaceComments.getComments();
-            return this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, comments, intrf);
+            // console.log('comments', intrf.comments);
+            return this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, intrf.comments, intrf);
           } else {
-            const comments = this.interfaceComments.getComments();
-            return this.repoService.addInterface(this.repo.datasourceType, this.repo.id, this.repo.registeredBy, comments, intrf);
+            // console.log('comments', intrf.comments);
+            return this.repoService.addInterface(this.repo.datasourceType, this.repo.id, this.repo.registeredBy, intrf.comments, intrf);
           }
         })
       ).subscribe(

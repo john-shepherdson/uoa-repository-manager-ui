@@ -34,14 +34,24 @@ export class RepositoryService {
   constructor(private httpClient: HttpClient) { }
 
   addInterface(datatype: string, repoId: string, registeredBy: string, comment: string, newInterface: RepositoryInterface): Observable<RepositoryInterface> {
-    const url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}`;
+    let url;
+    if (comment == null || comment === '') {
+      url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}`;
+    } else {
+      url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}`;
+    }
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(newInterface)}`);
     return this.httpClient.post<RepositoryInterface>(url, newInterface, headerOptions);
   }
 
   updateInterface(repoId: string, registeredBy: string, comment: string, interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
-    const url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}`;
+    let url;
+    if (comment == null || comment === '') {
+      url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}`;
+    } else {
+      url  = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}`;
+    }
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(interfaceInfo)}`);
     return this.httpClient.post<RepositoryInterface>(url, interfaceInfo, headerOptions);

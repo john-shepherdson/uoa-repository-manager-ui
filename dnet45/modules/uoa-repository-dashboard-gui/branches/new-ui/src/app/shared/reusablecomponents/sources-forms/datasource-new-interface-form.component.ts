@@ -12,6 +12,7 @@ export class RepoFields {
   datasourceType: string;
   datasourceClass: string;
   registeredBy: string;
+  comments: string;
 }
 
 @Component({
@@ -54,7 +55,6 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   classCodes: string[] = [];
   compClasses: Map<string, string> = new Map<string, string>();
   existingValSet: boolean;
-  comments: string;
   interfaceInfo: InterfaceInformation;
 
   constructor(private fb: FormBuilder,
@@ -258,7 +258,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     currentInterface.desiredCompatibilityLevel = compLvl;
     currentInterface.compliance = compLvl;
     currentInterface.typology = this.currentRepo.datasourceClass;
-    this.comments = comment;
+    currentInterface.comments = comment;
 
     if (!this.inRegister) {
       this.addInterface(currentInterface);
@@ -274,7 +274,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.repoService.addInterface(this.currentRepo.datasourceType,
                                   this.currentRepo.id,
                                   this.currentRepo.registeredBy,
-                                  this.comments,
+                                  this.currentRepo.comments,
                                   newInterface).subscribe(
       addedInterface => {
         console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
@@ -307,7 +307,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.currentInterface.desiredCompatibilityLevel = compLvl;
     this.currentInterface.compliance = compLvl;
     this.currentInterface.typology = this.currentRepo.datasourceClass;
-    this.comments = comment;
+    this.currentInterface.comments = comment;
 
     if (!this.inRegister) {
       this.updateInterface();
@@ -322,7 +322,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.loadingMessage = formSubmitting;
     this.repoService.updateInterface(this.currentRepo.id,
                                      this.currentRepo.registeredBy,
-                                     this.comments,
+                                     this.currentRepo.comments,
                                      this.currentInterface).subscribe(
       response => {
         console.log(`updateRepository responded ${JSON.stringify(response)}`);
@@ -365,10 +365,6 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
 
   getInterface() {
     return this.interfaceToExport;
-  }
-
-  getComments() {
-    return this.comments;
   }
 
 }

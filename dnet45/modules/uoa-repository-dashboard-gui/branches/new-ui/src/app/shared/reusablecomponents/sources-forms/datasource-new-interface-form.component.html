@@ -140,7 +140,7 @@
 
       <div class="uk-margin-medium-top">
         <label class="" for="comment" title="{{ commentDesc.desc }}">Comments (What else do we need to know?)</label>
-        <textarea id="comment" class="uk-textarea" rows="3" formControlName="comment"></textarea>
+        <textarea id="comment" class="uk-textarea" rows="3" formControlName="comment" (blur)="checkIfValid()"></textarea>
       </div>
 
     </div>
