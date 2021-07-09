@@ -1,0 +1,229 @@
+<div class="uk-section-default uk-section uk-section-small uk-padding-remove-bottom" style="min-height: 325px">
+
+  <!-- MARGIN-TOP  -->
+  <div class="uk-sticky-placeholder" style="height: 84px; margin: 0px;" aria-hidden="true"></div>
+  <div class="uk-container uk-container-large">
+
+    <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+      <div class="uk-width-1-1@m uk-first-column">
+
+        <h1 class="uk-h2">Get usage statistics report</h1>
+
+        <!-- TOP HELP CONTENT -->
+        <help-content #topHelperContent [position]="'top'"
+                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
+
+        <div class="uk-container uk-container-large uk-margin-medium-top uk-margin-medium-bottom">
+          <div class="uk-grid">
+
+            <!-- LEFT HELP CONTENT -->
+            <aside-help-content #leftHelperContent [position]="'left'"
+                                [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+            </aside-help-content>
+
+            <!-- MIDDLE -->
+            <div class=" uk-width-expand@m" style="min-height:500px;">
+
+              <div *ngIf="errorMessage" class="uk-alert uk-alert-warning">{{errorMessage}}</div>
+              <div *ngIf="loadingMessage" class="loading-big">
+                <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                  {{ loadingMessage }}
+                </div>
+                <div class="whiteFilm"></div>
+              </div>
+              <div *ngIf="repoResponse" class="uk-margin-top">
+                <h3>{{ repoResponse.ReportDefinition['@Name'] }} Report Results
+                  <span *ngIf="repoResponse.Report &&
+                              repoResponse.Report.Report &&
+                              repoResponse.Report.Report.Customer &&
+                              repoResponse.Report.Report.Customer.ReportItems &&
+                              repoResponse.Report.Report.Customer.ReportItems.length > 0">for {{ repoResponse.Report.Report.Customer.ReportItems[0].ItemPlatform }}</span>
+                </h3>
+                <div class="uk-width-1-2">
+                  <table class="uk-table">
+                    <tr>
+                      <th>Period covered</th>
+                      <td>{{ coveredPeriod }}</td>
+                    </tr>
+                    <tr>
+                      <th>Filters</th>
+                      <td>
+                        <span *ngFor="let filter of repoResponse.ReportDefinition.Filters.Filter; let i = index">
+                          <br *ngIf="i>0">
+                          {{ filter.Name }}: {{ filter.Value }}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Date run</th>
+                      <td>{{ repoResponse.Report.Report['@Created'] | date: "yyyy-MM-dd HH:mm:ss" }}</td>
+                    </tr>
+                    <tr>
+                      <th>Number of results</th>
+                      <td>{{ repoResponse.ReportDefinition.Filters.ReportAttribute[1].Value }}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div *ngIf="repoResponse.Report.Report.Customer &&
+                            repoResponse.Report.Report.Customer.ReportItems">
+                  <div>
+                    <div class="show-options uk-inline" style="float: right;">
+                      <div class="filterLabel" style="display: inline;">Results per page:</div>
+                      <div [formGroup]="pageSizeSelect" class="inlineBlock">
+                        <select class="form-control" formControlName="selectPageSize" (change)="getPageSize()">
+                          <option value="10" selected>10</option>
+                          <option value="25">25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div><br>
+                  <div class="contentAndPagerPanel">
+
+                    <!-- TOP PAGINATION LINKS -->
+                    <div>
+                      <ul class="uk-pagination">
+                        <li>
+                          <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
+                      <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+                        <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"
+                             icon="pagination-previous" ratio="1"></svg>
+                      </span>
+                            Previous
+                          </a>
+                        </li>
+                        <li class="uk-margin-auto-left">
+                          <a class="uk-link uk-link-muted" (click)="goToNextPage()">
+                            Next
+                            <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                        <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"
+                             icon="pagination-next" ratio="1"></svg>
+                      </span>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="resultsPageLabel">page {{ (totalPages > 0) ? page+1 : 0 }} of {{ totalPages }}</div>
+                    </div>
+
+
+                    <!-- RESULTS TABLE -->
+                    <div>
+                      <div>
+                        <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium uk-margin-top uk-margin-bottom">
+
+                          <table class="uk-table uk-table-middle uk-table-striped" style="vertical-align: top !important;">
+                            <thead>
+                              <tr>
+                                <th *ngIf="chosenReport !== 'RR1'">Title</th>
+                                <th *ngIf="chosenReport !== 'RR1'">Publisher</th>
+                                <th *ngIf="chosenReport === 'RR1'">Platform name</th>
+                                <th>{{ (chosenReport !== 'RR1') ? 'Item Urls' : 'Url' }}</th>
+                                <th>Type</th>
+                                <th colspan="2">Downloads/Views</th>
+                              </tr>
+                            </thead>
+                            <td colspan="6" *ngIf="infoMessage" class="uk-alert">{{ infoMessage }}</td>
+                            <tbody *ngFor="let item of repoResponse.Report.Report.Customer.ReportItems; let item_i = index"
+                                   style="border-bottom: 1px solid whitesmoke;">
+                              <tr>
+                                <td *ngIf="chosenReport !== 'RR1'">{{ item.ItemName }}</td>
+                                <td *ngIf="chosenReport !== 'RR1'">{{ item.ItemPublisher }}</td>
+                                <td *ngIf="chosenReport === 'RR1'">{{ item.ItemPlatform }}</td>
+                                <td style="min-width: 300px;">
+                                  <span *ngFor="let url of transformItem(item.ItemIdentifier); let i = index">
+                                    <br *ngIf="i>0">{{ url }}
+                                  </span>
+                                </td>
+                                <td>{{ item.ItemDataType }}</td>
+                                <td class="uk-text-center"
+                                    *ngIf="repoResponse.ReportDefinition.Filters.ReportAttribute[0].Value === 'Monthly'" colspan="2">
+                                  <a *ngIf="item.ItemPerformance && (item.ItemPerformance.length > 0)"
+                                     (click)="displayItemPerformance(item_i)">{{ (selectedItemIndex === item_i) ? 'Hide' : 'See' }} results</a>
+                                </td>
+                                <td class="uk-text-center"
+                                    *ngIf="repoResponse.ReportDefinition.Filters.ReportAttribute[0].Value === 'Totals'">
+                                  {{ item.ItemPerformance[0].Instance[0].Count }}
+                                </td>
+                                <td class="uk-text-center"
+                                    *ngIf="repoResponse.ReportDefinition.Filters.ReportAttribute[0].Value === 'Totals'">
+                                  {{ item.ItemPerformance[0].Instance[1].Count }}
+                                </td>
+                              </tr>
+                              <tr *ngIf="(selectedItemIndex === item_i)">
+                                <td colspan="6">
+                                  <div class="uk-animation-slide-top-medium uk-margin-small-top">
+                                    <table class="uk-table uk-table-middle uk-table-striped innerTable">
+                                      <tr>
+                                        <th>Month</th>
+                                        <th>Downloads</th>
+                                        <th>Views</th>
+                                      </tr>
+                                      <tr *ngFor="let month of item.ItemPerformance">
+                                        <td>{{ month.Period.Begin | date: "MMM yyyy" }}</td>
+                                        <td>{{ month.Instance[0].Count }}</td>
+                                        <td>{{ month.Instance[1].Count }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- BOTTOM PAGINATION LINKS -->
+                    <div>
+                      <ul class="uk-pagination">
+                        <li>
+                          <a class="uk-link uk-link-muted" (click)="goToPreviousPage()">
+                      <span class="uk-margin-small-right uk-pagination-previous uk-icon" uk-pagination-previous="">
+                        <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"
+                             icon="pagination-previous" ratio="1"></svg>
+                      </span>
+                            Previous
+                          </a>
+                        </li>
+                        <li class="uk-margin-auto-left">
+                          <a class="uk-link uk-link-muted" (click)="goToNextPage()">
+                            Next
+                            <span class="uk-margin-small-left uk-pagination-next uk-icon" uk-pagination-next="">
+                        <svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"
+                             icon="pagination-next" ratio="1"></svg>
+                      </span>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="resultsPageLabel">page {{ (totalPages > 0) ? page+1 : 0 }} of {{ totalPages }}</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- RIGHT HELP CONTENT -->
+            <aside-help-content #rightHelperContent [position]="'right'"
+                                [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+            </aside-help-content>
+
+          </div>
+        </div>
+
+
+        <!-- BOTTOM HELP CONTENT -->
+        <help-content #bottomHelperContent [position]="'bottom'"
+                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+

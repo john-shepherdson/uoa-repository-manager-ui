@@ -1,0 +1,50 @@
+<div *ngIf="entitiesList" [formGroup]="group">
+  <div class="marginBottom20 uk-margin-top">
+    <div>
+      <label>Cris Entities</label>
+    </div>
+    <div>
+      <div class="margin10" formArrayName="entities">
+        <div class="checkbox selectAll">
+          <label>
+            <input type="checkbox" [checked]="selectedAllEntities" (change)="toggleSelectAllContentRules()">
+            <span>Select / Deselect All Entities</span>
+          </label>
+        </div>
+        <div *ngFor="let content of group.controls['entities'].controls; let i = index" class="checkbox">
+          <div [formGroupName]="i">
+            <label for="entity_{{ i }}">
+              <input id="entity_{{ i }}"
+                     formControlName="entity"
+                     type="checkbox"
+                     (change)="onToggleCheckEntity($event)">
+              <span class="uk-margin-small-left">{{ entitiesList[i] }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="marginBottom20">
+    <div>
+      <label>Check Referential Integrity</label>
+    </div>
+    <div class="uk-grid form-inline">
+      <div class="uk-width-1-1">
+        <label class="btn btn-link" for="yes">
+          <input id="yes"
+                 name="referentialIntegrity"
+                 value="yes"
+                 checked
+                 type="radio"> <span class="uk-margin-small-left">Yes</span>
+        </label>
+        <label class="btn btn-link" for="no">
+          <input id="no"
+                 name="referentialIntegrity"
+                 value="no"
+                 type="radio"> <span class="uk-margin-small-left">No</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
