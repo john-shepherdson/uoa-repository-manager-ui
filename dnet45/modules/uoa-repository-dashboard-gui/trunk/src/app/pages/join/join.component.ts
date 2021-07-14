@@ -41,7 +41,7 @@ export class JoinComponent implements OnInit {
   }
 
   getReposOfUser(): void {
-    this.repositoryService.getRepositoriesOfUser()
+    this.repositoryService.getRepositoriesSnippetsOfUser()
       .subscribe(
         repos => {
           this.repositoriesOfUser = repos;

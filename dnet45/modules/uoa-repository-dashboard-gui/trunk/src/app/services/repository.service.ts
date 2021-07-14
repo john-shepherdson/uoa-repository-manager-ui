@@ -12,7 +12,7 @@ import {
   RepositoryInterface,
   RepositorySnippet, RepositorySummaryInfo,
   Timezone,
-  Typology
+  Typology, User
 } from '../domain/typeScriptClasses';
 import { Observable, of } from 'rxjs';
 import { timezones } from '../domain/timezones';
@@ -28,7 +28,7 @@ const headerOptions = {
 
 @Injectable ()
 export class RepositoryService {
-  private apiUrl = environment.API_ENDPOINT + '/repository/';
+  private apiUrl = environment.API_ENDPOINT + '/repositories/';
   private dashboardAPIUrl = environment.API_ENDPOINT + '/dashboard/';
 
   constructor(private httpClient: HttpClient) { }
@@ -91,15 +91,15 @@ export class RepositoryService {
     return this.httpClient.get<RepositorySnippet[]>(url, headerOptions);
   }
 
-  getRepositoriesOfUser(): Observable<RepositorySnippet[]> {
-    const url = `${this.apiUrl}getRepositoriesOfUser/0/100`;
+  getRepositoriesSnippetsOfUser(): Observable<RepositorySnippet[]> {
+    const url = `${this.apiUrl}snippets/user`;
     console.log(`knocking on: ${url}`);
     return this.httpClient.get<RepositorySnippet[]>(url, headerOptions);
   }
 
 
   getRepositoryById(id: string): Observable<Repository> {
-    const url = `${this.apiUrl}getRepositoryById/${id}`;
+    const   url = `${this.apiUrl}getRepositoryById/${id}`;
     console.log(`knocking on: ${url}`);
     return this.httpClient.get<Repository>(url, headerOptions);
   }
@@ -144,7 +144,7 @@ export class RepositoryService {
   }
 
   getCountries(): Observable<Country[]> {
-    const url = `${this.apiUrl}getCountries`;
+    const url = `${this.apiUrl}countries`;
     console.log(`knocking on: ${url}`);
     return this.httpClient.get<Country[]>(url, headerOptions);
   }
@@ -192,5 +192,23 @@ export class RepositoryService {
     const url = `${this.dashboardAPIUrl}getRepositoriesSummary/0/100`;
     console.log(`knocking on: ${url}`);
     return this.httpClient.get<RepositorySummaryInfo[]>(url, headerOptions);
+  }
+
+  getRepositoryAdmins(repoId: string): Observable<User[]> {
+    const url = `${this.apiUrl}${repoId}/admins`;
+    console.log(`knocking on: ${url}`);
+    return this.httpClient.get<User[]>(url, headerOptions);
+  }
+
+  deleteRepositoryAdmin(repoId: string, repoAdminEmail: string) {
+    const url = `${this.apiUrl}${repoId}/admins/${repoAdminEmail}`;
+    console.log(`knocking on: ${url}`);
+
+    return this.httpClient.delete(url, headerOptions);
+  }
+
+  addRepositoryAdmin(repoId: string, repoAdminEmail: string) {
+    const url = `${this.apiUrl}${repoId}/admins`;
+    return this.httpClient.post<string>(url, repoAdminEmail, headerOptions);
   }
 }

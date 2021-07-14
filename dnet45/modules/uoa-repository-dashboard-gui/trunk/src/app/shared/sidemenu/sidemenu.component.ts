@@ -154,7 +154,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   getReposOfUser(): void {
-    this.repositoryService.getRepositoriesOfUser()
+    this.repositoryService.getRepositoriesSnippetsOfUser()
       .subscribe(
         repos => {
             this.reposOfUser = repos;

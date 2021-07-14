@@ -8,7 +8,7 @@ import { DatasourceUpdateFormComponent } from '../../../shared/reusablecomponent
 import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { DatasourceNewInterfaceFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
-import {SharedService} from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 
 @Component ({
   selector: 'sources-update-repo',
