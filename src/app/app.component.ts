@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
   }
 
   getReposOfUser(): void {
-    this.repositoryService.getRepositoriesOfUser()
+    this.repositoryService.getRepositoriesSnippetsOfUser()
       .subscribe(
         repos => { this.reposOfUser = repos; },
         error => { console.log(error); },

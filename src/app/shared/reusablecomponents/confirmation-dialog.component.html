@@ -31,6 +31,7 @@
     <div class="uk-modal-footer uk-text-right">
       <button (click)="hideModal()" type="button" class="md-btn md-btn-flat uk-modal-close">{{ hideModalButton }}</button>
       <button *ngIf="confirmActionButton" (click)="confirmedAction()" type="button" class="md-btn md-btn-flat md-btn-flat-primary">{{confirmActionButton}}</button>
+      <button *ngIf="confirmButNotCloseButton" (click)="confirmedButNotCloseAction()" type="button" class="md-btn md-btn-flat md-btn-flat-primary">{{confirmButNotCloseButton}}</button>
     </div>
   </div>
 </div>
