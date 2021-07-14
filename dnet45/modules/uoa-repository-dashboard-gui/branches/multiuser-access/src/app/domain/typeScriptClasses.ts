@@ -716,3 +716,10 @@ export class CollectionMonitorSummary {
   aggregationDetails: AggregationDetails[];
   lastIndexedVersion: AggregationDetails;
 }
+
+export class User {
+  sub: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}

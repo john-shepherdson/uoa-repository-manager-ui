@@ -19,6 +19,7 @@ export class ConfirmationDialogComponent {
   @Input() public title: string;
 
   @Input() public confirmActionButton: string;
+  @Input() public confirmButNotCloseButton: string;
 
   @Input() public hideModalButton: string = 'Cancel';
 
@@ -49,5 +50,9 @@ export class ConfirmationDialogComponent {
       this.isModalShown = false;
       // this.hideModal();
     }
+  }
+
+  public confirmedButNotCloseAction() {
+    this.emitObject.emit(this._ids);
   }
 }
