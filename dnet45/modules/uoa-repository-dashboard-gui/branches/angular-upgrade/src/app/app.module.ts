@@ -24,6 +24,7 @@ import { EmptyPageComponent } from "./pages/emptypage/empty-page.component";
 import { SharedService } from "./services/shared.service";
 import { JoinComponent } from "./pages/join/join.component";
 import { AboutComponent } from "./pages/landing/about/about.component";
+import {environment} from '../environments/environment';
 
 
 @NgModule({
@@ -42,7 +43,18 @@ import { AboutComponent } from "./pages/landing/about/about.component";
     HttpClientModule,
     ReusableComponentsModule,
     CookieLawModule,
-    MatomoModule,
+    MatomoModule.forRoot({
+      scriptUrl: environment.MATOMO_URL + 'matomo.js',
+      trackers: [
+        {
+          trackerUrl: environment.MATOMO_URL + 'matomo.php',
+          siteId: environment.MATOMO_SITE
+        }
+      ],
+      routeTracking: {
+        enable: true
+      }
+    }),
     AppRoutingModule
   ],
   providers: [

@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { environment } from '../environments/environment';
-import { MatomoInjector, MatomoTracker } from 'ngx-matomo';
+import { MatomoTracker } from 'ngx-matomo';
 import { ConfirmationDialogComponent } from './shared/reusablecomponents/confirmation-dialog.component';
 import { RepositoryService } from './services/repository.service';
 import { RepositorySnippet } from './domain/typeScriptClasses';
@@ -34,26 +34,11 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthenticationService,
-              private matomoInjector: MatomoInjector,
               private matomoTracker: MatomoTracker,
               private repositoryService: RepositoryService,
               private fb: FormBuilder) {
 
     console.log('21-06-2019. Fixed matomo to log userIds?');
-
-    let piwikUrl;
-    if (window.location.origin.includes('beta')) {
-      // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
-      piwikUrl = '92';
-    } else if (window.location.origin.includes('localhost:4200') ||
-               window.location.origin.includes('athenarc')) {
-      // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=92&rec=1';
-      piwikUrl = '9222222';
-    } else {
-      // piwikUrl = 'https://analytics.openaire.eu/piwik.php?idsite=111&rec=1';
-      piwikUrl = '111';
-    }
-    this.matomoInjector.init('https://analytics.openaire.eu/', piwikUrl);
 
     /*disabling console.log in production*/
     if ( environment.production === true ) {

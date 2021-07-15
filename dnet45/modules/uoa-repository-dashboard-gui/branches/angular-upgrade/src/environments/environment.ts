@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   API_ENDPOINT: '/uoa-repository-manager-service',
+  MATOMO_URL: 'https://analytics.openaire.eu/',
+  MATOMO_SITE: 9222222,
   // FAQ_ENDPOINT: 'http://88.197.53.69:5555/api',
   // FAQ_HOMEPAGE: 'http://88.197.53.69:5555'
   FAQ_ENDPOINT: 'https://provide.openaire.eu/uoa-admin-tools/api',
