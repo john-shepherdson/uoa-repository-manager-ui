@@ -39,10 +39,10 @@ export class RegisterNewDatasourceComponent implements OnInit {
   @ViewChild('bottomHelperContent', { static: true })
   public bottomHelperContent: HelpContentComponent;
 
-  @ViewChild('registerDatasource', { static: false })
+  @ViewChild('registerDatasource')
   registerDatasource: DatasourceCreateFormComponent;
 
-  @ViewChild('interfaceComments', { static: false })
+  @ViewChild('interfaceComments')
   interfaceComments: DatasourceNewInterfaceFormComponent;
 
   @ViewChildren('interfacesArray') interfacesArray: QueryList<DatasourceNewInterfaceFormComponent>;

@@ -1,12 +1,13 @@
 /**
  * Created by stefanos on 19/5/2017.
  */
-import { EventEmitter, Input, OnInit, Output, ViewChild, ViewRef } from '@angular/core';
+import { EventEmitter, Input, OnInit, Output, ViewChild, ViewRef, Directive } from '@angular/core';
 import { Description } from '../../../domain/oa-description';
 import { MyFormDirective } from './my-form.directive';
 import { throwError } from 'rxjs';
 
 
+@Directive()
 export abstract class MyWrapper implements OnInit{
 
   @Input() public component: ViewRef;

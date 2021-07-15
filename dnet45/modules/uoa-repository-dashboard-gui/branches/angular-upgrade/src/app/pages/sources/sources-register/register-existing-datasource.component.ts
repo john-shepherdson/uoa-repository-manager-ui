@@ -51,13 +51,13 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   @ViewChild('bottomHelperContent', { static: true })
   public bottomHelperContent: HelpContentComponent;
 
-  @ViewChild('datasourcesByCountry', { static: false })
+  @ViewChild('datasourcesByCountry')
   public datasourcesByCountry: RegisterDatasourceSelectExistingComponent;
 
-  @ViewChild('registerDatasource', { static: false })
+  @ViewChild('registerDatasource')
   registerDatasource: DatasourceUpdateFormComponent;
 
-  @ViewChild('interfaceComments', { static: false })
+  @ViewChild('interfaceComments')
   interfaceComments: DatasourceNewInterfaceFormComponent;
 
   @ViewChildren('interfacesArray') interfacesArray: QueryList<DatasourceNewInterfaceFormComponent>;

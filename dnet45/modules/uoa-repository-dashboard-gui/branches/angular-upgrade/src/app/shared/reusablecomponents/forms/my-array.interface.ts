@@ -155,7 +155,7 @@ export class MyArray extends MyGroup {
     console.log(`emitted ${array_to_emit.length} interfaces`);
   }
 
-  @ViewChild('confirmDelete', {static: false} )
+  @ViewChild('confirmDelete')
   public confirmDelete: ConfirmationDialogComponent;
 
   @Output() emitShowModal: EventEmitter<void> = new EventEmitter<void>();
