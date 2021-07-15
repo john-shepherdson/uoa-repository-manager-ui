@@ -43,7 +43,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
   dataForm: FormGroup;
 
-  @ViewChild('confirmApprovalModal')
+  @ViewChild('confirmApprovalModal', { static: true })
   public confirmApprovalModal: ConfirmationDialogComponent;
   private pageTotal: number;
   private piwiksTotal: number;

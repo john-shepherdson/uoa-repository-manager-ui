@@ -44,7 +44,7 @@ export class MyArray extends MyGroup {
 
   @Input() public initEmpty: boolean = false;
 
-  @ViewChild(MyFormDirective) protected formComponents: MyFormDirective;
+  @ViewChild(MyFormDirective, { static: true }) protected formComponents: MyFormDirective;
 
   protected _cfr: ComponentFactoryResolver;
 
@@ -155,7 +155,7 @@ export class MyArray extends MyGroup {
     console.log(`emitted ${array_to_emit.length} interfaces`);
   }
 
-  @ViewChild('confirmDelete')
+  @ViewChild('confirmDelete', {static: false} )
   public confirmDelete: ConfirmationDialogComponent;
 
   @Output() emitShowModal: EventEmitter<void> = new EventEmitter<void>();

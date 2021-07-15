@@ -27,13 +27,13 @@ export class CompatibilityValidateTypeComponent implements OnInit {
    * the param that is used is 'step' and the values are: 'baseUrl','guidelines','crisEntities'/'parameters','finish'
    */
   currentStep: number;
-  @ViewChild('topHelperContent')
+  @ViewChild('topHelperContent', { static: true })
   public topHelperContent: HelpContentComponent;
-  @ViewChild('leftHelperContent')
+  @ViewChild('leftHelperContent', { static: true })
   public leftHelperContent: AsideHelpContentComponent;
-  @ViewChild('rightHelperContent')
+  @ViewChild('rightHelperContent', { static: true })
   public rightHelperContent: AsideHelpContentComponent;
-  @ViewChild('bottomHelperContent')
+  @ViewChild('bottomHelperContent', { static: true })
   public bottomHelperContent: HelpContentComponent;
 
   baseUrlList: string[] = [];
@@ -54,10 +54,10 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   errorMessage: string;
   loadingMessage: string;
 
-  @ViewChild('step1ChooseBaseUrl') step1ChooseBaseUrl: CompatibilityValidateStep1Component;
-  @ViewChild('step2ChooseGuidelines') step2ChooseGuidelines: CompatibilityValidateStep2Component;
-  @ViewChild('step3ChooseParameters') step3ChooseParameters: CompatibilityValidateStep3Component;
-  @ViewChild('step3ChooseCrisEntities') step3ChooseCrisEntities: CompatibilityValidateStep3CrisComponent;
+  @ViewChild('step1ChooseBaseUrl', { static: false }) step1ChooseBaseUrl: CompatibilityValidateStep1Component;
+  @ViewChild('step2ChooseGuidelines', { static: false }) step2ChooseGuidelines: CompatibilityValidateStep2Component;
+  @ViewChild('step3ChooseParameters', { static: false }) step3ChooseParameters: CompatibilityValidateStep3Component;
+  @ViewChild('step3ChooseCrisEntities', { static: false }) step3ChooseCrisEntities: CompatibilityValidateStep3CrisComponent;
 
   constructor(private route: ActivatedRoute,
               private router: Router,

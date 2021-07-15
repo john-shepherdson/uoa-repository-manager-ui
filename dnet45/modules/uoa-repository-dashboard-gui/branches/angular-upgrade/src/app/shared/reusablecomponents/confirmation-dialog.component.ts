@@ -10,7 +10,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 })
 export class ConfirmationDialogComponent {
 
-  @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
+  @ViewChild('autoShownModal', { static: false }) public autoShownModal: ModalDirective;
 
   @Input() public isModalShown: boolean = false;
 

@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
   consentTermsOfUseDate: Date;
 
-  @ViewChild('subscribeToTermsModal')
+  @ViewChild('subscribeToTermsModal', { static: false })
   public subscribeToTermsModal: ConfirmationDialogComponent;
 
   open: boolean = true;

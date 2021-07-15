@@ -17,7 +17,7 @@ export abstract class MyWrapper implements OnInit{
 
   @Output() deleteNotifier: EventEmitter<ViewRef> = new EventEmitter();
 
-  @ViewChild(MyFormDirective) private formComponents: MyFormDirective;
+  @ViewChild(MyFormDirective, { static: true }) private formComponents: MyFormDirective;
 
   public first = true;
 

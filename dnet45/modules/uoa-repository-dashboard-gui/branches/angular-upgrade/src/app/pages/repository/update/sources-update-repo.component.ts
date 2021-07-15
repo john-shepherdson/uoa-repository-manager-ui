@@ -24,7 +24,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
   repo: Repository;
   repoInterfaces: RepositoryInterface[] = [];
 
-  @ViewChild('datasourceUpdateForm') datasourceUpdateForm: DatasourceUpdateFormComponent;
+  @ViewChild('datasourceUpdateForm', { static: false }) datasourceUpdateForm: DatasourceUpdateFormComponent;
 
   group: FormGroup;
 
@@ -32,7 +32,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
   dataForInterfaceComp: any[] = [];
 
   isModalShown: boolean;
-  @ViewChild('updateLogoUrlModal')
+  @ViewChild('updateLogoUrlModal', { static: true })
   public updateLogoUrlModal: ConfirmationDialogComponent;
 
   constructor ( private fb: FormBuilder,
@@ -42,7 +42,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
                 private sharedService: SharedService,
                 private router: Router) { }
 
-  @ViewChild('updateTermsForm')
+  @ViewChild('updateTermsForm', { static: false })
 
   ngOnInit() {
 

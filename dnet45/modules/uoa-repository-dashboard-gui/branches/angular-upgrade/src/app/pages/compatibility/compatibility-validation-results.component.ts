@@ -7,7 +7,6 @@ import { loadingJobSummary, loadingJobSummaryError, noContentRulesResults,
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import * as Highcharts from 'highcharts';
-import {text} from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-compatibility-validation-results',
@@ -41,7 +40,7 @@ export class CompatibilityValidationResultsComponent implements OnInit {
   chartOptionsForContent: Highcharts.Options;
   chartOptionsForUsage: Highcharts.Options;
 
-  @ViewChild('checkErrors')
+  @ViewChild('checkErrors', { static: true })
   public checkErrors: ConfirmationDialogComponent;
 
   constructor (private route: ActivatedRoute,

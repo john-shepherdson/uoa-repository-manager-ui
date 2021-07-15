@@ -42,22 +42,22 @@ export class RegisterExistingDatasourceComponent implements OnInit {
    * currentStep represents the number of the current step
    */
   currentStep: number;
-  @ViewChild('topHelperContent')
+  @ViewChild('topHelperContent', { static: true })
   public topHelperContent: HelpContentComponent;
-  @ViewChild('leftHelperContent')
+  @ViewChild('leftHelperContent', { static: true })
   public leftHelperContent: AsideHelpContentComponent;
-  @ViewChild('rightHelperContent')
+  @ViewChild('rightHelperContent', { static: true })
   public rightHelperContent: AsideHelpContentComponent;
-  @ViewChild('bottomHelperContent')
+  @ViewChild('bottomHelperContent', { static: true })
   public bottomHelperContent: HelpContentComponent;
 
-  @ViewChild('datasourcesByCountry')
+  @ViewChild('datasourcesByCountry', { static: false })
   public datasourcesByCountry: RegisterDatasourceSelectExistingComponent;
 
-  @ViewChild ('registerDatasource')
+  @ViewChild('registerDatasource', { static: false })
   registerDatasource: DatasourceUpdateFormComponent;
 
-  @ViewChild ('interfaceComments')
+  @ViewChild('interfaceComments', { static: false })
   interfaceComments: DatasourceNewInterfaceFormComponent;
 
   @ViewChildren('interfacesArray') interfacesArray: QueryList<DatasourceNewInterfaceFormComponent>;
