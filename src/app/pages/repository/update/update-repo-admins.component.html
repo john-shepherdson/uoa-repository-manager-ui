@@ -75,7 +75,7 @@
 
 
 <confirmation-dialog #addRepositoryAdminModal [title]="'Add new datasource admin'" [isModalShown]="isAddModalShown"
-                     [confirmButNotCloseButton]="'Submit'" (emitObject)="addRepositoryAdmin($event)">
+                     [confirmButNotCloseButton]="'Submit'" (emitObject)="addRepositoryAdmin()">
 
   <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{modalErrorMessage}}</div>
 

@@ -1,16 +1,16 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
-import { RepositoryService } from '../../../services/repository.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { formInfoLoading, loadingRepoError } from '../../../domain/shared-messages';
-import { DatasourceUpdateFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-update-form.component';
-import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
-import { AuthenticationService } from '../../../services/authentication.service';
-import { DatasourceNewInterfaceFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
-import { SharedService } from '../../../services/shared.service';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Repository, RepositoryInterface} from '../../../domain/typeScriptClasses';
+import {RepositoryService} from '../../../services/repository.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {loadingRepoError} from '../../../domain/shared-messages';
+import {DatasourceUpdateFormComponent} from '../../../shared/reusablecomponents/sources-forms/datasource-update-form.component';
+import {ConfirmationDialogComponent} from '../../../shared/reusablecomponents/confirmation-dialog.component';
+import {AuthenticationService} from '../../../services/authentication.service';
+import {DatasourceNewInterfaceFormComponent} from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
+import {SharedService} from '../../../services/shared.service';
 
-@Component ({
+@Component({
   selector: 'sources-update-repo',
   templateUrl: 'sources-update-repo.component.html',
 })
@@ -32,21 +32,22 @@ export class SourcesUpdateRepoComponent implements OnInit {
   dataForInterfaceComp: any[] = [];
 
   isModalShown: boolean;
-  @ViewChild('updateLogoUrlModal')
+  @ViewChild('updateLogoUrlModal', {static: true})
   public updateLogoUrlModal: ConfirmationDialogComponent;
 
-  constructor ( private fb: FormBuilder,
-                private repoService: RepositoryService,
-                private authService: AuthenticationService,
-                private route: ActivatedRoute,
-                private sharedService: SharedService,
-                private router: Router) { }
+  constructor(private fb: FormBuilder,
+              private repoService: RepositoryService,
+              private authService: AuthenticationService,
+              private route: ActivatedRoute,
+              private sharedService: SharedService,
+              private router: Router) {
+  }
 
-  @ViewChild('updateTermsForm')
+  @ViewChild('updateTermsForm') updateTermsForm: DatasourceUpdateFormComponent;
 
   ngOnInit() {
 
-    if(this.sharedService.getRepository()) {
+    if (this.sharedService.getRepository()) {
       this.repo = this.sharedService.getRepository();
       this.logoURL = this.repo.logoUrl;
       this.getRepoInterfaces();
@@ -63,11 +64,11 @@ export class SourcesUpdateRepoComponent implements OnInit {
     );
 
     // this.readRepoId();
-    let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("top_bar_active");   //remove the class
-    body.classList.remove("page_heading_active");
-    body.classList.remove("landing");
-    body.classList.add("dashboard");
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove('top_bar_active');   // remove the class
+    body.classList.remove('page_heading_active');
+    body.classList.remove('landing');
+    body.classList.add('dashboard');
   }
 
   // readRepoId() {
@@ -100,7 +101,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
     this.group = this.fb.group({});
     this.repoService.getRepositoryInterface(this.repo.id).subscribe(
       interfaces => {
-        this.repoInterfaces = interfaces.sort( function(a, b) {
+        this.repoInterfaces = interfaces.sort(function (a, b) {
           if (a.id < b.id) {
             return -1;
           } else if (a.id > b.id) {
@@ -130,7 +131,8 @@ export class SourcesUpdateRepoComponent implements OnInit {
       for (let i = 0; i < this.repoInterfaces.length; i++) {
         this.dataForInterfaceComp.push([
           false, i,
-          { id: this.repo.id,
+          {
+            id: this.repo.id,
             datasourceType: this.repo.datasourceType,
             datasourceClass: this.repo.datasourceClass,
             registeredBy: this.repo.registeredBy
@@ -141,7 +143,8 @@ export class SourcesUpdateRepoComponent implements OnInit {
     } else {
       this.dataForInterfaceComp.push([
         false, 0,
-        { id: this.repo.id,
+        {
+          id: this.repo.id,
           datasourceType: this.repo.datasourceType,
           datasourceClass: this.repo.datasourceClass,
           registeredBy: this.repo.registeredBy
@@ -152,8 +155,10 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
   addInterfaceToList(intrf?: RepositoryInterface) {
     const curIndex = this.dataForInterfaceComp.length;
-    const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.datasourceType,
-      datasourceClass: this.repo.datasourceClass, registeredBy: this.repo.registeredBy };
+    const curRepoInfo = {
+      id: this.repo.id, datasourceType: this.repo.datasourceType,
+      datasourceClass: this.repo.datasourceClass, registeredBy: this.repo.registeredBy
+    };
     if (intrf) {
       this.dataForInterfaceComp.push([false, curIndex, curRepoInfo, intrf]);
     } else {
@@ -193,7 +198,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
   }
 
-  getNewLogoUrl( event: any ) {
+  getNewLogoUrl(event: any) {
     this.logoURL = event.target.value;
 
   }

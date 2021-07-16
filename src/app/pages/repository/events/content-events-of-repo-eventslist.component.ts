@@ -57,7 +57,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   modalErrorMessage: string;
 
   isModalShown: boolean;
-  @ViewChild('subscribeToEventsModal')
+  @ViewChild('subscribeToEventsModal', { static: true })
   public subscribeToEventsModal: ConfirmationDialogComponent;
 
   constructor (private route: ActivatedRoute,

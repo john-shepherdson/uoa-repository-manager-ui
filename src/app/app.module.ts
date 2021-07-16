@@ -1,29 +1,30 @@
-import { AppComponent } from './app.component';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ReusableComponentsModule } from './shared/reusablecomponents/reusable-components.module';
-import { CookieLawModule } from './shared/reusablecomponents/cookie-law/cookie-law.module';
-import { AppRoutingModule } from './app-routing.module';
-import { AuthenticationInterceptor } from './services/authentication-interceptor';
-import { BrokerService } from './services/broker.service';
-import { MonitorService } from './services/monitor.service';
-import { PiwikService } from './services/piwik.service';
-import { RepositoryService } from './services/repository.service';
-import { ValidatorService } from './services/validator.service';
-import { UsagestatsService } from './services/usagestats.service';
-import { StatisticsService } from './services/statistics.service';
-import { AuthGuardService } from './services/auth-guard.service';
-import { AuthenticationService } from './services/authentication.service';
-import { HomeComponent } from './pages/landing/home/home.component';
-import { MatomoModule } from 'ngx-matomo';
-import { DashboardService } from "./services/dashboard.service";
-import { EmptyPageComponent } from "./pages/emptypage/empty-page.component";
-import { SharedService } from "./services/shared.service";
-import { JoinComponent } from "./pages/join/join.component";
-import { AboutComponent } from "./pages/landing/about/about.component";
+import {AppComponent} from './app.component';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {ReusableComponentsModule} from './shared/reusablecomponents/reusable-components.module';
+import {CookieLawModule} from './shared/reusablecomponents/cookie-law/cookie-law.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AuthenticationInterceptor} from './services/authentication-interceptor';
+import {BrokerService} from './services/broker.service';
+import {MonitorService} from './services/monitor.service';
+import {PiwikService} from './services/piwik.service';
+import {RepositoryService} from './services/repository.service';
+import {ValidatorService} from './services/validator.service';
+import {UsagestatsService} from './services/usagestats.service';
+import {StatisticsService} from './services/statistics.service';
+import {AuthGuardService} from './services/auth-guard.service';
+import {AuthenticationService} from './services/authentication.service';
+import {HomeComponent} from './pages/landing/home/home.component';
+import {MatomoModule} from 'ngx-matomo';
+import {DashboardService} from './services/dashboard.service';
+import {EmptyPageComponent} from './pages/emptypage/empty-page.component';
+import {SharedService} from './services/shared.service';
+import {JoinComponent} from './pages/join/join.component';
+import {AboutComponent} from './pages/landing/about/about.component';
+import {environment} from '../environments/environment';
 
 
 @NgModule({
@@ -42,7 +43,18 @@ import { AboutComponent } from "./pages/landing/about/about.component";
     HttpClientModule,
     ReusableComponentsModule,
     CookieLawModule,
-    MatomoModule,
+    MatomoModule.forRoot({
+      scriptUrl: environment.MATOMO_URL + 'matomo.js',
+      trackers: [
+        {
+          trackerUrl: environment.MATOMO_URL + 'matomo.php',
+          siteId: environment.MATOMO_SITE
+        }
+      ],
+      routeTracking: {
+        enable: true
+      }
+    }),
     AppRoutingModule
   ],
   providers: [
@@ -65,4 +77,5 @@ import { AboutComponent } from "./pages/landing/about/about.component";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

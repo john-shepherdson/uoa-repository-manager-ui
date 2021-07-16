@@ -44,7 +44,7 @@ export class MyArray extends MyGroup {
 
   @Input() public initEmpty: boolean = false;
 
-  @ViewChild(MyFormDirective) protected formComponents: MyFormDirective;
+  @ViewChild(MyFormDirective, { static: true }) protected formComponents: MyFormDirective;
 
   protected _cfr: ComponentFactoryResolver;
 
