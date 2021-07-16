@@ -30,19 +30,19 @@ export class RegisterNewDatasourceComponent implements OnInit {
    * currentStep represents the number of the current step
    */
   currentStep: number;
-  @ViewChild('topHelperContent')
+  @ViewChild('topHelperContent', { static: true })
   public topHelperContent: HelpContentComponent;
-  @ViewChild('leftHelperContent')
+  @ViewChild('leftHelperContent', { static: true })
   public leftHelperContent: AsideHelpContentComponent;
-  @ViewChild('rightHelperContent')
+  @ViewChild('rightHelperContent', { static: true })
   public rightHelperContent: AsideHelpContentComponent;
-  @ViewChild('bottomHelperContent')
+  @ViewChild('bottomHelperContent', { static: true })
   public bottomHelperContent: HelpContentComponent;
 
-  @ViewChild ('registerDatasource')
+  @ViewChild('registerDatasource')
   registerDatasource: DatasourceCreateFormComponent;
 
-  @ViewChild ('interfaceComments')
+  @ViewChild('interfaceComments')
   interfaceComments: DatasourceNewInterfaceFormComponent;
 
   @ViewChildren('interfacesArray') interfacesArray: QueryList<DatasourceNewInterfaceFormComponent>;

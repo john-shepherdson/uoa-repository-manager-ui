@@ -24,11 +24,11 @@ export class UpdateRepoAdminsComponent implements OnChanges {
   selectedAdminForDelete: User;
 
   isDeleteModalShown: boolean;
-  @ViewChild('deleteRepositoryAdminModal')
+  @ViewChild('deleteRepositoryAdminModal', { static: true })
   public deleteRepositoryAdminModal: ConfirmationDialogComponent;
 
   isAddModalShown: boolean;
-  @ViewChild('addRepositoryAdminModal')
+  @ViewChild('addRepositoryAdminModal', { static: true })
   public addRepositoryAdminModal: ConfirmationDialogComponent;
 
   modalErrorMessage: string;

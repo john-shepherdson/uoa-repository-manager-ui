@@ -33,13 +33,13 @@ const appRoutes: Routes = [
   },
   {
     path: 'repository',
-    loadChildren: './pages/repository/repository.module#RepositoryModule',
+    loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
     // loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
     canActivate: [AuthGuardService]
   },
   {
     path: 'repositoryAdmin',
-    loadChildren: './pages/repository/repository.module#RepositoryModule',
+    loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
     // loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
     canActivate: [AuthGuardService]
   },
@@ -52,16 +52,16 @@ const appRoutes: Routes = [
   // },
   {
     path: 'sources',
-    loadChildren: './pages/sources/sources.module#SourcesModule',
+    loadChildren: () => import('./pages/sources/sources.module').then(m => m.SourcesModule),
     canActivate: [AuthGuardService]
   },
   {
     path: 'compatibility',
-    loadChildren: './pages/compatibility/compatibility.module#CompatibilityModule'
+    loadChildren: () => import('./pages/compatibility/compatibility.module').then(m => m.CompatibilityModule)
   },
   {
     path: 'content',
-    loadChildren: './pages/content/content.module#ContentModule',
+    loadChildren: () => import('./pages/content/content.module').then(m => m.ContentModule),
     canActivate: [AuthGuardService]
   },
   // {
@@ -71,7 +71,7 @@ const appRoutes: Routes = [
   // },
   {
     path: 'admin',
-    loadChildren: './pages/adminPg/adminPg.module#AdminPgModule',
+    loadChildren: () => import('./pages/adminPg/adminPg.module').then(m => m.AdminPgModule),
   },
   {
     path: '403-forbidden',
@@ -92,7 +92,7 @@ const appRoutes: Routes = [
 
 
 @NgModule ({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 

@@ -15,7 +15,6 @@ import {RepositoryService} from '../../services/repository.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PiwikInfoPage} from '../../domain/page-content';
 import {environment} from '../../../environments/environment';
-import {st} from '@angular/core/src/render3';
 
 @Component ({
   selector: 'app-admin-metrics',
@@ -44,7 +43,7 @@ export class AdminPgMetricsComponent implements OnInit {
 
   dataForm: FormGroup;
 
-  @ViewChild('confirmApprovalModal')
+  @ViewChild('confirmApprovalModal', { static: true })
   public confirmApprovalModal: ConfirmationDialogComponent;
   private pageTotal: number;
   private piwiksTotal: number;

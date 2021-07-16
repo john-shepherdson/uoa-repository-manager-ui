@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Repository, RepositorySnippet } from "../domain/typeScriptClasses";
-import { Subject } from "rxjs/internal/Subject";
+import {Injectable} from '@angular/core';
+import {Repository, RepositorySnippet} from '../domain/typeScriptClasses';
+import {Subject} from 'rxjs/internal/Subject';
 
 @Injectable()
 export class SharedService {
@@ -12,7 +12,6 @@ export class SharedService {
   private repositoriesOfUser: Subject<RepositorySnippet[]> = new Subject<RepositorySnippet[]>();
 
 
-
   get repository$() {
     return this.repository.asObservable();
   }
@@ -21,7 +20,7 @@ export class SharedService {
     return this.repositoryCopy;
   }
 
-  setRepository(data:Repository) {
+  setRepository(data: Repository) {
     this.repository.next(data);
     this.repositoryCopy = data;
   }

@@ -27,13 +27,13 @@ export class CompatibilityValidateTypeComponent implements OnInit {
    * the param that is used is 'step' and the values are: 'baseUrl','guidelines','crisEntities'/'parameters','finish'
    */
   currentStep: number;
-  @ViewChild('topHelperContent')
+  @ViewChild('topHelperContent', { static: true })
   public topHelperContent: HelpContentComponent;
-  @ViewChild('leftHelperContent')
+  @ViewChild('leftHelperContent', { static: true })
   public leftHelperContent: AsideHelpContentComponent;
-  @ViewChild('rightHelperContent')
+  @ViewChild('rightHelperContent', { static: true })
   public rightHelperContent: AsideHelpContentComponent;
-  @ViewChild('bottomHelperContent')
+  @ViewChild('bottomHelperContent', { static: true })
   public bottomHelperContent: HelpContentComponent;
 
   baseUrlList: string[] = [];

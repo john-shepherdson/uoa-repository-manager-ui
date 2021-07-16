@@ -29,7 +29,7 @@ export class MetricsEnableComponent implements OnInit {
   modalButton = 'Yes, enable it';
   isModalShown: boolean;
 
-  @ViewChild('confirmEnablingModal')
+  @ViewChild('confirmEnablingModal', { static: true })
   public confirmEnablingModal: ConfirmationDialogComponent;
 
 

@@ -25,17 +25,17 @@ const repositoryRoutes: Routes = [
           },
           {
             path: 'getImpact',
-            loadChildren: './metrics/metrics.module#MetricsModule',
+            loadChildren: () => import('./metrics/metrics.module').then(m => m.MetricsModule),
             canActivate: [AuthGuardService]
           },
           {
             path: 'aggregationHistory',
-            loadChildren: './aggregationhistory/compatibility-monitor.module#AggregationHistoryModule',
+            loadChildren: () => import('./aggregationhistory/compatibility-monitor.module').then(m => m.AggregationHistoryModule),
             canActivate: [AuthGuardService]
           },
           {
             path: 'events',
-            loadChildren: './events/events.module#EventsModule',
+            loadChildren: () => import('./events/events.module').then(m => m.EventsModule),
             canActivate: [AuthGuardService]
           },
           {
