@@ -19,6 +19,8 @@ export class AuthenticationService {
 
   private _storage: Storage = sessionStorage;
 
+  private cookie: string = null;
+
   isLoggedIn: boolean = false;
 
   public loginWithState() {
@@ -37,7 +39,6 @@ export class AuthenticationService {
   }
 
   public logout() {
-    deleteCookie('openAIREUser');
     deleteCookie('AccessToken');
     sessionStorage.clear();
     this.isLoggedIn = false;
@@ -50,22 +51,24 @@ export class AuthenticationService {
   }
 
   public tryLogin() {
-    if ( getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') ) {
-      console.log(`I got the cookie!`);
-      console.log(`in tryLogin -> document.cookie is: ${document.cookie.toString()}`);
+    this.cookie = getCookie('AccessToken');
+    if (this.cookie && this.cookie !== '') {
+      // console.log(`I got the cookie!`);
+      // console.log(`in tryLogin -> document.cookie is: ${document.cookie.toString()}`);
       /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTDOWN */
       setInterval(() => {
         this.http.get(this.apiUrl + '/user/login', { withCredentials: true }).subscribe(
           userInfo => {
-            console.log('User is still logged in');
-            console.log(userInfo);
+            // console.log('User is still logged in');
+            // console.log(userInfo);
             this.isLoggedIn = true;
           },
           () => {
             this.logout();
           },
           () => {
-            if ( !getCookie('openAIREUser') || (getCookie('openAIREUser') === '') ) {
+            this.cookie = getCookie('AccessToken');
+            if ( !this.cookie || this.cookie === '') {
               this.logout();
             }
           }
@@ -75,22 +78,22 @@ export class AuthenticationService {
 
       }, 1000 * 60 * 5);
       if (!this.getIsUserLoggedIn()) {
-        console.log(`session.name wasn't found --> logging in via repo-service!`);
+        // console.log(`session.name wasn't found --> logging in via repo-service!`);
         this.http.get(this.apiUrl + '/user/login', { withCredentials: true }).subscribe(
           userInfo => {
-            console.log(userInfo);
+            // console.log(userInfo);
             sessionStorage.setItem('name', userInfo['name']);
             sessionStorage.setItem('email', userInfo['email'].trim());
             sessionStorage.setItem('role', userInfo['role']);
             this.isLoggedIn = true;
-            console.log(`the current user is: ${sessionStorage.getItem('name')},
-                         ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
+            // console.log(`the current user is: ${sessionStorage.getItem('name')},
+            //              ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
           },
           error => {
             sessionStorage.clear();
             console.log('Error!');
             console.log(error);
-            deleteCookie('openAIREUser');
+            deleteCookie('AccessToken');
             deleteCookie('AccessToken');
             this.isLoggedIn = false;
             this.router.navigate(['/home']);
@@ -101,7 +104,7 @@ export class AuthenticationService {
               sessionStorage.removeItem('state.location');
               console.log(`tried to login - returning to state: ${state}`);
               if ( !this.getIsUserLoggedIn() ) {
-                console.log('user hasn\'t logged in yet -- going to home');
+                // console.log('user hasn\'t logged in yet -- going to home');
                 this.router.navigate(['/home']);
               } else {
                 this.router.navigate([state]);
@@ -111,21 +114,21 @@ export class AuthenticationService {
         );
       } else {
         this.isLoggedIn = true;
-        console.log(`the current user is: ${sessionStorage.getItem('name')},
-                     ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
+        // console.log(`the current user is: ${sessionStorage.getItem('name')},
+        //              ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
         if (this.redirectUrl) {
           const url = this.redirectUrl;
           this.redirectUrl = null;
           this.router.navigate([url]);
-          console.log('route is', url);
+          // console.log('route is', url);
         }
       }
     }
   }
 
   public getIsUserLoggedIn() {
-    this.isLoggedIn = (getCookie('openAIREUser') && (getCookie('openAIREUser') !== '') && (sessionStorage.getItem('email') !== null ) );
-    return this.isLoggedIn;
+    // todo: probably not all of them are needed
+    return this.isLoggedIn && this.cookie && this.cookie !== '' && sessionStorage.getItem('email') !== null;
   }
 
   public getUserName() {

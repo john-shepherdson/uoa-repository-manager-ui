@@ -10,12 +10,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
   constructor (private authenticationService: AuthenticationService, private router: Router) {}
 
   canActivate (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
-    if ( (getCookie('openAIREUser') !== null) &&
-         (getCookie('openAIREUser') !== '') &&
-         this.authenticationService.getIsUserLoggedIn() ) { return true; }
-
-    if ( (getCookie('openAIREUser') !== null) && (getCookie('openAIREUser') !== '') ) { return true; }
+    if ( this.authenticationService.getIsUserLoggedIn() ) { return true; }
 
     /* If no cookie was found, clear the app's session.
        The user may have logged out using another OpenAIRE portal */
