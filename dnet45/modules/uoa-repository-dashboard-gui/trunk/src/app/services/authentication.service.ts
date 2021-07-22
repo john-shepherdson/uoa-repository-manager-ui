@@ -47,7 +47,7 @@ export class AuthenticationService {
     console.log(`${this.apiUrl}/openid_logout`);
 
     /*window.location.href = `${this.apiUrl}/openid_logout`;*/
-    window.location.href = `https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=${this.apiUrl}/openid_logout`;
+    window.location.href = `${environment.AAI_LOGOUT + window.location.origin + this.apiUrl}/openid_logout`;
   }
 
   public tryLogin() {
