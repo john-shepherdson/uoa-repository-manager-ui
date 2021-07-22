@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "start:proxy": "ng serve --proxy-config proxy.conf.json",
-    "build": "rm -rf dist; ng build --configuration production",
+    "build": "ng build  --output-hashing=all",
+    "build:beta": "ng build --configuration beta --output-hashing=all",
+    "build:prod": "ng build --configuration production --output-hashing=all",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
