@@ -130,6 +130,9 @@ export class Repository extends DriverResource implements IsSerializable {
   eissn: string;
   lissn: string;
   interfaces: RepositoryInterface[];
+  consentTermsOfUse: boolean;
+  fullTextDownload: boolean;
+  consentTermsOfUseDate: Date;
   availableDiskSpace: string;
   securityParameters: string;
   protocol: string;
@@ -151,9 +154,6 @@ export class Repository extends DriverResource implements IsSerializable {
   registrationDate: Date;
   verified: boolean;
   dataCollectionTypes: DataCollectionType[];
-  consentTermsOfUse: string;
-  consentTermsOfUseDate: Date;
-  fullTextDownload: string;
 }
 
 export class RepositorySnippet {
@@ -168,9 +168,17 @@ export class RepositorySnippet {
   piwikInfo: PiwikInfo;
   logoUrl: string;
   description: string;
-  consentTermsOfUse: string;
+  consentTermsOfUse: boolean;
+  fullTextDownload: boolean;
   consentTermsOfUseDate: Date;
-  fullTextDownload: string;
+}
+
+export class TermsOfUse {
+  id: string;
+  name: string;
+  consentTermsOfUse: boolean;
+  fullTextDownload: boolean;
+  // consentTermsOfUseDate: Date;
 }
 
 export class Organization {

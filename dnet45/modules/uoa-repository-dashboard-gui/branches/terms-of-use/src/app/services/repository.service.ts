@@ -10,7 +10,7 @@ import {
   Country, MetricsInfo,
   Repository,
   RepositoryInterface,
-  RepositorySnippet, RepositorySummaryInfo,
+  RepositorySnippet, RepositorySummaryInfo, TermsOfUse,
   Timezone,
   Typology, User
 } from '../domain/typeScriptClasses';
@@ -85,6 +85,13 @@ export class RepositoryService {
     return this.httpClient.post<Repository>(url, repoInfo, headerOptions);
   }
 
+  updateRepositoriesTerms(termsList: any): Observable<TermsOfUse> {
+    const url = `${this.apiUrl}terms`;
+    console.log(`knocking on: ${url}`);
+    console.log(`sending ${JSON.stringify(termsList)}`);
+    return this.httpClient.post<TermsOfUse>(url, termsList, headerOptions);
+  }
+
   getRepositoriesOfCountry(country: string, mode: string): Observable<RepositorySnippet[]> {
     const url = `${this.apiUrl}getRepositoriesByCountry/${country}/${mode}`;
     console.log(`knocking on: ${url}`);
@@ -97,7 +104,6 @@ export class RepositoryService {
     return this.httpClient.get<RepositorySnippet[]>(url, headerOptions);
   }
 
-
   getRepositoryById(id: string): Observable<Repository> {
     const   url = `${this.apiUrl}getRepositoryById/${id}`;
     console.log(`knocking on: ${url}`);
@@ -109,7 +115,6 @@ export class RepositoryService {
     console.log(`knocking on: ${url}`);
     return this.httpClient.get<RepositoryInterface[]>(url, headerOptions);
   }
-
 
   getUrlsOfUserRepos(): Observable<string[]> {
     const url = `${this.apiUrl}getUrlsOfUserRepos/0/100/`;
