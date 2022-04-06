@@ -50,26 +50,36 @@
 <!-- End Matomo Code -->
 
 
-<!--&lt;!&ndash; Terms of Use (modal) &ndash;&gt;-->
-<!--<confirmation-dialog #subscribeToTermsModal [title]=modalTitle [isModalShown]=isModalShown-->
-<!--                     [confirmActionButton]=modalButton (emitObject)="updateTerms()">-->
-<!--  <form class="" [formGroup]="agreementForm">-->
-<!--    <div formArrayName="terms">-->
-<!--      <table class="table">-->
-<!--        <tr class="uk-text-nowrap">Do you agree with the <a href="https://zenodo.org/record/1446384#.XiGIAdmxU5n" target="_blank">terms of use</a>?</tr>-->
-<!--        <tbody>-->
-<!--        <tr class="el-item" *ngFor="let term of terms.controls; let i=index">-->
-<!--&lt;!&ndash;          {{term.get('accept').value}}&ndash;&gt;-->
-<!--          <br> {{term.get('name').value}} <br>-->
-<!--          <div [formGroupName]="i">-->
-<!--            <label>-->
-<!--              <input id="i" type="checkbox" formControlName="accept"> Yes, I agree to the terms of use.-->
-<!--            </label>-->
-<!--          </div>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--      </table>-->
-<!--    </div>-->
-<!--  </form>-->
-<!--  &lt;!&ndash;    <pre>{{this.agreementForm.value | json}}</pre>&ndash;&gt;-->
-<!--</confirmation-dialog>-->
+<!-- Terms of Use (modal) -->
+<confirmation-dialog #subscribeToTermsModal [title]=modalTitle [isModalShown]=isModalShown
+                     [confirmActionButton]=modalButton (emitObject)="updateTerms()">
+  <form class="" [formGroup]="agreementForm">
+    <div formArrayName="terms">
+      <table class="table">
+        <tr>
+          Thanks for being part of OpenAIRE. Please confirm the acceptance of our datasources policy.
+        </tr>
+        <br>
+        <tr>
+          Being registered in OpenAIRE, you are giving consent to OpenAIRE to download, transform and enrich the metadata records, publishing them in the OpenAIRE Research Graph.
+        </tr>
+        <tbody>
+        <tr class="el-item" *ngFor="let term of terms.controls; let i=index">
+          <br> {{term.get('name').value}} <br>
+          <div [formGroupName]="i">
+            <label>
+              <input id="consentTerms" type="checkbox" formControlName="consentTermsOfUse"> Accept the <a href="https://www.openaire.eu/terms-of-use-for-content-providers" target="_blank">Terms of Use</a>
+            </label>
+            <br>
+            <label>
+              <input id="consentText" type="checkbox" formControlName="fullTextDownload"> Agree to the <a href="https://www.openaire.eu/terms-of-use-for-content-providers#consent" target="_blank">re-use of full texts</a>
+            </label>
+          </div>
+        </tr>
+        </tbody>
+        <p class="uk-text-meta">Note: OpenAIRE will not provide the full text files for public distribution, the users will access from the original datasource.</p>
+      </table>
+    </div>
+  </form>
+<!--      <pre>{{this.agreementForm.value | json}}</pre>-->
+</confirmation-dialog>

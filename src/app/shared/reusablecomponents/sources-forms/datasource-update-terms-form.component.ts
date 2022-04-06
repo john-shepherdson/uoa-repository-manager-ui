@@ -19,7 +19,7 @@ export class DatasourceUpdateTermsFormComponent implements OnInit {
 
   agreementForm = this.fb.group({
     acceptTerms: '',
-    optOut: ''
+    textMining: ''
   });
 
   consentTermsOfUseDate: Date;
@@ -38,8 +38,6 @@ export class DatasourceUpdateTermsFormComponent implements OnInit {
   repoId: string;
   formSubmitted = false;
   // updateGroup: FormGroup;
-  termsTick: boolean;
-  dataMiningTick: boolean;
   readonly updateGroupDefinition = {
     softwarePlatform : ''
   };
@@ -52,20 +50,24 @@ export class DatasourceUpdateTermsFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.selectedRepo);
-    // this.dataMiningTick = false; // until we have an actual value
-    if (this.router.url.indexOf('/sources/update') > -1) {
-      console.log('up');
-      this.termsTick = (this.selectedRepo.consentTermsOfUse ? (this.selectedRepo.consentTermsOfUse === 'true') : true);
-      // this.addTerm(this.selectedRepo.consentTermsOfUse, this.dataMiningTick);
-
-    } else if (this.router.url.indexOf('/sources/register') > -1) {
-      console.log('reg');
-      this.termsTick = true;
+    this.agreementForm.get('acceptTerms').setValue(this.selectedRepo.consentTermsOfUse ? this.selectedRepo.consentTermsOfUse : false);
+    this.agreementForm.get('textMining').setValue(this.selectedRepo.fullTextDownload ? this.selectedRepo.fullTextDownload : false);
+    this.selectedRepo.consentTermsOfUse = this.agreementForm.value.acceptTerms;
+    this.selectedRepo.fullTextDownload = this.agreementForm.value.textMining;
+    // if (this.router.url.indexOf('/sources/update') > -1) {
+    //   console.log('update');
+    // } else
+      if (this.router.url.indexOf('/sources/register') > -1) {
+      this.emitRepo();
     }
   }
 
-  // TODO: review updateRepo when backend is ready to POST terms
+  emitRepo() {
+    this.selectedRepo.consentTermsOfUse = this.agreementForm.value.acceptTerms;
+    this.selectedRepo.fullTextDownload = this.agreementForm.value.textMining;
+    this.emittedInfo.emit(this.selectedRepo);
+  }
+
   updateRepo() {
     this.formSubmitted = true;
     this.errorMessage = '';
@@ -76,6 +78,9 @@ export class DatasourceUpdateTermsFormComponent implements OnInit {
       if (this.showButton) {
         this.loadingMessage = formSubmitting;
         this.errorMessage = '';
+        this.selectedRepo.consentTermsOfUse = this.agreementForm.value.acceptTerms;
+        this.selectedRepo.fullTextDownload = this.agreementForm.value.textMining;
+        this.selectedRepo.consentTermsOfUseDate = new Date(Date.now());
         this.repoService.updateRepository(this.selectedRepo).subscribe(
           response => {
             if (response) {

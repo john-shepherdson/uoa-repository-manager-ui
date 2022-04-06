@@ -19,6 +19,7 @@ import {
 } from '../../../domain/shared-messages';
 import { DatasourceUpdateFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-update-form.component';
 import { RegisterDatasourceSelectExistingComponent } from './register-datasource-select-existing.component';
+import {DatasourceUpdateTermsFormComponent} from "../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component";
 
 @Component({
   selector: 'app-register-existing-datasource',
@@ -63,12 +64,13 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   @ViewChildren('interfacesArray') interfacesArray: QueryList<DatasourceNewInterfaceFormComponent>;
   dataForInterfaceComp: any[] = [];
 
+  @ViewChild('updateTermsForm')
+  updateTermsForm: DatasourceUpdateTermsFormComponent;
+
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private repoService: RepositoryService) {}
-
-  // @ViewChild('updateTermsForm')
 
   ngOnInit() {
     if (this.datasourceType && this.currentMode) {
@@ -98,17 +100,14 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         } else {
           this.currentStep = 2;
         }
-      } else if (stepName === 'finish') {
-        this.currentStep = 3;
-        // ToU: to enable ToU delete the 2 lines above and uncomment the section below
-        /*} else if (stepName === 'termsOfUse') {
+        } else if (stepName === 'termsOfUse') {
           if (!this.interfacesArray) {
             this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=selectDatasource`);
           } else {
             this.currentStep = 3;
           }
         } else if (stepName === 'finish') {
-          this.currentStep = 4;*/
+          this.currentStep = 4;
       }
     }
     this.rightHelperContent.ngOnInit();
@@ -135,9 +134,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
             window.scrollTo(1, 1);
           } else {
             if (this.repoInterfaces.length > 0) {
-              this.registerRepository();
-// ToU: replace above line with the comment below
-              // this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=termsOfUse`);
+              this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=termsOfUse`);
             } else {
               this.errorMessage = noInterfacesSaved;
               window.scrollTo(1, 1);
@@ -145,9 +142,8 @@ export class RegisterExistingDatasourceComponent implements OnInit {
           }
         }
       );
-      // ToU: uncomment these lines
-      // } else if (this.currentStep === 3) {
-    //   this.registerRepository();
+      } else if (this.currentStep === 3) {
+      this.registerRepository();
     }
   }
 
@@ -162,9 +158,8 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       of(this.getInterfaces()).subscribe(
         () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`)
       );
-      // ToU: uncomment these lines
-      // } else if (this.currentStep === 3) {
-    //   this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`);
+      } else if (this.currentStep === 3) {
+      this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`);
     }
   }
 
@@ -279,6 +274,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   }
 
   getUpdatedRepo(repo: Repository) {
+    console.log('getUpdatedRepo(repo: Repository)');
     this.repo = repo;
     if (this.repoInterfaces.length === 0) {
       this.getRepoInterfaces();
@@ -320,14 +316,21 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     );
   }
 
+  //recheck if needed
+  getTerms(repo: Repository) {
+    this.repo = repo;
+  }
+
   downloadLogo() {
     window.open('../../../../assets/imgs/3_0ValidatedLogo.png', '_blank', 'enabledstatus=0,toolbar=0,menubar=0,location=0');
   }
 
   registerRepository() {
+    console.log('in registerRepository, step ===', this.currentStep);
     if (this.repo) {
       this.loadingMessage = 'Saving changes';
       this.errorMessage = '';
+      console.log('reg this.repo', this.repo);
       this.repoService.addRepository( this.repo.datasourceType, this.repo).subscribe(
         response => {
           console.log(`addRepository responded: ${response.id}, ${response.registeredBy}`);
@@ -341,7 +344,6 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         },
         () => {
           this.saveNewInterfaces();
-          // TODO: update terms when backend is ready, maybe POST with updateRepository
         }
       );
     }
