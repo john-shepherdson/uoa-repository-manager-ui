@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { deleteCookie, getCookie } from '../domain/utils';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthenticationService {
@@ -21,7 +22,11 @@ export class AuthenticationService {
 
   private cookie: string = null;
 
-  isLoggedIn: boolean = false;
+  public isLoggedIn_ = new BehaviorSubject(false);
+
+  public get isLoggedIn() {
+    return this.isLoggedIn_.asObservable();
+  }
 
   public loginWithState() {
     console.log(`logging in with state. Current url is: ${this.router.url}`);
@@ -41,8 +46,7 @@ export class AuthenticationService {
   public logout() {
     deleteCookie('AccessToken');
     sessionStorage.clear();
-    this.isLoggedIn = false;
-
+    this.isLoggedIn_.next(false);
     console.log('logging out, calling:');
     console.log(`${this.apiUrl}/openid_logout`);
 
@@ -61,7 +65,7 @@ export class AuthenticationService {
           userInfo => {
             // console.log('User is still logged in');
             // console.log(userInfo);
-            this.isLoggedIn = true;
+            this.isLoggedIn_.next(true);
           },
           () => {
             this.logout();
@@ -85,7 +89,7 @@ export class AuthenticationService {
             sessionStorage.setItem('name', userInfo['name']);
             sessionStorage.setItem('email', userInfo['email'].trim());
             sessionStorage.setItem('role', userInfo['role']);
-            this.isLoggedIn = true;
+            this.isLoggedIn_.next(true);
             // console.log(`the current user is: ${sessionStorage.getItem('name')},
             //              ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
           },
@@ -95,7 +99,7 @@ export class AuthenticationService {
             console.log(error);
             deleteCookie('AccessToken');
             deleteCookie('AccessToken');
-            this.isLoggedIn = false;
+            this.isLoggedIn_.next(false);
             this.router.navigate(['/home']);
           },
           () => {
@@ -113,7 +117,7 @@ export class AuthenticationService {
           }
         );
       } else {
-        this.isLoggedIn = true;
+        this.isLoggedIn_.next(true);
         // console.log(`the current user is: ${sessionStorage.getItem('name')},
         //              ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
         if (this.redirectUrl) {
@@ -128,11 +132,11 @@ export class AuthenticationService {
 
   public getIsUserLoggedIn() {
     // todo: probably not all of them are needed
-    return this.isLoggedIn && this.cookie && this.cookie !== '' && sessionStorage.getItem('email') !== null;
+    return this.isLoggedIn_.value && this.cookie && this.cookie !== '' && sessionStorage.getItem('email') !== null;
   }
 
   public getUserName() {
-    if (this.isLoggedIn) {
+    if (this.isLoggedIn_.value) {
       return sessionStorage.getItem('name');
     } else {
       return '';
@@ -148,7 +152,7 @@ export class AuthenticationService {
   }
 
   public getUserRole() {
-    if (this.isLoggedIn) {
+    if (this.isLoggedIn_.value) {
       return sessionStorage.getItem('role');
     } else {
       return '';

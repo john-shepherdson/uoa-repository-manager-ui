@@ -9722,7 +9722,7 @@ div.ganttview .ui-resizable-w {
 @media only screen and (min-width: 960px) {
   .wizard > .steps > ul > li {
     float: left;
-    width: 25%;
+    width: 20%;
   }
 }
 .wizard > .steps > ul > li + li a {

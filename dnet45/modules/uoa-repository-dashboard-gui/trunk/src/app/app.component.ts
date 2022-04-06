@@ -5,10 +5,10 @@ import { environment } from '../environments/environment';
 import { MatomoTracker } from 'ngx-matomo';
 import { ConfirmationDialogComponent } from './shared/reusablecomponents/confirmation-dialog.component';
 import { RepositoryService } from './services/repository.service';
-import { RepositorySnippet } from './domain/typeScriptClasses';
+import {RepositorySnippet, TermsOfUse} from './domain/typeScriptClasses';
 import {FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
 import {element} from 'protractor';
-import {timestamp} from 'rxjs/operators';
+import {timeout, timestamp} from 'rxjs/operators';
 
 @Component({
   selector: 'oa-repo-manager',
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
               private repositoryService: RepositoryService,
               private fb: FormBuilder) {
 
-    console.log('21-06-2019. Fixed matomo to log userIds?');
+    // console.log('21-06-2019. Fixed matomo to log userIds?');
 
     /*disabling console.log in production*/
     if ( environment.production === true ) {
@@ -57,15 +57,17 @@ export class AppComponent implements OnInit {
   }
 
   getReposOfUser(): void {
-    this.repositoryService.getRepositoriesSnippetsOfUser()
-      .subscribe(
-        repos => { this.reposOfUser = repos; },
-        error => { console.log(error); },
+      this.repositoryService.getRepositoriesSnippetsOfUser().subscribe(
+        repos => {
+          this.reposOfUser = repos;
+        },
+        error => {
+          console.log(error);
+        },
         () => {
           console.log(this.reposOfUser);
-          this.reposOfUser.forEach( repo => {
-            // TODO: change !repo.consentTermsOfUse check when it gets a non-null value
-            if (this.authService.isLoggedIn && !repo.consentTermsOfUse) {
+          this.reposOfUser.forEach(repo => {
+            if (!repo.consentTermsOfUse || !repo.fullTextDownload) {
               this.addTerm(repo.officialname, repo.id, repo.consentTermsOfUse);
               this.isModalShown = true;
             }
@@ -75,18 +77,10 @@ export class AppComponent implements OnInit {
   }
 
   updateTerms() {
-    /*   update consentTermsOfUse, consentTermsOfUseDate(?)
-         depending on  what value will consentTermsOfUse hold
-         Also what type of consentTermsOfUse will be? boolean or string */
-    for (let i = 0; i < this.terms.length; i++) {
-      const  id = this.terms.controls[i].get('id').value;
-      if (this.terms.controls[i].get('accept').value === true) {
-        console.log(`Agreed to the Terms of Use for: `, id);
-      }
-    }
-    this.consentTermsOfUseDate = new Date(Date.now());
-    console.log(this.consentTermsOfUseDate);
-    console.log('will POST when backend is ready');
+    this.repositoryService.updateRepositoriesTerms(this.agreementForm.value.terms).subscribe(
+      res => {},
+      err => {console.log(err)}
+    );
   }
 
   ngOnInit() {
@@ -94,25 +88,30 @@ export class AppComponent implements OnInit {
       if (!(evt instanceof NavigationEnd)) {
         return;
       }
-      if (this.authService.isLoggedIn) {
+      if (this.authService.isLoggedIn_) {
         this.matomoTracker.setUserId(this.authService.getUserEmail());
       }
       window.scrollTo(0, 0);
     });
 
-    // this.getReposOfUser();
+    this.authService.isLoggedIn.subscribe(
+      logged => {if(logged){this.getReposOfUser()}},
+      error => {console.log(error)}
+    );
 
   }
 
-  addTerm(name: string, id: string, consent: string) {
+  addTerm(name: string, id: string, consent: boolean) {
     this.terms.push(this.newTerm(name, id, consent));
   }
 
-  newTerm(name: string, id: string, consent: string): FormGroup {
+  newTerm(name: string, id: string, consent: boolean): FormGroup {
     return this.fb.group({
       id: [id],
       name: [name],
-      accept: [(consent ? consent : true)]
+      // accept: [(consent ? consent : true)]
+      consentTermsOfUse: false,
+      fullTextDownload: false
     });
   }
 
