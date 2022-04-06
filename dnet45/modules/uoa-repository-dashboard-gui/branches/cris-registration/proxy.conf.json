@@ -1,8 +1,0 @@
-{
-  "/uoa-repository-manager-service/*": {
-    "target": "http://localhost:8480",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true
-  }
-}
