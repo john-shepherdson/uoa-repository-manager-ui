@@ -127,7 +127,8 @@ export class DatasourceUpdateFormComponent implements OnInit {
       }
 
       if ((this.selectedRepo.datasourceType === 'opendoar') ||
-        (this.selectedRepo.datasourceType === 're3data')) {
+        (this.selectedRepo.datasourceType === 're3data') ||
+        (this.selectedRepo.datasourceType === 'cris')) {
 
         // this.updateGroup.get('officialName').disable();
         this.updateGroup.get('country').disable();
@@ -136,6 +137,11 @@ export class DatasourceUpdateFormComponent implements OnInit {
         // this.updateGroup.get('websiteUrl').disable();
         // this.updateGroup.get('institutionName').disable();
 
+      }
+
+      if (this.selectedRepo.datasourceType === 'cris') {
+        this.updateGroup.get('longtitude').disable();
+        this.updateGroup.get('latitude').disable();
       }
 
       if (this.selectedRepo.datasourceType === 'journal') {
@@ -266,7 +272,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
               } else {
                 this.successMessage = formSuccessUpdatedRepo;
               }
-              //fixme is this the place to update the subject??
+              // fixme is this the place to update the subject??
               this.sharedService.setRepository(this.selectedRepo);
             }
           );

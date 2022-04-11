@@ -19,7 +19,7 @@ import {
 } from '../../../domain/shared-messages';
 import { DatasourceUpdateFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-update-form.component';
 import { RegisterDatasourceSelectExistingComponent } from './register-datasource-select-existing.component';
-import {DatasourceUpdateTermsFormComponent} from "../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component";
+import {DatasourceUpdateTermsFormComponent} from '../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
 
 @Component({
   selector: 'app-register-existing-datasource',

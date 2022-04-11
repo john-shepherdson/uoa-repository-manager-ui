@@ -15,6 +15,7 @@ import { SrAggregatorComponent } from './sources-register/sr-aggregator.componen
 import { RegisterNewDatasourceComponent } from './sources-register/register-new-datasource.component';
 import { RegisterExistingDatasourceComponent } from './sources-register/register-existing-datasource.component';
 import { DatasourceUpdateTermsFormComponent } from '../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
+import {SrCrisComponent} from './sources-register/sr-cris.component';
 
 @NgModule ({
   imports: [
@@ -37,6 +38,7 @@ import { DatasourceUpdateTermsFormComponent } from '../../shared/reusablecompone
     SrDataComponent,
     SrJournalComponent,
     SrAggregatorComponent,
+    SrCrisComponent,
     RegisterDatasourceSelectExistingComponent,
     DatasourceUpdateTermsFormComponent,
     RepoFilter                           // a pipe that searches for string in repository name
