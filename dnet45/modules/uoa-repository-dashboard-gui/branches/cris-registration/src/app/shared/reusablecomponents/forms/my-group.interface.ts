@@ -122,14 +122,14 @@ export class MyGroup implements OnInit, AfterContentInit {
     <div class="">
       <label class="" *ngIf="description?.label !== null && description?.label !== ''"
              [ngClass]="{'required' : description.mandatory==true}" title="{{ description.desc }}">
-        {{ description.label }}
+        {{ description.label + (description.mandatory ? ' (*)' : '')  }}
       </label>
       <ng-content></ng-content>
       <span class="md-input-bar"></span>
     </div>
   `
-
 })
+
 export class InlineFormWrapper implements OnChanges {
 
   @Input() public description: Description = null;

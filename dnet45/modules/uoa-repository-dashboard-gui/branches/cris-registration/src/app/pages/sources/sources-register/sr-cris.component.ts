@@ -13,7 +13,7 @@ export class SrCrisComponent extends RegisterExistingDatasourceComponent impleme
 
   ngOnInit() {
     this.datasourceType = 'cris';
-    this.currentMode = 'opendoar';
+    this.currentMode = 'cris';
     super.ngOnInit();
   }
 

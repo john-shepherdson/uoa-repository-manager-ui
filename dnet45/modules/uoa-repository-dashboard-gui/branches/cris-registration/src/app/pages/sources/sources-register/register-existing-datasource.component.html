@@ -74,7 +74,8 @@
                                                     #datasourcesByCountry
                                                     [mode]="currentMode"
                                                     (emitRepoId)="getRepoId($event)"
-                                                    (promptNext)="goToStep2($event)"></app-select-existing-datasource>
+                                                    (promptNext)="goToStep2($event)">
+                    </app-select-existing-datasource>
                   </section>
 
                   <!-- second section -->
@@ -83,9 +84,9 @@
                            class="body step-1 {{ (currentStep == 1) ? 'current' : '' }}" data-step="1"  aria-hidden="true">
 
                     <datasource-update-form *ngIf="(currentStep === 1) && (repo !== null) && !loadingMessage"
-                                            #registerDatasource
-                                            [selectedRepo]="repo"
-                                            (emittedInfo)="getUpdatedRepo($event)"></datasource-update-form>
+                                            #registerDatasource [selectedRepo]="repo" [mode]="currentMode"
+                                            (emittedInfo)="getUpdatedRepo($event)">
+                    </datasource-update-form>
                   </section>
 
                   <!-- third section -->
@@ -99,7 +100,7 @@
                         <div>
                           <div class="md-card" style="height: 100%">
                             <app-repository-interface-form #interfacesArray
-                                                           [data]="inter"
+                                                           [data]="inter" [mode]="currentMode"
                                                            (emitDeleteInterface)="removeInterfaceFromList($event)">
                             </app-repository-interface-form>
                           </div>

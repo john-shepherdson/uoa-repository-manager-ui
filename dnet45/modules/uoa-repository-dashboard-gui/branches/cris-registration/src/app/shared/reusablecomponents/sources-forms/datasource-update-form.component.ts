@@ -8,7 +8,7 @@ import { Description, softwarePlatformDesc, platformNameDesc, officialNameDesc, 
          longtitudeDesc, latitudeDesc, websiteUrlDesc, institutionNameDesc, englishNameDesc, logoUrlDesc, timezoneDesc,
          datasourceTypeDesc, adminEmailDesc, lissnDesc, eissnDesc, issnDesc } from '../../../domain/oa-description';
 import { AuthenticationService } from '../../../services/authentication.service';
-import {SharedService} from "../../../services/shared.service";
+import {SharedService} from '../../../services/shared.service';
 
 @Component ({
   selector: 'datasource-update-form',
@@ -31,6 +31,8 @@ export class DatasourceUpdateFormComponent implements OnInit {
   @Output() emittedInfo: EventEmitter<Repository> = new EventEmitter();
 
   @Input() selectedRepo: Repository;
+
+  @Input() mode: string;
 
   @Input() showButton: boolean;
 
@@ -99,7 +101,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   setupUpdateForm() {
     if (this.selectedRepo) {
-      console.log(`my datasource type is: ${this.selectedRepo.datasourceType}`);
+      console.log(`mode is: ${this.mode}`);
 
       this.updateGroup.setValue({
         softwarePlatform: this.selectedRepo.typology,
@@ -126,25 +128,22 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
       }
 
-      if ((this.selectedRepo.datasourceType === 'opendoar') ||
-        (this.selectedRepo.datasourceType === 're3data') ||
-        (this.selectedRepo.datasourceType === 'cris')) {
+      // FIXME: Use eoscDatasourceType when we support the new model
+      if ((this.mode === 'opendoar') || (this.mode === 're3data')) {
 
-        // this.updateGroup.get('officialName').disable();
         this.updateGroup.get('country').disable();
-        // this.updateGroup.get('longtitude').disable();
-        // this.updateGroup.get('latitude').disable();
-        // this.updateGroup.get('websiteUrl').disable();
-        // this.updateGroup.get('institutionName').disable();
-
       }
 
-      if (this.selectedRepo.datasourceType === 'cris') {
-        this.updateGroup.get('longtitude').disable();
-        this.updateGroup.get('latitude').disable();
+      // FIXME: Use eoscDatasourceType when we support the new model
+      if (this.mode === 'cris') {
+
+        this.longtitudeDesc.mandatory = false;
+        this.latitudeDesc.mandatory = false;
+        this.datasourceTypeDesc.label = 'CRIS scope/type';
       }
 
-      if (this.selectedRepo.datasourceType === 'journal') {
+      // FIXME: Use eoscDatasourceType when we support the new model
+      if (this.mode === 'journal') {
 
         let ssnToShow = this.selectedRepo.issn.slice(0, 4) + '-' + this.selectedRepo.issn.toString().slice(4);
         this.updateGroup.get('issn').setValue(ssnToShow);
@@ -166,12 +165,12 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.updateGroup.get('eissn').disable();
         this.updateGroup.get('lissn').disable();*/
       }
-      /*this.getDatasourceClasses();*/
     }
   }
 
   getDatasourceClasses() {
-    this.repoService.getDatasourceClasses(this.selectedRepo.datasourceType).subscribe(
+    // FIXME: Use eoscDatasourceType when we support the new model
+    this.repoService.getDatasourceClasses(this.mode).subscribe(
       classes => this.datasourceClasses = classes,
       error => {
         this.loadingMessage = '';

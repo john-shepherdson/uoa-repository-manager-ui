@@ -26,6 +26,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   invalidCustomBaseUrl = invalidCustomBaseUrl;
 
   @Input() data: any[] = []; // expects an array containing at least 3 of the 4 below fields in this order
+  @Input() mode: string = null;
   inRegister: boolean;
   interfaceID: number;      // holds the interface index in the interfaces array as displayed
   currentRepo: RepoFields;  // a fraction of the Repository class
@@ -125,7 +126,11 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   }
 
   getCompatibilityClasses() {
-    this.repoService.getCompatibilityClasses(this.currentRepo.datasourceType).subscribe(
+    // FIXME: Use eoscDatasourceType when we support the new model
+    if (this.mode === null) {
+      this.mode = this.currentRepo.datasourceType;
+    }
+    this.repoService.getCompatibilityClasses(this.mode).subscribe(
       classes => {
         this.compClasses = classes;
         this.classCodes = Object.keys(this.compClasses);

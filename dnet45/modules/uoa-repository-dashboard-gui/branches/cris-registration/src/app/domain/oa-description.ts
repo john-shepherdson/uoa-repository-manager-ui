@@ -26,7 +26,7 @@ export const interfaceFormDesc = {
 /* Desription of the Datasource Info Forms Fields */
 export const softwarePlatformDesc = {
   desc: 'The typology used by your repository/journal.\nIf you use a typology not found in the drop-down list,\nyou can enter a custom name in the field below.',
-  label: 'Software Platform (*)',
+  label: 'Software Platform',
   mandatory: true,
   recommended: false
 };
@@ -40,14 +40,14 @@ export const platformNameDesc = {
 
 export const officialNameDesc = {
   desc: 'Your repository\'s/journal\'s official name.',
-  label: 'Official Name (*)',
+  label: 'Official Name',
   mandatory: true,
   recommended: false
 };
 
 export const issnDesc = {
   desc: 'Input your journal\'s issn (www.issn.org)',
-  label: 'ISSN (*)',
+  label: 'ISSN',
   mandatory: true,
   recommended: false
 };
@@ -68,49 +68,49 @@ export const lissnDesc = {
 
 export const repoDescriptionDesc = {
   desc: 'A description of your repository/journal',
-  label: 'Description (*)',
+  label: 'Description',
   mandatory: true,
   recommended: false
 };
 
 export const countryDesc = {
   desc: 'The country where your repository/journal is located',
-  label: 'Country (*)',
+  label: 'Country',
   mandatory: true,
   recommended: false
 };
 
 export const longtitudeDesc = {
   desc: 'The (approximate) longtitude of your repository/journal\'s location',
-  label: 'Longtitude (*)',
+  label: 'Longtitude',
   mandatory: true,
   recommended: false
 };
 
 export const latitudeDesc = {
   desc: 'The (approximate) latitude of your repository/journal\'s location',
-  label: 'Latitude (*)',
+  label: 'Latitude',
   mandatory: true,
   recommended: false
 };
 
 export const websiteUrlDesc = {
   desc: 'The main page of your repository/journal\'s website',
-  label: 'Entry URL (*)',
+  label: 'Entry URL',
   mandatory: true,
   recommended: false
 };
 
 export const institutionNameDesc = {
   desc: 'The institution that your repository belongs to',
-  label: 'Institution (*)',
+  label: 'Institution',
   mandatory: true,
   recommended: false
 };
 
 export const englishNameDesc = {
   desc: 'Your repository/journal\'s name in english',
-  label: 'English Name (*)',
+  label: 'English Name',
   mandatory: true,
   recommended: false
 };
@@ -124,35 +124,35 @@ export const logoUrlDesc = {
 
 export const timezoneDesc = {
   desc: 'The timezone of the area where your repository/ journal is located',
-  label: 'Timezone (*)',
+  label: 'Timezone',
   mandatory: true,
   recommended: false
 };
 
 export const datasourceTypeDesc = {
   desc: 'The type of your repository',
-  label: 'Repository Type (*)',
+  label: 'Repository Type',
   mandatory: true,
   recommended: false
 };
 
 export const journalTypeDesc = {
   desc: 'The type of your journal',
-  label: 'Journal Type (*)',
+  label: 'Journal Type',
   mandatory: true,
   recommended: false
 };
 
 export const aggregatorTypeDesc = {
   desc: 'The type of your aggregator',
-  label: 'Aggregator Type (*)',
+  label: 'Aggregator Type',
   mandatory: true,
   recommended: false
 };
 
 export const adminEmailDesc = {
   desc: 'The email address of the repository/journal\'s administrator',
-  label: 'Admin Email (*)',
+  label: 'Admin Email',
   mandatory: true,
   recommended: false
 };

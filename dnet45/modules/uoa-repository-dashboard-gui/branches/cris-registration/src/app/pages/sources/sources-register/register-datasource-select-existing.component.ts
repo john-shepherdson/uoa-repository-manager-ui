@@ -51,39 +51,41 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
     } else if (this.mode === 're3data') {
       this.sourceUrl = 'https://www.re3data.org/';
       this.sourceTitle = 'Re3data';
+    } else if (this.mode === 'cris') {
+      this.sourceUrl = 'https://eurocris.org';
+      this.sourceTitle = 'euroCris';
     }
     this.getLatestUpdate();
   }
 
   getCountries() {
-    this.repoService.getCountries()
-      .subscribe(
-        countries => {
-          // TODO: check again getCountries null return values
-          /*/!* check for null values *!/
-          let nullVals = countries.filter(el => el.name === null);
-          /!* remove null values from array *!/
-          for (let nullVal of nullVals) {
-            let i = countries.findIndex(el => el === nullVal);
-            /!* remove null value from array *!/
-            if (i !== -1) { countries.splice(i, 1); }
-          }*/
+    this.repoService.getCountries().subscribe(
+      countries => {
+        // TODO: check again getCountries null return values
+        /*/!* check for null values *!/
+        let nullVals = countries.filter(el => el.name === null);
+        /!* remove null values from array *!/
+        for (let nullVal of nullVals) {
+          let i = countries.findIndex(el => el === nullVal);
+          /!* remove null value from array *!/
+          if (i !== -1) { countries.splice(i, 1); }
+        }*/
 
-          /* sort countries array */
-          this.countries = countries.sort( function(a, b) {
-            if (a.name < b.name) {
-              return -1;
-            } else if (a.name > b.name) {
-              return 1;
-            } else {
-              return 0;
-            }
-          } );
-        },
-        error => {
-          this.alertMessage = noServiceMessage;
-          console.log(error);
-        });
+        /* sort countries array */
+        this.countries = countries.sort( function(a, b) {
+          if (a.name < b.name) {
+            return -1;
+          } else if (a.name > b.name) {
+            return 1;
+          } else {
+            return 0;
+          }
+        } );
+      },
+      error => {
+        this.alertMessage = noServiceMessage;
+        console.log(error);
+      });
   }
 
   getReposInCountry(i: number) {
