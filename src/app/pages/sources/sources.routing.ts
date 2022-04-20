@@ -5,6 +5,7 @@ import { SrLiteratureComponent } from './sources-register/sr-literature.componen
 import { SrDataComponent } from './sources-register/sr-data.component';
 import { SrJournalComponent } from './sources-register/sr-journal.component';
 import { SrAggregatorComponent } from './sources-register/sr-aggregator.component';
+import {SrCrisComponent} from './sources-register/sr-cris.component';
 
 const sourcesRoutes: Routes = [
   {
@@ -33,30 +34,14 @@ const sourcesRoutes: Routes = [
           {
             path: 'aggregator',
             component: SrAggregatorComponent
+          },
+          {
+            path: 'cris',
+            component: SrCrisComponent
           }
         ]
       },
     ]
-    // path: '',
-    // component: SourcesRegisterComponent,
-    // children: [
-    //   {
-    //     path: 'literature',
-    //     component: SrLiteratureComponent
-    //   },
-    //   {
-    //     path: 'data',
-    //     component: SrDataComponent
-    //   },
-    //   {
-    //     path: 'journal',
-    //     component: SrJournalComponent
-    //   },
-    //   {
-    //     path: 'aggregator',
-    //     component: SrAggregatorComponent
-    //   }
-    // ]
   }
 ];
 

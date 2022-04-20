@@ -9,12 +9,13 @@ import { DatasourceNewInterfaceFormComponent } from '../../../shared/reusablecom
 import { from, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { errorsInInterfaces, formErrorRegisterRepo, noInterfacesSaved } from '../../../domain/shared-messages';
-import {DatasourceUpdateTermsFormComponent} from "../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component";
+import {DatasourceUpdateTermsFormComponent} from '../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
 
 @Component({
   selector: 'app-register-new-datasource',
   templateUrl: './register-new-datasource.component.html'
 })
+
 export class RegisterNewDatasourceComponent implements OnInit {
   loadingMessage: string;
   errorMessage: string;
@@ -205,7 +206,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
     );
   }
 
-  //recheck if needed
+  // recheck if needed
   getTerms(repo: Repository) {
     console.log('this.repo', this.repo.consentTermsOfUse, this.repo.fullTextDownload);
     console.log('repo', repo.consentTermsOfUse, repo.fullTextDownload);
