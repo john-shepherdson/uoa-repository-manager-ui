@@ -57,8 +57,7 @@
                     <div *ngFor="let inter of dataForInterfaceComp" class="uk-width-1-2@m uk-margin-bottom">
                       <div>
                         <div class="md-card" style="height: 100%">
-                          <app-repository-interface-form #interfacesArray
-                                                         [data]="inter"
+                          <app-repository-interface-form #interfacesArray [data]="inter"
                                                          (emitDeleteInterface)="removeInterfaceFromList($event)">
                           </app-repository-interface-form>
                         </div>

@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
           console.log(error);
         },
         () => {
-          console.log(this.reposOfUser);
+          // console.log(this.reposOfUser);
           this.reposOfUser.forEach(repo => {
             if (!repo.consentTermsOfUse || !repo.fullTextDownload) {
               this.addTerm(repo.officialname, repo.id, repo.consentTermsOfUse);

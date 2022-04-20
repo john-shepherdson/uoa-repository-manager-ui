@@ -30,12 +30,12 @@
                 <h3>Literature repository</h3>
                 <!--<a [routerLink]="['literature']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>-->
                 <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('literature')" style="cursor: pointer">
-                  <p class="uk-margin-remove">Make sure your repository is already registered in OpenDOAR, the authoritative
-                    directory of institutional and thematic OA repositories, and is compatible with the OpenAIRE Guidelines for Literature Repositories.</p>
+                  <p class="uk-margin-remove">Make sure your repository is already registered in OpenDOAR, the
+                    authoritative directory of institutional and thematic OA repositories, and is compatible with the
+                    OpenAIRE Guidelines for Literature Repositories.</p>
                   <a href="http://v2.sherpa.ac.uk/opendoar/" target="_blank">
-                  List provided by
-                  <br>
-                  OpenDOAR<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
+                    List provided by<br>
+                    OpenDOAR<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
                   </a>
                 </div>
 
@@ -108,6 +108,22 @@
             </div>
           </div>
 
+          <div class="">
+            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
+              <a [routerLink]="['cris']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
+                <div class="">
+                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Cris.svg" alt="" width="50">
+                </div>
+                <h3>CRIS systems</h3>
+                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('cris')" style="cursor: pointer">
+                  <p class="uk-margin-remove">Stay tuned.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <hr style="border-top: 1px solid #dedede; margin-top: 40px; margin-bottom: 30px;">
@@ -117,23 +133,6 @@
         <div class="uk-margin uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m" uk-grid="">
 
           <div class="uk-row-first">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
-            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
-              <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
-              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
-                <div class="">
-                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Cris.svg" alt="" width="50">
-                </div>
-                <h3>CRIS systems</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
-                  <p class="uk-margin-remove">Stay tuned.</p>
-                </div>
-              </div>
-              <div class="whiteFilm"></div>
-            </div>
-          </div>
-
-          <div class="">
             <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
             datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
               <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
@@ -167,11 +166,7 @@
             </div>
           </div>
 
-        </div>
-
-        <div class="uk-margin uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m" uk-grid="">
-
-          <div class="uk-row-first">
+          <div class="">
             <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
             datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
               <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
@@ -187,6 +182,12 @@
               <div class="whiteFilm"></div>
             </div>
           </div>
+
+        </div>
+
+        <div class="uk-margin uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m" uk-grid="">
+
+
 
         </div>
 
