@@ -178,7 +178,7 @@ export class TermsOfUse {
   name: string;
   consentTermsOfUse: boolean;
   fullTextDownload: boolean;
-  // consentTermsOfUseDate: Date;
+  consentTermsOfUseDate: Date;
 }
 
 export class Organization {
