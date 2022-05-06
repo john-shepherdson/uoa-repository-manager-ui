@@ -26,7 +26,7 @@
                       <a id="wizard_advanced-t-0" href="#wizard_advanced-h-0" aria-controls="wizard_advanced-p-0">
                         <!--<span class="current-info audible">current step: </span>-->
                         <span class="number">1</span>
-                        <span class="title">Select Repository</span>
+                        <span class="title">Select {{currentMode === 'cris' ? 'Datasource' : 'Repository'}}</span>
                       </a>
                     </li>
                     <li role="tab" class="{{ (currentStep < 1) ? 'disabled' : '' }} {{ (currentStep == 1) ? 'current' : '' }}" aria-disabled="true">
@@ -70,11 +70,12 @@
                   <section id="wizard_advanced-p-0" role="tabpanel" aria-labelledby="wizard_advanced-h-0"
                            class="body step-0 {{ (currentStep == 0) ? 'current' : '' }}" data-step="0" aria-hidden="false">
 
-                    <app-select-existing-datasource *ngIf="(currentStep === 0) && (currentMode !== null) && !loadingMessage"
-                                                    #datasourcesByCountry
-                                                    [mode]="currentMode"
-                                                    (emitRepoId)="getRepoId($event)"
-                                                    (promptNext)="goToStep2($event)">
+                    <app-select-existing-datasource
+                      *ngIf="(currentStep === 0) && (currentMode !== null) && !loadingMessage"
+                      #datasourcesByCountry
+                      [mode]="currentMode"
+                      (emitRepoId)="getRepoId($event)"
+                      (promptNext)="goToStep2($event)">
                     </app-select-existing-datasource>
                   </section>
 
@@ -136,7 +137,8 @@
                       <datasource-update-terms-form #updateTermsForm
                                                     [selectedRepo]="repo"
                                                     [showButton]=false
-                                                    (emittedInfo)="getTerms($event)"></datasource-update-terms-form>
+                                                    (emittedInfo)="getTerms($event)">
+                      </datasource-update-terms-form>
                     </div>
                   </section>
 

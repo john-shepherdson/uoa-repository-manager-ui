@@ -49,8 +49,10 @@
                 <li aria-hidden="false" class="uk-active" style="animation-duration: 200ms;">
                   <datasource-update-form #datasourceUpdateForm
                                           [selectedRepo]="repo"
+                                          [mode]="this.mode"
                                           [showButton]=true
-                                          (emittedUrl)="getNewLogoUrl($event)"></datasource-update-form>
+                                          (emittedUrl)="getNewLogoUrl($event)">
+                  </datasource-update-form>
                 </li>
                 <li aria-hidden="true" style="animation-duration: 200ms;" class="">
                   <div *ngIf="repo && repoInterfaces && !loadingMessage" class="uk-grid uk-grid-match uk-margin-top" style="padding: 0px 3px 0px 3px;">

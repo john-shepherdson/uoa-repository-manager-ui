@@ -136,10 +136,13 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
       // FIXME: Use eoscDatasourceType when we support the new model
       if (this.mode === 'cris') {
-
         this.longtitudeDesc.mandatory = false;
         this.latitudeDesc.mandatory = false;
         this.datasourceTypeDesc.label = 'CRIS scope/type';
+      } else {
+        this.longtitudeDesc.mandatory = true;
+        this.latitudeDesc.mandatory = true;
+        this.datasourceTypeDesc.label = 'Repository Type';
       }
 
       // FIXME: Use eoscDatasourceType when we support the new model

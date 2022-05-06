@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { RegisterExistingDatasourceComponent } from './register-existing-datasource.component';
 
 @Component ({
-  selector: 'app-sr-literature',
+  selector: 'app-sr-cris',
   templateUrl: './register-existing-datasource.component.html'
 })
 export class SrCrisComponent extends RegisterExistingDatasourceComponent implements OnInit {

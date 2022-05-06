@@ -5,9 +5,12 @@
         {{ alertMessage }}
       </div>
       <div class="uk-alert uk-alert-info">
-        Please make sure your repository is registered in
+        Please make sure your {{mode === 'cris' ? 'Research Information System': 'repository'}} is registered in
         <a target="_blank" href="{{ sourceUrl }}">
           <i class="fas fa-external-link-alt" style="margin-right:3px;"></i>{{ sourceTitle }}
+        </a>
+        <a *ngIf="mode === 'cris'" target="_blank" href="https://eurocris.org/dris/dris-form">
+          <br><i class="fas fa-external-link-alt" style="margin-right:3px;"></i>euroCRIS DRIS
         </a>
         . <br>
         <span *ngIf="latestUpdate && (latestUpdate !== 'null')">
@@ -29,12 +32,12 @@
       </div>
       <div *ngIf="selectedCountry">
         <div>
-          <h2 class="heading_b uk-margin-bottom uk-margin-medium-top">{{ sourceTitle }} Repositories in {{
-            selectedCountry.name ? selectedCountry.name : selectedCountry.code }}</h2>
+          <h2 class="heading_b uk-margin-bottom uk-margin-medium-top">{{ sourceTitle }}
+            {{mode === 'cris' ? '- Research Information Systems' : 'Repositories'}} in
+            {{selectedCountry.name ? selectedCountry.name : selectedCountry.code }}</h2>
         </div>
         <div *ngIf="loadingMessage" class="loading-big">
-          <div class="loader-big"
-               style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+          <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
             {{ loadingMessage }}
           </div>
           <div class="whiteFilm"></div>
@@ -51,21 +54,17 @@
           </div>
 
 
-          <div class="form-group"
-               *ngFor="let repo of countryRepos | repoFilter: searchBox">
-            <label for="{{ repo.id }}"
-                   class="uk-button uk-link-muted visible_uk_links"
-                   style="display: block; text-align: left;">
+          <div class="form-group" *ngFor="let repo of countryRepos | repoFilter: searchBox">
+            <label for="{{ repo.id }}" class="uk-button uk-link-muted visible_uk_links" style="display: block; text-align: left;">
               <input type="radio" value="{{ repo.id }}" id="{{ repo.id }}" name="repositories"
                      (change)="onChooseRepository(repo.id)" [disabled]="repo.registeredby !== null">
-              <span>
-                        {{(repo.officialname !== null) ? repo.officialname : repo.englishname }}
-                        <span *ngIf="repo.registeredby !== null"
-                              class="uk-badge uk-badge-warning uk-margin-small-right uk-margin-small-left">Registered</span>
-                        <a target="_blank" href="{{ (repo.websiteurl !== null) ? repo.websiteurl : '' }}" [ngStyle]="">
-                          <i class="fas fa-external-link-alt externalLink"></i>
-                        </a>
-                      </span>
+              <span>{{(repo.officialname !== null) ? repo.officialname : repo.englishname }}
+                <span *ngIf="repo.registeredby !== null"
+                      class="uk-badge uk-badge-warning uk-margin-small-right uk-margin-small-left">Registered</span>
+                <a target="_blank" href="{{ (repo.websiteurl !== null) ? repo.websiteurl : '' }}" [ngStyle]="">
+                  <i class="fas fa-external-link-alt externalLink"></i>
+                </a>
+              </span>
               <!--TODO uncomment if we still need the next button everywhere-->
               <!--<div *ngIf="repoId == repo.id" class="uk-float-right">-->
               <!--<a class="uk-button uk-button-primary uk-border-rounded uk-vertical-align-middle"-->

@@ -22,6 +22,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
   // repoId: string;
   logoURL: string;
   repo: Repository;
+  mode: string = null;
   repoInterfaces: RepositoryInterface[] = [];
 
   @ViewChild('datasourceUpdateForm') datasourceUpdateForm: DatasourceUpdateFormComponent;
@@ -49,6 +50,9 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
     if (this.sharedService.getRepository()) {
       this.repo = this.sharedService.getRepository();
+      if (this.repo.id.includes('eurocrisdris')) {
+        this.mode = 'cris';
+      }
       this.logoURL = this.repo.logoUrl;
       this.getRepoInterfaces();
     }
