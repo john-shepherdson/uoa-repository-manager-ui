@@ -53,7 +53,7 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
       this.sourceTitle = 'Re3data';
     } else if (this.mode === 'cris') {
       this.sourceUrl = 'https://eurocris.org';
-      this.sourceTitle = 'euroCris';
+      this.sourceTitle = 'euroCRIS';
     }
     this.getLatestUpdate();
   }
