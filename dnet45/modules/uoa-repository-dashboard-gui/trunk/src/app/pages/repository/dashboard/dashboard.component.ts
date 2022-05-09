@@ -187,7 +187,7 @@ export class DashboardComponent implements OnInit {
     this.validatorService.getValidationSummary(repository.id).subscribe(
       validationSummary => {
         this.storedJob = validationSummary;
-        console.log(validationSummary);
+        // console.log(validationSummary);
       },
       error => {
         this.errorValidationsMessage = loadingJobSummaryError;

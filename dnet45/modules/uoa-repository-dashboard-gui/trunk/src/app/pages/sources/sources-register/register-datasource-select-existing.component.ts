@@ -90,7 +90,7 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
 
   getReposInCountry(i: number) {
     const country = this.countries[i];
-    console.log(`I got ${country} and ${this.mode}`);
+    // console.log(`I got ${country} and ${this.mode}`);
     this.countryRepos = [];
     this.selectedCountry = country;
     this.hasSelectedCountry = false;
@@ -120,7 +120,7 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
         }
         this.loadingMessage = '';
         this.alertMessage = '';
-        console.log('this.selectedCountry became', JSON.stringify(this.selectedCountry));
+        // console.log('this.selectedCountry became', JSON.stringify(this.selectedCountry));
       }
     );
   }
