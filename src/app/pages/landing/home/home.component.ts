@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component ({
   selector: 'app-landing',
   templateUrl: './home.component.html',
-  styleUrls: ['../../../../assets/css/landingpage/theme.css','../../../../assets/css/landingpage/custom.css','../../../../assets/css/landingpage/custom-provide.css'],
+  styleUrls: ['../../../../assets/css/landingpage/theme.css', '../../../../assets/css/landingpage/custom.css', '../../../../assets/css/landingpage/custom-provide.css'],
 })
 
 export class HomeComponent implements OnInit {
@@ -26,9 +26,9 @@ export class HomeComponent implements OnInit {
     const baseUrl = window.location.origin;
     this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
 
-    let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("dashboard");
-    body.classList.add("landing");
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove('dashboard');
+    body.classList.add('landing');
   }
 
 
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
       },
       error => console.log(error),
       () => {
-        console.log('statisticsNumbers is', JSON.stringify(this.statisticsNumbers));
+        // console.log('statisticsNumbers is', JSON.stringify(this.statisticsNumbers));
       }
     );
   }

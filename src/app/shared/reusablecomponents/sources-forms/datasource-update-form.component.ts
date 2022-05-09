@@ -101,7 +101,6 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   setupUpdateForm() {
     if (this.selectedRepo) {
-      console.log(`mode is: ${this.mode}`);
 
       this.updateGroup.setValue({
         softwarePlatform: this.selectedRepo.typology,
