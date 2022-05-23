@@ -80,7 +80,10 @@ export class DatasourceUpdateTermsFormComponent implements OnInit {
         this.errorMessage = '';
         this.selectedRepo.consentTermsOfUse = this.agreementForm.value.acceptTerms;
         this.selectedRepo.fullTextDownload = this.agreementForm.value.textMining;
-        this.selectedRepo.consentTermsOfUseDate = new Date(Date.now());
+        if (!this.selectedRepo.consentTermsOfUseDate) {
+          this.selectedRepo.consentTermsOfUseDate = new Date(Date.now());
+        }
+        this.selectedRepo.lastConsentTermsOfUseDate = new Date(Date.now());
         this.repoService.updateRepository(this.selectedRepo).subscribe(
           response => {
             if (response) {
