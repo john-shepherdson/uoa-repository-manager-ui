@@ -133,6 +133,7 @@ export class Repository extends DriverResource implements IsSerializable {
   consentTermsOfUse: boolean;
   fullTextDownload: boolean;
   consentTermsOfUseDate: Date;
+  lastConsentTermsOfUseDate: Date;
   availableDiskSpace: string;
   securityParameters: string;
   protocol: string;
