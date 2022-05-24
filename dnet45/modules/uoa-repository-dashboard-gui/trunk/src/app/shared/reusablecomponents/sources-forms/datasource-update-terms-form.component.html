@@ -29,7 +29,8 @@
       Agree to the <a href="https://www.openaire.eu/terms-of-use-for-content-providers#consent" target="_blank">re-use of full texts</a>
     </label>
   </form-inline>
-  <p class="">Date of Acceptance of the Terms of Use: {{selectedRepo.consentTermsOfUseDate ? (selectedRepo.consentTermsOfUseDate | date) : '-'}}</p>
+  <div class="uk-margin-top" *ngIf="selectedRepo.registrationDate">Data source registration date: {{selectedRepo.registrationDate | date}}</div>
+  <div class="uk-margin-small-top">Last date of acceptance of the Terms of Use: {{selectedRepo.lastConsentTermsOfUseDate ? (selectedRepo.lastConsentTermsOfUseDate | date) : '-'}}</div>
   <p class="uk-text-meta">Note: OpenAIRE will not provide the full text files for public distribution, the users will access from the original datasource.</p>
   <div *ngIf="showButton" class="form-group">
     <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
