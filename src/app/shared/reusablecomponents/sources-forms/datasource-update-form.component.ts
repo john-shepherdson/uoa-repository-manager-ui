@@ -172,6 +172,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   getDatasourceClasses() {
     // FIXME: Use eoscDatasourceType when we support the new model
+    console.log('I update with mode: ' + this.mode);
     this.repoService.getDatasourceClasses(this.mode).subscribe(
       classes => this.datasourceClasses = classes,
       error => {

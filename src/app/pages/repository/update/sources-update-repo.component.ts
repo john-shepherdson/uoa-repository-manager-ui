@@ -52,6 +52,14 @@ export class SourcesUpdateRepoComponent implements OnInit {
       this.repo = this.sharedService.getRepository();
       if (this.repo.id.includes('eurocrisdris')) {
         this.mode = 'cris';
+      } else if (this.repo.id.includes('opendoar')) {
+        this.mode = 'opendoar';
+      } else if (this.repo.id.includes('re3data')) {
+        this.mode = 're3data';
+      } else if (this.repo.id.includes('journal')) {
+        this.mode = 'journal';
+      } else if (this.repo.id.includes('aggregator')) {
+        this.mode = 'aggregator';
       }
       this.logoURL = this.repo.logoUrl;
       this.getRepoInterfaces();
