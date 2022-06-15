@@ -162,6 +162,7 @@ export class RepositoryService {
   }
 
   getDatasourceClasses(mode: string): Observable<Map<string, string>> {
+    console.log('mode: ' + mode);
     const url = `${this.apiUrl}getDatasourceClasses/${mode}`;
     console.log(`knocking on: ${url}`);
     return this.httpClient.get<Map<string, string>>(url, headerOptions);
