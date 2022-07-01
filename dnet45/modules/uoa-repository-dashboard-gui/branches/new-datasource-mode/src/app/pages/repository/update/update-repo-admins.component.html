@@ -1,0 +1,129 @@
+<div class="uk-margin-small-top">
+  <div>Update the users who can access the dashboard to manage the datasource.</div>
+
+  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+  <div *ngIf="loadingMessage" class="loading-medium">
+    <div class="loader-small" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+      {{ loadingMessage }}
+    </div>
+    <div class="whiteFilm"></div>
+  </div>
+
+  <div *ngIf="!loadingMessage" >
+
+    <div class="uk-margin-top">
+      <div class="uk-flex uk-flex-right@m uk-flex-right@l">
+        <a class="uk-button uk-button-primary action uk-flex uk-flex-middle" (click)="showAddRepoAdminModal()">
+          <!--<i class="md-icon material-icons">clear</i>-->
+          <span class="uk-margin-small-left">Invite admin</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="uk-margin-medium-top">
+      <div *ngFor="let repoAdmin of repoAdmins" class="uk-grid uk-grid-divider uk-flex uk-flex-middle" uk-grid="">
+        <div class="uk-width-3-4@l uk-width-1-2@m uk-first-column">
+          <div class="">
+            <span class="uk-text-muted">Email: </span>
+            <span class="uk-text-bold">{{repoAdmin.email}}</span>
+          </div>
+        </div>
+        <div class="uk-width-expand">
+          <div class="uk-flex uk-flex-center">
+            <a class="uk-button uk-button-default action uk-flex uk-flex-middle" (click)="showDeletionModal(repoAdmin)">
+              <i class="md-icon material-icons">clear</i>
+              <span class="uk-margin-small-left">Remove</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<confirmation-dialog #deleteRepositoryAdminModal [title]="'Remove datasource admin'" [isModalShown]="isDeleteModalShown"
+                     [confirmButNotCloseButton]="'Remove'" (emitObject)="deleteRepoAdmin($event)">
+
+  <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{modalErrorMessage}}</div>
+
+  <div *ngIf="modalLoadingMessage" class="loading-small">
+    <div class="loader-small" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+      {{ modalLoadingMessage }}
+    </div>
+    <div class="whiteFilm"></div>
+  </div>
+
+  <!--<div *ngIf="!modalLoadingMessage && !modalErrorMessage">-->
+
+    <!--<div *ngIf="selectedAdminForDelete">-->
+      <!--<h6>Are you sure you want to delete {{ selectedAdminForDelete.email }} from the list of repository admins?</h6>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div *ngIf="selectedAdminForDelete">
+    <h6>Are you sure you want to remove this user admin?</h6>
+    <pre>
+      <ng-container *ngIf="selectedAdminForDelete.firstName || selectedAdminForDelete.lastName">
+        {{selectedAdminForDelete.firstName}} {{selectedAdminForDelete.lastName}}
+      </ng-container>
+      {{ selectedAdminForDelete.email }}
+    </pre>
+  </div>
+
+</confirmation-dialog>
+
+
+<confirmation-dialog #addRepositoryAdminModal [title]="'Add new datasource admin'" [isModalShown]="isAddModalShown"
+                     [confirmButNotCloseButton]="'Submit'" (emitObject)="addRepositoryAdmin()">
+
+  <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{modalErrorMessage}}</div>
+
+  <div *ngIf="modalLoadingMessage" class="loading-small">
+    <div class="loader-small" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+      {{ modalLoadingMessage }}
+    </div>
+    <div class="whiteFilm"></div>
+  </div>
+
+  <h6>Add the email address of the new user admin. Make sure the user already has an OpenAIRE account with this email address.</h6>
+  <form>
+    <div class="uk-margin">
+      <input class="uk-input" placeholder="Enter email..." [formControl]="emailControl">
+    </div>
+  </form>
+</confirmation-dialog>
+
+
+
+<!--<div id="addAdminModal" uk-modal>-->
+  <!--<div class="uk-modal-dialog" style="top: 95.5px;">-->
+    <!--<div class="uk-modal-header">-->
+      <!--<h3 class="uk-modal-title">Adding a new repository admin for this repository</h3>-->
+    <!--</div>-->
+    <!--<div class="uk-modal-body">-->
+      <!--<p>Lorem ipsum.....</p>-->
+    <!--</div>-->
+    <!--<div class="uk-modal-footer uk-text-right">-->
+      <!--<button type="button" class="md-btn md-btn-flat uk-modal-close">Cancel</button>-->
+      <!--<button (click)="addRepositoryAdmin()" type="button" class="md-btn md-btn-flat md-btn-flat-primary">Add admin</button>-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+
+  <!--&lt;!&ndash;<div *ngIf="!loadingMessage" class="uk-modal-dialog uk-modal-body">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div *ngIf="selectedAdminForDelete">&ndash;&gt;-->
+      <!--&lt;!&ndash;<h6>Are you sure you want to delete {{ selectedAdminForDelete.email }} from the list of repository admins?</h6>&ndash;&gt;-->
+      <!--&lt;!&ndash;&lt;!&ndash;<p>Deleting a {{serviceORresource}} is an irreversible action.</p>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<button class="uk-button uk-button-danger uk-modal-close" type="button" (click)="deleteRepoAdmin(selectedAdminForDelete.email)">Delete</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;<button class="uk-button uk-button-primary uk-modal-close" type="button" (click)="closeDeletionModal()">Cancel</button>&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;<div *ngIf="loadingMessage">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="loader-small" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">&ndash;&gt;-->
+      <!--&lt;!&ndash;{{ loadingMessage }}&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;    <div class="whiteFilm"></div>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->

@@ -1,0 +1,23 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
+export const environment = {
+  production: false,
+  AAI_LOGOUT: 'https://openaire-dev.aai-dev.grnet.gr/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=',
+  API_ENDPOINT: '/uoa-repository-manager-service',
+  MATOMO_URL: 'https://analytics.openaire.eu/',
+  MATOMO_SITE: 9222222,
+  // FAQ_ENDPOINT: 'http://88.197.53.69:5555/api',
+  // FAQ_HOMEPAGE: 'http://88.197.53.69:5555'
+  FAQ_ENDPOINT: 'https://provide.openaire.eu/uoa-admin-tools/api',
+  FAQ_HOMEPAGE: 'https://provide.openaire.eu/uoa-admin-tools/dashboard'
+};
+
+/*
+ * In development mode, to ignore zone related error stack frames such as
+ * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can
+ * import the following file, but please comment it out in production mode
+ * because it will have performance impact when throw error
+ */
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

@@ -1,0 +1,85 @@
+<div *ngIf="!isLandingRoute() ; else landing" class="sidebar_main_swipe" [class.sidebar_main_active]="open">
+  <!--<div *ngIf="!isHomeRoute() ; else home" class="sidebar_main_open sidebar_main_swipe uk-height-1-1">-->
+  <top-menu-dashboard></top-menu-dashboard>
+  <side-menu></side-menu>
+  <div id="hide_controls">
+    <div id="toggle" [class.sidebar_main_open]="open" (click)="toggleOpen($event)">
+      <i class="material-icons">play_circle_filled</i>
+      <span *ngIf="open" class="uk-margin-small-left">Hide Controls</span>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+
+<ng-template #landing>
+  <top-menu-landing></top-menu-landing>
+  <router-outlet></router-outlet>
+  <footer></footer>
+</ng-template>
+
+
+
+
+<!--<div class="uk-offcanvas-content">-->
+  <!--<top-menu></top-menu>-->
+  <!--<router-outlet></router-outlet>-->
+  <!--<footer></footer>-->
+  <!--<cookie-law position="bottom">-->
+    <!--OpenAIRE uses cookies in order to function properly.<br>-->
+    <!--Cookies are small pieces of data that websites store in your browser to allow us to give you the best browsing experience possible.-->
+    <!--By using the OpenAIRE portal you accept our use of cookies. <a href="http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm" target="_blank"> Read more <span class="uk-icon">-->
+    <!--<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" icon="chevron-right" ratio="1"><polyline fill="none" stroke="#000" stroke-width="1.03" points="7 4 13 10 7 16"></polyline></svg>-->
+    <!--</span></a>-->
+  <!--</cookie-law>-->
+<!--</div>-->
+
+
+<!-- Matomo -->
+<!--<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//https://analytics.openaire.eu/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', piwikUrl]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>-->
+<!-- End Matomo Code -->
+
+
+<!-- Terms of Use (modal) -->
+<confirmation-dialog #subscribeToTermsModal [title]=modalTitle [isModalShown]=isModalShown
+                     [confirmActionButton]=modalButton (emitObject)="updateTerms()">
+  <form class="" [formGroup]="agreementForm">
+    <div formArrayName="terms">
+      <table class="table">
+        <tr>
+          Thanks for being part of OpenAIRE. Please confirm the acceptance of our datasources policy.
+        </tr>
+        <br>
+        <tr>
+          Being registered in OpenAIRE, you are giving consent to OpenAIRE to download, transform and enrich the metadata records, publishing them in the OpenAIRE Research Graph.
+        </tr>
+        <tbody>
+        <tr class="el-item" *ngFor="let term of terms.controls; let i=index">
+          <br> {{term.get('name').value}} <br>
+          <div [formGroupName]="i">
+            <label>
+              <input id="consentTerms" type="checkbox" formControlName="consentTermsOfUse"> Accept the <a href="https://www.openaire.eu/terms-of-use-for-content-providers" target="_blank">Terms of Use</a>
+            </label>
+            <br>
+            <label>
+              <input id="consentText" type="checkbox" formControlName="fullTextDownload"> Agree to the <a href="https://www.openaire.eu/terms-of-use-for-content-providers#consent" target="_blank">re-use of full texts</a>
+            </label>
+          </div>
+        </tr>
+        </tbody>
+        <p class="uk-text-meta">Note: OpenAIRE will not provide the full text files for public distribution, the users will access from the original datasource.</p>
+      </table>
+    </div>
+  </form>
+<!--      <pre>{{this.agreementForm.value | json}}</pre>-->
+</confirmation-dialog>

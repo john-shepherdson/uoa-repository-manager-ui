@@ -1,0 +1,41 @@
+<div *ngIf="loadingMessage" class="loading-big">
+  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+    {{ loadingMessage }}
+  </div>
+  <div class="whiteFilm"></div>
+</div>
+<div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
+
+<form *ngIf="selectedRepo && !loadingMessage" [formGroup]="agreementForm">
+  <div *ngIf="showButton" class="uk-margin-small"> <!-- Update -->
+    <span>Being registered in OpenAIRE, you are giving consent to OpenAIRE to download, transform and enrich the metadata records, publishing them in the OpenAIRE Research Graph.</span>
+  </div>
+  <div *ngIf="!showButton" class="uk-margin-medium"> <!-- Register -->
+    <span>By registering your data source, you are giving your consent to OpenAIRE to download, transform and enrich the metadata records, publishing them in the OpenAIRE Research Graph.</span>
+  </div>
+  <form-inline>
+    <label><input formControlName="acceptTerms" class="uk-checkbox" type="checkbox" checked
+                  [checked]="this.agreementForm.get('acceptTerms').value === true"
+                  (change)="emitRepo()">
+      Accept the
+    </label>
+    <a href="https://www.openaire.eu/terms-of-use-for-content-providers" target="_blank">Terms of Use</a>
+  </form-inline>
+  <form-inline>
+    <label><input formControlName="textMining" class="uk-checkbox" type="checkbox"
+                  [checked]="this.agreementForm.get('textMining').value === true"
+                  (change)="emitRepo()">
+      Agree to the <a href="https://www.openaire.eu/terms-of-use-for-content-providers#consent" target="_blank">re-use of full texts</a>
+    </label>
+  </form-inline>
+  <!--  FIXME: replace consentTermsOfUseDate with registrationDate  -->
+  <div class="uk-margin-top" *ngIf="selectedRepo.consentTermsOfUseDate">Data source registration date: {{selectedRepo.consentTermsOfUseDate | date}}</div>
+  <div class="uk-margin-small-top">Last date of acceptance of the Terms of Use: {{selectedRepo.lastConsentTermsOfUseDate ? (selectedRepo.lastConsentTermsOfUseDate | date) : '-'}}</div>
+  <p class="uk-text-meta">Note: OpenAIRE will not provide the full text files for public distribution, the users will access from the original datasource.</p>
+  <div *ngIf="showButton" class="form-group">
+    <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
+  </div>
+</form>
+
+<!--<pre>{{agreementForm.value|json}}</pre>-->
