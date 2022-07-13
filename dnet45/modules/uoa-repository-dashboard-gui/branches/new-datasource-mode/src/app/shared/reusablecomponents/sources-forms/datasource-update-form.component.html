@@ -120,7 +120,7 @@
         <form-inline [description]="countryDesc" [valid]="updateGroup.get('country')">
           <select formControlName="country" class="md-input">
             <option value="">-- none selected --</option>
-            <option *ngFor="let country of countries" value="{{country.code}}" title="{{country.name}}">{{ country.name }}</option>
+            <option *ngFor="let country of countries" value="{{country.code}}">{{ country.name }}</option>
           </select>
         </form-inline>
       </div>
