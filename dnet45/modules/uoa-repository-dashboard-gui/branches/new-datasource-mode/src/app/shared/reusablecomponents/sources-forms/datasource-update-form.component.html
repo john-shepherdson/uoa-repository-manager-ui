@@ -12,15 +12,20 @@
       Basic information
     </h4>
   </div>
-  <div *ngIf="selectedRepo.datasourceType === 'opendoar'" class="uk-alert uk-alert-info">
+  <div *ngIf="selectedRepo.collectedFrom.split('openaire____::')[1] === 'opendoar'" class="uk-alert uk-alert-info">
     The following fields are completed by OpenDOAR.<br>
     If you want to edit them, you can do it by using this
-    <a target="_blank" href="{{ 'http://v2.sherpa.ac.uk/id/repository/' + repoId }}">OpenDOAR link</a>
+    <a target="_blank" href="{{ 'http://v2.sherpa.ac.uk/id/repository/' + repoId }}">OpenDOAR link</a>.
   </div>
-  <div *ngIf="selectedRepo.datasourceType === 're3data'" class="uk-alert uk-alert-info">
+  <div *ngIf="selectedRepo.collectedFrom.split('openaire____::')[1] === 're3data'" class="uk-alert uk-alert-info">
     The following fields are completed by Re3data.<br>
     If you want to edit them, you can do it by using this
-    <a target="_blank" href="{{ 'http://service.re3data.org/repository/' + repoId }}">Re3data link</a>
+    <a target="_blank" href="{{ 'http://service.re3data.org/repository/' + repoId }}">Re3data link</a>.
+  </div>
+  <div *ngIf="selectedRepo.collectedFrom.split('openaire____::')[1] === 'fairsharing'" class="uk-alert uk-alert-info">
+    The following fields are completed by FAIRsharing.<br>
+    If you want to edit them, you can do it by using this
+    <a target="_blank" href="{{ 'https://fairsharing.org/search?q=' + selectedRepo.officialName }}">FAIRsharing link</a>.
   </div>
 
   <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">

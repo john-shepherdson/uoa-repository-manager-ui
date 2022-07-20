@@ -164,12 +164,9 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   }
 
   addInterfaceToList(intrf?: RepositoryInterface) {
-
-    console.log('clicked add interface to list');
-
     const curIndex = this.dataForInterfaceComp.length;
     const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.datasourceType,
-      datasourceClass: this.repo.datasourceClass, registeredBy: this.repo.registeredBy };
+      datasourceClass: this.repo.eoscDatasourceType, registeredBy: this.repo.registeredBy };
     if (intrf) {
       this.dataForInterfaceComp.push([true, curIndex, curRepoInfo, intrf]);
     } else {
@@ -185,7 +182,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     }
     tempArray.splice(i, 1);
     this.dataForInterfaceComp = tempArray;
-    console.log(JSON.stringify(this.dataForInterfaceComp));
+    // console.log(JSON.stringify(this.dataForInterfaceComp));
   }
 
   getInterfaces() {
@@ -225,7 +222,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
           true, i,
           { id: this.repo.id,
             datasourceType: this.repo.datasourceType,
-            datasourceClass: this.repo.datasourceClass,
+            datasourceClass: this.repo.eoscDatasourceType,
             registeredBy: this.repo.registeredBy
           },
           this.repoInterfaces[i]
@@ -236,7 +233,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         true, 0,
         { id: this.repo.id,
           datasourceType: this.repo.datasourceType,
-          datasourceClass: this.repo.datasourceClass,
+          datasourceClass: this.repo.eoscDatasourceType,
           registeredBy: this.repo.registeredBy
         }
       ]);
@@ -299,7 +296,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
             return 0;
           }
         });
-        console.log(`the number of interfaces is ${this.repoInterfaces.length}`);
+        // console.log(`the number of interfaces is ${this.repoInterfaces.length}`);
       },
       error => {
           console.log(error);
@@ -316,7 +313,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     );
   }
 
-  //recheck if needed
+  // recheck if needed
   getTerms(repo: Repository) {
     this.repo = repo;
   }
@@ -331,7 +328,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       this.loadingMessage = 'Saving changes';
       this.errorMessage = '';
       console.log('reg this.repo', this.repo);
-      this.repoService.addRepository( this.repo.datasourceType, this.repo).subscribe(
+      this.repoService.addRepository( this.repo.datasourceType, this.repo).subscribe( //this.repo.collectedFrom
         response => {
           console.log(`addRepository responded: ${response.id}, ${response.registeredBy}`);
           this.repo = response;

@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
 import { PiwikService } from '../../../services/piwik.service';
 import { RepositoryService } from '../../../services/repository.service';
-import { PiwikInfo, Repository } from '../../../domain/typeScriptClasses';
-import { enabledMetricsError, enabledMetricsSuccess, enablingMetrics,
-         loadingRepoError, loadingRepoMessage } from '../../../domain/shared-messages';
+import {Country, PiwikInfo, Repository} from '../../../domain/typeScriptClasses';
+import {
+  enabledMetricsError, enabledMetricsSuccess, enablingMetrics,
+  loadingRepoError, loadingRepoMessage, noServiceMessage
+} from '../../../domain/shared-messages';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { SharedService } from "../../../services/shared.service";
 
@@ -24,6 +26,8 @@ export class MetricsEnableComponent implements OnInit {
 
   repo: Repository;
   oaId: string;
+
+  countries: Country[] = [];
 
   modalTitle = 'Confirmation';
   modalButton = 'Yes, enable it';
@@ -60,11 +64,13 @@ export class MetricsEnableComponent implements OnInit {
 
     // this.getRepo();
     this.isModalShown = false;
-    let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("top_bar_active");   //remove the class
-    body.classList.remove("page_heading_active");
-    body.classList.remove("landing");
-    body.classList.add("dashboard");
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove('top_bar_active');   // remove the class
+    body.classList.remove('page_heading_active');
+    body.classList.remove('landing');
+    body.classList.add('dashboard');
+
+    this.getCountries();
   }
 
   // getRepo(): void {
@@ -110,7 +116,7 @@ export class MetricsEnableComponent implements OnInit {
         repositoryId: this.repo.id,
         openaireId: this.oaId,
         repositoryName: this.repo.officialName,
-        country: this.repo.countryName,
+        country: this.getCountryName(this.repo.organizations[0].country),
         siteId: '',
         authenticationToken: this.authenticationToken,
         creationDate: null,
@@ -127,7 +133,7 @@ export class MetricsEnableComponent implements OnInit {
           this.successMessage = enabledMetricsSuccess;
           this.loadingMessage = '';
 
-          //save piwik and update shareRepo
+          // save piwik and update shareRepo
           this.repo.piwikInfo = piwik;
           this.sharedService.setRepository(this.repo);
         },
@@ -143,4 +149,33 @@ export class MetricsEnableComponent implements OnInit {
       );
     }
   }
+
+  getCountries() {
+    this.repoService.getCountries()
+      .subscribe(
+        countries => this.countries = countries.sort(function (a, b) {
+          if (a.name < b.name) {
+            return -1;
+          } else if (a.name > b.name) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }),
+        error => {
+          this.loadingMessage = '';
+          this.errorMessage = noServiceMessage;
+          console.log(error);
+        }
+      );
+  }
+
+  getCountryName(countryCode): string {
+    for (const country of Object.values(this.countries)) {
+      if (country.code === countryCode) {
+        return country.name;
+      }
+    }
+  }
+
 }

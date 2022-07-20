@@ -110,15 +110,15 @@ export class DatasourceUpdateFormComponent implements OnInit {
         eissn: '',
         lissn: '',
         repoDescription: this.selectedRepo.description,
-        country: this.selectedRepo.countryCode,
+        country: this.selectedRepo.organizations[0].country, // countryCode
         longtitude: this.selectedRepo.longitude,
         latitude: this.selectedRepo.latitude,
         websiteUrl: this.selectedRepo.websiteUrl,
-        institutionName: this.selectedRepo.organization,
+        institutionName: this.selectedRepo.organizations[0].legalname,
         englishName: this.selectedRepo.englishName,
         logoUrl: this.selectedRepo.logoUrl,
         timezone: this.selectedRepo.timezone,
-        datasourceType: this.selectedRepo.datasourceClass,
+        datasourceType: this.selectedRepo.eoscDatasourceType,
         adminEmail: this.selectedRepo.contactEmail
       });
 
@@ -141,7 +141,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
       } else {
         this.longtitudeDesc.mandatory = true;
         this.latitudeDesc.mandatory = true;
-        this.datasourceTypeDesc.label = 'Repository Type';
+        this.datasourceTypeDesc.label = 'Data source type';
       }
 
       // FIXME: Use eoscDatasourceType when we support the new model
@@ -172,7 +172,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   getDatasourceClasses() {
     // FIXME: Use eoscDatasourceType when we support the new model
-    this.repoService.getDatasourceClasses(this.mode).subscribe(
+    this.repoService.getDatasourceClasses(this.selectedRepo.collectedFrom.split('::')[1]).subscribe(
       classes => this.datasourceClasses = classes,
       error => {
         this.loadingMessage = '';
@@ -294,16 +294,15 @@ export class DatasourceUpdateFormComponent implements OnInit {
     }
     this.selectedRepo.officialName = this.updateGroup.get('officialName').value.toString();
     this.selectedRepo.description = this.updateGroup.get('repoDescription').value.toString();
-    this.selectedRepo.countryCode = this.updateGroup.get('country').value;
-    this.selectedRepo.countryName = this.countries.filter(x => x.code === this.updateGroup.get('country').value)[0].name;
+    this.selectedRepo.organizations[0].country = this.updateGroup.get('country').value; // countryCode
     this.selectedRepo.longitude = this.updateGroup.get('longtitude').value;
     this.selectedRepo.latitude = this.updateGroup.get('latitude').value;
     this.selectedRepo.websiteUrl = this.updateGroup.get('websiteUrl').value;
-    this.selectedRepo.organization = this.updateGroup.get('institutionName').value.toString();
+    this.selectedRepo.organizations[0].legalname = this.updateGroup.get('institutionName').value.toString();
     this.selectedRepo.englishName = this.updateGroup.get('englishName').value.toString();
     this.selectedRepo.logoUrl = this.updateGroup.get('logoUrl').value;
     this.selectedRepo.timezone = this.updateGroup.get('timezone').value;
-    this.selectedRepo.datasourceClass = this.updateGroup.get('datasourceType').value;
+    this.selectedRepo.eoscDatasourceType = this.updateGroup.get('datasourceType').value;
     this.selectedRepo.contactEmail = this.updateGroup.get('adminEmail').value;
     if (this.selectedRepo.datasourceType === 'journal') {
       let ssnParts = this.updateGroup.get('issn').value.split('-');
@@ -322,8 +321,8 @@ export class DatasourceUpdateFormComponent implements OnInit {
     }
     if (!this.showButton) {
       this.selectedRepo.registeredBy = this.authService.getUserEmail();
-      this.selectedRepo.registered = true;
-      this.selectedRepo.registrationDate = new Date(Date.now()); // NOT NEEDED ??
+      this.selectedRepo.managed = true;
+      this.selectedRepo.registrationdate = new Date(Date.now()); // NOT NEEDED ??
       this.emittedInfo.emit(this.selectedRepo);
     }
   }

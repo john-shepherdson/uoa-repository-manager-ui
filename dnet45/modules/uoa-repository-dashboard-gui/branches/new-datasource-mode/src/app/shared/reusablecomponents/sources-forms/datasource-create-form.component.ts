@@ -134,15 +134,15 @@ export class DatasourceCreateFormComponent implements OnInit {
         eissn: '',
         lissn: '',
         repoDescription: this.selectedRepo.description,
-        country: this.selectedRepo.countryCode,
+        country: this.selectedRepo.organizations[0].country, // countryCode
         longtitude: this.selectedRepo.longitude,
         latitude: this.selectedRepo.latitude,
         websiteUrl: this.selectedRepo.websiteUrl,
-        institutionName: this.selectedRepo.organization,
+        institutionName: this.selectedRepo.organizations[0].legalname,
         englishName: this.selectedRepo.englishName,
         logoUrl: this.selectedRepo.logoUrl,
         timezone: this.selectedRepo.timezone,
-        datasourceType: this.selectedRepo.datasourceClass,
+        datasourceType: this.selectedRepo.eoscDatasourceType,
         adminEmail: this.selectedRepo.contactEmail
       });
 
@@ -184,7 +184,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   }
 
   getDatasourceClasses() {
-    this.repoService.getDatasourceClasses(this.mode).subscribe(
+    this.repoService.getDatasourceClasses(this.selectedRepo.collectedFrom).subscribe(
       classes => this.datasourceClasses = classes,
       error => {
         this.errorMessage = noServiceMessage;
@@ -233,13 +233,12 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.websiteUrl = this.group.get('websiteUrl').value;
     newRepo.logoUrl = this.group.get('logoUrl').value;
     newRepo.contactEmail = this.group.get('adminEmail').value;
-    newRepo.countryName = this.countries.filter(x => x.code === this.group.get('country').value)[0].name;
-    newRepo.countryCode = this.group.get('country').value;
-    newRepo.organization = this.group.get('institutionName').value.toString();
+    newRepo.organizations[0].country = this.group.get('country').value; // countryCode
+    newRepo.organizations[0].legalname = this.group.get('institutionName').value.toString();
     newRepo.latitude = this.group.get('latitude').value;
     newRepo.longitude = this.group.get('longtitude').value;
     newRepo.timezone = this.group.get('timezone').value;
-    newRepo.datasourceClass = this.group.get('datasourceType').value;
+    newRepo.eoscDatasourceType = this.group.get('datasourceType').value;
     if (this.group.get('softwarePlatform').value ) {
       newRepo.typology = this.group.get('softwarePlatform').value;
     } else if (this.group.get('platformName').value) {
@@ -271,9 +270,9 @@ export class DatasourceCreateFormComponent implements OnInit {
 
     /* THE BELOW FIELDS ARE NOT SET IN GWT CODE*/
     newRepo.datasourceType = this.mode;
-    newRepo.dateOfCreation = new Date(Date.now()); // NOT NEEDED ??
-    newRepo.registered = true;
-    newRepo.registrationDate = new Date(Date.now()); // NOT NEEDED ??
+    // newRepo.dateOfCreation = new Date(Date.now()); // NOT NEEDED ??
+    newRepo.managed = true;
+    newRepo.registrationdate = new Date(Date.now()); // NOT NEEDED ??
 
     return newRepo;
   }

@@ -1,11 +1,10 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { SourcesRegisterComponent } from './sources-register.component';
-import { SrLiteratureComponent } from './sources-register/sr-literature.component';
-import { SrDataComponent } from './sources-register/sr-data.component';
 import { SrJournalComponent } from './sources-register/sr-journal.component';
 import { SrAggregatorComponent } from './sources-register/sr-aggregator.component';
 import {SrCrisComponent} from './sources-register/sr-cris.component';
+import {SrRepositoryComponent} from './sources-register/sr-repository.component';
 
 const sourcesRoutes: Routes = [
   {
@@ -20,12 +19,8 @@ const sourcesRoutes: Routes = [
             component: SourcesRegisterComponent
           },
           {
-            path: 'literature',
-            component: SrLiteratureComponent
-          },
-          {
-            path: 'data',
-            component: SrDataComponent
+            path: 'repository',
+            component: SrRepositoryComponent
           },
           {
             path: 'journal',
