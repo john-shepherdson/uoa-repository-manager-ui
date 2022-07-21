@@ -121,7 +121,7 @@
                   <!-- REPOSITORY CARD -->
                   <div *ngFor="let res of repositorySnippet" class="md-card repositoryCard">
                     <div class="md-card-content large-padding">
-                      <div class="uk-text-meta">{{res.typology.split('::')[0]}}  {{res.typology.split('::')[1]}}  {{res.typology.split('::')[2]}}</div>
+                      <div class="uk-text-meta">{{res.eoscDatasourceType.split('::')[0]}}  {{res.eoscDatasourceType.split('::')[1]}}  {{res.eoscDatasourceType.split('::')[2]}}</div>
                       <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top"><a [routerLink]="['/repositoryAdmin/' + res.id]">{{res.officialname}}</a></div>
                       <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>{{res.id}}</div>
                       <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>{{res.registeredby}}</div>
