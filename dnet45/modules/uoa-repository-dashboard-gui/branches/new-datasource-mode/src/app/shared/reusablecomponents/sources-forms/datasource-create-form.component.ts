@@ -270,10 +270,12 @@ export class DatasourceCreateFormComponent implements OnInit {
 
     /* THE BELOW FIELDS ARE NOT SET IN GWT CODE*/
     newRepo.datasourceType = this.mode;
-    // newRepo.dateOfCreation = new Date(Date.now()); // NOT NEEDED ??
     newRepo.managed = true;
-    newRepo.registrationdate = new Date(Date.now()); // NOT NEEDED ??
 
+    const now = new Date(Date.now());
+    newRepo.consentTermsOfUseDate = now;
+    newRepo.lastConsentTermsOfUseDate = now;
+    newRepo.registrationdate = now;
     return newRepo;
   }
 

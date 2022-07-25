@@ -319,10 +319,13 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.selectedRepo.lissn = correctSSN;
       }
     }
-    if (!this.showButton) {
+    if (!this.showButton) { // on register
       this.selectedRepo.registeredBy = this.authService.getUserEmail();
       this.selectedRepo.managed = true;
-      this.selectedRepo.registrationdate = new Date(Date.now()); // NOT NEEDED ??
+      const now = new Date(Date.now());
+      this.selectedRepo.consentTermsOfUseDate = now;
+      this.selectedRepo.lastConsentTermsOfUseDate = now;
+      this.selectedRepo.registrationdate = now;
       this.emittedInfo.emit(this.selectedRepo);
     }
   }
