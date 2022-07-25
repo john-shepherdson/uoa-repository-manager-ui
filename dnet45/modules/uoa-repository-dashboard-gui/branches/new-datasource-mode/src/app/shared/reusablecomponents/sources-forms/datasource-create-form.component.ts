@@ -184,7 +184,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   }
 
   getDatasourceClasses() {
-    this.repoService.getDatasourceClasses(this.selectedRepo.collectedFrom).subscribe(
+    this.repoService.getDatasourceClasses(this.mode).subscribe(
       classes => this.datasourceClasses = classes,
       error => {
         this.errorMessage = noServiceMessage;
