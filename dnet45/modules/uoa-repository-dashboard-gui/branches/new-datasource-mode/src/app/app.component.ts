@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
         () => {
           // console.log(this.reposOfUser);
           this.reposOfUser.forEach(repo => {
-            if (!repo.consentTermsOfUse || !repo.fullTextDownload) {
+            if (repo.consentTermsOfUse === null || repo.fullTextDownload === null) {
               this.addTerm(repo.officialname, repo.id, repo.consentTermsOfUse);
               this.isModalShown = true;
             }
