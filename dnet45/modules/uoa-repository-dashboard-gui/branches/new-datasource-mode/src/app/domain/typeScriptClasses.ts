@@ -105,15 +105,15 @@ export class DatasourceDetails {
   aggregator: string;
   collectedfrom: string;
   managed: boolean;
-  consentTermsOfUse: boolean;
-  fullTextDownload: boolean;
+  registrationdate: Date;
   consentTermsOfUseDate: Date;
   lastConsentTermsOfUseDate: Date;
-  organizations: OrganizationDetails[];
+  consentTermsOfUse: boolean;
+  fullTextDownload: boolean;
+  organizations: OrganizationDetails[] = new Array<OrganizationDetails>();
   identities: IdentitiesDetails[];
   status: string;
   typology: string;
-  registrationdate: Date;
 }
 
 export class Repository extends DatasourceDetails implements IsSerializable {
@@ -226,7 +226,7 @@ export class ApiDetails {
   lastDownloadDate: Date;
   baseurl: string;
   removable: boolean;
-  apiParams: ApiParamDetails[];
+  apiParams: ApiParamDetails[] = new Array<ApiParamDetails>();
   metadataIdentifierPath: string;
   typology: string;
   comments: string;

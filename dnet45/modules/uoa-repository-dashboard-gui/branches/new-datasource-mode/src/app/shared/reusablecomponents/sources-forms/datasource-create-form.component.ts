@@ -227,14 +227,19 @@ export class DatasourceCreateFormComponent implements OnInit {
   }
 
   createNewRepository(): Repository {
-    const newRepo: Repository = new Repository();
+    const newRepo = new Repository();
     newRepo.officialName = this.group.get('officialName').value.toString();
     newRepo.englishName = this.group.get('englishName').value.toString();
     newRepo.websiteUrl = this.group.get('websiteUrl').value;
     newRepo.logoUrl = this.group.get('logoUrl').value;
     newRepo.contactEmail = this.group.get('adminEmail').value;
-    newRepo.organizations[0].country = this.group.get('country').value; // countryCode
-    newRepo.organizations[0].legalname = this.group.get('institutionName').value.toString();
+    newRepo.organizations.push({
+      legalshortname: null,
+      legalname: this.group.get('institutionName').value.toString(),
+      websiteurl: null,
+      logourl: null,
+      country: this.group.get('country').value
+    });
     newRepo.latitude = this.group.get('latitude').value;
     newRepo.longitude = this.group.get('longtitude').value;
     newRepo.timezone = this.group.get('timezone').value;
