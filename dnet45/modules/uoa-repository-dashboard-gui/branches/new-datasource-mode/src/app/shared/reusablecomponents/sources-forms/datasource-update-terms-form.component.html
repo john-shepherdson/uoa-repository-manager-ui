@@ -29,9 +29,10 @@
       Agree to the <a href="https://www.openaire.eu/terms-of-use-for-content-providers#consent" target="_blank">re-use of full texts</a>
     </label>
   </form-inline>
-  <!--  FIXME: replace consentTermsOfUseDate with registrationDate  -->
-  <div class="uk-margin-top" *ngIf="selectedRepo.consentTermsOfUseDate">Data source registration date: {{selectedRepo.consentTermsOfUseDate | date}}</div>
-  <div class="uk-margin-small-top">Last date of acceptance of the Terms of Use: {{selectedRepo.lastConsentTermsOfUseDate ? (selectedRepo.lastConsentTermsOfUseDate | date) : '-'}}</div>
+  <ng-container *ngIf="showButton">
+    <div class="uk-margin-top" *ngIf="selectedRepo.registrationdate">Data source registration date: {{selectedRepo.registrationdate | date}}</div>
+    <div class="uk-margin-small-top">Last date of acceptance of the Terms of Use: {{selectedRepo.lastConsentTermsOfUseDate ? (selectedRepo.lastConsentTermsOfUseDate | date) : '-'}}</div>
+  </ng-container>
   <p class="uk-text-meta">Note: OpenAIRE will not provide the full text files for public distribution, the users will access from the original datasource.</p>
   <div *ngIf="showButton" class="form-group">
     <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
