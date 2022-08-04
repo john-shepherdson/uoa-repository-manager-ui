@@ -118,21 +118,13 @@ export class DatasourceDetails {
 
 export class Repository extends DatasourceDetails implements IsSerializable {
   timezone: number;
-  datasourceType: string;
   interfaces: RepositoryInterface[];
   piwikInfo: PiwikInfo;
   environments: string[];
   namespacePrefix: string;
-  officialName: string;
-  registeredBy: string;
-  englishName: string;
-  collectedFrom: string;
   dateOfValidation: Date;
   dateOfCollection: Date;
   dataCollectionTypes: DataCollectionType[];
-  websiteUrl: string;
-  logoUrl: string;
-  contactEmail: string;
 }
 
 export class RepositorySnippet {

@@ -57,7 +57,7 @@
           <form-inline [description]="issnDesc" [valid]="group.get('issn').valid">
             <span *ngIf="group.get('issn').invalid && group.get('issn').touched && group.get('issn').dirty"
                   class="help-block inline uk-text-danger"
-                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn needs to be of the form: "1111-1111" or "1111-111X"</span>
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn needs to be of the form: "1111-1111" or "1111-111X" or "11111111" or "1111111X"</span>
             <input formControlName="issn" class="md-input" type="text"
                    (focus)="group.get('issn').markAsUntouched()" (blur)="group.get('issn').updateValueAndValidity()">
           </form-inline>
@@ -71,7 +71,7 @@
           <form-inline [description]="eissnDesc" [valid]="group.get('eissn').valid">
             <span *ngIf="group.get('eissn').invalid && group.get('eissn').touched && group.get('eissn').dirty"
                   class="help-block inline uk-text-danger"
-                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn needs to be of the form: "1111-1111" or "1111-111X"</span>
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn needs to be of the form: "1111-1111" or "1111-111X" or "11111111" or "1111111X"</span>
             <input formControlName="eissn" class="md-input" type="text"
                    (focus)="group.get('eissn').markAsUntouched()" (blur)="group.get('eissn').updateValueAndValidity()">
           </form-inline>
@@ -85,7 +85,7 @@
           <form-inline [description]="lissnDesc" [valid]="group.get('lissn').valid">
             <span *ngIf="group.get('lissn').invalid && group.get('lissn').touched && group.get('lissn').dirty"
                   class="help-block inline uk-text-danger"
-                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn needs to be of the form: "1111-1111" or "1111-111X"</span>
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn needs to be of the form: "1111-1111" or "1111-111X" or "11111111" or "1111111X"</span>
             <input formControlName="lissn" class="md-input" type="text"
                    (focus)="group.get('lissn').markAsUntouched()" (blur)="group.get('lissn').updateValueAndValidity()">
           </form-inline>
@@ -277,7 +277,7 @@
         <form-inline [description]="datasourceTypeDesc" [valid]="group.get('datasourceType').valid">
           <select formControlName="datasourceType" class="md-input">
             <option value="">-- none selected --</option>
-            <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
+            <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses.get(key) }}</option>
           </select>
         </form-inline>
       </div>

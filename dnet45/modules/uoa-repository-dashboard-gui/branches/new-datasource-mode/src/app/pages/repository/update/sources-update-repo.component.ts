@@ -61,7 +61,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
       } else if (this.repo.id.includes('aggregator')) {
         this.mode = 'aggregator';
       }
-      this.logoURL = this.repo.logoUrl;
+      this.logoURL = this.repo.logourl;
       this.getRepoInterfaces();
     }
 
@@ -69,7 +69,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
       r => {
         this.repo = r;
         if (this.repo) {
-          this.logoURL = this.repo.logoUrl;
+          this.logoURL = this.repo.logourl;
           this.getRepoInterfaces();
         }
       }
@@ -145,9 +145,9 @@ export class SourcesUpdateRepoComponent implements OnInit {
           false, i,
           {
             id: this.repo.id,
-            datasourceType: this.repo.datasourceType,
+            datasourceType: this.repo.eoscDatasourceType,
             datasourceClass: this.repo.eoscDatasourceType,
-            registeredBy: this.repo.registeredBy
+            registeredBy: this.repo.registeredby
           },
           this.repoInterfaces[i]
         ]);
@@ -157,9 +157,9 @@ export class SourcesUpdateRepoComponent implements OnInit {
         false, 0,
         {
           id: this.repo.id,
-          datasourceType: this.repo.datasourceType,
+          datasourceType: this.repo.eoscDatasourceType,
           datasourceClass: this.repo.eoscDatasourceType,
-          registeredBy: this.repo.registeredBy
+          registeredBy: this.repo.registeredby
         }
       ]);
     }
@@ -168,8 +168,8 @@ export class SourcesUpdateRepoComponent implements OnInit {
   addInterfaceToList(intrf?: RepositoryInterface) {
     const curIndex = this.dataForInterfaceComp.length;
     const curRepoInfo = {
-      id: this.repo.id, datasourceType: this.repo.datasourceType,
-      datasourceClass: this.repo.eoscDatasourceType, registeredBy: this.repo.registeredBy
+      id: this.repo.id, datasourceType: this.repo.eoscDatasourceType,
+      datasourceClass: this.repo.eoscDatasourceType, registeredBy: this.repo.registeredby
     };
     if (intrf) {
       this.dataForInterfaceComp.push([false, curIndex, curRepoInfo, intrf]);
@@ -204,7 +204,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
   }
 
   updatedLogoUrl(event: any) {
-    this.repo.logoUrl = this.logoURL;
+    this.repo.logourl = this.logoURL;
     this.datasourceUpdateForm.updateGroup.get('logoUrl').setValue(this.logoURL);
     this.datasourceUpdateForm.updateRepo();
 

@@ -47,6 +47,7 @@ export class RepositoryService {
 
   updateInterface(repoId: string, registeredBy: string, comment: string, interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
     let url;
+    console.log(comment);
     if (comment == null || comment === '') {
       url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}`;
     } else {
@@ -161,7 +162,7 @@ export class RepositoryService {
     return this.httpClient.get<Map<string, string>>(url, headerOptions);
   }
 
-  getDatasourceClasses(mode: string): Observable<Map<string, string>> {
+  getDatasourceClasses(mode: string): Observable<Object> {
     const url = `${this.apiUrl}getDatasourceClasses/${mode}`;
     console.log(`knocking on: ${url}`);
     return this.httpClient.get<Map<string, string>>(url, headerOptions);

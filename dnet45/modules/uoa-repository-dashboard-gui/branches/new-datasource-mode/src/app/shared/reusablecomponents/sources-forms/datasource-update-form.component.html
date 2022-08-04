@@ -12,20 +12,20 @@
       Basic information
     </h4>
   </div>
-  <div *ngIf="selectedRepo.collectedFrom.split('openaire____::')[1] === 'opendoar'" class="uk-alert uk-alert-info">
+  <div *ngIf="selectedRepo.collectedfrom.split('openaire____::')[1] === 'opendoar'" class="uk-alert uk-alert-info">
     The following fields are completed by OpenDOAR.<br>
     If you want to edit them, you can do it by using this
     <a target="_blank" href="{{ 'http://v2.sherpa.ac.uk/id/repository/' + repoId }}">OpenDOAR link</a>.
   </div>
-  <div *ngIf="selectedRepo.collectedFrom.split('openaire____::')[1] === 're3data'" class="uk-alert uk-alert-info">
+  <div *ngIf="selectedRepo.collectedfrom.split('openaire____::')[1] === 're3data'" class="uk-alert uk-alert-info">
     The following fields are completed by Re3data.<br>
     If you want to edit them, you can do it by using this
     <a target="_blank" href="{{ 'http://service.re3data.org/repository/' + repoId }}">Re3data link</a>.
   </div>
-  <div *ngIf="selectedRepo.collectedFrom.split('openaire____::')[1] === 'fairsharing'" class="uk-alert uk-alert-info">
+  <div *ngIf="selectedRepo.collectedfrom.split('openaire____::')[1] === 'fairsharing'" class="uk-alert uk-alert-info">
     The following fields are completed by FAIRsharing.<br>
     If you want to edit them, you can do it by using this
-    <a target="_blank" href="{{ 'https://fairsharing.org/search?q=' + selectedRepo.officialName }}">FAIRsharing link</a>.
+    <a target="_blank" href="{{ 'https://fairsharing.org/search?q=' + selectedRepo.officialname }}">FAIRsharing link</a>.
   </div>
 
   <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
@@ -64,14 +64,14 @@
     </div>
   </div>
 
-  <div *ngIf="selectedRepo.datasourceType == 'journal'">
+  <div *ngIf="selectedRepo.eoscDatasourceType == 'Journal archive'">
     <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
       <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
-        <div class="md-input-wrapper {{ (updateGroup.get('issn') != null) ? 'md-input-filled' : '' }}">
+        <div class="md-input-wrapper {{ (updateGroup.get('issn') != null) ? 'md-input-filled' : '1234-5678' }}">
           <form-inline [description]="issnDesc" [valid]="updateGroup.get('issn').valid">
             <span *ngIf="updateGroup.get('issn').invalid && updateGroup.get('issn').touched && updateGroup.get('issn').dirty"
                   class="help-block inline uk-text-danger"
-                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn needs to be of the form: "1111-1111" or "1111-111X"</span>
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Issn needs to be of the form: "1111-1111" or "1111-111X" or "11111111" or "1111111X"</span>
             <input formControlName="issn" class="md-input" type="text"
                    (focus)="updateGroup.get('issn').markAsUntouched()" (blur)="updateGroup.get('issn').updateValueAndValidity()">
           </form-inline>
@@ -85,7 +85,7 @@
           <form-inline [description]="eissnDesc" [valid]="updateGroup.get('eissn').valid">
             <span *ngIf="updateGroup.get('eissn').invalid && updateGroup.get('eissn').touched && updateGroup.get('eissn').dirty"
                   class="help-block inline uk-text-danger"
-                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn needs to be of the form: "1111-1111" or "1111-111X"</span>
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Eissn needs to be of the form: "1111-1111" or "1111-111X" or "11111111" or "1111111X"</span>
             <input formControlName="eissn" class="md-input" type="text"
                    (focus)="updateGroup.get('eissn').markAsUntouched()" (blur)="updateGroup.get('eissn').updateValueAndValidity()">
           </form-inline>
@@ -99,7 +99,7 @@
           <form-inline [description]="lissnDesc" [valid]="updateGroup.get('lissn').valid">
             <span *ngIf="updateGroup.get('lissn').invalid && updateGroup.get('lissn').touched && updateGroup.get('lissn').dirty"
                   class="help-block inline uk-text-danger"
-                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn needs to be of the form: "1111-1111" or "1111-111X"</span>
+                  style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">Lissn needs to be of the form: "1111-1111" or "1111-111X" or "11111111" or "1111111X"</span>
             <input formControlName="lissn" class="md-input" type="text"
                    (focus)="updateGroup.get('lissn').markAsUntouched()" (blur)="updateGroup.get('lissn').updateValueAndValidity()">
           </form-inline>
@@ -222,7 +222,7 @@
         <form-inline [description]="datasourceTypeDesc" [valid]="updateGroup.get('datasourceType').valid">
           <select formControlName="datasourceType" class="md-input">
             <option value="">-- none selected --</option>
-            <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses[key] }}</option>
+            <option *ngFor="let key of classCodes" value="{{key}}">{{ datasourceClasses.get(key) }}</option>
           </select>
         </form-inline>
       </div>
@@ -249,4 +249,4 @@
     <button class="uk-button uk-button-primary updateRepoInfoButton" type="button" (click)="updateRepo()">Update Information</button>
   </div>
 </form>
-
+<pre>{{updateGroup.value|json}}</pre>

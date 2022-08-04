@@ -43,9 +43,9 @@ export class DatasourceUpdateFormComponent implements OnInit {
     softwarePlatform : '',
     platformName : '',
     officialName :  ['', Validators.required],
-    issn : ['', [Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')] ],
-    eissn : ['', Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$') ],
-    lissn : ['', Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$') ],
+    issn : ['', [Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)')] ],
+    eissn : ['', Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)') ],
+    lissn : ['', Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)') ],
     repoDescription : ['', Validators.required],
     country : '',
     longtitude : '',
@@ -101,11 +101,11 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   setupUpdateForm() {
     if (this.selectedRepo) {
-
+console.log(this.mode);
       this.updateGroup.setValue({
-        softwarePlatform: this.selectedRepo.typology,
+        softwarePlatform: this.selectedRepo.platform,
         platformName: '',
-        officialName: this.selectedRepo.officialName,
+        officialName: this.selectedRepo.officialname,
         issn: '',
         eissn: '',
         lissn: '',
@@ -113,18 +113,25 @@ export class DatasourceUpdateFormComponent implements OnInit {
         country: this.selectedRepo.organizations[0].country, // countryCode
         longtitude: this.selectedRepo.longitude,
         latitude: this.selectedRepo.latitude,
-        websiteUrl: this.selectedRepo.websiteUrl,
+        websiteUrl: this.selectedRepo.websiteurl,
         institutionName: this.selectedRepo.organizations[0].legalname,
-        englishName: this.selectedRepo.englishName,
-        logoUrl: this.selectedRepo.logoUrl,
+        englishName: this.selectedRepo.englishname,
+        logoUrl: this.selectedRepo.logourl,
         timezone: this.selectedRepo.timezone,
-        datasourceType: this.selectedRepo.eoscDatasourceType,
-        adminEmail: this.selectedRepo.contactEmail
+        datasourceType: this.selectedRepo.typology, // TODO: rename to typology?
+        adminEmail: this.selectedRepo.contactemail
       });
 
-      if ( this.selectedRepo.typology === '' || !this.typologies.some(x => x.value === this.selectedRepo.typology) ) {
+      if ( this.selectedRepo.platform === '' || !this.typologies.some(x => x.value === this.selectedRepo.platform) ) {
         this.updateGroup.get('softwarePlatform').setValue('');
-        this.updateGroup.get('platformName').setValue(this.selectedRepo.typology);
+        this.updateGroup.get('platformName').setValue(this.selectedRepo.platform);
+      }
+
+      if (this.selectedRepo.eoscDatasourceType === 'Journal archive') {
+        console.log('inside journal');
+        this.updateGroup.get('issn').setValue(this.selectedRepo.issn);
+        this.updateGroup.get('eissn').setValue(this.selectedRepo.eissn);
+        this.updateGroup.get('lissn').setValue(this.selectedRepo.lissn);
       }
 
       // FIXME: Use eoscDatasourceType when we support the new model
@@ -150,7 +157,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         let ssnToShow = this.selectedRepo.issn.slice(0, 4) + '-' + this.selectedRepo.issn.toString().slice(4);
         this.updateGroup.get('issn').setValue(ssnToShow);
         this.updateGroup.get('issn').clearValidators();
-        this.updateGroup.get('issn').setValidators([Validators.required, Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')]);
+        this.updateGroup.get('issn').setValidators([Validators.required, Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)')]);
 
         if (this.selectedRepo.eissn.trim().length) {
           ssnToShow = this.selectedRepo.eissn.slice(0, 4) + '-' + this.selectedRepo.eissn.toString().slice(4);
@@ -172,25 +179,32 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   getDatasourceClasses() {
     // FIXME: Use eoscDatasourceType when we support the new model
-    this.repoService.getDatasourceClasses(this.selectedRepo.collectedFrom.split('::')[1]).subscribe(
-      classes => this.datasourceClasses = classes,
+    console.log('mode b4 getdatasourceclasses ', this.mode);
+
+    let param = this.selectedRepo.collectedfrom.split('::')[1];
+    if (this.selectedRepo.eoscDatasourceType === 'Journal archive') { param = 'journal'; }
+    if (this.selectedRepo.eoscDatasourceType === 'Aggregator') { param = 'aggregator'; }
+
+    this.repoService.getDatasourceClasses(param).subscribe(
+      classes => {
+        for (const [key, value] of Object.entries(classes)) {
+          this.datasourceClasses.set(key, value);
+        }},
       error => {
         this.loadingMessage = '';
         this.errorMessage = noServiceMessage;
         console.log(error);
       },
       () => {
-        for (const key of Object.keys(this.datasourceClasses)) {
-          this.classCodes.push(key);
-        }
+        console.log('gotDatasourceClasses');
+        this.classCodes = Array.from(this.datasourceClasses.keys());
         this.getCountries();
       }
     );
   }
 
   getCountries() {
-    this.repoService.getCountries()
-      .subscribe(
+    this.repoService.getCountries().subscribe(
         countries => this.countries = countries.sort( function(a, b) {
           if (a.name < b.name) {
             return -1;
@@ -205,6 +219,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
           this.errorMessage = noServiceMessage;
           console.log(error);
         }, () => {
+        console.log('gotCountries');
           this.getTypologies();
         });
   }
@@ -217,6 +232,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         console.log(error);
       },
       () => {
+        console.log('gotTypologies');
         this.getTimezones();
       }
     );
@@ -230,6 +246,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         console.log(error);
       },
       () => {
+        console.log('gotTimezones');
         this.loadingMessage = '';
         this.setupUpdateForm();
       }
@@ -243,7 +260,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
     window.scroll(1, 1);
 
     if (this.updateGroup.valid) {
-      if ( this.selectedRepo.datasourceType !== 'journal' || this.updateGroup.get('issn').value ) {
+      if ( this.selectedRepo.eoscDatasourceType !== 'journal' || this.updateGroup.get('issn').value ) {
         this.refreshSelectedRepo();
 
         /*
@@ -288,23 +305,28 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   refreshSelectedRepo() {
     if (this.updateGroup.get('softwarePlatform').value ) {
-      this.selectedRepo.typology = this.updateGroup.get('softwarePlatform').value;
+      this.selectedRepo.platform = this.updateGroup.get('softwarePlatform').value;
     } else if (this.updateGroup.get('platformName').value) {
-      this.selectedRepo.typology = this.updateGroup.get('platformName').value;
+      this.selectedRepo.platform = this.updateGroup.get('platformName').value;
     }
-    this.selectedRepo.officialName = this.updateGroup.get('officialName').value.toString();
+    this.selectedRepo.typology = this.updateGroup.get('datasourceType').value;
+    console.log('typology ', this.selectedRepo.typology);
+    console.log(this.datasourceClasses);
+    console.log(this.updateGroup.get('datasourceType').value);
+    // this.selectedRepo.eoscDatasourceType = this.datasourceClasses.get(this.updateGroup.get('datasourceType').value);
+    // console.warn(this.selectedRepo.eoscDatasourceType);
+    this.selectedRepo.officialname = this.updateGroup.get('officialName').value.toString();
     this.selectedRepo.description = this.updateGroup.get('repoDescription').value.toString();
     this.selectedRepo.organizations[0].country = this.updateGroup.get('country').value; // countryCode
     this.selectedRepo.longitude = this.updateGroup.get('longtitude').value;
     this.selectedRepo.latitude = this.updateGroup.get('latitude').value;
-    this.selectedRepo.websiteUrl = this.updateGroup.get('websiteUrl').value;
+    this.selectedRepo.websiteurl = this.updateGroup.get('websiteUrl').value;
     this.selectedRepo.organizations[0].legalname = this.updateGroup.get('institutionName').value.toString();
-    this.selectedRepo.englishName = this.updateGroup.get('englishName').value.toString();
-    this.selectedRepo.logoUrl = this.updateGroup.get('logoUrl').value;
+    this.selectedRepo.englishname = this.updateGroup.get('englishName').value.toString();
+    this.selectedRepo.logourl = this.updateGroup.get('logoUrl').value;
     this.selectedRepo.timezone = this.updateGroup.get('timezone').value;
-    this.selectedRepo.eoscDatasourceType = this.updateGroup.get('datasourceType').value;
-    this.selectedRepo.contactEmail = this.updateGroup.get('adminEmail').value;
-    if (this.selectedRepo.datasourceType === 'journal') {
+    this.selectedRepo.contactemail = this.updateGroup.get('adminEmail').value;
+    if (this.selectedRepo.eoscDatasourceType === 'journal') {
       let ssnParts = this.updateGroup.get('issn').value.split('-');
       let correctSSN = ssnParts[0] + ssnParts[1];
       this.selectedRepo.issn = correctSSN;
@@ -320,7 +342,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
       }
     }
     if (!this.showButton) { // on register
-      this.selectedRepo.registeredBy = this.authService.getUserEmail();
+      this.selectedRepo.registeredby = this.authService.getUserEmail();
       this.selectedRepo.managed = true;
       const now = new Date(Date.now());
       this.selectedRepo.consentTermsOfUseDate = now;

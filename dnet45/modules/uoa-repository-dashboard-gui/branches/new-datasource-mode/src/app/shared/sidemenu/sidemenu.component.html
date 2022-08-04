@@ -113,8 +113,8 @@
         </a>
         <ul [ngClass]="{'uk-display-block': visibleAdminRepo}">
           <li class="act_item">
-            <a *ngIf="adminRepository?.officialName && adminRepository.officialName.length>30" [routerLink]="['/repositoryAdmin/' + adminRepository.id]">{{adminRepository.officialName.substr(0,30)}}...</a>
-            <a *ngIf="adminRepository?.officialName && adminRepository.officialName.length<=30" [routerLink]="['/repositoryAdmin/' + adminRepository.id]">{{adminRepository.officialName}}</a>
+            <a *ngIf="adminRepository?.officialname && adminRepository.officialname.length>30" [routerLink]="['/repositoryAdmin/' + adminRepository.id]">{{adminRepository.officialname.substr(0,30)}}...</a>
+            <a *ngIf="adminRepository?.officialname && adminRepository.officialname.length<=30" [routerLink]="['/repositoryAdmin/' + adminRepository.id]">{{adminRepository.officialname}}</a>
           </li>
         </ul>
       </li>

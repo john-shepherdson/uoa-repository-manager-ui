@@ -137,8 +137,8 @@ export class RegisterNewDatasourceComponent implements OnInit {
 
   addInterfaceToList(intrf?: RepositoryInterface) {
     const curIndex = this.dataForInterfaceComp.length;
-    const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.datasourceType,
-      datasourceClass: this.repo.eoscDatasourceType, registeredBy: this.repo.registeredBy };
+    const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.eoscDatasourceType,
+      datasourceClass: this.repo.eoscDatasourceType, registeredBy: this.repo.registeredby };
     if (intrf) {
       this.dataForInterfaceComp.push([true, curIndex, curRepoInfo, intrf]);
     } else {
@@ -180,9 +180,9 @@ export class RegisterNewDatasourceComponent implements OnInit {
         this.dataForInterfaceComp.push([
           true, i,
           { id: this.repo.id,
-            datasourceType: this.repo.datasourceType,
+            datasourceType: this.repo.eoscDatasourceType,
             datasourceClass: this.repo.eoscDatasourceType,
-            registeredBy: this.repo.registeredBy
+            registeredBy: this.repo.registeredby
           },
           this.repoInterfaces[i]
         ]);
@@ -191,9 +191,9 @@ export class RegisterNewDatasourceComponent implements OnInit {
       this.dataForInterfaceComp.push([
         true, 0,
         { id: this.repo.id,
-          datasourceType: this.repo.datasourceType,
+          datasourceType: this.repo.eoscDatasourceType,
           datasourceClass: this.repo.eoscDatasourceType,
-          registeredBy: this.repo.registeredBy
+          registeredBy: this.repo.registeredby
         }
       ]);
     }
@@ -223,9 +223,9 @@ export class RegisterNewDatasourceComponent implements OnInit {
       this.loadingMessage = 'Saving changes';
       this.errorMessage = '';
       console.log('add this.repo', this.repo);
-      this.repoService.addRepository(this.repo.datasourceType, this.repo).subscribe(
+      this.repoService.addRepository(this.repo.eoscDatasourceType, this.repo).subscribe(
         response => {
-          console.log(`addRepository responded: ${response.id}, ${response.registeredBy}`);
+          console.log(`addRepository responded: ${response.id}, ${response.registeredby}`);
           this.repo = response;
         },
         error => {
@@ -246,10 +246,10 @@ export class RegisterNewDatasourceComponent implements OnInit {
         concatMap(intrf => {
           if (intrf.id) {
             // console.log('comments', intrf.comments);
-            return this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, intrf.comments, intrf);
+            return this.repoService.updateInterface(this.repo.id, this.repo.registeredby, intrf.comments, intrf);
           } else {
             // console.log('comments', intrf.comments);
-            return this.repoService.addInterface(this.repo.datasourceType, this.repo.id, this.repo.registeredBy, intrf.comments, intrf);
+            return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby, intrf.comments, intrf);
           }
         })
       ).subscribe(

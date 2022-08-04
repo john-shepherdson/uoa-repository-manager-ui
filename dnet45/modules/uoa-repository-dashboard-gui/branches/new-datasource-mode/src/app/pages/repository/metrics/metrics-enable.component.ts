@@ -115,7 +115,7 @@ export class MetricsEnableComponent implements OnInit {
       const piwik: PiwikInfo = {
         repositoryId: this.repo.id,
         openaireId: this.oaId,
-        repositoryName: this.repo.officialName,
+        repositoryName: this.repo.officialname,
         country: this.getCountryName(this.repo.organizations[0].country),
         siteId: '',
         authenticationToken: this.authenticationToken,
@@ -127,7 +127,7 @@ export class MetricsEnableComponent implements OnInit {
         comment: ''
       };
 
-      this.piwikService.enableMetricsForRepository(this.repo.officialName, this.repo.websiteUrl, piwik).subscribe(
+      this.piwikService.enableMetricsForRepository(this.repo.officialname, this.repo.websiteurl, piwik).subscribe(
         response => {
           console.log(`enableMetrics answered: ${response}`);
           this.successMessage = enabledMetricsSuccess;

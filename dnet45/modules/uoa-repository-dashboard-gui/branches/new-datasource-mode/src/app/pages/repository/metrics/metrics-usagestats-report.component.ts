@@ -68,7 +68,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
     if (this.repo.issn && this.repo.issn !== 'null') {
       this.shownRepoId = this.repo.issn.slice(0, 4) + '-' + this.repo.issn.toString().slice(4);
     }
-    this.title = `${this.chosen_report} report for ${this.repo.officialName}`;
+    this.title = `${this.chosen_report} report for ${this.repo.officialname}`;
   }
 
   getParams() {
