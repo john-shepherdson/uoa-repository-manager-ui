@@ -43,9 +43,9 @@ export class DatasourceUpdateFormComponent implements OnInit {
     softwarePlatform : '',
     platformName : '',
     officialName :  ['', Validators.required],
-    issn : ['', [Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)')] ],
-    eissn : ['', Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)') ],
-    lissn : ['', Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)') ],
+    issn : ['', [Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$')] ],
+    eissn : ['', Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$') ],
+    lissn : ['', Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$') ],
     repoDescription : ['', Validators.required],
     country : '',
     longtitude : '',
@@ -101,7 +101,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   setupUpdateForm() {
     if (this.selectedRepo) {
-console.log(this.mode);
+
       this.updateGroup.setValue({
         softwarePlatform: this.selectedRepo.platform,
         platformName: '',
@@ -157,7 +157,7 @@ console.log(this.mode);
         let ssnToShow = this.selectedRepo.issn.slice(0, 4) + '-' + this.selectedRepo.issn.toString().slice(4);
         this.updateGroup.get('issn').setValue(ssnToShow);
         this.updateGroup.get('issn').clearValidators();
-        this.updateGroup.get('issn').setValidators([Validators.required, Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)')]);
+        this.updateGroup.get('issn').setValidators([Validators.required, Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$')]);
 
         if (this.selectedRepo.eissn.trim().length) {
           ssnToShow = this.selectedRepo.eissn.slice(0, 4) + '-' + this.selectedRepo.eissn.toString().slice(4);
@@ -179,7 +179,6 @@ console.log(this.mode);
 
   getDatasourceClasses() {
     // FIXME: Use eoscDatasourceType when we support the new model
-    console.log('mode b4 getdatasourceclasses ', this.mode);
 
     let param = this.selectedRepo.collectedfrom.split('::')[1];
     if (this.selectedRepo.eoscDatasourceType === 'Journal archive') { param = 'journal'; }
@@ -219,7 +218,6 @@ console.log(this.mode);
           this.errorMessage = noServiceMessage;
           console.log(error);
         }, () => {
-        console.log('gotCountries');
           this.getTypologies();
         });
   }
@@ -232,7 +230,6 @@ console.log(this.mode);
         console.log(error);
       },
       () => {
-        console.log('gotTypologies');
         this.getTimezones();
       }
     );
@@ -246,7 +243,6 @@ console.log(this.mode);
         console.log(error);
       },
       () => {
-        console.log('gotTimezones');
         this.loadingMessage = '';
         this.setupUpdateForm();
       }
