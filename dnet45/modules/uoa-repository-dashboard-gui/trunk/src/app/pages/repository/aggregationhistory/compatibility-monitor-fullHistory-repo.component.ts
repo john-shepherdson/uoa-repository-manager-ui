@@ -30,7 +30,7 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
 
     if(this.sharedService.getRepository()) {
       this.repo = this.sharedService.getRepository();
-      this.repoName = this.repo.officialName;
+      this.repoName = this.repo.officialname;
       this.getAllAggregationHistory();
     }
 
@@ -38,7 +38,7 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
       r => {
         this.repo = r;
         if (this.repo) {
-          this.repoName = this.repo.officialName;
+          this.repoName = this.repo.officialname;
           this.getAllAggregationHistory();
         }
       }

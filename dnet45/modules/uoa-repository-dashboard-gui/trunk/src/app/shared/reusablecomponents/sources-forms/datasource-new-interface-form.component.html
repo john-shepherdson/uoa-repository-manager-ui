@@ -29,22 +29,22 @@
       <div *ngIf="errorMessage" class="uk-alert" [ngClass]="{'uk-alert-warning': errorMessage == invalidCustomBaseUrl,
                 'uk-alert-danger': errorMessage != invalidCustomBaseUrl}" style="clear: both">{{ errorMessage }}</div>
 
-      <div class="md-input-wrapper uk-margin-medium-top {{ (repoInterfaceForm.get('baseUrl') != null) ? 'md-input-filled' : '' }}">
-        <label class="" for="baseUrl" title="{{ baseUrlDesc.desc }}">Base OAI-PMH URL (*)</label>
+      <div class="md-input-wrapper uk-margin-medium-top {{ (repoInterfaceForm.get('baseurl') != null) ? 'md-input-filled' : '' }}">
+        <label class="" for="baseurl" title="{{ baseUrlDesc.desc }}">Base OAI-PMH URL (*)</label>
         <span *ngIf="showIdentifiedBaseUrl" class="help-block inline" style="margin-top: 8px; margin-bottom: 0px; padding-left: 10px; display: block;">
           Identified
         </span>
-        <input id="baseUrl" type="text" class="md-input" formControlName="baseUrl" (blur)="getInterfaceInfo()">
+        <input id="baseurl" type="text" class="md-input" formControlName="baseurl" (blur)="getInterfaceInfo()">
         <span class="md-input-bar"></span>
       </div>
 
 
       <!--<div class="form-group has-success">-->
-        <!--<label class="control-label" for="baseUrl" title="{{ baseUrlDesc.desc }}">Base OAI-PMH URL (*)</label>-->
+        <!--<label class="control-label" for="baseurl" title="{{ baseUrlDesc.desc }}">Base OAI-PMH URL (*)</label>-->
         <!--<span *ngIf="identifiedBaseUrl" class="help-block inline" style="margin-top: 0px; margin-bottom: 0px; padding-left: 10px;">-->
           <!--Identified-->
         <!--</span>-->
-        <!--<input id="baseUrl" type="text" class="form-control" formControlName="baseUrl" (blur)="getInterfaceInfo()">-->
+        <!--<input id="baseurl" type="text" class="form-control" formControlName="baseurl" (blur)="getInterfaceInfo()">-->
       <!--</div>-->
 
 

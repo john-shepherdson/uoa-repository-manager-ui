@@ -34,7 +34,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
   ngOnInit() {
 
     if(this.sharedService.getRepository()) {
-      this.repoName = this.sharedService.getRepository().officialName;
+      this.repoName = this.sharedService.getRepository().officialname;
       this.getCorrectName();
       this.getTopics();
     }
@@ -42,7 +42,7 @@ export class ContentEventsOfRepositoryComponent implements OnInit {
     this.sharedService.repository$.subscribe(
       r => {
         if (r) {
-          this.repoName = r.officialName;
+          this.repoName = r.officialname;
           this.getCorrectName();
           this.getTopics();
         }

@@ -41,6 +41,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   countries: Country[] = [];
   datasourceClasses: Map<string, string> = new Map<string, string>();
   classCodes: string[] = [];
+  // classCodes: string[] = [];
 
   @Input() mode: string;
 
@@ -57,9 +58,9 @@ export class DatasourceCreateFormComponent implements OnInit {
     softwarePlatform : ['', Validators.required],
     platformName : '',
     officialName : ['', Validators.required],
-    issn : ['', [Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')] ],
-    eissn : ['', Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$') ],
-    lissn : ['', Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$') ],
+    issn : ['', [Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)')] ],
+    eissn : ['', Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)') ],
+    lissn : ['', Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)') ],
     repoDescription : ['', Validators.required],
     country : ['', Validators.required],
     longtitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)] ],
@@ -110,7 +111,7 @@ export class DatasourceCreateFormComponent implements OnInit {
     this.group = this.fb.group(this.groupDefinition);
     if (this.mode === 'journal') {
       this.group.get('issn').clearValidators();
-      this.group.get('issn').setValidators([Validators.required, Validators.pattern('^\\d{4}-\\d{3}[\\dxX]$')]);
+      this.group.get('issn').setValidators([Validators.required, Validators.pattern('^(\\d{4}-\\d{3}[\\dxX])|([0-9]{7}[\\dxX]$)')]);
     }
     this.getTypologies();
     this.getTimezones();
@@ -124,29 +125,29 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   setupForm() {
     if (this.selectedRepo) {
-      console.log(`my datasource type is: ${this.selectedRepo.datasourceType}`);
+      console.log(`my datasource type is: ${this?.selectedRepo?.eoscDatasourceType}`);
 
       this.group.setValue({
-        softwarePlatform: this.selectedRepo.typology,
+        softwarePlatform: this.selectedRepo.platform,
         platformName: '',
-        officialName: this.selectedRepo.officialName,
+        officialName: this.selectedRepo.officialname,
         issn: '',
         eissn: '',
         lissn: '',
         repoDescription: this.selectedRepo.description,
-        country: this.selectedRepo.countryCode,
+        country: this.selectedRepo.organizations[0].country, // countryCode
         longtitude: this.selectedRepo.longitude,
         latitude: this.selectedRepo.latitude,
-        websiteUrl: this.selectedRepo.websiteUrl,
-        institutionName: this.selectedRepo.organization,
-        englishName: this.selectedRepo.englishName,
-        logoUrl: this.selectedRepo.logoUrl,
+        websiteUrl: this.selectedRepo.websiteurl,
+        institutionName: this.selectedRepo.organizations[0].legalname,
+        englishName: this.selectedRepo.englishname,
+        logoUrl: this.selectedRepo.logourl,
         timezone: this.selectedRepo.timezone,
-        datasourceType: this.selectedRepo.datasourceClass,
-        adminEmail: this.selectedRepo.contactEmail
+        datasourceType: this.selectedRepo.eoscDatasourceType, // TODO: still needed?
+        adminEmail: this.selectedRepo.contactemail
       });
 
-      if (this.selectedRepo.datasourceType === 'journal') {
+      if (this.selectedRepo.eoscDatasourceType === 'Journal archive') {
 
         let ssnToShow = this.selectedRepo.issn.slice(0, 4) + '-' + this.selectedRepo.issn.toString().slice(4);
         this.group.get('issn').setValue(ssnToShow);
@@ -185,15 +186,17 @@ export class DatasourceCreateFormComponent implements OnInit {
 
   getDatasourceClasses() {
     this.repoService.getDatasourceClasses(this.mode).subscribe(
-      classes => this.datasourceClasses = classes,
+      classes => {
+        for (const [key, value] of Object.entries(classes)) {
+          this.datasourceClasses.set(key, value);
+        }
+      },
       error => {
         this.errorMessage = noServiceMessage;
         console.log(error);
       },
       () => {
-        for (const key of Object.keys(this.datasourceClasses)) {
-          this.classCodes.push(key);
-        }
+        this.classCodes = Array.from(this.datasourceClasses.keys());
       }
     );
   }
@@ -227,25 +230,32 @@ export class DatasourceCreateFormComponent implements OnInit {
   }
 
   createNewRepository(): Repository {
-    const newRepo: Repository = new Repository();
-    newRepo.officialName = this.group.get('officialName').value.toString();
-    newRepo.englishName = this.group.get('englishName').value.toString();
-    newRepo.websiteUrl = this.group.get('websiteUrl').value;
-    newRepo.logoUrl = this.group.get('logoUrl').value;
-    newRepo.contactEmail = this.group.get('adminEmail').value;
-    newRepo.countryName = this.countries.filter(x => x.code === this.group.get('country').value)[0].name;
-    newRepo.countryCode = this.group.get('country').value;
-    newRepo.organization = this.group.get('institutionName').value.toString();
+    const newRepo = new Repository();
+    newRepo.officialname = this.group.get('officialName').value.toString();
+    newRepo.englishname = this.group.get('englishName').value.toString();
+    newRepo.websiteurl = this.group.get('websiteUrl').value;
+    newRepo.logourl = this.group.get('logoUrl').value;
+    newRepo.contactemail = this.group.get('adminEmail').value;
+    newRepo.organizations.push({
+      legalshortname: null,
+      legalname: this.group.get('institutionName').value.toString(),
+      websiteurl: null,
+      logourl: null,
+      country: this.group.get('country').value
+    });
     newRepo.latitude = this.group.get('latitude').value;
     newRepo.longitude = this.group.get('longtitude').value;
     newRepo.timezone = this.group.get('timezone').value;
-    newRepo.datasourceClass = this.group.get('datasourceType').value;
-    if (this.group.get('softwarePlatform').value ) {
-      newRepo.typology = this.group.get('softwarePlatform').value;
+    if (this.group.get('softwarePlatform').value !== '') {
+      console.log('1//', this.group.get('softwarePlatform').value);
+      newRepo.platform = this.group.get('softwarePlatform').value;
     } else if (this.group.get('platformName').value) {
-      newRepo.typology = this.group.get('platformName').value;
+      newRepo.platform = this.group.get('platformName').value;
+      console.log('2//', this.group.get('platformName').value);
     }
-    // newRepo.typology = this.group.get('softwarePlatform').value;
+    newRepo.typology = this.group.get('datasourceType').value;
+    // newRepo.eoscDatasourceType = this.datasourceClasses.get(this.group.get('datasourceType').value);
+    // console.warn(newRepo.eoscDatasourceType);
     newRepo.description = this.group.get('repoDescription').value.toString();
     newRepo.issn = '';
     newRepo.eissn = '';
@@ -267,14 +277,17 @@ export class DatasourceCreateFormComponent implements OnInit {
       }
     }
 
-    newRepo.registeredBy = this.authService.getUserEmail();
+    newRepo.registeredby = this.authService.getUserEmail();
 
     /* THE BELOW FIELDS ARE NOT SET IN GWT CODE*/
-    newRepo.datasourceType = this.mode;
-    newRepo.dateOfCreation = new Date(Date.now()); // NOT NEEDED ??
-    newRepo.registered = true;
-    newRepo.registrationDate = new Date(Date.now()); // NOT NEEDED ??
+    newRepo.eoscDatasourceType = this.mode; // TODO: delete this?
+    console.warn(newRepo.eoscDatasourceType);
+    newRepo.managed = true;
 
+    const now = new Date(Date.now());
+    newRepo.consentTermsOfUseDate = now;
+    newRepo.lastConsentTermsOfUseDate = now;
+    newRepo.registrationdate = now;
     return newRepo;
   }
 

@@ -1,20 +1,19 @@
 /*
-*  created by myrto on 12/12/2017
+*  created by andreas on 4/7/2022
 */
 
 import { Component, OnInit } from '@angular/core';
 import { RegisterExistingDatasourceComponent } from './register-existing-datasource.component';
 
 @Component ({
-  selector: 'app-sr-data',
+  selector: 'app-sr-repository',
   templateUrl: './register-existing-datasource.component.html'
 })
-
-export class SrDataComponent extends RegisterExistingDatasourceComponent implements OnInit {
+export class SrRepositoryComponent extends RegisterExistingDatasourceComponent implements OnInit {
 
   ngOnInit() {
-    this.datasourceType = 'data';
-    this.currentMode = 're3data';
+    this.datasourceType = 'repository';
+    this.currentMode = 'repository';
     super.ngOnInit();
   }
 

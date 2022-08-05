@@ -373,7 +373,7 @@
             <div *ngIf="!brokerSummary || !brokerSummary.userSubs">No notifications were found</div>
             <div *ngIf="brokerSummary && brokerSummary.userSubs">
               <ul class="md-list md-list-addon gmap_list">
-                <li *ngFor="let sub of brokerSummary.userSubs[repository.officialName]">
+                <li *ngFor="let sub of brokerSummary.userSubs[repository.officialname]">
                   <div class="md-list-addon-element">
                     <span>{{ sub.count | number }}</span>
                     <!--<img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt="">-->
