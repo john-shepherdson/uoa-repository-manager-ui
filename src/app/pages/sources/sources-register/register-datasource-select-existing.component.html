@@ -5,17 +5,39 @@
         {{ alertMessage }}
       </div>
       <div class="uk-alert uk-alert-info">
-        Please make sure your {{mode === 'cris' ? 'Research Information System': 'repository'}} is registered in
-        <a target="_blank" href="{{ sourceUrl }}">
-          <i class="fas fa-external-link-alt" style="margin-right:3px;"></i>{{ sourceTitle }}
-        </a>
-        <a *ngIf="mode === 'cris'" target="_blank" href="https://eurocris.org/dris/dris-form">
-          <br><i class="fas fa-external-link-alt" style="margin-right:3px;"></i>euroCRIS DRIS
-        </a>
-        . <br>
-        <span *ngIf="latestUpdate && (latestUpdate !== 'null')">
-          <b>Last Updated: </b>{{ latestUpdate }}
-        </span>
+
+        <ng-container *ngIf="mode === 'repository'">
+          Please make sure your repository is registered in <a href="https://v2.sherpa.ac.uk/opendoar/" target="_blank">OpenDOAR</a>,
+          <a href="http://www.re3data.org/" target="_blank">Re3data</a> or <a href="https://fairsharing.org/search?fairsharingRegistry=Database" target="_blank">FAIRsharing</a>.
+          <span *ngIf="opendoarlatestUpdate && (opendoarlatestUpdate !== 'null')">
+            <br><b>Last Updated (OpenDOAR): </b>{{ opendoarlatestUpdate }}
+          </span>
+          <span *ngIf="re3datalatestUpdate && (re3datalatestUpdate !== 'null')">
+            <br><b>Last Updated (Re3data): </b>{{ re3datalatestUpdate }}
+          </span>
+          <span *ngIf="fairsharinglatestUpdate && (fairsharinglatestUpdate !== 'null')">
+            <br><b>Last Updated (FAIRsharing): </b>{{ fairsharinglatestUpdate }}
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="mode === 'cris'">
+          Please make sure your Research Information System is registered in <a href="https://eurocris.org" target="_blank">euroCRIS</a>.
+          <a href="https://eurocris.org/dris/dris-form" target="_blank"><br><i class="fas fa-external-link-alt" style="margin-right:3px;"></i>euroCRIS DRIS</a>
+          <span *ngIf="latestUpdate && (latestUpdate !== 'null')">
+            <br><b>Last Updated: </b>{{ latestUpdate }}
+          </span>
+        </ng-container>
+<!--        <span *ngIf="latestUpdate && (latestUpdate !== 'null')">-->
+<!--          <ng-container *ngIf="mode==='repository'">-->
+<!--                      <b>Last Updated (OpenDOAR): </b>{{ latestUpdate }}-->
+<!--            <b>Last Updated (Re3data): </b>{{ latestUpdate }}-->
+<!--            <b>Last Updated (FAIRsharing): </b>{{ latestUpdate }}-->
+<!--          </ng-container>-->
+<!--          <ng-container *ngIf="mode==='cris'">-->
+<!--            -->
+<!--          </ng-container>-->
+<!--        </span>-->
+
       </div>
       <div class="uk-margin-medium-top">
         <div class="md-input-wrapper md-input-filled">

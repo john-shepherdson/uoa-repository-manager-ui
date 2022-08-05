@@ -20,7 +20,7 @@ export class SourcesRegisterComponent implements OnInit {
 
   // fixme still when I click the link inside the text in overlay, this event happens as well (I go to the first step of the wizard)
   goTo(datasourceType: string) {
-    if (datasourceType === 'literature') {
+    if (datasourceType === 'repository') {
       this.router.navigateByUrl(`/sources/register/${datasourceType}?step=selectDatasource`);
     } else if (datasourceType === 'data') {
       this.router.navigateByUrl(`/sources/register/${datasourceType}?step=selectDatasource`);

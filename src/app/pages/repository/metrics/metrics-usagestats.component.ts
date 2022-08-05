@@ -27,13 +27,13 @@ export class MetricsUsagestatsComponent implements OnInit {
 
     if(this.sharedService.getRepository()) {
       this.repo = this.sharedService.getRepository();
-      this.title = this.title + ' for ' + this.repo.officialName;
+      this.title = this.title + ' for ' + this.repo.officialname;
     }
 
     this.sharedService.repository$.subscribe(
       r => {
         this.repo = r;
-        this.title = this.title + ' for ' + this.repo.officialName;
+        this.title = this.title + ' for ' + this.repo.officialname;
       }
     );
 

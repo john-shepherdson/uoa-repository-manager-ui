@@ -283,7 +283,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getCorrectName() {
-    const temp = this.repository.officialName.split('|');
+    const temp = this.repository.officialname.split('|');
     let correctName = temp[0];
     let repoName = temp[0];
     for (let i = 1; i < temp.length; i++) {

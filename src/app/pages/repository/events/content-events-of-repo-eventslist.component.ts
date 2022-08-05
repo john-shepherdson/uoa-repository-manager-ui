@@ -74,7 +74,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
 
 
     if(this.sharedService.getRepository()) {
-      this.repoName = this.sharedService.getRepository().officialName;
+      this.repoName = this.sharedService.getRepository().officialname;
       this.initQuery();
       this.initForm();
       this.currentPage = 0; /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
@@ -84,7 +84,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     this.sharedService.repository$.subscribe(
       r => {
         if (r) {
-          this.repoName = r.officialName;
+          this.repoName = r.officialname;
           this.initQuery();
           this.initForm();
           this.currentPage = 0; /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */

@@ -164,12 +164,9 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   }
 
   addInterfaceToList(intrf?: RepositoryInterface) {
-
-    console.log('clicked add interface to list');
-
     const curIndex = this.dataForInterfaceComp.length;
-    const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.datasourceType,
-      datasourceClass: this.repo.datasourceClass, registeredBy: this.repo.registeredBy };
+    const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.eoscDatasourceType,
+      datasourceClass: this.repo.eoscDatasourceType, registeredBy: this.repo.registeredby };
     if (intrf) {
       this.dataForInterfaceComp.push([true, curIndex, curRepoInfo, intrf]);
     } else {
@@ -185,7 +182,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     }
     tempArray.splice(i, 1);
     this.dataForInterfaceComp = tempArray;
-    console.log(JSON.stringify(this.dataForInterfaceComp));
+    // console.log(JSON.stringify(this.dataForInterfaceComp));
   }
 
   getInterfaces() {
@@ -224,9 +221,9 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         this.dataForInterfaceComp.push([
           true, i,
           { id: this.repo.id,
-            datasourceType: this.repo.datasourceType,
-            datasourceClass: this.repo.datasourceClass,
-            registeredBy: this.repo.registeredBy
+            datasourceType: this.repo.eoscDatasourceType,
+            datasourceClass: this.repo.eoscDatasourceType,
+            registeredBy: this.repo.registeredby
           },
           this.repoInterfaces[i]
         ]);
@@ -235,9 +232,9 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       this.dataForInterfaceComp.push([
         true, 0,
         { id: this.repo.id,
-          datasourceType: this.repo.datasourceType,
-          datasourceClass: this.repo.datasourceClass,
-          registeredBy: this.repo.registeredBy
+          datasourceType: this.repo.eoscDatasourceType,
+          datasourceClass: this.repo.eoscDatasourceType,
+          registeredBy: this.repo.registeredby
         }
       ]);
     }
@@ -299,7 +296,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
             return 0;
           }
         });
-        console.log(`the number of interfaces is ${this.repoInterfaces.length}`);
+        // console.log(`the number of interfaces is ${this.repoInterfaces.length}`);
       },
       error => {
           console.log(error);
@@ -316,7 +313,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     );
   }
 
-  //recheck if needed
+  // recheck if needed
   getTerms(repo: Repository) {
     this.repo = repo;
   }
@@ -331,9 +328,9 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       this.loadingMessage = 'Saving changes';
       this.errorMessage = '';
       console.log('reg this.repo', this.repo);
-      this.repoService.addRepository( this.repo.datasourceType, this.repo).subscribe(
+      this.repoService.addRepository( this.repo.eoscDatasourceType, this.repo).subscribe( //this.repo.collectedfrom
         response => {
-          console.log(`addRepository responded: ${response.id}, ${response.registeredBy}`);
+          console.log(`addRepository responded: ${response.id}, ${response.registeredby}`);
           this.repo = response;
         },
         error => {
@@ -356,15 +353,15 @@ export class RegisterExistingDatasourceComponent implements OnInit {
           if (intrf.id) {
             let req;
             if (this.interfacesToDelete.some(id => id === intrf.id)) {
-              req = this.repoService.deleteInterface(intrf.id, this.repo.registeredBy);
+              req = this.repoService.deleteInterface(intrf.id, this.repo.registeredby);
             } else {
               // console.log('comments', intrf.comments);
-              req = this.repoService.updateInterface(this.repo.id, this.repo.registeredBy, intrf.comments, intrf);
+              req = this.repoService.updateInterface(this.repo.id, this.repo.registeredby, intrf.comments, intrf);
             }
             return req;
           } else {
             // console.log('comments', intrf.comments);
-            return this.repoService.addInterface(this.repo.datasourceType, this.repo.id, this.repo.registeredBy, intrf.comments, intrf);
+            return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby, intrf.comments, intrf);
           }
         })
       ).subscribe(

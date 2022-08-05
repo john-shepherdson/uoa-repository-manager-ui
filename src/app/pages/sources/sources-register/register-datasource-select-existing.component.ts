@@ -28,6 +28,9 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
   sourceUrl: string;
   sourceTitle: string;
   latestUpdate: string;
+  opendoarlatestUpdate: string;
+  re3datalatestUpdate: string;
+  fairsharinglatestUpdate: string;
 
   @Input() mode: string;
 
@@ -44,7 +47,7 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
     this.hasSelectedCountry = false;
   }
 
-  setUpSourceInfo() {
+  setUpSourceInfo() { // deprecated?
     if (this.mode === 'opendoar') {
       this.sourceUrl = 'http://v2.sherpa.ac.uk/opendoar/';
       this.sourceTitle = 'OpenDOAR';
@@ -126,8 +129,15 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
   }
 
   getLatestUpdate() {
-    return this.repoService.getListLatestUpdate(this.mode).subscribe (
-      responseDate => this.latestUpdate = responseDate['lastCollectionDate'],
+    return this.repoService.getListLatestUpdate(this.mode).subscribe(
+      responseDate => {
+        if (this.mode === 'cris') { this.latestUpdate = responseDate['lastCollectionDate']; }
+        if (this.mode === 'repository') {
+          this.opendoarlatestUpdate = responseDate['opendoar'];
+          this.re3datalatestUpdate = responseDate['re3data'];
+          this.fairsharinglatestUpdate = responseDate['fairsharing'];
+        }
+      },
       error => console.log(error)
     );
   }

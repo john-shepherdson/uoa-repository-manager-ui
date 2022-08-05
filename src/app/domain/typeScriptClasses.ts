@@ -1,159 +1,129 @@
 // Generated using typescript-generator version 1.29.366 on 2018-02-05 16:06:12.
 
 export class BrowseData {
-    data: { [index: string]: FieldData };
-    fields: string[];
+  data: { [index: string]: FieldData };
+  fields: string[];
 }
 
 export class DataCollectionAccessProtocol {
-    value: string;
-    username: string;
-    password: string;
+  value: string;
+  username: string;
+  password: string;
 }
 
 export class DataCollectionInterface {
-    protocol: DataCollectionAccessProtocol;
-    baseUrl: string;
-    format: string;
-    filter: string;
+  protocol: DataCollectionAccessProtocol;
+  baseUrl: string;
+  format: string;
+  filter: string;
 }
 
 export class DataCollectionType {
-    dataCollectionInterface: DataCollectionInterface;
-    id: string;
-    label: string;
-    group: string;
+  dataCollectionInterface: DataCollectionInterface;
+  id: string;
+  label: string;
+  group: string;
 }
 
 export class Document {
-    map: { [index: string]: string[] };
-    fieldNames: string[];
+  map: { [index: string]: string[] };
+  fieldNames: string[];
 }
 
 export class FieldData {
-    fieldRowList: FieldRow[];
-    count: number[];
-    values: string[];
+  fieldRowList: FieldRow[];
+  count: number[];
+  values: string[];
 }
 
 export class FieldRow {
-    value: string;
-    count: number;
+  value: string;
+  count: number;
 }
 
 export class FormattedSearchResult {
-    formattedResult: string;
-    resultsNumber: number;
+  formattedResult: string;
+  resultsNumber: number;
 }
 
 export class Hint {
-    alternateTerm: string;
-    autoFollowHint: boolean;
+  alternateTerm: string;
+  autoFollowHint: boolean;
 }
 
 export class DriverResource implements Serializable {
-    resourceId: string;
-    resourceUri: string;
-    resourceKind: string;
-    resourceType: string;
-    dateOfCreation: Date;
+  resourceId: string;
+  resourceUri: string;
+  resourceKind: string;
+  resourceType: string;
+  dateOfCreation: Date;
 }
 
 export class MDFormatDataStructure extends DriverResource {
-    resourceName: string;
-    layouts: { [index: string]: LayoutField[] };
+  resourceName: string;
+  layouts: { [index: string]: LayoutField[] };
 }
 
 export class PiwikInfo implements IsSerializable {
-    repositoryId: string;
-    openaireId: string;
-    repositoryName: string;
-    country: string;
-    siteId: string;
-    authenticationToken: string;
-    creationDate: Date;
-    requestorName: string;
-    requestorEmail: string;
-    validated: boolean;
-    validationDate: Date;
-    comment: string;
+  repositoryId: string;
+  openaireId: string;
+  repositoryName: string;
+  country: string;
+  siteId: string;
+  authenticationToken: string;
+  creationDate: Date;
+  requestorName: string;
+  requestorEmail: string;
+  validated: boolean;
+  validationDate: Date;
+  comment: string;
 }
 
-export class Repository extends DriverResource implements IsSerializable {
+export class DatasourceDetails {
   id: string;
-  officialName: string;
-  englishName: string;
-  websiteUrl: string;
-  logoUrl: string;
-  contactEmail: string;
-  countryName: string;
-  countryCode: string;
-  organization: string;
+  openaireId: string;
+  officialname: string;
+  englishname: string;
+  websiteurl: string;
+  logourl: string;
+  contactemail: string;
   latitude: number;
   longitude: number;
-  timezone: number;
-  namespacePrefix: string;
-  odNumberOfItems: string;
-  odNumberOfItemsDate: string;
-  odPolicies: string;
-  odLanguages: string;
-  odContentTypes: string;
-  collectedFrom: string;
-  inferred: boolean;
-  deletedByInference: boolean;
-  trust: number;
-  inferenceProvenance: string;
-  dateOfValidation: Date;
-  datasourceClass: string;
-  provenanceActionClass: string;
-  dateOfCollection: Date;
-  typology: string;
+  namespaceprefix: string;
+  languages: string;
+  dateofvalidation: Date;
+  eoscDatasourceType: string;
+  dateofcollection: Date;
+  platform: string;
   activationId: string;
-  mergehomonyms: boolean;
   description: string;
-  releaseStartDate: Date;
-  releaseEndDate: Date;
-  missionStatementUrl: string;
-  dataProvider: boolean;
-  serviceProvider: boolean;
-  databaseAccessType: string;
-  dataUploadType: string;
-  databaseAccessRestriction: string;
-  dataUploadRestriction: string;
-  versioning: boolean;
-  citationGuidelineUrl: string;
-  qualityManagementKind: string;
-  pidSystems: string;
-  certificates: string;
-  aggregator: string;
   issn: string;
   eissn: string;
   lissn: string;
-  interfaces: RepositoryInterface[];
-  consentTermsOfUse: boolean;
-  fullTextDownload: boolean;
+  registeredby: string;
+  subjects: string;
+  aggregator: string;
+  collectedfrom: string;
+  managed: boolean;
+  registrationdate: Date;
   consentTermsOfUseDate: Date;
   lastConsentTermsOfUseDate: Date;
-  availableDiskSpace: string;
-  securityParameters: string;
-  protocol: string;
-  registeredBy: string;
-  datasourceType: string;
-  datasourceAggregatorId: string;
-  datasourceOriginalIdValue: string;
-  datasourceOriginalIdProvenance: string;
-  datasourceAggregated: boolean;
-  datasourceComplianceDegreeValue: string;
-  datasourceComplianceDegreeEncoding: string;
-  numberOfObjects: number;
-  maxSizeOfDatastructure: number;
-  maxNumberOfDataStructures: number;
-  registered: boolean;
-  extraFields: { [index: string]: string };
+  consentTermsOfUse: boolean;
+  fullTextDownload: boolean;
+  organizations: OrganizationDetails[] = new Array<OrganizationDetails>();
+  identities: IdentitiesDetails[];
+  status: string;
+  typology: string;
+}
+
+export class Repository extends DatasourceDetails implements IsSerializable {
+  timezone: number;
+  interfaces: RepositoryInterface[];
   piwikInfo: PiwikInfo;
   environments: string[];
-  registrationDate: Date;
-  verified: boolean;
+  namespacePrefix: string;
+  dateOfValidation: Date;
+  dateOfCollection: Date;
   dataCollectionTypes: DataCollectionType[];
 }
 
@@ -162,16 +132,18 @@ export class RepositorySnippet {
   officialname: string;
   englishname: string;
   websiteurl: string;
-  typology: string;
   registeredby: string;
-  organizations: Organization[];
   registrationdate: Date;
-  piwikInfo: PiwikInfo;
+  eoscDatasourceType: string;
   logoUrl: string;
   description: string;
   consentTermsOfUse: boolean;
-  fullTextDownload: boolean;
   consentTermsOfUseDate: Date;
+  lastConsentTermsOfUseDate: Date;
+  fullTextDownload: boolean;
+  organizations: OrganizationDetails[];
+  typology: string;
+  piwikInfo: PiwikInfo;
 }
 
 export class TermsOfUse {
@@ -182,231 +154,260 @@ export class TermsOfUse {
   consentTermsOfUseDate: Date;
 }
 
-export class Organization {
-  country: string;
-  legalname: string;
-  websiteurl: string;
-  legalshortname: string;
-  logourl: string;
-}
-
 export class RepositoryAccessProtocol {
-    value: string;
-    username: string;
-    password: string;
-    filter: string;
+  value: string;
+  username: string;
+  password: string;
+  filter: string;
 }
 
 export class RepositoryBlackboard {
-    lastrequest: string;
-    lastresponse: string;
-    messages: RepositoryBlackboardMessage[];
+  lastrequest: string;
+  lastresponse: string;
+  messages: RepositoryBlackboardMessage[];
 }
 
 export class RepositoryBlackboardMessage {
-    id: string;
-    action: Action;
-    actionStatus: ActionStatus;
-    parameters: string[];
+  id: string;
+  action: Action;
+  actionStatus: ActionStatus;
+  parameters: string[];
 }
 
 export class RepositoryComparator implements Comparator<Repository> {
 }
 
-export class RepositoryInterface implements Serializable, IsSerializable {
-  desiredCompatibilityLevel: string;
-  complianceName: string;
-  upgradeToV3: string;
-  deleteApi: boolean;
-  accessSet: string;
-  accessFormat: string;
-  metadataIdentifierPath: string;
-  lastCollectionDate: string;
-  nextScheduledExecution: string;
-  status: string;
-  collectedFrom: string;
+// export class RepositoryInterface implements Serializable, IsSerializable {
+//   desiredCompatibilityLevel: string;
+//   complianceName: string;
+//   upgradeToV3: string;
+//   deleteApi: boolean;
+//   accessSet: string;
+//   accessFormat: string;
+//   metadataIdentifierPath: string;
+//   lastCollectionDate: string;
+//   nextScheduledExecution: string;
+//   status: string;
+//   collectedFrom: string;
+//   id: string;
+//   typology: string;
+//   compatibility: string;
+//   contentdescription: string;
+//   protocol: string;
+//   baseurl: string;
+//   active: boolean;
+//   removable: boolean;
+//   apiParams: { [index: string]: string };
+//   extraFields: { [index: string]: string };
+//   comments: string;
+// }
+
+export class ApiDetails {
   id: string;
-  typology: string;
-  compliance: string;
-  contentDescription: string;
-  accessProtocol: string;
-  baseUrl: string;
-  active: boolean;
+  protocol: string;
+  datasource: string;
+  contentdescription: string;
+  eoscDatasourceType: string;
+  compatibility: string;
+  compatibilityOverride: string;
+  lastCollectionTotal: number;
+  lastCollectionDate: Date;
+  lastAggregationTotal: number;
+  lastAggregationDate: Date;
+  lastDownloadTotal: number;
+  lastDownloadDate: Date;
+  baseurl: string;
   removable: boolean;
-  accessParams: { [index: string]: string };
-  extraFields: { [index: string]: string };
+  apiParams: ApiParamDetails[] = new Array<ApiParamDetails>();
+  metadataIdentifierPath: string;
+  typology: string;
   comments: string;
 }
 
+export class RepositoryInterface extends ApiDetails {
+
+}
+
+export class ApiParamDetails {
+  param: string;
+  value: string;
+
+  constructor(param, value) {
+    this.param = param;
+    this.value = value;
+  }
+
+}
+
 export class SearchCriteriaImpl implements SearchCriteria {
-    startsWith: string;
-    endsWith: string;
-    contains: string;
+  startsWith: string;
+  endsWith: string;
+  contains: string;
 }
 
 export class RepositorySearchCriteria extends SearchCriteriaImpl implements SearchCriteria {
-    haveDocuments: boolean;
-    protocolType: string;
-    adminInfo: string;
-    officialName: string;
-    registeredBy: string;
-    country: string;
-    verified: boolean;
+  haveDocuments: boolean;
+  protocolType: string;
+  adminInfo: string;
+  officialName: string;
+  registeredBy: string;
+  country: string;
+  verified: boolean;
 }
 
 export class SearchResult {
-    query: string;
-    locale: string;
-    total: number;
-    page: number;
-    size: number;
-    fields: string[];
-    searchResults: string[];
-    browseResults: string[];
+  query: string;
+  locale: string;
+  total: number;
+  page: number;
+  size: number;
+  fields: string[];
+  searchResults: string[];
+  browseResults: string[];
 }
 
 export class SimilarDocument {
-    id: string;
-    score: number;
+  id: string;
+  score: number;
 }
 
 export class StoreInfo {
-    serviceUrl: string;
-    storeId: string;
+  serviceUrl: string;
+  storeId: string;
 }
 
 export class StoreObjectInfo {
-    storeInfo: StoreInfo;
-    objectId: string;
+  storeInfo: StoreInfo;
+  objectId: string;
 }
 
 export class SuggestiveResult {
-    epr: EPR;
-    alternativeTerm: string;
-    autofollow: boolean;
+  epr: EPR;
+  alternativeTerm: string;
+  autofollow: boolean;
 }
 
 export class CustomProperties implements IsSerializable {
-    properties: { [index: string]: string };
+  properties: { [index: string]: string };
 }
 
 export class JobForValidation implements IsSerializable {
-    officialName: string;
-    baseUrl: string;
-    userEmail: string;
-    validationSet: string;
-    datasourceId: string;
-    interfaceId: string;
-    desiredCompatibilityLevel: string;
-    activationId: string;
-    repoType: string;
-    interfaceIdOld: string;
-    groupByXpath: string;
-    metadataPrefix: string;
-    records: number;
-    registration: boolean;
-    updateExisting: boolean;
-    cris: boolean;
-    crisReferentialChecks: boolean;
-    selectedCrisEntities: string[];
-    selectedContentRules: number[];
-    selectedUsageRules: number[];
-    adminEmails: string[];
+  officialName: string;
+  baseUrl: string;
+  userEmail: string;
+  validationSet: string;
+  datasourceId: string;
+  interfaceId: string;
+  desiredCompatibilityLevel: string;
+  activationId: string;
+  repoType: string;
+  interfaceIdOld: string;
+  groupByXpath: string;
+  metadataPrefix: string;
+  records: number;
+  registration: boolean;
+  updateExisting: boolean;
+  cris: boolean;
+  crisReferentialChecks: boolean;
+  selectedCrisEntities: string[];
+  selectedContentRules: number[];
+  selectedUsageRules: number[];
+  adminEmails: string[];
 }
 
 export class JobResultEntry implements IsSerializable {
-    name: string;
-    description: string;
-    successes: string;
-    weight: number;
-    errors: string[];
-    ruleId: number;
-    hasErrors: boolean;
-    mandatory: boolean;
-    type: string;
+  name: string;
+  description: string;
+  successes: string;
+  weight: number;
+  errors: string[];
+  ruleId: number;
+  hasErrors: boolean;
+  mandatory: boolean;
+  type: string;
 }
 
 export class Rule implements IsSerializable {
-    id: number;
-    name: string;
-    description: string;
-    type: string;
-    mandatory: boolean;
-    weight: number;
-    provider_information: string;
-    job_type: string;
-    entity_type: string;
-    for_cris: boolean;
-    configuration: CustomProperties;
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  mandatory: boolean;
+  weight: number;
+  provider_information: string;
+  job_type: string;
+  entity_type: string;
+  for_cris: boolean;
+  configuration: CustomProperties;
 }
 
 export class RuleSet implements Serializable, IsSerializable {
-    id: number;
-    name: string;
-    description: string;
-    guidelinesAcronym: string;
-    shortName: string;
-    visibility: string[];
-    contentRules: Rule[];
-    usageRules: Rule[];
-    contentRulesIds: number[];
-    usageRulesIds: number[];
+  id: number;
+  name: string;
+  description: string;
+  guidelinesAcronym: string;
+  shortName: string;
+  visibility: string[];
+  contentRules: Rule[];
+  usageRules: Rule[];
+  contentRulesIds: number[];
+  usageRulesIds: number[];
 }
 
 export class StoredJob extends JobForValidation implements IsSerializable {
-    contentJobStatus: string;
-    usageJobStatus: string;
-    started: string;
-    ended: string;
-    duration: string;
-    error: string;
-    validationType: string;
-    jobType: string;
-    guidelinesShortName: string;
-    validationStatus: string;
-    recordsTested: number;
-    id: number;
-    contentJobScore: number;
-    usageJobScore: number;
-    rules: number[];
-    resultEntries: JobResultEntry[];
-    filteredScores: { [index: string]: number };
+  contentJobStatus: string;
+  usageJobStatus: string;
+  started: string;
+  ended: string;
+  duration: string;
+  error: string;
+  validationType: string;
+  jobType: string;
+  guidelinesShortName: string;
+  validationStatus: string;
+  recordsTested: number;
+  id: number;
+  contentJobScore: number;
+  usageJobScore: number;
+  rules: number[];
+  resultEntries: JobResultEntry[];
+  filteredScores: { [index: string]: number };
 }
 
 export class AdvQueryObject implements IsSerializable {
-    datasource: string;
-    topic: string;
-    titles: string[];
-    subjects: string[];
-    authors: string[];
-    dates: Range[];
-    trust: Range;
-    page: number;
+  datasource: string;
+  topic: string;
+  titles: string[];
+  subjects: string[];
+  authors: string[];
+  dates: Range[];
+  trust: Range;
+  page: number;
 }
 
 export class BrowseEntry implements Comparable<BrowseEntry>, IsSerializable {
-    value: string;
-    size: number;
+  value: string;
+  size: number;
 }
 
 export class ConditionParams implements IsSerializable {
-    value: string;
-    otherValue: string;
+  value: string;
+  otherValue: string;
 }
 
 export class OaBrokerRelatedDataset implements IsSerializable {
-    openaireId: string;
-    originalId: string;
-    title: string;
-    collectedFrom: string;
-    pids: OaBrokerTypedValue[];
-    instances: OaBrokerInstance[];
+  openaireId: string;
+  originalId: string;
+  title: string;
+  collectedFrom: string;
+  pids: OaBrokerTypedValue[];
+  instances: OaBrokerInstance[];
 }
 
 export class DatasourcesBroker implements IsSerializable {
-    datasourcesOfUser: Tuple<BrowseEntry, string>[];
-    sharedDatasources: Tuple<BrowseEntry, string>[];
-    datasourcesOfOthers: Tuple<BrowseEntry, string>[];
+  datasourcesOfUser: Tuple<BrowseEntry, string>[];
+  sharedDatasources: Tuple<BrowseEntry, string>[];
+  datasourcesOfOthers: Tuple<BrowseEntry, string>[];
 }
 
 export class OaBrokerRelatedDatasource implements IsSerializable {
@@ -417,47 +418,47 @@ export class OaBrokerRelatedDatasource implements IsSerializable {
 }
 
 export class EventsPage implements IsSerializable {
-    datasource: string;
-    topic: string;
-    currPage: number;
-    totalPages: number;
-    total: number;
-    values: OaBrokerEventPayload[];
+  datasource: string;
+  topic: string;
+  currPage: number;
+  totalPages: number;
+  total: number;
+  values: OaBrokerEventPayload[];
 }
 
 export class OaBrokerExternalReference implements IsSerializable {
-    url: string;
-    sitename: string;
-    type: string;
-    refidentifier: string;
+  url: string;
+  sitename: string;
+  type: string;
+  refidentifier: string;
 }
 
 export class OaBrokerInstance implements IsSerializable {
-    url: string;
-    license: string;
-    hostedby: string;
-    instancetype: string;
+  url: string;
+  license: string;
+  hostedby: string;
+  instancetype: string;
 }
 
 export class OaBrokerJournal implements IsSerializable {
-    name: string;
-    issn: string;
-    eissn: string;
-    lissn: string;
+  name: string;
+  issn: string;
+  eissn: string;
+  lissn: string;
 }
 
 export class MapConditions implements IsSerializable {
-    field: string;
-    fieldType: MapValueType;
-    operator: ConditionOperator;
-    listParams: ConditionParams[];
+  field: string;
+  fieldType: MapValueType;
+  operator: ConditionOperator;
+  listParams: ConditionParams[];
 }
 
 export class OaBrokerEventPayload implements IsSerializable {
-    result: OaBrokerMainEntity; // old publication: Publication; ??
-    highlight: OaBrokerMainEntity;
-    provenance: OaBrokerProvenance;
-    trust: number;
+  result: OaBrokerMainEntity; // old publication: Publication; ??
+  highlight: OaBrokerMainEntity;
+  provenance: OaBrokerProvenance;
+  trust: number;
 }
 
 export class OaBrokerAuthor implements IsSerializable {
@@ -466,32 +467,32 @@ export class OaBrokerAuthor implements IsSerializable {
 }
 
 export class OpenaireSubscription implements IsSerializable {
-    subscriber: string;
-    frequency: NotificationFrequency;
-    mode: NotificationMode;
-    query: AdvQueryObject;
+  subscriber: string;
+  frequency: NotificationFrequency;
+  mode: NotificationMode;
+  query: AdvQueryObject;
 }
 
 export class OaBrokerTypedValue implements IsSerializable {
-    value: string;
-    type: string;
+  value: string;
+  type: string;
 }
 
 export class OaBrokerProject implements IsSerializable {
-    openaireId: string;
-    code: string;
-    acronym: string;
-    title: string;
-    funder: string;
-    fundingProgram: string;
-    jurisdiction: string;
+  openaireId: string;
+  code: string;
+  acronym: string;
+  title: string;
+  funder: string;
+  fundingProgram: string;
+  jurisdiction: string;
 }
 
 export class OaBrokerProvenance implements IsSerializable {
-    repositoryName: string;
-    repositoryType: string;
-    url: string;
-    id: string;
+  repositoryName: string;
+  repositoryType: string;
+  url: string;
+  id: string;
 }
 
 export class OaBrokerRelatedPublication implements IsSerializable {
@@ -505,41 +506,41 @@ export class OaBrokerRelatedPublication implements IsSerializable {
 }
 
 export class OaBrokerMainEntity implements IsSerializable {
-    openaireId: string;
-    originalId: string;
-    typology: string;
-    titles: string[];
-    abstracts: string[];
-    language: string;
-    subjects: OaBrokerTypedValue[];
-    creators: OaBrokerAuthor[];
-    publicationdate: string;
-    publisher: string;
-    embargoenddate: string;
-    contributor: string[];
-    journal: OaBrokerJournal;
-    pids: OaBrokerTypedValue[];
-    instances: OaBrokerInstance[];
-    externalReferences: OaBrokerExternalReference[];
-    publications: OaBrokerRelatedPublication[];
-    projects: OaBrokerProject[];
-    datasets: OaBrokerRelatedDataset[];
-    softwares: OaBrokerRelatedSoftware[];
-    datasources: OaBrokerRelatedDatasource[];
+  openaireId: string;
+  originalId: string;
+  typology: string;
+  titles: string[];
+  abstracts: string[];
+  language: string;
+  subjects: OaBrokerTypedValue[];
+  creators: OaBrokerAuthor[];
+  publicationdate: string;
+  publisher: string;
+  embargoenddate: string;
+  contributor: string[];
+  journal: OaBrokerJournal;
+  pids: OaBrokerTypedValue[];
+  instances: OaBrokerInstance[];
+  externalReferences: OaBrokerExternalReference[];
+  publications: OaBrokerRelatedPublication[];
+  projects: OaBrokerProject[];
+  datasets: OaBrokerRelatedDataset[];
+  softwares: OaBrokerRelatedSoftware[];
+  datasources: OaBrokerRelatedDatasource[];
 }
 
 export class Range implements IsSerializable {
-    min: string;
-    max: string;
+  min: string;
+  max: string;
 }
 
 export class SimpleSubscriptionDesc implements IsSerializable {
-    id: string;
-    datasource: string;
-    topic: string;
-    count: number;
-    creationDate: Date;
-    lastNotificationDate: Date;
+  id: string;
+  datasource: string;
+  topic: string;
+  count: number;
+  creationDate: Date;
+  lastNotificationDate: Date;
 }
 
 export class OaBrokerRelatedSoftware implements IsSerializable {
@@ -551,25 +552,25 @@ export class OaBrokerRelatedSoftware implements IsSerializable {
 }
 
 export class Subscription implements IsSerializable {
-    subscriptionId: string;
-    subscriber: string;
-    topic: string;
-    frequency: NotificationFrequency;
-    mode: NotificationMode;
-    creationDate: Date;
-    lastNotificationDate: Date;
-    conditions: string;
-    conditionsAsList: MapConditions[];
+  subscriptionId: string;
+  subscriber: string;
+  topic: string;
+  frequency: NotificationFrequency;
+  mode: NotificationMode;
+  creationDate: Date;
+  lastNotificationDate: Date;
+  conditions: string;
+  conditionsAsList: MapConditions[];
 }
 
 export class LayoutField {
-    name: string;
-    xpath: string;
-    type: string;
-    indexable: boolean;
-    result: boolean;
-    stat: boolean;
-    tokenizable: boolean;
+  name: string;
+  xpath: string;
+  type: string;
+  indexable: boolean;
+  result: boolean;
+  stat: boolean;
+  tokenizable: boolean;
 }
 
 export interface IsSerializable {
@@ -582,16 +583,16 @@ export interface SearchCriteria {
 }
 
 export class EPR {
-    epr: string;
-    address: string;
-    serviceName: string;
-    endpointName: string;
-    parameterNames: string[];
+  epr: string;
+  address: string;
+  serviceName: string;
+  endpointName: string;
+  parameterNames: string[];
 }
 
 export class Tuple<K, V> implements IsSerializable {
-    first: K;
-    second: V;
+  first: K;
+  second: V;
 }
 
 export interface Comparator<T> {
@@ -600,18 +601,27 @@ export interface Comparator<T> {
 export interface Comparable<T> {
 }
 
-export type ConditionOperator = "EXACT" | "MATCH_ANY" | "MATCH_ALL" | "RANGE";
+export type ConditionOperator = 'EXACT' | 'MATCH_ANY' | 'MATCH_ALL' | 'RANGE';
 
-export type MapValueType = "STRING" | "INTEGER" | "FLOAT" | "DATE" | "BOOLEAN" | "LIST_STRING" | "LIST_INTEGER" | "LIST_FLOAT" | "LIST_DATE" | "LIST_BOOLEAN";
+export type MapValueType =
+  'STRING'
+  | 'INTEGER'
+  | 'FLOAT'
+  | 'DATE'
+  | 'BOOLEAN'
+  | 'LIST_STRING'
+  | 'LIST_INTEGER'
+  | 'LIST_FLOAT'
+  | 'LIST_DATE'
+  | 'LIST_BOOLEAN';
 
-export type NotificationFrequency = "never" | "realtime" | "daily" | "weekly" | "monthly";
+export type NotificationFrequency = 'never' | 'realtime' | 'daily' | 'weekly' | 'monthly';
 
-export type NotificationMode = "MOCK" | "EMAIL";
+export type NotificationMode = 'MOCK' | 'EMAIL';
 
-export type Action = "CREATE" | "DELETE" | "UPDATE" | "MANAGE" | "RELEASE" | "CANCEL";
+export type Action = 'CREATE' | 'DELETE' | 'UPDATE' | 'MANAGE' | 'RELEASE' | 'CANCEL';
 
-export type ActionStatus = "DONE" | "ONGOING" | "FAILED" | "WAITING" | "ASSIGNED";
-
+export type ActionStatus = 'DONE' | 'ONGOING' | 'FAILED' | 'WAITING' | 'ASSIGNED';
 
 
 export class Country {
@@ -681,7 +691,7 @@ export class Aggregations implements IsSerializable {
   lastTransformation: AggregationDetails[];
 }
 
-export class UserInfo implements  IsSerializable {
+export class UserInfo implements IsSerializable {
   sub: string;
   role: string[];
   name: string;
@@ -731,4 +741,17 @@ export class User {
   firstName: string;
   lastName: string;
   email: string;
+}
+
+export class OrganizationDetails {
+  legalshortname: string;
+  legalname: string;
+  websiteurl: string;
+  logourl: string;
+  country: string;
+}
+
+export class IdentitiesDetails {
+  pid: string;
+  issuertype: string;
 }
