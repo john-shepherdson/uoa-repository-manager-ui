@@ -1,0 +1,757 @@
+// Generated using typescript-generator version 1.29.366 on 2018-02-05 16:06:12.
+
+export class BrowseData {
+  data: { [index: string]: FieldData };
+  fields: string[];
+}
+
+export class DataCollectionAccessProtocol {
+  value: string;
+  username: string;
+  password: string;
+}
+
+export class DataCollectionInterface {
+  protocol: DataCollectionAccessProtocol;
+  baseUrl: string;
+  format: string;
+  filter: string;
+}
+
+export class DataCollectionType {
+  dataCollectionInterface: DataCollectionInterface;
+  id: string;
+  label: string;
+  group: string;
+}
+
+export class Document {
+  map: { [index: string]: string[] };
+  fieldNames: string[];
+}
+
+export class FieldData {
+  fieldRowList: FieldRow[];
+  count: number[];
+  values: string[];
+}
+
+export class FieldRow {
+  value: string;
+  count: number;
+}
+
+export class FormattedSearchResult {
+  formattedResult: string;
+  resultsNumber: number;
+}
+
+export class Hint {
+  alternateTerm: string;
+  autoFollowHint: boolean;
+}
+
+export class DriverResource implements Serializable {
+  resourceId: string;
+  resourceUri: string;
+  resourceKind: string;
+  resourceType: string;
+  dateOfCreation: Date;
+}
+
+export class MDFormatDataStructure extends DriverResource {
+  resourceName: string;
+  layouts: { [index: string]: LayoutField[] };
+}
+
+export class PiwikInfo implements IsSerializable {
+  repositoryId: string;
+  openaireId: string;
+  repositoryName: string;
+  country: string;
+  siteId: string;
+  authenticationToken: string;
+  creationDate: Date;
+  requestorName: string;
+  requestorEmail: string;
+  validated: boolean;
+  validationDate: Date;
+  comment: string;
+}
+
+export class DatasourceDetails {
+  id: string;
+  openaireId: string;
+  officialname: string;
+  englishname: string;
+  websiteurl: string;
+  logourl: string;
+  contactemail: string;
+  latitude: number;
+  longitude: number;
+  namespaceprefix: string;
+  languages: string;
+  dateofvalidation: Date;
+  eoscDatasourceType: string;
+  dateofcollection: Date;
+  platform: string;
+  activationId: string;
+  description: string;
+  issn: string;
+  eissn: string;
+  lissn: string;
+  registeredby: string;
+  subjects: string;
+  aggregator: string;
+  collectedfrom: string;
+  managed: boolean;
+  registrationdate: Date;
+  consentTermsOfUseDate: Date;
+  lastConsentTermsOfUseDate: Date;
+  consentTermsOfUse: boolean;
+  fullTextDownload: boolean;
+  organizations: OrganizationDetails[] = new Array<OrganizationDetails>();
+  identities: IdentitiesDetails[];
+  status: string;
+  typology: string;
+}
+
+export class Repository extends DatasourceDetails implements IsSerializable {
+  timezone: number;
+  interfaces: RepositoryInterface[];
+  piwikInfo: PiwikInfo;
+  environments: string[];
+  namespacePrefix: string;
+  dateOfValidation: Date;
+  dateOfCollection: Date;
+  dataCollectionTypes: DataCollectionType[];
+}
+
+export class RepositorySnippet {
+  id: string;
+  officialname: string;
+  englishname: string;
+  websiteurl: string;
+  registeredby: string;
+  registrationdate: Date;
+  eoscDatasourceType: string;
+  logoUrl: string;
+  description: string;
+  consentTermsOfUse: boolean;
+  consentTermsOfUseDate: Date;
+  lastConsentTermsOfUseDate: Date;
+  fullTextDownload: boolean;
+  organizations: OrganizationDetails[];
+  typology: string;
+  piwikInfo: PiwikInfo;
+}
+
+export class TermsOfUse {
+  id: string;
+  name: string;
+  consentTermsOfUse: boolean;
+  fullTextDownload: boolean;
+  consentTermsOfUseDate: Date;
+}
+
+export class RepositoryAccessProtocol {
+  value: string;
+  username: string;
+  password: string;
+  filter: string;
+}
+
+export class RepositoryBlackboard {
+  lastrequest: string;
+  lastresponse: string;
+  messages: RepositoryBlackboardMessage[];
+}
+
+export class RepositoryBlackboardMessage {
+  id: string;
+  action: Action;
+  actionStatus: ActionStatus;
+  parameters: string[];
+}
+
+export class RepositoryComparator implements Comparator<Repository> {
+}
+
+// export class RepositoryInterface implements Serializable, IsSerializable {
+//   desiredCompatibilityLevel: string;
+//   complianceName: string;
+//   upgradeToV3: string;
+//   deleteApi: boolean;
+//   accessSet: string;
+//   accessFormat: string;
+//   metadataIdentifierPath: string;
+//   lastCollectionDate: string;
+//   nextScheduledExecution: string;
+//   status: string;
+//   collectedFrom: string;
+//   id: string;
+//   typology: string;
+//   compatibility: string;
+//   contentdescription: string;
+//   protocol: string;
+//   baseurl: string;
+//   active: boolean;
+//   removable: boolean;
+//   apiParams: { [index: string]: string };
+//   extraFields: { [index: string]: string };
+//   comments: string;
+// }
+
+export class ApiDetails {
+  id: string;
+  protocol: string;
+  datasource: string;
+  contentdescription: string;
+  eoscDatasourceType: string;
+  compatibility: string;
+  compatibilityOverride: string;
+  lastCollectionTotal: number;
+  lastCollectionDate: Date;
+  lastAggregationTotal: number;
+  lastAggregationDate: Date;
+  lastDownloadTotal: number;
+  lastDownloadDate: Date;
+  baseurl: string;
+  removable: boolean;
+  apiParams: ApiParamDetails[] = new Array<ApiParamDetails>();
+  metadataIdentifierPath: string;
+  typology: string;
+  comments: string;
+}
+
+export class RepositoryInterface extends ApiDetails {
+
+}
+
+export class ApiParamDetails {
+  param: string;
+  value: string;
+
+  constructor(param, value) {
+    this.param = param;
+    this.value = value;
+  }
+
+}
+
+export class SearchCriteriaImpl implements SearchCriteria {
+  startsWith: string;
+  endsWith: string;
+  contains: string;
+}
+
+export class RepositorySearchCriteria extends SearchCriteriaImpl implements SearchCriteria {
+  haveDocuments: boolean;
+  protocolType: string;
+  adminInfo: string;
+  officialName: string;
+  registeredBy: string;
+  country: string;
+  verified: boolean;
+}
+
+export class SearchResult {
+  query: string;
+  locale: string;
+  total: number;
+  page: number;
+  size: number;
+  fields: string[];
+  searchResults: string[];
+  browseResults: string[];
+}
+
+export class SimilarDocument {
+  id: string;
+  score: number;
+}
+
+export class StoreInfo {
+  serviceUrl: string;
+  storeId: string;
+}
+
+export class StoreObjectInfo {
+  storeInfo: StoreInfo;
+  objectId: string;
+}
+
+export class SuggestiveResult {
+  epr: EPR;
+  alternativeTerm: string;
+  autofollow: boolean;
+}
+
+export class CustomProperties implements IsSerializable {
+  properties: { [index: string]: string };
+}
+
+export class JobForValidation implements IsSerializable {
+  officialName: string;
+  baseUrl: string;
+  userEmail: string;
+  validationSet: string;
+  datasourceId: string;
+  interfaceId: string;
+  desiredCompatibilityLevel: string;
+  activationId: string;
+  repoType: string;
+  interfaceIdOld: string;
+  groupByXpath: string;
+  metadataPrefix: string;
+  records: number;
+  registration: boolean;
+  updateExisting: boolean;
+  cris: boolean;
+  crisReferentialChecks: boolean;
+  selectedCrisEntities: string[];
+  selectedContentRules: number[];
+  selectedUsageRules: number[];
+  adminEmails: string[];
+}
+
+export class JobResultEntry implements IsSerializable {
+  name: string;
+  description: string;
+  successes: string;
+  weight: number;
+  errors: string[];
+  ruleId: number;
+  hasErrors: boolean;
+  mandatory: boolean;
+  type: string;
+}
+
+export class Rule implements IsSerializable {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  mandatory: boolean;
+  weight: number;
+  provider_information: string;
+  job_type: string;
+  entity_type: string;
+  for_cris: boolean;
+  configuration: CustomProperties;
+}
+
+export class RuleSet implements Serializable, IsSerializable {
+  id: number;
+  name: string;
+  description: string;
+  guidelinesAcronym: string;
+  shortName: string;
+  visibility: string[];
+  contentRules: Rule[];
+  usageRules: Rule[];
+  contentRulesIds: number[];
+  usageRulesIds: number[];
+}
+
+export class StoredJob extends JobForValidation implements IsSerializable {
+  contentJobStatus: string;
+  usageJobStatus: string;
+  started: string;
+  ended: string;
+  duration: string;
+  error: string;
+  validationType: string;
+  jobType: string;
+  guidelinesShortName: string;
+  validationStatus: string;
+  recordsTested: number;
+  id: number;
+  contentJobScore: number;
+  usageJobScore: number;
+  rules: number[];
+  resultEntries: JobResultEntry[];
+  filteredScores: { [index: string]: number };
+}
+
+export class AdvQueryObject implements IsSerializable {
+  datasource: string;
+  topic: string;
+  titles: string[];
+  subjects: string[];
+  authors: string[];
+  dates: Range[];
+  trust: Range;
+  page: number;
+}
+
+export class BrowseEntry implements Comparable<BrowseEntry>, IsSerializable {
+  value: string;
+  size: number;
+}
+
+export class ConditionParams implements IsSerializable {
+  value: string;
+  otherValue: string;
+}
+
+export class OaBrokerRelatedDataset implements IsSerializable {
+  openaireId: string;
+  originalId: string;
+  title: string;
+  collectedFrom: string;
+  pids: OaBrokerTypedValue[];
+  instances: OaBrokerInstance[];
+}
+
+export class DatasourcesBroker implements IsSerializable {
+  datasourcesOfUser: Tuple<BrowseEntry, string>[];
+  sharedDatasources: Tuple<BrowseEntry, string>[];
+  datasourcesOfOthers: Tuple<BrowseEntry, string>[];
+}
+
+export class OaBrokerRelatedDatasource implements IsSerializable {
+  openaireId: string;
+  name: string;
+  type: string;
+  relType: string;
+}
+
+export class EventsPage implements IsSerializable {
+  datasource: string;
+  topic: string;
+  currPage: number;
+  totalPages: number;
+  total: number;
+  values: OaBrokerEventPayload[];
+}
+
+export class OaBrokerExternalReference implements IsSerializable {
+  url: string;
+  sitename: string;
+  type: string;
+  refidentifier: string;
+}
+
+export class OaBrokerInstance implements IsSerializable {
+  url: string;
+  license: string;
+  hostedby: string;
+  instancetype: string;
+}
+
+export class OaBrokerJournal implements IsSerializable {
+  name: string;
+  issn: string;
+  eissn: string;
+  lissn: string;
+}
+
+export class MapConditions implements IsSerializable {
+  field: string;
+  fieldType: MapValueType;
+  operator: ConditionOperator;
+  listParams: ConditionParams[];
+}
+
+export class OaBrokerEventPayload implements IsSerializable {
+  result: OaBrokerMainEntity; // old publication: Publication; ??
+  highlight: OaBrokerMainEntity;
+  provenance: OaBrokerProvenance;
+  trust: number;
+}
+
+export class OaBrokerAuthor implements IsSerializable {
+  fullname: string;
+  orcid: string;
+}
+
+export class OpenaireSubscription implements IsSerializable {
+  subscriber: string;
+  frequency: NotificationFrequency;
+  mode: NotificationMode;
+  query: AdvQueryObject;
+}
+
+export class OaBrokerTypedValue implements IsSerializable {
+  value: string;
+  type: string;
+}
+
+export class OaBrokerProject implements IsSerializable {
+  openaireId: string;
+  code: string;
+  acronym: string;
+  title: string;
+  funder: string;
+  fundingProgram: string;
+  jurisdiction: string;
+}
+
+export class OaBrokerProvenance implements IsSerializable {
+  repositoryName: string;
+  repositoryType: string;
+  url: string;
+  id: string;
+}
+
+export class OaBrokerRelatedPublication implements IsSerializable {
+  openaireId: string;
+  originalId: string;
+  title: string;
+  collectedFrom: string;
+  pids: OaBrokerTypedValue[];
+  instances: OaBrokerInstance[];
+  relType: string;
+}
+
+export class OaBrokerMainEntity implements IsSerializable {
+  openaireId: string;
+  originalId: string;
+  typology: string;
+  titles: string[];
+  abstracts: string[];
+  language: string;
+  subjects: OaBrokerTypedValue[];
+  creators: OaBrokerAuthor[];
+  publicationdate: string;
+  publisher: string;
+  embargoenddate: string;
+  contributor: string[];
+  journal: OaBrokerJournal;
+  pids: OaBrokerTypedValue[];
+  instances: OaBrokerInstance[];
+  externalReferences: OaBrokerExternalReference[];
+  publications: OaBrokerRelatedPublication[];
+  projects: OaBrokerProject[];
+  datasets: OaBrokerRelatedDataset[];
+  softwares: OaBrokerRelatedSoftware[];
+  datasources: OaBrokerRelatedDatasource[];
+}
+
+export class Range implements IsSerializable {
+  min: string;
+  max: string;
+}
+
+export class SimpleSubscriptionDesc implements IsSerializable {
+  id: string;
+  datasource: string;
+  topic: string;
+  count: number;
+  creationDate: Date;
+  lastNotificationDate: Date;
+}
+
+export class OaBrokerRelatedSoftware implements IsSerializable {
+  openaireId: string;
+  name: string;
+  description: string;
+  landingPage: string;
+  repository: string;
+}
+
+export class Subscription implements IsSerializable {
+  subscriptionId: string;
+  subscriber: string;
+  topic: string;
+  frequency: NotificationFrequency;
+  mode: NotificationMode;
+  creationDate: Date;
+  lastNotificationDate: Date;
+  conditions: string;
+  conditionsAsList: MapConditions[];
+}
+
+export class LayoutField {
+  name: string;
+  xpath: string;
+  type: string;
+  indexable: boolean;
+  result: boolean;
+  stat: boolean;
+  tokenizable: boolean;
+}
+
+export interface IsSerializable {
+}
+
+export interface Serializable {
+}
+
+export interface SearchCriteria {
+}
+
+export class EPR {
+  epr: string;
+  address: string;
+  serviceName: string;
+  endpointName: string;
+  parameterNames: string[];
+}
+
+export class Tuple<K, V> implements IsSerializable {
+  first: K;
+  second: V;
+}
+
+export interface Comparator<T> {
+}
+
+export interface Comparable<T> {
+}
+
+export type ConditionOperator = 'EXACT' | 'MATCH_ANY' | 'MATCH_ALL' | 'RANGE';
+
+export type MapValueType =
+  'STRING'
+  | 'INTEGER'
+  | 'FLOAT'
+  | 'DATE'
+  | 'BOOLEAN'
+  | 'LIST_STRING'
+  | 'LIST_INTEGER'
+  | 'LIST_FLOAT'
+  | 'LIST_DATE'
+  | 'LIST_BOOLEAN';
+
+export type NotificationFrequency = 'never' | 'realtime' | 'daily' | 'weekly' | 'monthly';
+
+export type NotificationMode = 'MOCK' | 'EMAIL';
+
+export type Action = 'CREATE' | 'DELETE' | 'UPDATE' | 'MANAGE' | 'RELEASE' | 'CANCEL';
+
+export type ActionStatus = 'DONE' | 'ONGOING' | 'FAILED' | 'WAITING' | 'ASSIGNED';
+
+
+export class Country {
+  name: string;
+  code: string;
+}
+
+export class Term implements IsSerializable {
+  englishName: string;
+  nativeName: string;
+  encoding: string;
+  code: string;
+}
+
+export class Timezone {
+  name: string;
+  offset: number;
+}
+
+export class InterfaceInformation implements IsSerializable {
+
+  identified: boolean;
+  sets: string[];
+  adminEmails: string[];
+}
+
+export class JobsOfUser implements IsSerializable {
+  totalJobs: number;
+  totalJobsSuccessful: number;
+  totalJobsFailed: number;
+  totalJobsOngoing: number;
+
+  jobs: StoredJob[];
+}
+
+export class MetricsNumbers implements IsSerializable {
+  downloads: string[];
+  pageviews: string;
+  total_downloads: string;
+  total_openaire_downloads: string;
+  total_openaire_views: string;
+  total_views: string;
+  views: string[];
+}
+
+export class MetricsInfo implements IsSerializable {
+  diagramsBaseURL: string;
+  metricsNumbers: MetricsNumbers;
+}
+
+export class Typology {
+  value: string;
+  name: string;
+}
+
+export class AggregationDetails implements IsSerializable {
+  aggregationStage: string;
+  date: Date;
+  numberOfRecords: number;
+  collectionMode: string;
+  indexedVersion: boolean;
+}
+
+export class Aggregations implements IsSerializable {
+  aggregationHistory: AggregationDetails[];
+  lastCollection: AggregationDetails[];
+  lastTransformation: AggregationDetails[];
+}
+
+export class UserInfo implements IsSerializable {
+  sub: string;
+  role: string[];
+  name: string;
+  email: string;
+}
+
+export class UsageStatsSummary implements IsSerializable {
+  literature: string;
+  aggregators: string;
+  journal: string;
+  software: string;
+  lastYearUsagestats: { number: string; year: number; };
+  usagestats: string;
+  dataRepositories: string;
+  datasets: string;
+  publications: string;
+}
+
+export class RepositorySummaryInfo {
+  id: string;
+  repositoryName: string;
+  logoURL: string;
+  recordsCollected: number;
+  lastIndexedVersion: Date;
+  enrichmentEvents: number;
+  totalViews: string;
+  totalDownloads: string;
+}
+
+export class UsageSummary {
+  metricsInfo: MetricsInfo;
+  piwikInfo: PiwikInfo;
+}
+
+export class BrokerSummary {
+  userSubs: Map<string, SimpleSubscriptionDesc[]>;
+  topicsForDatasource: BrowseEntry[];
+}
+
+export class CollectionMonitorSummary {
+  aggregationDetails: AggregationDetails[];
+  lastIndexedVersion: AggregationDetails;
+}
+
+export class User {
+  sub: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export class OrganizationDetails {
+  legalshortname: string;
+  legalname: string;
+  websiteurl: string;
+  logourl: string;
+  country: string;
+}
+
+export class IdentitiesDetails {
+  pid: string;
+  issuertype: string;
+}
