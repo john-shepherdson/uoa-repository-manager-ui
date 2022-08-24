@@ -41,7 +41,6 @@ export class DatasourceCreateFormComponent implements OnInit {
   countries: Country[] = [];
   datasourceClasses: Map<string, string> = new Map<string, string>();
   classCodes: string[] = [];
-  // classCodes: string[] = [];
 
   @Input() mode: string;
 
@@ -52,8 +51,6 @@ export class DatasourceCreateFormComponent implements OnInit {
   formSubmitted = false;
   group: FormGroup;
 
-  // old issn regex
-  // issn : ['', [Validators.pattern('^\\d\\d\\d\\d[-]\\d\\d\\d\\d$')] ],
   readonly groupDefinition = {
     softwarePlatform : ['', Validators.required],
     platformName : '',
@@ -143,7 +140,7 @@ export class DatasourceCreateFormComponent implements OnInit {
         englishName: this.selectedRepo.englishname,
         logoUrl: this.selectedRepo.logourl,
         timezone: this.selectedRepo.timezone,
-        datasourceType: this.selectedRepo.eoscDatasourceType, // TODO: still needed?
+        datasourceType: this.selectedRepo.eoscDatasourceType, // TODO: still needed? should it be typology? typology exists on that stage?
         adminEmail: this.selectedRepo.contactemail
       });
 
@@ -247,15 +244,11 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.longitude = this.group.get('longtitude').value;
     newRepo.timezone = this.group.get('timezone').value;
     if (this.group.get('softwarePlatform').value !== '') {
-      console.log('1//', this.group.get('softwarePlatform').value);
       newRepo.platform = this.group.get('softwarePlatform').value;
     } else if (this.group.get('platformName').value) {
       newRepo.platform = this.group.get('platformName').value;
-      console.log('2//', this.group.get('platformName').value);
     }
     newRepo.typology = this.group.get('datasourceType').value;
-    // newRepo.eoscDatasourceType = this.datasourceClasses.get(this.group.get('datasourceType').value);
-    // console.warn(newRepo.eoscDatasourceType);
     newRepo.description = this.group.get('repoDescription').value.toString();
     newRepo.issn = '';
     newRepo.eissn = '';
@@ -279,9 +272,7 @@ export class DatasourceCreateFormComponent implements OnInit {
 
     newRepo.registeredby = this.authService.getUserEmail();
 
-    /* THE BELOW FIELDS ARE NOT SET IN GWT CODE*/
-    newRepo.eoscDatasourceType = this.mode; // TODO: delete this?
-    console.warn(newRepo.eoscDatasourceType);
+    newRepo.eoscDatasourceType = this.mode; // keep this
     newRepo.managed = true;
 
     const now = new Date(Date.now());

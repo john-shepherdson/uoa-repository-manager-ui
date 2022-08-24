@@ -309,8 +309,6 @@ export class DatasourceUpdateFormComponent implements OnInit {
     console.log('typology ', this.selectedRepo.typology);
     console.log(this.datasourceClasses);
     console.log(this.updateGroup.get('datasourceType').value);
-    // this.selectedRepo.eoscDatasourceType = this.datasourceClasses.get(this.updateGroup.get('datasourceType').value);
-    // console.warn(this.selectedRepo.eoscDatasourceType);
     this.selectedRepo.officialname = this.updateGroup.get('officialName').value.toString();
     this.selectedRepo.description = this.updateGroup.get('repoDescription').value.toString();
     this.selectedRepo.organizations[0].country = this.updateGroup.get('country').value; // countryCode
