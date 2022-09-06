@@ -83,14 +83,14 @@ export const countryDesc = {
 export const longtitudeDesc = {
   desc: 'The (approximate) longtitude of your repository/journal\'s location',
   label: 'Longtitude',
-  mandatory: true,
+  mandatory: false,
   recommended: false
 };
 
 export const latitudeDesc = {
   desc: 'The (approximate) latitude of your repository/journal\'s location',
   label: 'Latitude',
-  mandatory: true,
+  mandatory: false,
   recommended: false
 };
 
