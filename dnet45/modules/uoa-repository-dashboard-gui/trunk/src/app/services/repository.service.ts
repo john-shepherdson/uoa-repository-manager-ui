@@ -35,6 +35,7 @@ export class RepositoryService {
 
   addInterface(datatype: string, repoId: string, registeredBy: string, comment: string, newInterface: RepositoryInterface): Observable<RepositoryInterface> {
     let url;
+    comment = newInterface.comments; // temp fix for emailing comment
     if (comment == null || comment === '') {
       url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}`;
     } else {
@@ -47,7 +48,7 @@ export class RepositoryService {
 
   updateInterface(repoId: string, registeredBy: string, comment: string, interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
     let url;
-    console.log(comment);
+    comment = interfaceInfo.comments; // temp fix for emailing comment
     if (comment == null || comment === '') {
       url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}`;
     } else {
