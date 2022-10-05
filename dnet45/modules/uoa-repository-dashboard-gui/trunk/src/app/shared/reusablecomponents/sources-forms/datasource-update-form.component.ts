@@ -86,6 +86,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   ngOnInit() {
     this.loadForm();
+    console.log('mode: ', this.mode);
   }
 
   loadForm() {
@@ -153,6 +154,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
       // FIXME: Use eoscDatasourceType when we support the new model
       if (this.mode === 'journal') {
+        console.log(this.mode);
 
         let ssnToShow = this.selectedRepo.issn.slice(0, 4) + '-' + this.selectedRepo.issn.toString().slice(4);
         this.updateGroup.get('issn').setValue(ssnToShow);
