@@ -46,13 +46,13 @@ export class RepositoryService {
     return this.httpClient.post<RepositoryInterface>(url, newInterface, headerOptions);
   }
 
-  updateInterface(repoId: string, registeredBy: string, comment: string, interfaceInfo: RepositoryInterface): Observable<RepositoryInterface> {
+  updateInterface(repoId: string, registeredBy: string, comment: string, interfaceInfo: RepositoryInterface, desiredCompatibilityLevel?: string): Observable<RepositoryInterface> {
     let url;
     comment = interfaceInfo.comments; // temp fix for emailing comment
     if (comment == null || comment === '') {
-      url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}`;
+      url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}$desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
     } else {
-      url  = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}`;
+      url  = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}$desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
     }
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(interfaceInfo)}`);
