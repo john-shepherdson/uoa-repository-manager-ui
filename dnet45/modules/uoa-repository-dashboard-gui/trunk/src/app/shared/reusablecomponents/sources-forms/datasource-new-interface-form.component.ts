@@ -39,8 +39,9 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   readonly repoInterfaceFormDef = {
     baseurl: ['', Validators.required],
     selectValidationSet: [''],
-    customValidationSet: [''],
-    compatibilityLevel: [''],
+    compatibilityLevel: null,
+    desiredCompatibilityLevel: null,
+    compatibilityLevelOverride: null,
     comment: ['']
   };
   baseUrlDesc: Description = baseUrlDesc;
@@ -68,11 +69,12 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       this.interfaceID = this.data[1];
       this.currentRepo = this.data[2];
       this.repoInterfaceForm = this.fb.group(this.repoInterfaceFormDef);
-      this.chooseValSet(true);
+      // this.chooseValSet(true);
       if (this.data[3]) {
         this.currentInterface = this.data[3];
         this.repoInterfaceForm.get('baseurl').setValue(this.currentInterface.baseurl);
-        this.repoInterfaceForm.get('compatibilityLevel').setValue(this.currentInterface.compatibilityOverride);
+        this.repoInterfaceForm.get('compatibilityLevel').setValue(this.currentInterface.compatibility);
+        this.repoInterfaceForm.get('compatibilityLevelOverride').setValue(this.currentInterface.compatibilityOverride);
       }
       this.getInterfaceInfo();
       this.getCompatibilityClasses();
@@ -110,16 +112,16 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
           this.errorMessage = noServiceMessage;
         },
         () => {
-          if ( this.currentInterface && this.currentInterface.apiParams && this.currentInterface.apiParams.find(entry => entry.param === 'set')) {
-            if ( this.valsetList.some( x => x === this.currentInterface.apiParams['set']) ) {
-              this.repoInterfaceForm.get('selectValidationSet').setValue(this.currentInterface.apiParams.find(entry => entry.param === 'set').value);
-            } else {
-              this.repoInterfaceForm.get('customValidationSet').setValue(this.currentInterface.apiParams.find(entry => entry.param === 'set').value);
+          if (this.currentInterface?.apiParams?.find(entry => entry.param === 'set')) {
+            // it will not work if set is not on valsetList
+            if (this.valsetList.some(x => x === this.currentInterface.apiParams['set'])) {
+              this.repoInterfaceForm.get('selectValidationSet').setValue(this.currentInterface.apiParams
+                .find(entry => entry.param === 'set').value);
             }
+            this.loadingMessage = '';
+            this.repoInterfaceForm.updateValueAndValidity();
+            this.checkIfValid();
           }
-          this.loadingMessage = '';
-          this.repoInterfaceForm.updateValueAndValidity();
-          this.checkIfValid();
         }
       );
     }
@@ -148,26 +150,14 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
 
   getExistingCompatibilityLevel() {
     if (this.currentInterface) {
-      if (this.currentInterface.compatibilityOverride &&
-        this.classCodes.some( x => x === this.currentInterface.compatibilityOverride ) ) {
-        this.existingCompLevel = this.compClasses[this.currentInterface.compatibilityOverride];
+      if (this.currentInterface.compatibility
+        && this.classCodes.some( x => x === this.currentInterface.compatibilityOverride)) {
+        this.existingCompLevel = this.compClasses[this.currentInterface.compatibility];
       } else {
-        this.repoInterfaceForm.get('compatibilityLevel').setValue('');
-        this.existingCompLevel = this.currentInterface.compatibilityOverride;
+        // this.repoInterfaceForm.get('compatibilityLevel').setValue('');
+        this.existingCompLevel = this.currentInterface.compatibility;
       }
     }
-  }
-
-  chooseValSet(fromList: boolean) {
-    this.existingValSet = fromList;
-    if (this.existingValSet) {
-      this.repoInterfaceForm.get('selectValidationSet').enable();
-      this.repoInterfaceForm.get('customValidationSet').disable();
-    }  else {
-      this.repoInterfaceForm.get('selectValidationSet').disable();
-      this.repoInterfaceForm.get('customValidationSet').enable();
-    }
-    this.checkIfValid();
   }
 
   checkIfCompatibilityLevelWasChosen() {
@@ -176,9 +166,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   }
 
   formIsValid() {
-    return (this.repoInterfaceForm.valid &&
-            this.identifiedBaseUrl &&
-            this.checkIfCompatibilityLevelWasChosen());
+    return (this.repoInterfaceForm.valid && this.identifiedBaseUrl && this.checkIfCompatibilityLevelWasChosen());
   }
 
   checkIfValid() {
@@ -203,24 +191,21 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       let valset = '';
       if (this.existingValSet) {
         valset = this.repoInterfaceForm.get('selectValidationSet').value;
-      } else {
-        valset = this.repoInterfaceForm.get('customValidationSet').value;
       }
-      let compLvl = '';
+      let desiredCompLvl = '';
       if (this.repoInterfaceForm.get('compatibilityLevel').value) {
-        this.existingCompLevel = this.compClasses[this.repoInterfaceForm.get('compatibilityLevel').value];
-        console.log('this.existingCompLevel is', this.existingCompLevel);
-        compLvl = this.repoInterfaceForm.get('compatibilityLevel').value;
-      } else {
-        compLvl = this.existingCompLevel;
+        // this.existingCompLevel = this.compClasses[this.repoInterfaceForm.get('compatibilityLevel').value];
+        // console.log('this.existingCompLevel is', this.existingCompLevel);
+        desiredCompLvl = this.repoInterfaceForm.get('compatibilityLevel').value;
       }
+      const compLvl = this.existingCompLevel;
       let comment = '';
       if (this.repoInterfaceForm.get('comment').value) {
         comment = this.repoInterfaceForm.get('comment').value;
       }
 
       if (this.currentInterface) {
-        this.updateCurrent(baseurl, valset, compLvl, comment);
+        this.updateCurrent(baseurl, valset, desiredCompLvl, compLvl, comment);
       } else {
         this.addCurrent(baseurl, valset, compLvl, comment);
       }
@@ -257,7 +242,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       validationSet = new ApiParamDetails('set', value);
       intrf.apiParams.push(validationSet);
     } else {
-      validationSet.value = this.repoInterfaceForm.get(this.existingValSet ? 'selectValidationSet' : 'customValidationSet').value;
+      validationSet.value = this.repoInterfaceForm.get('selectValidationSet').value;
     }
   }
 
@@ -282,11 +267,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
 
   addInterface(newInterface: RepositoryInterface) {
     this.loadingMessage = formSubmitting;
-    this.repoService.addInterface(this.currentRepo.datasourceType,
-                                  this.currentRepo.id,
-                                  this.currentRepo.registeredBy,
-                                  this.currentRepo.comments,
-                                  newInterface).subscribe(
+    this.repoService.addInterface(this.currentRepo.datasourceType, this.currentRepo.id,
+                                  this.currentRepo.registeredBy, this.currentRepo.comments, newInterface).subscribe(
       addedInterface => {
         console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
         this.currentInterface = addedInterface;
@@ -310,7 +292,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
 
   }
 
-  updateCurrent (baseurl: string, valset: string, compLvl: string, comment: string) {
+  updateCurrent (baseurl: string, valset: string, desiredCompLvl: string, compLvl: string, comment: string) {
     console.log('update current');
     this.updateValidationSet(this.currentInterface, valset);
     this.currentInterface.baseurl = baseurl;
@@ -320,7 +302,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.currentInterface.comments = comment;
 
     if (!this.inRegister) {
-      this.updateInterface();
+      this.updateInterface(desiredCompLvl);
     } else {
       this.successMessage = 'The harvesting settings are valid!';
       console.log('SAVED !');
@@ -328,12 +310,10 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     }
   }
 
-  updateInterface() {
+  updateInterface(desiredCompatibilityLevel: string) {
     this.loadingMessage = formSubmitting;
-    this.repoService.updateInterface(this.currentRepo.id,
-                                     this.currentRepo.registeredBy,
-                                     this.currentRepo.comments,
-                                     this.currentInterface).subscribe(
+    this.repoService.updateInterface(this.currentRepo.id, this.currentRepo.registeredBy, this.currentRepo.comments,
+                                     this.currentInterface, this.repoInterfaceForm.get('desiredCompatibilityLevel').value).subscribe(
       response => {
         console.log(`updateRepository responded ${JSON.stringify(response)}`);
         if (response) {
