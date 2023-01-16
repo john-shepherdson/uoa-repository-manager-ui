@@ -113,14 +113,17 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
         },
         () => {
           if (this.currentInterface?.apiParams?.find(entry => entry.param === 'set')) {
-            // it will not work if set is not on valsetList
-            if (this.valsetList.some(x => x === this.currentInterface.apiParams['set'])) {
-              this.repoInterfaceForm.get('selectValidationSet').setValue(this.currentInterface.apiParams
-                .find(entry => entry.param === 'set').value);
-            }
-            this.loadingMessage = '';
-            this.repoInterfaceForm.updateValueAndValidity();
-            this.checkIfValid();
+            this.repoInterfaceForm.get('selectValidationSet').setValue(this.currentInterface.apiParams
+              .find(entry => entry.param === 'set').value);
+            this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
+              res => {
+                console.log(res);
+                this.repoInterfaceForm.get('desiredCompatibilityLevel').setValue(res['desiredCompatibilityLevel']);
+              }
+            );
+          this.loadingMessage = '';
+          this.repoInterfaceForm.updateValueAndValidity();
+          this.checkIfValid();
           }
         }
       );

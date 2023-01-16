@@ -50,7 +50,7 @@ export class RepositoryService {
     let url;
     comment = interfaceInfo.comments; // temp fix for emailing comment
     if (comment == null || comment === '') {
-      url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}$desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
+      url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
     } else {
       url  = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}$desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
     }
@@ -64,6 +64,10 @@ export class RepositoryService {
     console.log(`knocking on: ${url}`);
 
     return this.httpClient.delete(url, {withCredentials: true, responseType: 'text'});
+  }
+
+  getInterfaceDesiredCompatibilityLevel(repoId: string, interfaceId: string) {
+    return this.httpClient.get(environment.API_ENDPOINT + `/compliance/${repoId}/${interfaceId}`);
   }
 
   addRepository(datatype: string, newRepository: Repository): Observable<Repository> {
