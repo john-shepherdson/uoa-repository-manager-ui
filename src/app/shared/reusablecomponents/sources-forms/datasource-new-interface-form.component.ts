@@ -75,6 +75,14 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
         this.repoInterfaceForm.get('baseurl').setValue(this.currentInterface.baseurl);
         this.repoInterfaceForm.get('compatibilityLevel').setValue(this.currentInterface.compatibility);
         this.repoInterfaceForm.get('compatibilityLevelOverride').setValue(this.currentInterface.compatibilityOverride);
+        this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
+          res => {
+            console.log(res);
+            if (res !== null) {
+              this.repoInterfaceForm.get('desiredCompatibilityLevel').setValue(res['desiredCompatibilityLevel']);
+            }
+          }
+        );
       }
       this.getInterfaceInfo();
       this.getCompatibilityClasses();
@@ -115,16 +123,10 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
           if (this.currentInterface?.apiParams?.find(entry => entry.param === 'set')) {
             this.repoInterfaceForm.get('selectValidationSet').setValue(this.currentInterface.apiParams
               .find(entry => entry.param === 'set').value);
-            this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
-              res => {
-                console.log(res);
-                this.repoInterfaceForm.get('desiredCompatibilityLevel').setValue(res['desiredCompatibilityLevel']);
-              }
-            );
-          this.loadingMessage = '';
-          this.repoInterfaceForm.updateValueAndValidity();
-          this.checkIfValid();
+            this.repoInterfaceForm.updateValueAndValidity();
+            this.checkIfValid();
           }
+          this.loadingMessage = '';
         }
       );
     }
@@ -271,7 +273,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   addInterface(newInterface: RepositoryInterface) {
     this.loadingMessage = formSubmitting;
     this.repoService.addInterface(this.currentRepo.datasourceType, this.currentRepo.id,
-                                  this.currentRepo.registeredBy, this.currentRepo.comments, newInterface).subscribe(
+                                  this.currentRepo.registeredBy, this.currentRepo.comments, newInterface,
+                                  this.repoInterfaceForm.get('desiredCompatibilityLevel').value).subscribe(
       addedInterface => {
         console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
         this.currentInterface = addedInterface;
@@ -305,7 +308,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.currentInterface.comments = comment;
 
     if (!this.inRegister) {
-      this.updateInterface(desiredCompLvl);
+      this.updateInterface();
     } else {
       this.successMessage = 'The harvesting settings are valid!';
       console.log('SAVED !');
@@ -313,7 +316,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     }
   }
 
-  updateInterface(desiredCompatibilityLevel: string) {
+  updateInterface() {
     this.loadingMessage = formSubmitting;
     this.repoService.updateInterface(this.currentRepo.id, this.currentRepo.registeredBy, this.currentRepo.comments,
                                      this.currentInterface, this.repoInterfaceForm.get('desiredCompatibilityLevel').value).subscribe(

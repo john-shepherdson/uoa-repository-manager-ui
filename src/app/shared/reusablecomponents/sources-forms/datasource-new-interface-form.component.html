@@ -29,7 +29,7 @@
         <span *ngIf="showIdentifiedBaseUrl" class="help-block inline" style="margin-top: 8px; margin-bottom: 0px; padding-left: 10px; display: block;">
           Identified
         </span>
-        <input id="baseurl" type="text" class="md-input" [ngClass]="{'uk-disabled': this.repoInterfaceForm.get('compatibilityLevel').value}"
+        <input id="baseurl" type="text" class="md-input" [ngClass]="{'uk-disabled': showIdentifiedBaseUrl}"
                formControlName="baseurl" (blur)="getInterfaceInfo()">
         <span class="md-input-bar"></span>
       </div>

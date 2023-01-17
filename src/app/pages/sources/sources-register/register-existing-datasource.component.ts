@@ -207,10 +207,10 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         } else {
           this.repoInterfaces.push(repo_interface);
         }
-        console.log(JSON.stringify(repo_interface));
+        // console.log(JSON.stringify(repo_interface));
       }
     }
-    console.log('new interfaces is ', this.repoInterfaces);
+    // console.log('new interfaces is ', this.repoInterfaces);
     return invalidFormsCount;
   }
 
@@ -328,7 +328,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       this.loadingMessage = 'Saving changes';
       this.errorMessage = '';
       console.log('reg this.repo', this.repo);
-      this.repoService.addRepository( this.repo.eoscDatasourceType, this.repo).subscribe( //this.repo.collectedfrom
+      this.repoService.addRepository( this.repo.eoscDatasourceType, this.repo).subscribe( // this.repo.collectedfrom
         response => {
           console.log(`addRepository responded: ${response.id}, ${response.registeredby}`);
           this.repo = response;
