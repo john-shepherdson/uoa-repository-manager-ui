@@ -33,13 +33,13 @@ export class RepositoryService {
 
   constructor(private httpClient: HttpClient) { }
 
-  addInterface(datatype: string, repoId: string, registeredBy: string, comment: string, newInterface: RepositoryInterface): Observable<RepositoryInterface> {
+  addInterface(datatype: string, repoId: string, registeredBy: string, comment: string, newInterface: RepositoryInterface, desiredCompatibilityLevel?: string): Observable<RepositoryInterface> {
     let url;
     comment = newInterface.comments; // temp fix for emailing comment
     if (comment == null || comment === '') {
-      url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}`;
+      url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}&desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
     } else {
-      url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}`;
+      url = `${this.apiUrl}addInterface?datatype=${datatype}&repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}&desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
     }
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(newInterface)}`);
@@ -52,7 +52,7 @@ export class RepositoryService {
     if (comment == null || comment === '') {
       url = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
     } else {
-      url  = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}$desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
+      url  = `${this.apiUrl}updateRepositoryInterface?repoId=${repoId}&registeredBy=${registeredBy}&comment=${comment}&desiredCompatibilityLevel=${desiredCompatibilityLevel}`;
     }
     console.log(`knocking on: ${url}`);
     console.log(`sending ${JSON.stringify(interfaceInfo)}`);
