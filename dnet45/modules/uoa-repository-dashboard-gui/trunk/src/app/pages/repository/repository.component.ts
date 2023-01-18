@@ -44,7 +44,7 @@ export class RepositoryComponent implements OnInit {
       this.loadingMessage = 'Retrieving datasource info';
       this.repoService.getRepositoryById(this.repositoryId).subscribe(
         repository => {
-          console.log("Repository component - Repository id: " + repository.id);
+          console.log('Repository component - Repository id: ' + repository.id);
           this.sharedService.setRepository(repository);
           this.loadingMessage = '';
         },

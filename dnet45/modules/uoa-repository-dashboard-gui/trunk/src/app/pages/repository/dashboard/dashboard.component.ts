@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { RepositoryService } from '../../../services/repository.service';
 import {
@@ -16,15 +16,15 @@ import {DashboardService} from '../../../services/dashboard.service';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {PiwikService} from '../../../services/piwik.service';
 import {ValidatorService} from '../../../services/validator.service';
-import {ActivatedRoute} from "@angular/router";
-import {SharedService} from "../../../services/shared.service";
+import {ActivatedRoute} from '@angular/router';
+import {SharedService} from '../../../services/shared.service';
 
 @Component ({
   selector: 'app-dashboard',
   templateUrl: 'dashboard.component.html'
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   repository: Repository = null;
   errorMessage: string;
@@ -88,27 +88,23 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.sharedService.getRepository()) {
+    if (this.sharedService.getRepository()) {
       this.repository = this.sharedService.getRepository();
       this.getSelectedRepositorySummaryInfo(this.repository);
     }
 
-    this.sharedService.repository$.subscribe(
-      r => {
-        this.repository = r;
-        // console.log("RepositoryID: ", this.repository.id);
-        this.getSelectedRepositorySummaryInfo(this.repository);
-      }
-    );
-
-    let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("top_bar_active");
-    body.classList.remove("page_heading_active");
-    body.classList.remove("landing");
-    body.classList.add("dashboard");
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove('top_bar_active');
+    body.classList.remove('page_heading_active');
+    body.classList.remove('landing');
+    body.classList.add('dashboard');
 
     const currentTime = new Date();
     this.currentDate = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1);
+  }
+
+  ngOnDestroy() {
+    // this.sharedService.repository.unsubscribe();
   }
 
   getSelectedRepositorySummaryInfo(repository: Repository) {
@@ -218,16 +214,16 @@ export class DashboardComponent implements OnInit {
 
     this.brokerSummary = brokerSummary;
 
-    if(this.brokerSummary.userSubs==null)
+    if (this.brokerSummary.userSubs == null)
       this.noSubscriptions = noTopicsFound;
-    if(this.brokerSummary.topicsForDatasource==null)
+    if (this.brokerSummary.topicsForDatasource == null)
       this.noTopics = noSubscriptionsFound;
 
     this.totalNumberOfEvents = 0;
     this.totalMore = 0;
     this.totalMissing = 0;
-    if(brokerSummary.topicsForDatasource) {
-      for (let browseEntry of brokerSummary.topicsForDatasource) {
+    if (brokerSummary.topicsForDatasource) {
+      for (const browseEntry of brokerSummary.topicsForDatasource) {
         this.totalNumberOfEvents += browseEntry.size;
         if (browseEntry.value.startsWith('ENRICH/MORE')) {
           this.totalMore += browseEntry.size;
@@ -272,13 +268,13 @@ export class DashboardComponent implements OnInit {
 
   getViewsUrl () {
 
-    let encodedURL = encodeURIComponent('{"library":"HighCharts","chartDescription":{"queries":[{"name":"Monthly views","type":"line","query":{"name":"usagestats.views.monthly", "parameters":["' + this.piwik.openaireId + '"], "profile":"OpenAIRE All-inclusive" }}],"chart":{"backgroundColor":"#FFFFFFFF","borderColor":"#335cadff","borderRadius":0,"borderWidth":0,"plotBorderColor":"#ccccccff","plotBorderWidth":0},"title":{"text":""},"subtitle":{},"yAxis":{"title":{"text":"Monthly views"}},"xAxis":{"title":{}},"lang":{"noData":"No Data available for the Query"},"exporting":{"enabled":false},"plotOptions":{"series":{"dataLabels":{"enabled":false}}},"legend":{"enabled":false},"credits":{"href":null,"enabled":true,"text":"Created by OpenAIRE via HighCharts"}}}');
+    const encodedURL = encodeURIComponent('{"library":"HighCharts","chartDescription":{"queries":[{"name":"Monthly views","type":"line","query":{"name":"usagestats.views.monthly", "parameters":["' + this.piwik.openaireId + '"], "profile":"OpenAIRE All-inclusive" }}],"chart":{"backgroundColor":"#FFFFFFFF","borderColor":"#335cadff","borderRadius":0,"borderWidth":0,"plotBorderColor":"#ccccccff","plotBorderWidth":0},"title":{"text":""},"subtitle":{},"yAxis":{"title":{"text":"Monthly views"}},"xAxis":{"title":{}},"lang":{"noData":"No Data available for the Query"},"exporting":{"enabled":false},"plotOptions":{"series":{"dataLabels":{"enabled":false}}},"legend":{"enabled":false},"credits":{"href":null,"enabled":true,"text":"Created by OpenAIRE via HighCharts"}}}');
     this.viewsUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${this.repoMetrics.diagramsBaseURL}chart?json=${encodedURL}`);
   }
 
   getDownloadsUrl () {
 
-    let encodedURL = encodeURIComponent('{"library":"HighCharts","chartDescription":{"queries":[{"name":"Monthly downloads","type":"line","query":{"name":"usagestats.downloads.monthly", "parameters":["' + this.piwik.openaireId + '"], "profile":"OpenAIRE All-inclusive" }}],"chart":{"backgroundColor":"#FFFFFFFF","borderColor":"#335cadff","borderRadius":0,"borderWidth":0,"plotBorderColor":"#ccccccff","plotBorderWidth":0},"title":{"text":""},"subtitle":{},"yAxis":{"title":{"text":"Monthly downloads"}},"xAxis":{"title":{}},"lang":{"noData":"No Data available for the Query"},"exporting":{"enabled":false},"plotOptions":{"series":{"dataLabels":{"enabled":false}}},"legend":{"enabled":false},"credits":{"href":null,"enabled":true,"text":"Created by OpenAIRE via HighCharts"}}}');
+    const encodedURL = encodeURIComponent('{"library":"HighCharts","chartDescription":{"queries":[{"name":"Monthly downloads","type":"line","query":{"name":"usagestats.downloads.monthly", "parameters":["' + this.piwik.openaireId + '"], "profile":"OpenAIRE All-inclusive" }}],"chart":{"backgroundColor":"#FFFFFFFF","borderColor":"#335cadff","borderRadius":0,"borderWidth":0,"plotBorderColor":"#ccccccff","plotBorderWidth":0},"title":{"text":""},"subtitle":{},"yAxis":{"title":{"text":"Monthly downloads"}},"xAxis":{"title":{}},"lang":{"noData":"No Data available for the Query"},"exporting":{"enabled":false},"plotOptions":{"series":{"dataLabels":{"enabled":false}}},"legend":{"enabled":false},"credits":{"href":null,"enabled":true,"text":"Created by OpenAIRE via HighCharts"}}}');
     this.downloadsUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${this.repoMetrics.diagramsBaseURL}chart?json=${encodedURL}`);
   }
 

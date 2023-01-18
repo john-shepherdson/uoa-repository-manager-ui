@@ -6,7 +6,7 @@ import {Subject} from 'rxjs/internal/Subject';
 export class SharedService {
 
   private repositoryCopy: Repository;
-  private repository: Subject<Repository> = new Subject<Repository>();
+  public repository: Subject<Repository> = new Subject<Repository>();
 
   private repositoriesOfUserCopy: RepositorySnippet[];
   private repositoriesOfUser: Subject<RepositorySnippet[]> = new Subject<RepositorySnippet[]>();
