@@ -347,45 +347,39 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   }
 
   saveNewInterfaces() {
-    console.log('saving Interfaces');
-    for (let i = 0; i < this.interfacesArray.length; i++) {
-      console.log(i);
-      this.interfacesArray[i].saveInterface();
+    if (this.repoInterfaces && (this.repoInterfaces.length > 0)) {
+      from(this.repoInterfaces).pipe(
+        concatMap(intrf => {
+          if (intrf.id) {
+            let req;
+            if (this.interfacesToDelete.some(id => id === intrf.id)) {
+              req = this.repoService.deleteInterface(intrf.id, this.repo.registeredby);
+            } else {
+              // console.log('comments', intrf.comments);
+              req = this.repoService.updateInterface(this.repo.id, this.repo.registeredby, intrf.comments, intrf);
+            }
+            return req;
+          } else {
+            // console.log('comments', intrf.comments);
+            return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby, intrf.comments, intrf);
+          }
+        })
+      ).subscribe(
+        res => console.log('after save interfaces', JSON.stringify(res)),
+        er => {
+          console.log(er);
+          this.loadingMessage = '';
+          this.errorMessage = 'Not all changes were saved. Please try again';
+          window.scrollTo(1, 1);
+        },
+        () => {
+          this.loadingMessage = '';
+          this.datasourceId = null;
+          this.repo = null;
+          this.repoInterfaces = [];
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=finish`);
+        }
+      );
     }
-    this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=finish`);
-    // if (this.repoInterfaces && (this.repoInterfaces.length > 0)) {
-    //   from(this.repoInterfaces).pipe(
-    //     concatMap(intrf => {
-    //       if (intrf.id) {
-    //         let req;
-    //         if (this.interfacesToDelete.some(id => id === intrf.id)) {
-    //           req = this.repoService.deleteInterface(intrf.id, this.repo.registeredby);
-    //         } else {
-    //           // console.log('comments', intrf.comments);
-    //           req = this.repoService.updateInterface(this.repo.id, this.repo.registeredby, intrf.comments, intrf);
-    //         }
-    //         return req;
-    //       } else {
-    //         // console.log('comments', intrf.comments);
-    //         return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby, intrf.comments, intrf);
-    //       }
-    //     })
-    //   ).subscribe(
-    //     res => console.log('after save interfaces', JSON.stringify(res)),
-    //     er => {
-    //       console.log(er);
-    //       this.loadingMessage = '';
-    //       this.errorMessage = 'Not all changes were saved. Please try again';
-    //       window.scrollTo(1, 1);
-    //     },
-    //     () => {
-    //       this.loadingMessage = '';
-    //       this.datasourceId = null;
-    //       this.repo = null;
-    //       this.repoInterfaces = [];
-    //       this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=finish`);
-    //     }
-    //   );
-    // }
   }
 }
