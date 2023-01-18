@@ -58,7 +58,8 @@
 
       <div class="uk-margin-medium-top">
         <label class="">Current Compatibility Level</label>
-        <div>{{repoInterfaceForm.get('compatibilityLevel').value ? this.compClasses[repoInterfaceForm.get('compatibilityLevel').value] : 'not available' }}</div>
+        <div>{{(repoInterfaceForm.get('compatibilityLevel').value && repoInterfaceForm.get('compatibilityLevel').value !== 'UNKNOWN')
+          ? this.compClasses[repoInterfaceForm.get('compatibilityLevel').value] : 'not available' }}</div>
       </div>
 
       <div class="uk-margin-medium-top">
@@ -73,7 +74,7 @@
 
     </div>
 
-    <pre>{{repoInterfaceForm.value | json}}</pre>
+<!--    <pre>{{repoInterfaceForm.value | json}}</pre>-->
 
   </div>
 </div>
