@@ -77,7 +77,6 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
         this.repoInterfaceForm.get('compatibilityLevelOverride').setValue(this.currentInterface.compatibilityOverride);
         this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
           res => {
-            console.log(res);
             if (res !== null) {
               this.repoInterfaceForm.get('desiredCompatibilityLevel').setValue(res['desiredCompatibilityLevel']);
             }
@@ -191,6 +190,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   saveInterface() {
     this.errorMessage = '';
     this.successMessage = '';
+    console.log('saving interface: ' + this.currentInterface?.id);
     if (this.formIsValid()) {
       const baseurl = this.repoInterfaceForm.get('baseurl').value;
       let valset = '';
