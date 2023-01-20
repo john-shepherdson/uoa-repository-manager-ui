@@ -43,7 +43,7 @@
         <div class="md-input-wrapper md-input-filled">
           <label style="top: -16px;" class="">Select country</label>
           <select class="md-input" (change)="getReposInCountry($event.target.value)">
-            <option value="" disabled>-- none selected --</option>
+            <option value="" disabled selected>-- none selected --</option>
             <option *ngFor="let country of countries; let i = index" value="{{ i }}">{{ country.name ? country.name :
               country.code }}
             </option>

@@ -51,6 +51,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   commentDesc: Description = commentDesc;
 
   identifiedBaseUrl: boolean;
+  canEdit = true;
   showIdentifiedBaseUrl: boolean;
   valsetList: string[] = [];
   existingCompLevel: string;
@@ -72,7 +73,10 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       // this.chooseValSet(true);
       if (this.data[3]) {
         this.currentInterface = this.data[3];
-        this.repoInterfaceForm.get('baseurl').setValue(this.currentInterface.baseurl);
+        if (this.currentInterface.baseurl !== null && this.currentInterface.baseurl !== '') {
+          this.canEdit = false;
+          this.repoInterfaceForm.get('baseurl').setValue(this.currentInterface.baseurl);
+        }
         this.repoInterfaceForm.get('compatibilityLevel').setValue(this.currentInterface.compatibility);
         this.repoInterfaceForm.get('compatibilityLevelOverride').setValue(this.currentInterface.compatibilityOverride);
         this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
@@ -182,7 +186,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       }
     } else {
       this.successMessage = '';
-      this.interfaceToExport = null;
+      // this.interfaceToExport = null;
     }
 
   }
@@ -190,7 +194,6 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   saveInterface() {
     this.errorMessage = '';
     this.successMessage = '';
-    console.log('saving interface: ' + this.currentInterface?.id);
     if (this.formIsValid()) {
       const baseurl = this.repoInterfaceForm.get('baseurl').value;
       let valset = '';
@@ -201,7 +204,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       if (this.repoInterfaceForm.get('compatibilityLevel').value) {
         // this.existingCompLevel = this.compClasses[this.repoInterfaceForm.get('compatibilityLevel').value];
         // console.log('this.existingCompLevel is', this.existingCompLevel);
-        desiredCompLvl = this.repoInterfaceForm.get('compatibilityLevel').value;
+        this.currentInterface.desiredCompatibilityLevel = this.repoInterfaceForm.get('desiredCompatibilityLevel').value;
+        desiredCompLvl = this.repoInterfaceForm.get('desiredCompatibilityLevel').value;
       }
       const compLvl = this.existingCompLevel;
       let comment = '';
@@ -212,10 +216,10 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
       if (this.currentInterface) {
         this.updateCurrent(baseurl, valset, desiredCompLvl, compLvl, comment);
       } else {
-        this.addCurrent(baseurl, valset, compLvl, comment);
+        this.addCurrent(baseurl, valset, desiredCompLvl, compLvl, comment);
       }
     } else {
-      this.interfaceToExport = null;
+      // this.interfaceToExport = null;
       this.errorMessage = 'Please make sure all required fields are filled with acceptable values.';
     }
   }
@@ -251,33 +255,33 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     }
   }
 
-  addCurrent (baseurl: string, valset: string, compLvl: string, comment: string) {
+  addCurrent (baseurl: string, valset: string, desiredCompLvl: string, compLvl: string, comment: string) {
     console.log('add current');
-    const currentInterface = new RepositoryInterface();
-    this.updateValidationSet(currentInterface, valset);
-    currentInterface.baseurl = baseurl;
-    currentInterface.compatibilityOverride = compLvl;
-    currentInterface.compatibility = compLvl;
-    currentInterface.typology = this.currentRepo.datasourceClass;
-    currentInterface.comments = comment;
+    this.currentInterface = new RepositoryInterface();
+    this.updateValidationSet(this.currentInterface, valset);
+    this.currentInterface.baseurl = baseurl;
+    this.currentInterface.desiredCompatibilityLevel = desiredCompLvl;
+    this.currentInterface.compatibility = compLvl;
+    this.currentInterface.typology = this.currentRepo.datasourceClass;
+    this.currentInterface.comments = comment;
 
     if (!this.inRegister) {
-      this.addInterface(currentInterface);
+      this.addInterface(this.currentInterface);
     } else {
       this.successMessage = 'The harvesting settings are valid!';
       console.log('SAVED !');
-      this.interfaceToExport = currentInterface;
+      this.interfaceToExport = this.currentInterface;
     }
   }
 
   addInterface(newInterface: RepositoryInterface) {
     this.loadingMessage = formSubmitting;
     this.repoService.addInterface(this.currentRepo.datasourceType, this.currentRepo.id,
-                                  this.currentRepo.registeredBy, this.currentRepo.comments, newInterface,
+                                  this.currentRepo.registeredBy, this.currentRepo.comments, this.currentInterface,
                                   this.repoInterfaceForm.get('desiredCompatibilityLevel').value).subscribe(
       addedInterface => {
         console.log(`addInterface responded ${JSON.stringify(addedInterface)}`);
-        this.currentInterface = addedInterface;
+        // this.currentInterface = addedInterface;
       },
       error => {
         console.log(error);
@@ -302,7 +306,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     console.log('update current');
     this.updateValidationSet(this.currentInterface, valset);
     this.currentInterface.baseurl = baseurl;
-    this.currentInterface.compatibilityOverride = compLvl;
+    this.currentInterface.desiredCompatibilityLevel = desiredCompLvl;
     this.currentInterface.compatibility = compLvl;
     this.currentInterface.typology = this.currentRepo.datasourceClass;
     this.currentInterface.comments = comment;
