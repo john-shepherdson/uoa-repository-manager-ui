@@ -246,10 +246,10 @@ export class RegisterNewDatasourceComponent implements OnInit {
         concatMap(intrf => {
           if (intrf.id) {
             // console.log('comments', intrf.comments);
-            return this.repoService.updateInterface(this.repo.id, this.repo.registeredby, intrf.comments, intrf);
+            return this.repoService.updateInterface(this.repo.id, this.repo.registeredby, intrf.comments, intrf, intrf.desiredCompatibilityLevel);
           } else {
             // console.log('comments', intrf.comments);
-            return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby, intrf.comments, intrf);
+            return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby, intrf.comments, intrf, intrf.desiredCompatibilityLevel);
           }
         })
       ).subscribe(

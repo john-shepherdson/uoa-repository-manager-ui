@@ -225,7 +225,7 @@ export class ApiDetails {
 }
 
 export class RepositoryInterface extends ApiDetails {
-
+ desiredCompatibilityLevel: string;
 }
 
 export class ApiParamDetails {

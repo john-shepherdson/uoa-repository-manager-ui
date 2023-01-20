@@ -356,12 +356,14 @@ export class RegisterExistingDatasourceComponent implements OnInit {
               req = this.repoService.deleteInterface(intrf.id, this.repo.registeredby);
             } else {
               // console.log('comments', intrf.comments);
-              req = this.repoService.updateInterface(this.repo.id, this.repo.registeredby, intrf.comments, intrf);
+              req = this.repoService.updateInterface(this.repo.id, this.repo.registeredby,
+                                                      intrf.comments, intrf, intrf.desiredCompatibilityLevel);
             }
             return req;
           } else {
             // console.log('comments', intrf.comments);
-            return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby, intrf.comments, intrf);
+            return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby,
+                                                  intrf.comments, intrf, intrf.desiredCompatibilityLevel);
           }
         })
       ).subscribe(
