@@ -25,7 +25,7 @@ export class AuthenticationService {
   public isLoggedIn_ = new BehaviorSubject(false);
 
   public get isLoggedIn() {
-    return this.isLoggedIn_.asObservable();
+    return this.isLoggedIn_;
   }
 
   public loginWithState() {
