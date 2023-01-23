@@ -56,28 +56,31 @@
   <form class="" [formGroup]="agreementForm">
     <div formArrayName="terms">
       <table class="table">
-        <tr>
-          Thanks for being part of OpenAIRE. Please confirm the acceptance of our datasources policy.
-        </tr>
+        <tr>Thanks for being part of OpenAIRE. Please confirm the acceptance of our datasources policy.</tr>
         <br>
-        <tr>
-          Being registered in OpenAIRE, you are giving consent to OpenAIRE to download, transform and enrich the metadata records, publishing them in the OpenAIRE Research Graph.
+        <tr>Being registered in OpenAIRE, you are giving consent to OpenAIRE to download, transform and enrich the
+          metadata records, publishing them in the OpenAIRE Research Graph.
         </tr>
         <tbody>
         <tr class="el-item" *ngFor="let term of terms.controls; let i=index">
           <br> {{term.get('name').value}} <br>
           <div [formGroupName]="i">
             <label>
-              <input id="consentTerms" type="checkbox" formControlName="consentTermsOfUse"> Accept the <a href="https://www.openaire.eu/terms-of-use-for-content-providers" target="_blank">Terms of Use</a>
+              <input id="consentTerms" type="checkbox" formControlName="consentTermsOfUse">
+              Accept the <a href="https://www.openaire.eu/terms-of-use-for-content-providers" target="_blank">Terms of Use</a>
             </label>
             <br>
             <label>
-              <input id="consentText" type="checkbox" formControlName="fullTextDownload"> Agree to the <a href="https://www.openaire.eu/terms-of-use-for-content-providers#consent" target="_blank">re-use of full texts</a>
+              <input id="consentText" type="checkbox" formControlName="fullTextDownload">Agree to the
+              <a href="https://www.openaire.eu/terms-of-use-for-content-providers#consent" target="_blank">
+              re-use of full texts</a>
             </label>
           </div>
         </tr>
         </tbody>
-        <p class="uk-text-meta">Note: OpenAIRE will not provide the full text files for public distribution, the users will access from the original datasource.</p>
+        <p class="uk-text-meta">Note: OpenAIRE will not provide the full text files for public distribution,
+          the users will access from the original datasource.
+        </p>
       </table>
     </div>
   </form>

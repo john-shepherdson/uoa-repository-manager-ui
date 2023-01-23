@@ -1,14 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
-import { AuthenticationService } from './services/authentication.service';
-import { environment } from '../environments/environment';
-import { MatomoTracker } from 'ngx-matomo';
-import { ConfirmationDialogComponent } from './shared/reusablecomponents/confirmation-dialog.component';
-import { RepositoryService } from './services/repository.service';
-import {RepositorySnippet, TermsOfUse} from './domain/typeScriptClasses';
-import {FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
-import {element} from 'protractor';
-import {timeout, timestamp} from 'rxjs/operators';
+import {NavigationEnd, Router} from '@angular/router';
+import {AuthenticationService} from './services/authentication.service';
+import {environment} from '../environments/environment';
+import {MatomoTracker} from 'ngx-matomo';
+import {ConfirmationDialogComponent} from './shared/reusablecomponents/confirmation-dialog.component';
+import {RepositoryService} from './services/repository.service';
+import {RepositorySnippet} from './domain/typeScriptClasses';
+import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
 
 @Component({
   selector: 'oa-repo-manager',
@@ -32,11 +30,8 @@ export class AppComponent implements OnInit {
 
   open: boolean = true;
 
-  constructor(private router: Router,
-              private authService: AuthenticationService,
-              private matomoTracker: MatomoTracker,
-              private repositoryService: RepositoryService,
-              private fb: FormBuilder) {
+  constructor(private router: Router, private authService: AuthenticationService, private matomoTracker: MatomoTracker,
+              private repositoryService: RepositoryService, private fb: FormBuilder) {
 
     // console.log('21-06-2019. Fixed matomo to log userIds?');
 
@@ -56,33 +51,6 @@ export class AppComponent implements OnInit {
     this.authService.tryLogin();
   }
 
-  getReposOfUser(): void {
-      this.repositoryService.getRepositoriesSnippetsOfUser().subscribe(
-        repos => {
-          this.reposOfUser = repos;
-        },
-        error => {
-          console.log(error);
-        },
-        () => {
-          // console.log(this.reposOfUser);
-          this.reposOfUser.forEach(repo => {
-            if (repo.consentTermsOfUse === null || repo.fullTextDownload === null) {
-              this.addTerm(repo.officialname, repo.id, repo.consentTermsOfUse);
-              this.isModalShown = true;
-            }
-          });
-        }
-      );
-  }
-
-  updateTerms() {
-    this.repositoryService.updateRepositoriesTerms(this.agreementForm.value.terms).subscribe(
-      res => {},
-      err => {console.log(err)}
-    );
-  }
-
   ngOnInit() {
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
@@ -95,10 +63,39 @@ export class AppComponent implements OnInit {
     });
 
     this.authService.isLoggedIn.subscribe(
-      logged => {if(logged){this.getReposOfUser()}},
-      error => {console.log(error)}
+      logged => {if (logged) {this.getReposOfUser(); }},
+      error => {console.log(error); }
     );
 
+  }
+
+  getReposOfUser(): void {
+      this.repositoryService.getRepositoriesSnippetsOfUser().subscribe(
+        repos => {
+          this.reposOfUser = repos;
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          // console.log(this.reposOfUser);
+          if (this.agreementForm.get('terms').value.length === 0) {
+            this.reposOfUser.forEach(repo => {
+              if (repo.consentTermsOfUse === null || repo.fullTextDownload === null) {
+                this.addTerm(repo.officialname, repo.id, repo.consentTermsOfUse);
+                this.isModalShown = true;
+              }
+            });
+          }
+        }
+      );
+  }
+
+  updateTerms() {
+    this.repositoryService.updateRepositoriesTerms(this.agreementForm.value.terms).subscribe(
+      res => {},
+      err => {console.log(err); }
+    );
   }
 
   addTerm(name: string, id: string, consent: boolean) {

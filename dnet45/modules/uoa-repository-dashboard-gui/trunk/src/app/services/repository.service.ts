@@ -33,7 +33,8 @@ export class RepositoryService {
 
   constructor(private httpClient: HttpClient) { }
 
-  addInterface(datatype: string, repoId: string, registeredBy: string, comment: string, newInterface: RepositoryInterface, desiredCompatibilityLevel?: string): Observable<RepositoryInterface> {
+  addInterface(datatype: string, repoId: string, registeredBy: string, comment: string,
+               newInterface: RepositoryInterface, desiredCompatibilityLevel: string): Observable<RepositoryInterface> {
     let url;
     comment = newInterface.comments; // temp fix for emailing comment
     if (comment == null || comment === '') {
@@ -46,7 +47,8 @@ export class RepositoryService {
     return this.httpClient.post<RepositoryInterface>(url, newInterface, headerOptions);
   }
 
-  updateInterface(repoId: string, registeredBy: string, comment: string, interfaceInfo: RepositoryInterface, desiredCompatibilityLevel?: string): Observable<RepositoryInterface> {
+  updateInterface(repoId: string, registeredBy: string, comment: string, interfaceInfo: RepositoryInterface,
+                  desiredCompatibilityLevel?: string): Observable<RepositoryInterface> {
     let url;
     comment = interfaceInfo.comments; // temp fix for emailing comment
     if (comment == null || comment === '') {
