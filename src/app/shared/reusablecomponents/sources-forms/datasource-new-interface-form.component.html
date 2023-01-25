@@ -48,7 +48,11 @@
       </div>
 
       <div class="md-input-wrapper md-input-filled uk-margin-medium-top">
-        <label style="top: -16px" class="" for="compLvl" title="{{ compatibilityLevelDesc.desc }}">Desired Compatibility Level (*)</label>
+        <div>
+          <label class="" for="compLvl" title="{{ compatibilityLevelDesc.desc }}">Select the Guidelines with which your data source is compatible.
+            Please note that the Aggregation Team will evaluate the compatibility, so the actual compliance level may be different from which you chose.
+          </label>
+        </div>
         <select class="md-input" id="compLvl" formControlName="desiredCompatibilityLevel" (change)="checkIfValid()">
           <option value="">-- none selected --</option>
           <option *ngFor="let key of classCodes" value="{{key}}">{{compClasses[key]}}</option>
@@ -57,14 +61,14 @@
       </div>
 
       <div class="uk-margin-medium-top">
-        <label class="">Current Compatibility Level</label>
-        <div>{{(repoInterfaceForm.get('compatibilityLevel').value && repoInterfaceForm.get('compatibilityLevel').value !== 'UNKNOWN')
+        <label class="">Compatible level returned by the Validator tool after your request to register the interface.</label>
+        <div class="uk-margin-small-top">{{(repoInterfaceForm.get('compatibilityLevel').value && repoInterfaceForm.get('compatibilityLevel').value !== 'UNKNOWN')
           ? this.compClasses[repoInterfaceForm.get('compatibilityLevel').value] : 'not available' }}</div>
       </div>
 
       <div class="uk-margin-medium-top">
-        <label class="">Compatibility Level Override</label>
-        <div>{{repoInterfaceForm.get('compatibilityLevelOverride').value ? this.compClasses[repoInterfaceForm.get('compatibilityLevelOverride').value] : 'not available' }}</div>
+        <label class="">Actual compatibility level of your data source, according to the validation process by the Aggregation Team. This is the compatibility level displayed on the data source public page in EXPLORE</label>
+        <div class="uk-margin-small-top">{{repoInterfaceForm.get('compatibilityLevelOverride').value ? this.compClasses[repoInterfaceForm.get('compatibilityLevelOverride').value] : 'not available' }}</div>
       </div>
 
       <div class="uk-margin-medium-top">
