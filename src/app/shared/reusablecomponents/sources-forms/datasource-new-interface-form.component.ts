@@ -52,7 +52,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
 
   identifiedBaseUrl: boolean;
   canEdit = true;
-  showIdentifiedBaseUrl: boolean;
+  showIdentifiedBaseUrl: boolean = null;
   valsetList: string[] = [];
   existingCompLevel: string;
   classCodes: string[] = [];
