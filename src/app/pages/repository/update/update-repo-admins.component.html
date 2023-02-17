@@ -44,7 +44,7 @@
 </div>
 
 <confirmation-dialog #deleteRepositoryAdminModal [title]="'Remove datasource admin'" [isModalShown]="isDeleteModalShown"
-                     [confirmButNotCloseButton]="'Remove'" (emitObject)="deleteRepoAdmin($event)">
+                     [confirmButNotCloseButton]="'Remove'" (emitObject)="deleteRepoAdmin($event)" (clearAll)="clearModal()">
 
   <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{modalErrorMessage}}</div>
 
@@ -54,13 +54,6 @@
     </div>
     <div class="whiteFilm"></div>
   </div>
-
-  <!--<div *ngIf="!modalLoadingMessage && !modalErrorMessage">-->
-
-    <!--<div *ngIf="selectedAdminForDelete">-->
-      <!--<h6>Are you sure you want to delete {{ selectedAdminForDelete.email }} from the list of repository admins?</h6>-->
-    <!--</div>-->
-  <!--</div>-->
   <div *ngIf="selectedAdminForDelete">
     <h6>Are you sure you want to remove this user admin?</h6>
     <pre>
@@ -75,7 +68,7 @@
 
 
 <confirmation-dialog #addRepositoryAdminModal [title]="'Add new datasource admin'" [isModalShown]="isAddModalShown"
-                     [confirmButNotCloseButton]="'Submit'" (emitObject)="addRepositoryAdmin()">
+                     [confirmButNotCloseButton]="'Submit'" (emitObject)="addRepositoryAdmin()" (clearAll)="clearModal()">
 
   <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{modalErrorMessage}}</div>
 

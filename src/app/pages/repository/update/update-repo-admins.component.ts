@@ -73,10 +73,9 @@ export class UpdateRepoAdminsComponent implements OnChanges {
     }
   }
 
-  closeDeletionModal() {
+  clearModal() {
     this.selectedAdminForDelete = null;
-    this.deleteRepositoryAdminModal.hideModal();
-    // UIkit.modal('#deletionModal').hide();
+    this.modalErrorMessage = null;
   }
 
   deleteRepoAdmin(event: any) {
@@ -128,11 +127,11 @@ export class UpdateRepoAdminsComponent implements OnChanges {
       }, error => {
         console.log('Error adding repository admin', error);
         this.modalLoadingMessage = '';
-        if(error.status === 404) {
+        if (error.status === 404) {
           this.modalErrorMessage = 'This email address is not associated with an OpenAIRE user account.\n' +
             'Please make sure the user has an OpenAIRE account and then try again.';
         } else {
-          this.modalErrorMessage = 'Error deleting the user admin, please try again. If the error persists, ' +
+          this.modalErrorMessage = 'Error adding the new admin, please try again. If the error persists, ' +
             'please contact helpdesk@openaire.eu';
         }
       },

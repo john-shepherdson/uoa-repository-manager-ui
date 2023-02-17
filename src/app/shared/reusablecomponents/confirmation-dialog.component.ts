@@ -24,6 +24,7 @@ export class ConfirmationDialogComponent {
   @Input() public hideModalButton: string = 'Cancel';
 
   @Output() emitObject: EventEmitter<any> = new EventEmitter();
+  @Output() clearAll: EventEmitter<any> = new EventEmitter();
 
   private _ids: string[] = [];
 
@@ -37,6 +38,7 @@ export class ConfirmationDialogComponent {
 
   public hideModal(): void {
     this.isModalShown = false;
+    this.clearAll.emit();
     // this.autoShownModal.hide();
   }
 
