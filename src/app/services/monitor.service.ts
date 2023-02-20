@@ -30,11 +30,10 @@ export class MonitorService {
 
   getJobsOfUser(params: URLParameter[]): Observable<JobsOfUser> {
     let url = `${this.apiUrl}getJobsOfUser`;
-    for (const param of params) {
-      if (param.key === 'offset') {
-        url += `?${param.key}=${param.value[0]}`;
-      } else {
-        url += `&${param.key}=${param.value[0]}`;
+    if ( params.length > 0 ) {
+      url += `?`
+      for (const param of params) {
+        url += `${param.key}=${param.value[0]}&`; // An ending "&" in the url does no cause any issues.
       }
     }
     console.log(`knocking on: ${url}`);
