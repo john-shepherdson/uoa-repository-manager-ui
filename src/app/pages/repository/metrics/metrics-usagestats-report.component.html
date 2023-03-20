@@ -42,7 +42,7 @@
 
                 <div class="md-input-wrapper md-input-filled uk-margin-bottom">
                   <label>Release</label>
-                  <input class="md-input label-fixed" type="text" value="4" disabled>
+                  <input class="md-input label-fixed" type="text" value="{{reportType}}" disabled>
                   <span class="md-input-bar "></span>
                 </div>
 
@@ -122,7 +122,32 @@
 
                 </div>
 
-                <div *ngIf="chosen_report == 'IR1' || chosen_report == 'RR1' || chosen_report == 'JR1'">
+                <div *ngIf="chosen_report == 'PR' || chosen_report == 'IR' || chosen_report == 'DSR'">
+                  <h5>Metric Type</h5>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Total_Item_Requests" (change)="updateTotalItemRequests($event)"> Total Item Requests
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Total_Item_Investigations" (change)="updateTotalItemInvestigations($event)"> Total Item Investigations
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Item_Requests" (change)="updateUniqueItemRequests($event)"> UniqueItem Requests
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Item_Investigations" (change)="updateUniqueItemInvestigations($event)"> Unique Item Investigations
+                    </label>
+                  </div>
+                </div>
+
+                <div *ngIf="chosen_report == 'IR1' || chosen_report == 'RR1' || chosen_report == 'JR1'
+                            || chosen_report == 'PR' || chosen_report == 'IR'">
 
                   <div class="uk-text-italic uk-margin-top uk-margin-bottom">
                     <p>Optional filter to only show results for a single item type, e.g. article, book, etc.</p>
@@ -130,7 +155,7 @@
 
                   <div class="md-input-wrapper md-input-filled">
                     <label class="">Item Data Type</label>
-                    <select class="md-input" name="ItemDataType" (change)="updateItemDataType($event)">
+                    <select class="md-input label-fixed" name="ItemDataType" (change)="updateItemDataType($event)">
                       <!-- TODO: get the list from api if it becomes available -->
                       <option value="">--- Select Item Data Type ---</option>
                       <option value="Annotation">Annotation</option>

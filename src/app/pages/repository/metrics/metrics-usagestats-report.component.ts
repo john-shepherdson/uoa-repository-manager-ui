@@ -26,9 +26,14 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   chosen_report: string;
 
   userEmail: string;
+  reportType: string;
   beginDate = '';
   endDate = '';
   itemIdentifier = '';
+  totalItemRequests = null;
+  totalItemInvestigations = null;
+  uniqueItemRequests = null;
+  uniqueItemInvestigations = null;
   itemDataType = '';
   granularity = 'Monthly';
 
@@ -73,6 +78,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
 
   getParams() {
     // this.repoId = this.route.snapshot.paramMap.get('id');
+    this.reportType = this.route.snapshot.paramMap.get('reportType').slice(1, 2);
     this.chosen_report = this.route.snapshot.paramMap.get('reportID');
     this.shownRepoId = this.convertToDisplayedFormat(this.repo.id);
     console.log(`shownRepoId is ${this.repo.id}`);
@@ -135,6 +141,38 @@ export class MetricsUsagestatsReportComponent implements OnInit {
 
   updateUseCurrentRepo(event: any) {
     this.useCurrentRepo = event.target.value;
+  }
+
+  updateTotalItemRequests(event: any) {
+    if (event.target.checked) {
+      this.totalItemRequests = event.target.value;
+    } else {
+      this.totalItemRequests = null;
+    }
+  }
+
+  updateUniqueItemRequests(event: any) {
+    if (event.target.checked) {
+      this.uniqueItemRequests = event.target.value;
+    } else {
+      this.uniqueItemRequests = null;
+    }
+  }
+
+  updateTotalItemInvestigations(event: any) {
+    if (event.target.checked) {
+      this.totalItemInvestigations = event.target.value;
+    } else {
+      this.totalItemInvestigations = null;
+    }
+  }
+
+  updateUniqueItemInvestigations(event: any) {
+    if (event.target.checked) {
+      this.uniqueItemInvestigations = event.target.value;
+    } else {
+      this.uniqueItemInvestigations = null;
+    }
   }
 
   goToReport() {
