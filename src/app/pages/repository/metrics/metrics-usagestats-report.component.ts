@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RepositoryService } from '../../../services/repository.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { loadingRepoMessage } from '../../../domain/shared-messages';
-import { SharedService } from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'metrics-usagestats-report',
@@ -26,10 +26,11 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   chosen_report: string;
 
   userEmail: string;
-  reportType: string;
+  release: string;
   beginDate = '';
   endDate = '';
   itemIdentifier = '';
+  datasetIdentifier = null;
   totalItemRequests = null;
   totalItemInvestigations = null;
   uniqueItemRequests = null;
@@ -45,7 +46,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.sharedService.getRepository()) {
+    if (this.sharedService.getRepository()) {
       this.repo = this.sharedService.getRepository();
       this.getInfo();
     }
@@ -57,11 +58,11 @@ export class MetricsUsagestatsReportComponent implements OnInit {
       }
     );
 
-    let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("top_bar_active");   //remove the class
-    body.classList.remove("page_heading_active");
-    body.classList.remove("landing");
-    body.classList.add("dashboard");
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove('top_bar_active');   // remove the class
+    body.classList.remove('page_heading_active');
+    body.classList.remove('landing');
+    body.classList.add('dashboard');
   }
 
   getInfo() {
@@ -78,7 +79,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
 
   getParams() {
     // this.repoId = this.route.snapshot.paramMap.get('id');
-    this.reportType = this.route.snapshot.paramMap.get('reportType').slice(1, 2);
+    this.release = this.route.snapshot.paramMap.get('reportType').slice(1, 2);
     this.chosen_report = this.route.snapshot.paramMap.get('reportID');
     this.shownRepoId = this.convertToDisplayedFormat(this.repo.id);
     console.log(`shownRepoId is ${this.repo.id}`);
@@ -135,6 +136,10 @@ export class MetricsUsagestatsReportComponent implements OnInit {
     this.itemIdentifier = event.target.value;
   }
 
+  updateDatasetIdentifier(event: any) {
+    this.datasetIdentifier = event.target.value;
+  }
+
   updateGranularity(event: any) {
     this.granularity = event.target.value;
   }
@@ -181,12 +186,18 @@ export class MetricsUsagestatsReportComponent implements OnInit {
       relativeTo: this.route.parent,
       queryParams: {
         report: this.chosen_report,
+        release: this.release,
         beginDate: this.beginDate,
         endDate: this.endDate,
         repoId: this.shownRepoId,
         itemDataType: this.itemDataType,
         itemIdentifier: this.itemIdentifier,
-        granularity: this.granularity
+        datasetIdentifier: this.datasetIdentifier,
+        granularity: this.granularity,
+        totalItemRequests: this.totalItemRequests,
+        totalItemInvestigations: this.totalItemInvestigations,
+        uniqueItemRequests: this.uniqueItemRequests,
+        uniqueItemInvestigations: this.uniqueItemInvestigations
       }
     });
 

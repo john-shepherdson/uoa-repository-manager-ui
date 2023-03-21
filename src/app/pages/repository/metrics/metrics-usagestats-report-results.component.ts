@@ -37,11 +37,11 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
     this.pageSize = 10;
     this.readParams();
     this.pageSizeSelect = this.fb.group({selectPageSize: ['']});
-    let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("top_bar_active");   //remove the class
-    body.classList.remove("page_heading_active");
-    body.classList.remove("landing");
-    body.classList.add("dashboard");
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove('top_bar_active');   // remove the class
+    body.classList.remove('page_heading_active');
+    body.classList.remove('landing');
+    body.classList.add('dashboard');
   }
 
   readParams() {
@@ -49,14 +49,19 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
 
     this.route.queryParams.subscribe( qparams => {
       this.params.append('Report', qparams['report']);
-      this.params.append('Release', '4');
+      this.params.append('Release', qparams['release']);
       this.params.append('RequestorID', this.authService.getUserEmail());
       this.params.append('BeginDate', qparams['beginDate']);
       this.params.append('EndDate', qparams['endDate']);
       this.params.append('RepositoryIdentifier', qparams['repoId']);
       this.params.append('ItemIdentifier', qparams['itemIdentifier']);
+      this.params.append('DatasetIdentifier', qparams['datasetIdentifier']);
       this.params.append('ItemDataType', qparams['itemIdentifier']);
       this.params.append('Granularity', qparams['granularity']);
+      this.params.append('MetricType', qparams['totalItemRequests']);
+      this.params.append('MetricType', qparams['totalItemInvestigations']);
+      this.params.append('MetricType', qparams['uniqueItemRequests']);
+      this.params.append('MetricType', qparams['uniqueItemInvestigations']);
     });
 
     this.chosenReport = this.params.get('Report');

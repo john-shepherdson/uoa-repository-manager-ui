@@ -42,7 +42,7 @@
 
                 <div class="md-input-wrapper md-input-filled uk-margin-bottom">
                   <label>Release</label>
-                  <input class="md-input label-fixed" type="text" value="{{reportType}}" disabled>
+                  <input class="md-input label-fixed" type="text" value="{{release}}" disabled>
                   <span class="md-input-bar "></span>
                 </div>
 
@@ -112,11 +112,22 @@
                 </div>
 
 
-                <div *ngIf="chosen_report != 'JR1' && chosen_report != 'RR1'" class="">
+                <div *ngIf="chosen_report != 'JR1' && chosen_report != 'RR1' && chosen_report != 'PR'
+                      && chosen_report != 'PR_P1' && chosen_report != 'DSR'">
                   <div class="md-input-wrapper md-input-filled uk-margin-bottom">
                     <label>Item Identifier</label>
-                    <input class="md-input label-fixed" name="ItemIdentifier" placeholder="e.g. openaire:od_________::fb90de6f20d79783d05749d8f60417d5"
+                    <input class="md-input label-fixed" name="ItemIdentifier" placeholder="e.g. doi:10.xyz/12345"
                            type="text" (blur)="updateItemIdentifier($event)">
+                    <span class="md-input-bar "></span>
+                  </div>
+
+                </div>
+
+                <div *ngIf="chosen_report == 'DSR'">
+                  <div class="md-input-wrapper md-input-filled uk-margin-bottom">
+                    <label>Dataset Identifier</label>
+                    <input class="md-input label-fixed" name="DatasetIdentifier" placeholder="e.g. doi:10.xyz/12345"
+                           type="text" (blur)="updateDatasetIdentifier($event)">
                     <span class="md-input-bar "></span>
                   </div>
 
