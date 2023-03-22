@@ -30,11 +30,11 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   beginDate = '';
   endDate = '';
   itemIdentifier = '';
-  datasetIdentifier = null;
-  totalItemRequests = null;
-  totalItemInvestigations = null;
-  uniqueItemRequests = null;
-  uniqueItemInvestigations = null;
+  datasetIdentifier = '';
+  totalItemRequests = 'Total_Item_Requests';
+  totalItemInvestigations = 'Total_Item_Investigations';
+  uniqueItemRequests = 'Unique_Item_Requests';
+  uniqueItemInvestigations = 'Unique_Item_Investigations';
   itemDataType = '';
   granularity = 'Monthly';
 
@@ -182,6 +182,19 @@ export class MetricsUsagestatsReportComponent implements OnInit {
 
   goToReport() {
     if (!this.useCurrentRepo) { this.shownRepoId = ''; }
+    const metricTypes: string[] = [];
+    if (this.totalItemRequests !== null) {
+      metricTypes.push(this.totalItemRequests);
+    }
+    if (this.totalItemInvestigations !== null) {
+      metricTypes.push(this.totalItemRequests);
+    }
+    if (this.uniqueItemRequests !== null) {
+      metricTypes.push(this.uniqueItemRequests);
+    }
+    if (this.uniqueItemInvestigations  !== null) {
+      metricTypes.push(this.uniqueItemInvestigations);
+    }
     this.router.navigate(['usagestats-report-results'], {
       relativeTo: this.route.parent,
       queryParams: {
@@ -194,10 +207,11 @@ export class MetricsUsagestatsReportComponent implements OnInit {
         itemIdentifier: this.itemIdentifier,
         datasetIdentifier: this.datasetIdentifier,
         granularity: this.granularity,
-        totalItemRequests: this.totalItemRequests,
-        totalItemInvestigations: this.totalItemInvestigations,
-        uniqueItemRequests: this.uniqueItemRequests,
-        uniqueItemInvestigations: this.uniqueItemInvestigations
+        metricTypes: metricTypes,
+        // totalItemRequests: this.totalItemRequests,
+        // totalItemInvestigations: this.totalItemInvestigations,
+        // uniqueItemRequests: this.uniqueItemRequests,
+        // uniqueItemInvestigations: this.uniqueItemInvestigations
       }
     });
 
