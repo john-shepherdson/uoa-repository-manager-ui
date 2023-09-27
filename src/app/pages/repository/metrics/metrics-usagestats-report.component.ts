@@ -207,11 +207,11 @@ export class MetricsUsagestatsReportComponent implements OnInit {
         itemIdentifier: this.itemIdentifier,
         datasetIdentifier: this.datasetIdentifier,
         granularity: this.granularity,
-        metricTypes: metricTypes,
-        // totalItemRequests: this.totalItemRequests,
-        // totalItemInvestigations: this.totalItemInvestigations,
-        // uniqueItemRequests: this.uniqueItemRequests,
-        // uniqueItemInvestigations: this.uniqueItemInvestigations
+        // metricTypes: metricTypes,
+        totalItemRequests: this.totalItemRequests,
+        totalItemInvestigations: this.totalItemInvestigations,
+        uniqueItemRequests: this.uniqueItemRequests,
+        uniqueItemInvestigations: this.uniqueItemInvestigations
       }
     });
 
