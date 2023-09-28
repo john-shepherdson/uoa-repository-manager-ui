@@ -72,7 +72,7 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
       this.params.append('Granularity', qparams['granularity']);
       this.granularity = qparams['granularity'];
       // this.params.append('MetricType', qparams['metricTypes']);
-      if (qparams['report'] !== 'PR_1') {
+      if (qparams['report'] !== 'PR_P1') {
         if (qparams['totalItemRequests'])
           this.params.append('MetricType', qparams['totalItemRequests']);
         if (qparams['totalItemInvestigations'])

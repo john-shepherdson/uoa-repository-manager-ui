@@ -89,29 +89,29 @@
                     </thead>
                     <tbody>
                     <ng-container *ngFor="let item of r5report[reportItems]; let i=index">
-                      <tr *ngIf="chosenReport === 'DSR'; else notDsrRow">
-                        <td>{{item.Dataset_Title}}</td>
-                        <td>{{item.YOP}}</td>
-                        <td>{{item.Publisher}}</td>
-                        <td>{{item.Access_Method}}</td>
-                      </tr>
-                      <ng-template #notDsrRow>
-                        <tr>
+                      <tr>
+                        <ng-container *ngIf="chosenReport === 'DSR'; else notDsrRow">
+                          <td>{{item.Dataset_Title}}</td>
+                          <td>{{item.Publisher}}</td>
+                          <td>{{item.YOP}}</td>
+                          <td>{{item.Access_Method}}</td>
+                        </ng-container>
+                        <ng-template #notDsrRow>
                           <td>{{item.Platform}}</td>
                           <td *ngIf="chosenReport === 'PR'">{{item.Data_Type}}</td>
                           <td>{{item.Access_Method}}</td>
-                          <ng-container *ngIf="granularity === 'Totals'">
-                            <td *ngFor="let instance of item.Performance[0].Instance">
-                              {{instance.Count}}
-                            </td>
-                          </ng-container>
-                          <td class="uk-text-center" *ngIf="granularity === 'Monthly'">
-                            <a *ngIf="item?.Performance?.length > 0" (click)="displayItemPerformance(i)">
-                              {{ (selectedItemIndex === i) ? 'Hide' : 'See' }} results
-                            </a>
+                        </ng-template>
+                        <ng-container *ngIf="granularity === 'Totals'">
+                          <td *ngFor="let instance of item.Performance[0].Instance">
+                            {{instance.Count}}
                           </td>
-                        </tr>
-                      </ng-template>
+                        </ng-container>
+                        <td class="uk-text-center" *ngIf="granularity === 'Monthly'">
+                          <a *ngIf="item?.Performance?.length > 0" (click)="displayItemPerformance(i)">
+                            {{ (selectedItemIndex === i) ? 'Hide' : 'See' }} results
+                          </a>
+                        </td>
+                      </tr>
                       <tr *ngIf="(selectedItemIndex === i)">
                         <td colspan="6">
                           <div class="uk-animation-slide-top-medium uk-margin-small-top">
