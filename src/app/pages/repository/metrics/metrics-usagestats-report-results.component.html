@@ -14,7 +14,139 @@
     </aside-help-content>
 
     <!-- MIDDLE -->
-    <div class=" uk-width-expand@m">
+    <div *ngIf="release === '5'; else elseBlock" class="uk-width-expand@m">
+      <div *ngIf="errorMessage" class="uk-alert uk-alert-warning">{{errorMessage}}</div>
+      <div *ngIf="loadingMessage" class="loading-big">
+        <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+          {{ loadingMessage }}
+        </div>
+        <div class="transparentFilm"></div>
+      </div>
+      <div *ngIf="compressed; else notCompressed" class="uk-margin-top">
+        <a [href]=r5report?.Data target="_blank">Download report here</a>
+      </div>
+      <ng-template #notCompressed>
+        <div *ngIf="r5report?.[reportItems]?.length === 0" class="uk-alert uk-alert-warning">
+          Service did not find any data
+        </div>
+        <div *ngIf="r5report?.[reportItems]?.length > 0" class="md-card">
+          <div class="md-card-content large-padding">
+
+            <div class="uk-margin-bottom" data-uk-margin="">
+
+              <div class="uk-grid">
+                <div class="uk-width-4-5@m">
+                  <h3>{{ r5report?.Report_Header?.Report_Name }} Report Results</h3>
+                </div>
+<!--                <div class="uk-width-1-5@m">-->
+<!--                  <div [formGroup]="pageSizeSelect" class="md-input-wrapper md-input-filled">-->
+<!--                    <label class="">Results per page</label>-->
+<!--                    <select class="md-input" formControlName="selectPageSize" (change)="getPageSize()">-->
+<!--                      <option value="10" selected>10</option>-->
+<!--                      <option value="25">25</option>-->
+<!--                      <option value="50">50</option>-->
+<!--                      <option value="100">100</option>-->
+<!--                    </select>-->
+<!--                    <span class="md-input-bar"></span>-->
+<!--                  </div>-->
+<!--                </div>-->
+              </div>
+
+            </div>
+
+            <hr>
+
+            <div class="uk-grid uk-grid-divider" data-uk-grid-margin="">
+
+              <div class="uk-width-1-1@m uk-row-first">
+
+                <!-- RESULTS TABLE -->
+                {{chosenReport}}
+                <div class="uk-overflow-container">
+                  <table class="uk-table table_check" style="overflow-wrap: anywhere;">
+                    <thead>
+                    <tr>
+                      <ng-container *ngIf="chosenReport === 'DSR'; else notDSR">
+                        <th>Dataset Title</th>
+                        <th>Publisher</th>
+                        <th>YOP</th>
+                        <th>Access Method</th>
+                      </ng-container>
+
+                      <ng-template #notDSR>
+                        <th>Platform</th>
+                        <th *ngIf="chosenReport === 'PR'">Data type</th>
+                        <th>Access method</th>
+                      </ng-template>
+
+                      <th *ngIf="granularity === 'Monthly'">Count</th>
+                      <ng-container *ngIf="granularity === 'Totals'">
+                        <th *ngFor="let Instance of r5report[reportItems][0].Performance[0].Instance">
+                          {{Instance.MetricType}}
+                        </th>
+                      </ng-container>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <ng-container *ngFor="let item of r5report[reportItems]; let i=index">
+                      <tr *ngIf="chosenReport === 'DSR'; else notDsrRow">
+                        <td>{{item.Dataset_Title}}</td>
+                        <td>{{item.YOP}}</td>
+                        <td>{{item.Publisher}}</td>
+                        <td>{{item.Access_Method}}</td>
+                      </tr>
+                      <ng-template #notDsrRow>
+                        <tr>
+                          <td>{{item.Platform}}</td>
+                          <td *ngIf="chosenReport === 'PR'">{{item.Data_Type}}</td>
+                          <td>{{item.Access_Method}}</td>
+                          <ng-container *ngIf="granularity === 'Totals'">
+                            <td *ngFor="let instance of item.Performance[0].Instance">
+                              {{instance.Count}}
+                            </td>
+                          </ng-container>
+                          <td class="uk-text-center" *ngIf="granularity === 'Monthly'">
+                            <a *ngIf="item?.Performance?.length > 0" (click)="displayItemPerformance(i)">
+                              {{ (selectedItemIndex === i) ? 'Hide' : 'See' }} results
+                            </a>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <tr *ngIf="(selectedItemIndex === i)">
+                        <td colspan="6">
+                          <div class="uk-animation-slide-top-medium uk-margin-small-top">
+                            <table class="uk-table uk-table-middle uk-table-striped innerTable uk-margin-small-top uk-margin-small-bottom">
+                              <tr>
+                                <th>Month</th>
+                                <th *ngFor="let instance of item.Performance[0].Instance">{{instance.MetricType}}</th>
+                              </tr>
+                              <tr *ngFor="let month of item.Performance">
+                                <td>{{ month.Period.Begin_Date | date: "MMM yyyy" }}</td>
+                                <td *ngFor="let instance of month.Instance">{{ instance.Count }}</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                    </tbody>
+
+                  </table>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </ng-template>
+
+      <pre>{{r5report | json}}</pre>
+    </div>
+    <ng-template #elseBlock>
+      <div class="uk-width-expand@m">
 
       <div *ngIf="errorMessage" class="uk-alert uk-alert-warning">{{errorMessage}}</div>
       <div *ngIf="loadingMessage" class="loading-big">
@@ -364,6 +496,7 @@
       <!--</div>-->
 
     </div>
+    </ng-template>
 
     <!-- RIGHT HELP CONTENT -->
     <aside-help-content #rightHelperContent [position]="'right'"

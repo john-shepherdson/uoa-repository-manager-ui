@@ -31,11 +31,11 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   endDate = '';
   itemIdentifier = '';
   datasetIdentifier = '';
-  totalItemRequests = 'Total_Item_Requests';
-  totalItemInvestigations = 'Total_Item_Investigations';
-  uniqueItemRequests = 'Unique_Item_Requests';
-  uniqueItemInvestigations = 'Unique_Item_Investigations';
-  itemDataType = '';
+  totalItemRequests = '';
+  totalItemInvestigations = '';
+  uniqueItemRequests = '';
+  uniqueItemInvestigations = '';
+  dataType = '';
   granularity = 'Monthly';
 
   constructor(private repoService: RepositoryService,
@@ -80,6 +80,12 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   getParams() {
     // this.repoId = this.route.snapshot.paramMap.get('id');
     this.release = this.route.snapshot.paramMap.get('reportType').slice(1, 2);
+    if (this.release === '5') {
+      this.totalItemRequests = 'Total_Item_Requests';
+      this.totalItemInvestigations = 'Total_Item_Investigations';
+      this.uniqueItemRequests = 'Unique_Item_Requests';
+      this.uniqueItemInvestigations = 'Unique_Item_Investigations';
+    }
     this.chosen_report = this.route.snapshot.paramMap.get('reportID');
     this.shownRepoId = this.convertToDisplayedFormat(this.repo.id);
     console.log(`shownRepoId is ${this.repo.id}`);
@@ -129,7 +135,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   }
 
   updateItemDataType(event: any) {
-    this.itemDataType = event.target.value;
+    this.dataType = event.target.value;
   }
 
   updateItemIdentifier(event: any) {
@@ -203,7 +209,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
         beginDate: this.beginDate,
         endDate: this.endDate,
         repoId: this.shownRepoId,
-        itemDataType: this.itemDataType,
+        dataType: this.dataType,
         itemIdentifier: this.itemIdentifier,
         datasetIdentifier: this.datasetIdentifier,
         granularity: this.granularity,
