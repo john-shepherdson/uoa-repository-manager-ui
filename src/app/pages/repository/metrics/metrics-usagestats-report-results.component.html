@@ -61,7 +61,6 @@
               <div class="uk-width-1-1@m uk-row-first">
 
                 <!-- RESULTS TABLE -->
-                {{chosenReport}}
                 <div class="uk-overflow-container">
                   <table class="uk-table table_check" style="overflow-wrap: anywhere;">
                     <thead>
@@ -91,7 +90,7 @@
                     <ng-container *ngFor="let item of r5report[reportItems]; let i=index">
                       <tr>
                         <ng-container *ngIf="chosenReport === 'DSR'; else notDsrRow">
-                          <td>{{item.Dataset_Title}}</td>
+                          <td class="uk-width-1-3">{{item.Dataset_Title}}</td>
                           <td>{{item.Publisher}}</td>
                           <td>{{item.YOP}}</td>
                           <td>{{item.Access_Method}}</td>

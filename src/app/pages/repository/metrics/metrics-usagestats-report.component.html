@@ -133,7 +133,7 @@
 
                 </div>
 
-                <div *ngIf="chosen_report == 'PR' || chosen_report == 'IR' || chosen_report == 'DSR'">
+                <div *ngIf="chosen_report == 'PR' || chosen_report == 'IR'">
                   <h5>Metric Type</h5>
                   <div>
                     <label>
@@ -147,12 +147,36 @@
                   </div>
                   <div>
                     <label>
-                      <input type="checkbox" class="uk-checkbox" value="Unique_Item_Requests" checked (change)="updateUniqueItemRequests($event)"> UniqueItem Requests
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Item_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Item Requests
                     </label>
                   </div>
                   <div>
                     <label>
                       <input type="checkbox" class="uk-checkbox" value="Unique_Item_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Item Investigations
+                    </label>
+                  </div>
+                </div>
+
+                <div *ngIf="chosen_report == 'DSR'">
+                  <h5>Metric Type</h5>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Requests" checked (change)="updateTotalItemRequests($event)"> Total Dataset Requests
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Dataset Investigations
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Dataset Requests
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Dataset Investigations
                     </label>
                   </div>
                 </div>

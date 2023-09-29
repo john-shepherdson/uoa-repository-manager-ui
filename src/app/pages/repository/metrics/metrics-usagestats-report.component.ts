@@ -80,13 +80,20 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   getParams() {
     // this.repoId = this.route.snapshot.paramMap.get('id');
     this.release = this.route.snapshot.paramMap.get('reportType').slice(1, 2);
-    if (this.release === '5') {
-      this.totalItemRequests = 'Total_Item_Requests';
-      this.totalItemInvestigations = 'Total_Item_Investigations';
-      this.uniqueItemRequests = 'Unique_Item_Requests';
-      this.uniqueItemInvestigations = 'Unique_Item_Investigations';
-    }
     this.chosen_report = this.route.snapshot.paramMap.get('reportID');
+    if (this.release === '5') {
+      if (this.chosen_report === 'DSR') {
+        this.totalItemRequests = 'Total_Dataset_Requests';
+        this.totalItemInvestigations = 'Total_Dataset_Investigations';
+        this.uniqueItemRequests = 'Unique_Dataset_Requests';
+        this.uniqueItemInvestigations = 'Unique_Dataset_Investigations';
+      } else {
+        this.totalItemRequests = 'Total_Item_Requests';
+        this.totalItemInvestigations = 'Total_Item_Investigations';
+        this.uniqueItemRequests = 'Unique_Item_Requests';
+        this.uniqueItemInvestigations = 'Unique_Item_Investigations';
+      }
+    }
     this.shownRepoId = this.convertToDisplayedFormat(this.repo.id);
     console.log(`shownRepoId is ${this.repo.id}`);
     this.title = `${this.chosen_report} report`;
