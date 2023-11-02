@@ -23,7 +23,9 @@
         <div class="transparentFilm"></div>
       </div>
       <div *ngIf="compressed; else notCompressed" class="uk-margin-top">
-        <a [href]=r5report?.Data target="_blank">Download report here</a>
+        <a [href]=r5report?.Data target="_blank" class="uk-button uk-button-primary">
+          <span class=""><i class="fas fa-download"></i></span> Download report
+        </a>
       </div>
       <ng-template #notCompressed>
         <div *ngIf="r5report?.[reportItems]?.length === 0" class="uk-alert uk-alert-warning">
@@ -36,7 +38,7 @@
 
               <div class="uk-grid">
                 <div class="uk-width-4-5@m">
-                  <h3>{{ r5report?.Report_Header?.Report_Name }} Report Results</h3>
+                  <h3>{{ r5report?.Report_Header?.Report_Name }} Results</h3>
                 </div>
 <!--                <div class="uk-width-1-5@m">-->
 <!--                  <div [formGroup]="pageSizeSelect" class="md-input-wrapper md-input-filled">-->
@@ -58,7 +60,7 @@
 
             <div class="uk-grid uk-grid-divider" data-uk-grid-margin="">
 
-              <div class="uk-width-1-1@m uk-row-first">
+              <div class="uk-width-3-4@m uk-row-first">
 
                 <!-- RESULTS TABLE -->
                 <div class="uk-overflow-container">
@@ -133,6 +135,42 @@
                   </table>
                 </div>
 
+              </div>
+              <div class="uk-width-1-4@m">
+
+                <div class="uk-margin-medium-bottom">
+<!--                  <p>-->
+<!--                    Number of results:-->
+<!--                    <span class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">{{ repoResponse.ReportDefinition.Filters.ReportAttribute[1].Value }}</span>-->
+<!--                  </p>-->
+                  <p>
+                    Filters:
+                    <span *ngFor="let filter of r5report.Report_Header.Report_Filters; let i = index" class="uk-badge uk-badge-outline uk-text-upper uk-margin-small-left">
+                      {{ filter.Name }}: {{ filter.Value }}
+                    </span>
+                  </p>
+                </div>
+                <h2 class="heading_c uk-margin-small-bottom">Details</h2>
+                <ul class="md-list md-list-addon">
+                  <li>
+                    <div class="md-list-addon-element">
+                      <i class="md-list-addon-icon material-icons"></i>
+                    </div>
+                    <div class="md-list-content">
+                      <span class="md-list-heading">{{ r5report.Report_Header.Created | date: "yyyy-MM-dd HH:mm:ss" }}</span>
+                      <span class="uk-text-small uk-text-muted">Date run</span>
+                    </div>
+                  </li>
+<!--                  <li>-->
+<!--                    <div class="md-list-addon-element">-->
+<!--                      <i class="md-list-addon-icon material-icons"></i>-->
+<!--                    </div>-->
+<!--                    <div class="md-list-content">-->
+<!--                      <span class="md-list-heading">{{ coveredPeriod }}</span>-->
+<!--                      <span class="uk-text-small uk-text-muted">Period covered</span>-->
+<!--                    </div>-->
+<!--                  </li>-->
+                </ul>
               </div>
 
             </div>
