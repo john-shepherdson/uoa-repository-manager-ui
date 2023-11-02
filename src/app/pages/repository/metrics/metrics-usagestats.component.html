@@ -21,10 +21,73 @@
 
         <h3>Supported Reports</h3>
 
+        <h2>R5 Reports</h2>
+
+        <div class="uk-grid-match" uk-grid>
+          <div class="uk-width-1-3">
+            <div class="uk-text-center md-card md-card-hover">
+              <a [routerLink]="['R5','PR']" class="uk-position-cover"></a>
+              <div class="uk-card-media-top " style="background-color: #001a6e">
+                <h1 class="uk-padding-large font-weight-bolder md-color-white">PR</h1>
+              </div>
+              <div class="uk-card-body uk-padding-small">
+                <h3 class="uk-card-title uk-margin-small-bottom">
+                  A report summarizing usage activity for the repository by month, metric type and item type
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="uk-width-1-3">
+            <div class="uk-text-center md-card md-card-hover">
+              <a [routerLink]="['R5','PR_P1']" class="uk-position-cover"></a>
+              <div class="uk-card-media-top " style="background-color: #001a6e">
+                <h1 class="uk-padding-large font-weight-bolder md-color-white">PR_P1</h1>
+              </div>
+              <div class="uk-card-body uk-padding-small">
+                <h3 class="uk-card-title uk-margin-small-bottom">
+                  A report summarizing usage activity for the repository by month, broken down by metric type
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="uk-width-1-3">
+            <div class="uk-text-center md-card md-card-hover">
+              <a [routerLink]="['R5','IR']" class="uk-position-cover"></a>
+              <div class="uk-card-media-top " style="background-color: #001a6e">
+                <h1 class="uk-padding-large font-weight-bolder md-color-white">IR</h1>
+              </div>
+              <div class="uk-card-body uk-padding-small">
+                <h3 class="uk-card-title uk-margin-small-bottom">
+                  A report for items requests by month metric_type, item type and repository
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="uk-grid-match" uk-grid>
+          <div class="uk-width-1-3">
+            <div class="uk-text-center md-card md-card-hover">
+              <a [routerLink]="['R5','DSR']" class="uk-position-cover"></a>
+              <div class="uk-card-media-top " style="background-color: #001a6e">
+                <h1 class="uk-padding-large font-weight-bolder md-color-white">DSR</h1>
+              </div>
+              <div class="uk-card-body uk-padding-small">
+                <h3 class="uk-card-title uk-margin-small-bottom">
+                  A report for datasets requests by month metric type and repository
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <h2>R4 Reports</h2>
+
         <div class="uk-grid uk-grid-match repositoryTypeSelection" data-uk-grid-margin="">
           <div class="uk-width-1-3@m uk-row-first">
             <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
-              <a [routerLink]="['AR1']" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <a [routerLink]="['R4','AR1']" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
               <div class="uk-card-media-top">
                 <img class="el-image" src="../../../../assets/imgs/Icons_Reports_wide_AR1.png" alt="" style="width: 100%;">
               </div>
@@ -37,7 +100,7 @@
           </div>
           <div class="uk-width-1-3@m">
             <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-              <a [routerLink]="['IR1']" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
+              <a [routerLink]="['R4','IR1']" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
               <div class="uk-card-media-top">
                 <img class="el-image" src="../../../../assets/imgs/Icons_Reports_wide_IR1.png" alt="" style="width:100%;">
               </div>
@@ -50,7 +113,7 @@
           </div>
           <div class="uk-width-1-3@m">
             <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-              <a [routerLink]="['RR1']" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <a [routerLink]="['R4','RR1']" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
               <div class="uk-card-media-top">
                 <img class="el-image" src="../../../../assets/imgs/Icons_Reports_wide_RR1.png" alt="" style="width:100%;">
               </div>
@@ -62,10 +125,11 @@
             </div>
           </div>
         </div>
+
         <div class="uk-grid uk-grid-match repositoryTypeSelection" data-uk-grid-margin="">
           <div class="uk-width-1-3@m uk-row-first">
             <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="">
-              <a [routerLink]="['BR1']" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <a [routerLink]="['R4','BR1']" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
               <div class="uk-card-media-top">
                 <img class="el-image" src="../../../../assets/imgs/Icons_Reports_wide_BR1.png" alt="" style="width: 100%;">
               </div>
@@ -78,7 +142,7 @@
           </div>
           <div class="uk-width-1-3@m">
             <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-              <a [routerLink]="['BR2']" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
+              <a [routerLink]="['R4','BR2']" class="el-link uk-position-cover uk-margin-remove-adjacent" href=""></a>
               <div class="uk-card-media-top">
                 <img class="el-image" src="../../../../assets/imgs/Icons_Reports_wide_BR2.png" alt="" style="width:100%;">
               </div>
@@ -91,7 +155,7 @@
           </div>
           <div *ngIf="repo.eoscDatasourceType === 'journal'" class="uk-width-1-3@m">
             <div class="uk-margin uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium" uk-scrollspy-class="" data-id="" style="">
-              <a [routerLink]="['JR1']" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+              <a [routerLink]="['R4','JR1']" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
               <div class="uk-card-media-top">
                 <img class="el-image" src="../../../../assets/imgs/Icons_Reports_wide_JR1.png" alt="" style="width:100%;">
               </div>

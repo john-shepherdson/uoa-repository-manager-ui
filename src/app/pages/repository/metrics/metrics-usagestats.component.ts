@@ -3,7 +3,7 @@ import { Repository } from '../../../domain/typeScriptClasses';
 import { RepositoryService } from '../../../services/repository.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedService } from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'metrics-usagestats',

@@ -74,7 +74,7 @@ export class ReportItem {
 }
 
 export class ReportResponse {
-  "@Created": string;
+  '@Created': string;
   Exception: ReportException[];
   Requestor: Requestor;
   ReportDefinition: ReportDefinition;

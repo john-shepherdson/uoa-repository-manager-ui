@@ -36,7 +36,7 @@ const metricsRoutes: Routes = [
         component: MetricsUsagestatsComponent
       },
       {
-        path: 'usagestats/:reportID',
+        path: 'usagestats/:reportType/:reportID',
         component: MetricsUsagestatsReportComponent
       },
       {

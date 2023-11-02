@@ -732,7 +732,7 @@ export class BrokerSummary {
 }
 
 export class CollectionMonitorSummary {
-  aggregationDetails: AggregationDetails[];
+  aggregationInfo: AggregationDetails[];
   lastIndexedVersion: AggregationDetails;
 }
 

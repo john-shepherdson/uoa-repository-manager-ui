@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RepositoryService } from '../../../services/repository.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { loadingRepoMessage } from '../../../domain/shared-messages';
-import { SharedService } from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'metrics-usagestats-report',
@@ -26,10 +26,16 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   chosen_report: string;
 
   userEmail: string;
+  release: string;
   beginDate = '';
   endDate = '';
   itemIdentifier = '';
-  itemDataType = '';
+  datasetIdentifier = '';
+  totalItemRequests = '';
+  totalItemInvestigations = '';
+  uniqueItemRequests = '';
+  uniqueItemInvestigations = '';
+  dataType = '';
   granularity = 'Monthly';
 
   constructor(private repoService: RepositoryService,
@@ -40,7 +46,7 @@ export class MetricsUsagestatsReportComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.sharedService.getRepository()) {
+    if (this.sharedService.getRepository()) {
       this.repo = this.sharedService.getRepository();
       this.getInfo();
     }
@@ -52,11 +58,11 @@ export class MetricsUsagestatsReportComponent implements OnInit {
       }
     );
 
-    let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("top_bar_active");   //remove the class
-    body.classList.remove("page_heading_active");
-    body.classList.remove("landing");
-    body.classList.add("dashboard");
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove('top_bar_active');   // remove the class
+    body.classList.remove('page_heading_active');
+    body.classList.remove('landing');
+    body.classList.add('dashboard');
   }
 
   getInfo() {
@@ -73,7 +79,21 @@ export class MetricsUsagestatsReportComponent implements OnInit {
 
   getParams() {
     // this.repoId = this.route.snapshot.paramMap.get('id');
+    this.release = this.route.snapshot.paramMap.get('reportType').slice(1, 2);
     this.chosen_report = this.route.snapshot.paramMap.get('reportID');
+    if (this.release === '5') {
+      if (this.chosen_report === 'DSR') {
+        this.totalItemRequests = 'Total_Dataset_Requests';
+        this.totalItemInvestigations = 'Total_Dataset_Investigations';
+        this.uniqueItemRequests = 'Unique_Dataset_Requests';
+        this.uniqueItemInvestigations = 'Unique_Dataset_Investigations';
+      } else {
+        this.totalItemRequests = 'Total_Item_Requests';
+        this.totalItemInvestigations = 'Total_Item_Investigations';
+        this.uniqueItemRequests = 'Unique_Item_Requests';
+        this.uniqueItemInvestigations = 'Unique_Item_Investigations';
+      }
+    }
     this.shownRepoId = this.convertToDisplayedFormat(this.repo.id);
     console.log(`shownRepoId is ${this.repo.id}`);
     this.title = `${this.chosen_report} report`;
@@ -122,11 +142,15 @@ export class MetricsUsagestatsReportComponent implements OnInit {
   }
 
   updateItemDataType(event: any) {
-    this.itemDataType = event.target.value;
+    this.dataType = event.target.value;
   }
 
   updateItemIdentifier(event: any) {
     this.itemIdentifier = event.target.value;
+  }
+
+  updateDatasetIdentifier(event: any) {
+    this.datasetIdentifier = event.target.value;
   }
 
   updateGranularity(event: any) {
@@ -137,18 +161,70 @@ export class MetricsUsagestatsReportComponent implements OnInit {
     this.useCurrentRepo = event.target.value;
   }
 
+  updateTotalItemRequests(event: any) {
+    if (event.target.checked) {
+      this.totalItemRequests = event.target.value;
+    } else {
+      this.totalItemRequests = null;
+    }
+  }
+
+  updateUniqueItemRequests(event: any) {
+    if (event.target.checked) {
+      this.uniqueItemRequests = event.target.value;
+    } else {
+      this.uniqueItemRequests = null;
+    }
+  }
+
+  updateTotalItemInvestigations(event: any) {
+    if (event.target.checked) {
+      this.totalItemInvestigations = event.target.value;
+    } else {
+      this.totalItemInvestigations = null;
+    }
+  }
+
+  updateUniqueItemInvestigations(event: any) {
+    if (event.target.checked) {
+      this.uniqueItemInvestigations = event.target.value;
+    } else {
+      this.uniqueItemInvestigations = null;
+    }
+  }
+
   goToReport() {
     if (!this.useCurrentRepo) { this.shownRepoId = ''; }
+    const metricTypes: string[] = [];
+    if (this.totalItemRequests !== null) {
+      metricTypes.push(this.totalItemRequests);
+    }
+    if (this.totalItemInvestigations !== null) {
+      metricTypes.push(this.totalItemRequests);
+    }
+    if (this.uniqueItemRequests !== null) {
+      metricTypes.push(this.uniqueItemRequests);
+    }
+    if (this.uniqueItemInvestigations  !== null) {
+      metricTypes.push(this.uniqueItemInvestigations);
+    }
     this.router.navigate(['usagestats-report-results'], {
       relativeTo: this.route.parent,
       queryParams: {
         report: this.chosen_report,
+        release: this.release,
         beginDate: this.beginDate,
         endDate: this.endDate,
         repoId: this.shownRepoId,
-        itemDataType: this.itemDataType,
+        dataType: this.dataType,
         itemIdentifier: this.itemIdentifier,
-        granularity: this.granularity
+        datasetIdentifier: this.datasetIdentifier,
+        granularity: this.granularity,
+        // metricTypes: metricTypes,
+        totalItemRequests: this.totalItemRequests,
+        totalItemInvestigations: this.totalItemInvestigations,
+        uniqueItemRequests: this.uniqueItemRequests,
+        uniqueItemInvestigations: this.uniqueItemInvestigations
       }
     });
 

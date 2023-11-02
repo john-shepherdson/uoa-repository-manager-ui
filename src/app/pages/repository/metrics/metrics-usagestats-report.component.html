@@ -42,7 +42,7 @@
 
                 <div class="md-input-wrapper md-input-filled uk-margin-bottom">
                   <label>Release</label>
-                  <input class="md-input label-fixed" type="text" value="4" disabled>
+                  <input class="md-input label-fixed" type="text" value="{{release}}" disabled>
                   <span class="md-input-bar "></span>
                 </div>
 
@@ -112,17 +112,77 @@
                 </div>
 
 
-                <div *ngIf="chosen_report != 'JR1' && chosen_report != 'RR1'" class="">
+                <div *ngIf="chosen_report != 'JR1' && chosen_report != 'RR1' && chosen_report != 'PR'
+                      && chosen_report != 'PR_P1' && chosen_report != 'DSR'">
                   <div class="md-input-wrapper md-input-filled uk-margin-bottom">
                     <label>Item Identifier</label>
-                    <input class="md-input label-fixed" name="ItemIdentifier" placeholder="e.g. openaire:od_________::fb90de6f20d79783d05749d8f60417d5"
+                    <input class="md-input label-fixed" name="ItemIdentifier" placeholder="e.g. doi:10.xyz/12345"
                            type="text" (blur)="updateItemIdentifier($event)">
                     <span class="md-input-bar "></span>
                   </div>
 
                 </div>
 
-                <div *ngIf="chosen_report == 'IR1' || chosen_report == 'RR1' || chosen_report == 'JR1'">
+                <div *ngIf="chosen_report == 'DSR'">
+                  <div class="md-input-wrapper md-input-filled uk-margin-bottom">
+                    <label>Dataset Identifier</label>
+                    <input class="md-input label-fixed" name="DatasetIdentifier" placeholder="e.g. doi:10.xyz/12345"
+                           type="text" (blur)="updateDatasetIdentifier($event)">
+                    <span class="md-input-bar "></span>
+                  </div>
+
+                </div>
+
+                <div *ngIf="chosen_report == 'PR' || chosen_report == 'IR'">
+                  <h5>Metric Type</h5>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Total_Item_Requests" checked (change)="updateTotalItemRequests($event)"> Total Item Requests
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Total_Item_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Item Investigations
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Item_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Item Requests
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Item_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Item Investigations
+                    </label>
+                  </div>
+                </div>
+
+                <div *ngIf="chosen_report == 'DSR'">
+                  <h5>Metric Type</h5>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Requests" checked (change)="updateTotalItemRequests($event)"> Total Dataset Requests
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Dataset Investigations
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Dataset Requests
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Dataset Investigations
+                    </label>
+                  </div>
+                </div>
+
+                <div *ngIf="chosen_report == 'IR1' || chosen_report == 'RR1' || chosen_report == 'JR1'
+                            || chosen_report == 'PR' || chosen_report == 'IR'">
 
                   <div class="uk-text-italic uk-margin-top uk-margin-bottom">
                     <p>Optional filter to only show results for a single item type, e.g. article, book, etc.</p>
@@ -130,7 +190,7 @@
 
                   <div class="md-input-wrapper md-input-filled">
                     <label class="">Item Data Type</label>
-                    <select class="md-input" name="ItemDataType" (change)="updateItemDataType($event)">
+                    <select class="md-input label-fixed" name="ItemDataType" (change)="updateItemDataType($event)">
                       <!-- TODO: get the list from api if it becomes available -->
                       <option value="">--- Select Item Data Type ---</option>
                       <option value="Annotation">Annotation</option>

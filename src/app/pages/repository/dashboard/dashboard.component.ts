@@ -199,7 +199,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getCollectionMonitorSummary(collectionMonitorSummary: CollectionMonitorSummary) {
 
-    this.latestAggregations = collectionMonitorSummary.aggregationDetails;
+    this.latestAggregations = collectionMonitorSummary.aggregationInfo;
     this.lastIndexedVersion = collectionMonitorSummary.lastIndexedVersion;
 
     if ( !this.latestAggregations || (this.latestAggregations.length === 0) ) {
