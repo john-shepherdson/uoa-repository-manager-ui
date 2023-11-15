@@ -11,7 +11,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8 (Angular version 6.1.10).
 
-## Minimum requirements for installing and building the project
+#### Minimum requirements for installing and building the project
 
 [Node.js](https://nodejs.org/en/) version 8.x or 10.x.<br>
 [npm client](https://docs.npmjs.com/cli/install) command line interface (it is installed with Node.js by default).
