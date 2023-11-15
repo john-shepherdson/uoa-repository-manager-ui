@@ -9,11 +9,12 @@
 
 ## Building
 
-The frontend has been developed and tested using Angular 12.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8 (Angular version 6.1.10).
 
-#### Manual build
+## Minimum requirements for installing and building the project
 
-###### Requirements:
+[Node.js](https://nodejs.org/en/) version 8.x or 10.x.<br>
+[npm client](https://docs.npmjs.com/cli/install) command line interface (it is installed with Node.js by default).
 - [Node.js version 16](https://nodejs.org/en/blog/release/v16.16.0)
 
 ###### Build Instructions:
@@ -45,10 +46,6 @@ To deploy the Frontend app:
 
 ### Prerequisites
 - [Nginx](https://www.nginx.com/) (or another Web Server like [Apache HTTP Server](https://httpd.apache.org/))
-
-### Dependencies
-[...]
-
 
 <br>
 <br>
@@ -106,44 +103,6 @@ Lastly, we would advice to validate the configuration of the Nginx to make sure 
 ## Recovery
 ## References
 
-
-
-
-
-
-
-
-
------
-These we auto-generated many years back and may not be correct (for example the Angular-version)
-
-
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8 (Angular version 6.1.10).
-
-## Minimum requirements for installing and building the project
-
-[Node.js](https://nodejs.org/en/) version 8.x or 10.x.<br>
-[npm client](https://docs.npmjs.com/cli/install) command line interface (it is installed with Node.js by default).
-
-## Installing the project
-
-After checking out (or updating) the repository enter the created folder and run `npm ci`.
-This will install the exact versions of the dependencies as mentioned in the `package-lock.json` file (inside the root folder).
-
-## Build for production
-
-Run `npm run build` (equivalent of `ng build --prod`) to build the project. The build artifacts will be stored in the `dist/uoa-repository-manager-ui` directory.
-
-## Deploy project to nginx server
-
-Run `tar -czvf dist.tar.gz dist/` to generate a compressed `.gz` file containing the built angular folder<br>
-Run `scp dist.tar.gz path/to/server/` to copy the compressed file to the server.<br>
-Connect to server (`ssh user@server.ip.address`).<br>
-Uncompress `dist.tar.gz` file.<br>
-Navigate to the root folder of the server.
-Copy the contents of the uncompressed dist/uoa-repository-manager-ui folder
-into the `uoa-repository-manager-dashboard` folder (superuser privileges are normally required for this action).<br>
 
 ## Other topics
 ### Development server
