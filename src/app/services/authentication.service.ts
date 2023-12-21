@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { deleteCookie, getCookie } from '../domain/utils';
@@ -8,8 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class AuthenticationService {
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
+  constructor(private router: Router,
               private http: HttpClient) {}
 
   private apiUrl: string = environment.API_ENDPOINT;
@@ -17,8 +16,6 @@ export class AuthenticationService {
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
-
-  private _storage: Storage = sessionStorage;
 
   private cookie: string = null;
 
@@ -33,7 +30,6 @@ export class AuthenticationService {
     if (this.redirectUrl) {
       const url = this.redirectUrl;
       this.redirectUrl = null;
-      console.log('stored location', url);
       sessionStorage.setItem('state.location', url);
     } else {
       /*sessionStorage.setItem("state.location", this.router.url);*/
@@ -108,7 +104,7 @@ export class AuthenticationService {
               sessionStorage.removeItem('state.location');
               console.log(`tried to login - returning to state: ${state}`);
               if ( !this.getIsUserLoggedIn() ) {
-                // console.log('user hasn\'t logged in yet -- going to home');
+                // console.log('user hasn't logged in yet -- redirecting to home');
                 this.router.navigate(['/home']);
               } else {
                 this.router.navigate([state]);

@@ -12,12 +12,17 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canActivate (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if ( this.authenticationService.getIsUserLoggedIn() ) { return true; }
 
-    /* If no cookie was found, clear the app's session.
-       The user may have logged out using another OpenAIRE portal */
-    sessionStorage.clear();
+
 
     // Store the attempted URL for redirecting
-    sessionStorage.setItem('state.location', state.url);
+    if (state.url !== '/join') {
+      /* If no cookie was found, clear the app's session.
+      The user may have logged out using another OpenAIRE portal */
+      sessionStorage.clear();
+      this.authenticationService.redirectUrl = state.url;
+      sessionStorage.setItem('state.location', state.url);
+    }
+    console.log('redirect state: ' + sessionStorage.getItem('state.location'));
 
     // If we decide that in this case we will send the user back to the aai
     // this.authenticationService.redirectUrl = state.url;
