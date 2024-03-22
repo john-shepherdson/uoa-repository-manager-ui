@@ -678,11 +678,12 @@ export class Typology {
 }
 
 export class AggregationDetails implements IsSerializable {
-  aggregationStage: string;
   date: Date;
-  numberOfRecords: number;
+  aggregationStage: string; // is present when aggregationStage==='COLLECT'
   collectionMode: string;
+  numberOfRecords: number;
   indexedVersion: boolean;
+  completedSuccessfully: boolean;
 }
 
 export class Aggregations implements IsSerializable {

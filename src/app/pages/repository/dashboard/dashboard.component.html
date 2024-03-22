@@ -144,7 +144,7 @@
                       </div>
                     </div>
 
-                    <div *ngIf="aggr.numberOfRecords" class="uk-margin-small-bottom">
+                    <div class="uk-margin-small-bottom">
                       <!--<div class="inline-block" style="vertical-align: top">-->
                         <!--<span class="md-user-image md-list-addon-avatar dense-image dense-ready">-->
                           <!--<i class="material-icons">list</i>-->
@@ -153,7 +153,14 @@
 
                       <div class="">
                         <div class="md-list-heading">Number of records</div>
-                        <div class="uk-text-small uk-text-muted">{{ aggr.numberOfRecords | number }}</div>
+                        <div class="uk-text-small uk-text-muted">{{ aggr?.numberOfRecords>=0 ? aggr.numberOfRecords : 'NA' }}</div>
+                      </div>
+                    </div>
+
+                    <div class="uk-margin-small-bottom">
+                      <div class="">
+                        <div class="md-list-heading">Completed Successfully</div>
+                        <div class="uk-text-small uk-text-muted">{{ aggr.completedSuccessfully }}</div>
                       </div>
                     </div>
 
