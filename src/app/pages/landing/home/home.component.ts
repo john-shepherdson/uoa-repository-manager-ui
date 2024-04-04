@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
     if (this.authService.getIsUserLoggedIn()) {
       this.router.navigate([pageUrl]);
     } else {
-      this.authService.redirectUrl = pageUrl;
+      // this.authService.redirectUrl = pageUrl;
       this.login();
     }
   }

@@ -23,7 +23,7 @@ export class UsagestatsService {
 
   getReportResponse(page: String, pageSize: String, params: URLSearchParams): Observable<ReportResponseWrapper> {
     const url = `${this.apiUrl}/sushilite/getReportResults/${page}/${pageSize}?${params}`;
-    console.log(`knocking on: ${url}`);
+    // console.log(`knocking on: ${url}`);
 
     return this.httpClient.get<ReportResponseWrapper>(url, headerOptions);
   }

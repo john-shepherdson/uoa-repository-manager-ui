@@ -74,7 +74,7 @@
                         <span class="uk-text-small uk-text-muted">{{ aggr.collectionMode }}</span>
                       </div>
                     </li>
-                    <li *ngIf="aggr.numberOfRecords">
+                    <li>
                       <!--<div class="md-list-addon-element">-->
                           <!--<span class="md-user-image md-list-addon-avatar dense-image dense-ready">-->
                             <!--<i class="material-icons">list</i>-->
@@ -82,7 +82,13 @@
                       <!--</div>-->
                       <div class="md-list-content">
                         <span class="md-list-heading">Number of records</span>
-                        <span class="uk-text-small uk-text-muted">{{ aggr.numberOfRecords }}</span>
+                        <span class="uk-text-small uk-text-muted">{{ aggr?.numberOfRecords>=0 ? aggr.numberOfRecords : 'NA' }}</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="md-list-content">
+                        <span class="md-list-heading">Completed Successfully</span>
+                        <span class="uk-text-small uk-text-muted">{{ aggr.completedSuccessfully }}</span>
                       </div>
                     </li>
                   </ul>

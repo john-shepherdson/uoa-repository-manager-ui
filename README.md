@@ -1,32 +1,110 @@
 # UOA Repository Manager UI
 
+
+
+## Introduction
+## Architecture
+
+
+
+## Building
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8 (Angular version 6.1.10).
 
-## Minimum requirements for installing and building the project
+#### Minimum requirements for installing and building the project
 
 [Node.js](https://nodejs.org/en/) version 8.x or 10.x.<br>
 [npm client](https://docs.npmjs.com/cli/install) command line interface (it is installed with Node.js by default).
+- [Node.js version 16](https://nodejs.org/en/blog/release/v16.16.0)
 
-## Installing the project
+###### Build Instructions:
+Follow the instructions below to download the source code and build the application.
+For more information about building an Angular app you can refer to the official documentation: [Building and serving Angular apps](https://angular.io/guide/build#building-and-serving-angular-apps).
 
-After checking out (or updating) the repository enter the created folder and run `npm ci`.
-This will install the exact versions of the dependencies as mentioned in the `package-lock.json` file (inside the root folder).
+1. Clone the repository and move inside the directory
+   <br> `git clone https://code-repo.d4science.org/MaDgIK/uoa-repository-manager-ui.git && cd uoa-repository-manager-ui`
+2. Install Angular dependencies
+   <br> `npm install`
+3. Build Angular app
+   <br> `ng build --configuration production`
+   <br> Produces the directory "dist/**uoa-repository-manager-ui**" which contains the compiled files.
+<br>
+<br>
 
-## Build for production
+## Deployment
 
-Run `npm run build` (equivalent of `ng build --prod`) to build the project. The build artifacts will be stored in the `dist/uoa-repository-manager-ui` directory.
+### Prerequisites
+- Nginx
 
-## Deploy project to nginx server
+### Instructions
+To deploy the Frontend app:
+1. Make sure that you have successfully built and installed the application on Nginx (or another Web Server).
+2. _Start_ or _reload_ the Web Server service.
+   <br>e.g. `systemctl start nginx` or `systemctl reload nginx`
 
-Run `tar -czvf dist.tar.gz dist/` to generate a compressed `.gz` file containing the built angular folder<br>
-Run `scp dist.tar.gz path/to/server/` to copy the compressed file to the server.<br>
-Connect to server (`ssh user@server.ip.address`).<br>
-Uncompress `dist.tar.gz` file.<br>
-Navigate to the root folder of the server.
-Copy the contents of the uncompressed dist/uoa-repository-manager-ui folder
-into the `uoa-repository-manager-dashboard` folder (superuser privileges are normally required for this action).<br>
+## Installation
 
-## Other topics  
+### Prerequisites
+- [Nginx](https://www.nginx.com/) (or another Web Server like [Apache HTTP Server](https://httpd.apache.org/))
+
+<br>
+<br>
+
+
+### Installation
+
+#### Nginx Configuration
+You have to create a [Server Block configuration](https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/) that will point to the directory "dist/**uoa-repository-manager-ui**" created by [building manually](./building.md#manual-build) the webapp.
+It must also be configured as a reverse proxy for the Backend Application (to serve it under the path '/api') and for the list of [Dependencies](#dependencies) of the project.
+
+See the example below:
+```nginx
+server {
+    server_name                 ...
+    access_log                  ...
+    root                        /path/to/uoa-repository-manager-ui;  # the directory of the application
+
+    location / {
+        try_files $uri$args $uri$args/ /index.html /index.php;
+    }
+
+    location ~* \.(eot|ttf|woff)$ {
+        add_header Access-Control-Allow-Origin *;
+    }
+
+    # reverse proxy configuration for the backend application
+    location /api {
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_pass              <?>;
+        proxy_read_timeout      3600;
+        proxy_send_timeout      3600;
+    }
+
+    [...]
+}
+```
+
+Lastly, we would advice to validate the configuration of the Nginx to make sure it does not contain errors.
+<br>Execute `nginx -t` with elevated permissions to perform a validation. If the test is successful you can move on to [deploying](./deployment.md#frontend) the application.
+
+<br>
+<br>
+
+## Configuration
+
+
+
+
+## Security
+## Maintenance
+## Recovery
+## References
+
+
+## Other topics
 ### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.<br>

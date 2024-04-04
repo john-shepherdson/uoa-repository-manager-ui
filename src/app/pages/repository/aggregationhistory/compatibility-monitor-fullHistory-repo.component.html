@@ -51,8 +51,8 @@
                     <!--<td class="uk-text-center"><img class="md-user-image dense-image dense-ready" src="assets/img/avatars/avatar_01_tn@2x.png" alt="" data-dense-cap="2"></td>-->
                     <td><span *ngIf="aggr.date">{{ aggr.date | date : "yyyy-MM-dd" }}</span></td>
                     <td class=""><span *ngIf="aggr.aggregationStage">{{ aggr.aggregationStage }}</span></td>
-                    <td class=""><span *ngIf="aggr.collectionMode">{{ aggr.collectionMode }}</span></td>
-                    <td class="uk-text-center"><span *ngIf="aggr.numberOfRecords">{{ aggr.numberOfRecords }}</span></td>
+                    <td class=""><span>{{ aggr.collectionMode ? aggr.collectionMode : '-'}}</span></td>
+                    <td class="uk-text-center"><span *ngIf="aggr.numberOfRecords !== null">{{ aggr.numberOfRecords }}</span></td>
                     <td class="uk-text-center"><span *ngIf="aggr.indexedVersion !== null && (aggr.indexedVersion === true)" class="uk-badge">Indexed version</span></td>
                   </tr>
                   </tbody>
