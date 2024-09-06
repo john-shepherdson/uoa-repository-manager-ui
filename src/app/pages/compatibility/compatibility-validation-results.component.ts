@@ -72,11 +72,11 @@ export class CompatibilityValidationResultsComponent implements OnInit {
         if (this.jobSummary.resultEntries && this.jobSummary.resultEntries.length) {
           this.jobSummary.resultEntries.forEach(
             entry => {
-              if (entry.type === 'content') {
+              if (entry.type.toLowerCase() === 'content') {
                 this.contentResults.push(entry);
                 this.ruleNameForContent.push(entry.name);
                 this.unprocessedDataForContent.push(entry.successes.split('/')[0]);
-              } else if (entry.type === 'usage') {
+              } else if (entry.type.toLowerCase() === 'usage') {
                 this.usageResults.push(entry);
                 this.ruleNameForUsage.push(entry.name);
                 this.unprocessedDataForUsage.push(entry.successes.split('/')[0]);
@@ -86,7 +86,7 @@ export class CompatibilityValidationResultsComponent implements OnInit {
         }
       },
       error => {
-        console.log(error);
+        console.error(error);
         this.errorMessage = loadingJobSummaryError;
         this.loadingMessage = '';
       },
