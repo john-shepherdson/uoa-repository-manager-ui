@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description, existingValSetDesc, commentDesc } from '../../../domain/oa-description';
-import {ApiParamDetails, InterfaceInformation, RepositoryInterface} from '../../../domain/typeScriptClasses';
+import {ApiParamDetails, InterfaceInformation, RepositoryInterface, ValidationSet} from '../../../domain/typeScriptClasses';
 import { ValidatorService } from '../../../services/validator.service';
 import { RepositoryService } from '../../../services/repository.service';
 import { formErrorWasntSaved, formInfoLoading, formSubmitting, formSuccessAddedInterface, formSuccessUpdatedInterface, invalidCustomBaseUrl,
@@ -53,7 +53,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   identifiedBaseUrl: boolean;
   canEdit = true;
   showIdentifiedBaseUrl: boolean = null;
-  valsetList: string[] = [];
+  validationSets: ValidationSet[] = [];
   existingCompLevel: string;
   classCodes: string[] = [];
   compClasses: Map<string, string> = new Map<string, string>();
@@ -111,8 +111,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
             this.showIdentifiedBaseUrl = false;
           }
           if (this.interfaceInfo.sets) {
-            this.valsetList = this.interfaceInfo.sets;
-            // console.log(this.valsetList);
+            this.validationSets = this.interfaceInfo.sets;
+            // console.log(this.validationSets);
           }
         },
         error => {

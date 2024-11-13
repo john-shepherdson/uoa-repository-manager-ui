@@ -641,10 +641,16 @@ export class Timezone {
   offset: number;
 }
 
+export class ValidationSet {
+  spec: string;
+  name: string;
+  descriptions: string[];
+}
+
 export class InterfaceInformation implements IsSerializable {
 
   identified: boolean;
-  sets: string[];
+  sets: ValidationSet[];
   adminEmails: string[];
 }
 

@@ -45,7 +45,7 @@
         <div class="md-input-wrapper">
           <select class="md-input" id="selectValidationSet{{interfaceID}}" formControlName="selectValidationSet" (change)="checkIfValid()">
             <option value="" selected>-- none selected --</option>
-            <option *ngFor="let set of valsetList" value="{{set}}">{{set}}</option>
+            <option *ngFor="let set of validationSets" value="{{set.spec}}">{{set.name}} ({{set.spec}})</option>
           </select>
           <span class="md-input-bar"></span>
         </div>
