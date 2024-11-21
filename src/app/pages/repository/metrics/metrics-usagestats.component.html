@@ -19,6 +19,15 @@
       <div *ngIf="errorMessage" class="uk-alert uk-alert-warning">{{ errorMessage }}</div>
       <div *ngIf="repo">
 
+        <p>In the getImpact/usagestats page add this text above the 'Supported reports': UsageCounts reports follow the
+          <a href="https://www.projectcounter.org/" target="_blank">COUNTER Code of Practice</a> to provide usage
+          statistics based on standards.
+          On this page you can find reports based on the latest Release 5 as well as Release 4. Both Releases are
+          available in a transition phase, so that you can get experienced with the new reports before the Release 4
+          reports are phased out.
+          The Release 5 introduces new Metric Types, which lead to new statistics reports and offer new possibilities
+          for the usage analysis.</p>
+
         <h3>Supported Reports</h3>
 
         <h2>R5 Reports</h2>
@@ -27,8 +36,8 @@
           <div class="uk-width-1-3">
             <div class="uk-text-center md-card md-card-hover">
               <a [routerLink]="['R5','PR']" class="uk-position-cover"></a>
-              <div class="uk-card-media-top " style="background-color: #001a6e">
-                <h1 class="uk-padding-large font-weight-bolder md-color-white">PR</h1>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../../assets/imgs/R5_PR.jpg" alt="" style="width: 100%;">
               </div>
               <div class="uk-card-body uk-padding-small">
                 <h3 class="uk-card-title uk-margin-small-bottom">
@@ -40,8 +49,8 @@
           <div class="uk-width-1-3">
             <div class="uk-text-center md-card md-card-hover">
               <a [routerLink]="['R5','PR_P1']" class="uk-position-cover"></a>
-              <div class="uk-card-media-top " style="background-color: #001a6e">
-                <h1 class="uk-padding-large font-weight-bolder md-color-white">PR_P1</h1>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../../assets/imgs/R5_PR_P1.jpg" alt="" style="width: 100%;">
               </div>
               <div class="uk-card-body uk-padding-small">
                 <h3 class="uk-card-title uk-margin-small-bottom">
@@ -53,8 +62,8 @@
           <div class="uk-width-1-3">
             <div class="uk-text-center md-card md-card-hover">
               <a [routerLink]="['R5','IR']" class="uk-position-cover"></a>
-              <div class="uk-card-media-top " style="background-color: #001a6e">
-                <h1 class="uk-padding-large font-weight-bolder md-color-white">IR</h1>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../../assets/imgs/R5_IR.jpg" alt="" style="width: 100%;">
               </div>
               <div class="uk-card-body uk-padding-small">
                 <h3 class="uk-card-title uk-margin-small-bottom">
@@ -69,8 +78,8 @@
           <div class="uk-width-1-3">
             <div class="uk-text-center md-card md-card-hover">
               <a [routerLink]="['R5','DSR']" class="uk-position-cover"></a>
-              <div class="uk-card-media-top " style="background-color: #001a6e">
-                <h1 class="uk-padding-large font-weight-bolder md-color-white">DSR</h1>
+              <div class="uk-card-media-top">
+                <img class="el-image" src="../../../../assets/imgs/R5_DSR.jpg" alt="" style="width: 100%;">
               </div>
               <div class="uk-card-body uk-padding-small">
                 <h3 class="uk-card-title uk-margin-small-bottom">
