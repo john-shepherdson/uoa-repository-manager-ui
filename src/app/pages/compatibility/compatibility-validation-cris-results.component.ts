@@ -75,7 +75,7 @@ export class CompatibilityValidationCrisResultsComponent implements OnInit {
         if (this.jobSummary.ruleResults && this.jobSummary.ruleResults.length) {
           this.jobSummary.ruleResults.forEach(
             entry => {
-              if (entry.type.toLowerCase() === 'content') {
+              if (entry.type.toLowerCase() === 'content' && entry.errors?.length > 0) {
                 this.contentResults.push(entry);
                 // this.ruleNameForContent.push(entry.name);
                 // this.unprocessedDataForContent.push(entry.successes.split('/')[0]);
