@@ -387,7 +387,7 @@ export class CrisStoredJob implements IsSerializable {
   dateSubmitted: Date;
   dateStarted: Date;
   dateFinished: Date;
-  validationResults: ValidationResults[];
+  ruleResults: ValidationResults[] = [];
 }
 
 export class ValidationResults implements IsSerializable {
@@ -404,6 +404,7 @@ export class ValidationError implements IsSerializable {
   error: string;
   identifier: string;
   message: string;
+  metadataPrefix: string;
 }
 
 export class AdvQueryObject implements IsSerializable {

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CrisStoredJob, JobResultEntry, StoredJob} from '../../domain/typeScriptClasses';
+import { CrisStoredJob, JobResultEntry, ValidationError, ValidationResults } from '../../domain/typeScriptClasses';
 import { MonitorService } from '../../services/monitor.service';
 import { loadingJobSummary, loadingJobSummaryError, noContentRulesResults,
   noUsageRulesResults } from '../../domain/shared-messages';
@@ -23,9 +23,9 @@ export class CompatibilityValidationCrisResultsComponent implements OnInit {
   // jobSummary: StoredJob;
   jobSummary: CrisStoredJob;
   jobDuration: string;
-  contentResults: JobResultEntry[] = [];
-  usageResults: JobResultEntry[] = [];
-  currentErrors: string[] = [];
+  contentResults: ValidationResults[] = [];
+  usageResults: ValidationResults[] = [];
+  currentErrors: ValidationError[] = [];
 
   modalTitle: string;
   isModalShown: boolean;
@@ -70,22 +70,23 @@ export class CompatibilityValidationCrisResultsComponent implements OnInit {
     this.loadingMessage = loadingJobSummary;
     this.monitorService.getCrisJobSummary(id, 'all').subscribe(
       job => {
+        console.log(job);
         this.jobSummary = job;
-        // if (this.jobSummary.resultEntries && this.jobSummary.resultEntries.length) {
-        //   this.jobSummary.resultEntries.forEach(
-        //     entry => {
-        //       if (entry.type.toLowerCase() === 'content') {
-        //         this.contentResults.push(entry);
-        //         this.ruleNameForContent.push(entry.name);
-        //         this.unprocessedDataForContent.push(entry.successes.split('/')[0]);
-        //       } else if (entry.type.toLowerCase() === 'usage') {
-        //         this.usageResults.push(entry);
-        //         this.ruleNameForUsage.push(entry.name);
-        //         this.unprocessedDataForUsage.push(entry.successes.split('/')[0]);
-        //       }
-        //     }
-        //   );
-        // }
+        if (this.jobSummary.ruleResults && this.jobSummary.ruleResults.length) {
+          this.jobSummary.ruleResults.forEach(
+            entry => {
+              if (entry.type.toLowerCase() === 'content') {
+                this.contentResults.push(entry);
+                // this.ruleNameForContent.push(entry.name);
+                // this.unprocessedDataForContent.push(entry.successes.split('/')[0]);
+              } else if (entry.type.toLowerCase() === 'usage') {
+                this.usageResults.push(entry);
+                // this.ruleNameForUsage.push(entry.name);
+                // this.unprocessedDataForUsage.push(entry.successes.split('/')[0]);
+              }
+            }
+          );
+        }
       },
       error => {
         console.error(error);
@@ -94,7 +95,7 @@ export class CompatibilityValidationCrisResultsComponent implements OnInit {
       },
       () => {
         this.loadingMessage = '';
-        if (!this.contentResults.length) {
+        if (!this.jobSummary.ruleResults.length) {
           this.noContent = noContentRulesResults;
         } else {
           this.processedDataForContent = this.unprocessedDataForContent.map(Number);
@@ -126,14 +127,22 @@ export class CompatibilityValidationCrisResultsComponent implements OnInit {
     );
   }
 
-  viewErrors(rule: JobResultEntry) {
-    this.modalTitle = `Rule: ${rule.name}`;
-    this.currentErrors = rule.errors;
+  viewErrors(errorType: string, errors: ValidationError[], metadataPrefix: string): void {
+    this.modalTitle = `Error: ${errorType}`;
+    this.currentErrors = [];
+    errors.forEach(error => {
+      if (error.error === errorType) {
+        this.currentErrors.push(error);
+        this.currentErrors[this.currentErrors.length-1].metadataPrefix = metadataPrefix;
+      }
+
+    });
+    this.currentErrors = errors;
     this.checkErrors.showModal();
   }
 
-  linkToError(er: string) {
-    // return encodeURI(`${this.jobSummary.baseUrl}?verb=GetRecord&metadataPrefix=${this.jobSummary.metadataPrefix}&identifier=${er}`);
+  linkToError(er: ValidationError) {
+    return encodeURI(`${this.jobSummary.url}?verb=GetRecord&metadataPrefix=${er.metadataPrefix}&identifier=${er.identifier}`);
   }
 
   calculateExecutionTime(start: Date, finish: Date): string {
@@ -144,6 +153,10 @@ export class CompatibilityValidationCrisResultsComponent implements OnInit {
     const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
 
     return `${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  splitCamelCase(s: string) {
+    return s.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
   }
 
 }

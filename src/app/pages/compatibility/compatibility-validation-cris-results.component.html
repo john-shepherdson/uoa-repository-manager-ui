@@ -79,50 +79,48 @@
                           <div class="uk-width-1-1@m uk-first-column">
                             <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
                               <div *ngIf="noContent" class="uk-alert">{{ noContent }}</div>
-                              <div *ngIf="contentResults && contentResults.length > 0">
-                                <table class="uk-table uk-table-striped uk-table-middle rules-table">
-                                  <thead>
-                                  <tr>
-                                    <th class="uk-width-2-10">Rule Name</th>
-                                    <th class="uk-width-4-10 uk-text-nowrap">Rule Description</th>
-                                    <th class="uk-width-1-10 uk-text-nowrap">Rule Weight</th>
-                                    <th class="uk-width-1-10 uk-text-nowrap"># of records</th>
-                                    <th class="uk-width-2-10 uk-text-nowrap">Status</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  <tr *ngFor="let contentRule of contentResults" class="el-item">
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ contentRule.name }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title" [innerHtml]="contentRule.description">
-                                      </div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ contentRule.weight }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ contentRule.successes }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div *ngIf="!contentRule.hasErrors" class="el-title">
-                                        <i class="material-icons" style="color: #4b991f">check_circle_outline</i>
-                                      </div>
-                                      <div *ngIf="contentRule.hasErrors && contentRule.mandatory">
-                                        <i class="material-icons" style="color: #cd242b">highlight_off</i>
-                                        <a class="errorlink viewErrors uk-margin-left"
-                                           (click)="viewErrors(contentRule)"><span>View Errors</span></a>
-                                      </div>
-                                      <div *ngIf="contentRule.hasErrors && !contentRule.mandatory">
-                                        <i class="material-icons" style="color: #e9d60d">error_outline</i>
-                                        <a class="warninglink viewErrors uk-margin-left"
-                                           (click)="viewErrors(contentRule)"><span>View Warnings</span></a>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  </tbody>
-                                </table>
+                              <div *ngIf="this.contentResults && this.contentResults.length > 0">
+                                <ul class="uk-tab" data-uk-tab="{connect:'#tabs_anim5', animation:'slide-left'}">
+                                  <li *ngFor="let tab of contentResults" class="uk-active" aria-expanded="true">
+                                    <a href="#">{{ splitCamelCase(tab.set) }}</a>
+                                  </li>
+                                </ul>
+
+                                <ul id="tabs_anim5" class="uk-switcher uk-margin">
+                                  <li *ngFor="let content of contentResults">
+
+                                    <table class="uk-table uk-table-striped uk-table-middle rules-table">
+                                      <thead>
+                                      <tr>
+                                        <th class="uk-width-2-10">Error</th>
+                                        <th class="uk-width-1-10 uk-text-nowrap"># of records</th>
+                                        <th class="uk-width-2-10 uk-text-nowrap">Status</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                      <tr *ngFor="let contentRule of content.rulesFailedCounts | keyvalue" class="el-item">
+                                        <td class="uk-table-shrink">
+                                          <div class="el-title">{{ contentRule.key }}</div>
+                                        </td>
+
+                                        <td class="uk-table-shrink">
+                                          <div class="el-title">{{ contentRule.value }}</div>
+                                        </td>
+                                        <td>
+                                          <div *ngIf="contentRule.value > 0">
+                                            <i class="material-icons" style="color: #cd242b">highlight_off</i>
+                                            <a class="warninglink viewErrors uk-margin-left"
+                                               (click)="viewErrors(contentRule.key, content.errors, content.metadataPrefix)">
+                                              <span>View Errors</span></a>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      </tbody>
+                                    </table>
+
+                                  </li>
+                                </ul>
+
                               </div>
                             </div>
                           </div>
@@ -134,49 +132,25 @@
                             <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
                               <div *ngIf="noUsage" class="uk-alert">{{ noUsage }}</div>
                               <div *ngIf="usageResults && usageResults.length > 0">
+
                                 <table class="uk-table uk-table-striped uk-table-middle rules-table">
                                   <thead>
                                   <tr>
-                                    <th class="uk-width-2-10">Rule Name</th>
-                                    <th class="uk-width-4-10 uk-text-nowrap">Rule Description</th>
-                                    <th class="uk-width-1-10 uk-text-nowrap">Rule Weight</th>
-                                    <th class="uk-width-1-10 uk-text-nowrap"># of records</th>
-                                    <th class="uk-width-2-10 uk-text-nowrap">Status</th>
+                                    <th class="uk-width-2-10">Error</th>
                                   </tr>
                                   </thead>
                                   <tbody>
-                                  <tr *ngFor="let usageRule of usageResults" class="el-item">
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ usageRule.name }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title" [innerHtml]="usageRule.description">
-                                      </div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ usageRule.weight }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ usageRule.successes }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div *ngIf="!usageRule.hasErrors" class="el-title">
-                                        <i class="material-icons" style="color: #4b991f">check_circle_outline</i>
-                                      </div>
-                                      <div *ngIf="usageRule.hasErrors && usageRule.mandatory">
-                                        <i class="material-icons" style="color: #cd242b">highlight_off</i>
-                                        <a class="errorlink viewErrors uk-margin-left"
-                                           (click)="viewErrors(usageRule)"><span>View Errors</span></a>
-                                      </div>
-                                      <div *ngIf="usageRule.hasErrors && !usageRule.mandatory">
-                                        <i class="material-icons" style="color: #e9d60d">error_outline</i>
-                                        <a class="warninglink viewErrors uk-margin-left"
-                                           (click)="viewErrors(usageRule)"><span>View Warnings</span></a>
-                                      </div>
-                                    </td>
-                                  </tr>
+                                  <ng-container *ngFor="let content of usageResults" class="el-item">
+                                    <tr *ngFor="let contentRule of content.rulesFailedCounts | keyvalue" class="el-item">
+<!--                                      <tr >-->
+                                      <td class="uk-table-shrink">
+                                        <div class="el-title">{{ contentRule.key }}</div>
+                                      </td>
+                                    </tr>
+                                  </ng-container>
                                   </tbody>
                                 </table>
+
                               </div>
                             </div>
                           </div>
@@ -286,7 +260,7 @@
 <confirmation-dialog #checkErrors [title]="modalTitle" [isModalShown]="false" [hideModalButton]="'OK'">
   <div>
     <p>See the list of errors found for this specific rule</p>
-    <a *ngFor="let er of currentErrors" class="uk-display-block" target="_blank" href="{{ linkToError(er) }}">{{ er }}</a>
+    <a *ngFor="let er of currentErrors" class="uk-display-block" target="_blank" href="{{ linkToError(er) }}">{{ er.message }}</a>
   </div>
 </confirmation-dialog>
 
