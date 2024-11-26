@@ -14,6 +14,7 @@ import { CompatibilityValidateStep2Component } from './compatibility-validate-fo
 import { CompatibilityValidateStep3Component } from './compatibility-validate-forms/compatibility-validate-step3.component';
 import { CompatibilityValidateStep3CrisComponent } from './compatibility-validate-forms/compatibility-validate-step3-cris.component';
 import {HighchartsChartModule} from 'highcharts-angular';
+import {CompatibilityValidationCrisResultsComponent} from './compatibility-validation-cris-results.component';
 
 @NgModule ({
   imports: [
@@ -30,6 +31,7 @@ import {HighchartsChartModule} from 'highcharts-angular';
     CompatibilityValidateComponent,
     CompatibilityValidationHistoryComponent,
     CompatibilityValidationResultsComponent,
+    CompatibilityValidationCrisResultsComponent,
     CompatibilityValidateTypeComponent,
     CompatibilityValidateStep1Component,
     CompatibilityValidateStep2Component,

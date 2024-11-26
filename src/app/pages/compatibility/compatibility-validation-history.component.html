@@ -148,9 +148,17 @@
                         </td>
                         <td style="vertical-align: top !important;">
                           <div>
-                            <a [routerLink]="[job.id]">
-                              View Results<i class="fa fa-angle-right uk-margin-small-left"></i>
-                            </a>
+                            <ng-container *ngIf="!job.cris; else cris">
+                              <a [routerLink]="[job.id]">
+                                View Results<i class="fa fa-angle-right uk-margin-small-left"></i>
+                              </a>
+                            </ng-container>
+                            <ng-template #cris>
+                              <a [routerLink]="['cris',job.id]">
+                                View Results<i class="fa fa-angle-right uk-margin-small-left"></i>
+                              </a>
+                            </ng-template>
+
                           </div>
                           <div>
                             <a (click)="resubmitJob(job.id.toString(), job.userEmail)">Resubmit Job<i class="fa fa-repeat uk-margin-small-left"></i></a>

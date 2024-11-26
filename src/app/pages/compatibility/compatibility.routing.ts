@@ -7,6 +7,7 @@ import { CompatibilityValidationHistoryComponent } from './compatibility-validat
 import { CompatibilityValidationResultsComponent } from './compatibility-validation-results.component';
 import { CompatibilityValidateComponent } from './compatibility-validate.component';
 import { AuthGuardService } from '../../services/auth-guard.service';
+import {CompatibilityValidationCrisResultsComponent} from './compatibility-validation-cris-results.component';
 
 const compatibilityRoutes: Routes = [
   {
@@ -27,6 +28,10 @@ const compatibilityRoutes: Routes = [
         path: 'browseHistory',
         component: CompatibilityValidationHistoryComponent,
         canActivate: [AuthGuardService]
+      },
+      {
+        path: 'browseHistory/cris/:id',
+        component: CompatibilityValidationCrisResultsComponent
       },
       {
         path: 'browseHistory/:id',
