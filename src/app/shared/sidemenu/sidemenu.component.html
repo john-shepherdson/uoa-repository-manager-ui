@@ -61,7 +61,7 @@
   </div>
 
   <div *ngIf="reposOfUser && reposOfUser.length>0" class="menu_section border_top">
-    <div class="sidebar_heading">My data sources</div>
+    <div class="sidebar_heading uk-text-uppercase">My data sources</div>
     <ul>
 
       <li *ngFor="let repo of visibleReposOfUser" [routerLinkActive]="['current_section']" class="">
@@ -96,7 +96,7 @@
   </div>
 
   <div *ngIf="getIsUserAdmin()" class="menu_section admin_menu_section border_top">
-    <div class="sidebar_heading">ADMIN</div>
+    <div class="sidebar_heading uk-text-uppercase">Admin</div>
     <ul>
 
       <li [routerLinkActive]="['current_section']" class="">
