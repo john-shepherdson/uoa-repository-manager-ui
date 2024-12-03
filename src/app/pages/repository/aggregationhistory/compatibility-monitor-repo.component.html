@@ -26,6 +26,20 @@
       <div *ngIf="noAggregations">{{ noAggregations }}</div>
       <div *ngIf="latestAggregations && (latestAggregations.length > 0) && !noAggregations">
 
+      <div class="uk-grid uk-child-width-1-2">
+        <ng-container *ngFor="let aggr of latestAggregations">
+          <div *ngIf="aggr.indexedVersion">
+            <div class="uk-card uk-card-default uk-card-body">
+              <p>Indexed version</p>
+              <p>Aggregation date: <strong>{{ aggr.date }}</strong></p>
+              <p>Number of collected records: <strong>{{ aggr.numberOfRecords }}</strong></p>
+  <!--            <p>Number of transformed records: <strong>{{ aggr.numberOfRecords }}</strong></p>-->
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+
         <div class="uk-width-large-2-3 uk-container-center">
           <div class="timeline timeline-center">
             <div *ngFor="let aggr of latestAggregations" class="timeline_item">
