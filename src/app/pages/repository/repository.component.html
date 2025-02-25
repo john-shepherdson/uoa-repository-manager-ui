@@ -13,12 +13,33 @@
     <div class="repositoryMenu">
 
       <div class="uk-margin-medium-left uk-margin-medium-right">
-        <div class="uk-padding-small">
-          <h3 *ngIf="repository" class="heading_b">
-            <img *ngIf="!repository.logourl" src="../../../assets/imgs/yourLogoHere.jpg" style="margin-right: 15px; margin-top:-8px" width="60">
-            <img *ngIf="repository.logourl" src="{{ repository.logourl }}" style="margin-right: 15px; margin-top:-8px" width="60">
+        <div class="uk-padding-small" style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 *ngIf="repository" class="heading_b" style="display: flex; align-items: center;">
+            <img *ngIf="!repository.logourl" src="../../../assets/imgs/yourLogoHere.jpg"
+                 style="margin-right: 15px; margin-top: -8px;" width="60">
+            <img *ngIf="repository.logourl" src="{{ repository.logourl }}"
+                 style="margin-right: 15px; margin-top: -8px;" width="60">
             {{ repository.officialname }}
           </h3>
+
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="assets/imgs/validator.svg" alt="Logo" style="height: 40px;">
+            <div class="uk-inline">
+              <span style="cursor: pointer; color: black;"
+                    onmouseover="this.style.color='lightblue'"
+                    onmouseout="this.style.color='black'">
+                    <i class="fas fa-download"></i>
+                  </span>
+              <div uk-dropdown="mode: hover">
+                <ul class="uk-nav uk-dropdown-nav">
+                  <li><a href="assets/imgs/validator.png" download="validator.png">Download logo as PNG</a></li>
+                  <li><a href="assets/imgs/validator.jpg" download="validator.jpg">Download logo as JPEG</a></li>
+                  <li><a href="assets/imgs/validator.svg" download="validator.svg">Download logo as SVG</a></li>
+                  <li><a href="assets/imgs/validator.pdf" download="validator.pdf">Download logo as PDF</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div id="top_bar">
