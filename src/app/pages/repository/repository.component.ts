@@ -2,8 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from "../../services/repository.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ActivatedRoute } from "@angular/router";
-import { Repository, RepositoryInterface } from "../../domain/typeScriptClasses";
-import { formInfoLoading, loadingRepoError } from "../../domain/shared-messages";
+import {AggregationDetails, Repository, RepositoryInterface} from '../../domain/typeScriptClasses';
+import {
+  formInfoLoading,
+  loadingAggregationHistory,
+  loadingAggregationHistoryError,
+  loadingRepoError,
+  noAggregationHistory
+} from '../../domain/shared-messages';
 import { SharedService } from "../../services/shared.service";
 
 @Component ({
@@ -16,6 +22,7 @@ export class RepositoryComponent implements OnInit {
   repositoryId: string;
   repository: Repository;
   repositoryInterfaces: RepositoryInterface[] = [];
+  latestAggregations: AggregationDetails[] = [];
 
   loadingMessage: string = '';
   errorMessage: string = '';
@@ -52,11 +59,19 @@ export class RepositoryComponent implements OnInit {
           console.log(error);
           this.loadingMessage = '';
           this.errorMessage = loadingRepoError;
-        }
+        },
+      () => { this.getLatestAggregationHistory(); }
       );
 
       this.sharedService.repository$.subscribe(r => this.repository = r);
     }
+  }
+
+  getLatestAggregationHistory() {
+    this.repoService.getRepositoryAggregations(this.repositoryId).subscribe(
+      aggr => this.latestAggregations = aggr,
+      error => this.errorMessage = loadingAggregationHistoryError
+    );
   }
 
 }

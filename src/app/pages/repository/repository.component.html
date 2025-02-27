@@ -22,7 +22,7 @@
             {{ repository.officialname }}
           </h3>
 
-          <div style="display: flex; align-items: center; gap: 10px;">
+          <div *ngIf="latestAggregations.length>0" style="display: flex; align-items: center; gap: 10px;">
             <img src="assets/imgs/validator.svg" alt="Logo" style="height: 40px;">
             <div class="uk-inline">
               <span style="cursor: pointer; color: black;"
