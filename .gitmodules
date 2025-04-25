@@ -1,0 +1,3 @@
+[submodule "src/assets/openaire-theme"]
+	path = src/assets/openaire-theme
+	url = gitea@code-repo.d4science.org:MaDgIK/openaire-theme.git
