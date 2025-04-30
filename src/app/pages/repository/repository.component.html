@@ -1,82 +1,74 @@
-<div id="page_content">
+<div *ngIf="loadingMessage" class="loading-big">
+  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+    {{ loadingMessage }}
+  </div>
+  <div class="transparentFilm"></div>
+</div>
 
-  <div *ngIf="loadingMessage" class="loading-big">
-    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-      {{ loadingMessage }}
+<div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+
+<div *ngIf="!loadingMessage && !errorMessage && repository">
+
+<!--  <div class="uk-banner uk-padding-small uk-padding-remove-horizontal uk-light">-->
+    <div class="uk-banner uk-padding-small uk-padding-remove-horizontal">
+    <div class="uk-container uk-container-large">
+      <div class="uk-padding-small uk-padding-remove-vertical">
+
+        <div class="uk-grid uk-flex-middle" uk-grid>
+          <div class="uk-width-expand">
+            <div class="uk-grid uk-grid-small uk-flex-middle" uk-grid>
+
+              <div class="uk-card uk-card-default uk-padding-small uk-first-column">
+                <ng-container *ngIf="!repository.logourl"><img src="../../../assets/imgs/yourLogoHere.jpg" alt="OpenAIRE placeholder logo" class="uk-height-max-xsmall ng-star-inserted" style="height: 65px; max-width: 180px;"></ng-container>
+                <ng-container *ngIf="repository.logourl"><img src="{{ repository.logourl }}" alt="OpenAIRE placeholder logo" class="uk-height-max-xsmall ng-star-inserted" style="height: 65px; max-width: 180px;"></ng-container>
+              </div>
+
+              <div class="uk-width-expand uk-margin-small-left">
+                <h1 class="uk-h5 uk-margin-remove uk-text-truncate">{{ repository.officialname }}</h1>
+                <!--                      <div class="uk-text-small uk-margin-small-top">-->
+                <!--                        <breadcrumbs [breadcrumbs]="breadcrumbs"></breadcrumbs>-->
+                <!--                      </div>-->
+              </div>
+
+              <div *ngIf="latestAggregations.length>0" style="" class="uk-flex uk-flex-middle">
+                <img src="assets/imgs/validator.svg" alt="Logo" style="height: 40px;">
+                <div class="uk-inline uk-margin-small-left uk-margin-small-top">
+                  <a>
+                    <span style="cursor: pointer; color: black;" onmouseover="this.style.color='lightblue'" onmouseout="this.style.color='black'">
+                      <i class="fas fa-download"></i>
+                    </span>
+                  </a>
+                  <div class="uk-navbar-dropdown uk-dropdown uk-drop uk-dropdown-bottom-right" uk-dropdown="mode: hover">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                      <li><a href="assets/imgs/validator.png" download="validator.png">Download logo as PNG</a></li>
+                      <li><a href="assets/imgs/validator.jpg" download="validator.jpg">Download logo as JPEG</a></li>
+                      <li><a href="assets/imgs/validator.svg" download="validator.svg">Download logo as SVG</a></li>
+                      <li><a href="assets/imgs/validator.pdf" download="validator.pdf">Download logo as PDF</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="transparentFilm"></div>
   </div>
 
-  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-
-  <div *ngIf="!loadingMessage && !errorMessage">
-    <div class="repositoryMenu">
-
-      <div class="uk-margin-medium-left uk-margin-medium-right">
-        <div class="uk-padding-small" style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 *ngIf="repository" class="heading_b" style="display: flex; align-items: center;">
-            <img *ngIf="!repository.logourl" src="../../../assets/imgs/yourLogoHere.jpg"
-                 style="margin-right: 15px; margin-top: -8px;" width="60">
-            <img *ngIf="repository.logourl" src="{{ repository.logourl }}"
-                 style="margin-right: 15px; margin-top: -8px;" width="60">
-            {{ repository.officialname }}
-          </h3>
-
-          <div *ngIf="latestAggregations.length>0" style="display: flex; align-items: center; gap: 10px;">
-            <img src="assets/imgs/validator.svg" alt="Logo" style="height: 40px;">
-            <div class="uk-inline">
-              <span style="cursor: pointer; color: black;"
-                    onmouseover="this.style.color='lightblue'"
-                    onmouseout="this.style.color='black'">
-                    <i class="fas fa-download"></i>
-                  </span>
-              <div uk-dropdown="mode: hover">
-                <ul class="uk-nav uk-dropdown-nav">
-                  <li><a href="assets/imgs/validator.png" download="validator.png">Download logo as PNG</a></li>
-                  <li><a href="assets/imgs/validator.jpg" download="validator.jpg">Download logo as JPEG</a></li>
-                  <li><a href="assets/imgs/validator.svg" download="validator.svg">Download logo as SVG</a></li>
-                  <li><a href="assets/imgs/validator.pdf" download="validator.pdf">Download logo as PDF</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="top_bar">
-          <div class="md-top-bar">
-            <div class="uk-width-4-5@l uk-container-center">
-              <ul *ngIf="repository" class="top_bar_nav" id="snippets_grid_filter">
-                <!--<li class="uk-active" data-uk-filter="">-->
-                <li [routerLinkActive]="['uk-active']" data-uk-filter="">
-                  <!--<a [routerLink]="['/repository/' + repository.id + '/dashboard']">DASHBOARD</a>-->
-                  <a [routerLink]="['./dashboard']">DASHBOARD</a>
-                </li>
-                <li [routerLinkActive]="['uk-active']" data-uk-filter="snippets-lang-php">
-                  <!--<a [routerLink]="['/repository/' + repository.id + '/update']">UPDATE</a>-->
-                  <a [routerLink]="['./update']">UPDATE</a>
-                </li>
-                <li data-uk-filter="snippets-lang-css" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['./aggregationHistory']">AGGREGATION HISTORY</a>
-                </li>
-                <li data-uk-filter="snippets-lang-javascript" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['./events']">ENRICHMENTS</a>
-                </li>
-                <li data-uk-filter="snippets-lang-php" [routerLinkActive]="['uk-active']">
-                  <!--<a [routerLink]="['/repository/' + repository.id + '/getImpact']">METRICS</a>-->
-                  <a *ngIf="repository.piwikInfo && repository.piwikInfo.validated" [routerLink]="['./getImpact/show_metrics']">USAGE COUNTS</a>
-                  <a *ngIf="repository.piwikInfo && !repository.piwikInfo.validated" [routerLink]="['./getImpact/instructions']">USAGE COUNTS</a>
-                  <a *ngIf="!repository.piwikInfo" [routerLink]="['./getImpact/enable']">USAGE COUNTS</a>
-                </li>
-
-              </ul>
-            </div>
-          </div>
-        </div>
+  <div id="sidebar" class="sidebar_main_swipe uk-flex uk-background-default"
+       [class.sidebar_main_active]="open && (hasSidebar || hasAdminMenu)"
+       [class.sidebar_mini]="!open &&  (hasSidebar || hasAdminMenu)"
+       [class.sidebar_hover]="hover">
+    <!--  <side-menu *ngIf="hasSidebar"></side-menu>-->
+    <app-repo-side-menu *ngIf="hasSidebar" [repository]="repository"></app-repo-side-menu>
+    <main class="uk-width-1-1">
+      <div id="page_content">
+        <router-outlet></router-outlet>
       </div>
-
-    </div>
-
-    <router-outlet></router-outlet>
+    </main>
   </div>
 
 </div>

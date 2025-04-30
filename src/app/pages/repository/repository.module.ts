@@ -21,6 +21,7 @@ import { SharedService } from '../../services/shared.service';
 import { SourcesUpdateRepoComponent } from './update/sources-update-repo.component';
 import { SourcesModule } from '../sources/sources.module';
 import { UpdateRepoAdminsComponent } from './update/update-repo-admins.component';
+import {RepositorySideMenuComponent} from './repository-sidebar/repository-sidebar.component';
 
 @NgModule ({
     imports: [
@@ -34,6 +35,7 @@ import { UpdateRepoAdminsComponent } from './update/update-repo-admins.component
         SourcesModule
     ],
   declarations: [
+    RepositorySideMenuComponent,
     RepositoryComponent,
     DashboardComponent,
     SourcesUpdateRepoComponent,

@@ -8,7 +8,13 @@ import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'metrics-usagestats-report',
-  templateUrl: './metrics-usagestats-report.component.html'
+  templateUrl: './metrics-usagestats-report.component.html',
+  styles: [`#back-fab {
+    position: fixed;
+    bottom: 5vh;
+    right: 5vw;
+    z-index: 980;
+  }`]
 })
 
 export class MetricsUsagestatsReportComponent implements OnInit {

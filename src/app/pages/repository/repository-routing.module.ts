@@ -13,6 +13,9 @@ const repositoryRoutes: Routes = [
       {
         path: ':id',
         component: RepositoryComponent,
+        data: {
+          hasSidebar: true
+        },
         children: [
           {
             path: '',
@@ -21,7 +24,10 @@ const repositoryRoutes: Routes = [
           },
           {
             path: 'dashboard',
-            component: DashboardComponent
+            component: DashboardComponent,
+            data: {
+              hasSidebar: true
+            }
           },
           {
             path: 'getImpact',
@@ -41,7 +47,10 @@ const repositoryRoutes: Routes = [
           {
             path: 'update',
             component: SourcesUpdateRepoComponent,
-            canActivate: [AuthGuardService]
+            canActivate: [AuthGuardService],
+            data: {
+              hasSidebar: true
+            }
           },
           // {
           //   path: 'videos/:id',

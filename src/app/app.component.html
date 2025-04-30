@@ -1,14 +1,62 @@
-<div *ngIf="!isLandingRoute() ; else landing" class="sidebar_main_swipe" [class.sidebar_main_active]="open">
-  <!--<div *ngIf="!isHomeRoute() ; else home" class="sidebar_main_open sidebar_main_swipe uk-height-1-1">-->
+<!--<div *ngIf="!isLandingRoute() ; else landing" class="sidebar_main_swipe" [class.sidebar_main_active]="open">-->
+<!--  &lt;!&ndash;<div *ngIf="!isHomeRoute() ; else home" class="sidebar_main_open sidebar_main_swipe uk-height-1-1">&ndash;&gt;-->
+<!--  <top-menu-dashboard></top-menu-dashboard>-->
+<!--  <side-menu></side-menu>-->
+<!--  <div id="hide_controls">-->
+<!--    <div id="toggle" [class.sidebar_main_open]="open" (click)="toggleOpen($event)">-->
+<!--      <i class="material-icons">play_circle_filled</i>-->
+<!--      <span *ngIf="open" class="uk-margin-small-left">Hide Controls</span>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <router-outlet></router-outlet>-->
+<!--</div>-->
+
+<div *ngIf="!isLandingRoute() ; else landing">
   <top-menu-dashboard></top-menu-dashboard>
-  <side-menu></side-menu>
-  <div id="hide_controls">
-    <div id="toggle" [class.sidebar_main_open]="open" (click)="toggleOpen($event)">
-      <i class="material-icons">play_circle_filled</i>
-      <span *ngIf="open" class="uk-margin-small-left">Hide Controls</span>
-    </div>
-  </div>
   <router-outlet></router-outlet>
+
+<!--  <div id="sidebar" class="sidebar_main_swipe uk-flex uk-background-default"-->
+<!--       [class.sidebar_main_active]="open && (hasSidebar || hasAdminMenu)"-->
+<!--       [class.sidebar_mini]="!open &&  (hasSidebar || hasAdminMenu)"-->
+<!--       [class.sidebar_hover]="hover">-->
+<!--    <side-menu *ngIf="hasSidebar"></side-menu>-->
+<!--&lt;!&ndash;    <dashboard-sidebar *ngIf="stakeholder && isFrontPage && hasSidebar && !hasInternalSidebar"&ndash;&gt;-->
+<!--&lt;!&ndash;                       queryParamsHandling="merge" [items]="sideBarItems"&ndash;&gt;-->
+<!--&lt;!&ndash;                       [activeItem]="activeTopic?activeTopic.alias:null"&ndash;&gt;-->
+<!--&lt;!&ndash;                       [activeSubItem]="activeCategory?activeCategory.alias:null"></dashboard-sidebar>&ndash;&gt;-->
+<!--&lt;!&ndash;    <dashboard-sidebar *ngIf="hasAdminMenu && !hasInternalSidebar" [items]="adminMenuItems"&ndash;&gt;-->
+<!--&lt;!&ndash;                       [backItem]="backItem"></dashboard-sidebar>&ndash;&gt;-->
+<!--    <main class="uk-width-1-1">-->
+<!--      <router-outlet></router-outlet>-->
+<!--&lt;!&ndash;      <div page-content="">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div id="page_content">&ndash;&gt;-->
+<!--&lt;!&ndash;          <router-outlet></router-outlet>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    </main>-->
+<!--  </div>-->
+
+
+<!--  <div id="sidebar" class="sidebar_main_swipe uk-flex uk-background-default sidebar_main_active" [class.sidebar_main_active]="open" [class.sidebar_mini]="!open">-->
+<!--    <side-menu></side-menu>-->
+<!--    <main class="uk-width-1-1">-->
+<!--      <div>-->
+<!--        <div id="page_content">-->
+<!--          <router-outlet></router-outlet>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </main>-->
+<!--  </div>-->
+
+
+<!--  <side-menu></side-menu>-->
+<!--  <div id="hide_controls">-->
+<!--    <div id="toggle" [class.sidebar_main_open]="open" (click)="toggleOpen($event)">-->
+<!--      <i class="material-icons">play_circle_filled</i>-->
+<!--      <span *ngIf="open" class="uk-margin-small-left">Hide Controls</span>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <router-outlet></router-outlet>-->
 </div>
 
 <ng-template #landing>

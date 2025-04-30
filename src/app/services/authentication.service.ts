@@ -33,7 +33,7 @@ export class AuthenticationService {
       sessionStorage.setItem('state.location', url);
     } else {
       /*sessionStorage.setItem("state.location", this.router.url);*/
-      sessionStorage.setItem('state.location', '/join');
+      sessionStorage.setItem('state.location', '/myDataSources');
     }
     console.log('redirect location', sessionStorage.getItem('state.location'));
     window.location.href = this.loginUrl;
