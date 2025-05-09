@@ -35,55 +35,52 @@ const myGroups = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    TabsModule.forRoot(),
-    ModalModule.forRoot(),
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-  ],
-  entryComponents : [
-    MyArrayWrapper
-  ],
-  declarations: [
-    HelpContentComponent,
-    AsideHelpContentComponent,
-    ConfirmationDialogComponent,
-    TopmenuLandingComponent,
-    TopmenuDashboardComponent,
-    SideMenuComponent,
-    FooterComponent,
-    RepositoryTilesComponent,
-    ForbiddenPageComponent,
-    ReadMoreComponent,
-    ReadMoreTextComponent,
-    DatasourceUpdateFormComponent,
-    DatasourceCreateFormComponent,
-    DatasourceNewInterfaceFormComponent,
-    ...myGroups
-  ],
-  exports: [
-    HelpContentComponent,
-    AsideHelpContentComponent,
-    ConfirmationDialogComponent,
-    TopmenuLandingComponent,
-    TopmenuDashboardComponent,
-    SideMenuComponent,
-    FooterComponent,
-    RepositoryTilesComponent,
-    ForbiddenPageComponent,
-    ...myGroups,
-    ReadMoreComponent,
-    ReadMoreTextComponent,
-    DatasourceUpdateFormComponent,
-    DatasourceCreateFormComponent,
-    DatasourceNewInterfaceFormComponent,
-  ],
-  providers: [
-    HelpContentService
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        TabsModule.forRoot(),
+        ModalModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+    ],
+    declarations: [
+        HelpContentComponent,
+        AsideHelpContentComponent,
+        ConfirmationDialogComponent,
+        TopmenuLandingComponent,
+        TopmenuDashboardComponent,
+        SideMenuComponent,
+        FooterComponent,
+        RepositoryTilesComponent,
+        ForbiddenPageComponent,
+        ReadMoreComponent,
+        ReadMoreTextComponent,
+        DatasourceUpdateFormComponent,
+        DatasourceCreateFormComponent,
+        DatasourceNewInterfaceFormComponent,
+        ...myGroups
+    ],
+    exports: [
+        HelpContentComponent,
+        AsideHelpContentComponent,
+        ConfirmationDialogComponent,
+        TopmenuLandingComponent,
+        TopmenuDashboardComponent,
+        SideMenuComponent,
+        FooterComponent,
+        RepositoryTilesComponent,
+        ForbiddenPageComponent,
+        ...myGroups,
+        ReadMoreComponent,
+        ReadMoreTextComponent,
+        DatasourceUpdateFormComponent,
+        DatasourceCreateFormComponent,
+        DatasourceNewInterfaceFormComponent,
+    ],
+    providers: [
+        HelpContentService
+    ]
 })
 
 export class ReusableComponentsModule {

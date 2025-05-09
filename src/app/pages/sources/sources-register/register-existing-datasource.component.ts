@@ -5,7 +5,7 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { AsideHelpContentComponent, HelpContentComponent } from '../../../shared/reusablecomponents/help-content.component';
 import { RepositoryService } from '../../../services/repository.service';
 import { DatasourceNewInterfaceFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
@@ -67,7 +67,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   @ViewChild('updateTermsForm')
   updateTermsForm: DatasourceUpdateTermsFormComponent;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private repoService: RepositoryService) {}

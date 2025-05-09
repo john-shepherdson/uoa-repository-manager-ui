@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { UsagestatsService } from '../../../services/usagestats.service';
 import { ReportResponse } from '../../../domain/usageStatsClasses';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import {COUNTER_Dataset_Report, COUNTER_Item_Report, SUSHI_Error_Model} from '../../../domain/sushilite';
 
 @Component({
@@ -30,13 +30,13 @@ export class MetricsUsagestatsReportResultsComponent implements OnInit {
   totalPages: number;
   selectedItemIndex: number;
 
-  pageSizeSelect: FormGroup;
+  pageSizeSelect: UntypedFormGroup;
   chosenReport: string;
 
   constructor(private route: ActivatedRoute,
               private authService: AuthenticationService,
               private usageService: UsagestatsService,
-              private fb: FormBuilder) {}
+              private fb: UntypedFormBuilder) {}
 
   ngOnInit() {
     this.page = 0;

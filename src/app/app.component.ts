@@ -6,7 +6,7 @@ import {MatomoTracker} from 'ngx-matomo';
 import {ConfirmationDialogComponent} from './shared/reusablecomponents/confirmation-dialog.component';
 import {RepositoryService} from './services/repository.service';
 import {RepositorySnippet} from './domain/typeScriptClasses';
-import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, UntypedFormArray} from '@angular/forms';
 
 @Component({
   selector: 'oa-repo-manager',
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
   open: boolean = true;
 
   constructor(private router: Router, private authService: AuthenticationService, private matomoTracker: MatomoTracker,
-              private repositoryService: RepositoryService, private fb: FormBuilder, public route: ActivatedRoute) {
+              private repositoryService: RepositoryService, private fb: UntypedFormBuilder, public route: ActivatedRoute) {
 
     // console.log('21-06-2019. Fixed matomo to log userIds?');
 
@@ -122,7 +122,7 @@ export class AppComponent implements OnInit {
     this.terms.push(this.newTerm(name, id, consent));
   }
 
-  newTerm(name: string, id: string, consent: boolean): FormGroup {
+  newTerm(name: string, id: string, consent: boolean): UntypedFormGroup {
     return this.fb.group({
       id: [id],
       name: [name],
@@ -133,7 +133,7 @@ export class AppComponent implements OnInit {
   }
 
   get terms() {
-    return this.agreementForm.get('terms') as FormArray;
+    return this.agreementForm.get('terms') as UntypedFormArray;
   }
 
   isLandingRoute() {

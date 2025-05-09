@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import {
   adminEmailDesc,
   countryDesc,
@@ -49,7 +49,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   @Input() selectedRepo: Repository;
 
   formSubmitted = false;
-  group: FormGroup;
+  group: UntypedFormGroup;
 
   readonly groupDefinition = {
     softwarePlatform : ['', Validators.required],
@@ -90,7 +90,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   adminEmailDesc: Description = adminEmailDesc;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     private repoService: RepositoryService,
     private authService: AuthenticationService

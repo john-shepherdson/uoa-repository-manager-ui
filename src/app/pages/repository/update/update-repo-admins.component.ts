@@ -3,7 +3,7 @@ import { Repository, User } from '../../../domain/typeScriptClasses';
 import { RepositoryService } from '../../../services/repository.service';
 import {loadingRepoMessage} from '../../../domain/shared-messages';
 import {ConfirmationDialogComponent} from '../../../shared/reusablecomponents/confirmation-dialog.component';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 
 declare var UIkit: any;
 
@@ -34,7 +34,7 @@ export class UpdateRepoAdminsComponent implements OnChanges {
   modalErrorMessage: string;
   modalLoadingMessage: string;
 
-  emailControl = new FormControl();
+  emailControl = new UntypedFormControl();
 
   constructor (private repoService: RepositoryService) { }
 

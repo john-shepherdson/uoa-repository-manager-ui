@@ -5,7 +5,7 @@ import { BrokerService } from '../../../services/broker.service';
 import { loadingEvents, noEventsForTopic, noEventsWithParams, noServiceMessage,
          subscribingChooseFrequency, subscribingToEvents, subscribingToEventsError,
          subscribingToeventsSuccess } from '../../../domain/shared-messages';
-import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
 import { SharedService } from "../../../services/shared.service";
@@ -33,7 +33,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
 
   selectedItemIndex: number;
 
-  group: FormGroup;
+  group: UntypedFormGroup;
   readonly titleDefinition = { eventTitle: [''] };
   readonly authorDefinition = { eventAuthor: [''] };
   readonly subjectDefinition = { eventSubject: [''] };
@@ -61,7 +61,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   public subscribeToEventsModal: ConfirmationDialogComponent;
 
   constructor (private route: ActivatedRoute,
-               private fb: FormBuilder,
+               private fb: UntypedFormBuilder,
                private brokerService: BrokerService,
                private authService: AuthenticationService,
                private sharedService: SharedService) {}
@@ -137,30 +137,30 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
   }
 
   removeControl(controlName: string, i: number) {
-    const controlArray = <FormArray>this.group.controls[controlName];
+    const controlArray = <UntypedFormArray>this.group.controls[controlName];
     controlArray.removeAt(i);
   }
 
   addControl(controlName: string, definition: any) {
-    const controlArray = <FormArray>this.group.controls[controlName];
+    const controlArray = <UntypedFormArray>this.group.controls[controlName];
     controlArray.push(this.initControl(definition));
   }
 
   clearForm() {
-    let controlArray: FormArray;
-    controlArray = <FormArray>this.group.controls['eventTitles'];
+    let controlArray: UntypedFormArray;
+    controlArray = <UntypedFormArray>this.group.controls['eventTitles'];
     controlArray.controls = [];
     controlArray.push(this.initControl(this.titleDefinition));
 
-    controlArray = <FormArray>this.group.controls['eventAuthors'];
+    controlArray = <UntypedFormArray>this.group.controls['eventAuthors'];
     controlArray.controls = [];
     controlArray.push(this.initControl(this.authorDefinition));
 
-    controlArray = <FormArray>this.group.controls['eventSubjects'];
+    controlArray = <UntypedFormArray>this.group.controls['eventSubjects'];
     controlArray.controls = [];
     controlArray.push(this.initControl(this.subjectDefinition));
 
-    controlArray = <FormArray>this.group.controls['eventDateRanges'];
+    controlArray = <UntypedFormArray>this.group.controls['eventDateRanges'];
     controlArray.controls = [];
     controlArray.push(this.initControl(this.dateRangeDefinition));
 
@@ -173,32 +173,32 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
 
   updateQuery() {
     let i: number;
-    let controlArray: FormArray;
+    let controlArray: UntypedFormArray;
 
     if ( this.group.valid ) {
       this.initQuery();
       this.advanceSearch.trust.min = this.group.get('trustMin').value;
       this.advanceSearch.trust.max = this.group.get('trustMax').value;
 
-      controlArray = <FormArray>this.group.controls['eventTitles'];
+      controlArray = <UntypedFormArray>this.group.controls['eventTitles'];
       for (i = 0; i < controlArray.length; i++) {
         if (controlArray.at(i).get('eventTitle').value) {
           this.advanceSearch.titles.push(controlArray.at(i).get('eventTitle').value);
         }
       }
-      controlArray = <FormArray>this.group.controls['eventAuthors'];
+      controlArray = <UntypedFormArray>this.group.controls['eventAuthors'];
       for (i = 0; i < controlArray.length; i++) {
         if (controlArray.at(i).get('eventAuthor').value) {
           this.advanceSearch.authors.push(controlArray.at(i).get('eventAuthor').value);
         }
       }
-      controlArray = <FormArray>this.group.controls['eventSubjects'];
+      controlArray = <UntypedFormArray>this.group.controls['eventSubjects'];
       for (i = 0; i < controlArray.length; i++) {
         if (controlArray.at(i).get('eventSubject').value) {
           this.advanceSearch.subjects.push(controlArray.at(i).get('eventSubject').value);
         }
       }
-      controlArray = <FormArray>this.group.controls['eventDateRanges'];
+      controlArray = <UntypedFormArray>this.group.controls['eventDateRanges'];
       for (i = 0; i < controlArray.length; i++) {
         if (controlArray.at(i).get('dateFrom').value) {
           let toDate;
@@ -242,13 +242,13 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
             this.noEvents = noEventsWithParams;
           }
         }
-        let tempArray = <FormArray>this.group.controls['eventTitles'];
+        let tempArray = <UntypedFormArray>this.group.controls['eventTitles'];
         this.eventTitleFormArray = tempArray.controls;
-        tempArray = <FormArray>this.group.controls['eventAuthors'];
+        tempArray = <UntypedFormArray>this.group.controls['eventAuthors'];
         this.eventAuthorFormArray = tempArray.controls;
-        tempArray = <FormArray>this.group.controls['eventSubjects'];
+        tempArray = <UntypedFormArray>this.group.controls['eventSubjects'];
         this.eventSubjectsFormArray = tempArray.controls;
-        tempArray = <FormArray>this.group.controls['eventDateRanges'];
+        tempArray = <UntypedFormArray>this.group.controls['eventDateRanges'];
         this.eventDateRangesFormArray = tempArray.controls;
         console.log(`total pages is ${this.eventsPage.totalPages}`);
         this.eventsPageInitialized = true;

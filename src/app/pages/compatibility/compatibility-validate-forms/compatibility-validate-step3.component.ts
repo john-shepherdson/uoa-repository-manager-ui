@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { formErrorRequiredFields } from '../../../domain/shared-messages';
 
 @Component ({
@@ -13,9 +13,9 @@ export class CompatibilityValidateStep3Component implements OnInit {
   @Input() valSets: string[];
   @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
-  group: FormGroup;
+  group: UntypedFormGroup;
 
-  constructor (private fb: FormBuilder) {}
+  constructor (private fb: UntypedFormBuilder) {}
 
   ngOnInit () {
     this.group = this.fb.group({

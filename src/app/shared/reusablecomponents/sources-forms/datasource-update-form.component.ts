@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { formErrorRequiredFields, formErrorWasntSaved, formSubmitting, formSuccessUpdatedRepo, loadingRepoError,
          loadingRepoMessage, noServiceMessage } from '../../../domain/shared-messages';
 import { RepositoryService } from '../../../services/repository.service';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
 import { Description, softwarePlatformDesc, platformNameDesc, officialNameDesc, repoDescriptionDesc, countryDesc,
          longtitudeDesc, latitudeDesc, websiteUrlDesc, institutionNameDesc, englishNameDesc, logoUrlDesc, timezoneDesc,
@@ -38,7 +38,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   repoId: string;
   formSubmitted = false;
-  updateGroup: FormGroup;
+  updateGroup: UntypedFormGroup;
   readonly updateGroupDefinition = {
     softwarePlatform : '',
     platformName : '',
@@ -78,7 +78,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   adminEmailDesc: Description = adminEmailDesc;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private repoService: RepositoryService,
     private sharedService: SharedService,
     private authService: AuthenticationService

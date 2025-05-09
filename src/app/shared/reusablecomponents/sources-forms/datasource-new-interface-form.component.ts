@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description, existingValSetDesc, commentDesc } from '../../../domain/oa-description';
 import {ApiParamDetails, InterfaceInformation, RepositoryInterface} from '../../../domain/typeScriptClasses';
 import { ValidatorService } from '../../../services/validator.service';
@@ -35,7 +35,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   @Output() emitDeleteInterface: EventEmitter<number> = new EventEmitter<number>();
   interfaceToExport: RepositoryInterface;
 
-  repoInterfaceForm: FormGroup;
+  repoInterfaceForm: UntypedFormGroup;
   readonly repoInterfaceFormDef = {
     baseurl: ['', Validators.required],
     selectValidationSet: [''],
@@ -59,7 +59,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   compClasses: Map<string, string> = new Map<string, string>();
   interfaceInfo: InterfaceInformation;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private valService: ValidatorService,
               private repoService: RepositoryService) {}
 

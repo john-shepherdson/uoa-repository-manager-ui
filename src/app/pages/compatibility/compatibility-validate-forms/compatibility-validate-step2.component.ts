@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Rule, RuleSet } from '../../../domain/typeScriptClasses';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component ({
   selector: 'compatibility-validate-step2',
@@ -15,12 +15,12 @@ export class CompatibilityValidateStep2Component implements OnInit {
   selectedAllContentRules: boolean;
   selectedAllUsageRules: boolean;
 
-  group: FormGroup;
+  group: UntypedFormGroup;
 
   @Input() ruleSets: RuleSet[];
   @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit() {
     this.showRules = false;
@@ -67,11 +67,11 @@ export class CompatibilityValidateStep2Component implements OnInit {
 
   /* inputs the Rule Lists into the FormArrays */
   getRulesLists() {
-    let contentRules = <FormArray>this.group.controls['contentRules'];
+    let contentRules = <UntypedFormArray>this.group.controls['contentRules'];
     for ( let i = 0; i<this.currentContentRules.length-1; i++ ) {
       contentRules.push(this.initRules());
     }
-    let usageRules = <FormArray>this.group.controls['usageRules'];
+    let usageRules = <UntypedFormArray>this.group.controls['usageRules'];
     for ( let i = 0; i<this.currentUsageRules.length-1; i++ ) {
       usageRules.push(this.initRules());
     }
@@ -86,12 +86,12 @@ export class CompatibilityValidateStep2Component implements OnInit {
 
   /* removes form controls in order to reinitialize contentRules formArrays */
   removeRulesControls() {
-    let contentRules = <FormArray>this.group.controls['contentRules'];
+    let contentRules = <UntypedFormArray>this.group.controls['contentRules'];
 //    contentRules.reset();
     contentRules.controls = [];
     contentRules.push(this.initRules());
 
-    let usageRules = <FormArray>this.group.controls['usageRules'];
+    let usageRules = <UntypedFormArray>this.group.controls['usageRules'];
 //    usageRules.reset();
     usageRules.controls = [];
     usageRules.push(this.initRules());
@@ -99,7 +99,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
 
   /* selects/deselects all content rules */
   toggleSelectAllContentRules() {
-    let contentRules = <FormArray>this.group.controls['contentRules'];
+    let contentRules = <UntypedFormArray>this.group.controls['contentRules'];
     if (this.selectedAllContentRules) {
       this.selectedAllContentRules = false;
       contentRules.controls.map(x => x.get('rule').setValue(false));
@@ -111,7 +111,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
 
   /* selects/deselects all usage rules */
   toggleSelectAllUsageRules() {
-    let usageRules = <FormArray>this.group.controls['usageRules'];
+    let usageRules = <UntypedFormArray>this.group.controls['usageRules'];
     if (this.selectedAllUsageRules) {
       this.selectedAllUsageRules = false;
       usageRules.controls.map(x => x.get('rule').setValue(false))
@@ -151,7 +151,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
     emitted.push(this.ruleSets[index].guidelinesAcronym);
 
     console.log(`saving the selected rules`);
-    let contentRules = <FormArray>this.group.controls['contentRules'];
+    let contentRules = <UntypedFormArray>this.group.controls['contentRules'];
     let selectedContent: number[] = [];
     for (let i=0; i< this.ruleSets[index].contentRules.length; i++ ) {
       if (contentRules.at(i).get('rule').value) {
@@ -160,7 +160,7 @@ export class CompatibilityValidateStep2Component implements OnInit {
     }
     emitted.push(selectedContent);
     let selectedUsage: number[] = [];
-    let usageRules = <FormArray>this.group.controls['usageRules'];
+    let usageRules = <UntypedFormArray>this.group.controls['usageRules'];
     for (let i=0; i< this.ruleSets[index].usageRules.length; i++ ) {
       if (usageRules.at(i).get('rule').value) {
         selectedUsage.push(this.ruleSets[index].usageRules[i].id);
