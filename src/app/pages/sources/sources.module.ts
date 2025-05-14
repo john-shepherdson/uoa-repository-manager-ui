@@ -3,7 +3,7 @@ import { SourcesRouting } from './sources.routing';
 import { SourcesComponent } from './sources.component';
 import { SourcesRegisterComponent } from './sources-register.component';
 import { CommonModule } from '@angular/common';
-import { TabsModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RepoFilter } from './sourcesPipes';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TabsModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RepositoryComponent } from './repository.component';

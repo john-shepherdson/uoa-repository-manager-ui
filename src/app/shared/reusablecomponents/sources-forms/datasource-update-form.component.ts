@@ -1,15 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { formErrorRequiredFields, formErrorWasntSaved, formSubmitting, formSuccessUpdatedRepo, loadingRepoError,
-         loadingRepoMessage, noServiceMessage } from '../../../domain/shared-messages';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import {
+  formErrorRequiredFields, formErrorWasntSaved, formSubmitting, formSuccessUpdatedRepo, loadingRepoError, loadingRepoMessage,
+  noServiceMessage
+} from '../../../domain/shared-messages';
 import { RepositoryService } from '../../../services/repository.service';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
-import { Description, softwarePlatformDesc, platformNameDesc, officialNameDesc, repoDescriptionDesc, countryDesc,
-         longtitudeDesc, latitudeDesc, websiteUrlDesc, institutionNameDesc, englishNameDesc, logoUrlDesc, timezoneDesc,
-         datasourceTypeDesc, adminEmailDesc, lissnDesc, eissnDesc, issnDesc } from '../../../domain/oa-description';
+import {
+  adminEmailDesc, countryDesc, datasourceTypeDesc, Description, eissnDesc, englishNameDesc, institutionNameDesc,
+  issnDesc, latitudeDesc, lissnDesc, logoUrlDesc, longtitudeDesc, officialNameDesc, platformNameDesc, repoDescriptionDesc,
+  softwarePlatformDesc, timezoneDesc, websiteUrlDesc
+} from '../../../domain/oa-description';
 import { AuthenticationService } from '../../../services/authentication.service';
-import {SharedService} from '../../../services/shared.service';
-import {Option} from '../../input.component';
+import { SharedService } from '../../../services/shared.service';
+import { Option } from '../../input.component';
 
 @Component ({
   selector: 'datasource-update-form',
@@ -26,6 +30,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   typologiesOptions: Option[] = [];
   timezones: Timezone[] = [];
   countries: Country[] = [];
+  countriesOptions: Option[] = [];
   datasourceClasses: Map<string, string> = new Map<string, string>();
   classCodes: string[] = [];
 
@@ -79,16 +84,12 @@ export class DatasourceUpdateFormComponent implements OnInit {
   datasourceTypeDesc: Description = datasourceTypeDesc;
   adminEmailDesc: Description = adminEmailDesc;
 
-  constructor(
-    private fb: UntypedFormBuilder,
-    private repoService: RepositoryService,
-    private sharedService: SharedService,
-    private authService: AuthenticationService
-  ) {}
+  constructor(private fb: UntypedFormBuilder, private repoService: RepositoryService, private sharedService: SharedService,
+              private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.loadForm();
-    console.log('mode: ', this.mode);
+    // console.log('mode: ', this.mode);
   }
 
   loadForm() {
@@ -96,6 +97,16 @@ export class DatasourceUpdateFormComponent implements OnInit {
       this.repoId = this.selectedRepo.id.split('::')[1];
       this.loadingMessage = loadingRepoMessage;
       this.updateGroup = this.fb.group(this.updateGroupDefinition, {validator: checkPlatform});
+      this.updateGroup.get('repoDescription').disable();
+      this.updateGroup.get('softwarePlatform').valueChanges.subscribe({
+        next: (value) => {
+          if (value === '') {
+            this.updateGroup.get('repoDescription').enable();
+          } else {
+            this.updateGroup.get('repoDescription').disable();
+          }
+        }
+      });
       this.getDatasourceClasses();
     } else {
       this.errorMessage = loadingRepoError;
@@ -216,12 +227,17 @@ export class DatasourceUpdateFormComponent implements OnInit {
           } else {
             return 0;
           }
-        } ),
+        }),
         error => {
           this.loadingMessage = '';
           this.errorMessage = noServiceMessage;
           console.log(error);
-        }, () => {
+        },
+        () => {
+          this.countriesOptions = [];
+          this.countries.forEach(country => {
+            this.countriesOptions.push({value: country.code, label: country.name});
+          });
           this.getTypologies();
         });
   }

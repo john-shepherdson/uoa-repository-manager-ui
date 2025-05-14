@@ -65,18 +65,32 @@
 
   <div class="uk-child-width-1-2" uk-grid>
     <div class="uk-width-1-2 uk-margin-bottom">
-      <div input placeholder="Software platform" type="select" [formInput]="updateGroup.get('softwarePlatform')" [options]="typologiesOptions"></div>
+      <div input placeholder="Software platform" type="select" [formInput]="updateGroup.get('softwarePlatform')"
+           [options]="typologiesOptions">
+      </div>
     </div>
+
+    <div class="uk-width-1-2 uk-margin-bottom">
+      <div input placeholder="Text" [hint]="'This value will be used as the platform for your repository'"
+           type="textarea"  [formInput]="updateGroup.get('repoDescription')">
+      </div>
+    </div>
+
+    <div class="uk-width-1-2 uk-margin-bottom">
+      <div input placeholder="Official Name" type="text" [formInput]="updateGroup.get('officialName')"></div>
+    </div>
+
+    <div class="uk-width-1-2 uk-margin-bottom">
+      <div input placeholder="Country" type="select" [formInput]="updateGroup.get('country')"
+           [options]="countriesOptions">">
+      </div>
+    </div>
+
   </div>
 
-
-<!--  <div class="uk-width-1-2 uk-margin-bottom">-->
-<!--    <div input placeholder="Select" type="select" [options]="['option 1', 'option 2']"></div>-->
-<!--  </div>-->
-
-  <div class="uk-width-1-2 uk-margin-bottom">
-    <div input placeholder="Text" [hint]="'sjhjswkfvhw'" type="textarea"  [formInput]="updateGroup.get('repoDescription')"></div>
-  </div>
+  <!--  <div class="uk-width-1-2 uk-margin-bottom">-->
+  <!--    <div input placeholder="Select" type="select" [options]="['option 1', 'option 2']"></div>-->
+  <!--  </div>-->
 
 
 
