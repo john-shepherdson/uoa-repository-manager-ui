@@ -23,6 +23,7 @@ import { TopmenuDashboardComponent} from "../topmenudashboard/topmenu-dashboard.
 import { DatasourceUpdateFormComponent } from "./sources-forms/datasource-update-form.component";
 import { DatasourceCreateFormComponent } from "./sources-forms/datasource-create-form.component";
 import { DatasourceNewInterfaceFormComponent } from "./sources-forms/datasource-new-interface-form.component";
+import {InputComponent} from '../input.component';
 
 const myGroups = [
   MyGroup,
@@ -35,15 +36,16 @@ const myGroups = [
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        TabsModule.forRoot(),
-        ModalModule.forRoot(),
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-    ],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TabsModule.forRoot(),
+    ModalModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    InputComponent
+  ],
     declarations: [
         HelpContentComponent,
         AsideHelpContentComponent,

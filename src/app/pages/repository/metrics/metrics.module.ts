@@ -13,15 +13,17 @@ import { MetricsUsagestatsComponent } from './metrics-usagestats.component';
 import { MetricsUsagestatsReportComponent } from './metrics-usagestats-report.component';
 import { MetricsUsagestatsReportResultsComponent } from './metrics-usagestats-report-results.component';
 import { ReusableComponentsModule } from "../../../shared/reusablecomponents/reusable-components.module";
+import { InputDirective } from '../../../directives/input.directive';
 
 @NgModule ({
-  imports: [
-    CommonModule,
-    TabsModule.forRoot(),
-    MetricsRouting,
-    ReusableComponentsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        TabsModule.forRoot(),
+        MetricsRouting,
+        ReusableComponentsModule,
+        ReactiveFormsModule,
+        InputDirective
+    ],
   declarations: [
     MetricsEnableComponent,
     MetricsInstructionsComponent,

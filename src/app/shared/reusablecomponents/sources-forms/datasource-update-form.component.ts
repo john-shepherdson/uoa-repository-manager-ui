@@ -9,6 +9,7 @@ import { Description, softwarePlatformDesc, platformNameDesc, officialNameDesc, 
          datasourceTypeDesc, adminEmailDesc, lissnDesc, eissnDesc, issnDesc } from '../../../domain/oa-description';
 import { AuthenticationService } from '../../../services/authentication.service';
 import {SharedService} from '../../../services/shared.service';
+import {Option} from '../../input.component';
 
 @Component ({
   selector: 'datasource-update-form',
@@ -22,6 +23,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   loadingMessage: string;
 
   typologies: Typology[] = [];
+  typologiesOptions: Option[] = [];
   timezones: Timezone[] = [];
   countries: Country[] = [];
   datasourceClasses: Map<string, string> = new Map<string, string>();
@@ -226,7 +228,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   getTypologies() {
     this.repoService.getTypologies().subscribe(
-      types => this.typologies = types,
+      types => {
+        this.typologies = types;
+        this.getTypologiesAsOptions();
+      },
       error => {
         this.loadingMessage = '';
         console.log(error);
@@ -235,6 +240,18 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.getTimezones();
       }
     );
+  }
+
+  getTypologiesAsOptions() {
+    console.log('getTypologiesAsOptions');
+
+    this.typologiesOptions = [];
+    for (const typology of this.typologies) {
+      const option: Option = new Option();
+      option.value = typology.value;
+      option.label = typology.name;
+      this.typologiesOptions.push(option);
+    }
   }
 
   getTimezones() {

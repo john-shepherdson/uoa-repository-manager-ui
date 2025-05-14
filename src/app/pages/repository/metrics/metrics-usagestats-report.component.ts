@@ -14,7 +14,7 @@ import { SharedService } from '../../../services/shared.service';
     bottom: 5vh;
     right: 5vw;
     z-index: 980;
-  }`]
+  }`],
 })
 
 export class MetricsUsagestatsReportComponent implements OnInit {

@@ -28,6 +28,64 @@
     <a target="_blank" href="{{ 'https://fairsharing.org/search?q=' + selectedRepo.officialname }}">FAIRsharing link</a>.
   </div>
 
+
+<!--  <div input="" placeholder="Select" type="select" class="uk-margin-medium-bottom">-->
+<!--    <div id="input-2" class="">-->
+<!--      <div class="input-wrapper flat hint" tabindex="0" aria-haspopup="true" aria-expanded="true">-->
+<!--        <div click-outside-or-esc="" class="input-box select">-->
+<!--          <div class="placeholder ng-star-inserted"><label>Select </label></div>-->
+<!--          <div class="uk-flex uk-flex-middle" aria-describedby="uk-tooltip-148" tabindex="0">-->
+<!--            <div class="input uk-width-expand uk-text-truncate ng-star-inserted">No option selected</div>-->
+<!--            <div class="uk-margin-small-left icon ng-star-inserted">-->
+<!--              <icon class="ng-star-inserted">-->
+<!--                <span class="uk-flex ng-star-inserted">-->
+<!--                  <span class="material-icons" style="font-size: 20px;">arrow_drop_down</span>-->
+<!--                </span>-->
+<!--              </icon>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="tools"></div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div uk-dropdown="mode: none; stretch: true; flip: false; shift: false"-->
+<!--           class="options uk-dropdown uk-drop" boundary="#input-2"-->
+<!--           style="width: 324px; overflow: auto; max-width: 1698px; top: 58px; left: 445px;">-->
+<!--        <ul class="uk-nav uk-dropdown-nav">-->
+<!--          <li class="">-->
+<!--            <a><span uk-tooltip="title: option 1; delay: 500; pos:bottom-left" title="" aria-describedby="uk-tooltip-151" tabindex="0">option 1</span></a>-->
+<!--          </li>-->
+<!--          <li class=""><a><span uk-tooltip="title: option 2; delay: 500; pos:bottom-left" title="" aria-describedby="uk-tooltip-152" tabindex="0">option 2</span></a></li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <span class="uk-text-small uk-text-danger"></span>-->
+<!--    <span class="uk-text-small uk-text-warning uk-margin-xsmall-top ng-star-inserted"></span>-->
+<!--    <i class="uk-text-small uk-text-meta uk-margin-xsmall-top"></i>-->
+<!--  </div>-->
+
+  <div class="uk-child-width-1-2" uk-grid>
+    <div class="uk-width-1-2 uk-margin-bottom">
+      <div input placeholder="Software platform" type="select" [formInput]="updateGroup.get('softwarePlatform')" [options]="typologiesOptions"></div>
+    </div>
+  </div>
+
+
+<!--  <div class="uk-width-1-2 uk-margin-bottom">-->
+<!--    <div input placeholder="Select" type="select" [options]="['option 1', 'option 2']"></div>-->
+<!--  </div>-->
+
+  <div class="uk-width-1-2 uk-margin-bottom">
+    <div input placeholder="Text" [hint]="'sjhjswkfvhw'" type="textarea"  [formInput]="updateGroup.get('repoDescription')"></div>
+  </div>
+
+
+
+
+
+
+
+
+
   <div data-dynamic-fields="d_field_wizard" class="uk-grid" data-uk-grid-margin="" dynamic-fields-counter="0">
     <div class="uk-width-medium-1-1 parsley-row form_section uk-row-first">
       <div class="md-input-wrapper {{ (updateGroup.get('softwarePlatform') != null) ? 'md-input-filled' : '' }}">

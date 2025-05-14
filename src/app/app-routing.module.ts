@@ -73,6 +73,7 @@ const appRoutes: Routes = [
     // fixme redirect to 404
     path: '**',
     redirectTo: '/403-forbidden',
+    pathMatch: 'full'
     // component: ForbiddenPageComponent
   }
 ];

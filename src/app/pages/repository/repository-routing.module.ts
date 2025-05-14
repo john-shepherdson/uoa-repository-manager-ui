@@ -20,7 +20,7 @@ const repositoryRoutes: Routes = [
           {
             path: '',
             redirectTo: 'dashboard',
-            // pathMatch: 'full'
+            pathMatch: 'full'
           },
           {
             path: 'dashboard',
@@ -72,7 +72,8 @@ const repositoryRoutes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/403-forbidden'
+        redirectTo: '/403-forbidden',
+        pathMatch: 'full'
       }
     ]
   }

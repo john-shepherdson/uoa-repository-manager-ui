@@ -17,7 +17,7 @@ const metricsRoutes: Routes = [
       {
         path: '',
         redirectTo: 'enable',
-        // pathMatch: 'full'
+        pathMatch: 'full'
       },
       {
         path: 'enable',
