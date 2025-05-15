@@ -29,9 +29,11 @@ export class DatasourceUpdateFormComponent implements OnInit {
   typologies: Typology[] = [];
   typologiesOptions: Option[] = [];
   timezones: Timezone[] = [];
+  timezonesOptions: Option[] = [];
   countries: Country[] = [];
   countriesOptions: Option[] = [];
   datasourceClasses: Map<string, string> = new Map<string, string>();
+  datasourceClassesOptions: Option[] = [];
   classCodes: string[] = [];
 
   /*  in sources/register (in literature or data mode) the updated repository is emitted */
@@ -97,13 +99,14 @@ export class DatasourceUpdateFormComponent implements OnInit {
       this.repoId = this.selectedRepo.id.split('::')[1];
       this.loadingMessage = loadingRepoMessage;
       this.updateGroup = this.fb.group(this.updateGroupDefinition, {validator: checkPlatform});
-      this.updateGroup.get('repoDescription').disable();
+      this.updateGroup.get('platformName').disable();
       this.updateGroup.get('softwarePlatform').valueChanges.subscribe({
         next: (value) => {
           if (value === '') {
-            this.updateGroup.get('repoDescription').enable();
+            this.updateGroup.get('platformName').enable();
           } else {
-            this.updateGroup.get('repoDescription').disable();
+            this.updateGroup.get('platformName').disable();
+            this.updateGroup.get('platformName').reset();
           }
         }
       });
@@ -202,6 +205,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
     this.repoService.getDatasourceClasses(param).subscribe(
       classes => {
         for (const [key, value] of Object.entries(classes)) {
+          this.datasourceClassesOptions.push({value: key, label: value});
           this.datasourceClasses.set(key, value);
         }},
       error => {
@@ -272,7 +276,13 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   getTimezones() {
     this.repoService.getTimezones().subscribe(
-      zones => this.timezones = zones,
+      zones => {
+        this.timezones = zones;
+        this.timezonesOptions = [];
+        zones.forEach(zone => {
+          this.timezonesOptions.push({value: zone.offset, label: zone.name});
+        })
+      },
       error => {
         this.loadingMessage = '';
         console.log(error);

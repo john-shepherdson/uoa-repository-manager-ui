@@ -1,11 +1,27 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description, existingValSetDesc, commentDesc } from '../../../domain/oa-description';
-import {ApiParamDetails, InterfaceInformation, RepositoryInterface} from '../../../domain/typeScriptClasses';
+import {
+  baseUrlDesc,
+  commentDesc,
+  compatibilityLevelDesc,
+  customValSetDesc,
+  Description,
+  existingValSetDesc
+} from '../../../domain/oa-description';
+import { ApiParamDetails, InterfaceInformation, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { ValidatorService } from '../../../services/validator.service';
 import { RepositoryService } from '../../../services/repository.service';
-import { formErrorWasntSaved, formInfoLoading, formSubmitting, formSuccessAddedInterface, formSuccessUpdatedInterface, invalidCustomBaseUrl,
-         nonRemovableInterface, noServiceMessage } from '../../../domain/shared-messages';
+import {
+  formErrorWasntSaved,
+  formInfoLoading,
+  formSubmitting,
+  formSuccessAddedInterface,
+  formSuccessUpdatedInterface,
+  invalidCustomBaseUrl,
+  nonRemovableInterface,
+  noServiceMessage
+} from '../../../domain/shared-messages';
+import { Option } from '../../input.component';
 
 export class RepoFields {
   id: string;
@@ -53,15 +69,15 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   identifiedBaseUrl: boolean;
   canEdit = true;
   showIdentifiedBaseUrl: boolean = null;
-  valsetList: string[] = [];
+  valsetList: string[] = [''];
   existingCompLevel: string;
   classCodes: string[] = [];
   compClasses: Map<string, string> = new Map<string, string>();
+  compClassesOptions: Option[] = [];
+  currentCompClassesOptions: Option[] = [];
   interfaceInfo: InterfaceInformation;
 
-  constructor(private fb: UntypedFormBuilder,
-              private valService: ValidatorService,
-              private repoService: RepositoryService) {}
+  constructor(private fb: UntypedFormBuilder, private valService: ValidatorService, private repoService: RepositoryService) {}
 
   ngOnInit() {
     if (this.data && (this.data.length >= 3)) {
@@ -77,7 +93,9 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
           this.repoInterfaceForm.get('baseurl').setValue(this.currentInterface.baseurl);
         }
         this.repoInterfaceForm.get('compatibilityLevel').setValue(this.currentInterface.compatibility);
+        this.repoInterfaceForm.get('compatibilityLevel').disable();
         this.repoInterfaceForm.get('compatibilityLevelOverride').setValue(this.currentInterface.compatibilityOverride);
+        this.repoInterfaceForm.get('compatibilityLevelOverride').disable();
         this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
           res => {
             if (res !== null) {
@@ -96,7 +114,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
 
-    const  baseurl = this.repoInterfaceForm.get('baseurl').value;
+    const baseurl = this.repoInterfaceForm.get('baseurl').value;
     if (baseurl) {
       this.loadingMessage = formInfoLoading;
       this.valService.getInterfaceInformation(baseurl).subscribe(
@@ -111,8 +129,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
             this.showIdentifiedBaseUrl = false;
           }
           if (this.interfaceInfo.sets) {
-            this.valsetList = this.interfaceInfo.sets;
-            // console.log(this.valsetList);
+            this.valsetList.push(...this.interfaceInfo.sets);
           }
         },
         error => {
@@ -142,6 +159,10 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.repoService.getCompatibilityClasses(this.mode).subscribe(
       classes => {
         this.compClasses = classes;
+        for (const [key, value] of Object.entries(classes)) {
+          this.compClassesOptions.push({value: key, label: value});
+        }
+        this.currentCompClassesOptions = [...this.compClassesOptions,  {value: 'UNKNOWN', label: 'not available'}];
         this.classCodes = Object.keys(this.compClasses);
       },
       error => {

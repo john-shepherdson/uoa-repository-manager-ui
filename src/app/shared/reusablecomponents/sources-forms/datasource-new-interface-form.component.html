@@ -11,90 +11,129 @@
   </div>
   <div *ngIf="repoInterfaceForm && (!loadingMessage || (loadingMessage===''))" [formGroup]="repoInterfaceForm">
 
-    <div class="md-card-toolbar">
-      <div class="md-card-toolbar-actions">
-        <a *ngIf="!inRegister" (click)="saveInterface()" class="uk-margin-small-right"><i class="md-icon material-icons">save</i></a>
-        <a *ngIf="canEdit" (click)="removeInterface()" class="uk-margin-small-left"><i class="md-icon material-icons">clear</i></a>
-      </div>
-    </div>
+    <div class="uk-card uk-card-default">
 
-    <div class="md-card-content">
-      <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="clear: both">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="uk-alert" [ngClass]="{'uk-alert-warning': errorMessage == invalidCustomBaseUrl,
-                'uk-alert-danger': errorMessage != invalidCustomBaseUrl}" style="clear: both">{{ errorMessage }}
-      </div>
-
-      <div class="md-input-wrapper uk-margin-top {{ (repoInterfaceForm.get('baseurl') != null) ? 'md-input-filled' : '' }}">
-        <div>
-          <label class="uk-text-bold" for="baseurl" title="{{ baseUrlDesc.desc }}">Base OAI-PMH URL (*)</label>
-        </div>
-        <span *ngIf="showIdentifiedBaseUrl" class="help-block inline uk-text-success" style="margin-top: 8px; margin-bottom: 0px; padding-left: 10px; display: block;">
-          Identified
-        </span>
-        <span *ngIf="errorMessage == invalidCustomBaseUrl" class="help-block inline uk-text-warning" style="margin-top: 8px; margin-bottom: 0px; padding-left: 10px; display: block;">
-          Not identified
-        </span>
-        <input id="baseurl" type="text" class="md-input" [ngClass]="{'uk-disabled': !canEdit}"
-               formControlName="baseurl" (blur)="getInterfaceInfo()">
-        <span class="md-input-bar"></span>
-      </div>
-
-
-      <div class="radioButtonForm uk-margin-top">
-        <label for="selectValidationSet{{interfaceID}}" class="control-label uk-text-bold">Set</label>
-        <div class="md-input-wrapper">
-          <select class="md-input" id="selectValidationSet{{interfaceID}}" formControlName="selectValidationSet" (change)="checkIfValid()">
-            <option value="" selected>-- none selected --</option>
-            <option *ngFor="let set of valsetList" value="{{set}}">{{set}}</option>
-          </select>
-          <span class="md-input-bar"></span>
+      <div class="uk-card-body">
+        <div class="uk-flex uk-flex-right">
+          <a *ngIf="!inRegister" (click)="saveInterface()" class="uk-margin-small-right"><i class="md-icon material-icons">save</i></a>
+          <a *ngIf="canEdit" (click)="removeInterface()" class="uk-margin-small-left"><i class="md-icon material-icons">clear</i></a>
         </div>
 
-      </div>
+        <div *ngIf="successMessage" class="uk-alert uk-alert-success" style="clear: both">{{ successMessage }}</div>
+        <div *ngIf="errorMessage" class="uk-alert" [ngClass]="{'uk-alert-warning': errorMessage == invalidCustomBaseUrl,
+                  'uk-alert-danger': errorMessage != invalidCustomBaseUrl}" style="clear: both">
+          {{ errorMessage }}
+        </div>
 
-      <div class="md-input-wrapper md-input-filled uk-margin-medium-top">
-        <div>
-          <label class="uk-text-bold" for="compLvl" title="{{ compatibilityLevelDesc.desc }}">
-            Desired compatibility level (*)
-          </label>
-          <div class="uk-comment-meta uk-text-italic uk-margin-small-top uk-margin-small-bottom">
-            Select the Guidelines with which your data source is compatible.
-            Please note that the Aggregation Team will evaluate the compatibility, so the actual compliance level may be different from which you chose.
+        <div class="uk-margin-medium-top">
+          <div input type="URL" placeholder="Base OAI-PMH URL" [formInput]="repoInterfaceForm.get('baseurl')">
+            <ng-container *ngIf="errorMessage === invalidCustomBaseUrl" warning>Not identified</ng-container>
+            <ng-container *ngIf="showIdentifiedBaseUrl" success>Identified</ng-container>
           </div>
         </div>
-        <select class="md-input" id="compLvl" formControlName="desiredCompatibilityLevel" (change)="checkIfValid()">
-          <option value="">-- none selected --</option>
-          <option *ngFor="let key of classCodes" value="{{key}}">{{compClasses[key]}}</option>
-        </select>
-        <span class="md-input-bar"></span>
-      </div>
 
-      <div class="uk-margin-medium-top">
-        <label class="uk-text-bold">Current compatibility level</label>
-        <div class="uk-comment-meta uk-text-italic uk-margin-small-top uk-margin-small-bottom">
-          Compatible level returned by the Validator tool after your request to register the interface.
+        <div class="uk-margin-medium-top">
+          <div input type="select" placeholder="Set" [formInput]="repoInterfaceForm.get('selectValidationSet')" [options]="valsetList"></div>
         </div>
-        <div class="uk-margin-small-top">{{(repoInterfaceForm.get('compatibilityLevel').value && repoInterfaceForm.get('compatibilityLevel').value !== 'UNKNOWN')
-          ? this.compClasses[repoInterfaceForm.get('compatibilityLevel').value] : 'not available' }}</div>
-      </div>
 
-      <div class="uk-margin-medium-top">
-        <label class="uk-text-bold">Compatibility override</label>
-        <div class="uk-comment-meta uk-text-italic uk-margin-small-top uk-margin-small-bottom">
-          Actual compatibility level of your data source, according to the validation process by the Aggregation Team. This is the compatibility level displayed on the data source public page in EXPLORE
+        <div class="uk-margin-medium-top">
+          <div input type="select" [placeholder]="{label: 'Desired compatibility level', tooltip: compatibilityLevelDesc.desc}"
+               [formInput]="repoInterfaceForm.get('desiredCompatibilityLevel')" [options]="compClassesOptions">
+            <ng-container note>
+              Select the Guidelines with which your data source is compatible.
+              Please note that the Aggregation Team will evaluate the compatibility, so the actual compliance level may be different from which you chose.
+            </ng-container>
+          </div>
         </div>
-        <div class="uk-margin-small-top">{{repoInterfaceForm.get('compatibilityLevelOverride').value ? this.compClasses[repoInterfaceForm.get('compatibilityLevelOverride').value] : 'not available' }}</div>
-      </div>
 
-      <div class="uk-margin-medium-top uk-margin-bottom">
-        <label class="uk-text-bold" for="comment" title="{{ commentDesc.desc }}">Comments (What else do we need to know?)</label>
-        <textarea id="comment" class="uk-textarea" rows="3" formControlName="comment" (blur)="checkIfValid()"></textarea>
-      </div>
+        <div class="uk-margin-medium-top">
+          <div input type="select" placeholder="Current compatibility level" [options]="currentCompClassesOptions"
+               [formInput]="repoInterfaceForm.get('compatibilityLevel')">
+            <ng-container note>
+              Compatible level returned by the Validator tool after your request to register the interface.
+            </ng-container>
+          </div>
+        </div>
 
+        <div class="uk-margin-medium-top">
+          <div input type="select" placeholder="Compatibility override" [options]="currentCompClassesOptions"
+               [formInput]="repoInterfaceForm.get('compatibilityLevelOverride')">
+            <ng-container note>
+              Actual compatibility level of your data source, according to the validation process by the Aggregation Team. This is the compatibility level displayed on the data source public page in EXPLORE
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="uk-margin-medium-top">
+          <div input type="textarea" [placeholder]="{label: 'Comments (What else do we need to know?)', tooltip: commentDesc.desc}"
+               [formInput]="repoInterfaceForm.get('comment')">
+          </div>
+        </div>
+
+<!--        <pre>{{ repoInterfaceForm.getRawValue() | json}}</pre>-->
+
+
+
+<!--        <div class="radioButtonForm uk-margin-top">-->
+<!--          <label for="selectValidationSet{{interfaceID}}" class="control-label uk-text-bold">Set</label>-->
+<!--          <div class="md-input-wrapper">-->
+<!--            <select class="md-input" id="selectValidationSet{{interfaceID}}" formControlName="selectValidationSet" (change)="checkIfValid()">-->
+<!--              <option value="" selected>&#45;&#45; none selected &#45;&#45;</option>-->
+<!--              <option *ngFor="let set of valsetList" value="{{set}}">{{set}}</option>-->
+<!--            </select>-->
+<!--            <span class="md-input-bar"></span>-->
+<!--          </div>-->
+
+<!--        </div>-->
+
+<!--        <div class="md-input-wrapper md-input-filled uk-margin-medium-top">-->
+<!--          <div>-->
+<!--            <label class="uk-text-bold" for="compLvl" title="{{ compatibilityLevelDesc.desc }}">-->
+<!--              Desired compatibility level (*)-->
+<!--            </label>-->
+<!--            <div class="uk-comment-meta uk-text-italic uk-margin-small-top uk-margin-small-bottom">-->
+<!--              Select the Guidelines with which your data source is compatible.-->
+<!--              Please note that the Aggregation Team will evaluate the compatibility, so the actual compliance level may be different from which you chose.-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <select class="md-input" id="compLvl" formControlName="desiredCompatibilityLevel" (change)="checkIfValid()">-->
+<!--            <option value="">&#45;&#45; none selected &#45;&#45;</option>-->
+<!--            <option *ngFor="let key of classCodes" value="{{key}}">{{compClasses[key]}}</option>-->
+<!--          </select>-->
+<!--          <span class="md-input-bar"></span>-->
+<!--        </div>-->
+
+<!--        <div class="uk-margin-medium-top">-->
+<!--          <label class="uk-text-bold">Current compatibility level</label>-->
+<!--          <div class="uk-comment-meta uk-text-italic uk-margin-small-top uk-margin-small-bottom">-->
+<!--            Compatible level returned by the Validator tool after your request to register the interface.-->
+<!--          </div>-->
+<!--          <div class="uk-margin-small-top">-->
+<!--            {{(repoInterfaceForm.get('compatibilityLevel').value && repoInterfaceForm.get('compatibilityLevel').value !== 'UNKNOWN')-->
+<!--            ? this.compClasses[repoInterfaceForm.get('compatibilityLevel').value] : 'not available' }}-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="uk-margin-medium-top">-->
+<!--          <label class="uk-text-bold">Compatibility override</label>-->
+<!--          <div class="uk-comment-meta uk-text-italic uk-margin-small-top uk-margin-small-bottom">-->
+<!--            Actual compatibility level of your data source, according to the validation process by the Aggregation Team. This is the compatibility level displayed on the data source public page in EXPLORE-->
+<!--          </div>-->
+<!--          <div class="uk-margin-small-top">-->
+<!--            {{repoInterfaceForm.get('compatibilityLevelOverride').value ? this.compClasses[repoInterfaceForm.get('compatibilityLevelOverride').value] : 'not available' }}-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="uk-margin-medium-top uk-margin-bottom">-->
+<!--          <label class="uk-text-bold" for="comment" title="{{ commentDesc.desc }}">Comments (What else do we need to know?)</label>-->
+<!--          <textarea id="comment" class="uk-textarea" rows="3" formControlName="comment" (blur)="checkIfValid()"></textarea>-->
+<!--        </div>-->
+
+      </div>
     </div>
-
-<!--    <pre>{{repoInterfaceForm.value | json}}</pre>-->
-<!--    <pre>{{interfaceToExport | json}}</pre>-->
+    <!--    <pre>{{repoInterfaceForm.value | json}}</pre>-->
+    <!--    <pre>{{interfaceToExport | json}}</pre>-->
 
   </div>
+
 </div>
