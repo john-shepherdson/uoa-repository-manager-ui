@@ -15,6 +15,9 @@ import { RegisterExistingDatasourceComponent } from './sources-register/register
 import { DatasourceUpdateTermsFormComponent } from '../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
 import {SrCrisComponent} from './sources-register/sr-cris.component';
 import {SrRepositoryComponent} from './sources-register/sr-repository.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { InputComponent } from '../../shared/input.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule ({
   imports: [
@@ -23,7 +26,10 @@ import {SrRepositoryComponent} from './sources-register/sr-repository.component'
     FormsModule,
     ReactiveFormsModule,
     SourcesRouting,
-    ReusableComponentsModule
+    ReusableComponentsModule,
+    MatStepperModule,
+    InputComponent,
+    MatButtonModule
   ],
   exports: [
     DatasourceUpdateTermsFormComponent

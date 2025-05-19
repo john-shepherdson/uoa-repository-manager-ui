@@ -26,14 +26,16 @@
         </div>
 
         <div class="uk-margin-medium-top">
-          <div input type="URL" placeholder="Base OAI-PMH URL" [formInput]="repoInterfaceForm.get('baseurl')">
+          <div input type="URL" placeholder="Base OAI-PMH URL" [formInput]="repoInterfaceForm.get('baseurl')"
+               (focusout)="getInterfaceInfo()">
             <ng-container *ngIf="errorMessage === invalidCustomBaseUrl" warning>Not identified</ng-container>
             <ng-container *ngIf="showIdentifiedBaseUrl" success>Identified</ng-container>
           </div>
         </div>
 
         <div class="uk-margin-medium-top">
-          <div input type="select" placeholder="Set" [formInput]="repoInterfaceForm.get('selectValidationSet')" [options]="valsetList"></div>
+          <div input type="select" placeholder="Set" [formInput]="repoInterfaceForm.get('selectValidationSet')"
+               [options]="setListOptions"></div>
         </div>
 
         <div class="uk-margin-medium-top">

@@ -365,7 +365,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
 
   @Input()
   set options(options: (Option | string | number) []) {
-    if(options) {
+    if (options) {
       this.optionsArray = options.map(option => {
         if (option === null) {
           return {
@@ -387,7 +387,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     if (!this.tooltip) {
       this.tooltip = this.optionsArray.length > 0;
     }
-    if (this.type === "select") {
+    if (this.type === 'select') {
       if (this.optionsArray.length > this.optionsBreakpoint) {
         this.type = 'autocomplete';
         this.showOptionsOnEmpty = true;
@@ -621,7 +621,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
       }));
     }
     if (this.formAsControl?.validator || this.formAsArray?.validator) {
-      let validator = this.formControl.validator({} as AbstractControl);
+      const validator = this.formControl.validator({} as AbstractControl);
       this.required = (validator && validator.required);
     }
     if (this.type === 'date') {
@@ -656,7 +656,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
       }
     }));
     if (this.formAsGroup) {
-      let fromControl = this.formAsGroup.get(this.yearRange.from.control);
+      const fromControl = this.formAsGroup.get(this.yearRange.from.control);
       this.subscriptions.push(fromControl.valueChanges.subscribe(value => {
         let from = this.initValue[this.yearRange.from.control];
         if (from === value || (from === '' && value === null)) {

@@ -44,7 +44,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   @Input() data: any[] = []; // expects an array containing at least 3 of the 4 below fields in this order
   @Input() mode: string = null;
   inRegister: boolean;
-  interfaceID: number;      // holds the interface index in the interfaces array as displayed
+  interfaceID: number;      // holds the interface index in the interface array as displayed
   currentRepo: RepoFields;  // a fraction of the Repository class
   currentInterface: RepositoryInterface;
 
@@ -69,7 +69,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   identifiedBaseUrl: boolean;
   canEdit = true;
   showIdentifiedBaseUrl: boolean = null;
-  valsetList: string[] = [''];
+  valsetList: any[] = [];
+  setListOptions: Option[] = [];
   existingCompLevel: string;
   classCodes: string[] = [];
   compClasses: Map<string, string> = new Map<string, string>();
@@ -130,6 +131,9 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
           }
           if (this.interfaceInfo.sets) {
             this.valsetList.push(...this.interfaceInfo.sets);
+            this.interfaceInfo.sets.forEach(element => {
+              this.setListOptions.push({value: element?.['spec'], label: element?.['name']});
+            });
           }
         },
         error => {
