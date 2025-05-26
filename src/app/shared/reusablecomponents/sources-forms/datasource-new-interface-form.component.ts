@@ -56,7 +56,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     baseurl: ['', Validators.required],
     selectValidationSet: [''],
     compatibilityLevel: null,
-    desiredCompatibilityLevel: null,
+    desiredCompatibilityLevel: [null, Validators.required],
     compatibilityLevelOverride: null,
     comment: ['']
   };
@@ -198,20 +198,24 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   }
 
   formIsValid() {
-    return (this.repoInterfaceForm.valid && this.identifiedBaseUrl && this.checkIfCompatibilityLevelWasChosen());
+    // return (this.repoInterfaceForm.valid && this.identifiedBaseUrl && this.checkIfCompatibilityLevelWasChosen());
+    // Removed compatibility check, hopefully it was unnecessary.
+    return (this.repoInterfaceForm.valid && this.identifiedBaseUrl);
   }
 
   checkIfValid() {
-    if (this.formIsValid()) {
-      if (this.inRegister) {
-        // this.successMessage = 'The interface will be stored when the registration procedure is completed.';
-        this.successMessage = 'The harvesting settings are valid!';
-        this.saveInterface();
+    setTimeout(() => {
+      if (this.formIsValid()) {
+        if (this.inRegister) {
+          // this.successMessage = 'The interface will be stored when the registration procedure is completed.';
+          this.successMessage = 'The harvesting settings are valid!';
+          this.saveInterface();
+        }
+      } else {
+        this.successMessage = '';
+        // this.interfaceToExport = null;
       }
-    } else {
-      this.successMessage = '';
-      // this.interfaceToExport = null;
-    }
+    }, 0);
 
   }
 

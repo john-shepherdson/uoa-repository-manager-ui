@@ -14,7 +14,7 @@ import {
   SimpleChanges,
   ViewChild,
   ViewChildren
-} from "@angular/core";
+} from '@angular/core';
 import {
   AbstractControl,
   FormsModule,
@@ -23,13 +23,13 @@ import {
   UntypedFormControl,
   UntypedFormGroup,
   ValidatorFn
-} from "@angular/forms";
-import { BehaviorSubject, Subscription } from "rxjs";
-import { MatDatepicker, MatDatepickerModule } from "@angular/material/datepicker";
-import { CommonModule } from "@angular/common";
-import { RouterModule } from "@angular/router";
-import { MatNativeDateModule } from "@angular/material/core";
-import { MatInputModule } from "@angular/material/input";
+} from '@angular/forms';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 export type InputType =
     'text'
@@ -44,29 +44,29 @@ export type InputType =
     | 'date';
 
 export interface Option {
-  icon?: string,
-  iconClass?: string,
-  value: any,
-  label: string,
-  tooltip?: string,
-  disabled?: boolean,
-  hidden?: boolean
+  icon?: string;
+  iconClass?: string;
+  value: any;
+  label: string;
+  tooltip?: string;
+  disabled?: boolean;
+  hidden?: boolean;
 }
 
 export interface Placeholder {
-  label: string,
-  static?: boolean,
-  tooltip?: string
+  label: string;
+  static?: boolean;
+  tooltip?: string;
 }
 
 export interface YearRange {
-  from: ControlConfiguration,
-  to: ControlConfiguration
+  from: ControlConfiguration;
+  to: ControlConfiguration;
 }
 
 export interface ControlConfiguration {
-  control: string,
-  placeholder: string
+  control: string;
+  placeholder: string;
 }
 
 declare var UIkit;
@@ -283,63 +283,63 @@ declare var UIkit;
 })
 
 export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
-  private static INPUT_COUNTER: number = 0;
+  private static INPUT_COUNTER = 0;
   /** Basic information */
   @Input('formInput') formControl: AbstractControl;
   @Input('type') type: InputType = 'text';
-  @Input() password: boolean = false;
+  @Input() password = false;
   @Input() validators: ValidatorFn[] | ValidatorFn;
-  @Input() disabled: boolean = false;
-  @Input() disabledIcon: string = 'lock';
+  @Input() disabled = false;
+  @Input() disabledIcon = 'lock';
   @Input() value: any | any[];
   @Output() valueChange = new EventEmitter<any | any[]>();
   @Input() hint: string;
-  @Input() tooltip: boolean = false;
-  @Input() searchable: boolean = false;
+  @Input() tooltip = false;
+  @Input() searchable = false;
   /** Text */
   @ViewChildren('input') input: QueryList<ElementRef>;
   /** Textarea options */
   @ViewChild('textArea') textArea: ElementRef;
-  @Input('rows') rows: number = 3;
+  @Input('rows') rows = 3;
   /** Select | Autocomplete | chips available options */
-  @Input() selectArrow: string = 'arrow_drop_down';
-  @Input() selectedIndex: number = 0;
-  @Input() selectable: boolean = false;
-  @Input() noValueSelected: string = 'No option selected';
+  @Input() selectArrow = 'arrow_drop_down';
+  @Input() selectedIndex = 0;
+  @Input() selectable = false;
+  @Input() noValueSelected = 'No option selected';
   /** Chips && Autocomplete*/
   public filteredOptions: Option[] = [];
   public searchControl: UntypedFormControl;
   public activeElement: BehaviorSubject<ElementRef> = new BehaviorSubject<ElementRef>(null);
   /** Use modifier's class(es) to change view of your Input */
-  @Input() inputClass: string = 'flat';
+  @Input() inputClass = 'flat';
   /** Icon on the input */
   @Input() icon: string = null;
   /** Chip options */
-  @Input() addExtraChips: boolean = false;
-  @Input() showOptionsOnEmpty: boolean = true;
-  @Input() visibleChips: number = 1;
+  @Input() addExtraChips = false;
+  @Input() showOptionsOnEmpty = true;
+  @Input() visibleChips = 1;
   @Input() separators: string[] = [];
-  @Input() noWrap: boolean = false;
+  @Input() noWrap = false;
   /** Year Range Configuration */
   @Input() yearRange: YearRange;
   public activeIndex: 0 | 1 | null = null;
   /** Date Configuration*/
-  @Input() selectADate: string = 'Select a date';
+  @Input() selectADate = 'Select a date';
   public selectedDate: Date;
-  @Input() visibleRows: number = -1;
+  @Input() visibleRows = -1;
   @Input() extendEnter: () => void = null;
   @Output() focusEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
   /** LogoUrl information */
-  public secure: boolean = true;
+  public secure = true;
   /** Internal basic information */
   public id: string;
   public placeholderInfo: Placeholder = {label: '', static: true};
-  public required: boolean = false;
-  public focused: boolean = false;
-  public opened: boolean = false;
+  public required = false;
+  public focused = false;
+  public opened = false;
   private initValue: any;
   private optionsArray: Option[] = [];
-  private optionsBreakpoint: number = 6;
+  private optionsBreakpoint = 6;
   private subscriptions: any[] = [];
   @ViewChild('inputBox') inputBox: ElementRef;
   @ViewChild('optionBox') optionBox: ElementRef;
@@ -426,7 +426,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     if (this.type === 'chips' && this.focused) {
       if (this.activeElement.getValue()) {
         event.preventDefault();
-        let index = this.chips.toArray().indexOf(this.activeElement.getValue());
+        const index = this.chips.toArray().indexOf(this.activeElement.getValue());
         if (index > 0) {
           this.activeElement.next(this.chips.get(index - 1));
           return;
@@ -440,7 +440,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     if (this.type === 'chips' && this.focused) {
       if (this.activeElement.getValue()) {
         event.preventDefault();
-        let index = this.chips.toArray().indexOf(this.activeElement.getValue());
+        const index = this.chips.toArray().indexOf(this.activeElement.getValue());
         if (index < this.chips.length - 1) {
           this.activeElement.next(this.chips.get(index + 1));
           return;
@@ -476,7 +476,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
 
   @HostListener('document:click', ['$event'])
   click(event: any) {
-    if(event.isTrusted) {
+    if (event.isTrusted) {
       this.focus(this.inputBox && this.inputBox.nativeElement.contains(event.target));
     }
   }
@@ -506,7 +506,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
       if (element) {
         element.nativeElement.scrollIntoView({behavior: 'smooth'});
       }
-    })
+    });
   }
 
   ngAfterViewInit() {
@@ -658,7 +658,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     if (this.formAsGroup) {
       const fromControl = this.formAsGroup.get(this.yearRange.from.control);
       this.subscriptions.push(fromControl.valueChanges.subscribe(value => {
-        let from = this.initValue[this.yearRange.from.control];
+        const from = this.initValue[this.yearRange.from.control];
         if (from === value || (from === '' && value === null)) {
           fromControl.markAsPristine();
         } else {
@@ -671,9 +671,9 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
           }
         }
       }));
-      let toControl = this.formAsGroup.get(this.yearRange.to.control);
+      const toControl = this.formAsGroup.get(this.yearRange.to.control);
       this.subscriptions.push(toControl.valueChanges.subscribe(value => {
-        let to = this.initValue[this.yearRange.to.control];
+        const to = this.initValue[this.yearRange.to.control];
         if (to === value || (to === '' && value === null)) {
           toControl.markAsPristine();
         } else {
@@ -701,7 +701,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
       this.formAsArray.controls.forEach(control => {
         control.setValidators(this.validators);
         control.updateValueAndValidity();
-      })
+      });
     } else {
       this.formControl.setValidators(this.validators);
       this.formControl.updateValueAndValidity();
@@ -720,7 +720,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
 
   private filter(value: string): Option[] {
     let options = this.optionsArray.filter(option => !option.hidden);
-    if (this.type === "chips") {
+    if (this.type === 'chips') {
       options = options.filter(option => !this.formAsArray.value.find(value => this.equals(option.value, value)));
     }
     if ((!value || value.length == 0)) {
@@ -756,7 +756,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
       }));
     });
     values.forEach(value => {
-      let control = new UntypedFormControl(value.trim(), this.validators);
+      const control = new UntypedFormControl(value.trim(), this.validators);
       if (control.valid) {
         this.formAsArray.push(control);
         this.formAsArray.markAsDirty();
@@ -769,12 +769,12 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   }
 
   getLabel(value: any): string {
-    let option = this.optionsArray.find(option => this.equals(option.value, value));
+    const option = this.optionsArray.find(option => this.equals(option.value, value));
     return (option) ? option.label : (value);
   }
 
   getTooltip(value: any): string {
-    let option = this.optionsArray.find(option => this.equals(option.value, value));
+    const option = this.optionsArray.find(option => this.equals(option.value, value));
     return (option) ? (option.tooltip ? option.tooltip : option.label) : (value);
   }
 
@@ -808,7 +808,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
         if (this.input) {
           this.input.forEach(input => {
             input.nativeElement.blur();
-          })
+          });
         } else if (this.textArea) {
           this.textArea.nativeElement.blur();
         } else if (this.searchInput) {

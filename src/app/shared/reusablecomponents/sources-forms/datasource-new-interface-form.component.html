@@ -16,6 +16,7 @@
       <div class="uk-card-body">
         <div class="uk-flex uk-flex-right">
           <a *ngIf="!inRegister" (click)="saveInterface()" class="uk-margin-small-right"><i class="md-icon material-icons">save</i></a>
+          <!--TODO: Check when remove action should be available to user-->
           <a *ngIf="canEdit" (click)="removeInterface()" class="uk-margin-small-left"><i class="md-icon material-icons">clear</i></a>
         </div>
 
@@ -35,12 +36,14 @@
 
         <div class="uk-margin-medium-top">
           <div input type="select" placeholder="Set" [formInput]="repoInterfaceForm.get('selectValidationSet')"
-               [options]="setListOptions"></div>
+               [options]="setListOptions">
+          </div>
         </div>
 
         <div class="uk-margin-medium-top">
           <div input type="select" [placeholder]="{label: 'Desired compatibility level', tooltip: compatibilityLevelDesc.desc}"
-               [formInput]="repoInterfaceForm.get('desiredCompatibilityLevel')" [options]="compClassesOptions">
+               [formInput]="repoInterfaceForm.get('desiredCompatibilityLevel')" [options]="compClassesOptions"
+               (valueChange)="checkIfValid()">
             <ng-container note>
               Select the Guidelines with which your data source is compatible.
               Please note that the Aggregation Team will evaluate the compatibility, so the actual compliance level may be different from which you chose.
@@ -139,3 +142,8 @@
   </div>
 
 </div>
+<!--<div>-->
+<!--  <pre>-->
+<!--    {{ repoInterfaceForm.getRawValue() | json}}-->
+<!--  </pre>-->
+<!--</div>-->

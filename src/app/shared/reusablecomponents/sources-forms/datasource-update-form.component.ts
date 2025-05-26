@@ -49,8 +49,8 @@ export class DatasourceUpdateFormComponent implements OnInit {
   formSubmitted = false;
   updateGroup: UntypedFormGroup;
   readonly updateGroupDefinition = {
-    softwarePlatform : '',
-    platformName : '',
+    softwarePlatform : null,
+    platformName : null,
     officialName :  ['', Validators.required],
     issn : ['', [Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$')] ],
     eissn : ['', Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$') ],
@@ -102,7 +102,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
       this.updateGroup.get('platformName').disable();
       this.updateGroup.get('softwarePlatform').valueChanges.subscribe({
         next: (value) => {
-          if (value === '') {
+          if (value === 'Other') {
             this.updateGroup.get('platformName').enable();
           } else {
             this.updateGroup.get('platformName').disable();
@@ -205,8 +205,8 @@ export class DatasourceUpdateFormComponent implements OnInit {
     this.repoService.getDatasourceClasses(param).subscribe(
       classes => {
         for (const [key, value] of Object.entries(classes)) {
-          this.datasourceClassesOptions.push({value: key, label: value});
           this.datasourceClasses.set(key, value);
+          this.datasourceClassesOptions.push({value: key, label: value});
         }},
       error => {
         this.loadingMessage = '';
@@ -214,7 +214,6 @@ export class DatasourceUpdateFormComponent implements OnInit {
         console.log(error);
       },
       () => {
-        console.log('gotDatasourceClasses');
         this.classCodes = Array.from(this.datasourceClasses.keys());
         this.getCountries();
       }
@@ -263,7 +262,6 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   getTypologiesAsOptions() {
-    console.log('getTypologiesAsOptions');
 
     this.typologiesOptions = [];
     for (const typology of this.typologies) {
@@ -281,7 +279,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
         this.timezonesOptions = [];
         zones.forEach(zone => {
           this.timezonesOptions.push({value: zone.offset, label: zone.name});
-        })
+        });
       },
       error => {
         this.loadingMessage = '';
@@ -345,7 +343,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   refreshSelectedRepo() {
-    if (this.updateGroup.get('softwarePlatform').value ) {
+    if (this.updateGroup.get('softwarePlatform').value && this.updateGroup.get('softwarePlatform').value !== 'Other' ) {
       this.selectedRepo.platform = this.updateGroup.get('softwarePlatform').value;
     } else if (this.updateGroup.get('platformName').value) {
       this.selectedRepo.platform = this.updateGroup.get('platformName').value;
@@ -394,7 +392,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 }
 
 export function checkPlatform(c: AbstractControl) {
-  if ( c.get('softwarePlatform').value || c.get('platformName').value ) {
+  if ( (c.get('softwarePlatform').value && c.get('softwarePlatform').value !== 'Other') || c.get('platformName').value ) {
     return null;
   }
   return 'invalid';

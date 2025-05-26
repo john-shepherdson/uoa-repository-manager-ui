@@ -76,18 +76,13 @@
 
                 <ng-template matStepContent>
 <!--                  <div *ngIf="(currentStep === 2) && repo && !loadingMessage" class="uk-grid uk-grid-match">-->
-                  <div *ngIf="repo && !loadingMessage" class="uk-grid uk-grid-match">
+                  <div *ngIf="repo && !loadingMessage" class="uk-grid uk-child-width-1-2@m uk-grid-match">
 
-                    <pre>{{dataForInterfaceComp | json }}</pre>
-                    <div *ngFor="let inter of dataForInterfaceComp" class="uk-width-1-2@m uk-margin-bottom">
-                      <div>
-                        <div class="md-card" style="height: 100%">
-                          <app-repository-interface-form
-                            [data]="inter" [mode]="currentMode" #interfacesArray
-                            (emitDeleteInterface)="removeInterfaceFromList($event)">
-                          </app-repository-interface-form>
-                        </div>
-                      </div>
+                    <div *ngFor="let inter of dataForInterfaceComp" class="uk-margin-bottom">
+                      <app-repository-interface-form
+                        [data]="inter" [mode]="currentMode" #interfacesArray
+                        (emitDeleteInterface)="removeInterfaceFromList($event)">
+                      </app-repository-interface-form>
                     </div>
 
                     <div class="uk-width-1-2@m uk-margin-bottom">
