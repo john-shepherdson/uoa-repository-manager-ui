@@ -55,8 +55,8 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   readonly repoInterfaceFormDef = {
     baseurl: ['', Validators.required],
     selectValidationSet: [''],
-    compatibilityLevel: null,
     desiredCompatibilityLevel: [null, Validators.required],
+    compatibilityLevel: null,
     compatibilityLevelOverride: null,
     comment: ['']
   };
@@ -94,9 +94,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
           this.repoInterfaceForm.get('baseurl').setValue(this.currentInterface.baseurl);
         }
         this.repoInterfaceForm.get('compatibilityLevel').setValue(this.currentInterface.compatibility);
-        this.repoInterfaceForm.get('compatibilityLevel').disable();
         this.repoInterfaceForm.get('compatibilityLevelOverride').setValue(this.currentInterface.compatibilityOverride);
-        this.repoInterfaceForm.get('compatibilityLevelOverride').disable();
         this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
           res => {
             if (res !== null) {
@@ -105,6 +103,9 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
           }
         );
       }
+      this.repoInterfaceForm.get('compatibilityLevel').disable();
+      this.repoInterfaceForm.get('compatibilityLevelOverride').disable();
+
       this.getInterfaceInfo();
       this.getCompatibilityClasses();
     }
