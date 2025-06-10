@@ -60,6 +60,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     compatibilityLevelOverride: null,
     comment: ['']
   };
+  validationUnderway: string | null = null;
   baseUrlDesc: Description = baseUrlDesc;
   existingValSetDesc: Description = existingValSetDesc;
   customValSetDesc: Description = customValSetDesc;
@@ -97,8 +98,10 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
         this.repoInterfaceForm.get('compatibilityLevelOverride').setValue(this.currentInterface.compatibilityOverride);
         this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
           res => {
-            if (res !== null) {
+            this.validationUnderway = null;
+            if (res !== null && res['desiredCompatibilityLevel'] !== 'null') { // null as string may be returned...
               this.repoInterfaceForm.get('desiredCompatibilityLevel').setValue(res['desiredCompatibilityLevel']);
+              this.validationUnderway = 'Validation is ongoing';
             }
           }
         );

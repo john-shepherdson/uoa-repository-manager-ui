@@ -26,6 +26,8 @@
           {{ errorMessage }}
         </div>
 
+<!--        <pre>{{ repoInterfaceForm.getRawValue() | json }}</pre>-->
+
         <div class="uk-margin-medium-top">
           <div input type="URL" placeholder="Base OAI-PMH URL" [formInput]="repoInterfaceForm.get('baseurl')"
                (focusout)="getInterfaceInfo()">
@@ -44,6 +46,9 @@
           <div input type="select" [placeholder]="{label: 'Desired compatibility level', tooltip: compatibilityLevelDesc.desc}"
                [formInput]="repoInterfaceForm.get('desiredCompatibilityLevel')" [options]="compClassesOptions"
                (valueChange)="checkIfValid()">
+            <ng-container warning *ngIf="validationUnderway !== null">
+              {{ validationUnderway }}<br>
+            </ng-container>
             <ng-container note>
               Select the Guidelines with which your data source is compatible.
               Please note that the Aggregation Team will evaluate the compatibility, so the actual compliance level may be different from which you chose.
