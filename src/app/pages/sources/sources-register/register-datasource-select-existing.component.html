@@ -58,10 +58,10 @@
       </div>
       <div *ngIf="selectedCountry">
         <div>
-          <h2 class="heading_b uk-margin-bottom uk-margin-medium-top">
+          <h4 class="uk-margin-bottom uk-margin-medium-top">
             {{ (sourceTitle ?? '') + (mode === 'cris' ? ' - Research Information Systems' : ' Repositories') }} in
             {{ selectedCountry.name ? selectedCountry.name : selectedCountry.code }}
-          </h2>
+          </h4>
         </div>
         <div *ngIf="loadingMessage" class="loading-big">
           <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
