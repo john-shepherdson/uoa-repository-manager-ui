@@ -37,7 +37,7 @@ export class CompatibilityValidateStep1Component implements OnInit {
   }
 
   submitForm() {
-    if (this.group.get('selectBaseUrl').enabled){
+    if (this.group.get('selectBaseUrl').enabled) {
       if ( this.group.get('selectBaseUrl').value) {
         this.emitObject.emit(this.group.get('selectBaseUrl').value);
         console.log(`selected baseUrl!`);

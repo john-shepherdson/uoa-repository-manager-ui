@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { formErrorRequiredFields } from '../../../domain/shared-messages';
+import {Option} from '../../../shared/input.component';
 
 @Component ({
   selector: 'compatibility-validate-step3',
@@ -14,6 +15,7 @@ export class CompatibilityValidateStep3Component implements OnInit {
   @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
   group: UntypedFormGroup;
+  valSetsOptions: Option[] = [];
 
   constructor (private fb: UntypedFormBuilder) {}
 
@@ -26,6 +28,16 @@ export class CompatibilityValidateStep3Component implements OnInit {
     this.group.get('noOfRecordsInput').setValue(10);
     this.group.get('noOfRecordsInput').disable();
     this.group.get('xpathInput').disable();
+
+    this.valSetsOptions = [];
+    this.valSetsOptions.push(
+      {value: '', label: 'All sets'}
+    );
+    this.valSets.forEach(set => {
+      this.valSetsOptions.push(
+        {value: set['spec'], label: (set['name'] + ' (' + set['spec'] + ')')}
+      );
+    });
   }
 
   chooseAll(all: boolean) {
