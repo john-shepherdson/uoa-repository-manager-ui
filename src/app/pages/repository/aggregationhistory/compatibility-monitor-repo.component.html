@@ -1,107 +1,109 @@
-<div id="page_content_inner">
+<div id="page_content">
+  <div id="page_content_inner">
 
-  <div class="uk-section uk-section-default">
-    <div class="uk-container uk-container-expand">
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-expand">
 
-      <!-- TOP HELP CONTENT -->
-      <help-content #topHelperContent [position]="'top'"
-                    [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-      </help-content>
+        <!-- TOP HELP CONTENT -->
+        <help-content #topHelperContent [position]="'top'"
+                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
 
-      <div class="uk-grid">
+        <div class="uk-grid">
 
-        <!-- LEFT HELP CONTENT -->
-        <aside-help-content #leftHelperContent [position]="'left'"
-                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
+          <!-- LEFT HELP CONTENT -->
+          <aside-help-content #leftHelperContent [position]="'left'"
+                              [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content>
 
-        <!-- MIDDLE -->
-        <div class=" uk-width-expand@m">
+          <!-- MIDDLE -->
+          <div class=" uk-width-expand@m">
 
-          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-          <div *ngIf="loadingMessage" class="loading-big">
-            <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-              {{ loadingMessage }}
+            <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+            <div *ngIf="loadingMessage" class="loading-big">
+              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                {{ loadingMessage }}
+              </div>
+              <div class="transparentFilm"></div>
             </div>
-            <div class="transparentFilm"></div>
-          </div>
-          <div *ngIf="noAggregations">{{ noAggregations }}</div>
-          <div *ngIf="latestAggregations && (latestAggregations.length > 0) && !noAggregations">
+            <div *ngIf="noAggregations">{{ noAggregations }}</div>
+            <div *ngIf="latestAggregations && (latestAggregations.length > 0) && !noAggregations">
 
-            <div class="uk-grid uk-child-width-1-2">
-              <ng-container *ngFor="let aggr of latestAggregations">
-                <div *ngIf="aggr.indexedVersion">
-                  <div class="uk-card uk-card-default uk-padding-small number-card">
-                    <h6>Indexed version</h6>
-                    <div>Aggregation date: <strong>{{ aggr.date }}</strong></div>
-                    <div>Number of collected records: <strong>{{ aggr.numberOfRecords }}</strong></div>
-                    <!--            <p>Number of transformed records: <strong>{{ aggr.numberOfRecords }}</strong></p>-->
-                  </div>
-                </div>
-              </ng-container>
-            </div>
-
-
-            <div class="uk-width-large-2-3 uk-container-center uk-margin-large-top">
-              <div class="timeline timeline-center">
-                <div *ngFor="let aggr of latestAggregations" class="timeline_item">
-                  <div class="timeline_icon timeline_icon_white uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-scale-up"
-                       data-uk-scrollspy="{cls:'uk-animation-scale-up uk-invisible', delay:300, repeat: true}">
-                    <ng-container *ngIf="aggr.indexedVersion">
-                      <img src="https://www.openaire.eu/images/Logos/Favicon-90x90.png" style="width: 80%;margin-top: 9%;">
-                    </ng-container>
-                  </div>
-                  <div *ngIf="aggr.date" class="timeline_date uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-slide-right"
-                       data-uk-scrollspy="{cls:'uk-animation-slide-right uk-invisible', delay:300}">
-                    {{ aggr.date | date : "yyyy-MM-dd" }}
-                  </div>
-                  <div class="timeline_content uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-slide-left" data-uk-scrollspy="{cls:'uk-animation-slide-left uk-invisible', delay:300}">
-                    <span *ngIf="aggr.indexedVersion" class="uk-float-right uk-badge">Indexed version</span>
-
-                    <div class="timeline_content_addon">
-                      <dl class="uk-description-list">
-                        <ng-container *ngIf="aggr.aggregationStage">
-                          <dt class="uk-text-meta">Aggregation stage</dt>
-                          <dd>{{ aggr.aggregationStage }}</dd>
-                        </ng-container>
-                        <ng-container *ngIf="aggr.collectionMode">
-                          <dt class="uk-text-meta">Collection mode</dt>
-                          <dd>{{ aggr.collectionMode }}</dd>
-                        </ng-container>
-                        <dt class="uk-text-meta">Number of records</dt>
-                        <dd>{{ aggr?.numberOfRecords>=0 ? aggr.numberOfRecords : 'NA' }}</dd>
-                        <dt class="uk-text-meta">Completed Successfully</dt>
-                        <dd>{{ aggr.completedSuccessfully }}</dd>
-                      </dl>
+              <div class="uk-grid uk-child-width-1-2">
+                <ng-container *ngFor="let aggr of latestAggregations">
+                  <div *ngIf="aggr.indexedVersion">
+                    <div class="uk-card uk-card-default uk-padding-small number-card">
+                      <h6>Indexed version</h6>
+                      <div>Aggregation date: <strong>{{ aggr.date }}</strong></div>
+                      <div>Number of collected records: <strong>{{ aggr.numberOfRecords }}</strong></div>
+                      <!--            <p>Number of transformed records: <strong>{{ aggr.numberOfRecords }}</strong></p>-->
                     </div>
+                  </div>
+                </ng-container>
+              </div>
 
+
+              <div class="uk-width-large-2-3 uk-container-center uk-margin-large-top">
+                <div class="timeline timeline-center">
+                  <div *ngFor="let aggr of latestAggregations" class="timeline_item">
+                    <div class="timeline_icon timeline_icon_white uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-scale-up"
+                         data-uk-scrollspy="{cls:'uk-animation-scale-up uk-invisible', delay:300, repeat: true}">
+                      <ng-container *ngIf="aggr.indexedVersion">
+                        <img src="https://www.openaire.eu/images/Logos/Favicon-90x90.png" style="width: 80%;margin-top: 9%;">
+                      </ng-container>
+                    </div>
+                    <div *ngIf="aggr.date" class="timeline_date uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-slide-right"
+                         data-uk-scrollspy="{cls:'uk-animation-slide-right uk-invisible', delay:300}">
+                      {{ aggr.date | date : "yyyy-MM-dd" }}
+                    </div>
+                    <div class="timeline_content uk-scrollspy-init-inview uk-scrollspy-inview uk-animation-slide-left" data-uk-scrollspy="{cls:'uk-animation-slide-left uk-invisible', delay:300}">
+                      <span *ngIf="aggr.indexedVersion" class="uk-float-right uk-badge">Indexed version</span>
+
+                      <div class="timeline_content_addon">
+                        <dl class="uk-description-list">
+                          <ng-container *ngIf="aggr.aggregationStage">
+                            <dt class="uk-text-meta">Aggregation stage</dt>
+                            <dd>{{ aggr.aggregationStage }}</dd>
+                          </ng-container>
+                          <ng-container *ngIf="aggr.collectionMode">
+                            <dt class="uk-text-meta">Collection mode</dt>
+                            <dd>{{ aggr.collectionMode }}</dd>
+                          </ng-container>
+                          <dt class="uk-text-meta">Number of records</dt>
+                          <dd>{{ aggr?.numberOfRecords>=0 ? aggr.numberOfRecords : 'NA' }}</dd>
+                          <dt class="uk-text-meta">Completed Successfully</dt>
+                          <dd>{{ aggr.completedSuccessfully }}</dd>
+                        </dl>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <div class="uk-margin-large-top uk-text-center">
+                <a *ngIf="repo" [routerLink]="['/repository/' + repo.id + '/aggregationHistory/fullHistory']" class="uk-h5 uk-link">See more results ...</a>
+              </div>
+
+
             </div>
-
-            <div class="uk-margin-large-top uk-text-center">
-              <a *ngIf="repo" [routerLink]="['/repository/' + repo.id + '/aggregationHistory/fullHistory']" class="uk-h5 uk-link">See more results ...</a>
-            </div>
-
-
           </div>
+
+          <!-- RIGHT HELP CONTENT -->
+          <aside-help-content #rightHelperContent [position]="'right'"
+                              [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content>
+
         </div>
 
-        <!-- RIGHT HELP CONTENT -->
-        <aside-help-content #rightHelperContent [position]="'right'"
-                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
+        <!-- BOTTOM HELP CONTENT -->
+        <help-content #bottomHelperContent [position]="'bottom'"
+                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
 
       </div>
-
-      <!-- BOTTOM HELP CONTENT -->
-      <help-content #bottomHelperContent [position]="'bottom'"
-                    [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-      </help-content>
-
     </div>
-  </div>
 
+  </div>
 </div>
 

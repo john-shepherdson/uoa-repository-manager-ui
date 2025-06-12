@@ -1,625 +1,627 @@
-<div id="page_content_inner">
+<div id="page_content">
+  <div id="page_content_inner">
 
-  <div class="uk-section uk-section-default">
-    <div class="uk-container uk-container-expand">
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-expand">
 
-<!--      <h4 class="">{{ title }}</h4>-->
-      <h6>
-        <a class="uk-link-reset uk-flex uk-flex-middle" [routerLink]="['../../']">
-          <span class="material-icons uk-margin-small-right">arrow_back</span>
-          <span>Select type of report</span>
-        </a>
-      </h6>
+        <!--      <h4 class="">{{ title }}</h4>-->
+        <h6>
+          <a class="uk-link-reset uk-flex uk-flex-middle" [routerLink]="['../../']">
+            <span class="material-icons uk-margin-small-right">arrow_back</span>
+            <span>Select type of report</span>
+          </a>
+        </h6>
 
-      <!-- TOP HELP CONTENT -->
-      <help-content #topHelperContent [position]="'top'"
-                    [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-      </help-content>
+        <!-- TOP HELP CONTENT -->
+        <help-content #topHelperContent [position]="'top'"
+                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
 
-      <div class="uk-grid">
+        <div class="uk-grid">
 
-        <!-- LEFT HELP CONTENT -->
-        <aside-help-content #leftHelperContent [position]="'left'"
-                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
+          <!-- LEFT HELP CONTENT -->
+          <aside-help-content #leftHelperContent [position]="'left'"
+                              [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content>
 
-        <!-- MIDDLE -->
-        <div class=" uk-width-expand@m">
+          <!-- MIDDLE -->
+          <div class=" uk-width-expand@m">
 
-          <div *ngIf="errorMessage" class="uk-alert uk-alert-warning">{{errorMessage}}</div>
-          <div *ngIf="loadingMessage" class="loading-big">
-            <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-              {{ loadingMessage }}
+            <div *ngIf="errorMessage" class="uk-alert uk-alert-warning">{{errorMessage}}</div>
+            <div *ngIf="loadingMessage" class="loading-big">
+              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+                {{ loadingMessage }}
+              </div>
+              <div class="transparentFilm"></div>
             </div>
-            <div class="transparentFilm"></div>
-          </div>
-          <div *ngIf="repo && chosen_report" class="uk-margin-top">
+            <div *ngIf="repo && chosen_report" class="uk-margin-top">
 
-            <div class="" uk-grid>
-              <div class="uk-width-3-5">
+              <div class="" uk-grid>
+                <div class="uk-width-3-5">
 
-                <div>
-                  <h5>
-                    <span class="uk-text-primary">1. </span>
-                    <span>Set Report Filters</span>
-                  </h5>
+                  <div>
+                    <h5>
+                      <span class="uk-text-primary">1. </span>
+                      <span>Set Report Filters</span>
+                    </h5>
 
-                  <h6>Date range</h6>
+                    <h6>Date range</h6>
 
-                  <div class="uk-text-italic">
-                    <p>Valid date formats are yyyy-mm-dd or yyyy-mm. Default range is the last available month.</p>
-                  </div>
+                    <div class="uk-text-italic">
+                      <p>Valid date formats are yyyy-mm-dd or yyyy-mm. Default range is the last available month.</p>
+                    </div>
 
-                  <div class="uk-child-width-1-2" uk-grid>
-                    <div>
-                      <div input="" placeholder="Begin Date">
-                        <div class="input-wrapper hint flat">
-                          <div click-outside-or-esc="" class="input-box">
-                            <div class="placeholder">
-                              <label>Begin Date
-<!--                                <sup class="">*</sup>-->
-                              </label>
-                            </div>
-                            <div class="uk-flex uk-flex-middle">
-                              <input class="input" type="text" placeholder="2016-03" (blur)="updateBeginDate($event)">
-                            </div>
-                            <div class="tools">
+                    <div class="uk-child-width-1-2" uk-grid>
+                      <div>
+                        <div input="" placeholder="Begin Date">
+                          <div class="input-wrapper hint flat">
+                            <div click-outside-or-esc="" class="input-box">
+                              <div class="placeholder">
+                                <label>Begin Date
+                                  <!--                                <sup class="">*</sup>-->
+                                </label>
+                              </div>
+                              <div class="uk-flex uk-flex-middle">
+                                <input class="input" type="text" placeholder="2016-03" (blur)="updateBeginDate($event)">
+                              </div>
+                              <div class="tools">
+                              </div>
                             </div>
                           </div>
+                          <!--                        <span class="uk-text-small uk-text-danger ng-star-inserted"></span>-->
+                          <!--                        <span class="uk-text-small uk-text-danger"></span>-->
+                          <!--                        <i class="uk-text-small uk-text-meta uk-margin-xsmall-top"></i>-->
                         </div>
-<!--                        <span class="uk-text-small uk-text-danger ng-star-inserted"></span>-->
-<!--                        <span class="uk-text-small uk-text-danger"></span>-->
-<!--                        <i class="uk-text-small uk-text-meta uk-margin-xsmall-top"></i>-->
                       </div>
-                    </div>
-                    <div>
-                      <div input="" placeholder="End Date">
-                        <div class="input-wrapper hint flat">
-                          <div click-outside-or-esc="" class="input-box">
-                            <div class="placeholder">
-                              <label>End Date
-                                <!--                                <sup class="">*</sup>-->
-                              </label>
-                            </div>
-                            <div class="uk-flex uk-flex-middle">
-                              <input class="input" type="text" placeholder="2016-06" (blur)="updateEndDate($event)">
-                            </div>
-                            <div class="tools">
+                      <div>
+                        <div input="" placeholder="End Date">
+                          <div class="input-wrapper hint flat">
+                            <div click-outside-or-esc="" class="input-box">
+                              <div class="placeholder">
+                                <label>End Date
+                                  <!--                                <sup class="">*</sup>-->
+                                </label>
+                              </div>
+                              <div class="uk-flex uk-flex-middle">
+                                <input class="input" type="text" placeholder="2016-06" (blur)="updateEndDate($event)">
+                              </div>
+                              <div class="tools">
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <!--                        <span class="uk-text-small uk-text-danger ng-star-inserted"></span>-->
-                        <!--                        <span class="uk-text-small uk-text-danger"></span>-->
-                        <!--                        <i class="uk-text-small uk-text-meta uk-margin-xsmall-top"></i>-->
+                          <!--                        <span class="uk-text-small uk-text-danger ng-star-inserted"></span>-->
+                          <!--                        <span class="uk-text-small uk-text-danger"></span>-->
+                          <!--                        <i class="uk-text-small uk-text-meta uk-margin-xsmall-top"></i>-->
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!--                  <div class="">-->
+                    <!--                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+                    <!--                      <label>Begin Date</label>-->
+                    <!--                      <input class="md-input label-fixed" name="BeginDate" placeholder="2016-03" type="text" (blur)="updateBeginDate($event)">-->
+                    <!--                      <span class="md-input-bar "></span>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="md-input-wrapper md-input-filled">-->
+                    <!--                      <label>End Date</label>-->
+                    <!--                      <input class="md-input label-fixed" name="EndDate" placeholder="2016-06" type="text" (blur)="updateEndDate($event)">-->
+                    <!--                      <span class="md-input-bar "></span>-->
+                    <!--                    </div>-->
+                    <!--                  </div>-->
+
+                    <h6><span *ngIf="chosen_report == 'RR1' || chosen_report == 'JR1'">Optional </span>Filters</h6>
+
+                    <div class="uk-text-italic">
+                      <p *ngIf="chosen_report != 'RR1' && chosen_report != 'JR1'">
+                        For more specific results, provide an Item Identifier.<br>
+                        Identifier format: <b>namespace:value</b><br>
+                        Valid namespace for Item Identifier: <b>openaire</b>, <b>doi</b> or <b>oid</b>(for OAI-PMH).
+                      </p>
+                      <p *ngIf="chosen_report =='RR1'">
+                        By default results are returned for all repositories.<br>
+                        To get just the results for the current repository, check the box.</p>
+                    </div>
+
+                    <div *ngIf="chosen_report != 'JR1'">
+                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">
+                        <label>Repository Identifier</label>
+                        <input class="md-input label-fixed" type="text" value="{{ shownRepoId }}" disabled>
+                        <span class="md-input-bar "></span>
+                      </div>
+                      <div *ngIf="chosen_report =='RR1'" class="uk-margin-bottom">
+                        <input class="md-input label-fixed" type="checkbox" value="useCurrentRepo" (change)="updateUseCurrentRepo($event)">
+                        <label class="inline-label">Select current repository</label>
                       </div>
                     </div>
 
-                  </div>
-
-<!--                  <div class="">-->
-<!--                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                      <label>Begin Date</label>-->
-<!--                      <input class="md-input label-fixed" name="BeginDate" placeholder="2016-03" type="text" (blur)="updateBeginDate($event)">-->
-<!--                      <span class="md-input-bar "></span>-->
-<!--                    </div>-->
-<!--                    <div class="md-input-wrapper md-input-filled">-->
-<!--                      <label>End Date</label>-->
-<!--                      <input class="md-input label-fixed" name="EndDate" placeholder="2016-06" type="text" (blur)="updateEndDate($event)">-->
-<!--                      <span class="md-input-bar "></span>-->
-<!--                    </div>-->
-<!--                  </div>-->
-
-                  <h6><span *ngIf="chosen_report == 'RR1' || chosen_report == 'JR1'">Optional </span>Filters</h6>
-
-                  <div class="uk-text-italic">
-                    <p *ngIf="chosen_report != 'RR1' && chosen_report != 'JR1'">
-                      For more specific results, provide an Item Identifier.<br>
-                      Identifier format: <b>namespace:value</b><br>
-                      Valid namespace for Item Identifier: <b>openaire</b>, <b>doi</b> or <b>oid</b>(for OAI-PMH).
-                    </p>
-                    <p *ngIf="chosen_report =='RR1'">
-                      By default results are returned for all repositories.<br>
-                      To get just the results for the current repository, check the box.</p>
-                  </div>
-
-                  <div *ngIf="chosen_report != 'JR1'">
-                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">
-                      <label>Repository Identifier</label>
-                      <input class="md-input label-fixed" type="text" value="{{ shownRepoId }}" disabled>
-                      <span class="md-input-bar "></span>
+                    <div *ngIf="repo.issn && chosen_report == 'JR1'" class="">
+                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">
+                        <label>Journal Identifier</label>
+                        <input class="md-input label-fixed" type="text" value="{{ shownRepoId }}" disabled>
+                        <span class="md-input-bar "></span>
+                      </div>
                     </div>
-                    <div *ngIf="chosen_report =='RR1'" class="uk-margin-bottom">
-                      <input class="md-input label-fixed" type="checkbox" value="useCurrentRepo" (change)="updateUseCurrentRepo($event)">
-                      <label class="inline-label">Select current repository</label>
-                    </div>
-                  </div>
-
-                  <div *ngIf="repo.issn && chosen_report == 'JR1'" class="">
-                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">
-                      <label>Journal Identifier</label>
-                      <input class="md-input label-fixed" type="text" value="{{ shownRepoId }}" disabled>
-                      <span class="md-input-bar "></span>
-                    </div>
-                  </div>
 
 
-                  <div *ngIf="chosen_report != 'JR1' && chosen_report != 'RR1' && chosen_report != 'PR'
+                    <div *ngIf="chosen_report != 'JR1' && chosen_report != 'RR1' && chosen_report != 'PR'
                       && chosen_report != 'PR_P1' && chosen_report != 'DSR'">
-                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">
-                      <label>Item Identifier</label>
-                      <input class="md-input label-fixed" name="ItemIdentifier" placeholder="e.g. doi:10.xyz/12345"
-                             type="text" (blur)="updateItemIdentifier($event)">
-                      <span class="md-input-bar "></span>
+                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">
+                        <label>Item Identifier</label>
+                        <input class="md-input label-fixed" name="ItemIdentifier" placeholder="e.g. doi:10.xyz/12345"
+                               type="text" (blur)="updateItemIdentifier($event)">
+                        <span class="md-input-bar "></span>
+                      </div>
+
                     </div>
 
-                  </div>
+                    <div *ngIf="chosen_report == 'DSR'">
+                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">
+                        <label>Dataset Identifier</label>
+                        <input class="md-input label-fixed" name="DatasetIdentifier" placeholder="e.g. doi:10.xyz/12345"
+                               type="text" (blur)="updateDatasetIdentifier($event)">
+                        <span class="md-input-bar "></span>
+                      </div>
 
-                  <div *ngIf="chosen_report == 'DSR'">
-                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">
-                      <label>Dataset Identifier</label>
-                      <input class="md-input label-fixed" name="DatasetIdentifier" placeholder="e.g. doi:10.xyz/12345"
-                             type="text" (blur)="updateDatasetIdentifier($event)">
-                      <span class="md-input-bar "></span>
                     </div>
 
-                  </div>
+                    <div *ngIf="chosen_report == 'PR' || chosen_report == 'IR'">
+                      <h6>Metric Type</h6>
+                      <div>
+                        <label>
+                          <input type="checkbox" class="uk-checkbox" value="Total_Item_Requests" checked (change)="updateTotalItemRequests($event)"> Total Item Requests
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          <input type="checkbox" class="uk-checkbox" value="Total_Item_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Item Investigations
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          <input type="checkbox" class="uk-checkbox" value="Unique_Item_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Item Requests
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          <input type="checkbox" class="uk-checkbox" value="Unique_Item_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Item Investigations
+                        </label>
+                      </div>
+                    </div>
 
-                  <div *ngIf="chosen_report == 'PR' || chosen_report == 'IR'">
-                    <h6>Metric Type</h6>
-                    <div>
-                      <label>
-                        <input type="checkbox" class="uk-checkbox" value="Total_Item_Requests" checked (change)="updateTotalItemRequests($event)"> Total Item Requests
-                      </label>
+                    <div *ngIf="chosen_report == 'DSR'">
+                      <h6>Metric Type</h6>
+                      <div>
+                        <label>
+                          <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Requests" checked (change)="updateTotalItemRequests($event)"> Total Dataset Requests
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Dataset Investigations
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Dataset Requests
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Dataset Investigations
+                        </label>
+                      </div>
                     </div>
-                    <div>
-                      <label>
-                        <input type="checkbox" class="uk-checkbox" value="Total_Item_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Item Investigations
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input type="checkbox" class="uk-checkbox" value="Unique_Item_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Item Requests
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input type="checkbox" class="uk-checkbox" value="Unique_Item_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Item Investigations
-                      </label>
-                    </div>
-                  </div>
 
-                  <div *ngIf="chosen_report == 'DSR'">
-                    <h6>Metric Type</h6>
-                    <div>
-                      <label>
-                        <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Requests" checked (change)="updateTotalItemRequests($event)"> Total Dataset Requests
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Dataset Investigations
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Dataset Requests
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Dataset Investigations
-                      </label>
-                    </div>
-                  </div>
-
-                  <div *ngIf="chosen_report == 'IR1' || chosen_report == 'RR1' || chosen_report == 'JR1'
+                    <div *ngIf="chosen_report == 'IR1' || chosen_report == 'RR1' || chosen_report == 'JR1'
                             || chosen_report == 'PR' || chosen_report == 'IR'">
 
-                    <div class="uk-text-italic uk-margin-top uk-margin-bottom">
-                      <p>Optional filter to only show results for a single item type, e.g. article, book, etc.</p>
+                      <div class="uk-text-italic uk-margin-top uk-margin-bottom">
+                        <p>Optional filter to only show results for a single item type, e.g. article, book, etc.</p>
+                      </div>
+
+                      <div class="md-input-wrapper md-input-filled">
+                        <label class="">Item Data Type</label>
+                        <select class="md-input label-fixed" name="ItemDataType" (change)="updateItemDataType($event)">
+                          <!-- TODO: get the list from api if it becomes available -->
+                          <option value="">--- Select Item Data Type ---</option>
+                          <option value="Annotation">Annotation</option>
+                          <option value="Article">Article</option>
+                          <option value="Bachelor thesis">Bachelor thesis</option>
+                          <option value="Book">Book</option>
+                          <option value="clinical trial">clinical trial</option>
+                          <option value="Collection">Collection</option>
+                          <option value="Conference object">Conference object</option>
+                          <option value="Contribution for newspaper or weekly magazine">Contribution for newspaper or weekly magazine</option>
+                          <option value="Dataset">Dataset</option>
+                          <option value="Doctoral thesis">Doctoral thesis</option>
+                          <option value="Event">Event</option>
+                          <option value="External research report">External research report</option>
+                          <option value="Film">Film</option>
+                          <option value="Image">Image</option>
+                          <option value="InteractiveResource">InteractiveResource</option>
+                          <option value="Internal report">Internal report</option>
+                          <option value="Lecture">Lecture</option>
+                          <option value="Master thesis">Master thesis</option>
+                          <option value="Newsletter">Newsletter</option>
+                          <option value="Other">Other</option>
+                          <option value="Part of book or chapter of book">Part of book or chapter of book</option>
+                          <option value="Patent">Patent</option>
+                          <option value="PhysicalObject">PhysicalObject</option>
+                          <option value="Preprint">Preprint</option>
+                          <option value="Report">Report</option>
+                          <option value="Research">Research</option>
+                          <option value="Review">Review</option>
+                          <option value="Software">Software</option>
+                          <option value="Sound">Sound</option>
+                          <option value="Unknown">Unknown</option>
+                        </select>
+                        <span class="md-input-bar"></span>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div>
+                    <h5>
+                      <span class="uk-text-primary">2. </span>
+                      <span>Set Report Attributes</span>
+                    </h5>
+
+                    <div class="uk-text-italic">
+                      <p>Valid Granularity values: Monthly or Totals</p>
                     </div>
 
                     <div class="md-input-wrapper md-input-filled">
-                      <label class="">Item Data Type</label>
-                      <select class="md-input label-fixed" name="ItemDataType" (change)="updateItemDataType($event)">
-                        <!-- TODO: get the list from api if it becomes available -->
-                        <option value="">--- Select Item Data Type ---</option>
-                        <option value="Annotation">Annotation</option>
-                        <option value="Article">Article</option>
-                        <option value="Bachelor thesis">Bachelor thesis</option>
-                        <option value="Book">Book</option>
-                        <option value="clinical trial">clinical trial</option>
-                        <option value="Collection">Collection</option>
-                        <option value="Conference object">Conference object</option>
-                        <option value="Contribution for newspaper or weekly magazine">Contribution for newspaper or weekly magazine</option>
-                        <option value="Dataset">Dataset</option>
-                        <option value="Doctoral thesis">Doctoral thesis</option>
-                        <option value="Event">Event</option>
-                        <option value="External research report">External research report</option>
-                        <option value="Film">Film</option>
-                        <option value="Image">Image</option>
-                        <option value="InteractiveResource">InteractiveResource</option>
-                        <option value="Internal report">Internal report</option>
-                        <option value="Lecture">Lecture</option>
-                        <option value="Master thesis">Master thesis</option>
-                        <option value="Newsletter">Newsletter</option>
-                        <option value="Other">Other</option>
-                        <option value="Part of book or chapter of book">Part of book or chapter of book</option>
-                        <option value="Patent">Patent</option>
-                        <option value="PhysicalObject">PhysicalObject</option>
-                        <option value="Preprint">Preprint</option>
-                        <option value="Report">Report</option>
-                        <option value="Research">Research</option>
-                        <option value="Review">Review</option>
-                        <option value="Software">Software</option>
-                        <option value="Sound">Sound</option>
-                        <option value="Unknown">Unknown</option>
+                      <label class="">Granularity</label>
+                      <select class="md-input" name="Granularity" (change)="updateGranularity($event)">
+                        <option value="Monthly">Monthly</option>
+                        <option value="Totals">Totals</option>
                       </select>
                       <span class="md-input-bar"></span>
                     </div>
-
                   </div>
 
                 </div>
+                <div class="uk-width-2-5">
 
-                <div>
-                  <h5>
-                    <span class="uk-text-primary">2. </span>
-                    <span>Set Report Attributes</span>
-                  </h5>
-
-                  <div class="uk-text-italic">
-                    <p>Valid Granularity values: Monthly or Totals</p>
-                  </div>
-
-                  <div class="md-input-wrapper md-input-filled">
-                    <label class="">Granularity</label>
-                    <select class="md-input" name="Granularity" (change)="updateGranularity($event)">
-                      <option value="Monthly">Monthly</option>
-                      <option value="Totals">Totals</option>
-                    </select>
-                    <span class="md-input-bar"></span>
-                  </div>
-                </div>
-
-              </div>
-              <div class="uk-width-2-5">
-
-                <div class="uk-card uk-card-default">
-                  <div class="uk-card-body">
-                    <div>
-                      <h6>Report Request</h6>
+                  <div class="uk-card uk-card-default">
+                    <div class="uk-card-body">
                       <div>
-                        <span class="uk-text-muted">Report name: </span>
-                        <span>{{ chosen_report }}</span>
+                        <h6>Report Request</h6>
+                        <div>
+                          <span class="uk-text-muted">Report name: </span>
+                          <span>{{ chosen_report }}</span>
+                        </div>
+                        <div>
+                          <span class="uk-text-muted">Release: </span>
+                          <span>{{release}}</span>
+                        </div>
+                        <div>
+                          <span class="uk-text-muted">Requestor: </span>
+                          <span>{{ userEmail }}</span>
+                        </div>
                       </div>
+                      <hr>
                       <div>
-                        <span class="uk-text-muted">Release: </span>
-                        <span>{{release}}</span>
+                        <h6>Report Filters</h6>
+                        <div>
+                          <span class="uk-text-muted">Date range: </span>
+                          <span>{{ beginDate }} - {{ endDate }}</span>
+                        </div>
+                        <div>
+                          <span class="uk-text-muted">Repository Identifier: </span>
+                          <span>{{ datasetIdentifier }}</span>
+                        </div>
+                        <div>
+                          <span class="uk-text-muted">Item Identifier: </span>
+                          <span>{{ itemIdentifier }}</span>
+                        </div>
                       </div>
+                      <hr>
                       <div>
-                        <span class="uk-text-muted">Requestor: </span>
-                        <span>{{ userEmail }}</span>
+                        <h6>Metric type</h6>
+                        <div>
+                          <span>--</span>
+                        </div>
+                        <div>
+                          <span class="uk-text-muted">Item data type: </span>
+                          <span>{{ dataType }}</span>
+                        </div>
+                      </div>
+                      <hr>
+                      <div>
+                        <h6>Report Attributes</h6>
+                        <div>
+                          <span>{{ granularity }}</span>
+                        </div>
                       </div>
                     </div>
-                    <hr>
-                    <div>
-                      <h6>Report Filters</h6>
-                      <div>
-                        <span class="uk-text-muted">Date range: </span>
-                        <span>{{ beginDate }} - {{ endDate }}</span>
-                      </div>
-                      <div>
-                        <span class="uk-text-muted">Repository Identifier: </span>
-                        <span>{{ datasetIdentifier }}</span>
-                      </div>
-                      <div>
-                        <span class="uk-text-muted">Item Identifier: </span>
-                        <span>{{ itemIdentifier }}</span>
-                      </div>
-                    </div>
-                    <hr>
-                    <div>
-                      <h6>Metric type</h6>
-                      <div>
-                        <span>--</span>
-                      </div>
-                      <div>
-                        <span class="uk-text-muted">Item data type: </span>
-                        <span>{{ dataType }}</span>
-                      </div>
-                    </div>
-                    <hr>
-                    <div>
-                      <h6>Report Attributes</h6>
-                      <div>
-                        <span>{{ granularity }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="uk-card-footer uk-background-primary">
-                    <a class="uk-link-text uk-link-reset uk-width-1-1" aria-haspopup="true" (click)="goToReport()">
+                    <div class="uk-card-footer uk-background-primary">
+                      <a class="uk-link-text uk-link-reset uk-width-1-1" aria-haspopup="true" (click)="goToReport()">
                       <span class="uk-flex uk-flex-middle uk-flex-center uk-text-white">
                         <span class="uk-margin-small-right uk-text-uppercase">Get Report</span>
                         <span class="material-icons" style="font-size: 20px;">arrow_right_alt</span>
                       </span>
-                    </a>
+                      </a>
+                    </div>
                   </div>
-                </div>
 
+                </div>
               </div>
+
+
+
+
+
+
+
+
+
+
+              <!--            <div class="md-card">-->
+              <!--              <div class="md-card-content large-padding">-->
+
+              <!--                <div class="uk-grid uk-grid-divider" data-uk-grid-margin="">-->
+
+              <!--                  <div class="uk-width-1-3@l uk-width-1-3@m uk-row-first">-->
+
+              <!--                    <h3>Report Request</h3>-->
+
+              <!--                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+              <!--                      <label>Report Name</label>-->
+              <!--                      <input class="md-input label-fixed" type="text" value="{{ chosen_report }}" disabled>-->
+              <!--                      <span class="md-input-bar "></span>-->
+              <!--                    </div>-->
+
+              <!--                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+              <!--                      <label>Release</label>-->
+              <!--                      <input class="md-input label-fixed" type="text" value="{{release}}" disabled>-->
+              <!--                      <span class="md-input-bar "></span>-->
+              <!--                    </div>-->
+
+              <!--                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+              <!--                      <label>Requestor</label>-->
+              <!--                      <input class="md-input label-fixed" type="text" value="{{ userEmail }}" disabled>-->
+              <!--                      <span class="md-input-bar "></span>-->
+              <!--                    </div>-->
+
+              <!--                  </div>-->
+
+              <!--                  &lt;!&ndash;<hr>&ndash;&gt;-->
+
+              <!--                  <div class="uk-width-1-3@l uk-width-1-3@m">-->
+              <!--                    <h3>Report Filters</h3>-->
+
+              <!--                    <h5>Date range</h5>-->
+
+              <!--                    <div class="uk-text-italic">-->
+              <!--                      <p>Valid date formats are yyyy-mm-dd or yyyy-mm. Default range is the last available month.</p>-->
+              <!--                    </div>-->
+
+              <!--                    <div class="">-->
+              <!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+              <!--                        <label>Begin Date</label>-->
+              <!--                        <input class="md-input label-fixed" name="BeginDate" placeholder="2016-03" type="text" (blur)="updateBeginDate($event)">-->
+              <!--                        <span class="md-input-bar "></span>-->
+              <!--                      </div>-->
+              <!--                      <div class="md-input-wrapper md-input-filled">-->
+              <!--                        <label>End Date</label>-->
+              <!--                        <input class="md-input label-fixed" name="EndDate" placeholder="2016-06" type="text" (blur)="updateEndDate($event)">-->
+              <!--                        <span class="md-input-bar "></span>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+
+              <!--                    <h5><span *ngIf="chosen_report == 'RR1' || chosen_report == 'JR1'">Optional </span>Filters</h5>-->
+
+              <!--                    <div class="uk-text-italic">-->
+              <!--                      <p *ngIf="chosen_report != 'RR1' && chosen_report != 'JR1'">-->
+              <!--                        For more specific results, provide an Item Identifier.<br>-->
+              <!--                        Identifier format: <b>namespace:value</b><br>-->
+              <!--                        Valid namespace for Item Identifier: <b>openaire</b>, <b>doi</b> or <b>oid</b>(for OAI-PMH).-->
+              <!--                      </p>-->
+              <!--                      <p *ngIf="chosen_report =='RR1'">-->
+              <!--                        By default results are returned for all repositories.<br>-->
+              <!--                        To get just the results for the current repository, check the box.</p>-->
+              <!--                    </div>-->
+
+              <!--                    <div *ngIf="chosen_report != 'JR1'">-->
+              <!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+              <!--                        <label>Repository Identifier</label>-->
+              <!--                        <input class="md-input label-fixed" type="text" value="{{ shownRepoId }}" disabled>-->
+              <!--                        <span class="md-input-bar "></span>-->
+              <!--                      </div>-->
+              <!--                      <div *ngIf="chosen_report =='RR1'" class="uk-margin-bottom">-->
+              <!--                        <input class="md-input label-fixed" type="checkbox" value="useCurrentRepo" (change)="updateUseCurrentRepo($event)">-->
+              <!--                        <label class="inline-label">Select current repository</label>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+
+              <!--                    <div *ngIf="repo.issn && chosen_report == 'JR1'" class="">-->
+              <!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+              <!--                        <label>Journal Identifier</label>-->
+              <!--                        <input class="md-input label-fixed" type="text" value="{{ shownRepoId }}" disabled>-->
+              <!--                        <span class="md-input-bar "></span>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+
+
+              <!--                    <div *ngIf="chosen_report != 'JR1' && chosen_report != 'RR1' && chosen_report != 'PR'-->
+              <!--                      && chosen_report != 'PR_P1' && chosen_report != 'DSR'">-->
+              <!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+              <!--                        <label>Item Identifier</label>-->
+              <!--                        <input class="md-input label-fixed" name="ItemIdentifier" placeholder="e.g. doi:10.xyz/12345"-->
+              <!--                               type="text" (blur)="updateItemIdentifier($event)">-->
+              <!--                        <span class="md-input-bar "></span>-->
+              <!--                      </div>-->
+
+              <!--                    </div>-->
+
+              <!--                    <div *ngIf="chosen_report == 'DSR'">-->
+              <!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
+              <!--                        <label>Dataset Identifier</label>-->
+              <!--                        <input class="md-input label-fixed" name="DatasetIdentifier" placeholder="e.g. doi:10.xyz/12345"-->
+              <!--                               type="text" (blur)="updateDatasetIdentifier($event)">-->
+              <!--                        <span class="md-input-bar "></span>-->
+              <!--                      </div>-->
+
+              <!--                    </div>-->
+
+              <!--                    <div *ngIf="chosen_report == 'PR' || chosen_report == 'IR'">-->
+              <!--                      <h5>Metric Type</h5>-->
+              <!--                      <div>-->
+              <!--                        <label>-->
+              <!--                          <input type="checkbox" class="uk-checkbox" value="Total_Item_Requests" checked (change)="updateTotalItemRequests($event)"> Total Item Requests-->
+              <!--                        </label>-->
+              <!--                      </div>-->
+              <!--                      <div>-->
+              <!--                        <label>-->
+              <!--                          <input type="checkbox" class="uk-checkbox" value="Total_Item_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Item Investigations-->
+              <!--                        </label>-->
+              <!--                      </div>-->
+              <!--                      <div>-->
+              <!--                        <label>-->
+              <!--                          <input type="checkbox" class="uk-checkbox" value="Unique_Item_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Item Requests-->
+              <!--                        </label>-->
+              <!--                      </div>-->
+              <!--                      <div>-->
+              <!--                        <label>-->
+              <!--                          <input type="checkbox" class="uk-checkbox" value="Unique_Item_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Item Investigations-->
+              <!--                        </label>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+
+              <!--                    <div *ngIf="chosen_report == 'DSR'">-->
+              <!--                      <h5>Metric Type</h5>-->
+              <!--                      <div>-->
+              <!--                        <label>-->
+              <!--                          <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Requests" checked (change)="updateTotalItemRequests($event)"> Total Dataset Requests-->
+              <!--                        </label>-->
+              <!--                      </div>-->
+              <!--                      <div>-->
+              <!--                        <label>-->
+              <!--                          <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Dataset Investigations-->
+              <!--                        </label>-->
+              <!--                      </div>-->
+              <!--                      <div>-->
+              <!--                        <label>-->
+              <!--                          <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Dataset Requests-->
+              <!--                        </label>-->
+              <!--                      </div>-->
+              <!--                      <div>-->
+              <!--                        <label>-->
+              <!--                          <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Dataset Investigations-->
+              <!--                        </label>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+
+              <!--                    <div *ngIf="chosen_report == 'IR1' || chosen_report == 'RR1' || chosen_report == 'JR1'-->
+              <!--                            || chosen_report == 'PR' || chosen_report == 'IR'">-->
+
+              <!--                      <div class="uk-text-italic uk-margin-top uk-margin-bottom">-->
+              <!--                        <p>Optional filter to only show results for a single item type, e.g. article, book, etc.</p>-->
+              <!--                      </div>-->
+
+              <!--                      <div class="md-input-wrapper md-input-filled">-->
+              <!--                        <label class="">Item Data Type</label>-->
+              <!--                        <select class="md-input label-fixed" name="ItemDataType" (change)="updateItemDataType($event)">-->
+              <!--                          &lt;!&ndash; TODO: get the list from api if it becomes available &ndash;&gt;-->
+              <!--                          <option value="">-&#45;&#45; Select Item Data Type -&#45;&#45;</option>-->
+              <!--                          <option value="Annotation">Annotation</option>-->
+              <!--                          <option value="Article">Article</option>-->
+              <!--                          <option value="Bachelor thesis">Bachelor thesis</option>-->
+              <!--                          <option value="Book">Book</option>-->
+              <!--                          <option value="clinical trial">clinical trial</option>-->
+              <!--                          <option value="Collection">Collection</option>-->
+              <!--                          <option value="Conference object">Conference object</option>-->
+              <!--                          <option value="Contribution for newspaper or weekly magazine">Contribution for newspaper or weekly magazine</option>-->
+              <!--                          <option value="Dataset">Dataset</option>-->
+              <!--                          <option value="Doctoral thesis">Doctoral thesis</option>-->
+              <!--                          <option value="Event">Event</option>-->
+              <!--                          <option value="External research report">External research report</option>-->
+              <!--                          <option value="Film">Film</option>-->
+              <!--                          <option value="Image">Image</option>-->
+              <!--                          <option value="InteractiveResource">InteractiveResource</option>-->
+              <!--                          <option value="Internal report">Internal report</option>-->
+              <!--                          <option value="Lecture">Lecture</option>-->
+              <!--                          <option value="Master thesis">Master thesis</option>-->
+              <!--                          <option value="Newsletter">Newsletter</option>-->
+              <!--                          <option value="Other">Other</option>-->
+              <!--                          <option value="Part of book or chapter of book">Part of book or chapter of book</option>-->
+              <!--                          <option value="Patent">Patent</option>-->
+              <!--                          <option value="PhysicalObject">PhysicalObject</option>-->
+              <!--                          <option value="Preprint">Preprint</option>-->
+              <!--                          <option value="Report">Report</option>-->
+              <!--                          <option value="Research">Research</option>-->
+              <!--                          <option value="Review">Review</option>-->
+              <!--                          <option value="Software">Software</option>-->
+              <!--                          <option value="Sound">Sound</option>-->
+              <!--                          <option value="Unknown">Unknown</option>-->
+              <!--                        </select>-->
+              <!--                        <span class="md-input-bar"></span>-->
+              <!--                      </div>-->
+
+              <!--                    </div>-->
+              <!--                  </div>-->
+
+              <!--                  &lt;!&ndash;<hr>&ndash;&gt;-->
+
+              <!--                  <div class="uk-width-1-3@l uk-width-1-3@m">-->
+
+              <!--                    <h3>Report Attributes</h3>-->
+
+              <!--                    <div class="uk-text-italic">-->
+              <!--                      <p>Valid Granularity values: Monthly or Totals</p>-->
+              <!--                    </div>-->
+
+              <!--                    <div class="md-input-wrapper md-input-filled">-->
+              <!--                      <label class="">Granularity</label>-->
+              <!--                      <select class="md-input" name="Granularity" (change)="updateGranularity($event)">-->
+              <!--                        <option value="Monthly">Monthly</option>-->
+              <!--                        <option value="Totals">Totals</option>-->
+              <!--                      </select>-->
+              <!--                      <span class="md-input-bar"></span>-->
+              <!--                    </div>-->
+
+              <!--                  </div>-->
+
+              <!--                </div>-->
+
+              <!--                <a class="uk-button uk-button-primary uk-margin-top" (click)="goToReport()">Get Report</a>-->
+
+              <!--              </div>-->
+              <!--            </div>-->
+
+
             </div>
 
-
-
-
-
-
-
-
-
-
-<!--            <div class="md-card">-->
-<!--              <div class="md-card-content large-padding">-->
-
-<!--                <div class="uk-grid uk-grid-divider" data-uk-grid-margin="">-->
-
-<!--                  <div class="uk-width-1-3@l uk-width-1-3@m uk-row-first">-->
-
-<!--                    <h3>Report Request</h3>-->
-
-<!--                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                      <label>Report Name</label>-->
-<!--                      <input class="md-input label-fixed" type="text" value="{{ chosen_report }}" disabled>-->
-<!--                      <span class="md-input-bar "></span>-->
-<!--                    </div>-->
-
-<!--                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                      <label>Release</label>-->
-<!--                      <input class="md-input label-fixed" type="text" value="{{release}}" disabled>-->
-<!--                      <span class="md-input-bar "></span>-->
-<!--                    </div>-->
-
-<!--                    <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                      <label>Requestor</label>-->
-<!--                      <input class="md-input label-fixed" type="text" value="{{ userEmail }}" disabled>-->
-<!--                      <span class="md-input-bar "></span>-->
-<!--                    </div>-->
-
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash;<hr>&ndash;&gt;-->
-
-<!--                  <div class="uk-width-1-3@l uk-width-1-3@m">-->
-<!--                    <h3>Report Filters</h3>-->
-
-<!--                    <h5>Date range</h5>-->
-
-<!--                    <div class="uk-text-italic">-->
-<!--                      <p>Valid date formats are yyyy-mm-dd or yyyy-mm. Default range is the last available month.</p>-->
-<!--                    </div>-->
-
-<!--                    <div class="">-->
-<!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                        <label>Begin Date</label>-->
-<!--                        <input class="md-input label-fixed" name="BeginDate" placeholder="2016-03" type="text" (blur)="updateBeginDate($event)">-->
-<!--                        <span class="md-input-bar "></span>-->
-<!--                      </div>-->
-<!--                      <div class="md-input-wrapper md-input-filled">-->
-<!--                        <label>End Date</label>-->
-<!--                        <input class="md-input label-fixed" name="EndDate" placeholder="2016-06" type="text" (blur)="updateEndDate($event)">-->
-<!--                        <span class="md-input-bar "></span>-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                    <h5><span *ngIf="chosen_report == 'RR1' || chosen_report == 'JR1'">Optional </span>Filters</h5>-->
-
-<!--                    <div class="uk-text-italic">-->
-<!--                      <p *ngIf="chosen_report != 'RR1' && chosen_report != 'JR1'">-->
-<!--                        For more specific results, provide an Item Identifier.<br>-->
-<!--                        Identifier format: <b>namespace:value</b><br>-->
-<!--                        Valid namespace for Item Identifier: <b>openaire</b>, <b>doi</b> or <b>oid</b>(for OAI-PMH).-->
-<!--                      </p>-->
-<!--                      <p *ngIf="chosen_report =='RR1'">-->
-<!--                        By default results are returned for all repositories.<br>-->
-<!--                        To get just the results for the current repository, check the box.</p>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="chosen_report != 'JR1'">-->
-<!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                        <label>Repository Identifier</label>-->
-<!--                        <input class="md-input label-fixed" type="text" value="{{ shownRepoId }}" disabled>-->
-<!--                        <span class="md-input-bar "></span>-->
-<!--                      </div>-->
-<!--                      <div *ngIf="chosen_report =='RR1'" class="uk-margin-bottom">-->
-<!--                        <input class="md-input label-fixed" type="checkbox" value="useCurrentRepo" (change)="updateUseCurrentRepo($event)">-->
-<!--                        <label class="inline-label">Select current repository</label>-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="repo.issn && chosen_report == 'JR1'" class="">-->
-<!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                        <label>Journal Identifier</label>-->
-<!--                        <input class="md-input label-fixed" type="text" value="{{ shownRepoId }}" disabled>-->
-<!--                        <span class="md-input-bar "></span>-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-
-<!--                    <div *ngIf="chosen_report != 'JR1' && chosen_report != 'RR1' && chosen_report != 'PR'-->
-<!--                      && chosen_report != 'PR_P1' && chosen_report != 'DSR'">-->
-<!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                        <label>Item Identifier</label>-->
-<!--                        <input class="md-input label-fixed" name="ItemIdentifier" placeholder="e.g. doi:10.xyz/12345"-->
-<!--                               type="text" (blur)="updateItemIdentifier($event)">-->
-<!--                        <span class="md-input-bar "></span>-->
-<!--                      </div>-->
-
-<!--                    </div>-->
-
-<!--                    <div *ngIf="chosen_report == 'DSR'">-->
-<!--                      <div class="md-input-wrapper md-input-filled uk-margin-bottom">-->
-<!--                        <label>Dataset Identifier</label>-->
-<!--                        <input class="md-input label-fixed" name="DatasetIdentifier" placeholder="e.g. doi:10.xyz/12345"-->
-<!--                               type="text" (blur)="updateDatasetIdentifier($event)">-->
-<!--                        <span class="md-input-bar "></span>-->
-<!--                      </div>-->
-
-<!--                    </div>-->
-
-<!--                    <div *ngIf="chosen_report == 'PR' || chosen_report == 'IR'">-->
-<!--                      <h5>Metric Type</h5>-->
-<!--                      <div>-->
-<!--                        <label>-->
-<!--                          <input type="checkbox" class="uk-checkbox" value="Total_Item_Requests" checked (change)="updateTotalItemRequests($event)"> Total Item Requests-->
-<!--                        </label>-->
-<!--                      </div>-->
-<!--                      <div>-->
-<!--                        <label>-->
-<!--                          <input type="checkbox" class="uk-checkbox" value="Total_Item_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Item Investigations-->
-<!--                        </label>-->
-<!--                      </div>-->
-<!--                      <div>-->
-<!--                        <label>-->
-<!--                          <input type="checkbox" class="uk-checkbox" value="Unique_Item_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Item Requests-->
-<!--                        </label>-->
-<!--                      </div>-->
-<!--                      <div>-->
-<!--                        <label>-->
-<!--                          <input type="checkbox" class="uk-checkbox" value="Unique_Item_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Item Investigations-->
-<!--                        </label>-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="chosen_report == 'DSR'">-->
-<!--                      <h5>Metric Type</h5>-->
-<!--                      <div>-->
-<!--                        <label>-->
-<!--                          <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Requests" checked (change)="updateTotalItemRequests($event)"> Total Dataset Requests-->
-<!--                        </label>-->
-<!--                      </div>-->
-<!--                      <div>-->
-<!--                        <label>-->
-<!--                          <input type="checkbox" class="uk-checkbox" value="Total_Dataset_Investigations" checked (change)="updateTotalItemInvestigations($event)"> Total Dataset Investigations-->
-<!--                        </label>-->
-<!--                      </div>-->
-<!--                      <div>-->
-<!--                        <label>-->
-<!--                          <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Requests" checked (change)="updateUniqueItemRequests($event)"> Unique Dataset Requests-->
-<!--                        </label>-->
-<!--                      </div>-->
-<!--                      <div>-->
-<!--                        <label>-->
-<!--                          <input type="checkbox" class="uk-checkbox" value="Unique_Dataset_Investigations" checked (change)="updateUniqueItemInvestigations($event)"> Unique Dataset Investigations-->
-<!--                        </label>-->
-<!--                      </div>-->
-<!--                    </div>-->
-
-<!--                    <div *ngIf="chosen_report == 'IR1' || chosen_report == 'RR1' || chosen_report == 'JR1'-->
-<!--                            || chosen_report == 'PR' || chosen_report == 'IR'">-->
-
-<!--                      <div class="uk-text-italic uk-margin-top uk-margin-bottom">-->
-<!--                        <p>Optional filter to only show results for a single item type, e.g. article, book, etc.</p>-->
-<!--                      </div>-->
-
-<!--                      <div class="md-input-wrapper md-input-filled">-->
-<!--                        <label class="">Item Data Type</label>-->
-<!--                        <select class="md-input label-fixed" name="ItemDataType" (change)="updateItemDataType($event)">-->
-<!--                          &lt;!&ndash; TODO: get the list from api if it becomes available &ndash;&gt;-->
-<!--                          <option value="">-&#45;&#45; Select Item Data Type -&#45;&#45;</option>-->
-<!--                          <option value="Annotation">Annotation</option>-->
-<!--                          <option value="Article">Article</option>-->
-<!--                          <option value="Bachelor thesis">Bachelor thesis</option>-->
-<!--                          <option value="Book">Book</option>-->
-<!--                          <option value="clinical trial">clinical trial</option>-->
-<!--                          <option value="Collection">Collection</option>-->
-<!--                          <option value="Conference object">Conference object</option>-->
-<!--                          <option value="Contribution for newspaper or weekly magazine">Contribution for newspaper or weekly magazine</option>-->
-<!--                          <option value="Dataset">Dataset</option>-->
-<!--                          <option value="Doctoral thesis">Doctoral thesis</option>-->
-<!--                          <option value="Event">Event</option>-->
-<!--                          <option value="External research report">External research report</option>-->
-<!--                          <option value="Film">Film</option>-->
-<!--                          <option value="Image">Image</option>-->
-<!--                          <option value="InteractiveResource">InteractiveResource</option>-->
-<!--                          <option value="Internal report">Internal report</option>-->
-<!--                          <option value="Lecture">Lecture</option>-->
-<!--                          <option value="Master thesis">Master thesis</option>-->
-<!--                          <option value="Newsletter">Newsletter</option>-->
-<!--                          <option value="Other">Other</option>-->
-<!--                          <option value="Part of book or chapter of book">Part of book or chapter of book</option>-->
-<!--                          <option value="Patent">Patent</option>-->
-<!--                          <option value="PhysicalObject">PhysicalObject</option>-->
-<!--                          <option value="Preprint">Preprint</option>-->
-<!--                          <option value="Report">Report</option>-->
-<!--                          <option value="Research">Research</option>-->
-<!--                          <option value="Review">Review</option>-->
-<!--                          <option value="Software">Software</option>-->
-<!--                          <option value="Sound">Sound</option>-->
-<!--                          <option value="Unknown">Unknown</option>-->
-<!--                        </select>-->
-<!--                        <span class="md-input-bar"></span>-->
-<!--                      </div>-->
-
-<!--                    </div>-->
-<!--                  </div>-->
-
-<!--                  &lt;!&ndash;<hr>&ndash;&gt;-->
-
-<!--                  <div class="uk-width-1-3@l uk-width-1-3@m">-->
-
-<!--                    <h3>Report Attributes</h3>-->
-
-<!--                    <div class="uk-text-italic">-->
-<!--                      <p>Valid Granularity values: Monthly or Totals</p>-->
-<!--                    </div>-->
-
-<!--                    <div class="md-input-wrapper md-input-filled">-->
-<!--                      <label class="">Granularity</label>-->
-<!--                      <select class="md-input" name="Granularity" (change)="updateGranularity($event)">-->
-<!--                        <option value="Monthly">Monthly</option>-->
-<!--                        <option value="Totals">Totals</option>-->
-<!--                      </select>-->
-<!--                      <span class="md-input-bar"></span>-->
-<!--                    </div>-->
-
-<!--                  </div>-->
-
-<!--                </div>-->
-
-<!--                <a class="uk-button uk-button-primary uk-margin-top" (click)="goToReport()">Get Report</a>-->
-
-<!--              </div>-->
-<!--            </div>-->
-
+            <!--          <div *ngIf="repo && chosen_report" id="back-fab">-->
+            <!--            <button class="uk-button uk-button-primary uk-box-shadow-default uk-box-shadow-default-hover uk-flex uk-flex-middle" aria-haspopup="true" (click)="goToReport()">-->
+            <!--              <span class="uk-flex">-->
+            <!--                <span class="uk-margin-small-left">Get Report</span>-->
+            <!--                <span class="material-icons" style="font-size: 20px;">arrow_back</span>-->
+            <!--              </span>-->
+            <!--            </button>-->
+            <!--          </div>-->
 
           </div>
 
-<!--          <div *ngIf="repo && chosen_report" id="back-fab">-->
-<!--            <button class="uk-button uk-button-primary uk-box-shadow-default uk-box-shadow-default-hover uk-flex uk-flex-middle" aria-haspopup="true" (click)="goToReport()">-->
-<!--              <span class="uk-flex">-->
-<!--                <span class="uk-margin-small-left">Get Report</span>-->
-<!--                <span class="material-icons" style="font-size: 20px;">arrow_back</span>-->
-<!--              </span>-->
-<!--            </button>-->
-<!--          </div>-->
+          <!-- RIGHT HELP CONTENT -->
+          <aside-help-content #rightHelperContent [position]="'right'"
+                              [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content>
 
         </div>
 
-        <!-- RIGHT HELP CONTENT -->
-        <aside-help-content #rightHelperContent [position]="'right'"
-                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-        </aside-help-content>
+        <!-- BOTTOM HELP CONTENT -->
+        <help-content #bottomHelperContent [position]="'bottom'"
+                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
 
       </div>
-
-      <!-- BOTTOM HELP CONTENT -->
-      <help-content #bottomHelperContent [position]="'bottom'"
-                    [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-      </help-content>
-
     </div>
-  </div>
 
+  </div>
 </div>

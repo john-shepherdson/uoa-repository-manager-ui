@@ -6,16 +6,18 @@ import { EventsRoutingModule } from './events-routing.module';
 import { ContentEventsOfRepositoryComponent } from './content-events-of-repository.component';
 import { ContentEventsOfRepoEventslistComponent } from './content-events-of-repo-eventslist.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {InputComponent} from '../../../shared/input.component';
 
 
 @NgModule ({
-  imports: [
-    CommonModule,
-    TabsModule.forRoot(),
-    EventsRoutingModule,
-    ReusableComponentsModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        CommonModule,
+        TabsModule.forRoot(),
+        EventsRoutingModule,
+        ReusableComponentsModule,
+        ReactiveFormsModule,
+        InputComponent,
+    ],
   declarations: [
     ContentEventsOfRepositoryComponent,
     ContentEventsOfRepoEventslistComponent

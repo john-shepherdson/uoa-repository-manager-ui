@@ -8,352 +8,354 @@
     <!--<span class="uk-text-upper uk-text-small">{{ topic }}</span>-->
   <!--</div>-->
 <!--</div>-->
+<div id="page_content">
+  <div id="page_content_inner" class="">
 
-<div id="page_content_inner" class="uk-margin-medium-left uk-margin-medium-right uk-margin-top">
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-expand">
 
-  <div class="uk-margin-bottom">
-    <h2 class="heading_b uk-margin-bottom uk-inline">{{ topic }}</h2>
+        <div class="uk-padding-small uk-padding-remove-vertical">
+          <div class="uk-margin-bottom">
+            <h5 class="heading_b uk-margin-bottom uk-inline">{{ topic }}</h5>
 
-    <div class="heading_actions uk-float-right repositoryAdminActions">
-      <button class="uk-button uk-button-link" (click)="showSubscriptionModal()">
-        <img src="../../../../assets/icons/noun_subscribe_2322541.svg" width="20">
-        Subscribe to these events
-      </button>
-      <!--<button id="subscribe" type="button" class="uk-button uk-button-success" (click)="showSubscriptionModal()">Subscribe to these events</button>-->
-    </div>
-  </div>
-
-  <!-- TOP HELP CONTENT -->
-  <help-content #topHelperContent [position]="'top'"
-                [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-  </help-content>
-
-  <div class="uk-grid">
-
-    <!-- LEFT HELP CONTENT -->
-    <aside-help-content #leftHelperContent [position]="'left'"
-                        [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-    </aside-help-content>
-
-    <!-- MIDDLE -->
-    <div class=" uk-width-expand@m">
-
-      <div>
-        <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
-        <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{successMessage}}</div>
-        <div *ngIf="loadingMessage" class="loading-big">
-          <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
-          <div class="transparentFilm"></div>
-        </div>
-        <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
-        <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages>0" class="events-results">
-
-          <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-          <!--<span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>-->
-
-          <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
-          <!--<div class="uk-margin-bottom">Showing {{(currentPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (currentPage+1)*10) ) ? (eventsPage.total) : (currentPage+1)*10 }} of {{ eventsPage.total }} results</div>-->
-
-          <div class="uk-alert uk-alert-info">
-            This is a preview of the top 100 events generated for this topic. If you are interested to receive the full list, please subscribe to these events and then be notified about the new enrichment events for your data source.
+            <div class="heading_actions uk-float-right repositoryAdminActions">
+              <button class="uk-button uk-button-link" (click)="showSubscriptionModal()">
+                <img src="../../../../assets/icons/noun_subscribe_2322541.svg" width="20">
+                Subscribe to these events
+              </button>
+              <!--<button id="subscribe" type="button" class="uk-button uk-button-success" (click)="showSubscriptionModal()">Subscribe to these events</button>-->
+            </div>
           </div>
 
-          <div style="display: flex;justify-content: space-between;">
+          <!-- TOP HELP CONTENT -->
+          <help-content #topHelperContent [position]="'top'"
+                        [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+          </help-content>
 
-            <div class="resultsInfo" style="margin-top: auto;">
-              <span class="number">{{eventsPage.total}}</span> RESULTS, PAGE <span class="number">{{(currentPage)+1}}</span> OF <span class="number">{{ eventsPage.totalPages }}</span>
-            </div>
+          <div class="uk-grid">
 
-            <div class="uk-inline">
-              <ul class="uk-pagination" uk-margin>
-                <li><a (click)="goToPreviousPage()"><span uk-pagination-previous></span></a></li>
-                <li class="uk-active"><span>{{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }}</span></li>
-                <li><a (click)="goToNextPage()"><span uk-pagination-next></span></a></li>
-              </ul>
-            </div>
+            <!-- LEFT HELP CONTENT -->
+            <aside-help-content #leftHelperContent [position]="'left'"
+                                [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+            </aside-help-content>
 
-          </div>
+            <!-- MIDDLE -->
+            <div class=" uk-width-expand@m">
 
-
-          <hr class="adminResultsHeader">
-
-
-          <!--<div *ngFor="let event of eventsPage.values; let item_i = index" class="md-card md-card-hover md-card-overlay {{ (selectedItemIndex == item_i) ? 'md-card-overlay-active' : '' }}">-->
-          <div *ngFor="let event of eventsPage.values; let item_i = index" class="md-card md-card-hover eventCard">
-            <div class="md-card-content large-padding">
-
-              <div *ngIf="event.result.originalId" class="uk-text-meta">ID: {{event.result.originalId}}</div>
-
-              <div *ngIf="event.result.titles && event.result.titles.length>0">
-                <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top">
-                  <h4>{{ event.result.titles[0] }}</h4>
+              <div>
+                <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{errorMessage}}</div>
+                <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{successMessage}}</div>
+                <div *ngIf="loadingMessage" class="loading-big">
+                  <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+                  <div class="transparentFilm"></div>
                 </div>
-              </div>
+                <div *ngIf="noEvents" class="uk-alert">{{ noEvents }}</div>
+                <div *ngIf="!noEvents && !loadingMessage && !errorMessage && eventsPage && eventsPage.totalPages>0" class="events-results">
 
-              <ng-container *ngIf="event.highlight.creators && event.highlight.creators.length>0">
+                  <!-- RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+                  <!--<span>Showing {{(eventsPage.currPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (eventsPage.currPage+1)*10) ) ? (eventsPage.total) : (eventsPage.currPage+1)*10 }} of {{ eventsPage.total }} results</span>-->
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.creators.length}} author ORCID(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
+                  <!-- DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE -->
+                  <!--<div class="uk-margin-bottom">Showing {{(currentPage*10)+1 }}-{{ ( (eventsPage.total < 10) || (eventsPage.total < (currentPage+1)*10) ) ? (eventsPage.total) : (currentPage+1)*10 }} of {{ eventsPage.total }} results</div>-->
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let author of event.highlight.creators; let p_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(p_index + 1)}}. </span>
-                    <span>{{ author.fullname }} <b>&nbsp;&nbsp;({{ author.orcid }})&nbsp;&nbsp;</b></span>
+                  <div class="uk-alert uk-alert-info">
+                    This is a preview of the top 100 events generated for this topic. If you are interested to receive the full list, please subscribe to these events and then be notified about the new enrichment events for your data source.
                   </div>
-                </div>
 
-              </ng-container>
+                  <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-medium-top">
 
-              <ng-container *ngIf="event.highlight.pids && event.highlight.pids.length>0">
+                    <div class="uk-text-large">
+                      <span class="uk-text-primary">{{eventsPage.total}}</span> results, page <span class="uk-text-primary">{{(currentPage)+1}}</span> of <span class="uk-text-primary">{{ eventsPage.totalPages }}</span>
+                    </div>
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.pids.length}} PID(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
+                    <ul class="uk-pagination" uk-margin>
+                      <li><a (click)="goToPreviousPage()"><span uk-pagination-previous></span></a></li>
+                      <li class="uk-active"><span>{{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }}</span></li>
+                      <li><a (click)="goToNextPage()"><span uk-pagination-next></span></a></li>
+                    </ul>
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let pid of event.highlight.pids; let p_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(p_index + 1)}}. </span>
-                    <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b></span>
                   </div>
-                </div>
 
-              </ng-container>
 
-              <ng-container *ngIf="event.highlight.abstracts && event.highlight.abstracts.length>0">
+                  <hr class="adminResultsHeader">
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.abstracts.length}} Abstract(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let abs of event.highlight.abstracts; let a_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(a_index + 1)}}. </span>
-                    <span class=""><read-more-text [text]="abs" [maxHeight]="40"></read-more-text></span>
-                  </div>
-                </div>
+                  <!--<div *ngFor="let event of eventsPage.values; let item_i = index" class="md-card md-card-hover md-card-overlay {{ (selectedItemIndex == item_i) ? 'md-card-overlay-active' : '' }}">-->
+                  <div *ngFor="let event of eventsPage.values; let item_i = index" class="uk-card uk-card-default uk-card-hover eventCard uk-margin-bottom">
+                    <div class="uk-card-body">
 
-              </ng-container>
+                      <div *ngIf="event.result.originalId" class="uk-text-meta">ID: {{event.result.originalId}}</div>
 
-              <ng-container *ngIf="event.highlight.projects && event.highlight.projects.length>0">
+                      <div *ngIf="event.result.titles && event.result.titles.length>0">
+                        <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top">
+                          <h6>{{ event.result.titles[0] }}</h6>
+                        </div>
+                      </div>
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.projects.length}} Project(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
+                      <ng-container *ngIf="event.highlight.creators && event.highlight.creators.length>0">
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let proj of event.highlight.projects; let p_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(p_index + 1)}}. </span>
-                    <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
-                    <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
-                    <span *ngIf="(proj.funder && proj.funder !=='') ||
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.creators.length}} author ORCID(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
+
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let author of event.highlight.creators; let p_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(p_index + 1)}}. </span>
+                            <span>{{ author.fullname }} <b>&nbsp;&nbsp;({{ author.orcid }})&nbsp;&nbsp;</b></span>
+                          </div>
+                        </div>
+
+                      </ng-container>
+
+                      <ng-container *ngIf="event.highlight.pids && event.highlight.pids.length>0">
+
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.pids.length}} PID(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
+
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let pid of event.highlight.pids; let p_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(p_index + 1)}}. </span>
+                            <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b></span>
+                          </div>
+                        </div>
+
+                      </ng-container>
+
+                      <ng-container *ngIf="event.highlight.abstracts && event.highlight.abstracts.length>0">
+
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.abstracts.length}} Abstract(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
+
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let abs of event.highlight.abstracts; let a_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(a_index + 1)}}. </span>
+                            <span class=""><read-more-text [text]="abs" [maxHeight]="40"></read-more-text></span>
+                          </div>
+                        </div>
+
+                      </ng-container>
+
+                      <ng-container *ngIf="event.highlight.projects && event.highlight.projects.length>0">
+
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.projects.length}} Project(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
+
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let proj of event.highlight.projects; let p_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(p_index + 1)}}. </span>
+                            <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
+                            <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
+                            <span *ngIf="(proj.funder && proj.funder !=='') ||
                                  (proj.fundingProgram && proj.fundingProgram !=='')">
                       (<span *ngIf="proj.funder && proj.funder !==''">{{ proj.funder }} </span>
                       <span *ngIf="(proj.funder && proj.funder !=='') &&
                                    (proj.fundingProgram && proj.fundingProgram !=='')">/</span>
                       <span *ngIf="proj.fundingProgram && proj.fundingProgram !==''">{{ proj.fundingProgram }}</span>)
                     </span>
-                  </div>
-                </div>
+                          </div>
+                        </div>
 
-              </ng-container>
+                      </ng-container>
 
-              <ng-container *ngIf="event.highlight.subjects && event.highlight.subjects.length>0">
+                      <ng-container *ngIf="event.highlight.subjects && event.highlight.subjects.length>0">
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.subjects.length}} Subject(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.subjects.length}} Subject(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let subj of event.highlight.subjects; let s_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(s_index + 1)}}. </span>
-                    <span>{{ subj.value }}</span>
-                  </div>
-                </div>
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let subj of event.highlight.subjects; let s_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(s_index + 1)}}. </span>
+                            <span>{{ subj.value }}</span>
+                          </div>
+                        </div>
 
-              </ng-container>
+                      </ng-container>
 
-              <ng-container *ngIf="event.highlight.publications && event.highlight.publications.length>0">
+                      <ng-container *ngIf="event.highlight.publications && event.highlight.publications.length>0">
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.publications.length}} Publications(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.publications.length}} Publications(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let pub of event.highlight.publications; let p_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(p_index + 1)}}. </span>
-                    <span>{{ pub.title }} (ID: {{pub.originalId}})</span>
-                  </div>
-                </div>
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let pub of event.highlight.publications; let p_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(p_index + 1)}}. </span>
+                            <span>{{ pub.title }} (ID: {{pub.originalId}})</span>
+                          </div>
+                        </div>
 
-              </ng-container>
+                      </ng-container>
 
-              <ng-container *ngIf="event.highlight.datasets && event.highlight.datasets.length>0">
+                      <ng-container *ngIf="event.highlight.datasets && event.highlight.datasets.length>0">
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.datasets.length}} Dataset(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.datasets.length}} Dataset(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let dataset of event.highlight.datasets; let d_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(d_index + 1)}}. </span>
-                    <span>{{ dataset.title }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
-                  </div>
-                </div>
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let dataset of event.highlight.datasets; let d_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(d_index + 1)}}. </span>
+                            <span>{{ dataset.title }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
+                          </div>
+                        </div>
 
-              </ng-container>
+                      </ng-container>
 
-              <ng-container *ngIf="event.highlight.softwares && event.highlight.softwares.length>0">
+                      <ng-container *ngIf="event.highlight.softwares && event.highlight.softwares.length>0">
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.softwares.length}} Software(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.softwares.length}} Software(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let software of event.highlight.softwares; let s_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(s_index + 1)}}. </span>
-                    <span>{{ software.name }}</span>
-                    <span *ngIf="software.description"> <br> {{ software.description }}</span>
-                    <span><br><a href="{{ software.landingPage }}" target="_blank">{{ software.landingPage }}</a></span>
-                  </div>
-                </div>
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let software of event.highlight.softwares; let s_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(s_index + 1)}}. </span>
+                            <span>{{ software.name }}</span>
+                            <span *ngIf="software.description"> <br> {{ software.description }}</span>
+                            <span><br><a href="{{ software.landingPage }}" target="_blank">{{ software.landingPage }}</a></span>
+                          </div>
+                        </div>
 
-              </ng-container>
+                      </ng-container>
 
-              <ng-container *ngIf="event.highlight.instances && event.highlight.instances.length>0">
+                      <ng-container *ngIf="event.highlight.instances && event.highlight.instances.length>0">
 
-                <div class="small-content">
-                  <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.instances.length}} OA version(s) added</span>
-                  <span class="mute-title">FROM: </span>
-                  <ng-container *ngIf="event.provenance.url">
-                    <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
-                    <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
-                  </ng-container>
-                  <ng-container *ngIf="!event.provenance.url">
-                    <span>{{ event.provenance.repositoryName }}</span>
-                  </ng-container>
-                </div>
+                        <div class="small-content">
+                          <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.instances.length}} OA version(s) added</span>
+                          <span class="mute-title">FROM: </span>
+                          <ng-container *ngIf="event.provenance.url">
+                            <a href="{{ event.provenance.url }}" target="_blank">{{ event.provenance.repositoryName }}</a>
+                            <span *ngIf="event.provenance.id"> (ID: {{ event.provenance.id }})</span>
+                          </ng-container>
+                          <ng-container *ngIf="!event.provenance.url">
+                            <span>{{ event.provenance.repositoryName }}</span>
+                          </ng-container>
+                        </div>
 
-                <div class="uk-margin-top uk-margin-medium-bottom small-content">
-                  <div *ngFor="let l of event.highlight.instances; let l_index = index" class="uk-margin-small-bottom">
-                    <span class="highlightIndex">{{(l_index + 1)}}. </span>
-                    <span>
+                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                          <div *ngFor="let l of event.highlight.instances; let l_index = index" class="uk-margin-small-bottom">
+                            <span class="highlightIndex">{{(l_index + 1)}}. </span>
+                            <span>
                     {{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b>
                     <a href="{{ l.url }}" target="_blank" class="uk-margin-left">{{ l.url }}</a>
                   </span>
-                  </div>
-                </div>
+                          </div>
+                        </div>
 
-              </ng-container>
+                      </ng-container>
 
-              <div *ngIf="selectedItemIndex == item_i" class="uk-text-meta uk-text-center">
-                <a (click)="showLess(item_i)">Show less <i class="fas fa-angle-up uk-margin-small-left"></i></a>
-              </div>
+                      <div *ngIf="selectedItemIndex == item_i" class="uk-text-meta uk-text-center">
+                        <a (click)="showLess(item_i)">Show less <i class="fas fa-angle-up uk-margin-small-left"></i></a>
+                      </div>
 
-              <div *ngIf="selectedItemIndex != item_i" class="uk-text-meta uk-text-center">
-                <a (click)="showMore(item_i)">Show more <i class="fas fa-angle-down uk-margin-small-left"></i></a>
-              </div>
+                      <div *ngIf="selectedItemIndex != item_i" class="uk-text-meta uk-text-center">
+                        <a (click)="showMore(item_i)">Show more <i class="fas fa-angle-down uk-margin-small-left"></i></a>
+                      </div>
 
-              <ng-container *ngIf="selectedItemIndex == item_i">
-                <hr>
+                      <ng-container *ngIf="selectedItemIndex == item_i">
+                        <hr>
 
-                <!--AUTHORS-->
-                <div *ngIf="event.result.creators && event.result.creators.length>0" class="uk-margin-small-bottom">
-                  <span class="mute-title">Author(s): </span>
-                  <span *ngFor="let auth of event.result.creators; let au_index = index" class="small-content">
+                        <!--AUTHORS-->
+                        <div *ngIf="event.result.creators && event.result.creators.length>0" class="uk-margin-small-bottom">
+                          <span class="mute-title">Author(s): </span>
+                          <span *ngFor="let auth of event.result.creators; let au_index = index" class="small-content">
                     <span *ngIf="au_index>0"> | </span>
                     <span>{{ auth.fullname }} <b>&nbsp;({{ auth.orcid }})&nbsp;&nbsp;</b></span>
                   </span>
-                </div>
+                        </div>
 
-                <!--PIDs-->
-                <div *ngIf="event.result.pids && event.result.pids.length>0" class="uk-margin-small-bottom">
-                  <span class="mute-title">PID(s): </span>
-                  <span *ngFor="let pid of event.result.pids; let p_index = index" class="small-content">
+                        <!--PIDs-->
+                        <div *ngIf="event.result.pids && event.result.pids.length>0" class="uk-margin-small-bottom">
+                          <span class="mute-title">PID(s): </span>
+                          <span *ngFor="let pid of event.result.pids; let p_index = index" class="small-content">
                     <br *ngIf="p_index > 0">
                     <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b></span>
                   </span>
-                </div>
+                        </div>
 
-                <!--Abstracts-->
-                <div *ngIf="event.result.abstracts && event.result.abstracts.length>0" class="uk-margin-small-bottom">
-                  <span class="mute-title">Abstract(s): </span>
-                  <span *ngFor="let abs of event.result.abstracts; let a_index = index" class="small-content">
+                        <!--Abstracts-->
+                        <div *ngIf="event.result.abstracts && event.result.abstracts.length>0" class="uk-margin-small-bottom">
+                          <span class="mute-title">Abstract(s): </span>
+                          <span *ngFor="let abs of event.result.abstracts; let a_index = index" class="small-content">
                     <br *ngIf="a_index > 0">
                     <span>
-                      <read-more-text [text]="abs" [maxHeight]="83"></read-more-text>
+                      <read-more-text [text]="abs" [maxHeight]="70"></read-more-text>
                     </span>
                   </span>
-                </div>
+                        </div>
 
-                <!--Projects/Relations-->
-                <div *ngIf="event.result.projects && event.result.projects.length>0" class="uk-margin-small-bottom">
-                  <span class="mute-title">Project(s)/Relation(s): </span>
-                  <span *ngFor="let proj of event.result.projects; let p_index = index" class="small-content">
+                        <!--Projects/Relations-->
+                        <div *ngIf="event.result.projects && event.result.projects.length>0" class="uk-margin-small-bottom">
+                          <span class="mute-title">Project(s)/Relation(s): </span>
+                          <span *ngFor="let proj of event.result.projects; let p_index = index" class="small-content">
                     <br *ngIf="p_index > 0">
                     <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
                     <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
@@ -365,109 +367,117 @@
                       <span *ngIf="proj.fundingProgram && proj.fundingProgram !==''">{{ proj.fundingProgram }}</span>)
                     </span>
                   </span>
-                </div>
+                        </div>
 
-                <!--Subjects-->
-                <div *ngIf="event.result.subjects && event.result.subjects.length>0" class="uk-margin-small-bottom">
-                  <span class="mute-title">Subject(s): </span>
-                  <span *ngFor="let subj of event.result.subjects; let s_index = index" class="small-content">
+                        <!--Subjects-->
+                        <div *ngIf="event.result.subjects && event.result.subjects.length>0" class="uk-margin-small-bottom">
+                          <span class="mute-title">Subject(s): </span>
+                          <span *ngFor="let subj of event.result.subjects; let s_index = index" class="small-content">
                     <span *ngIf="s_index>0"> | </span>
                     <span>{{ subj.value }}</span>
                   </span>
-                </div>
+                        </div>
 
-                <!--Publications-->
-                <div *ngIf="event.result.publications && event.result.publications.length>0" class="uk-margin-small-bottom">
-                  <span *ngIf="this.topic.includes('PUBLICATION')" class="mute-title">{{this.lastTopicEntry}} Publication(s): </span>
-                  <span *ngIf="!this.topic.includes('PUBLICATION')" class="mute-title">Publication(s): </span>
-                  <span *ngFor="let pub of event.result.publications; let p_index = index" class="small-content">
+                        <!--Publications-->
+                        <div *ngIf="event.result.publications && event.result.publications.length>0" class="uk-margin-small-bottom">
+                          <span *ngIf="this.topic.includes('PUBLICATION')" class="mute-title">{{this.lastTopicEntry}} Publication(s): </span>
+                          <span *ngIf="!this.topic.includes('PUBLICATION')" class="mute-title">Publication(s): </span>
+                          <span *ngFor="let pub of event.result.publications; let p_index = index" class="small-content">
                     <br *ngIf="p_index > 0">
                     <span>{{ pub.title }} (ID: {{pub.originalId}})</span>
                   </span>
-                </div>
+                        </div>
 
-                <!--Datasets-->
-                <div *ngIf="event.result.datasets && event.result.datasets.length>0" class="uk-margin-small-bottom">
-                  <span *ngIf="this.topic.includes('DATASET')" class="mute-title">{{this.lastTopicEntry}} Dataset(s): </span>
-                  <span *ngIf="!this.topic.includes('DATASET')" class="mute-title">Dataset(s): </span>
-                  <span *ngFor="let dataset of event.result.datasets; let d_index = index" class="small-content">
+                        <!--Datasets-->
+                        <div *ngIf="event.result.datasets && event.result.datasets.length>0" class="uk-margin-small-bottom">
+                          <span *ngIf="this.topic.includes('DATASET')" class="mute-title">{{this.lastTopicEntry}} Dataset(s): </span>
+                          <span *ngIf="!this.topic.includes('DATASET')" class="mute-title">Dataset(s): </span>
+                          <span *ngFor="let dataset of event.result.datasets; let d_index = index" class="small-content">
                     <br *ngIf="d_index > 0">
                     <span>{{ dataset.titles[0] }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
                   </span>
-                </div>
+                        </div>
 
-                <!--Software-->
-                <div *ngIf="event.result.softwares && event.result.softwares.length>0" class="uk-margin-small-bottom">
-                  <span *ngIf="this.topic.includes('SOFTWARE')" class="mute-title">{{this.lastTopicEntry}} Software(s): </span>
-                  <span *ngIf="!this.topic.includes('SOFTWARE')" class="mute-title">Software(s): </span>
-                  <span *ngFor="let software of event.result.softwares; let s_index = index" class="small-content">
+                        <!--Software-->
+                        <div *ngIf="event.result.softwares && event.result.softwares.length>0" class="uk-margin-small-bottom">
+                          <span *ngIf="this.topic.includes('SOFTWARE')" class="mute-title">{{this.lastTopicEntry}} Software(s): </span>
+                          <span *ngIf="!this.topic.includes('SOFTWARE')" class="mute-title">Software(s): </span>
+                          <span *ngFor="let software of event.result.softwares; let s_index = index" class="small-content">
                     <br *ngIf="s_index > 0">
                     <span>{{ software.name }}</span>
                     <span *ngIf="software.description"> <br> {{ software.description }}</span>
                     <span><br><a href="{{ software.landingPage }}" target="_blank">{{ software.landingPage }}</a></span>
                     <span *ngIf="software.landingPage !== software.repository"><br><a href="{{ software.repository }}" target="_blank">{{ software.repository }}</a></span>
                   </span>
-                </div>
+                        </div>
 
-                <!--Publication Date-->
-                <div *ngIf="event.result.publicationdate && event.result.publicationdate.length>0" class="uk-margin-small-bottom">
-                  <span class="mute-title">Publication date(s): </span>
-                  <span class="small-content">
+                        <!--Publication Date-->
+                        <div *ngIf="event.result.publicationdate && event.result.publicationdate.length>0" class="uk-margin-small-bottom">
+                          <span class="mute-title">Publication date(s): </span>
+                          <span class="small-content">
                     {{ event.result.publicationdate }}
                   </span>
-                </div>
+                        </div>
 
-                <!--Rights-->
-                <div *ngIf="event.result.instances && event.result.instances.length>0" class="uk-margin-small-bottom">
-                  <span class="mute-title">Rights: </span>
-                  <span *ngFor="let l of event.result.instances; let l_index = index" class="small-content">
+                        <!--Rights-->
+                        <div *ngIf="event.result.instances && event.result.instances.length>0" class="uk-margin-small-bottom">
+                          <span class="mute-title">Rights: </span>
+                          <span *ngFor="let l of event.result.instances; let l_index = index" class="small-content">
                     <br *ngIf="l_index > 0">
                     <span>
                       {{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b> - <a class="" href="{{ l.url }}" target="_blank">{{ l.url }}</a>
                     </span>
                   </span>
+                        </div>
+
+                      </ng-container>
+
+                    </div>
+
+                  </div>
+
+                  <!-- BOTTOM PAGINATION LINKS -->
+                  <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>
+                    <li><a (click)="goToPreviousPage()"><span uk-pagination-previous></span></a></li>
+                    <li class="uk-active"><span>{{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }}</span></li>
+                    <li><a (click)="goToNextPage()"><span uk-pagination-next></span></a></li>
+                  </ul>
                 </div>
-
-              </ng-container>
-
+              </div>
             </div>
+
+
+            <!-- RIGHT HELP CONTENT -->
+            <aside-help-content #rightHelperContent [position]="'right'"
+                                [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+            </aside-help-content>
 
           </div>
 
-          <!-- BOTTOM PAGINATION LINKS -->
-          <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>
-            <li><a (click)="goToPreviousPage()"><span uk-pagination-previous></span></a></li>
-            <li class="uk-active"><span>{{ (eventsPage.totalPages > 0) ? currentPage+1 : 0 }}</span></li>
-            <li><a (click)="goToNextPage()"><span uk-pagination-next></span></a></li>
-          </ul>
+          <!-- BOTTOM HELP CONTENT -->
+          <help-content #bottomHelperContent [position]="'bottom'"
+                        [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+          </help-content>
         </div>
+
       </div>
     </div>
 
-
-    <!-- RIGHT HELP CONTENT -->
-    <aside-help-content #rightHelperContent [position]="'right'"
-                        [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-    </aside-help-content>
-
   </div>
-
-  <!-- BOTTOM HELP CONTENT -->
-  <help-content #bottomHelperContent [position]="'bottom'"
-                [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-  </help-content>
-
 </div>
 
+<a id="filters_switcher_toggle" class="uk-offcanvas-switcher uk-flex uk-flex-center uk-flex-middle uk-link-reset" href="#offcanvas-overlay" uk-toggle="">
+  <span class="material-symbols-outlined uk-text-secondary">tune</span>
+</a>
 
-<div class="filter-overlay-toolbar uk-animation-scale-up ng-star-inserted">
-  <button class="uk-button filter-overlay-button" type="button" uk-toggle="target: #offcanvas-overlay">
-    <span class=""><i class="fas fa-filter"></i></span>
-  </button>
-</div>
+<!--<div class="filter-overlay-toolbar uk-animation-scale-up ng-star-inserted">-->
+<!--  <button class="uk-button filter-overlay-button" type="button" uk-toggle="target: #offcanvas-overlay">-->
+<!--    <span class=""><i class="fas fa-filter"></i></span>-->
+<!--  </button>-->
+<!--</div>-->
 
-<div class="offcanvas-filters" id="offcanvas-overlay" uk-offcanvas="overlay: true">
-  <div class="uk-offcanvas-bar uk-light">
+<div class="uk-offcanvas uk-offcanvas-overlay uk-open" id="offcanvas-overlay" uk-offcanvas="flip:true; overlay: true">
+  <div class="uk-offcanvas-bar">
 
     <button class="uk-offcanvas-close" type="button" uk-close></button>
 
@@ -868,17 +878,15 @@
   <div *ngIf="eventsPage">
     <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{ modalErrorMessage }}</div>
     <div>
-      <h2 class="heading_c uk-margin-bottom">
+      <h6 class="uk-margin-medium-bottom">
         {{ eventsPage.datasource }}
-        <span class="sub-heading">{{ eventsPage.topic }}</span>
-      </h2>
+        <span class="">{{ eventsPage.topic }}</span>
+      </h6>
     </div>
     <div>
-      <div class="md-input-wrapper md-input-filled uk-margin-bottom">
-        <label>Email</label>
-        <input class="md-input label-fixed" type="text" value="{{ userEmail }}" disabled>
-        <span class="md-input-bar "></span>
-      </div>
+
+      <div input placeholder="Email" type="text" [value]="userEmail" [disabled]="true"></div>
+
       <!--<div class="form-group">-->
         <!--<label class="control-label">Email</label>-->
         <!--<div>{{ userEmail }}</div>-->
