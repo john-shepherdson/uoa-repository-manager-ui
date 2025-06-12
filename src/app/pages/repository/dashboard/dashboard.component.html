@@ -363,14 +363,14 @@
                   </div>
                   <div *ngIf="!moreList || moreList.length==0">No topics for these kind of events were found</div>
                   <div *ngIf="moreList && moreList.length>0">
-                    <ul class="md-list md-list-addon gmap_list">
-                      <li *ngFor="let moreTopic of moreList">
-                        <div class="md-list-addon-element">
+                    <ul class="uk-list">
+                      <li *ngFor="let moreTopic of moreList" class="uk-flex uk-flex-middle">
+                        <div class="uk-margin-right">
                           <span>{{ moreTopic.size | number }}</span>
                           <!--<img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt="">-->
                         </div>
-                        <div class="md-list-content">
-                          <span class="md-list-heading">{{ moreTopic.value }}</span>
+                        <div class="">
+                          <span class="">{{ moreTopic.value }}</span>
                           <!--<span class="uk-text-small uk-text-muted">Lockman, Pouros and Kilback</span>-->
                         </div>
                       </li>
@@ -400,14 +400,14 @@
                   </div>
                   <div *ngIf="!missingList || missingList.length==0">No topics for these kind of events were found</div>
                   <div *ngIf="missingList && missingList.length>0">
-                    <ul class="md-list md-list-addon gmap_list">
-                      <li *ngFor="let missingTopic of missingList">
-                        <div class="md-list-addon-element">
+                    <ul class="uk-list">
+                      <li *ngFor="let missingTopic of missingList" class="uk-flex uk-flex-middle">
+                        <div class="uk-margin-right">
                           <span>{{ missingTopic.size | number }}</span>
                           <!--<img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt="">-->
                         </div>
-                        <div class="md-list-content">
-                          <span class="md-list-heading">{{ missingTopic.value }}</span>
+                        <div class="">
+                          <span class="">{{ missingTopic.value }}</span>
                           <!--<span class="uk-text-small uk-text-muted">Lockman, Pouros and Kilback</span>-->
                         </div>
                       </li>
@@ -437,14 +437,14 @@
                   </div>
                   <div *ngIf="!brokerSummary || !brokerSummary.userSubs">No notifications were found</div>
                   <div *ngIf="brokerSummary && brokerSummary.userSubs">
-                    <ul class="md-list md-list-addon gmap_list">
-                      <li *ngFor="let sub of brokerSummary.userSubs[repository.officialname]">
-                        <div class="md-list-addon-element">
+                    <ul class="uk-list">
+                      <li *ngFor="let sub of brokerSummary.userSubs[repository.officialname]"  class="uk-flex uk-flex-middle">
+                        <div class="uk-margin-right">
                           <span>{{ sub.count | number }}</span>
                           <!--<img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt="">-->
                         </div>
-                        <div class="md-list-content">
-                          <span class="md-list-heading">{{ sub.topic }}</span>
+                        <div class="">
+                          <span class="">{{ sub.topic }}</span>
                           <!--<span class="uk-text-small uk-text-muted">Lockman, Pouros and Kilback</span>-->
                         </div>
                       </li>
