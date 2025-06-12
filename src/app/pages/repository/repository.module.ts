@@ -22,18 +22,20 @@ import { SourcesUpdateRepoComponent } from './update/sources-update-repo.compone
 import { SourcesModule } from '../sources/sources.module';
 import { UpdateRepoAdminsComponent } from './update/update-repo-admins.component';
 import {RepositorySideMenuComponent} from './repository-sidebar/repository-sidebar.component';
+import {InputComponent} from '../../shared/input.component';
 
 @NgModule ({
-    imports: [
-        CommonModule,
-        TabsModule.forRoot(),
-        FormsModule,
-        ReactiveFormsModule,
-        // SourcesRouting,
-        RepositoryRoutingModule,
-        ReusableComponentsModule,
-        SourcesModule
-    ],
+  imports: [
+    CommonModule,
+    TabsModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
+    // SourcesRouting,
+    RepositoryRoutingModule,
+    ReusableComponentsModule,
+    SourcesModule,
+    InputComponent
+  ],
   declarations: [
     RepositorySideMenuComponent,
     RepositoryComponent,
