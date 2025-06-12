@@ -30,7 +30,9 @@ export class RepositoryComponent implements OnInit {
   open = true;
   hasSidebar = true;
   hasAdminMenu = false;
-  hover = true;
+
+  //fixme make true if it is hover
+  hover = false;
 
   constructor(private repoService: RepositoryService,
               private sharedService: SharedService,

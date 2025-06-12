@@ -86,8 +86,8 @@
                     <a class="login uk-icon ng-star-inserted" tabindex="0" role="button" aria-haspopup="true"><svg height="60" width="60"><circle cx="30" cy="30" r="20" stroke-width="2"></circle><text x="50%" y="50%" text-anchor="middle" dy=".4em" font-size="16"> {{ parseUsername() }} </text></svg></a>
                     <div uk-dropdown="pos: bottom-right" class="uk-navbar-dropdown uk-dropdown ng-star-inserted uk-drop" style="top: 73px; left: 1388px; max-width: 1698px;">
                       <ul class="uk-nav uk-navbar-dropdown-nav">
-                        <li class="uk-active ng-star-inserted">
-                          <a ng-reflect-router-link="/admin" href="/admin" class="">Manage datasources</a>
+                        <li *ngIf="getIsUserAdmin()" class="">
+                          <a [routerLink]="['/admin', 'registrations']" class="">Super Admin Options</a>
                         </li>
 <!--                        <li ng-reflect-ng-class="uk-visible@m" class="uk-visible@m">-->
 <!--                          <a ng-reflect-router-link="/admin/admin-tools/portals" ng-reflect-query-params="" href="/admin/admin-tools/portals" class="">Super Admin options</a>-->

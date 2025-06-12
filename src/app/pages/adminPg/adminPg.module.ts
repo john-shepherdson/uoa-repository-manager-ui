@@ -7,6 +7,7 @@ import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusab
 import { AdminPgComponent } from './adminPg.component';
 import { AdminPgMetricsComponent } from './adminPg-metrics.component';
 import {RegistrationComponent} from './adminPg-registrations.component';
+import {AdminSideMenuComponent} from './admin-sidebar/admin-sidebar.component';
 
 @NgModule ({
   imports: [
@@ -19,6 +20,7 @@ import {RegistrationComponent} from './adminPg-registrations.component';
   ],
   declarations: [
     AdminPgComponent,
+    AdminSideMenuComponent,
     AdminPgMetricsComponent,
     RegistrationComponent
   ]
