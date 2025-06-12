@@ -98,7 +98,7 @@
 <!--                        <li class="ng-star-inserted">-->
 <!--                          <a ng-reflect-router-link="/user-info" ng-reflect-query-params="[object Object]" href="/user-info" class="ng-star-inserted">User information</a>-->
 <!--                        </li>-->
-                        <li class="uk-nav-divider ng-star-inserted"></li>
+                        <li *ngIf="getIsUserAdmin()" class="uk-nav-divider ng-star-inserted"></li>
                         <li><a (click)="logout()">Log out</a></li>
                       </ul>
                     </div>

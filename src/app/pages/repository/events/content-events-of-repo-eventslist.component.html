@@ -81,7 +81,7 @@
 
 
                   <!--<div *ngFor="let event of eventsPage.values; let item_i = index" class="md-card md-card-hover md-card-overlay {{ (selectedItemIndex == item_i) ? 'md-card-overlay-active' : '' }}">-->
-                  <div *ngFor="let event of eventsPage.values; let item_i = index" class="uk-card uk-card-default uk-card-hover eventCard uk-margin-bottom">
+                  <div *ngFor="let event of eventsPage.values; let item_i = index" class="uk-card uk-card-default uk-card-hover uk-margin-bottom">
                     <div class="uk-card-body">
 
                       <div *ngIf="event.result.originalId" class="uk-text-meta">ID: {{event.result.originalId}}</div>
@@ -94,7 +94,7 @@
 
                       <ng-container *ngIf="event.highlight.creators && event.highlight.creators.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.creators.length}} author ORCID(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -106,7 +106,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let author of event.highlight.creators; let p_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(p_index + 1)}}. </span>
                             <span>{{ author.fullname }} <b>&nbsp;&nbsp;({{ author.orcid }})&nbsp;&nbsp;</b></span>
@@ -117,7 +117,7 @@
 
                       <ng-container *ngIf="event.highlight.pids && event.highlight.pids.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.pids.length}} PID(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -129,7 +129,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let pid of event.highlight.pids; let p_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(p_index + 1)}}. </span>
                             <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b></span>
@@ -140,7 +140,7 @@
 
                       <ng-container *ngIf="event.highlight.abstracts && event.highlight.abstracts.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.abstracts.length}} Abstract(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -152,7 +152,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let abs of event.highlight.abstracts; let a_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(a_index + 1)}}. </span>
                             <span class=""><read-more-text [text]="abs" [maxHeight]="40"></read-more-text></span>
@@ -163,7 +163,7 @@
 
                       <ng-container *ngIf="event.highlight.projects && event.highlight.projects.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.projects.length}} Project(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -175,7 +175,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let proj of event.highlight.projects; let p_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(p_index + 1)}}. </span>
                             <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
@@ -194,7 +194,7 @@
 
                       <ng-container *ngIf="event.highlight.subjects && event.highlight.subjects.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.subjects.length}} Subject(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -206,7 +206,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let subj of event.highlight.subjects; let s_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(s_index + 1)}}. </span>
                             <span>{{ subj.value }}</span>
@@ -217,7 +217,7 @@
 
                       <ng-container *ngIf="event.highlight.publications && event.highlight.publications.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.publications.length}} Publications(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -229,7 +229,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let pub of event.highlight.publications; let p_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(p_index + 1)}}. </span>
                             <span>{{ pub.title }} (ID: {{pub.originalId}})</span>
@@ -240,7 +240,7 @@
 
                       <ng-container *ngIf="event.highlight.datasets && event.highlight.datasets.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.datasets.length}} Dataset(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -252,7 +252,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let dataset of event.highlight.datasets; let d_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(d_index + 1)}}. </span>
                             <span>{{ dataset.title }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
@@ -263,7 +263,7 @@
 
                       <ng-container *ngIf="event.highlight.softwares && event.highlight.softwares.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.softwares.length}} Software(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -275,7 +275,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let software of event.highlight.softwares; let s_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(s_index + 1)}}. </span>
                             <span>{{ software.name }}</span>
@@ -288,7 +288,7 @@
 
                       <ng-container *ngIf="event.highlight.instances && event.highlight.instances.length>0">
 
-                        <div class="small-content">
+                        <div class="uk-text-small">
                           <span class="uk-badge uk-badge-success uk-margin-small-right">{{event.highlight.instances.length}} OA version(s) added</span>
                           <span class="mute-title">FROM: </span>
                           <ng-container *ngIf="event.provenance.url">
@@ -300,7 +300,7 @@
                           </ng-container>
                         </div>
 
-                        <div class="uk-margin-top uk-margin-medium-bottom small-content">
+                        <div class="uk-margin-top uk-margin-medium-bottom uk-text-small">
                           <div *ngFor="let l of event.highlight.instances; let l_index = index" class="uk-margin-small-bottom">
                             <span class="highlightIndex">{{(l_index + 1)}}. </span>
                             <span>
@@ -326,7 +326,7 @@
                         <!--AUTHORS-->
                         <div *ngIf="event.result.creators && event.result.creators.length>0" class="uk-margin-small-bottom">
                           <span class="mute-title">Author(s): </span>
-                          <span *ngFor="let auth of event.result.creators; let au_index = index" class="small-content">
+                          <span *ngFor="let auth of event.result.creators; let au_index = index" class="uk-text-small">
                     <span *ngIf="au_index>0"> | </span>
                     <span>{{ auth.fullname }} <b>&nbsp;({{ auth.orcid }})&nbsp;&nbsp;</b></span>
                   </span>
@@ -335,7 +335,7 @@
                         <!--PIDs-->
                         <div *ngIf="event.result.pids && event.result.pids.length>0" class="uk-margin-small-bottom">
                           <span class="mute-title">PID(s): </span>
-                          <span *ngFor="let pid of event.result.pids; let p_index = index" class="small-content">
+                          <span *ngFor="let pid of event.result.pids; let p_index = index" class="uk-text-small">
                     <br *ngIf="p_index > 0">
                     <span>{{ pid.value }} <b>&nbsp;&nbsp;({{ pid.type }})&nbsp;&nbsp;</b></span>
                   </span>
@@ -344,10 +344,10 @@
                         <!--Abstracts-->
                         <div *ngIf="event.result.abstracts && event.result.abstracts.length>0" class="uk-margin-small-bottom">
                           <span class="mute-title">Abstract(s): </span>
-                          <span *ngFor="let abs of event.result.abstracts; let a_index = index" class="small-content">
+                          <span *ngFor="let abs of event.result.abstracts; let a_index = index" class="uk-text-small">
                     <br *ngIf="a_index > 0">
                     <span>
-                      <read-more-text [text]="abs" [maxHeight]="70"></read-more-text>
+                      <read-more-text [text]="abs" [maxHeight]="63"></read-more-text>
                     </span>
                   </span>
                         </div>
@@ -355,7 +355,7 @@
                         <!--Projects/Relations-->
                         <div *ngIf="event.result.projects && event.result.projects.length>0" class="uk-margin-small-bottom">
                           <span class="mute-title">Project(s)/Relation(s): </span>
-                          <span *ngFor="let proj of event.result.projects; let p_index = index" class="small-content">
+                          <span *ngFor="let proj of event.result.projects; let p_index = index" class="uk-text-small">
                     <br *ngIf="p_index > 0">
                     <span *ngIf="proj.acronym && proj.acronym !==''">{{ proj.acronym }}</span>
                     <span *ngIf="!proj.acronym || proj.acronym ===''">{{ proj.title }}</span>
@@ -372,7 +372,7 @@
                         <!--Subjects-->
                         <div *ngIf="event.result.subjects && event.result.subjects.length>0" class="uk-margin-small-bottom">
                           <span class="mute-title">Subject(s): </span>
-                          <span *ngFor="let subj of event.result.subjects; let s_index = index" class="small-content">
+                          <span *ngFor="let subj of event.result.subjects; let s_index = index" class="uk-text-small">
                     <span *ngIf="s_index>0"> | </span>
                     <span>{{ subj.value }}</span>
                   </span>
@@ -382,7 +382,7 @@
                         <div *ngIf="event.result.publications && event.result.publications.length>0" class="uk-margin-small-bottom">
                           <span *ngIf="this.topic.includes('PUBLICATION')" class="mute-title">{{this.lastTopicEntry}} Publication(s): </span>
                           <span *ngIf="!this.topic.includes('PUBLICATION')" class="mute-title">Publication(s): </span>
-                          <span *ngFor="let pub of event.result.publications; let p_index = index" class="small-content">
+                          <span *ngFor="let pub of event.result.publications; let p_index = index" class="uk-text-small">
                     <br *ngIf="p_index > 0">
                     <span>{{ pub.title }} (ID: {{pub.originalId}})</span>
                   </span>
@@ -392,7 +392,7 @@
                         <div *ngIf="event.result.datasets && event.result.datasets.length>0" class="uk-margin-small-bottom">
                           <span *ngIf="this.topic.includes('DATASET')" class="mute-title">{{this.lastTopicEntry}} Dataset(s): </span>
                           <span *ngIf="!this.topic.includes('DATASET')" class="mute-title">Dataset(s): </span>
-                          <span *ngFor="let dataset of event.result.datasets; let d_index = index" class="small-content">
+                          <span *ngFor="let dataset of event.result.datasets; let d_index = index" class="uk-text-small">
                     <br *ngIf="d_index > 0">
                     <span>{{ dataset.titles[0] }} <span *ngIf="dataset.pids && dataset.pids.length>0">({{dataset.pids[0].type}}: {{dataset.pids[0].value}})</span></span>
                   </span>
@@ -402,7 +402,7 @@
                         <div *ngIf="event.result.softwares && event.result.softwares.length>0" class="uk-margin-small-bottom">
                           <span *ngIf="this.topic.includes('SOFTWARE')" class="mute-title">{{this.lastTopicEntry}} Software(s): </span>
                           <span *ngIf="!this.topic.includes('SOFTWARE')" class="mute-title">Software(s): </span>
-                          <span *ngFor="let software of event.result.softwares; let s_index = index" class="small-content">
+                          <span *ngFor="let software of event.result.softwares; let s_index = index" class="uk-text-small">
                     <br *ngIf="s_index > 0">
                     <span>{{ software.name }}</span>
                     <span *ngIf="software.description"> <br> {{ software.description }}</span>
@@ -414,7 +414,7 @@
                         <!--Publication Date-->
                         <div *ngIf="event.result.publicationdate && event.result.publicationdate.length>0" class="uk-margin-small-bottom">
                           <span class="mute-title">Publication date(s): </span>
-                          <span class="small-content">
+                          <span class="uk-text-small">
                     {{ event.result.publicationdate }}
                   </span>
                         </div>
@@ -422,7 +422,7 @@
                         <!--Rights-->
                         <div *ngIf="event.result.instances && event.result.instances.length>0" class="uk-margin-small-bottom">
                           <span class="mute-title">Rights: </span>
-                          <span *ngFor="let l of event.result.instances; let l_index = index" class="small-content">
+                          <span *ngFor="let l of event.result.instances; let l_index = index" class="uk-text-small">
                     <br *ngIf="l_index > 0">
                     <span>
                       {{ l.license }}&nbsp;&nbsp;<b>{{ l.hostedby }}</b> - <a class="" href="{{ l.url }}" target="_blank">{{ l.url }}</a>
