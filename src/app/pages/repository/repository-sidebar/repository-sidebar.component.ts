@@ -1,7 +1,7 @@
 /**
  * Created by stefania on 7/5/16.
  */
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Repository} from '../../../domain/typeScriptClasses';
 
 @Component({
@@ -14,6 +14,7 @@ export class RepositorySideMenuComponent implements OnInit {
   toggle: number[] = [];
 
   @Input() repository: Repository;
+  @Output() hoverChange = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -38,5 +39,13 @@ export class RepositorySideMenuComponent implements OnInit {
       el.classList.add('sidebar_main_active');
       el.classList.remove('sidebar_mini');
     }
+  }
+
+  onMouseEnter() {
+    this.hoverChange.emit(true);
+  }
+
+  onMouseLeave() {
+    this.hoverChange.emit(false);
   }
 }

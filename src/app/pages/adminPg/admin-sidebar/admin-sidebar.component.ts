@@ -1,7 +1,7 @@
 /**
  * Created by stefania on 7/5/16.
  */
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Repository} from '../../../domain/typeScriptClasses';
 import {environment} from '../../../../environments/environment';
 
@@ -16,6 +16,8 @@ export class AdminSideMenuComponent implements OnInit {
   toggle: number[] = [];
 
   @Input() repository: Repository;
+
+  @Output() hoverChange = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -41,4 +43,13 @@ export class AdminSideMenuComponent implements OnInit {
       el.classList.remove('sidebar_mini');
     }
   }
+
+  onMouseEnter() {
+    this.hoverChange.emit(true);
+  }
+
+  onMouseLeave() {
+    this.hoverChange.emit(false);
+  }
+
 }

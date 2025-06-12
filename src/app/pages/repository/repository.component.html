@@ -63,7 +63,7 @@
        [class.sidebar_mini]="!open &&  (hasSidebar || hasAdminMenu)"
        [class.sidebar_hover]="hover">
     <!--  <side-menu *ngIf="hasSidebar"></side-menu>-->
-    <app-repo-side-menu *ngIf="hasSidebar" [repository]="repository"></app-repo-side-menu>
+    <app-repo-side-menu *ngIf="hasSidebar" [repository]="repository" (hoverChange)="onHoverChange($event)"></app-repo-side-menu>
     <main class="uk-width-1-1">
       <div id="page_content">
         <router-outlet></router-outlet>

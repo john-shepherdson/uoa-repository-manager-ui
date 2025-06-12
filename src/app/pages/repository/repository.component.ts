@@ -30,8 +30,6 @@ export class RepositoryComponent implements OnInit {
   open = true;
   hasSidebar = true;
   hasAdminMenu = false;
-
-  //fixme make true if it is hover
   hover = false;
 
   constructor(private repoService: RepositoryService,
@@ -110,6 +108,10 @@ export class RepositoryComponent implements OnInit {
         return null;
       }
     }
+  }
+
+  onHoverChange(state: boolean) {
+    this.hover = state;
   }
 
 }

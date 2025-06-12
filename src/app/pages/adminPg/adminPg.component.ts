@@ -15,11 +15,13 @@ export class AdminPgComponent implements OnInit {
   open = true;
   hasSidebar = true;
   hasAdminMenu = false;
-
-  //fixme make true if it is hover
   hover = false;
 
   constructor() {}
 
   ngOnInit() {}
+
+  onHoverChange(state: boolean) {
+    this.hover = state;
+  }
 }
