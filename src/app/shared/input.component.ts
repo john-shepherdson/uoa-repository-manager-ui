@@ -325,6 +325,7 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   public activeIndex: 0 | 1 | null = null;
   /** Date Configuration*/
   @Input() selectADate = 'Select a date';
+  @Input() formatDateToString = false;
   public selectedDate: Date;
   @Input() visibleRows = -1;
   @Input() extendEnter: () => void = null;
@@ -874,6 +875,10 @@ export class InputComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
 
   dateChanged(event: Date) {
     this.focus(false);
+    if (this.formatDateToString) {
+      this.formAsControl.setValue(event.toISOString().split('T')[0]);
+      return;
+    }
     this.formAsControl.setValue(event.getTime());
   }
 

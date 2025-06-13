@@ -8,14 +8,11 @@
 
         <div id="top_bar">
           <div class="md-top-bar">
-            <div class="uk-width-1-2@l uk-margin-auto">
-              <form [formGroup]="dataForm" (ngSubmit)="handleChangeAndResetPage()" class="uk-search uk-search-default uk-width-1-1@m">
-                <div class="md-input-wrapper">
-                  <label for="repository_name_search">Search (official name) ...</label>
-                  <input class="md-input" type="search" id="repository_name_search" formControlName="officialName">
-                  <span class="md-input-bar"></span>
+            <div class="uk-width-1-3@l uk-margin-auto">
+              <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
+                <div input placeholder="Search (official name)" type="text" (focusout)="handleChangeAndResetPage()"
+                     [formInput]="dataForm.get('officialName')">
                 </div>
-
               </form>
             </div>
           </div>
@@ -51,46 +48,27 @@
               <div class="">
 
                 <div class="uk-margin-medium uk-margin-top repositoryAdminActions">
-                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid">
+                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid uk-child-width-1-6">
 
                     <div class="uk-inline">
-                      <div class="uk-margin">
-                        <label class="" for="size">Results per page </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="size" (change)="handleChangeAndResetPage()" formControlName="size">
-                            <option value="10">10</option>
-                            <option value="25" selected>25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                          </select>
-                        </div>
+                      <div input placeholder="Results per page" type="select" [formInput]="dataForm.get('size')"
+                           [options]="['10', '25', '50', '100']" (valueChange)="handleChangeAndResetPage()">
                       </div>
                     </div>
 
                     <div class="uk-inline">
-
-                      <div class="uk-inline uk-margin-right">
-                        <label class="" for="orderBy">Order by </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
-                            <option value="DESCENDING" selected>Descending</option>
-                            <option value="ASCENDING">Ascending</option>
-                          </select>
-                        </div>
+                      <div input placeholder="Order by" type="select" [formInput]="dataForm.get('order')"
+                           [options]="[{value: 'DESCENDING', label: 'Descending'}, {value: 'ASCENDING', label: 'Ascending'}]"
+                           (valueChange)="handleChangeAndResetPage()">
                       </div>
-
-                      <div class="uk-inline">
-                        <label class="" for="sortBy">Sort by </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="requestSortBy">
-                            <option value="registrationdate" selected>Date</option>
-                            <option value="officialname">Name</option>
-                          </select>
-                        </div>
-                      </div>
-
                     </div>
 
+                    <div class="uk-inline">
+                      <div input placeholder="Sort by" type="select" [formInput]="dataForm.get('requestSortBy')"
+                           [options]="[{value: 'registrationdate', label: 'Date'}, {value: 'officialname', label: 'Name'}]"
+                           (valueChange)="handleChangeAndResetPage()">
+                      </div>
+                    </div>
 
                   </form>
                 </div>

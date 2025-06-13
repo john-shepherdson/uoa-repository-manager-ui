@@ -14,8 +14,9 @@ import { CompatibilityValidateStep2Component } from './compatibility-validate-fo
 import { CompatibilityValidateStep3Component } from './compatibility-validate-forms/compatibility-validate-step3.component';
 import { CompatibilityValidateStep3CrisComponent } from './compatibility-validate-forms/compatibility-validate-step3-cris.component';
 import { HighchartsChartModule } from 'highcharts-angular';
-import {MatStepperModule} from '@angular/material/stepper';
-import {InputComponent} from '../../shared/input.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { InputComponent } from '../../shared/input.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {InputComponent} from '../../shared/input.component';
     ReusableComponentsModule,
     HighchartsChartModule,
     MatStepperModule,
-    InputComponent
+    InputComponent,
+    MatPaginatorModule
   ],
   declarations: [
     CompatibilityComponent,

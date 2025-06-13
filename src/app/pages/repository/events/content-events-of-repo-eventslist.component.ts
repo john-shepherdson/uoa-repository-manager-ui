@@ -73,11 +73,11 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     this.getParams();
 
 
-    if(this.sharedService.getRepository()) {
+    if (this.sharedService.getRepository()) {
       this.repoName = this.sharedService.getRepository().officialname;
       this.initQuery();
       this.initForm();
-      this.currentPage = 0; /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
+      this.currentPage = 0; /* DELETE IT WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
       this.getEventsPage(0);
     }
 
@@ -93,8 +93,8 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
       }
     );
 
-    let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("top_bar_active");   //remove the class
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove("top_bar_active");   // remove the class
     body.classList.add("page_heading_active");
     body.classList.remove("landing");
     body.classList.add("dashboard");
@@ -220,21 +220,29 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     }
   }
 
-  getEventsPage(page: number) {
+  handlePageEvent(event: any) {
+    this.currentPage = event.pageIndex;
+    this.getEventsPage(event.pageIndex, event.pageSize);
+
+    window.scrollTo(0, 0);
+  }
+
+  getEventsPage(page: number, size = 10) {
     this.noEvents = '';
     this.errorMessage = '';
     this.successMessage = '';
     this.loadingMessage = loadingEvents;
-    this.brokerService.advancedShowEvents(page, 10, this.advanceSearch).subscribe(
-      events => this.eventsPage = events,
+    this.brokerService.advancedShowEvents(page, size, this.advanceSearch).subscribe(
+      events => {
+        this.eventsPage = events;
+      },
       error => {
         this.loadingMessage = '';
         this.errorMessage = noServiceMessage;
-        console.log(error);
+        console.error(error);
       },
       () => {
         this.loadingMessage = '';
-        console.log(this.eventsPage);
         if (!this.eventsPage.total) {
           if (!this.eventsPageInitialized) {
             this.noEvents = noEventsForTopic;
@@ -250,7 +258,7 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
         this.eventSubjectsFormArray = tempArray.controls;
         tempArray = <UntypedFormArray>this.group.controls['eventDateRanges'];
         this.eventDateRangesFormArray = tempArray.controls;
-        console.log(`total pages is ${this.eventsPage.totalPages}`);
+        // console.log(`total pages is ${this.eventsPage.totalPages}`);
         this.eventsPageInitialized = true;
       }
     );

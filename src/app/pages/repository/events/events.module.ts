@@ -7,17 +7,19 @@ import { ContentEventsOfRepositoryComponent } from './content-events-of-reposito
 import { ContentEventsOfRepoEventslistComponent } from './content-events-of-repo-eventslist.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {InputComponent} from '../../../shared/input.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule ({
-    imports: [
-        CommonModule,
-        TabsModule.forRoot(),
-        EventsRoutingModule,
-        ReusableComponentsModule,
-        ReactiveFormsModule,
-        InputComponent,
-    ],
+  imports: [
+    CommonModule,
+    TabsModule.forRoot(),
+    EventsRoutingModule,
+    ReusableComponentsModule,
+    ReactiveFormsModule,
+    InputComponent,
+    MatPaginatorModule,
+  ],
   declarations: [
     ContentEventsOfRepositoryComponent,
     ContentEventsOfRepoEventslistComponent
