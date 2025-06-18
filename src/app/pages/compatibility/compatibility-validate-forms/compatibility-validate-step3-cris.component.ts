@@ -31,7 +31,7 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
   }
 
   getEntitiesList() {
-    this.entitiesList = ['Funding','Organisation','Person','Project','Publication','Product','Service'];
+    this.entitiesList = ['Funding', 'Organisation', 'Person', 'Project', 'Publication', 'Product', 'Service'];
   }
 
   initEntities() {
@@ -42,15 +42,15 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
 
   /* inputs the entities List into the FormArray */
   setEntitiesControls() {
-    let entities = <UntypedFormArray>this.group.controls['entities'];
-    for ( let i = 0; i<this.entitiesList.length-1; i++ ) {
+    const entities = <UntypedFormArray>this.group.controls['entities'];
+    for ( let i = 0; i < this.entitiesList.length - 1; i++ ) {
       entities.push(this.initEntities());
     }
   }
 
   /* selects/deselects all entities */
   toggleSelectAllContentRules() {
-    let entities = <UntypedFormArray>this.group.controls['entities'];
+    const entities = <UntypedFormArray>this.group.controls['entities'];
     if (this.selectedAllEntities) {
       this.selectedAllEntities = false;
       entities.controls.map(x => x.get('entity').setValue(false));
@@ -67,17 +67,17 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
   }
 
   saveChanges() {
-    let emitted: any[] = [];
-    let chosenEntities: string[] = [];
+    const emitted: any[] = [];
+    const chosenEntities: string[] = [];
     console.log(`saving the selected entities`);
-    let entities = <UntypedFormArray>this.group.controls['entities'];
-    for (let i=0; i<this.entitiesList.length; i++ ) {
+    const entities = <UntypedFormArray>this.group.controls['entities'];
+    for (let i = 0; i < this.entitiesList.length; i++ ) {
       if (entities.at(i).get('entity').value) {
         chosenEntities.push(this.entitiesList[i]);
       }
     }
     emitted.push(chosenEntities);
-    if (this.group.get('refIntegrity').value){
+    if (this.group.get('refIntegrity').value) {
       emitted.push(true);
     } else {
       emitted.push(false);

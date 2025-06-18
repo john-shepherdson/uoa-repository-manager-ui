@@ -1,62 +1,7 @@
-<!--<div *ngIf="!isLandingRoute() ; else landing" class="sidebar_main_swipe" [class.sidebar_main_active]="open">-->
-<!--  &lt;!&ndash;<div *ngIf="!isHomeRoute() ; else home" class="sidebar_main_open sidebar_main_swipe uk-height-1-1">&ndash;&gt;-->
-<!--  <top-menu-dashboard></top-menu-dashboard>-->
-<!--  <side-menu></side-menu>-->
-<!--  <div id="hide_controls">-->
-<!--    <div id="toggle" [class.sidebar_main_open]="open" (click)="toggleOpen($event)">-->
-<!--      <i class="material-icons">play_circle_filled</i>-->
-<!--      <span *ngIf="open" class="uk-margin-small-left">Hide Controls</span>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <router-outlet></router-outlet>-->
-<!--</div>-->
 
 <div *ngIf="!isLandingRoute() ; else landing">
   <top-menu-dashboard></top-menu-dashboard>
   <router-outlet></router-outlet>
-
-<!--  <div id="sidebar" class="sidebar_main_swipe uk-flex uk-background-default"-->
-<!--       [class.sidebar_main_active]="open && (hasSidebar || hasAdminMenu)"-->
-<!--       [class.sidebar_mini]="!open &&  (hasSidebar || hasAdminMenu)"-->
-<!--       [class.sidebar_hover]="hover">-->
-<!--    <side-menu *ngIf="hasSidebar"></side-menu>-->
-<!--&lt;!&ndash;    <dashboard-sidebar *ngIf="stakeholder && isFrontPage && hasSidebar && !hasInternalSidebar"&ndash;&gt;-->
-<!--&lt;!&ndash;                       queryParamsHandling="merge" [items]="sideBarItems"&ndash;&gt;-->
-<!--&lt;!&ndash;                       [activeItem]="activeTopic?activeTopic.alias:null"&ndash;&gt;-->
-<!--&lt;!&ndash;                       [activeSubItem]="activeCategory?activeCategory.alias:null"></dashboard-sidebar>&ndash;&gt;-->
-<!--&lt;!&ndash;    <dashboard-sidebar *ngIf="hasAdminMenu && !hasInternalSidebar" [items]="adminMenuItems"&ndash;&gt;-->
-<!--&lt;!&ndash;                       [backItem]="backItem"></dashboard-sidebar>&ndash;&gt;-->
-<!--    <main class="uk-width-1-1">-->
-<!--      <router-outlet></router-outlet>-->
-<!--&lt;!&ndash;      <div page-content="">&ndash;&gt;-->
-<!--&lt;!&ndash;        <div id="page_content">&ndash;&gt;-->
-<!--&lt;!&ndash;          <router-outlet></router-outlet>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--    </main>-->
-<!--  </div>-->
-
-
-<!--  <div id="sidebar" class="sidebar_main_swipe uk-flex uk-background-default sidebar_main_active" [class.sidebar_main_active]="open" [class.sidebar_mini]="!open">-->
-<!--    <side-menu></side-menu>-->
-<!--    <main class="uk-width-1-1">-->
-<!--      <div>-->
-<!--        <div id="page_content">-->
-<!--          <router-outlet></router-outlet>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </main>-->
-<!--  </div>-->
-
-
-<!--  <side-menu></side-menu>-->
-<!--  <div id="hide_controls">-->
-<!--    <div id="toggle" [class.sidebar_main_open]="open" (click)="toggleOpen($event)">-->
-<!--      <i class="material-icons">play_circle_filled</i>-->
-<!--      <span *ngIf="open" class="uk-margin-small-left">Hide Controls</span>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <router-outlet></router-outlet>-->
 </div>
 
 <ng-template #landing>
@@ -64,38 +9,6 @@
   <router-outlet></router-outlet>
   <footer></footer>
 </ng-template>
-
-
-
-
-<!--<div class="uk-offcanvas-content">-->
-  <!--<top-menu></top-menu>-->
-  <!--<router-outlet></router-outlet>-->
-  <!--<footer></footer>-->
-  <!--<cookie-law position="bottom">-->
-    <!--OpenAIRE uses cookies in order to function properly.<br>-->
-    <!--Cookies are small pieces of data that websites store in your browser to allow us to give you the best browsing experience possible.-->
-    <!--By using the OpenAIRE portal you accept our use of cookies. <a href="http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm" target="_blank"> Read more <span class="uk-icon">-->
-    <!--<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" icon="chevron-right" ratio="1"><polyline fill="none" stroke="#000" stroke-width="1.03" points="7 4 13 10 7 16"></polyline></svg>-->
-    <!--</span></a>-->
-  <!--</cookie-law>-->
-<!--</div>-->
-
-
-<!-- Matomo -->
-<!--<script type="text/javascript">
-  var _paq = _paq || [];
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//https://analytics.openaire.eu/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', piwikUrl]);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>-->
-<!-- End Matomo Code -->
 
 
 <!-- Terms of Use (modal) -->
