@@ -1,31 +1,38 @@
 /**
  * Created by stefania on 7/5/16.
  */
-import { Component, DoCheck, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { environment } from '../../../environments/environment';
+import { CommunityContextService } from "../../services/communityContext.service";
 
 @Component({
   selector: 'top-menu-landing',
   templateUrl: './topmenu-landing.component.html',
   styleUrls: ['../../../assets/css/landingpage/theme.css','../../../assets/css/landingpage/custom.css','../../../assets/css/landingpage/custom-provide.css','./topmenu-landing.component.css'],
-  // encapsulation: ViewEncapsulation.None
 })
 
 export class TopmenuLandingComponent implements OnInit {
   userLoggedIn = false;
   userName = '';
   isUserAdmin = false;
-  adminHomePage = environment.FAQ_HOMEPAGE;
+  communityLogo?: string;
 
   inBeta: boolean;
 
-  constructor(public authService: AuthenticationService) { }
+  constructor(public authService: AuthenticationService, private communityService: CommunityContextService) { }
 
   ngOnInit() {
     this.getIsUserLoggedIn();
     this.getUserName();
     this.getIsUserAdmin();
+
+    this.communityService.community.subscribe({
+      next: (community) => {
+        if (community !== null)
+          this.communityLogo = community.logoUrl;
+      }
+    });
 
     const baseUrl = window.location.origin;
     this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );

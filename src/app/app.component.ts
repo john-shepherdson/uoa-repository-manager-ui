@@ -8,13 +8,13 @@ import { RepositoryService } from './services/repository.service';
 import { RepositorySnippet } from './domain/typeScriptClasses';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { CommunityContextService } from './services/communityContext.service';
-import { Community } from './domain/community';
 
 @Component({
   selector: 'oa-repo-manager',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
+
 export class AppComponent implements OnInit {
   reposOfUser: RepositorySnippet[] = [];
   modalTitle = 'Terms of Use';
@@ -124,27 +124,33 @@ export class AppComponent implements OnInit {
 
   private loadCommunityFromRoute() {
     // Extract org ID from the current URL
-    const pathSegments = window.location.pathname.split('/');
-    const orgId = pathSegments[1];
+    const hostSegments = window.location.host.split('.');
+    const communityId = hostSegments[0];
 
-    // Define static routes that are NOT Community IDs
-    const staticRoutes = [
-      'home', 'about', 'myDataSources', 'repository', 'repositoryAdmin', 'sources', 'compatibility', 'content', 'admin', '403-forbidden'
-    ];
-
-
-    if (orgId && !staticRoutes.includes(orgId)) {
-      this.communityService.loadCommunity(orgId).subscribe(
-        org => {
-          console.log('Community loaded:', org);
+    if (hostSegments.length === 4) { // URL should be in format: <community-id>.<service>.<domain>.<tld>, e.g., 'egi.provide.openaire.eu'
+      this.communityService.loadCommunity(communityId).subscribe(
+        communityId => {
+          console.log('Community loaded:', communityId);
         },
         error => {
           console.error('Failed to load community:', error);
           // Handle error - maybe redirect to default org
         }
       );
+    } else { // If the host is not of the form <community-id>.<service>.<domain>.<tld>
+      // Handle error - maybe redirect to the default org
+      if (environment.production === false) {
+        this.communityService.loadCommunity('egi').subscribe(
+          communityId => {
+            console.log('Mock community loaded:', communityId);
+          },
+          error => {
+            console.error('Failed to load community:', error);
+            // Handle error - maybe redirect to default org
+          }
+        );
+      }
     }
   }
-
 
 }

@@ -5,7 +5,7 @@ import { InlineFormWrapper, MyGroup } from './forms/my-group.interface';
 import { MyArray, MyArrayInline, MyArrayWrapper, MyInlineArrayWrapper } from './forms/my-array.interface';
 import { MyFormDirective } from './forms/my-form.directive';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -45,7 +45,8 @@ const myGroups = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    InputComponent
+    InputComponent,
+    NgOptimizedImage
   ],
     declarations: [
         HelpContentComponent,

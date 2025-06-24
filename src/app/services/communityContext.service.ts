@@ -20,7 +20,7 @@ export class CommunityContextService {
     creationDate: '2023-10-02T10:09:46.211',
     lastUpdateDate: '2025-05-14T09:22:32.529',
     description: '<p>EGI is a federated e-Infrastructure set up to provide advanced computing services for research and innovation.</p>\n',
-    logoUrl: 'egi-1636631993856.png',
+    logoUrl: 'https://documents.egi.eu/public/RetrieveFile?docid=2905&filename=EGI%20Logo%20-%20no%20background%201000px%20%281%29.png&version=2',
     status: 'manager',
     claim: 'all',
     membership: 'open',
@@ -71,7 +71,6 @@ export class CommunityContextService {
       })
     );
   }
-
 
   getMockCommunity(id: string): Observable<Community> {
     return of(this.mockData).pipe(delay(350));
