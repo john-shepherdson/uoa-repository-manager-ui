@@ -37,4 +37,5 @@ export interface Community {
   removeConstraints: any;
   otherZenodoCommunities: string[];
   suggestedAcknowledgements: string[];
+  styleUrls: string[];
 }

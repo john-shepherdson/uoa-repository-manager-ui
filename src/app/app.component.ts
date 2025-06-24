@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { environment } from '../environments/environment';
@@ -8,6 +8,7 @@ import { RepositoryService } from './services/repository.service';
 import { RepositorySnippet } from './domain/typeScriptClasses';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { CommunityContextService } from './services/communityContext.service';
+import { DynamicStylesService } from "./services/dynamicStyles.service";
 
 @Component({
   selector: 'oa-repo-manager',
@@ -15,7 +16,7 @@ import { CommunityContextService } from './services/communityContext.service';
   styleUrls: ['./app.component.css'],
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   reposOfUser: RepositorySnippet[] = [];
   modalTitle = 'Terms of Use';
   isModalShown: boolean;
@@ -31,7 +32,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthenticationService, private matomoTracker: MatomoTracker,
               private repositoryService: RepositoryService, private fb: UntypedFormBuilder, public route: ActivatedRoute,
-              private communityService: CommunityContextService) {
+              private communityService: CommunityContextService, private dynamicStyleService: DynamicStylesService) {
 
     /*disabling console.log in production*/
     if ( environment.production === true ) {
@@ -68,6 +69,24 @@ export class AppComponent implements OnInit {
       error => { console.log(error); }
     );
 
+    // Subscribe to community changes to load dynamic CSS
+    this.communityService.community.subscribe(
+      community => {
+        if (community && community.styleUrls && community.styleUrls.length > 0) {
+          console.log('Loading community styles for:', community.id);
+          this.dynamicStyleService.loadStyleUrls(community.styleUrls, community.id);
+        }
+      },
+      error => {
+        console.error('Error loading community styles:', error);
+      }
+    );
+
+  }
+
+  ngOnDestroy() {
+    // Clean up community styles when the component is destroyed
+    this.dynamicStyleService.removeAllCommunityStyles();
   }
 
   getReposOfUser(): void {

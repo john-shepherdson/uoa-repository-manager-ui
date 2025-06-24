@@ -4,7 +4,6 @@ import { HomeComponent } from './pages/landing/home/home.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { ForbiddenPageComponent } from './shared/reusablecomponents/403-forbidden-page.component';
 import { EmptyPageComponent } from './pages/emptypage/empty-page.component';
-import { JoinComponent } from './pages/join/join.component';
 import { AboutComponent } from './pages/landing/about/about.component';
 import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.component';
 
@@ -22,11 +21,6 @@ const appRoutes: Routes = [
     path: 'about',
     component: AboutComponent
   },
-  // {
-  //   path: 'join',
-  //   component: JoinComponent,
-  //   canActivate: [AuthGuardService]
-  // },
   {
     path: 'emptyPage',
     component: EmptyPageComponent,

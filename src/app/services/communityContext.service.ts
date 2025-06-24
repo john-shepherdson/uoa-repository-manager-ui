@@ -48,7 +48,8 @@ export class CommunityContextService {
     },
     removeConstraints: null,
     otherZenodoCommunities: ['egi', 'eu4dualrepo', 'uav-apm'],
-    suggestedAcknowledgements: ['']
+    suggestedAcknowledgements: [''],
+    styleUrls: ['https://egi.openaire.eu/default-1749554345115.css'],
   };
 
   community: BehaviorSubject<Community | null> = new BehaviorSubject<Community | null>(null);
