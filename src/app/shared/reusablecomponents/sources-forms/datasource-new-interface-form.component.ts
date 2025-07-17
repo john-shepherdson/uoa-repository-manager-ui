@@ -1,11 +1,27 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { baseUrlDesc, compatibilityLevelDesc, customValSetDesc, Description, existingValSetDesc, commentDesc } from '../../../domain/oa-description';
-import {ApiParamDetails, InterfaceInformation, RepositoryInterface} from '../../../domain/typeScriptClasses';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  baseUrlDesc,
+  commentDesc,
+  compatibilityLevelDesc,
+  customValSetDesc,
+  Description,
+  existingValSetDesc
+} from '../../../domain/oa-description';
+import { ApiParamDetails, InterfaceInformation, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { ValidatorService } from '../../../services/validator.service';
 import { RepositoryService } from '../../../services/repository.service';
-import { formErrorWasntSaved, formInfoLoading, formSubmitting, formSuccessAddedInterface, formSuccessUpdatedInterface, invalidCustomBaseUrl,
-         nonRemovableInterface, noServiceMessage } from '../../../domain/shared-messages';
+import {
+  formErrorWasntSaved,
+  formInfoLoading,
+  formSubmitting,
+  formSuccessAddedInterface,
+  formSuccessUpdatedInterface,
+  invalidCustomBaseUrl,
+  nonRemovableInterface,
+  noServiceMessage
+} from '../../../domain/shared-messages';
+import { Option } from '../../input.component';
 
 export class RepoFields {
   id: string;
@@ -28,22 +44,23 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   @Input() data: any[] = []; // expects an array containing at least 3 of the 4 below fields in this order
   @Input() mode: string = null;
   inRegister: boolean;
-  interfaceID: number;      // holds the interface index in the interfaces array as displayed
+  interfaceID: number;      // holds the interface index in the interface array as displayed
   currentRepo: RepoFields;  // a fraction of the Repository class
   currentInterface: RepositoryInterface;
 
   @Output() emitDeleteInterface: EventEmitter<number> = new EventEmitter<number>();
   interfaceToExport: RepositoryInterface;
 
-  repoInterfaceForm: FormGroup;
+  repoInterfaceForm: UntypedFormGroup;
   readonly repoInterfaceFormDef = {
     baseurl: ['', Validators.required],
     selectValidationSet: [''],
+    desiredCompatibilityLevel: [null, Validators.required],
     compatibilityLevel: null,
-    desiredCompatibilityLevel: null,
     compatibilityLevelOverride: null,
     comment: ['']
   };
+  validationUnderway: string | null = null;
   baseUrlDesc: Description = baseUrlDesc;
   existingValSetDesc: Description = existingValSetDesc;
   customValSetDesc: Description = customValSetDesc;
@@ -53,15 +70,16 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   identifiedBaseUrl: boolean;
   canEdit = true;
   showIdentifiedBaseUrl: boolean = null;
-  valsetList: string[] = [];
+  valsetList: any[] = [];
+  setListOptions: Option[] = [];
   existingCompLevel: string;
   classCodes: string[] = [];
   compClasses: Map<string, string> = new Map<string, string>();
+  compClassesOptions: Option[] = [];
+  currentCompClassesOptions: Option[] = [];
   interfaceInfo: InterfaceInformation;
 
-  constructor(private fb: FormBuilder,
-              private valService: ValidatorService,
-              private repoService: RepositoryService) {}
+  constructor(private fb: UntypedFormBuilder, private valService: ValidatorService, private repoService: RepositoryService) {}
 
   ngOnInit() {
     if (this.data && (this.data.length >= 3)) {
@@ -80,12 +98,17 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
         this.repoInterfaceForm.get('compatibilityLevelOverride').setValue(this.currentInterface.compatibilityOverride);
         this.repoService.getInterfaceDesiredCompatibilityLevel(this.currentInterface.datasource, this.currentInterface.id).subscribe(
           res => {
-            if (res !== null) {
+            this.validationUnderway = null;
+            if (res !== null && res['desiredCompatibilityLevel'] !== 'null') { // null as string may be returned...
               this.repoInterfaceForm.get('desiredCompatibilityLevel').setValue(res['desiredCompatibilityLevel']);
+              this.validationUnderway = 'Validation is ongoing';
             }
           }
         );
       }
+      this.repoInterfaceForm.get('compatibilityLevel').disable();
+      this.repoInterfaceForm.get('compatibilityLevelOverride').disable();
+
       this.getInterfaceInfo();
       this.getCompatibilityClasses();
     }
@@ -96,7 +119,7 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
 
-    const  baseurl = this.repoInterfaceForm.get('baseurl').value;
+    const baseurl = this.repoInterfaceForm.get('baseurl').value;
     if (baseurl) {
       this.loadingMessage = formInfoLoading;
       this.valService.getInterfaceInformation(baseurl).subscribe(
@@ -111,8 +134,10 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
             this.showIdentifiedBaseUrl = false;
           }
           if (this.interfaceInfo.sets) {
-            this.valsetList = this.interfaceInfo.sets;
-            // console.log(this.valsetList);
+            this.valsetList.push(...this.interfaceInfo.sets);
+            this.interfaceInfo.sets.forEach(element => {
+              this.setListOptions.push({value: element?.['spec'], label: element?.['name']});
+            });
           }
         },
         error => {
@@ -142,6 +167,10 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
     this.repoService.getCompatibilityClasses(this.mode).subscribe(
       classes => {
         this.compClasses = classes;
+        for (const [key, value] of Object.entries(classes)) {
+          this.compClassesOptions.push({value: key, label: value});
+        }
+        this.currentCompClassesOptions = [...this.compClassesOptions,  {value: 'UNKNOWN', label: 'not available'}];
         this.classCodes = Object.keys(this.compClasses);
       },
       error => {
@@ -173,20 +202,24 @@ export class DatasourceNewInterfaceFormComponent implements OnInit {
   }
 
   formIsValid() {
-    return (this.repoInterfaceForm.valid && this.identifiedBaseUrl && this.checkIfCompatibilityLevelWasChosen());
+    // return (this.repoInterfaceForm.valid && this.identifiedBaseUrl && this.checkIfCompatibilityLevelWasChosen());
+    // Removed compatibility check, hopefully it was unnecessary.
+    return (this.repoInterfaceForm.valid && this.identifiedBaseUrl);
   }
 
   checkIfValid() {
-    if (this.formIsValid()) {
-      if (this.inRegister) {
-        // this.successMessage = 'The interface will be stored when the registration procedure is completed.';
-        this.successMessage = 'The harvesting settings are valid!';
-        this.saveInterface();
+    setTimeout(() => {
+      if (this.formIsValid()) {
+        if (this.inRegister) {
+          // this.successMessage = 'The interface will be stored when the registration procedure is completed.';
+          this.successMessage = 'The harvesting settings are valid!';
+          this.saveInterface();
+        }
+      } else {
+        this.successMessage = '';
+        // this.interfaceToExport = null;
       }
-    } else {
-      this.successMessage = '';
-      // this.interfaceToExport = null;
-    }
+    }, 0);
 
   }
 

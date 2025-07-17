@@ -9,11 +9,17 @@ const aggregationHistoryRoutes: Routes = [
     path: '',
     component: CompatibilityMonitorRepoComponent,
     canActivate: [AuthGuardService],
+    data: {
+      hasSidebar: true
+    }
   },
   {
     path: 'fullHistory',
     component: CompatibilityMonitorFullHistoryRepoComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
+    data: {
+      hasSidebar: true
+    }
   }
 ];
 

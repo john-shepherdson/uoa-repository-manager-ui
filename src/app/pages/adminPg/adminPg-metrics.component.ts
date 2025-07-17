@@ -1,6 +1,5 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PiwikService } from '../../services/piwik.service';
-import { PiwikInfo } from '../../domain/typeScriptClasses';
 import {
   enabledMetricsError,
   enablingMetrics,
@@ -9,12 +8,11 @@ import {
   validatePiwikSiteSuccess
 } from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
-import {URLParameter} from '../../domain/url-parameter';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {RepositoryService} from '../../services/repository.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {PiwikInfoPage} from '../../domain/page-content';
-import {environment} from '../../../environments/environment';
+import { URLParameter } from '../../domain/url-parameter';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PiwikInfoPage } from '../../domain/page-content';
+import { environment } from '../../../environments/environment';
 
 @Component ({
   selector: 'app-admin-metrics',
@@ -34,14 +32,14 @@ export class AdminPgMetricsComponent implements OnInit {
 
   formPrepare = {
     searchField: '',
-    orderField: 'REPOSITORY_NAME',
+    orderField: 'CREATION_DATE',
     order: 'ASC',
     page: '0',
     quantity: '25',
     from: '0'
   };
 
-  dataForm: FormGroup;
+  dataForm: UntypedFormGroup;
 
   @ViewChild('confirmApprovalModal', { static: true })
   public confirmApprovalModal: ConfirmationDialogComponent;
@@ -51,7 +49,7 @@ export class AdminPgMetricsComponent implements OnInit {
   private offset = 2;
 
   constructor(private piwikService: PiwikService,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router) {}
 
@@ -63,7 +61,7 @@ export class AdminPgMetricsComponent implements OnInit {
           for (const i in params) {
             this.dataForm.get(i).setValue(params[i]);
           }
-          for (let i in this.dataForm.controls) {
+          for (const i in this.dataForm.controls) {
             if (this.dataForm.get(i).value) {
               this.urlParams.push({key: i, value: [this.dataForm.get(i).value]});
             }
@@ -139,6 +137,15 @@ export class AdminPgMetricsComponent implements OnInit {
         this.getPiwiks();
       }
     );
+  }
+
+  pageChange(page) {
+    console.log(page);
+    this.dataForm.get('page').setValue(page.pageIndex);
+    this.dataForm.get('quantity').setValue(page.pageSize);
+    this.dataForm.get('from').setValue(page.pageIndex * page.pageSize);
+
+    this.handleChange();
   }
 
   handleChange() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JobResultEntry, StoredJob } from '../../domain/typeScriptClasses';
 import { MonitorService } from '../../services/monitor.service';
@@ -7,13 +7,16 @@ import { loadingJobSummary, loadingJobSummaryError, noContentRulesResults,
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import * as Highcharts from 'highcharts';
+// import HighchartsForContent from 'highcharts';
+// import HighchartsForUsage from 'highcharts';
 
 @Component({
   selector: 'app-compatibility-validation-results',
-  templateUrl: 'compatibility-validation-results.component.html'
+  templateUrl: 'compatibility-validation-results.component.html',
+  styleUrls: ['./compatibility-validation-results.component.less']
 })
 
-export class CompatibilityValidationResultsComponent implements OnInit {
+export class CompatibilityValidationResultsComponent implements OnInit, AfterViewInit {
   errorMessage: string;
   loadingMessage: string;
   noRulesTested: string;
@@ -40,6 +43,8 @@ export class CompatibilityValidationResultsComponent implements OnInit {
   chartOptionsForContent: Highcharts.Options;
   chartOptionsForUsage: Highcharts.Options;
 
+  public offset: number;
+
   @ViewChild('checkErrors', { static: true })
   public checkErrors: ConfirmationDialogComponent;
 
@@ -47,6 +52,17 @@ export class CompatibilityValidationResultsComponent implements OnInit {
                private router: Router,
                private monitorService: MonitorService,
                private authService: AuthenticationService) {}
+
+  ngAfterViewInit() {
+    if (typeof document !== 'undefined') {
+      if (document.getElementById('main-menu')) {
+        this.offset = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
+      } else {
+        this.offset = 0;
+      }
+    }
+  }
+
 
   ngOnInit () {
     if (this.authService.getIsUserLoggedIn()) {

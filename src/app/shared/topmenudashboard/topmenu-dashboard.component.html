@@ -1,39 +1,116 @@
-<header id="header_main">
-  <!--<div class="header_main_content">-->
-    <!--<nav class="uk-navbar">-->
+<!--<header id="header_main">-->
+<!--  &lt;!&ndash;<div class="header_main_content">&ndash;&gt;-->
+<!--    &lt;!&ndash;<nav class="uk-navbar">&ndash;&gt;-->
 
-      <!--&lt;!&ndash; main sidebar switch &ndash;&gt;-->
-      <!--<a (click)="toggleSideMenu()" id="sidebar_main_toggle" class="sSwitch sSwitch_left">-->
-        <!--<span class="sSwitchIcon"></span>-->
-      <!--</a>-->
+<!--      &lt;!&ndash;&lt;!&ndash; main sidebar switch &ndash;&gt;&ndash;&gt;-->
+<!--      &lt;!&ndash;<a (click)="toggleSideMenu()" id="sidebar_main_toggle" class="sSwitch sSwitch_left">&ndash;&gt;-->
+<!--        &lt;!&ndash;<span class="sSwitchIcon"></span>&ndash;&gt;-->
+<!--      &lt;!&ndash;</a>&ndash;&gt;-->
 
-    <!--</nav>-->
-  <!--</div>-->
+<!--    &lt;!&ndash;</nav>&ndash;&gt;-->
+<!--  &lt;!&ndash;</div>&ndash;&gt;-->
 
-  <nav class="uk-navbar uk-light">
-    <div class="uk-navbar-right">
-      <ul class="uk-navbar-nav user_actions">
-        <li>
-          <div>
-            <a class="uk-icon ng-star-inserted" aria-expanded="false">
-              <svg height="60" width="60">
-                <circle cx="30" cy="30" r="20" stroke-width="1"></circle>
-                <text dy=".4em" font-size="16" text-anchor="middle" x="50%" y="50%" class="ng-star-inserted"> {{ parseUsername() }} </text>
-              </svg>
-              <!--<i class="material-icons">keyboard_arrow_down</i>-->
-            </a>
-            <div class="uk-padding-remove-horizontal ng-star-inserted uk-dropdown" uk-dropdown="mode: click; offset: -2; delay-hide: 0; flip: false; pos: bottom-right">
-              <ul class="uk-nav uk-dropdown-nav">
-                <li>
-                  <a id="logout" (click)="logout()">Log out</a>
-                </li>
-              </ul>
-            </div><!---->
-            <div id="logout2"></div>
-          </div>
-        </li>
-      </ul>
+<!--  <nav class="uk-navbar uk-light">-->
+<!--    <div class="uk-navbar-right">-->
+<!--      <ul class="uk-navbar-nav user_actions">-->
+<!--        <li>-->
+<!--          <div>-->
+<!--            <a class="uk-icon ng-star-inserted" aria-expanded="false">-->
+<!--              <svg height="60" width="60">-->
+<!--                <circle cx="30" cy="30" r="20" stroke-width="1"></circle>-->
+<!--                <text dy=".4em" font-size="16" text-anchor="middle" x="50%" y="50%" class="ng-star-inserted"> {{ parseUsername() }} </text>-->
+<!--              </svg>-->
+<!--              &lt;!&ndash;<i class="material-icons">keyboard_arrow_down</i>&ndash;&gt;-->
+<!--            </a>-->
+<!--            <div class="uk-padding-remove-horizontal ng-star-inserted uk-dropdown" uk-dropdown="mode: click; offset: -2; delay-hide: 0; flip: false; pos: bottom-right">-->
+<!--              <ul class="uk-nav uk-dropdown-nav">-->
+<!--                <li>-->
+<!--                  <a id="logout" (click)="logout()">Log out</a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </div>&lt;!&ndash;&ndash;&gt;-->
+<!--            <div id="logout2"></div>-->
+<!--          </div>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </nav>-->
+
+<!--</header>&lt;!&ndash; main header end &ndash;&gt;-->
+
+
+<div>
+  <div>
+
+    <div id="main-menu-small" class="uk-hidden@m">
+      <nav>
+
+      </nav>
     </div>
-  </nav>
 
-</header><!-- main header end -->
+    <div id="main-menu" class="uk-visible@m">
+      <div>
+        <div class="uk-navbar-container uk-sticky uk-sticky-fixed" uk-sticky="" >
+          <a target="_blank" ng-reflect-target="_blank" class="ng-star-inserted"><img alt="BETA" class="uk-position-top-left ng-star-inserted" style="height: 65px; width: 65px; z-index: 1000;" src="assets/prototype_flag.svg"></a>
+          <div class="uk-container uk-container-expand">
+            <nav class="uk-navbar" uk-navbar="delay-hide: 400">
+              <div class="uk-navbar-left">
+                <a class="uk-logo uk-navbar-item uk-flex uk-flex-middle" href="https://provide.openaire.eu"><img src="assets/imgs/OA_PROVIDE_B.png" alt="Provide" class="ng-star-inserted"></a>
+              </div>
+              <div class="uk-navbar-center">
+                <ul class="uk-navbar-nav">
+<!--                  <li class="uk-parent"><a ng-reflect-router-link="/" ng-reflect-query-params="" href="/" class=""> Dashboard</a></li>-->
+                  <li class="uk-parent" [routerLinkActive]="['uk-active']"><a [routerLink]="['/sources', 'register']" class=""> Register</a></li>
+                  <li class="uk-parent" [routerLinkActive]="['uk-active']">
+                    <a href="" class=""> Validator</a>
+                    <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left uk-height-max-medium uk-overflow-auto ng-star-inserted uk-drop" style="top: 70px; left: 212.033px; max-width: 1698px;">
+                      <div>
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                          <li class="">
+                            <a class="" [routerLink]="['/compatibility', 'validate']">Validate</a>
+                          </li>
+                          <li class="">
+                            <a class="" [routerLink]="['/compatibility', 'browseHistory']">Validation History</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="uk-parent" [routerLinkActive]="['uk-active']"><a [routerLink]="['/content', 'notifications']" class=""> Notifications</a></li>
+                  <li class="uk-parent" [routerLinkActive]="['uk-active']"><a [routerLink]="['/myDataSources']" class="">Manage</a></li>
+                </ul>
+              </div>
+              <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                  <li>
+                    <a class="login uk-icon ng-star-inserted" tabindex="0" role="button" aria-haspopup="true"><svg height="60" width="60"><circle cx="30" cy="30" r="20" stroke-width="2"></circle><text x="50%" y="50%" text-anchor="middle" dy=".4em" font-size="16"> {{ parseUsername() }} </text></svg></a>
+                    <div uk-dropdown="pos: bottom-right" class="uk-navbar-dropdown uk-dropdown ng-star-inserted uk-drop" style="top: 73px; left: 1388px; max-width: 1698px;">
+                      <ul class="uk-nav uk-navbar-dropdown-nav">
+                        <li *ngIf="getIsUserAdmin()" class="">
+                          <a [routerLink]="['/admin', 'registrations']" class="">Super Admin Options</a>
+                        </li>
+<!--                        <li ng-reflect-ng-class="uk-visible@m" class="uk-visible@m">-->
+<!--                          <a ng-reflect-router-link="/admin/admin-tools/portals" ng-reflect-query-params="" href="/admin/admin-tools/portals" class="">Super Admin options</a>-->
+<!--                        </li>-->
+<!--                        <li ng-reflect-ng-class="uk-visible@m" class="uk-visible@m ng-star-inserted">-->
+<!--                          <a ng-reflect-router-link="/admin/monitor/admin-tools/pag" ng-reflect-query-params="[object Object]" href="/admin/monitor/admin-tools/pages" class="ng-star-inserted">Monitor options</a>-->
+<!--                        </li>-->
+<!--                        <li class="ng-star-inserted">-->
+<!--                          <a ng-reflect-router-link="/user-info" ng-reflect-query-params="[object Object]" href="/user-info" class="ng-star-inserted">User information</a>-->
+<!--                        </li>-->
+                        <li *ngIf="getIsUserAdmin()" class="uk-nav-divider ng-star-inserted"></li>
+                        <li><a (click)="logout()">Log out</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="uk-sticky-placeholder" style="height: 65px; width: 1728px; margin: 0px;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>

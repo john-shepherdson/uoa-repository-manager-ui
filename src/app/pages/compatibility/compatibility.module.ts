@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TabsModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompatibilityRouting } from './compatibility.routing';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
@@ -13,9 +13,12 @@ import { CompatibilityValidateStep1Component } from './compatibility-validate-fo
 import { CompatibilityValidateStep2Component } from './compatibility-validate-forms/compatibility-validate-step2.component';
 import { CompatibilityValidateStep3Component } from './compatibility-validate-forms/compatibility-validate-step3.component';
 import { CompatibilityValidateStep3CrisComponent } from './compatibility-validate-forms/compatibility-validate-step3-cris.component';
-import {HighchartsChartModule} from 'highcharts-angular';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { MatStepperModule } from '@angular/material/stepper';
+import { InputComponent } from '../../shared/input.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
-@NgModule ({
+@NgModule({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
@@ -23,7 +26,10 @@ import {HighchartsChartModule} from 'highcharts-angular';
     ReactiveFormsModule,
     CompatibilityRouting,
     ReusableComponentsModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    MatStepperModule,
+    InputComponent,
+    MatPaginatorModule
   ],
   declarations: [
     CompatibilityComponent,

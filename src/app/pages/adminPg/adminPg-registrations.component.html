@@ -1,35 +1,27 @@
 <div id="page_content">
+  <div id="page_content_inner">
 
-  <div class="repositoryAdminMenu">
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-large">
 
-    <div class="uk-margin-medium-left uk-margin-medium-right">
-      <div class="uk-padding-small">
-        <h3 class="heading_b">
-          Registrations Admin
-        </h3>
-      </div>
+        <h4 class="uk-margin-bottom">Registrations Admin</h4>
 
-      <div id="top_bar">
-        <div class="md-top-bar">
-          <div class="uk-width-1-2@l uk-margin-auto">
-            <form [formGroup]="dataForm" (ngSubmit)="handleChangeAndResetPage()" class="uk-search uk-search-default uk-width-1-1@m">
-              <div class="md-input-wrapper">
-                <label for="repository_name_search">Search (official name) ...</label>
-                <input class="md-input" type="search" id="repository_name_search" formControlName="officialName">
-                <span class="md-input-bar"></span>
-              </div>
-
-            </form>
+        <div id="top_bar">
+          <div class="md-top-bar">
+            <div class="uk-width-1-3@l uk-margin-auto">
+              <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
+                <div input placeholder="Search (official name)" type="text" (focusout)="handleChangeAndResetPage()"
+                     [formInput]="dataForm.get('officialName')">
+                </div>
+              </form>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
-  </div>
-
-  <div id="page_content_inner" class="whiteBackground uk-padding-remove-left uk-padding-remove-right">
-
-    <div class="uk-section uk-background-norepeat uk-background-contain uk-background-bottom-center"
+    <div class="uk-section uk-section-default uk-background-norepeat uk-background-contain uk-background-bottom-center"
          style="background-image: url('../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);" uk-height-viewport="offset-top: true; offset-bottom: 20;">
 
       <!-- TOP HELP CONTENT -->
@@ -50,52 +42,33 @@
           <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
           <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
 
-          <div *ngIf="!errorMessage" class="uk-container">
+          <div *ngIf="!errorMessage" class="uk-container uk-container-large">
 
-            <div class="">
+            <div class="uk-padding-small uk-padding-remove-vertical">
               <div class="">
 
                 <div class="uk-margin-medium uk-margin-top repositoryAdminActions">
-                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid">
+                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-grid uk-child-width-1-6">
 
                     <div class="uk-inline">
-                      <div class="uk-margin">
-                        <label class="" for="size">Results per page </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="size" (change)="handleChangeAndResetPage()" formControlName="size">
-                            <option value="10">10</option>
-                            <option value="25" selected>25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                          </select>
-                        </div>
+                      <div input placeholder="Results per page" type="select" [formInput]="dataForm.get('size')"
+                           [options]="['10', '25', '50', '100']" (valueChange)="handleChangeAndResetPage()">
                       </div>
                     </div>
 
                     <div class="uk-inline">
-
-                      <div class="uk-inline uk-margin-right">
-                        <label class="" for="orderBy">Order by </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
-                            <option value="DESCENDING" selected>Descending</option>
-                            <option value="ASCENDING">Ascending</option>
-                          </select>
-                        </div>
+                      <div input placeholder="Order by" type="select" [formInput]="dataForm.get('order')"
+                           [options]="[{value: 'DESCENDING', label: 'Descending'}, {value: 'ASCENDING', label: 'Ascending'}]"
+                           (valueChange)="handleChangeAndResetPage()">
                       </div>
-
-                      <div class="uk-inline">
-                        <label class="" for="sortBy">Sort by </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="sortBy" (change)="handleChangeAndResetPage()" formControlName="requestSortBy">
-                            <option value="registrationdate" selected>Date</option>
-                            <option value="officialname">Name</option>
-                          </select>
-                        </div>
-                      </div>
-
                     </div>
 
+                    <div class="uk-inline">
+                      <div input placeholder="Sort by" type="select" [formInput]="dataForm.get('requestSortBy')"
+                           [options]="[{value: 'registrationdate', label: 'Date'}, {value: 'officialname', label: 'Name'}]"
+                           (valueChange)="handleChangeAndResetPage()">
+                      </div>
+                    </div>
 
                   </form>
                 </div>
@@ -119,13 +92,13 @@
                   </div>
 
                   <!-- REPOSITORY CARD -->
-                  <div *ngFor="let res of repositorySnippet" class="md-card repositoryCard">
-                    <div class="md-card-content large-padding">
+                  <div *ngFor="let res of repositorySnippet" class="uk-card uk-card-default uk-margin-bottom">
+                    <div class="uk-card-body large-padding">
                       <div class="uk-text-meta">{{res.eoscDatasourceType.split('::')[0]}}  {{res.eoscDatasourceType.split('::')[1]}}  {{res.eoscDatasourceType.split('::')[2]}}</div>
                       <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top"><a [routerLink]="['/repositoryAdmin/' + res.id]">{{res.officialname}}</a></div>
                       <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>{{res.id}}</div>
                       <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>{{res.registeredby}}</div>
-                      <div class="uk-margin-small-bottom"><span class="mute-title">Date: </span><span class="small-content">{{res.registrationdate}}</span></div>
+                      <div class="uk-margin-small-bottom"><span class="mute-title">Date: </span><span class="small-content">{{res.registrationdate | date: 'yyyy-MM-dd'}}</span></div>
                       <div><span class="mute-title">Organization: </span><span *ngFor="let organization of res.organizations; let i=index" class="small-content"><span *ngIf="i>0">, </span>{{organization.legalname + ' (' + getCountryName(organization.country) + ')'}}</span></div>
                     </div>
                   </div>
@@ -160,14 +133,18 @@
   </div>
 </div>
 
-<div class="filter-overlay-toolbar uk-animation-scale-up ng-star-inserted">
-  <button class="uk-button filter-overlay-button" type="button" uk-toggle="target: #offcanvas-overlay">
-    <span class=""><i class="fas fa-filter"></i></span>
-  </button>
-</div>
+<a id="filters_switcher_toggle" class="uk-offcanvas-switcher uk-flex uk-flex-center uk-flex-middle uk-link-reset" href="#offcanvas-overlay" uk-toggle="">
+  <span class="material-symbols-outlined uk-text-secondary">tune</span>
+</a>
 
-<div class="offcanvas-filters" id="offcanvas-overlay" uk-offcanvas="overlay: true">
-  <div class="uk-offcanvas-bar uk-light">
+<!--<div id="filters_switcher_toggle" class="filter-overlay-toolbar uk-animation-scale-up ng-star-inserted">-->
+<!--  <button class="uk-button filter-overlay-button" type="button" uk-toggle="target: #offcanvas-overlay">-->
+<!--    <span class="material-symbols-outlined">filters</span>-->
+<!--  </button>-->
+<!--</div>-->
+
+<div class="uk-offcanvas uk-offcanvas-overlay uk-open" id="offcanvas-overlay" uk-offcanvas="flip:true; overlay: true">
+  <div class="uk-offcanvas-bar">
 
     <button class="uk-offcanvas-close" type="button" uk-close></button>
 

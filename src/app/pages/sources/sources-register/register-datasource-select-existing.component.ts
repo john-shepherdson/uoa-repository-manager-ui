@@ -1,11 +1,9 @@
-/*
-*  updated by myrto on 19/12/2018
-*/
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RepositoryService } from '../../../services/repository.service';
 import { loadingReposMessage, noRepositoriesFound, noRepositoryChosenMsg, noServiceMessage } from '../../../domain/shared-messages';
 import { Country, RepositorySnippet } from '../../../domain/typeScriptClasses';
+import { Option } from '../../../shared/input.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-select-existing-datasource',
@@ -14,8 +12,11 @@ import { Country, RepositorySnippet } from '../../../domain/typeScriptClasses';
 
 export class RegisterDatasourceSelectExistingComponent implements OnInit {
   countries: Country[] = [];
+  countriesOptions: Option[] = [];
   hasSelectedCountry: boolean;
   selectedCountry: Country;
+  selectedCountryInput = new FormControl<number | null>(null);
+  searchRepoInput = new FormControl<string | null>(null);
   countryRepos: RepositorySnippet[] = [];
   hasSelectedRepo: boolean;
 
@@ -74,7 +75,7 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
           if (i !== -1) { countries.splice(i, 1); }
         }*/
 
-        /* sort countries array */
+        /* sort the country array */
         this.countries = countries.sort( function(a, b) {
           if (a.name < b.name) {
             return -1;
@@ -83,7 +84,14 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
           } else {
             return 0;
           }
-        } );
+        });
+
+        this.countries.forEach((country, index) => {
+          this.countriesOptions.push({value: index, label: country.name ?? country.code});
+        });
+        this.countriesOptions = [...this.countriesOptions];
+        // console.log(this.countriesOptions);
+
       },
       error => {
         this.alertMessage = noServiceMessage;
@@ -91,7 +99,11 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
       });
   }
 
-  getReposInCountry(i: number) {
+  getReposInCountry(i: number | null) {
+    if (i === null) {
+      return;
+    }
+
     const country = this.countries[i];
     // console.log(`I got ${country} and ${this.mode}`);
     this.countryRepos = [];
@@ -162,7 +174,7 @@ export class RegisterDatasourceSelectExistingComponent implements OnInit {
   }
 
   searchTerm(event: any) {
-    this.searchBox = event.target.value;
+    this.searchBox = event;
   }
 
 }

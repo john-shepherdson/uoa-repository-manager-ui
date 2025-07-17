@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import {
   adminEmailDesc,
   countryDesc,
@@ -25,6 +25,9 @@ import { ActivatedRoute } from '@angular/router';
 import { RepositoryService } from '../../../services/repository.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { formErrorRequiredFields, noServiceMessage } from '../../../domain/shared-messages';
+import { Option } from '../../input.component';
+import { checkPlatform } from './datasource-update-form.component';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component ({
   selector: 'datasource-create-form',
@@ -37,9 +40,13 @@ export class DatasourceCreateFormComponent implements OnInit {
   loadingMessage: string;
 
   typologies: Typology[] = [];
+  typologiesOptions: Option[] = [];
   timezones: Timezone[] = [];
+  timezonesOptions: Option[] = [];
   countries: Country[] = [];
+  countriesOptions: Option[] = [];
   datasourceClasses: Map<string, string> = new Map<string, string>();
+  datasourceClassesOptions: Option[] = [];
   classCodes: string[] = [];
 
   @Input() mode: string;
@@ -49,11 +56,11 @@ export class DatasourceCreateFormComponent implements OnInit {
   @Input() selectedRepo: Repository;
 
   formSubmitted = false;
-  group: FormGroup;
+  group: UntypedFormGroup;
 
   readonly groupDefinition = {
-    softwarePlatform : ['', Validators.required],
-    platformName : '',
+    softwarePlatform : [null, Validators.required],
+    platformName : null,
     officialName : ['', Validators.required],
     issn : ['', [Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$')] ],
     eissn : ['', Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$') ],
@@ -67,9 +74,10 @@ export class DatasourceCreateFormComponent implements OnInit {
     englishName: ['', Validators.required],
     logoUrl: ['', Validators.pattern('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$') ],
     timezone: ['', Validators.required],
-    datasourceType: ['', Validators.required],
+    datasourceType: [null, Validators.required],
     adminEmail: ['', [Validators.required, Validators.email] ]
   };
+
 
   softwarePlatformDesc: Description = softwarePlatformDesc;
   platformNameDesc: Description = platformNameDesc;
@@ -90,7 +98,7 @@ export class DatasourceCreateFormComponent implements OnInit {
   adminEmailDesc: Description = adminEmailDesc;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     private repoService: RepositoryService,
     private authService: AuthenticationService
@@ -105,7 +113,23 @@ export class DatasourceCreateFormComponent implements OnInit {
       this.mode = this.route.snapshot.url[0].path.toString();
       console.log(`my mode is ${this.mode}`);
     }
-    this.group = this.fb.group(this.groupDefinition);
+    this.group = this.fb.group(this.groupDefinition, {validator: checkPlatform});
+
+    this.group.get('platformName').disable();
+    this.group.get('softwarePlatform').valueChanges.subscribe({
+      next: (value) => {
+        if (value === 'Other') {
+          this.group.get('platformName').enable();
+          this.group.get('platformName').setValidators([Validators.required]);
+          this.group.updateValueAndValidity();
+        } else {
+          this.group.get('platformName').clearValidators();
+          this.group.updateValueAndValidity();
+          this.group.get('platformName').reset();
+          this.group.get('platformName').disable();
+        }
+      }
+    });
     if (this.mode === 'journal') {
       this.group.get('issn').clearValidators();
       this.group.get('issn').setValidators([Validators.required, Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$')]);
@@ -164,9 +188,9 @@ export class DatasourceCreateFormComponent implements OnInit {
   }
 
   getCountries() {
-    this.repoService.getCountries()
-      .subscribe(
-        countries => this.countries = countries.sort( function(a, b) {
+    this.repoService.getCountries().subscribe(
+      countries => {
+        this.countries = countries.sort( function(a, b) {
           if (a.name < b.name) {
             return -1;
           } else if (a.name > b.name) {
@@ -174,11 +198,16 @@ export class DatasourceCreateFormComponent implements OnInit {
           } else {
             return 0;
           }
-        } ),
-        error => {
-          this.errorMessage = noServiceMessage;
-          console.log(error);
         });
+        this.countriesOptions = [];
+        this.countries.forEach(country => {
+          this.countriesOptions.push({value: country.code, label: country.name});
+        });
+      },
+      error => {
+        this.errorMessage = noServiceMessage;
+        console.log(error);
+      });
   }
 
   getDatasourceClasses() {
@@ -186,6 +215,7 @@ export class DatasourceCreateFormComponent implements OnInit {
       classes => {
         for (const [key, value] of Object.entries(classes)) {
           this.datasourceClasses.set(key, value);
+          this.datasourceClassesOptions.push({value: key, label: value});
         }
       },
       error => {
@@ -199,20 +229,34 @@ export class DatasourceCreateFormComponent implements OnInit {
   }
 
   getTypologies() {
-    this.repoService.getTypologies().subscribe(
-      types => this.typologies = types,
-      error => console.log(error)
-    );
+    this.repoService.getTypologies().subscribe({
+      next: value => {
+        this.typologies = value;
+        this.typologiesOptions = [];
+        this.typologies.forEach(typology => {
+          this.typologiesOptions.push({value: typology.value, label: typology.name});
+        });
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
   }
 
   getTimezones() {
     this.repoService.getTimezones().subscribe(
-      zones => this.timezones = zones,
+      zones => {
+        this.timezones = zones;
+        this.timezonesOptions = [];
+        zones.forEach(zone => {
+          this.timezonesOptions.push({value: zone.offset, label: zone.name});
+        });
+      },
       error => console.log(error)
     );
   }
 
-  registerDatasource() {
+  registerDatasource(stepper?: MatStepper) {
     this.formSubmitted = true;
     this.errorMessage = '';
     this.successMessage = '';
@@ -220,6 +264,7 @@ export class DatasourceCreateFormComponent implements OnInit {
 
     if (this.group.valid) {
       this.selectedRepo = this.createNewRepository();
+      stepper.next();
       this.emittedInfo.emit(this.selectedRepo);
     } else {
       this.errorMessage = formErrorRequiredFields;
@@ -243,7 +288,7 @@ export class DatasourceCreateFormComponent implements OnInit {
     newRepo.latitude = this.group.get('latitude').value;
     newRepo.longitude = this.group.get('longtitude').value;
     newRepo.timezone = this.group.get('timezone').value;
-    if (this.group.get('softwarePlatform').value !== '') {
+    if (this.group.get('softwarePlatform').value !== 'Other') {
       newRepo.platform = this.group.get('softwarePlatform').value;
     } else if (this.group.get('platformName').value) {
       newRepo.platform = this.group.get('platformName').value;

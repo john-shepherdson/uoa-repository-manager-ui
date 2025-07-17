@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {loadingReposMessage, noServiceMessage} from '../../domain/shared-messages';
 import {Country, RepositorySnippet} from '../../domain/typeScriptClasses';
 import {RepositoryService} from '../../services/repository.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {URLParameter} from '../../domain/url-parameter';
 
@@ -32,10 +32,10 @@ export class RegistrationComponent implements OnInit {
     size: '25'
   };
 
-  dataForm: FormGroup;
+  dataForm: UntypedFormGroup;
 
   constructor(private repoService: RepositoryService,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router) { }
 

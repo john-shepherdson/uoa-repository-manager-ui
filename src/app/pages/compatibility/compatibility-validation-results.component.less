@@ -1,0 +1,56 @@
+@import "~src/assets/openaire-theme/less/_import-variables";
+
+@accordion-warning-border: @warning-border-color;
+@accordion-danger-border: @danger-border-color;
+
+@analysis-portal-color: @global-primary-background;
+@analysis-right-sidebar-min-width: 360px;
+@analysis-right-sidebar-background: @default-color;
+@analysis-right-sidebar-border-width: 2px;
+@analysis-right-sidebar-border: fade(@analysis-portal-color, @global-opacity);
+@analysis-header-height: @global-header-height;
+@analysis-sidebar-height: calc(100vh - @analysis-header-height);
+
+#page_content {
+  background-color: #fff;
+}
+
+.accordion-warning {
+  border: 1px solid @accordion-warning-border;
+}
+
+.accordion-danger {
+  border: 1px solid @accordion-danger-border;
+}
+
+
+.analysis {
+  #analysis-center-content {
+    min-height: @analysis-sidebar-height;
+  }
+
+  #analysis-right-sidebar {
+    min-width: @analysis-right-sidebar-min-width;
+    background: @analysis-right-sidebar-background;
+    border-left: @analysis-right-sidebar-border-width solid @analysis-right-sidebar-border;
+
+    & > .uk-sticky {
+      height: @analysis-sidebar-height;
+    }
+  }
+
+  & #analysis_icon .start {
+    stop-color: #1F88BE;
+  }
+
+  & #analysis_icon .end {
+    stop-color: darkblue;
+  }
+
+  //& .analysis-progress:extend(.uk-progress all) {
+  //  height: 19px;
+  //  &::-webkit-progress-value,&::-moz-progress-bar {
+  //    background-color: @global-muted-color;
+  //  }
+  //}
+}

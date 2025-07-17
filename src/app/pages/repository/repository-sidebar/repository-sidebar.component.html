@@ -1,0 +1,115 @@
+<div id="sidebar_main" uk-sticky="end: .sidebar_main_swipe;" class="uk-visible@m uk-sticky uk-sticky-fixed" offset="65" style="position: sticky; top: 65px;">
+  <div sidebar-content="">
+    <div id="sidebar_toggle" (click)="toggleSidebar()"></div>
+    <div id="sidebar_content" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+      <div class="menu_section uk-margin-large-top ng-star-inserted" style="min-height: 30vh;">
+        <ul uk-nav="duration: 400" class="uk-list uk-nav uk-nav-default">
+
+<!--          <li class="uk-parent ng-star-inserted">-->
+<!--            <a class="uk-flex uk-flex-middle" ng-reflect-router-link="aurora/impact" title="Impact" ng-reflect-query-params="[object Object]" ng-reflect-query-params-handling="merge" href="/aurora/impact" id="uk-nav-97-title-4" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">-->
+<!--              <div class="uk-width-auto ng-star-inserted">-->
+<!--                <div class="menu-icon" ng-reflect-ratio="0.9" ng-reflect-svg="<svg xmlns=&quot;http://www.w3.org/" ng-reflect-flex="true">-->
+<!--                  <span class="uk-icon uk-flex ng-star-inserted" ng-reflect-ng-style="[object Object]" style="">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 15 15"><defs><style>.a{opacity:0.5;}</style></defs><g class="a" transform="translate(0.04 0.04)"><g transform="translate(-0.04 -0.04)"><path class="b" d="M3.107,33.912a3.136,3.136,0,1,1,3.125-3.136A3.136,3.136,0,0,1,3.107,33.912Zm0-4.9a1.77,1.77,0,1,0,0-.011Z" transform="translate(0.04 -20.104)"></path><path class="b" d="M35.156,33.912a3.136,3.136,0,1,1,3.136-3.136A3.136,3.136,0,0,1,35.156,33.912Zm0-4.9a.736.736,0,1,0,0-.011Z" transform="translate(-23.292 -20.105)"></path><path class="b" d="M18.4,6.232a3.136,3.136,0,1,1,3.136-3.125A3.136,3.136,0,0,1,18.4,6.232Zm0-4.9a1.775,1.775,0,1,0,1.775,1.775A1.775,1.775,0,0,0,18.4,1.332Z" transform="translate(-11.095 0.04)"></path></g></g></svg>-->
+<!--                  </span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Impact</span>-->
+<!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+<!--            </a>-->
+<!--            <ul class="uk-nav-sub ng-star-inserted" hidden="" id="uk-nav-97-content-4" role="region" aria-labelledby="uk-nav-97-title-4">-->
+<!--              <li class="ng-star-inserted" role="presentation">-->
+<!--                <a ng-reflect-router-link="aurora/impact/usage-statistics" title="Usage statistics" ng-reflect-query-params="[object Object]" ng-reflect-query-params-handling="merge" href="/aurora/impact/usage-statistics">-->
+<!--                  <span class="uk-text-truncate">Usage statistics</span>-->
+<!--                </a>-->
+<!--              </li>-->
+<!--              <li class="ng-star-inserted" role="presentation">-->
+<!--                <a ng-reflect-router-link="aurora/impact/sdgs" title="SDGs" ng-reflect-query-params="[object Object]" ng-reflect-query-params-handling="merge" href="/aurora/impact/sdgs">-->
+<!--                  <span class="uk-text-truncate">SDGs</span>-->
+<!--                </a>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </li>-->
+
+          <li class="uk-parent ng-star-inserted" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./dashboard']" title="Dashboard" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+              <div class="uk-width-auto ng-star-inserted">
+                <span class="material-symbols-outlined">dashboard</span>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Dashboard</span>
+<!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+            </a>
+          </li>
+
+          <li class="uk-parent ng-star-inserted" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./update']" title="Update" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+              <div class="uk-width-auto ng-star-inserted">
+                <span class="material-symbols-outlined">edit_note</span>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Update</span>
+<!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+            </a>
+          </li>
+
+          <li class="uk-parent ng-star-inserted" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./aggregationHistory']" title="Aggregation History" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+              <div class="uk-width-auto ng-star-inserted">
+                <span class="material-symbols-outlined">view_timeline</span>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Aggregation History</span>
+<!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+            </a>
+          </li>
+
+          <li class="uk-parent ng-star-inserted" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./events']" title="Enrichments" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+              <div class="uk-width-auto ng-star-inserted">
+                <span class="material-symbols-outlined">docs_add_on</span>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Enrichments</span>
+<!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+            </a>
+          </li>
+
+          <li class="uk-parent ng-star-inserted" [routerLinkActive]="['uk-active']">
+            <ng-container *ngIf="repository.piwikInfo && repository.piwikInfo.validated">
+              <a class="uk-flex uk-flex-middle" [routerLink]="['./getImpact/show_metrics']" title="Usage Counts" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+                <span class="material-symbols-outlined">data_usage</span>
+                <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Usage Counts</span>
+                <!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+              </a>
+            </ng-container>
+            <ng-container *ngIf="repository.piwikInfo && !repository.piwikInfo.validated">
+              <a class="uk-flex uk-flex-middle" [routerLink]="['./getImpact/instructions']" title="Usage Counts" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+                <div class="uk-width-auto ng-star-inserted">
+                  <div class="menu-icon" ng-reflect-ratio="0.9" ng-reflect-svg="<svg xmlns=&quot;http://www.w3.org/" ng-reflect-flex="true">
+                  <span class="uk-icon uk-flex ng-star-inserted" ng-reflect-ng-style="[object Object]" style="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 15 15"><defs><style>.a{opacity:0.5;}</style></defs><g class="a" transform="translate(0.04 0.04)"><g transform="translate(-0.04 -0.04)"><path class="b" d="M3.107,33.912a3.136,3.136,0,1,1,3.125-3.136A3.136,3.136,0,0,1,3.107,33.912Zm0-4.9a1.77,1.77,0,1,0,0-.011Z" transform="translate(0.04 -20.104)"></path><path class="b" d="M35.156,33.912a3.136,3.136,0,1,1,3.136-3.136A3.136,3.136,0,0,1,35.156,33.912Zm0-4.9a.736.736,0,1,0,0-.011Z" transform="translate(-23.292 -20.105)"></path><path class="b" d="M18.4,6.232a3.136,3.136,0,1,1,3.136-3.125A3.136,3.136,0,0,1,18.4,6.232Zm0-4.9a1.775,1.775,0,1,0,1.775,1.775A1.775,1.775,0,0,0,18.4,1.332Z" transform="translate(-11.095 0.04)"></path></g></g></svg>
+                  </span>
+                  </div>
+                </div>
+                <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Usage Counts</span>
+                <!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+              </a>
+            </ng-container>
+            <ng-container *ngIf="!repository.piwikInfo">
+              <a class="uk-flex uk-flex-middle" [routerLink]="['./getImpact/enable']" title="Usage Counts" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+                <div class="uk-width-auto ng-star-inserted">
+                  <div class="menu-icon" ng-reflect-ratio="0.9" ng-reflect-svg="<svg xmlns=&quot;http://www.w3.org/" ng-reflect-flex="true">
+                  <span class="uk-icon uk-flex ng-star-inserted" ng-reflect-ng-style="[object Object]" style="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 15 15"><defs><style>.a{opacity:0.5;}</style></defs><g class="a" transform="translate(0.04 0.04)"><g transform="translate(-0.04 -0.04)"><path class="b" d="M3.107,33.912a3.136,3.136,0,1,1,3.125-3.136A3.136,3.136,0,0,1,3.107,33.912Zm0-4.9a1.77,1.77,0,1,0,0-.011Z" transform="translate(0.04 -20.104)"></path><path class="b" d="M35.156,33.912a3.136,3.136,0,1,1,3.136-3.136A3.136,3.136,0,0,1,35.156,33.912Zm0-4.9a.736.736,0,1,0,0-.011Z" transform="translate(-23.292 -20.105)"></path><path class="b" d="M18.4,6.232a3.136,3.136,0,1,1,3.136-3.125A3.136,3.136,0,0,1,18.4,6.232Zm0-4.9a1.775,1.775,0,1,0,1.775,1.775A1.775,1.775,0,0,0,18.4,1.332Z" transform="translate(-11.095 0.04)"></path></g></g></svg>
+                  </span>
+                  </div>
+                </div>
+                <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Usage Counts</span>
+                <!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+              </a>
+            </ng-container>
+          </li>
+
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

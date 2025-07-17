@@ -13,6 +13,7 @@ import { CompatibilityValidateStep2Component } from './compatibility-validate-fo
 import { CompatibilityValidateStep3Component } from './compatibility-validate-forms/compatibility-validate-step3.component';
 import { CompatibilityValidateStep3CrisComponent } from './compatibility-validate-forms/compatibility-validate-step3-cris.component';
 import { AsideHelpContentComponent, HelpContentComponent } from '../../shared/reusablecomponents/help-content.component';
+import {MatStepper} from '@angular/material/stepper';
 
 @Component ({
   selector: 'compatibility-validate-literature',
@@ -26,7 +27,6 @@ export class CompatibilityValidateTypeComponent implements OnInit {
    * This was needed for Help Service [which sends back info according to the current router.url]
    * the param that is used is 'step' and the values are: 'baseUrl','guidelines','crisEntities'/'parameters','finish'
    */
-  currentStep: number;
   @ViewChild('topHelperContent', { static: true })
   public topHelperContent: HelpContentComponent;
   @ViewChild('leftHelperContent', { static: true })
@@ -35,6 +35,9 @@ export class CompatibilityValidateTypeComponent implements OnInit {
   public rightHelperContent: AsideHelpContentComponent;
   @ViewChild('bottomHelperContent', { static: true })
   public bottomHelperContent: HelpContentComponent;
+
+  @ViewChild('stepper') stepper: MatStepper;
+  currentStep: number;
 
   baseUrlList: string[] = [];
   ruleSets: RuleSet[] = [];
@@ -146,6 +149,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
           this.getValidationSets();
           this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=parameters`);
         }
+        this.stepper.next();
       } else {
         this.errorMessage = didntSelectRules;
         window.scroll(1, 1);
@@ -175,6 +179,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
     } else if ((this.currentStep === 2) && (this.type === 'cris')) {
       this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=guidelines`);
     }
+    this.stepper.previous();
   }
 
   identifyUrl() {
@@ -217,6 +222,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
           this.loadingMessage = '';
           if (this.ruleSets && this.ruleSets.length) {
             this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=guidelines`);
+            this.stepper.next();
           } else {
             this.errorMessage = noRuleSets;
             window.scroll(1, 1);
@@ -315,6 +321,7 @@ export class CompatibilityValidateTypeComponent implements OnInit {
       },
       () => {
         this.router.navigateByUrl(`/compatibility/validate/${this.type}?step=finish`);
+        this.stepper.next();
       }
     );
   }

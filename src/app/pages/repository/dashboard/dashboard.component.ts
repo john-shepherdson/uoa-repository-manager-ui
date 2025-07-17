@@ -113,7 +113,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.loadingAggregationsMessage = loadingAggregationHistory;
     this.latestAggregations = [];
     this.lastIndexedVersion = null;
-    this.dashboardService.getCollectionMonitorSummary(repository.id, 5).subscribe(
+    this.dashboardService.getCollectionMonitorSummary(repository.id, 2).subscribe(
       collectionMonitorSummary => this.getCollectionMonitorSummary(collectionMonitorSummary),
       error => {
         this.loadingAggregationsMessage = '';

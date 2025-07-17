@@ -17,31 +17,49 @@ const metricsRoutes: Routes = [
       {
         path: '',
         redirectTo: 'enable',
-        // pathMatch: 'full'
+        pathMatch: 'full'
       },
       {
         path: 'enable',
-        component: MetricsEnableComponent
+        component: MetricsEnableComponent,
+        data: {
+          hasSidebar: true
+        }
       },
       {
         path: 'show_metrics',
-        component: MetricsShowComponent
+        component: MetricsShowComponent,
+        data: {
+          hasSidebar: true
+        }
       },
       {
         path: 'instructions',
-        component: MetricsInstructionsComponent
+        component: MetricsInstructionsComponent,
+        data: {
+          hasSidebar: true
+        }
       },
       {
         path: 'usagestats',
-        component: MetricsUsagestatsComponent
+        component: MetricsUsagestatsComponent,
+        data: {
+          hasSidebar: true
+        }
       },
       {
         path: 'usagestats/:reportType/:reportID',
-        component: MetricsUsagestatsReportComponent
+        component: MetricsUsagestatsReportComponent,
+        data: {
+          hasSidebar: true
+        }
       },
       {
         path: 'usagestats-report-results',
-        component: MetricsUsagestatsReportResultsComponent
+        component: MetricsUsagestatsReportResultsComponent,
+        data: {
+          hasSidebar: true
+        }
       }
     ]
   }

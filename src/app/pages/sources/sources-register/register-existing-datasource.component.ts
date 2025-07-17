@@ -1,29 +1,29 @@
-/*
-*  created by myrto on 19/12/2018
-*/
-
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { AsideHelpContentComponent, HelpContentComponent } from '../../../shared/reusablecomponents/help-content.component';
 import { RepositoryService } from '../../../services/repository.service';
-import { DatasourceNewInterfaceFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
-import { from, of } from 'rxjs';
+import {
+  DatasourceNewInterfaceFormComponent
+} from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
+import { from, Observable, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import {
-  errorsInInterfaces,
-  formErrorRegisterRepo,
-  formInfoLoading, formInterfacesLoading, loadingInterfacesError, loadingRepoError,
-  noInterfacesSaved
+  errorsInInterfaces, formErrorRegisterRepo, formInfoLoading, formInterfacesLoading,
+  loadingInterfacesError, loadingRepoError, noInterfacesSaved
 } from '../../../domain/shared-messages';
 import { DatasourceUpdateFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-update-form.component';
 import { RegisterDatasourceSelectExistingComponent } from './register-datasource-select-existing.component';
-import {DatasourceUpdateTermsFormComponent} from '../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
+import {
+  DatasourceUpdateTermsFormComponent
+} from '../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-register-existing-datasource',
-  templateUrl: './register-existing-datasource.component.html'
+  templateUrl: './register-existing-datasource.component.html',
+  styles: ['']
 })
 export class RegisterExistingDatasourceComponent implements OnInit {
   loadingMessage: string;
@@ -43,14 +43,16 @@ export class RegisterExistingDatasourceComponent implements OnInit {
    * currentStep represents the number of the current step
    */
   currentStep: number;
-  @ViewChild('topHelperContent', { static: true })
+  @ViewChild('topHelperContent', {static: true})
   public topHelperContent: HelpContentComponent;
-  @ViewChild('leftHelperContent', { static: true })
+  @ViewChild('leftHelperContent', {static: true})
   public leftHelperContent: AsideHelpContentComponent;
-  @ViewChild('rightHelperContent', { static: true })
+  @ViewChild('rightHelperContent', {static: true})
   public rightHelperContent: AsideHelpContentComponent;
-  @ViewChild('bottomHelperContent', { static: true })
+  @ViewChild('bottomHelperContent', {static: true})
   public bottomHelperContent: HelpContentComponent;
+
+  @ViewChild('stepper') stepper: MatStepper;
 
   @ViewChild('datasourcesByCountry')
   public datasourcesByCountry: RegisterDatasourceSelectExistingComponent;
@@ -67,7 +69,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
   @ViewChild('updateTermsForm')
   updateTermsForm: DatasourceUpdateTermsFormComponent;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private repoService: RepositoryService) {}
@@ -100,14 +102,14 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         } else {
           this.currentStep = 2;
         }
-        } else if (stepName === 'termsOfUse') {
-          if (!this.interfacesArray) {
-            this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=selectDatasource`);
-          } else {
-            this.currentStep = 3;
-          }
-        } else if (stepName === 'finish') {
-          this.currentStep = 4;
+      } else if (stepName === 'termsOfUse') {
+        if (!this.interfacesArray) {
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=selectDatasource`);
+        } else {
+          this.currentStep = 3;
+        }
+      } else if (stepName === 'finish') {
+        this.currentStep = 4;
       }
     }
     this.rightHelperContent.ngOnInit();
@@ -122,6 +124,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     if (this.currentStep === 0) {
       if (this.datasourcesByCountry.goToNextStep()) {
         console.log(`got datasource with id ${this.datasourceId}`);
+        this.stepper.next();
         this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`);
       }
     } else if (this.currentStep === 1) {
@@ -134,6 +137,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
             window.scrollTo(1, 1);
           } else {
             if (this.repoInterfaces.length > 0) {
+              this.stepper.next();
               this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=termsOfUse`);
             } else {
               this.errorMessage = noInterfacesSaved;
@@ -142,7 +146,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
           }
         }
       );
-      } else if (this.currentStep === 3) {
+    } else if (this.currentStep === 3) {
       this.registerRepository();
     }
   }
@@ -158,15 +162,18 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       of(this.getInterfaces()).subscribe(
         () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=basicInformation`)
       );
-      } else if (this.currentStep === 3) {
+    } else if (this.currentStep === 3) {
       this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`);
     }
+    this.stepper.previous();
   }
 
   addInterfaceToList(intrf?: RepositoryInterface) {
     const curIndex = this.dataForInterfaceComp.length;
-    const curRepoInfo = { id: this.repo.id, datasourceType: this.repo.eoscDatasourceType,
-      datasourceClass: this.repo.eoscDatasourceType, registeredBy: this.repo.registeredby };
+    const curRepoInfo = {
+      id: this.repo.id, datasourceType: this.repo.eoscDatasourceType,
+      datasourceClass: this.repo.eoscDatasourceType, registeredBy: this.repo.registeredby
+    };
     if (intrf) {
       this.dataForInterfaceComp.push([true, curIndex, curRepoInfo, intrf]);
     } else {
@@ -192,7 +199,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       const intrf = el.getInterface();
       if (intrf) {
         if (intrf.id && this.repoInterfaces.some(intr => intr.id === intrf.id)) {
-          const i = this.repoInterfaces.findIndex( intr => intr.id === intrf.id );
+          const i = this.repoInterfaces.findIndex(intr => intr.id === intrf.id);
           this.repoInterfaces[i] = intrf;
         } else {
           this.repoInterfaces.push(intrf);
@@ -202,7 +209,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         invalidFormsCount = invalidFormsCount + 1;
         const repo_interface = el.getCurrentValues();
         if (repo_interface.id && this.repoInterfaces.some(intr => intr.id === repo_interface.id)) {
-          const i = this.repoInterfaces.findIndex( intr => intr.id === repo_interface.id );
+          const i = this.repoInterfaces.findIndex(intr => intr.id === repo_interface.id);
           this.repoInterfaces[i] = repo_interface;
         } else {
           this.repoInterfaces.push(repo_interface);
@@ -220,7 +227,8 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       for (let i = 0; i < this.repoInterfaces.length; i++) {
         this.dataForInterfaceComp.push([
           true, i,
-          { id: this.repo.id,
+          {
+            id: this.repo.id,
             datasourceType: this.repo.eoscDatasourceType,
             datasourceClass: this.repo.eoscDatasourceType,
             registeredBy: this.repo.registeredby
@@ -231,7 +239,8 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     } else {
       this.dataForInterfaceComp.push([
         true, 0,
-        { id: this.repo.id,
+        {
+          id: this.repo.id,
           datasourceType: this.repo.eoscDatasourceType,
           datasourceClass: this.repo.eoscDatasourceType,
           registeredBy: this.repo.registeredby
@@ -277,7 +286,10 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       this.getRepoInterfaces();
     } else {
       of(this.fillInterfacesForms()).subscribe(
-        () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`)
+        () => {
+          this.stepper.next();
+          this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`);
+        }
       );
     }
   }
@@ -287,7 +299,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
     this.errorMessage = '';
     this.repoService.getRepositoryInterface(this.datasourceId).subscribe(
       interfaces => {
-        this.repoInterfaces = interfaces.sort( function(a, b) {
+        this.repoInterfaces = interfaces.sort(function (a, b) {
           if (a.id < b.id) {
             return -1;
           } else if (a.id > b.id) {
@@ -299,15 +311,18 @@ export class RegisterExistingDatasourceComponent implements OnInit {
         // console.log(`the number of interfaces is ${this.repoInterfaces.length}`);
       },
       error => {
-          console.log(error);
-          this.errorMessage = loadingInterfacesError;
-          this.loadingMessage = '';
-          window.scrollTo(1, 1);
-        },
+        console.log(error);
+        this.errorMessage = loadingInterfacesError;
+        this.loadingMessage = '';
+        window.scrollTo(1, 1);
+      },
       () => {
         this.loadingMessage = '';
         of(this.fillInterfacesForms()).subscribe(
-          () => this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`)
+          () => {
+            this.stepper.next();
+            this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`);
+          }
         );
       }
     );
@@ -328,7 +343,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       this.loadingMessage = 'Saving changes';
       this.errorMessage = '';
       console.log('reg this.repo', this.repo);
-      this.repoService.addRepository( this.repo.eoscDatasourceType, this.repo).subscribe( // this.repo.collectedfrom
+      this.repoService.addRepository(this.repo.eoscDatasourceType, this.repo).subscribe( // this.repo.collectedfrom
         response => {
           console.log(`addRepository responded: ${response.id}, ${response.registeredby}`);
           this.repo = response;
@@ -351,19 +366,19 @@ export class RegisterExistingDatasourceComponent implements OnInit {
       from(this.repoInterfaces).pipe(
         concatMap(intrf => {
           if (intrf.id) {
-            let req;
+            let req: Observable<RepositoryInterface> | Observable<string>;
             if (this.interfacesToDelete.some(id => id === intrf.id)) {
               req = this.repoService.deleteInterface(intrf.id, this.repo.registeredby);
             } else {
               // console.log('comments', intrf.comments);
               req = this.repoService.updateInterface(this.repo.id, this.repo.registeredby,
-                                                      intrf.comments, intrf, intrf.desiredCompatibilityLevel);
+                intrf.comments, intrf, intrf.desiredCompatibilityLevel);
             }
             return req;
           } else {
             // console.log('comments', intrf.comments);
             return this.repoService.addInterface(this.repo.eoscDatasourceType, this.repo.id, this.repo.registeredby,
-                                                  intrf.comments, intrf, intrf.desiredCompatibilityLevel);
+              intrf.comments, intrf, intrf.desiredCompatibilityLevel);
           }
         })
       ).subscribe(
@@ -379,6 +394,7 @@ export class RegisterExistingDatasourceComponent implements OnInit {
           this.datasourceId = null;
           this.repo = null;
           this.repoInterfaces = [];
+          this.stepper.next();
           this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=finish`);
         }
       );
