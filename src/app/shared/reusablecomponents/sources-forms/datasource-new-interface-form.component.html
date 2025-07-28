@@ -12,7 +12,6 @@
   <div *ngIf="repoInterfaceForm && (!loadingMessage || (loadingMessage===''))" [formGroup]="repoInterfaceForm">
 
     <div class="uk-card uk-card-default">
-
       <div class="uk-card-body">
         <div class="uk-flex uk-flex-right">
           <a *ngIf="!inRegister" (click)="saveInterface()" class="uk-margin-small-right"><i class="md-icon material-icons">save</i></a>

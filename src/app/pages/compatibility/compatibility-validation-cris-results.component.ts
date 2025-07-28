@@ -1,32 +1,31 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JobResultEntry, StoredJob } from '../../domain/typeScriptClasses';
+import { CrisStoredJob, JobResultEntry, ValidationError, ValidationResults } from '../../domain/typeScriptClasses';
 import { MonitorService } from '../../services/monitor.service';
 import { loadingJobSummary, loadingJobSummaryError, noContentRulesResults,
-         noUsageRulesResults } from '../../domain/shared-messages';
+  noUsageRulesResults } from '../../domain/shared-messages';
 import { ConfirmationDialogComponent } from '../../shared/reusablecomponents/confirmation-dialog.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import * as Highcharts from 'highcharts';
-// import HighchartsForContent from 'highcharts';
-// import HighchartsForUsage from 'highcharts';
 
 @Component({
-  selector: 'app-compatibility-validation-results',
-  templateUrl: 'compatibility-validation-results.component.html',
-  styleUrls: ['./compatibility-validation-results.component.less']
+  selector: 'app-compatibility-validation-cris-results',
+  templateUrl: 'compatibility-validation-cris-results.component.html'
 })
 
-export class CompatibilityValidationResultsComponent implements OnInit, AfterViewInit {
+export class CompatibilityValidationCrisResultsComponent implements OnInit {
   errorMessage: string;
   loadingMessage: string;
   noRulesTested: string;
   noContent: string;
   noUsage: string;
 
-  jobSummary: StoredJob;
-  contentResults: JobResultEntry[] = [];
-  usageResults: JobResultEntry[] = [];
-  currentErrors: string[] = [];
+  // jobSummary: StoredJob;
+  jobSummary: CrisStoredJob;
+  jobDuration: string;
+  contentResults: ValidationResults[] = [];
+  usageResults: ValidationResults[] = [];
+  currentErrors: ValidationError[] = [];
 
   modalTitle: string;
   isModalShown: boolean;
@@ -43,8 +42,6 @@ export class CompatibilityValidationResultsComponent implements OnInit, AfterVie
   chartOptionsForContent: Highcharts.Options;
   chartOptionsForUsage: Highcharts.Options;
 
-  public offset: number;
-
   @ViewChild('checkErrors', { static: true })
   public checkErrors: ConfirmationDialogComponent;
 
@@ -53,20 +50,9 @@ export class CompatibilityValidationResultsComponent implements OnInit, AfterVie
                private monitorService: MonitorService,
                private authService: AuthenticationService) {}
 
-  ngAfterViewInit() {
-    if (typeof document !== 'undefined') {
-      if (document.getElementById('main-menu')) {
-        this.offset = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
-      } else {
-        this.offset = 0;
-      }
-    }
-  }
-
-
   ngOnInit () {
     if (this.authService.getIsUserLoggedIn()) {
-        this.getJobInfo();
+      this.getJobInfo();
     } else {
       const id = this.route.snapshot.paramMap.get('id');
       this.authService.redirectUrl = '/compatibility/browseHistory/' + id;
@@ -82,20 +68,21 @@ export class CompatibilityValidationResultsComponent implements OnInit, AfterVie
   getJobInfo() {
     const id = this.route.snapshot.paramMap.get('id');
     this.loadingMessage = loadingJobSummary;
-    this.monitorService.getJobSummary(id, 'all').subscribe(
+    this.monitorService.getCrisJobSummary(id, 'all').subscribe(
       job => {
+        console.log(job);
         this.jobSummary = job;
-        if (this.jobSummary.resultEntries && this.jobSummary.resultEntries.length) {
-          this.jobSummary.resultEntries.forEach(
+        if (this.jobSummary.ruleResults && this.jobSummary.ruleResults.length) {
+          this.jobSummary.ruleResults.forEach(
             entry => {
-              if (entry.type.toLowerCase() === 'content') {
+              if (entry.type.toLowerCase() === 'content' && entry.errors?.length > 0) {
                 this.contentResults.push(entry);
-                this.ruleNameForContent.push(entry.name);
-                this.unprocessedDataForContent.push(entry.successes.split('/')[0]);
+                // this.ruleNameForContent.push(entry.name);
+                // this.unprocessedDataForContent.push(entry.successes.split('/')[0]);
               } else if (entry.type.toLowerCase() === 'usage') {
                 this.usageResults.push(entry);
-                this.ruleNameForUsage.push(entry.name);
-                this.unprocessedDataForUsage.push(entry.successes.split('/')[0]);
+                // this.ruleNameForUsage.push(entry.name);
+                // this.unprocessedDataForUsage.push(entry.successes.split('/')[0]);
               }
             }
           );
@@ -108,7 +95,7 @@ export class CompatibilityValidationResultsComponent implements OnInit, AfterVie
       },
       () => {
         this.loadingMessage = '';
-        if (!this.contentResults.length) {
+        if (!this.jobSummary.ruleResults.length) {
           this.noContent = noContentRulesResults;
         } else {
           this.processedDataForContent = this.unprocessedDataForContent.map(Number);
@@ -133,18 +120,43 @@ export class CompatibilityValidationResultsComponent implements OnInit, AfterVie
         /*if ( this.authService.activateFrontAuthorization && (this.authService.getUserEmail() !== this.jobSummary.userEmail.trim()) ) {
           this.router.navigateByUrl('/403-forbidden', { skipLocationChange: true });
         }*/
+        if (this.jobSummary.dateFinished) {
+          this.jobDuration = this.calculateExecutionTime(this.jobSummary.dateStarted, this.jobSummary.dateFinished);
+        }
       }
     );
   }
 
-  viewErrors(rule: JobResultEntry) {
-    this.modalTitle = `Rule: ${rule.name}`;
-    this.currentErrors = rule.errors;
+  viewErrors(errorType: string, errors: ValidationError[], metadataPrefix: string): void {
+    this.modalTitle = `Error: ${errorType}`;
+    this.currentErrors = [];
+    errors.forEach(error => {
+      if (error.error === errorType) {
+        this.currentErrors.push(error);
+        this.currentErrors[this.currentErrors.length-1].metadataPrefix = metadataPrefix;
+      }
+
+    });
+    this.currentErrors = errors;
     this.checkErrors.showModal();
   }
 
-  linkToError(er: string) {
-    return encodeURI(`${this.jobSummary.baseUrl}?verb=GetRecord&metadataPrefix=${this.jobSummary.metadataPrefix}&identifier=${er}`);
+  linkToError(er: ValidationError) {
+    return encodeURI(`${this.jobSummary.url}?verb=GetRecord&metadataPrefix=${er.metadataPrefix}&identifier=${er.identifier}`);
+  }
+
+  calculateExecutionTime(start: Date, finish: Date): string {
+    const diffMs = new Date(finish).getTime() - new Date(start).getTime(); // Difference in milliseconds
+
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+    return `${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  splitCamelCase(s: string) {
+    return s.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
   }
 
 }
