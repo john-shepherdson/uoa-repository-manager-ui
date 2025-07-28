@@ -226,4 +226,20 @@ export class SideMenuComponent implements OnInit {
     }
     this.allReposVisible = false;
   }
+
+  toggleSidebar() {
+
+    const el: HTMLElement | null = document.getElementById('sidebar');
+    if (el === null) {
+      return;
+    }
+
+    if (!el.classList.contains('sidebar_mini')) {
+      el.classList.add('sidebar_mini');
+      el.classList.remove('sidebar_main_active');
+    } else {
+      el.classList.add('sidebar_main_active');
+      el.classList.remove('sidebar_mini');
+    }
+  }
 }

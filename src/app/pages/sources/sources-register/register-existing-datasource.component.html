@@ -1,62 +1,29 @@
 <div id="page_content">
   <div id="page_content_inner">
-    <h2 class="heading_b uk-margin-bottom">Register your datasource</h2>
 
-    <!-- TOP HELP CONTENT -->
-    <help-content #topHelperContent [position]="'top'"
-                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-    </help-content>
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-expand">
 
-    <div class="uk-grid">
+<!--        <h4 class="uk-margin-bottom">Register your datasource</h4>-->
 
-      <!-- LEFT HELP CONTENT -->
-      <aside-help-content #leftHelperContent [position]="'left'"
-                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-      </aside-help-content>
+        <!-- TOP HELP CONTENT -->
+        <help-content #topHelperContent [position]="'top'"
+                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
 
-      <!-- MIDDLE -->
-      <div class=" uk-width-expand@m">
-        <div class="md-card uk-margin-large-bottom">
-          <div class="md-card-content">
-            <form class="uk-form-stacked" id="wizard_advanced_form" novalidate="">
-              <div id="wizard_advanced" role="application" class="wizard clearfix">
-                <div class="steps clearfix">
-                  <ul role="tablist">
-                    <li role="tab" class="first {{ (currentStep == 0) ? 'current' : '' }}" aria-disabled="false" aria-selected="true">
-<!--                      <a id="wizard_advanced-t-0" href="#wizard_advanced-h-0" aria-controls="wizard_advanced-p-0">-->
-                      <a id="wizard_advanced-t-0" aria-controls="wizard_advanced-p-0" style="cursor: default">
-                        <!--<span class="current-info audible">current step: </span>-->
-                        <span class="number">1</span>
-                        <span class="title">Select {{currentMode === 'cris' ? 'Datasource' : 'Repository'}}</span>
-                      </a>
-                    </li>
-                    <li role="tab" class="{{ (currentStep < 1) ? 'disabled' : '' }} {{ (currentStep == 1) ? 'current' : '' }}" aria-disabled="true">
-                      <a id="wizard_advanced-t-1" aria-controls="wizard_advanced-p-1" style="cursor: default">
-                        <span class="number">2</span>
-                        <span class="title">Register data source</span>
-                      </a>
-                    </li>
-                    <li role="tab" class=" {{ (currentStep < 2) ? 'disabled' : '' }} {{ (currentStep == 2) ? 'current' : '' }}" aria-disabled="true">
-                      <a id="wizard_advanced-t-2" aria-controls="wizard_advanced-p-2" style="cursor: default">
-                        <span class="number">3</span>
-                        <span class="title">Register interface</span>
-                      </a>
-                    </li>
-                    <li role="tab" class=" {{ (currentStep < 3) ? 'disabled' : '' }} {{ (currentStep == 3) ? 'current' : '' }}" aria-disabled="true">
-                      <a id="wizard_advanced-t-3" aria-controls="wizard_advanced-p-3" style="cursor: default">
-                        <span class="number">4</span>
-                        <span class="title">Terms of Use</span>
-                      </a>
-                    </li>
-                    <li role="tab" class="last {{ (currentStep < 4) ? 'disabled' : '' }} {{ (currentStep == 4) ? 'current' : '' }}" aria-disabled="true">
-                      <a id="wizard_advanced-t-4" aria-controls="wizard_advanced-p-4"  style="cursor: default">
-                        <span class="number">5</span>
-                        <span class="title">Finish</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="content clearfix" style="height: 660px">
+        <div class="uk-grid">
+
+          <!-- LEFT HELP CONTENT -->
+          <aside-help-content #leftHelperContent [position]="'left'"
+                              [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content>
+
+          <!-- MIDDLE -->
+          <div class=" uk-width-expand@m">
+            <div class="uk-card uk-card-default uk-margin-large-bottom">
+              <div class="uk-card-body">
+
+                <div class="content clearfix">
 
                   <div *ngIf="loadingMessage" class="loading-big">
                     <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
@@ -65,60 +32,71 @@
                     <div class="whiteFilm"></div>
                   </div>
                   <div *ngIf="errorMessage" class="uk-alert uk-alert-danger uk-margin-top">{{ errorMessage }}</div>
+                </div>
 
-                  <!-- first section -->
-                  <h3 id="wizard_advanced-h-0" tabindex="-1" class="title {{ (currentStep == 0) ? 'current' : '' }}">Select Repository</h3>
-                  <section id="wizard_advanced-p-0" role="tabpanel" aria-labelledby="wizard_advanced-h-0"
-                           class="body step-0 {{ (currentStep == 0) ? 'current' : '' }}" data-step="0" aria-hidden="false">
+                <mat-stepper linear #stepper>
+                  <mat-step>
+                    <ng-template matStepLabel >
+                      <span>Select {{currentMode === 'cris' ? 'Datasource' : 'Repository'}}</span>
+                    </ng-template>
+                    <ng-template matStepContent>
 
-                    <app-select-existing-datasource
-                      *ngIf="(currentStep === 0) && (currentMode !== null) && !loadingMessage"
-                      #datasourcesByCountry
-                      [mode]="currentMode"
-                      (emitRepoId)="getRepoId($event)"
-                      (promptNext)="goToStep2($event)">
-                    </app-select-existing-datasource>
-                  </section>
+                      <!--                  <app-select-existing-datasource *ngIf="(currentStep === 0) && (currentMode !== null) && !loadingMessage" #datasourcesByCountry-->
+                      <app-select-existing-datasource
+                        *ngIf="(currentMode !== null) && !loadingMessage" #datasourcesByCountry
+                        [mode]="currentMode" (emitRepoId)="getRepoId($event)">
+                      </app-select-existing-datasource>
 
-                  <!-- second section -->
-                  <h3 id="wizard_advanced-h-1" tabindex="-1" class="title {{ (currentStep == 1) ? 'current' : '' }}">Enter Information</h3>
-                  <section id="wizard_advanced-p-1" role="tabpanel" aria-labelledby="wizard_advanced-h-1"
-                           class="body step-1 {{ (currentStep == 1) ? 'current' : '' }}" data-step="1"  aria-hidden="true">
-
-                    <datasource-update-form *ngIf="(currentStep === 1) && (repo !== null) && !loadingMessage"
-                                            #registerDatasource [selectedRepo]="repo" [mode]="currentMode"
-                                            (emittedInfo)="getUpdatedRepo($event)">
-                    </datasource-update-form>
-                  </section>
-
-                  <!-- third section -->
-                  <h3 id="wizard_advanced-h-2" tabindex="-1" class="title {{ (currentStep == 2) ? 'current' : '' }}">Add Interfaces</h3>
-                  <section id="wizard_advanced-p-2" role="tabpanel" aria-labelledby="wizard_advanced-h-2"
-                           class="body step-2 {{ (currentStep == 2) ? 'current' : '' }}" data-step="2" aria-hidden="true">
-
-                    <div *ngIf="(currentStep === 2) && repo && !loadingMessage" class="uk-grid uk-grid-match">
-
-                      <div *ngFor="let inter of dataForInterfaceComp" class="uk-width-1-2@m uk-margin-bottom">
-                        <div>
-                          <div class="md-card" style="height: 100%">
-                            <app-repository-interface-form #interfacesArray
-                                                           [data]="inter" [mode]="currentMode"
-                                                           (emitDeleteInterface)="removeInterfaceFromList($event)">
-                            </app-repository-interface-form>
-                          </div>
-                        </div>
+                      <div class="uk-margin-medium-top">
+<!--                        <button mat-button  (click)="moveAStep()">Next</button>-->
+                        <button class="uk-button uk-button-primary"  (click)="moveAStep()">Next</button>
                       </div>
+                    </ng-template>
+                  </mat-step>
 
-                      <div class="uk-width-1-2@m uk-margin-bottom">
-                        <div>
-                          <div class="md-card" style="height: 100%">
-                            <div class="md-card-toolbar">
-                            </div>
-                            <div class="md-card-content">
+                  <mat-step>
+                    <ng-template matStepLabel>
+                      <span class="title">Register data source</span>
+                    </ng-template>
+
+                    <ng-template matStepContent>
+                      <!--                <datasource-update-form *ngIf="(currentStep === 1) && (repo !== null) && !loadingMessage"-->
+                      <datasource-update-form *ngIf="(repo !== null) && !loadingMessage" #registerDatasource
+                                              [selectedRepo]="repo" [mode]="currentMode"
+                                              (emittedInfo)="getUpdatedRepo($event)">
+                      </datasource-update-form>
+
+                      <div class="uk-margin-small-top">
+                        <button class="uk-button uk-button-default" (click)="moveBackAStep()">Back</button>
+                        <button class="uk-button uk-button-primary uk-margin-left" (click)="moveAStep()">Next</button>
+                      </div>
+                    </ng-template>
+
+                  </mat-step>
+
+                  <mat-step>
+                    <ng-template matStepLabel>
+                      <span class="title">Register interface</span>
+                    </ng-template>
+
+                    <ng-template matStepContent>
+                      <!--                  <div *ngIf="(currentStep === 2) && repo && !loadingMessage" class="uk-grid uk-grid-match">-->
+                      <div *ngIf="repo && !loadingMessage" class="uk-grid uk-child-width-1-2@m uk-grid-match">
+
+                        <div *ngFor="let inter of dataForInterfaceComp" class="uk-margin-bottom">
+                          <app-repository-interface-form
+                            [data]="inter" [mode]="currentMode" #interfacesArray
+                            (emitDeleteInterface)="removeInterfaceFromList($event)">
+                          </app-repository-interface-form>
+                        </div>
+
+                        <div class="uk-width-1-2@m uk-margin-bottom">
+                          <div>
+                            <div class="uk-card uk-card-default uk-card-body">
                               <div class="interface-box new" style="text-align: center">
                                 <a class="add-new-element add-new-group" (click)="addInterfaceToList()">
                                   <i class="far fa-plus-square" aria-hidden="true"></i>
-                                  <span class="info">Add New Interface</span>
+                                  <span class="info"> Add New Interface</span>
                                 </a>
                               </div>
                             </div>
@@ -127,79 +105,251 @@
 
                       </div>
 
-                    </div>
-                  </section>
+                      <div class="uk-margin-small-top">
+                        <button class="uk-button uk-button-default" (click)="moveBackAStep()">Back</button>
+                        <button class="uk-button uk-button-primary uk-margin-left" (click)="moveAStep()">Next</button>
+                      </div>
+                    </ng-template>
+                  </mat-step>
 
-                  <!-- fourth section -->
-                  <h3 id="wizard_advanced-h-3" tabindex="-1" class="title {{ (currentStep == 3) ? 'current' : '' }}">Terms of Use</h3>
-                  <section id="wizard_advanced-p-3" role="tabpanel" aria-labelledby="wizard_advanced-h-3"
-                           class="body step-3 {{ (currentStep == 3) ? 'current' : '' }}" data-step="3"  aria-hidden="true">
-                    <div *ngIf="(currentStep === 3) && !loadingMessage" class="uk-grid uk-grid-match">
-                      <datasource-update-terms-form #updateTermsForm
-                                                    [selectedRepo]="repo"
-                                                    [showButton]=false
-                                                    (emittedInfo)="getTerms($event)">
-                      </datasource-update-terms-form>
-                    </div>
-                  </section>
+                  <mat-step>
 
-                  <!-- fifth section -->
-                  <h3 id="wizard_advanced-h-4" tabindex="-1" class="title {{ (currentStep == 4) ? 'current' : '' }}">Finish</h3>
-                  <section id="wizard_advanced-p-4" role="tabpanel" aria-labelledby="wizard_advanced-h-4"
-                           class="body step-4 {{ (currentStep == 4) ? 'current' : '' }}" data-step="3"  aria-hidden="true">
+                    <ng-template matStepLabel>
+                      <span>Terms of Use</span>
+                    </ng-template>
 
-                    <div *ngIf="(currentStep === 4) && !loadingMessage" class="row openAIRECompliantLogoDownload">
-                      <div class="col-lg-12">
-                        <div class="col-md-12">
-                          <div>
-                            <div class="openAIRECompliantLogo">
-                              <h2 class="openAIRECompliantLogoMessage">
-                                We successfully received the request to register/update your repository with/on OpenAIRE.
-                                It usually takes about 6 weeks to check your metadata and index it.
-                                For questions, please create a ticket
-<!--                                <a href="https://www.openaire.eu/support/helpdesk" target="_blank">helpdesk ticket</a>-->
-                                writing to <a href="mailto:helpdesk@openaire.eu">helpdesk@openaire.eu</a>.
-                              </h2>
+                    <ng-template matStepContent>
+                      <!--                  <div *ngIf="(currentStep === 3) && !loadingMessage" class="uk-grid uk-grid-match">-->
+                      <div *ngIf="!loadingMessage" class="uk-grid uk-grid-match">
+                        <datasource-update-terms-form [selectedRepo]="repo" [showButton]=false #updateTermsForm
+                                                      (emittedInfo)="getTerms($event)">
+                        </datasource-update-terms-form>
+                      </div>
+
+                      <div class="uk-margin-small-top">
+                        <button class="uk-button uk-button-default" (click)="moveBackAStep()">Back</button>
+                        <button class="uk-button uk-button-primary uk-margin-left" (click)="moveAStep()">Next</button>
+                      </div>
+                    </ng-template>
+                  </mat-step>
+
+                  <mat-step>
+
+                    <ng-template matStepLabel>
+                      <span>Finish</span>
+                    </ng-template>
+
+                    <ng-template matStepContent>
+                      <!--                  <div *ngIf="(currentStep === 4) && !loadingMessage" class="row openAIRECompliantLogoDownload">-->
+                      <div *ngIf="!loadingMessage" class="row openAIRECompliantLogoDownload">
+                        <div class="col-lg-12">
+                          <div class="col-md-12">
+                            <div>
+                              <div class="openAIRECompliantLogo">
+                                <h2 class="openAIRECompliantLogoMessage">
+                                  We successfully received the request to register/update your repository with/on OpenAIRE.
+                                  It usually takes about 6 weeks to check your metadata and index it.
+                                  For questions, please create a ticket
+                                  <!--                                <a href="https://www.openaire.eu/support/helpdesk" target="_blank">helpdesk ticket</a>-->
+                                  writing to <a href="mailto:helpdesk@openaire.eu">helpdesk@openaire.eu</a>.
+                                </h2>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </ng-template>
 
-                  </section>
+                  </mat-step>
 
-                </div>
 
-                <div *ngIf="currentStep != 4" class="actions clearfix">
-                  <ul role="menu" aria-label="Pagination">
-                    <li class="button_previous {{ (currentStep < 1) ? 'disabled' : '' }}" aria-disabled="true">
-                      <a (click)="moveBackAStep()" role="menuitem"><i class="material-icons"></i> Previous</a>
-                    </li>
-                    <li *ngIf="currentStep < 3" class="button_next" aria-hidden="false" aria-disabled="false">
-                      <a (click)="moveAStep()" role="menuitem">Next<i class="material-icons"></i></a>
-                    </li>
-                    <li *ngIf="currentStep == 3" class="button_finish" aria-hidden="true">
-                      <a (click)="moveAStep()" role="menuitem">Finish</a>
-                    </li>
-                  </ul>
-                </div>
+                </mat-stepper>
+
+                <!--            <form class="uk-form-stacked" id="wizard_advanced_form" novalidate="">-->
+                <!--              <div id="wizard_advanced" role="application" class="wizard clearfix">-->
+                <!--                <div class="steps clearfix">-->
+                <!--                  <ul role="tablist">-->
+                <!--                    <li role="tab" class="first {{ (currentStep == 0) ? 'current' : '' }}" aria-disabled="false" aria-selected="true">-->
+                <!--&lt;!&ndash;                      <a id="wizard_advanced-t-0" href="#wizard_advanced-h-0" aria-controls="wizard_advanced-p-0">&ndash;&gt;-->
+                <!--                      <a id="wizard_advanced-t-0" aria-controls="wizard_advanced-p-0" style="cursor: default">-->
+                <!--                        &lt;!&ndash;<span class="current-info audible">current step: </span>&ndash;&gt;-->
+                <!--                        <span class="number">1</span>-->
+                <!--                        <span class="title">Select {{currentMode === 'cris' ? 'Datasource' : 'Repository'}}</span>-->
+                <!--                      </a>-->
+                <!--                    </li>-->
+                <!--                    <li role="tab" class="{{ (currentStep < 1) ? 'disabled' : '' }} {{ (currentStep == 1) ? 'current' : '' }}" aria-disabled="true">-->
+                <!--                      <a id="wizard_advanced-t-1" aria-controls="wizard_advanced-p-1" style="cursor: default">-->
+                <!--                        <span class="number">2</span>-->
+                <!--                        <span class="title">Register data source</span>-->
+                <!--                      </a>-->
+                <!--                    </li>-->
+                <!--                    <li role="tab" class=" {{ (currentStep < 2) ? 'disabled' : '' }} {{ (currentStep == 2) ? 'current' : '' }}" aria-disabled="true">-->
+                <!--                      <a id="wizard_advanced-t-2" aria-controls="wizard_advanced-p-2" style="cursor: default">-->
+                <!--                        <span class="number">3</span>-->
+                <!--                        <span class="title">Register interface</span>-->
+                <!--                      </a>-->
+                <!--                    </li>-->
+                <!--                    <li role="tab" class=" {{ (currentStep < 3) ? 'disabled' : '' }} {{ (currentStep == 3) ? 'current' : '' }}" aria-disabled="true">-->
+                <!--                      <a id="wizard_advanced-t-3" aria-controls="wizard_advanced-p-3" style="cursor: default">-->
+                <!--                        <span class="number">4</span>-->
+                <!--                        <span class="title">Terms of Use</span>-->
+                <!--                      </a>-->
+                <!--                    </li>-->
+                <!--                    <li role="tab" class="last {{ (currentStep < 4) ? 'disabled' : '' }} {{ (currentStep == 4) ? 'current' : '' }}" aria-disabled="true">-->
+                <!--                      <a id="wizard_advanced-t-4" aria-controls="wizard_advanced-p-4"  style="cursor: default">-->
+                <!--                        <span class="number">5</span>-->
+                <!--                        <span class="title">Finish</span>-->
+                <!--                      </a>-->
+                <!--                    </li>-->
+                <!--                  </ul>-->
+                <!--                </div>-->
+                <!--                <div class="content clearfix" style="height: 660px">-->
+
+                <!--                  <div *ngIf="loadingMessage" class="loading-big">-->
+                <!--                    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">-->
+                <!--                      {{ loadingMessage }}-->
+                <!--                    </div>-->
+                <!--                    <div class="whiteFilm"></div>-->
+                <!--                  </div>-->
+                <!--                  <div *ngIf="errorMessage" class="uk-alert uk-alert-danger uk-margin-top">{{ errorMessage }}</div>-->
+
+                <!--                  &lt;!&ndash; first section &ndash;&gt;-->
+                <!--&lt;!&ndash;                  <h3 id="wizard_advanced-h-0" tabindex="-1" class="title {{ (currentStep == 0) ? 'current' : '' }}">Select Repository</h3>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  <section id="wizard_advanced-p-0" role="tabpanel" aria-labelledby="wizard_advanced-h-0"&ndash;&gt;-->
+                <!--&lt;!&ndash;                           class="body step-0 {{ (currentStep == 0) ? 'current' : '' }}" data-step="0" aria-hidden="false">&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                    <app-select-existing-datasource&ndash;&gt;-->
+                <!--&lt;!&ndash;                      *ngIf="(currentStep === 0) && (currentMode !== null) && !loadingMessage"&ndash;&gt;-->
+                <!--&lt;!&ndash;                      #datasourcesByCountry&ndash;&gt;-->
+                <!--&lt;!&ndash;                      [mode]="currentMode"&ndash;&gt;-->
+                <!--&lt;!&ndash;                      (emitRepoId)="getRepoId($event)"&ndash;&gt;-->
+                <!--&lt;!&ndash;                      (promptNext)="goToStep2($event)">&ndash;&gt;-->
+                <!--&lt;!&ndash;                    </app-select-existing-datasource>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  </section>&ndash;&gt;-->
+
+                <!--                  &lt;!&ndash; second section &ndash;&gt;-->
+                <!--&lt;!&ndash;                  <h3 id="wizard_advanced-h-1" tabindex="-1" class="title {{ (currentStep == 1) ? 'current' : '' }}">Enter Information</h3>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  <section id="wizard_advanced-p-1" role="tabpanel" aria-labelledby="wizard_advanced-h-1"&ndash;&gt;-->
+                <!--&lt;!&ndash;                           class="body step-1 {{ (currentStep == 1) ? 'current' : '' }}" data-step="1"  aria-hidden="true">&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                    <datasource-update-form *ngIf="(currentStep === 1) && (repo !== null) && !loadingMessage"&ndash;&gt;-->
+                <!--&lt;!&ndash;                                            #registerDatasource [selectedRepo]="repo" [mode]="currentMode"&ndash;&gt;-->
+                <!--&lt;!&ndash;                                            (emittedInfo)="getUpdatedRepo($event)">&ndash;&gt;-->
+                <!--&lt;!&ndash;                    </datasource-update-form>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  </section>&ndash;&gt;-->
+
+                <!--                  &lt;!&ndash; third section &ndash;&gt;-->
+                <!--&lt;!&ndash;                  <h3 id="wizard_advanced-h-2" tabindex="-1" class="title {{ (currentStep == 2) ? 'current' : '' }}">Add Interfaces</h3>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  <section id="wizard_advanced-p-2" role="tabpanel" aria-labelledby="wizard_advanced-h-2"&ndash;&gt;-->
+                <!--&lt;!&ndash;                           class="body step-2 {{ (currentStep == 2) ? 'current' : '' }}" data-step="2" aria-hidden="true">&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                    <div *ngIf="(currentStep === 2) && repo && !loadingMessage" class="uk-grid uk-grid-match">&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                      <div *ngFor="let inter of dataForInterfaceComp" class="uk-width-1-2@m uk-margin-bottom">&ndash;&gt;-->
+                <!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                          <div class="md-card" style="height: 100%">&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <app-repository-interface-form #interfacesArray&ndash;&gt;-->
+                <!--&lt;!&ndash;                                                           [data]="inter" [mode]="currentMode"&ndash;&gt;-->
+                <!--&lt;!&ndash;                                                           (emitDeleteInterface)="removeInterfaceFromList($event)">&ndash;&gt;-->
+                <!--&lt;!&ndash;                            </app-repository-interface-form>&ndash;&gt;-->
+                <!--&lt;!&ndash;                          </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                      </div>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                      <div class="uk-width-1-2@m uk-margin-bottom">&ndash;&gt;-->
+                <!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                          <div class="md-card" style="height: 100%">&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <div class="md-card-toolbar">&ndash;&gt;-->
+                <!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <div class="md-card-content">&ndash;&gt;-->
+                <!--&lt;!&ndash;                              <div class="interface-box new" style="text-align: center">&ndash;&gt;-->
+                <!--&lt;!&ndash;                                <a class="add-new-element add-new-group" (click)="addInterfaceToList()">&ndash;&gt;-->
+                <!--&lt;!&ndash;                                  <i class="far fa-plus-square" aria-hidden="true"></i>&ndash;&gt;-->
+                <!--&lt;!&ndash;                                  <span class="info">Add New Interface</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;                                </a>&ndash;&gt;-->
+                <!--&lt;!&ndash;                              </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                          </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                      </div>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  </section>&ndash;&gt;-->
+
+                <!--                  &lt;!&ndash; fourth section &ndash;&gt;-->
+                <!--&lt;!&ndash;                  <h3 id="wizard_advanced-h-3" tabindex="-1" class="title {{ (currentStep == 3) ? 'current' : '' }}">Terms of Use</h3>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  <section id="wizard_advanced-p-3" role="tabpanel" aria-labelledby="wizard_advanced-h-3"&ndash;&gt;-->
+                <!--&lt;!&ndash;                           class="body step-3 {{ (currentStep == 3) ? 'current' : '' }}" data-step="3"  aria-hidden="true">&ndash;&gt;-->
+                <!--&lt;!&ndash;                    <div *ngIf="(currentStep === 3) && !loadingMessage" class="uk-grid uk-grid-match">&ndash;&gt;-->
+                <!--&lt;!&ndash;                      <datasource-update-terms-form #updateTermsForm&ndash;&gt;-->
+                <!--&lt;!&ndash;                                                    [selectedRepo]="repo"&ndash;&gt;-->
+                <!--&lt;!&ndash;                                                    [showButton]=false&ndash;&gt;-->
+                <!--&lt;!&ndash;                                                    (emittedInfo)="getTerms($event)">&ndash;&gt;-->
+                <!--&lt;!&ndash;                      </datasource-update-terms-form>&ndash;&gt;-->
+                <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  </section>&ndash;&gt;-->
+
+                <!--                  &lt;!&ndash; fifth section &ndash;&gt;-->
+                <!--&lt;!&ndash;                  <h3 id="wizard_advanced-h-4" tabindex="-1" class="title {{ (currentStep == 4) ? 'current' : '' }}">Finish</h3>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  <section id="wizard_advanced-p-4" role="tabpanel" aria-labelledby="wizard_advanced-h-4"&ndash;&gt;-->
+                <!--&lt;!&ndash;                           class="body step-4 {{ (currentStep == 4) ? 'current' : '' }}" data-step="3"  aria-hidden="true">&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                    <div *ngIf="(currentStep === 4) && !loadingMessage" class="row openAIRECompliantLogoDownload">&ndash;&gt;-->
+                <!--&lt;!&ndash;                      <div class="col-lg-12">&ndash;&gt;-->
+                <!--&lt;!&ndash;                        <div class="col-md-12">&ndash;&gt;-->
+                <!--&lt;!&ndash;                          <div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <div class="openAIRECompliantLogo">&ndash;&gt;-->
+                <!--&lt;!&ndash;                              <h2 class="openAIRECompliantLogoMessage">&ndash;&gt;-->
+                <!--&lt;!&ndash;                                We successfully received the request to register/update your repository with/on OpenAIRE.&ndash;&gt;-->
+                <!--&lt;!&ndash;                                It usually takes about 6 weeks to check your metadata and index it.&ndash;&gt;-->
+                <!--&lt;!&ndash;                                For questions, please create a ticket&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;                                <a href="https://www.openaire.eu/support/helpdesk" target="_blank">helpdesk ticket</a>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;                                writing to <a href="mailto:helpdesk@openaire.eu">helpdesk@openaire.eu</a>.&ndash;&gt;-->
+                <!--&lt;!&ndash;                              </h2>&ndash;&gt;-->
+                <!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                          </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                      </div>&ndash;&gt;-->
+                <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;                  </section>&ndash;&gt;-->
+
+                <!--                </div>-->
+
+                <!--&lt;!&ndash;                <div *ngIf="currentStep != 4" class="actions clearfix">&ndash;&gt;-->
+                <!--&lt;!&ndash;                  <ul role="menu" aria-label="Pagination">&ndash;&gt;-->
+                <!--&lt;!&ndash;                    <li class="button_previous {{ (currentStep < 1) ? 'disabled' : '' }}" aria-disabled="true">&ndash;&gt;-->
+                <!--&lt;!&ndash;                      <a (click)="moveBackAStep()" role="menuitem"><i class="material-icons"></i> Previous</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;                    </li>&ndash;&gt;-->
+                <!--&lt;!&ndash;                    <li *ngIf="currentStep < 3" class="button_next" aria-hidden="false" aria-disabled="false">&ndash;&gt;-->
+                <!--&lt;!&ndash;                      <a (click)="moveAStep()" role="menuitem">Next<i class="material-icons"></i></a>&ndash;&gt;-->
+                <!--&lt;!&ndash;                    </li>&ndash;&gt;-->
+                <!--&lt;!&ndash;                    <li *ngIf="currentStep == 3" class="button_finish" aria-hidden="true">&ndash;&gt;-->
+                <!--&lt;!&ndash;                      <a (click)="moveAStep()" role="menuitem">Finish</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;                    </li>&ndash;&gt;-->
+                <!--&lt;!&ndash;                  </ul>&ndash;&gt;-->
+                <!--&lt;!&ndash;                </div>&ndash;&gt;-->
+                <!--              </div>-->
+                <!--            </form>-->
               </div>
-            </form>
+            </div>
           </div>
+
+          <!-- RIGHT HELP CONTENT -->
+          <aside-help-content #rightHelperContent [position]="'right'"
+                              [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content>
+
         </div>
+
+        <!-- BOTTOM HELP CONTENT -->
+        <help-content #bottomHelperContent [position]="'bottom'"
+                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
+
       </div>
-
-      <!-- RIGHT HELP CONTENT -->
-      <aside-help-content #rightHelperContent [position]="'right'"
-                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-      </aside-help-content>
-
     </div>
-
-    <!-- BOTTOM HELP CONTENT -->
-    <help-content #bottomHelperContent [position]="'bottom'"
-                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-    </help-content>
 
   </div>
 </div>

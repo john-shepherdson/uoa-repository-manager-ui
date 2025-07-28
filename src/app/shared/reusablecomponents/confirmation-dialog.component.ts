@@ -2,7 +2,7 @@
  * Created by stefania on 5/2/17.
  */
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'confirmation-dialog',

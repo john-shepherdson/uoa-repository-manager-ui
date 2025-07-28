@@ -1,13 +1,12 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { Repository, User } from '../../../domain/typeScriptClasses';
 import { RepositoryService } from '../../../services/repository.service';
-import {loadingRepoMessage} from '../../../domain/shared-messages';
-import {ConfirmationDialogComponent} from '../../../shared/reusablecomponents/confirmation-dialog.component';
-import {FormControl} from '@angular/forms';
+import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
+import { UntypedFormControl } from '@angular/forms';
 
 declare var UIkit: any;
 
-@Component ({
+@Component({
   selector: 'app-update-repo-admins',
   templateUrl: 'update-repo-admins.component.html',
 })
@@ -24,19 +23,19 @@ export class UpdateRepoAdminsComponent implements OnChanges {
   selectedAdminForDelete: User;
 
   isDeleteModalShown: boolean;
-  @ViewChild('deleteRepositoryAdminModal', { static: true })
+  @ViewChild('deleteRepositoryAdminModal', {static: true})
   public deleteRepositoryAdminModal: ConfirmationDialogComponent;
 
   isAddModalShown: boolean;
-  @ViewChild('addRepositoryAdminModal', { static: true })
+  @ViewChild('addRepositoryAdminModal', {static: true})
   public addRepositoryAdminModal: ConfirmationDialogComponent;
 
   modalErrorMessage: string;
   modalLoadingMessage: string;
 
-  emailControl = new FormControl();
+  emailControl = new UntypedFormControl();
 
-  constructor (private repoService: RepositoryService) { }
+  constructor(private repoService: RepositoryService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getRepositoryAdmins();

@@ -8,7 +8,7 @@ import { MyWrapper } from './my-wrapper.interface';
 import { MyFormDirective } from './my-form.directive';
 import { Subject } from 'rxjs';
 import { nonRemovableInterface } from '../../../domain/shared-messages';
-import { FormArray, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import { ConfirmationDialogComponent } from '../confirmation-dialog.component';
 import { Description } from '../../../domain/oa-description';
 
@@ -83,7 +83,7 @@ export class MyArray extends MyGroup {
     this.arrayData_.push((<MyGroup>componentView.instance).patchData);
     (<MyGroup>componentView.instance).description = this.description;
     const arrayGroup = (<MyGroup>componentView.instance).generate();
-    (<MyGroup>componentView.instance).parentGroup = arrayGroup as FormGroup;
+    (<MyGroup>componentView.instance).parentGroup = arrayGroup as UntypedFormGroup;
     (<MyWrapper>wrapperView.instance).component = componentView.hostView;
     (<MyWrapper>wrapperView.instance).viewRef = wrapperView.hostView;
     (<MyWrapper>wrapperView.instance).description = this.description;
@@ -95,12 +95,12 @@ export class MyArray extends MyGroup {
       console.log(index);
       if ( this.viewContainerRef.length === 1 && this.description.mandatory === true) {
         console.log(this.viewContainerRef.get(0));
-        ((this.parentGroup as FormArray).controls[this.name].at(0).corpus((<MyGroup>componentView.instance).generate().value));
+        ((this.parentGroup as UntypedFormArray).controls[this.name].at(0).corpus((<MyGroup>componentView.instance).generate().value));
       } else {
         if (index > 0) {
           if (this.registerMode || !(<MyGroup>componentView.instance).wasSaved ) {
             this.remove(index);
-            (this.parentGroup as FormArray).controls[this.name].removeAt(index - 1);
+            (this.parentGroup as UntypedFormArray).controls[this.name].removeAt(index - 1);
             this.components.splice(index, 1);
             this.arrayData_.splice(index - 1, 1);
           } else {
@@ -119,7 +119,7 @@ export class MyArray extends MyGroup {
       }
     });
 
-    ((this.parentGroup as FormArray).controls[this.name]).push(arrayGroup);
+    ((this.parentGroup as UntypedFormArray).controls[this.name]).push(arrayGroup);
 
     this.viewContainerRef.insert(wrapperView.hostView);
     console.log('ADDED NEW GROUP IN CREATEVIEW');
@@ -172,7 +172,7 @@ export class MyArray extends MyGroup {
     if (this.curIndex > 0) {
       this.curIntrf.toBeDeleted = true;
       this.remove(this.curIndex);
-      (this.parentGroup as FormArray).controls[this.name].removeAt(this.curIndex - 1);
+      (this.parentGroup as UntypedFormArray).controls[this.name].removeAt(this.curIndex - 1);
       this.arrayData_.splice(this.curIndex - 1, 1);
       this.curIndex = -1;
       this.curIntrf = null;
@@ -186,7 +186,7 @@ export class MyArray extends MyGroup {
   ngOnInit(): void {
     // super.ngOnInit();
     this.viewContainerRef = this.formComponents.viewContainerRef;
-    (<FormGroup>this.parentGroup).addControl(<string>this.name, this._fb.array([]));
+    (<UntypedFormGroup>this.parentGroup).addControl(<string>this.name, this._fb.array([]));
 /*    (<FormGroup>this.parentGroup).addControl(<string>this.name, this._fb.array([]));
     !this.initEmpty && this.createView();
     this.parentGroup.get(this.name as string).patchValue = this.patchValue();*/
@@ -210,7 +210,7 @@ export class MyArray extends MyGroup {
   protected patchValue() {
     const self = this;
     return (value: {[key: string]: any}, {onlySelf, emitEvent}: {onlySelf?: boolean, emitEvent?: boolean} = {}) => {
-      for (let i = (<FormArray>self.parentGroup.get(this.name as string)).length; i < Object.keys(value).length; i++) {
+      for (let i = (<UntypedFormArray>self.parentGroup.get(this.name as string)).length; i < Object.keys(value).length; i++) {
         self.createView();
         console.log('ADDED NEW GROUP');
       }

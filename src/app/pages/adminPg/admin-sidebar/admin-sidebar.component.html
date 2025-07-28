@@ -1,0 +1,48 @@
+<div id="sidebar_main" uk-sticky="end: .sidebar_main_swipe;" class="uk-visible@m uk-sticky uk-sticky-fixed" offset="65" style="position: sticky; top: 65px;">
+  <div sidebar-content="">
+    <div id="sidebar_toggle" (click)="toggleSidebar()"></div>
+    <div id="sidebar_content" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+      <div class="menu_section uk-margin-large-top ng-star-inserted" style="min-height: 30vh;">
+        <ul uk-nav="duration: 400" class="uk-list uk-nav uk-nav-default">
+
+          <li class="uk-parent" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./registrations']" title="Registrations" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+              <div class="uk-width-auto ng-star-inserted">
+                <div class="menu-icon" ng-reflect-ratio="0.9" ng-reflect-svg="<svg xmlns=&quot;http://www.w3.org/" ng-reflect-flex="true">
+                  <span class="material-symbols-outlined">library_add</span>
+                </div>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Registrations</span>
+<!--                            <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+            </a>
+          </li>
+
+          <li class="uk-parent" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./metrics']" title="Metrics" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+              <div class="uk-width-auto ng-star-inserted">
+                <div class="menu-icon" ng-reflect-ratio="0.9" ng-reflect-svg="<svg xmlns=&quot;http://www.w3.org/" ng-reflect-flex="true">
+                  <span class="material-symbols-outlined">monitoring</span>
+                </div>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Metrics</span>
+              <!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+            </a>
+          </li>
+
+          <li class="">
+            <a class="uk-flex uk-flex-middle" href="{{adminHomePage}}" target="_blank" title="Help Texts" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+              <div class="uk-width-auto ng-star-inserted">
+                <div class="menu-icon" ng-reflect-ratio="0.9" ng-reflect-svg="<svg xmlns=&quot;http://www.w3.org/" ng-reflect-flex="true">
+                  <span class="material-symbols-outlined">help</span>
+                </div>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Help Texts</span>
+              <!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

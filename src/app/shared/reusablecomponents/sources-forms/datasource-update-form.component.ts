@@ -1,14 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { formErrorRequiredFields, formErrorWasntSaved, formSubmitting, formSuccessUpdatedRepo, loadingRepoError,
-         loadingRepoMessage, noServiceMessage } from '../../../domain/shared-messages';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import {
+  formErrorRequiredFields, formErrorWasntSaved, formSubmitting, formSuccessUpdatedRepo, loadingRepoError, loadingRepoMessage,
+  noServiceMessage
+} from '../../../domain/shared-messages';
 import { RepositoryService } from '../../../services/repository.service';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Country, Repository, Timezone, Typology } from '../../../domain/typeScriptClasses';
-import { Description, softwarePlatformDesc, platformNameDesc, officialNameDesc, repoDescriptionDesc, countryDesc,
-         longtitudeDesc, latitudeDesc, websiteUrlDesc, institutionNameDesc, englishNameDesc, logoUrlDesc, timezoneDesc,
-         datasourceTypeDesc, adminEmailDesc, lissnDesc, eissnDesc, issnDesc } from '../../../domain/oa-description';
+import {
+  adminEmailDesc, countryDesc, datasourceTypeDesc, Description, eissnDesc, englishNameDesc, institutionNameDesc,
+  issnDesc, latitudeDesc, lissnDesc, logoUrlDesc, longtitudeDesc, officialNameDesc, platformNameDesc, repoDescriptionDesc,
+  softwarePlatformDesc, timezoneDesc, websiteUrlDesc
+} from '../../../domain/oa-description';
 import { AuthenticationService } from '../../../services/authentication.service';
-import {SharedService} from '../../../services/shared.service';
+import { SharedService } from '../../../services/shared.service';
+import { Option } from '../../input.component';
 
 @Component ({
   selector: 'datasource-update-form',
@@ -22,9 +27,13 @@ export class DatasourceUpdateFormComponent implements OnInit {
   loadingMessage: string;
 
   typologies: Typology[] = [];
+  typologiesOptions: Option[] = [];
   timezones: Timezone[] = [];
+  timezonesOptions: Option[] = [];
   countries: Country[] = [];
+  countriesOptions: Option[] = [];
   datasourceClasses: Map<string, string> = new Map<string, string>();
+  datasourceClassesOptions: Option[] = [];
   classCodes: string[] = [];
 
   /*  in sources/register (in literature or data mode) the updated repository is emitted */
@@ -38,10 +47,10 @@ export class DatasourceUpdateFormComponent implements OnInit {
 
   repoId: string;
   formSubmitted = false;
-  updateGroup: FormGroup;
+  updateGroup: UntypedFormGroup;
   readonly updateGroupDefinition = {
-    softwarePlatform : '',
-    platformName : '',
+    softwarePlatform : null,
+    platformName : null,
     officialName :  ['', Validators.required],
     issn : ['', [Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$')] ],
     eissn : ['', Validators.pattern('^(\\d{4}-?\\d{3}[\\dxX])$') ],
@@ -77,16 +86,12 @@ export class DatasourceUpdateFormComponent implements OnInit {
   datasourceTypeDesc: Description = datasourceTypeDesc;
   adminEmailDesc: Description = adminEmailDesc;
 
-  constructor(
-    private fb: FormBuilder,
-    private repoService: RepositoryService,
-    private sharedService: SharedService,
-    private authService: AuthenticationService
-  ) {}
+  constructor(private fb: UntypedFormBuilder, private repoService: RepositoryService, private sharedService: SharedService,
+              private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.loadForm();
-    console.log('mode: ', this.mode);
+    // console.log('mode: ', this.mode);
   }
 
   loadForm() {
@@ -94,6 +99,17 @@ export class DatasourceUpdateFormComponent implements OnInit {
       this.repoId = this.selectedRepo.id.split('::')[1];
       this.loadingMessage = loadingRepoMessage;
       this.updateGroup = this.fb.group(this.updateGroupDefinition, {validator: checkPlatform});
+      this.updateGroup.get('platformName').disable();
+      this.updateGroup.get('softwarePlatform').valueChanges.subscribe({
+        next: (value) => {
+          if (value === 'Other') {
+            this.updateGroup.get('platformName').enable();
+          } else {
+            this.updateGroup.get('platformName').disable();
+            this.updateGroup.get('platformName').reset();
+          }
+        }
+      });
       this.getDatasourceClasses();
     } else {
       this.errorMessage = loadingRepoError;
@@ -190,6 +206,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
       classes => {
         for (const [key, value] of Object.entries(classes)) {
           this.datasourceClasses.set(key, value);
+          this.datasourceClassesOptions.push({value: key, label: value});
         }},
       error => {
         this.loadingMessage = '';
@@ -197,7 +214,6 @@ export class DatasourceUpdateFormComponent implements OnInit {
         console.log(error);
       },
       () => {
-        console.log('gotDatasourceClasses');
         this.classCodes = Array.from(this.datasourceClasses.keys());
         this.getCountries();
       }
@@ -214,19 +230,27 @@ export class DatasourceUpdateFormComponent implements OnInit {
           } else {
             return 0;
           }
-        } ),
+        }),
         error => {
           this.loadingMessage = '';
           this.errorMessage = noServiceMessage;
           console.log(error);
-        }, () => {
+        },
+        () => {
+          this.countriesOptions = [];
+          this.countries.forEach(country => {
+            this.countriesOptions.push({value: country.code, label: country.name});
+          });
           this.getTypologies();
         });
   }
 
   getTypologies() {
     this.repoService.getTypologies().subscribe(
-      types => this.typologies = types,
+      types => {
+        this.typologies = types;
+        this.getTypologiesAsOptions();
+      },
       error => {
         this.loadingMessage = '';
         console.log(error);
@@ -237,9 +261,26 @@ export class DatasourceUpdateFormComponent implements OnInit {
     );
   }
 
+  getTypologiesAsOptions() {
+
+    this.typologiesOptions = [];
+    for (const typology of this.typologies) {
+      const option: Option = new Option();
+      option.value = typology.value;
+      option.label = typology.name;
+      this.typologiesOptions.push(option);
+    }
+  }
+
   getTimezones() {
     this.repoService.getTimezones().subscribe(
-      zones => this.timezones = zones,
+      zones => {
+        this.timezones = zones;
+        this.timezonesOptions = [];
+        zones.forEach(zone => {
+          this.timezonesOptions.push({value: zone.offset, label: zone.name});
+        });
+      },
       error => {
         this.loadingMessage = '';
         console.log(error);
@@ -302,7 +343,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
   }
 
   refreshSelectedRepo() {
-    if (this.updateGroup.get('softwarePlatform').value ) {
+    if (this.updateGroup.get('softwarePlatform').value && this.updateGroup.get('softwarePlatform').value !== 'Other' ) {
       this.selectedRepo.platform = this.updateGroup.get('softwarePlatform').value;
     } else if (this.updateGroup.get('platformName').value) {
       this.selectedRepo.platform = this.updateGroup.get('platformName').value;
@@ -351,7 +392,7 @@ export class DatasourceUpdateFormComponent implements OnInit {
 }
 
 export function checkPlatform(c: AbstractControl) {
-  if ( c.get('softwarePlatform').value || c.get('platformName').value ) {
+  if ( (c.get('softwarePlatform').value && c.get('softwarePlatform').value !== 'Other') || c.get('platformName').value ) {
     return null;
   }
   return 'invalid';

@@ -1,283 +1,318 @@
 <div id="page_content">
   <div id="page_content_inner">
-    <h2 class="heading_b uk-margin-bottom">Validation results for</h2>
 
-    <!-- TOP HELP CONTENT -->
-    <help-content #topHelperContent [position]="'top'"
-                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-    </help-content>
+    <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="loadingMessage" class="loading-big">
+      <div class="loader-big"
+           style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+        {{ loadingMessage }}
+      </div>
+      <div class="transparentFilm"></div>
+    </div>
 
-    <div class="uk-grid">
+    <div *ngIf="jobSummary" uk-grid="" class="analysis uk-grid uk-margin-remove-left">
 
-      <!-- LEFT HELP CONTENT -->
-      <aside-help-content #leftHelperContent [position]="'left'"
-                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-      </aside-help-content>
+      <div class="uk-width-expand uk-container uk-container-large uk-first-column">
+        <div id="analysis-center-content" class="uk-width-expand uk-section uk-section-small uk-container uk-container-large">
 
-      <!-- MIDDLE -->
-      <div class=" uk-width-expand@m">
+          <ul class="uk-breadcrumb uk-margin-remove-bottom">
+            <!--          <li><a class="uk-text-capitalize" ng-reflect-router-link="/" href="/">home</a></li>-->
+            <li><a class="uk-text-capitalize" [routerLink]="['/compatibility', 'browseHistory']">Validator's History</a></li>
+            <li><span class="uk-text-capitalize">Result for ...</span></li>
+          </ul>
 
-        <div>
-          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
-          <div *ngIf="loadingMessage" class="loading-big">
-            <div class="loader-big"
-                 style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
-              {{ loadingMessage }}
-            </div>
-            <div class="transparentFilm"></div>
-          </div>
+          <div class="uk-margin-large-top">
+            <h1 class="uk-h5">Validation Result Analysis</h1>
+            <hr>
 
+            <ul class="uk-tab" data-uk-tab="{connect:'#tabs_anim', animation:'slide-left'}">
+              <li id="forContent" class="uk-active" aria-expanded="true"><a href="#">for Content</a></li>
+              <li id="forUsage" aria-expanded="false" class=""><a href="#">for Usage</a></li>
+            </ul>
+            <ul id="tabs_anim" class="uk-switcher uk-margin">
+              <li aria-hidden="false" class="uk-active" style="animation-duration: 200ms;">
+                <div class="uk-grid-margin uk-grid uk-grid-stack">
+                  <div class="uk-width-1-1@m uk-first-column">
+                    <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                      <div *ngIf="noContent" class="uk-alert">{{ noContent }}</div>
+                      <div *ngIf="contentResults && contentResults.length > 0">
 
-          <div *ngIf="jobSummary">
-
-            <div class="uk-margin-medium-bottom">
-              <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
-                  uk-scrollspy-class=""><span>{{jobSummary.baseUrl}}</span></h4>
-              <div class="uk-margin-small">by {{jobSummary.userEmail}}</div>
-            </div>
-
-            <div class="uk-grid">
-              <div class="uk-width-3-4">
-                <div id="container_C" class="md-card tabs">
-                  <div class="md-card-content">
-                    <highcharts-chart
-                      [Highcharts] = "HighchartsForContent"
-                      [options] = "chartOptionsForContent"
-                      style="width: 100%; height: 400px; display: block; margin-top: 20px"
-                    ></highcharts-chart>
-                  </div>
-                </div>
-              </div>
-              <div class="uk-width-1-4">
-                <div id="container_U" class="md-card tabs">
-                  <div class="md-card-content">
-                    <highcharts-chart
-                      [Highcharts] = "HighchartsForUsage"
-                      [options] = "chartOptionsForUsage"
-                      style="width: 100%; height: 400px; display: block; margin-top: 20px"
-                    ></highcharts-chart>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-
-            <div class="md-card tabs">
-              <div class="md-card-content">
-
-                <div class="uk-grid uk-grid-divider" data-uk-grid-margin="">
-                  <div class="uk-width-3-4@m uk-row-first">
-                    <ul class="uk-tab" data-uk-tab="{connect:'#tabs_anim4', animation:'slide-left'}">
-                      <li id="forContent" class="uk-active" aria-expanded="true"><a href="#">for Content</a></li>
-                      <li id="forUsage" aria-expanded="false" class=""><a href="#">for Usage</a></li>
-                    </ul>
-                    <ul id="tabs_anim4" class="uk-switcher uk-margin">
-                      <li aria-hidden="false" class="uk-active" style="animation-duration: 200ms;">
-                        <div class="uk-grid-margin uk-grid uk-grid-stack">
-                          <div class="uk-width-1-1@m uk-first-column">
-                            <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
-                              <div *ngIf="noContent" class="uk-alert">{{ noContent }}</div>
-                              <div *ngIf="contentResults && contentResults.length > 0">
-                                <table class="uk-table uk-table-striped uk-table-middle rules-table">
-                                  <thead>
-                                  <tr>
-                                    <th class="uk-width-2-10">Rule Name</th>
-                                    <th class="uk-width-4-10 uk-text-nowrap">Rule Description</th>
-                                    <th class="uk-width-1-10 uk-text-nowrap">Rule Weight</th>
-                                    <th class="uk-width-1-10 uk-text-nowrap"># of records</th>
-                                    <th class="uk-width-2-10 uk-text-nowrap">Status</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  <tr *ngFor="let contentRule of contentResults" class="el-item">
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ contentRule.name }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title" [innerHtml]="contentRule.description">
-                                      </div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ contentRule.weight }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ contentRule.successes }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div *ngIf="!contentRule.hasErrors" class="el-title">
-                                        <i class="material-icons" style="color: #4b991f">check_circle_outline</i>
-                                      </div>
-                                      <div *ngIf="contentRule.hasErrors && contentRule.mandatory">
-                                        <i class="material-icons" style="color: #cd242b">highlight_off</i>
-                                        <a class="errorlink viewErrors uk-margin-left"
-                                           (click)="viewErrors(contentRule)"><span>View Errors</span></a>
-                                      </div>
-                                      <div *ngIf="contentRule.hasErrors && !contentRule.mandatory">
-                                        <i class="material-icons" style="color: #e9d60d">error_outline</i>
-                                        <a class="warninglink viewErrors uk-margin-left"
-                                           (click)="viewErrors(contentRule)"><span>View Warnings</span></a>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
+                        <div class="uk-card card-simple uk-margin-top">
+                          <div id="container_C" class="uk-card-body">
+                            <highcharts-chart
+                              [Highcharts] = "HighchartsForContent"
+                              [options] = "chartOptionsForContent"
+                              style="width: 100%; height: 400px; display: block; margin-top: 20px"
+                            ></highcharts-chart>
                           </div>
                         </div>
-                      </li>
-                      <li aria-hidden="true" style="animation-duration: 200ms;" class="">
-                        <div class="uk-grid-margin uk-grid uk-grid-stack">
-                          <div class="uk-width-1-1@m uk-first-column">
-                            <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
-                              <div *ngIf="noUsage" class="uk-alert">{{ noUsage }}</div>
-                              <div *ngIf="usageResults && usageResults.length > 0">
-                                <table class="uk-table uk-table-striped uk-table-middle rules-table">
-                                  <thead>
-                                  <tr>
-                                    <th class="uk-width-2-10">Rule Name</th>
-                                    <th class="uk-width-4-10 uk-text-nowrap">Rule Description</th>
-                                    <th class="uk-width-1-10 uk-text-nowrap">Rule Weight</th>
-                                    <th class="uk-width-1-10 uk-text-nowrap"># of records</th>
-                                    <th class="uk-width-2-10 uk-text-nowrap">Status</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  <tr *ngFor="let usageRule of usageResults" class="el-item">
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ usageRule.name }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title" [innerHtml]="usageRule.description">
-                                      </div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ usageRule.weight }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div class="el-title">{{ usageRule.successes }}</div>
-                                    </td>
-                                    <td class="uk-table-shrink">
-                                      <div *ngIf="!usageRule.hasErrors" class="el-title">
-                                        <i class="material-icons" style="color: #4b991f">check_circle_outline</i>
-                                      </div>
-                                      <div *ngIf="usageRule.hasErrors && usageRule.mandatory">
-                                        <i class="material-icons" style="color: #cd242b">highlight_off</i>
-                                        <a class="errorlink viewErrors uk-margin-left"
-                                           (click)="viewErrors(usageRule)"><span>View Errors</span></a>
-                                      </div>
-                                      <div *ngIf="usageRule.hasErrors && !usageRule.mandatory">
-                                        <i class="material-icons" style="color: #e9d60d">error_outline</i>
-                                        <a class="warninglink viewErrors uk-margin-left"
-                                           (click)="viewErrors(usageRule)"><span>View Warnings</span></a>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  </tbody>
-                                </table>
+
+                        <table class="uk-table uk-table-striped uk-table-middle rules-table">
+                          <thead>
+                          <tr>
+                            <th class="">Rule Name</th>
+                            <th class="uk-text-nowrap">Rule Description</th>
+                            <th class="uk-text-center uk-text-nowrap">Rule Weight</th>
+                            <th class="uk-text-center uk-text-nowrap"># of records</th>
+                            <th class="uk-text-center uk-text-nowrap">Issues</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let contentRule of contentResults" class="el-item">
+                            <td class="uk-table-shrink">
+                              <div class="el-title">{{ contentRule.name }}</div>
+                            </td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title" [innerHtml]="contentRule.description">
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="uk-width-1-4@m">
-                    <div class="uk-margin-medium-bottom">
-                      <p>
-                        Score for content:
-                        <span *ngIf="jobSummary.contentJobScore>=50" class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">{{ jobSummary.contentJobScore }}</span>
-                        <span *ngIf="jobSummary.contentJobScore<50" class="uk-badge uk-badge-danger uk-text-upper uk-margin-small-left">{{ jobSummary.contentJobScore }}</span>
-                      </p>
-                      <p>
-                        Score for usage:
-                        <span *ngIf="jobSummary.usageJobScore>=50" class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">{{ jobSummary.usageJobScore }}</span>
-                        <span *ngIf="jobSummary.usageJobScore<50" class="uk-badge uk-badge-danger uk-text-upper uk-margin-small-left">{{ jobSummary.usageJobScore }}</span>
-                      </p>
+                            </td>
+                            <td class="uk-text-center uk-table-shrink">
+                              <div class="el-title">{{ contentRule.weight }}</div>
+                            </td>
+                            <td class="uk-text-center uk-table-shrink">
+<!--                              <progress class="analysis-progress uk-progress uk-margin-remove-bottom" [value]="ruleResult.passed_records*100/jobResult.numberOfRecords" max="100"></progress>-->
+<!--                              <div class="uk-text-center uk-text-xsmall uk-text-bolder uk-text-primary"-->
+<!--                                   style="position:relative; top: -18px; mix-blend-mode: color-burn">-->
+<!--                                {{ruleResult.passed_records*100/jobResult.numberOfRecords}}%-->
+<!--                              </div>-->
+                              <div class="el-title">{{ contentRule.successes }}</div>
+                            </td>
+                            <td class="uk-table-shrink uk-text-center">
+                              <div *ngIf="!contentRule.hasErrors" class="el-title">
+                                <span class="material-symbols-outlined uk-text-success">check</span>
+                              </div>
+                              <div *ngIf="contentRule.hasErrors && contentRule.mandatory">
+                                <a class="uk-text-danger" (click)="viewErrors(contentRule)"><span>Errors</span></a>
+
+                              </div>
+                              <div *ngIf="contentRule.hasErrors && !contentRule.mandatory">
+                                <a class="uk-text-warning" (click)="viewErrors(contentRule)"><span>Warnings</span></a>
+                              </div>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-                    <h2 class="heading_c uk-margin-small-bottom">Details</h2>
-
-                    <ul class="md-list md-list-addon">
-                      <li>
-                        <div class="md-list-addon-element">
-                          <!--<img class="md-user-image md-list-addon-avatar dense-image dense-ready" src="assets/img/avatars/avatar_02_tn@2x.png" alt="" data-dense-cap="2">-->
-                        </div>
-                        <div class="md-list-content">
-                          <span class="md-list-heading">{{ jobSummary.jobType }}</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="md-list-addon-element">
-                          <i class="md-list-addon-icon material-icons">gavel</i>
-                        </div>
-                        <div class="md-list-content">
-                          <span class="md-list-heading">{{ jobSummary.guidelinesShortName }}</span>
-                          <span class="uk-text-small uk-text-muted">Guidelines</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="md-list-addon-element">
-                          <i class="md-list-addon-icon material-icons">collections_bookmark</i>
-                        </div>
-                        <div class="md-list-content">
-                          <span class="md-list-heading">{{ jobSummary.validationSet }}</span>
-                          <span class="uk-text-small uk-text-muted">Validation set</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="md-list-addon-element">
-                          <i class="md-list-addon-icon material-icons"></i>
-                        </div>
-                        <div class="md-list-content uk-margin-small-bottom">
-                          <span class="md-list-heading">{{ jobSummary.started }}</span>
-                          <span class="uk-text-small uk-text-muted">Started</span>
-                        </div>
-                        <div class="md-list-content">
-                          <span class="md-list-heading">{{ jobSummary.ended ? jobSummary.ended : '--' }}</span>
-                          <span class="uk-text-small uk-text-muted">Ended</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="md-list-addon-element">
-                          <i class="md-list-addon-icon material-icons"></i>
-                        </div>
-                        <div class="md-list-content">
-                          <span class="md-list-heading">{{ jobSummary.duration }}</span>
-                          <span class="uk-text-small uk-text-muted">Duration</span>
-                        </div>
-                      </li>
-                    </ul>
                   </div>
-
                 </div>
+              </li>
+              <li aria-hidden="true" style="animation-duration: 200ms;" class="">
+                <div class="uk-grid-margin uk-grid uk-grid-stack">
+                  <div class="uk-width-1-1@m uk-first-column">
+                    <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                      <div *ngIf="noUsage" class="uk-alert">{{ noUsage }}</div>
+                      <div *ngIf="usageResults && usageResults.length > 0">
 
-              </div>
-            </div>
+                        <div id="container_U" class="uk-card card-simple uk-margin-top">
+                          <div class="uk-card-body">
+                            <highcharts-chart
+                              [Highcharts] = "HighchartsForUsage"
+                              [options] = "chartOptionsForUsage"
+                              style="width: 100%; height: 400px; display: block; margin-top: 20px"
+                            ></highcharts-chart>
+                          </div>
+                        </div>
+
+                        <table class="uk-table uk-table-striped uk-table-middle rules-table">
+                          <thead>
+                          <tr>
+                            <th class="">Rule Name</th>
+                            <th class="uk-text-nowrap">Rule Description</th>
+                            <th class="uk-text-center uk-text-nowrap">Rule Weight</th>
+                            <th class="uk-text-center uk-text-nowrap"># of records</th>
+                            <th class="uk-text-center uk-text-nowrap">Issues</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let usageRule of usageResults" class="el-item">
+                            <td class="uk-table-shrink">
+                              <div class="el-title">{{ usageRule.name }}</div>
+                            </td>
+                            <td class="uk-table-shrink">
+                              <div class="el-title" [innerHtml]="usageRule.description">
+                              </div>
+                            </td>
+                            <td class="uk-text-center uk-table-shrink">
+                              <div class="el-title">{{ usageRule.weight }}</div>
+                            </td>
+                            <td class="uk-text-center uk-table-shrink">
+                              <div class="el-title">{{ usageRule.successes }}</div>
+                            </td>
+                            <td class="uk-table-shrink uk-text-center">
+                              <div *ngIf="!usageRule.hasErrors" class="el-title">
+                                <span class="material-symbols-outlined uk-text-success">check</span>
+                              </div>
+                              <div *ngIf="usageRule.hasErrors && usageRule.mandatory">
+                                <a class="uk-text-danger" (click)="viewErrors(usageRule)"><span>Errors</span></a>
+
+                              </div>
+                              <div *ngIf="usageRule.hasErrors && !usageRule.mandatory">
+                                <a class="uk-text-warning" (click)="viewErrors(usageRule)"><span>Warnings</span></a>
+                              </div>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
 
           </div>
-
 
         </div>
-
       </div>
 
-      <!-- RIGHT HELP CONTENT -->
-      <aside-help-content #rightHelperContent [position]="'right'"
-                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-      </aside-help-content>
+      <div *ngIf="jobSummary" id="analysis-right-sidebar" class="uk-width-1-3 uk-width-1-4@l uk-padding-remove uk-text-small">
+        <div class="uk-sticky" uk-sticky="end: true" [attr.offset]="offset">
+          <div class="uk-overflow-auto uk-height-1-1 uk-padding">
+
+            <div class="uk-margin-medium-bottom">
+              <p>
+                Score for content:
+                <span *ngIf="jobSummary.contentJobScore>=50" class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">{{ jobSummary.contentJobScore }}</span>
+                <span *ngIf="jobSummary.contentJobScore<50" class="uk-badge uk-badge-danger uk-text-upper uk-margin-small-left">{{ jobSummary.contentJobScore }}</span>
+              </p>
+              <p>
+                Score for usage:
+                <span *ngIf="jobSummary.usageJobScore>=50" class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">{{ jobSummary.usageJobScore }}</span>
+                <span *ngIf="jobSummary.usageJobScore<50" class="uk-badge uk-badge-danger uk-text-upper uk-margin-small-left">{{ jobSummary.usageJobScore }}</span>
+              </p>
+            </div>
+
+            <div *ngIf="jobSummary.baseUrl" class="uk-card uk-card-default">
+              <div class="uk-card-body uk-card-small">
+                <div class="uk-flex uk-flex-middle">
+                  <span class="material-symbols-outlined uk-text-background">link</span>
+<!--                  <icon name="link" ratio="1.2" class="uk-text-background"></icon>-->
+                  <div class="uk-margin-left uk-width-expand uk-text-break">
+                    <div class="uk-text-meta uk-text-xsmall">Base url</div>
+                    <div class="uk-text-primary uk-text-bold uk-text-default">{{jobSummary.baseUrl}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<!--            <div *ngIf="jobSummary.userEmail" class="uk-margin-top uk-card uk-card-default">-->
+<!--              <div class="uk-card-body uk-card-small">-->
+<!--                <div class="uk-flex uk-flex-middle">-->
+<!--                  <span class="material-symbols-outlined uk-text-background">person</span>-->
+<!--                  <div class="uk-margin-left uk-width-expand uk-text-break">-->
+<!--                    <div class="uk-text-meta uk-text-xsmall">Requestor</div>-->
+<!--                    <div class="uk-text-primary uk-text-bold uk-text-default">{{jobSummary.userEmail}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+            <div *ngIf="jobSummary.validationSet" class="uk-margin-top uk-card uk-card-default">
+              <div class="uk-card-body uk-card-small">
+                <div class="uk-flex uk-flex-middle">
+                  <span class="material-symbols-outlined uk-text-background">collections_bookmark</span>
+                  <!--                  <icon name="link" ratio="1.2" class="uk-text-background"></icon>-->
+                  <div class="uk-margin-left uk-width-expand uk-text-break">
+                    <div class="uk-text-meta uk-text-xsmall">Validation set</div>
+                    <div class="uk-text-primary uk-text-bold uk-text-default">{{jobSummary.validationSet}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<!--            <div *ngIf="jobResult.xml" class="uk-card uk-card-default">-->
+<!--              <div class="uk-card-body uk-card-small">-->
+<!--                <div class="uk-flex uk-flex-middle">-->
+<!--                  <icon name="code" ratio="1.2" class="uk-text-background"></icon>-->
+<!--                  <div class="uk-margin-left uk-width-expand uk-text-break">-->
+<!--                    <div class="uk-text-meta uk-text-xsmall">Xml metadata record</div>-->
+<!--                    <div class="uk-text-primary uk-text-bold uk-text-default multi-line-ellipsis lines-3">-->
+<!--                      <p>{{jobResult.xml}}</p>-->
+<!--                    </div>-->
+<!--                    <a class="uk-link" (click)="openXmlModal()">View xml record</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <modal-alert #xmlModal large="true" (alertOutput)="xmlModalOpen=false" classTitle="uk-border-bottom">-->
+<!--                <div *ngIf="xmlModalOpen" class="uk-modal-body uk-height-min-medium uk-width-expand">-->
+<!--                  <pre>{{jobResult.xml}}</pre>-->
+<!--                </div>-->
+<!--              </modal-alert>-->
+<!--            </div>-->
+
+<!--            <div *ngIf="jobResult.set" class="uk-margin-top uk-card uk-card-default">-->
+<!--              <div class="uk-card-body uk-card-small">-->
+<!--                <div class="uk-flex uk-flex-middle">-->
+<!--                  <icon name="workspaces" ratio="1.2" class="uk-text-background"></icon>-->
+<!--                  <div class="uk-margin-left uk-width-expand uk-text-break">-->
+<!--                    <div class="uk-text-meta uk-text-xsmall">Set</div>-->
+<!--                    <div class="uk-text-primary uk-text-bold uk-text-default">{{jobResult.set}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+            <div class="uk-margin-top uk-card uk-card-default">
+              <div class="uk-card-body uk-card-small">
+                <div class="uk-flex uk-flex-middle">
+                  <span class="material-symbols-outlined uk-text-background">gavel</span>
+<!--                  <icon name="gavel" ratio="1.2" class="uk-text-background"></icon>-->
+                  <div class="uk-margin-left uk-width-expand uk-text-break">
+                    <div class="uk-text-meta uk-text-xsmall">Guidelines</div>
+                    <div class="uk-text-primary uk-text-bold uk-text-default">{{jobSummary.guidelinesShortName}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="uk-margin-top uk-card uk-card-default">
+              <div class="uk-card-body uk-card-small">
+                <div class="uk-flex uk-flex-top">
+                  <span class="material-symbols-outlined uk-text-background">today</span>
+<!--                  <icon name="today" ratio="1.2" class="uk-text-background"></icon>-->
+                  <div class="uk-margin-left uk-width-expand uk-text-break">
+                    <div class="uk-text-meta uk-text-xsmall">Started</div>
+                    <div class="uk-text-primary uk-text-bold uk-text-default">{{jobSummary.started}}</div>
+                    <div class="uk-text-meta uk-text-xsmall uk-margin-small-top"><span *ngIf="!jobSummary.ended">Not yet </span>Ended</div>
+                    <div *ngIf="jobSummary.ended" class="uk-text-primary uk-text-bold uk-text-default">{{jobSummary.ended}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="jobSummary.duration" class="uk-margin-top uk-card uk-card-default">
+              <div class="uk-card-body uk-card-small">
+                <div class="uk-flex uk-flex-middle">
+                  <span class="material-symbols-outlined uk-text-background">schedule</span>
+<!--                  <icon name="schedule" ratio="1.2" class="uk-text-background"></icon>-->
+                  <div class="uk-margin-left uk-width-expand uk-text-break">
+                    <div class="uk-text-meta uk-text-xsmall">Duration</div>
+                    <div class="uk-text-primary uk-text-bold uk-text-default">
+                      <span>{{jobSummary.duration}}</span>
+<!--                      <span *ngIf="jobDuration.years">{{jobDuration.years}} years</span>-->
+<!--                      <span *ngIf="jobDuration.years && (jobDuration.months || jobDuration.days || jobDuration.hours || jobDuration.minutes || jobDuration.seconds)"> & </span>-->
+<!--                      <span *ngIf="jobDuration.months">{{jobDuration.months}} months</span>-->
+<!--                      <span *ngIf="jobDuration.months && (jobDuration.days || jobDuration.hours || jobDuration.minutes || jobDuration.seconds)"> & </span>-->
+<!--                      <span *ngIf="jobDuration.days">{{jobDuration.days}} days</span>-->
+<!--                      <span *ngIf="jobDuration.days && (jobDuration.hours || jobDuration.minutes || jobDuration.seconds)"> & </span>-->
+<!--                      <span *ngIf="jobDuration.hours">{{jobDuration.hours}} hours</span>-->
+<!--                      <span *ngIf="jobDuration.hours && (jobDuration.minutes || jobDuration.seconds)"> & </span>-->
+<!--                      <span *ngIf="jobDuration.minutes">{{jobDuration.minutes}} minutes</span>-->
+<!--                      <span *ngIf="jobDuration.minutes && jobDuration.seconds"> & </span>-->
+<!--                      <span *ngIf="jobDuration.seconds">{{jobDuration.seconds}} seconds</span>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
 
-    <!-- BOTTOM HELP CONTENT -->
-    <help-content #bottomHelperContent [position]="'bottom'"
-                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-    </help-content>
-
   </div>
 </div>
-
 
 <confirmation-dialog #checkErrors [title]="modalTitle" [isModalShown]="false" [hideModalButton]="'OK'">
   <div>

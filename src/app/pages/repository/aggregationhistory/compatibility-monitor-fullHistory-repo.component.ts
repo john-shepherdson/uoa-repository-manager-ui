@@ -3,11 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AggregationDetails, Repository } from '../../../domain/typeScriptClasses';
 import { RepositoryService } from '../../../services/repository.service';
 import { loadingAggregationHistory, loadingAggregationHistoryError, noAggregationHistory } from '../../../domain/shared-messages';
-import { SharedService } from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 
 @Component ({
   selector: 'app-compatibility-fullhistory-monitor-repo',
-  templateUrl: 'compatibility-monitor-fullHistory-repo.component.html'
+  templateUrl: 'compatibility-monitor-fullHistory-repo.component.html',
+  styles: [`#back-fab {
+    position: fixed;
+    bottom: 5vh;
+    right: 5vw;
+    z-index: 980;
+  }`]
 })
 
 export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
@@ -28,7 +34,7 @@ export class CompatibilityMonitorFullHistoryRepoComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.sharedService.getRepository()) {
+    if (this.sharedService.getRepository()) {
       this.repo = this.sharedService.getRepository();
       this.repoName = this.repo.officialname;
       this.getAllAggregationHistory();

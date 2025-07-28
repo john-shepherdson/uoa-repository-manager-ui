@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { formErrorRequiredFields, formErrorWasntSaved, formSubmitting, formSuccessUpdatedRepo, loadingRepoError,
   loadingRepoMessage, noServiceMessage } from '../../../domain/shared-messages';
 import { RepositoryService } from '../../../services/repository.service';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, UntypedFormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Country, Repository, RepositorySnippet, Timezone, Typology } from '../../../domain/typeScriptClasses';
 import { Description, softwarePlatformDesc, platformNameDesc, officialNameDesc, repoDescriptionDesc, countryDesc,
   longtitudeDesc, latitudeDesc, websiteUrlDesc, institutionNameDesc, englishNameDesc, logoUrlDesc, timezoneDesc,
@@ -43,7 +43,7 @@ export class DatasourceUpdateTermsFormComponent implements OnInit {
   };
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private repoService: RepositoryService,
     private authService: AuthenticationService,
     private router: Router

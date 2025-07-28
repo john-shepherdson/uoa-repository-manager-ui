@@ -1,14 +1,16 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Repository, RepositoryInterface} from '../../../domain/typeScriptClasses';
-import {RepositoryService} from '../../../services/repository.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {loadingRepoError} from '../../../domain/shared-messages';
-import {DatasourceUpdateFormComponent} from '../../../shared/reusablecomponents/sources-forms/datasource-update-form.component';
-import {ConfirmationDialogComponent} from '../../../shared/reusablecomponents/confirmation-dialog.component';
-import {AuthenticationService} from '../../../services/authentication.service';
-import {DatasourceNewInterfaceFormComponent} from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
-import {SharedService} from '../../../services/shared.service';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
+import { RepositoryService } from '../../../services/repository.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { loadingRepoError } from '../../../domain/shared-messages';
+import { DatasourceUpdateFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-update-form.component';
+import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
+import { AuthenticationService } from '../../../services/authentication.service';
+import {
+  DatasourceNewInterfaceFormComponent
+} from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'sources-update-repo',
@@ -27,7 +29,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
 
   @ViewChild('datasourceUpdateForm') datasourceUpdateForm: DatasourceUpdateFormComponent;
 
-  group: FormGroup;
+  group: UntypedFormGroup;
 
   @ViewChildren('interfacesArray') interfacesArray: QueryList<DatasourceNewInterfaceFormComponent>;
   dataForInterfaceComp: any[] = [];
@@ -36,7 +38,7 @@ export class SourcesUpdateRepoComponent implements OnInit {
   @ViewChild('updateLogoUrlModal', {static: true})
   public updateLogoUrlModal: ConfirmationDialogComponent;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private repoService: RepositoryService,
               private authService: AuthenticationService,
               private route: ActivatedRoute,

@@ -1,35 +1,33 @@
 <div id="page_content">
+  <div id="page_content_inner">
 
-  <div class="repositoryAdminMenu">
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-large">
 
-    <div class="uk-margin-medium-left uk-margin-medium-right">
-      <div class="uk-padding-small">
-        <h3 class="heading_b">
-          Metrics Admin
-        </h3>
-      </div>
+        <h4 class="uk-margin-bottom">Usage Counts Admin</h4>
 
-      <div id="top_bar">
-        <div class="md-top-bar">
-          <div class="uk-width-1-2@l uk-margin-auto">
-            <form [formGroup]="dataForm" (ngSubmit)="handleChangeAndResetPage()" class="uk-search uk-search-default uk-width-1-1@m">
-              <div class="md-input-wrapper">
-                <label for="repository_name_search">Search...</label>
-                <input class="md-input" type="search" id="repository_name_search" formControlName="searchField">
-                <span class="md-input-bar"></span>
-              </div>
+        <div id="top_bar">
+          <div class="md-top-bar">
+            <div class="uk-width-1-3@l uk-margin-auto">
+              <form [formGroup]="dataForm" class="uk-search uk-search-default uk-width-1-1@m">
+                <div input placeholder="Search" type="text" (focusout)="handleChangeAndResetPage()"
+                     [formInput]="dataForm.get('searchField')">
+                </div>
+<!--                <div class="md-input-wrapper">-->
+<!--                  <label for="repository_name_search">Search...</label>-->
+<!--                  <input class="md-input" type="search" id="repository_name_search" formControlName="searchField">-->
+<!--                  <span class="md-input-bar"></span>-->
+<!--                </div>-->
 
-            </form>
+              </form>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
-  </div>
-
-  <div id="page_content_inner" class="whiteBackground uk-padding-remove-left uk-padding-remove-right">
-
-    <div class="uk-section uk-background-norepeat uk-background-cover uk-background-top-center"
+    <div class="uk-section uk-section-default uk-background-norepeat uk-background-cover uk-background-top-center"
          style="background-image: url('../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);" uk-height-viewport="offset-top: true; offset-bottom: 20;">
 
       <!-- TOP HELP CONTENT -->
@@ -50,51 +48,27 @@
           <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
           <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>
 
-          <div *ngIf="!errorMessage" class="uk-container">
+          <div *ngIf="!errorMessage" class="uk-container uk-container-large">
 
-            <div class="">
+            <div class="uk-padding-small uk-padding-remove-vertical">
               <div class="">
 
                 <div class="uk-margin-medium uk-margin-top repositoryAdminActions">
 
                   <form [formGroup]="dataForm" class="uk-form-horizontal uk-flex">
 
-                    <div class="uk-margin-right">
-                      <div class="">
-                        <label class="" for="quantity">Results per page </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="quantity" (change)="handleChangeAndResetPage()" formControlName="quantity">
-                            <option value="10">10</option>
-                            <option value="25" selected>25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                          </select>
-                        </div>
+                    <div class="uk-padding-xsmall uk-padding-remove-vertical">
+                      <div input placeholder="Order by" type="select" [formInput]="dataForm.get('order')"
+                           [options]="[{value: 'DSC', label: 'Descending'}, {value: 'ASC', label: 'Ascending'}]"
+                           (valueChange)="handleChangeAndResetPage()">
                       </div>
                     </div>
 
-                    <div class="uk-margin-right">
-
-                      <div class="uk-inline uk-margin-right">
-                        <label class="" for="orderBy">Order by </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">
-                            <option value="DSC" selected>Descending</option>
-                            <option value="ASC">Ascending</option>
-                          </select>
-                        </div>
+                    <div class="uk-padding-xsmall uk-padding-remove-vertical">
+                      <div input placeholder="Sort by" type="select" [formInput]="dataForm.get('orderField')"
+                           [options]="[{value: 'CREATION_DATE', label: 'Date'}, {value: 'REPOSITORY_NAME', label: 'Name'}]"
+                           (valueChange)="handleChangeAndResetPage()">
                       </div>
-
-                      <div class="uk-inline">
-                        <label class="" for="orderField">Sort by </label>
-                        <div class="uk-inline">
-                          <select class="uk-select" id="orderField" (change)="handleChangeAndResetPage()" formControlName="orderField">
-                            <option value="CREATION_DATE" selected>Date</option>
-                            <option value="REPOSITORY_NAME">Name</option>
-                          </select>
-                        </div>
-                      </div>
-
                     </div>
 
                     <div class="" style="margin-left:auto; margin-right:0;">
@@ -110,21 +84,26 @@
 
                 <div class="uk-width-1-1@m">
 
-                  <div style="display: flex;justify-content: space-between;">
+                  <div>
 
-                    <div *ngIf="piwiks" class="resultsInfo" style="margin-top: auto;">
-                      <span class="number">{{piwiks.total}}</span> RESULTS, PAGE <span class="number">{{(dataForm.get('page').value)*1 + 1}}</span> OF <span class="number">{{pages.length}}</span>
-                    </div>
+                    <mat-paginator *ngIf="piwiks" [length]="piwiks.total" [pageSize]="dataForm.get('quantity').value"
+                                   [pageSizeOptions]="[10, 25, 50, 100]" [pageIndex]="dataForm.get('page').value"
+                                   [showFirstLastButtons]="true" (page)="pageChange($event)">
+                    </mat-paginator>
 
-                    <div class="uk-inline">
-                      <ul class="uk-pagination" uk-margin>
-                        <li><a (click)="previousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>
-                        <li [ngClass]="{'uk-active': (this.dataForm.get('page').value == page) }" *ngFor="let page of pages">
-                          <a (click)="selectPage(page)">{{page+1}}</a>
-                        </li>
-                        <li><a (click)="nextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>
-                      </ul>
-                    </div>
+<!--                    <div *ngIf="piwiks" class="resultsInfo" style="margin-top: auto;">-->
+<!--                      <span class="number">{{piwiks.total}}</span> RESULTS, PAGE <span class="number">{{(dataForm.get('page').value)*1 + 1}}</span> OF <span class="number">{{pages.length}}</span>-->
+<!--                    </div>-->
+
+<!--                    <div class="uk-inline">-->
+<!--                      <ul class="uk-pagination" uk-margin>-->
+<!--                        <li><a (click)="previousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>-->
+<!--                        <li [ngClass]="{'uk-active': (this.dataForm.get('page').value == page) }" *ngFor="let page of pages">-->
+<!--                          <a (click)="selectPage(page)">{{page+1}}</a>-->
+<!--                        </li>-->
+<!--                        <li><a (click)="nextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>-->
+<!--                      </ul>-->
+<!--                    </div>-->
 
                   </div>
 
@@ -142,8 +121,8 @@
 
                   <!-- REPOSITORY CARD -->
                   <ng-container *ngIf="piwiks && piwiks.results.length>0">
-                    <div *ngFor="let piwik of piwiks.results" class="md-card repositoryCard">
-                      <div class="md-card-content large-padding">
+                    <div *ngFor="let piwik of piwiks.results" class="uk-card uk-card-default uk-margin-bottom">
+                      <div class="uk-card-body large-padding">
                         <div class="uk-text-meta">
                           Requested on: {{ piwik.creationDate | date : "yyyy-MM-dd" }}
                           <ng-container *ngIf="piwik.validated">
@@ -169,13 +148,13 @@
                   </ng-container>
 
 
-                  <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>
-                    <li><a (click)="previousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>
-                    <li [ngClass]="{'uk-active': (this.dataForm.get('page').value == page) }" *ngFor="let page of pages">
-                      <a (click)="selectPage(page)">{{page+1}}</a>
-                    </li>
-                    <li><a (click)="nextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>
-                  </ul>
+<!--                  <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>-->
+<!--                    <li><a (click)="previousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>-->
+<!--                    <li [ngClass]="{'uk-active': (this.dataForm.get('page').value == page) }" *ngFor="let page of pages">-->
+<!--                      <a (click)="selectPage(page)">{{page+1}}</a>-->
+<!--                    </li>-->
+<!--                    <li><a (click)="nextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>-->
+<!--                  </ul>-->
 
                 </div>
 
@@ -199,8 +178,196 @@
 
     </div>
 
-
   </div>
+
+<!--  <div class="repositoryAdminMenu">-->
+
+<!--    <div class="uk-margin-medium-left uk-margin-medium-right">-->
+<!--      <div class="uk-padding-small">-->
+<!--        <h3 class="heading_b">-->
+<!--          Metrics Admin-->
+<!--        </h3>-->
+<!--      </div>-->
+
+<!--      -->
+<!--    </div>-->
+
+<!--  </div>-->
+
+<!--  <div id="" class="whiteBackground uk-padding-remove-left uk-padding-remove-right">-->
+
+<!--    <div class="uk-section uk-background-norepeat uk-background-cover uk-background-top-center"-->
+<!--         style="background-image: url('../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);" uk-height-viewport="offset-top: true; offset-bottom: 20;">-->
+
+<!--      &lt;!&ndash; TOP HELP CONTENT &ndash;&gt;-->
+<!--      <help-content #topHelperContent [position]="'top'"-->
+<!--                    [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">-->
+<!--      </help-content>-->
+
+<!--      <div class="uk-grid">-->
+
+<!--        &lt;!&ndash; LEFT HELP CONTENT &ndash;&gt;-->
+<!--        <aside-help-content #leftHelperContent [position]="'left'"-->
+<!--                            [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">-->
+<!--        </aside-help-content>-->
+
+<!--        &lt;!&ndash; MIDDLE &ndash;&gt;-->
+<!--        <div class="uk-width-expand@m">-->
+
+<!--          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>-->
+<!--          <div *ngIf="successMessage" class="uk-alert uk-alert-success">{{ successMessage }}</div>-->
+
+<!--          <div *ngIf="!errorMessage" class="uk-container">-->
+
+<!--            <div class="">-->
+<!--              <div class="">-->
+
+<!--                <div class="uk-margin-medium uk-margin-top repositoryAdminActions">-->
+
+<!--                  <form [formGroup]="dataForm" class="uk-form-horizontal uk-flex">-->
+
+<!--                    <div class="uk-margin-right">-->
+<!--                      <div class="">-->
+<!--                        <label class="" for="quantity">Results per page </label>-->
+<!--                        <div class="uk-inline">-->
+<!--                          <select class="uk-select" id="quantity" (change)="handleChangeAndResetPage()" formControlName="quantity">-->
+<!--                            <option value="10">10</option>-->
+<!--                            <option value="25" selected>25</option>-->
+<!--                            <option value="50">50</option>-->
+<!--                            <option value="100">100</option>-->
+<!--                          </select>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="uk-margin-right">-->
+
+<!--                      <div class="uk-inline uk-margin-right">-->
+<!--                        <label class="" for="orderBy">Order by </label>-->
+<!--                        <div class="uk-inline">-->
+<!--                          <select class="uk-select" id="orderBy" (change)="handleChangeAndResetPage()" formControlName="order">-->
+<!--                            <option value="DSC" selected>Descending</option>-->
+<!--                            <option value="ASC">Ascending</option>-->
+<!--                          </select>-->
+<!--                        </div>-->
+<!--                      </div>-->
+
+<!--                      <div class="uk-inline">-->
+<!--                        <label class="" for="orderField">Sort by </label>-->
+<!--                        <div class="uk-inline">-->
+<!--                          <select class="uk-select" id="orderField" (change)="handleChangeAndResetPage()" formControlName="orderField">-->
+<!--                            <option value="CREATION_DATE" selected>Date</option>-->
+<!--                            <option value="REPOSITORY_NAME">Name</option>-->
+<!--                          </select>-->
+<!--                        </div>-->
+<!--                      </div>-->
+
+<!--                    </div>-->
+
+<!--                    <div class="" style="margin-left:auto; margin-right:0;">-->
+<!--                      <button class="uk-button uk-button-link" (click)="downloadCSV()">-->
+<!--                        <i class="fas fa-download uk-margin-small-right"></i>Export to CSV-->
+<!--                      </button>-->
+<!--                    </div>-->
+
+<!--                  </form>-->
+
+
+<!--                </div>-->
+
+<!--                <div class="uk-width-1-1@m">-->
+
+<!--                  <div style="display: flex;justify-content: space-between;">-->
+
+<!--                    <div *ngIf="piwiks" class="resultsInfo" style="margin-top: auto;">-->
+<!--                      <span class="number">{{piwiks.total}}</span> RESULTS, PAGE <span class="number">{{(dataForm.get('page').value)*1 + 1}}</span> OF <span class="number">{{pages.length}}</span>-->
+<!--                    </div>-->
+
+<!--                    <div class="uk-inline">-->
+<!--                      <ul class="uk-pagination" uk-margin>-->
+<!--                        <li><a (click)="previousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>-->
+<!--                        <li [ngClass]="{'uk-active': (this.dataForm.get('page').value == page) }" *ngFor="let page of pages">-->
+<!--                          <a (click)="selectPage(page)">{{page+1}}</a>-->
+<!--                        </li>-->
+<!--                        <li><a (click)="nextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>-->
+<!--                      </ul>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+
+
+<!--                  <hr class="adminResultsHeader">-->
+
+<!--                  <div *ngIf="loadingMessage" class="loading-big">-->
+<!--                    <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">-->
+<!--                      {{ loadingMessage }}-->
+
+<!--                    </div>-->
+<!--                    <div class="transparentFilm"></div>-->
+<!--                  </div>-->
+
+
+<!--                  &lt;!&ndash; REPOSITORY CARD &ndash;&gt;-->
+<!--                  <ng-container *ngIf="piwiks && piwiks.results.length>0">-->
+<!--                    <div *ngFor="let piwik of piwiks.results" class="md-card repositoryCard">-->
+<!--                      <div class="md-card-content large-padding">-->
+<!--                        <div class="uk-text-meta">-->
+<!--                          Requested on: {{ piwik.creationDate | date : "yyyy-MM-dd" }}-->
+<!--                          <ng-container *ngIf="piwik.validated">-->
+<!--                            . Validated on: {{ piwik.validationDate | date : "yyyy-MM-dd" }}-->
+<!--                          </ng-container>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                          <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top uk-inline">-->
+<!--                            <a *ngIf="piwik.validated" [routerLink]="['/repositoryAdmin/' + piwik.repositoryId + '/getImpact/show']">{{ piwik.repositoryName }}</a>-->
+<!--                            <a *ngIf="!piwik.validated" [routerLink]="['/repositoryAdmin/' + piwik.repositoryId + '/getImpact/instructions']">{{ piwik.repositoryName }}</a>-->
+<!--                          </div>-->
+<!--                          <ng-container *ngIf="!piwik.validated">-->
+<!--                            <button class="uk-button uk-button-primary validate uk-inline uk-float-right" (click)="confirmApproval(piwik.repositoryId)">Validate</button>-->
+<!--                          </ng-container>-->
+<!--                        </div>-->
+
+<!--                        <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>{{ piwik.repositoryId }}</div>-->
+<!--                        <div class="uk-margin-small-bottom"><span class="mute-title">Requestor: </span><span class="small-content">{{ piwik.requestorName }} - {{ piwik.requestorEmail }}</span></div>-->
+<!--                        <div class="uk-margin-small-bottom"><span class="mute-title">Matomo ID: </span><span class="small-content">{{ piwik.siteId }}</span></div>-->
+<!--                        <div class=""><span class="mute-title">Authentication Token: </span><span class="small-content">{{ piwik.authenticationToken }}</span></div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </ng-container>-->
+
+
+<!--                  <ul class="uk-pagination uk-margin-top uk-flex-right" uk-margin>-->
+<!--                    <li><a (click)="previousPage()" class="pagination_arrow"><span uk-pagination-previous></span></a></li>-->
+<!--                    <li [ngClass]="{'uk-active': (this.dataForm.get('page').value == page) }" *ngFor="let page of pages">-->
+<!--                      <a (click)="selectPage(page)">{{page+1}}</a>-->
+<!--                    </li>-->
+<!--                    <li><a (click)="nextPage()" class="pagination_arrow"><span uk-pagination-next></span></a></li>-->
+<!--                  </ul>-->
+
+<!--                </div>-->
+
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--        </div>-->
+
+<!--        &lt;!&ndash; RIGHT HELP CONTENT &ndash;&gt;-->
+<!--        <aside-help-content #rightHelperContent [position]="'right'"-->
+<!--                            [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">-->
+<!--        </aside-help-content>-->
+
+<!--      </div>-->
+
+<!--      &lt;!&ndash; BOTTOM HELP CONTENT &ndash;&gt;-->
+<!--      <help-content #bottomHelperContent [position]="'bottom'"-->
+<!--                    [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">-->
+<!--      </help-content>-->
+
+<!--    </div>-->
+
+
+<!--  </div>-->
 </div>
 
 <confirmation-dialog #confirmApprovalModal [title]="modalTitle" [isModalShown]="isModalShown"

@@ -59,9 +59,18 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
     this.getJobs();
   }
 
+  pageChange(event): void {
+    console.log(event);
+    this.currentPage = event.pageIndex;
+    this.itemsPerPage = event.pageSize;
+    console.log(this.currentPage);
+    this.getJobs();
+  }
 
-  getJobType(type: string) {
-    this.chosenJobType = type;
+
+  getJobType() {
+    // console.log(type);
+    // this.chosenJobType = type;
     this.currentPage = 0;
     this.getJobs();
   }
@@ -132,6 +141,7 @@ export class CompatibilityValidationHistoryComponent  implements OnInit {
         this.errorMessage = loadingUserJobsError;
       },
       () => {
+        console.log(this.jobsOfUser);
         if (this.currentFilter === 'all') {
           this.currentTotalJobs = this.jobsOfUser.totalJobs;
         } else if (this.currentFilter === 'successful') {

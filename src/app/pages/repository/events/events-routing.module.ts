@@ -9,11 +9,17 @@ const eventsRoutes: Routes = [
     path: '',
     component: ContentEventsOfRepositoryComponent,
     canActivate: [AuthGuardService],
+    data: {
+      hasSidebar: true
+    }
   },
   {
     path: ':topic',
     component: ContentEventsOfRepoEventslistComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
+    data: {
+      hasSidebar: true
+    }
   }
 ];
 

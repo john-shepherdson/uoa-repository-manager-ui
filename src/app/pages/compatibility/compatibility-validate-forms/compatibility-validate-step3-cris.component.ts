@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 @Component ({
   selector: 'compatibility-validate-step3-cris',
@@ -11,11 +11,11 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
   entitiesList: string[] = [];
   selectedAllEntities: boolean;
 
-  group: FormGroup;
+  group: UntypedFormGroup;
 
   @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit () {
     this.selectedAllEntities = true;
@@ -42,7 +42,7 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
 
   /* inputs the entities List into the FormArray */
   setEntitiesControls() {
-    let entities = <FormArray>this.group.controls['entities'];
+    let entities = <UntypedFormArray>this.group.controls['entities'];
     for ( let i = 0; i<this.entitiesList.length-1; i++ ) {
       entities.push(this.initEntities());
     }
@@ -50,7 +50,7 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
 
   /* selects/deselects all entities */
   toggleSelectAllContentRules() {
-    let entities = <FormArray>this.group.controls['entities'];
+    let entities = <UntypedFormArray>this.group.controls['entities'];
     if (this.selectedAllEntities) {
       this.selectedAllEntities = false;
       entities.controls.map(x => x.get('entity').setValue(false));
@@ -70,7 +70,7 @@ export class CompatibilityValidateStep3CrisComponent implements OnInit {
     let emitted: any[] = [];
     let chosenEntities: string[] = [];
     console.log(`saving the selected entities`);
-    let entities = <FormArray>this.group.controls['entities'];
+    let entities = <UntypedFormArray>this.group.controls['entities'];
     for (let i=0; i<this.entitiesList.length; i++ ) {
       if (entities.at(i).get('entity').value) {
         chosenEntities.push(this.entitiesList[i]);

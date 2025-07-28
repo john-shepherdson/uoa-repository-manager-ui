@@ -1,9 +1,9 @@
-<div *ngIf="ruleSets" [formGroup]="group" class="form-group radioButtonForm">
+<div *ngIf="ruleSets" [formGroup]="group" class="form-group uk-margin-top">
 
-  <div class="radioButtonForm uk-margin-bottom">
-    <div *ngFor="let set of ruleSets; let set_index = index" class="">
+  <div class="radioButtonForm uk-margin-medium-bottom">
+    <div *ngFor="let set of ruleSets; let set_index = index" class="uk-margin-small-bottom">
 
-      <label for="ruleSet_{{ set_index }}" class="uk-button uk-link-muted visible_uk_links" style="display: block; text-align: left;">
+      <label for="ruleSet_{{ set_index }}" class="uk-link-muted visible_uk_links" style="display: block; text-align: left;">
         <input id="ruleSet_{{ set_index }}" value="{{ set.id }}" formControlName="ruleSet" name="ruleSet" type="radio"
                (change)="refreshLists()" [checked]="set_index == 0">
         <span class="uk-margin-small-left">{{ set.name }}</span>
@@ -12,14 +12,10 @@
   </div>
 
   <button class="uk-button uk-button-link" (click)="toggleShowRules()">
-    <span *ngIf="showRules">
-      <i class="fa fa-angle-up"></i>
-      Hide Content and Usage Rules</span>
-    <span *ngIf="!showRules">
-      <i class="fa fa-angle-down"></i>
-      Show Content and Usage Rules</span>
+    <span *ngIf="showRules"><i class="fa fa-angle-up uk-margin-small-right"></i>Hide Content and Usage Rules</span>
+    <span *ngIf="!showRules"><i class="fa fa-angle-down uk-margin-small-right"></i>Show Content and Usage Rules</span>
   </button>
-  <div *ngIf="showRules" class="uk-grid uk-animation-fade">
+  <div *ngIf="showRules" class="uk-grid uk-animation-fade uk-margin-top">
     <div class="uk-width-1-2 uk-grid-item-match uk-first-column" formArrayName="contentRules">
       <div class="">
         <div class="checkbox selectAll uk-margin-small-bottom">
@@ -33,7 +29,7 @@
 
           <label>
             <input type="checkbox" [checked]="selectedAllContentRules" (change)="toggleSelectAllContentRules()">
-            <span>Select / Deselect All Content Rules</span>
+            <span class="uk-margin-small-left uk-text-bold">Select / Deselect All Content Rules</span>
           </label>
         </div>
         <div *ngFor="let content of group.controls['contentRules'].controls; let content_index = index" class="checkbox">
@@ -55,7 +51,7 @@
         <div class="checkbox selectAll uk-margin-small-bottom">
           <label>
             <input type="checkbox" [checked]="selectedAllUsageRules" (change)="toggleSelectAllUsageRules()">
-            <span>Select / Deselect All Usage Rules</span>
+            <span class="uk-margin-small-left uk-text-bold">Select / Deselect All Usage Rules</span>
           </label>
         </div>
         <div *ngFor="let usage of group.controls['usageRules'].controls; let usage_index = index" class="checkbox">
