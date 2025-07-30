@@ -6,6 +6,7 @@ import { ForbiddenPageComponent } from './shared/reusablecomponents/403-forbidde
 import { EmptyPageComponent } from './pages/emptypage/empty-page.component';
 import { AboutComponent } from './pages/landing/about/about.component';
 import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.component';
+import { GatewayDashboardRouting } from './pages/gateway-dashboard/gateway-dashboard.routing';
 
 const appRoutes: Routes = [
   {
@@ -58,6 +59,10 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./pages/adminPg/adminPg.module').then(m => m.AdminPgModule),
+  },
+  {
+    path: 'gateway-dashboard',
+    children: GatewayDashboardRouting
   },
   {
     path: '403-forbidden',

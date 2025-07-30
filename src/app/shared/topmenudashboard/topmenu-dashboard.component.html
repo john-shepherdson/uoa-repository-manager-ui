@@ -66,6 +66,10 @@
 <!--                          <a ng-reflect-router-link="/user-info" ng-reflect-query-params="[object Object]" href="/user-info">User information</a>-->
 <!--                        </li>-->
                         <li *ngIf="getIsUserAdmin()" class="uk-nav-divider"></li>
+                        <li *ngIf="getUserGatewayAdmin()" class="">
+                          <a [routerLink]="['/gateway-dashboard']" class="">Gateway Admin Options</a>
+                        </li>
+                        <li *ngIf="getUserGatewayAdmin()" class="uk-nav-divider"></li>
                         <li><a (click)="logout()">Log out</a></li>
                       </ul>
                     </div>

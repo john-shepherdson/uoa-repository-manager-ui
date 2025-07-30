@@ -148,8 +148,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (hostSegments.length === 4) { // URL should be in format: <community-id>.<service>.<domain>.<tld>, e.g., 'egi.provide.openaire.eu'
       this.communityService.loadCommunity(communityId).subscribe(
-        communityId => {
-          console.log('Community loaded:', communityId);
+        community => {
+          console.log('Community loaded:', community);
         },
         error => {
           console.error('Failed to load community:', error);
@@ -160,8 +160,8 @@ export class AppComponent implements OnInit, OnDestroy {
       // Handle error - maybe redirect to the default org
       if (environment.production === false) {
         this.communityService.loadCommunity('egi').subscribe(
-          communityId => {
-            console.log('Mock community loaded:', communityId);
+          community => {
+            console.log('Mock community loaded:', community);
           },
           error => {
             console.error('Failed to load community:', error);

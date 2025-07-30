@@ -136,8 +136,8 @@ export class SideMenuComponent implements OnInit {
   }
 
   getIsUserAdmin() {
-    this.isUserAdmin = (this.authService.getUserRole().includes('SUPER_ADMINISTRATOR') ||
-      this.authService.getUserRole().includes('CONTENT_PROVIDER_DASHBOARD_ADMINISTRATOR'));
+    this.isUserAdmin = (this.authService.getUserRole().includes('Super_Administrator') ||
+      this.authService.getUserRole().includes('Content_Provider_Dashboard_Administrator'));
     return this.isUserAdmin;
   }
 

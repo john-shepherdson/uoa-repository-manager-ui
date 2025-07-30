@@ -36,8 +36,8 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canLoad () {
 
     if (this.authenticationService.getUserRole() &&
-        (this.authenticationService.getUserRole().includes('SUPER_ADMINISTRATOR') ||
-         this.authenticationService.getUserRole().includes('CONTENT_PROVIDER_DASHBOARD_ADMINISTRATOR')) ) {
+        (this.authenticationService.getUserRole().includes('Super_Administrator') ||
+         this.authenticationService.getUserRole().includes('Content_Provider_Dashboard_Administrator')) ) {
       console.log('Admin recognized');
       return true;
     }

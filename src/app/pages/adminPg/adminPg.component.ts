@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
 
 @Component ({
   selector: 'app-admin',
-  // templateUrl: '../pageContainer.html'
   templateUrl: './adminPg.component.html'
 })
 
