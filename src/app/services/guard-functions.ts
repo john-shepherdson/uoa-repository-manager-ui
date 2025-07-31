@@ -7,12 +7,12 @@ export const GatewayAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, 
   const auth = inject(AuthenticationService);
   const router = inject(Router);
 
-  // your actual check
+  // check role
   if (auth.getUserRole().includes('beta_gateway')) {
     return true;
   }
 
-  // redirect to unothorized, preserving the attempted URL
+  // redirect to unauthorized, preserving the attempted URL
   return router.createUrlTree(['/403-forbidden'], {
     // queryParams: { returnUrl: state.url }
   });
