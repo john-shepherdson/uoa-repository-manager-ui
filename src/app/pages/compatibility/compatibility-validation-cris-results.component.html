@@ -1,0 +1,266 @@
+<div id="page_content">
+  <div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">Validation results for</h2>
+
+    <!-- TOP HELP CONTENT -->
+    <help-content #topHelperContent [position]="'top'"
+                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+    <div class="uk-grid">
+
+      <!-- LEFT HELP CONTENT -->
+      <aside-help-content #leftHelperContent [position]="'left'"
+                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
+      <!-- MIDDLE -->
+      <div class=" uk-width-expand@m">
+
+        <div>
+          <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+          <div *ngIf="loadingMessage" class="loading-big">
+            <div class="loader-big"
+                 style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">
+              {{ loadingMessage }}
+            </div>
+            <div class="transparentFilm"></div>
+          </div>
+
+
+          <div *ngIf="jobSummary">
+
+            <div class="uk-margin-medium-bottom">
+              <h4 class="uk-h4 uk-text-primary uk-scrollspy-inview uk-animation-slide-top-medium"
+                  uk-scrollspy-class=""><span>{{jobSummary.url}}</span></h4>
+              <div class="uk-margin-small">by {{jobSummary.admin}}</div>
+            </div>
+
+<!--            <div class="uk-grid">-->
+<!--              <div class="uk-width-3-4">-->
+<!--                <div id="container_C" class="md-card tabs">-->
+<!--                  <div class="md-card-content">-->
+<!--                    <highcharts-chart-->
+<!--                      [Highcharts] = "HighchartsForContent"-->
+<!--                      [options] = "chartOptionsForContent"-->
+<!--                      style="width: 100%; height: 400px; display: block; margin-top: 20px"-->
+<!--                    ></highcharts-chart>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="uk-width-1-4">-->
+<!--                <div id="container_U" class="md-card tabs">-->
+<!--                  <div class="md-card-content">-->
+<!--                    <highcharts-chart-->
+<!--                      [Highcharts] = "HighchartsForUsage"-->
+<!--                      [options] = "chartOptionsForUsage"-->
+<!--                      style="width: 100%; height: 400px; display: block; margin-top: 20px"-->
+<!--                    ></highcharts-chart>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+
+
+
+            <div class="md-card tabs">
+              <div class="md-card-content">
+
+                <div class="uk-grid uk-grid-divider" data-uk-grid-margin="">
+                  <div class="uk-width-3-4@m uk-row-first">
+                    <ul class="uk-tab" data-uk-tab="{connect:'#tabs_anim4', animation:'slide-left'}">
+                      <li id="forContent" class="uk-active" aria-expanded="true"><a href="#">for Content</a></li>
+                      <li id="forUsage" aria-expanded="false" class=""><a href="#">for Usage</a></li>
+                    </ul>
+                    <ul id="tabs_anim4" class="uk-switcher uk-margin">
+                      <li aria-hidden="false" class="uk-active" style="animation-duration: 200ms;">
+                        <div class="uk-grid-margin uk-grid uk-grid-stack">
+                          <div class="uk-width-1-1@m uk-first-column">
+                            <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                              <div *ngIf="noContent" class="uk-alert">{{ noContent }}</div>
+                              <div *ngIf="this.contentResults && this.contentResults.length > 0">
+                                <ul class="uk-tab" data-uk-tab="{connect:'#tabs_anim5', animation:'slide-left'}">
+                                  <li *ngFor="let tab of contentResults" class="uk-active" aria-expanded="true">
+                                    <a href="#">{{ splitCamelCase(tab.set) }}</a>
+                                  </li>
+                                </ul>
+
+                                <ul id="tabs_anim5" class="uk-switcher uk-margin">
+                                  <li *ngFor="let content of contentResults">
+
+                                    <table class="uk-table uk-table-striped uk-table-middle rules-table">
+                                      <thead>
+                                      <tr>
+                                        <th class="uk-width-2-10">Error</th>
+                                        <th class="uk-width-1-10 uk-text-nowrap"># of records</th>
+                                        <th class="uk-width-2-10 uk-text-nowrap">Status</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                      <tr *ngFor="let contentRule of content.rulesFailedCounts | keyvalue" class="el-item">
+                                        <td class="uk-table-shrink">
+                                          <div class="el-title">{{ contentRule.key }}</div>
+                                        </td>
+
+                                        <td class="uk-table-shrink">
+                                          <div class="el-title">{{ contentRule.value }}</div>
+                                        </td>
+                                        <td>
+                                          <div *ngIf="contentRule.value > 0">
+                                            <i class="material-icons" style="color: #cd242b">highlight_off</i>
+                                            <a class="warninglink viewErrors uk-margin-left"
+                                               (click)="viewErrors(contentRule.key, content.errors, content.metadataPrefix)">
+                                              <span>View Errors</span></a>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      </tbody>
+                                    </table>
+
+                                  </li>
+                                </ul>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li aria-hidden="true" style="animation-duration: 200ms;" class="">
+                        <div class="uk-grid-margin uk-grid uk-grid-stack">
+                          <div class="uk-width-1-1@m uk-first-column">
+                            <div class="uk-overflow-auto uk-scrollspy-inview uk-animation-slide-top-medium">
+                              <div *ngIf="noUsage" class="uk-alert">{{ noUsage }}</div>
+                              <div *ngIf="usageResults && usageResults.length > 0">
+
+                                <table class="uk-table uk-table-striped uk-table-middle rules-table">
+                                  <thead>
+                                  <tr>
+                                    <th class="uk-width-2-10">Error</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <ng-container *ngFor="let content of usageResults" class="el-item">
+                                    <tr *ngFor="let contentRule of content.rulesFailedCounts | keyvalue" class="el-item">
+<!--                                      <tr >-->
+                                      <td class="uk-table-shrink">
+                                        <div class="el-title">{{ contentRule.key }}</div>
+                                      </td>
+                                    </tr>
+                                  </ng-container>
+                                  </tbody>
+                                </table>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="uk-width-1-4@m">
+                    <div class="uk-margin-medium-bottom">
+                      <p>
+                        Score for content:
+                        <span *ngIf="jobSummary.contentScore>=50" class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">{{ jobSummary.contentScore }}</span>
+                        <span *ngIf="jobSummary.contentScore<50" class="uk-badge uk-badge-danger uk-text-upper uk-margin-small-left">{{ jobSummary.contentScore }}</span>
+                      </p>
+                      <p>
+                        Score for usage:
+                        <span *ngIf="jobSummary.usageScore>=50" class="uk-badge uk-badge-success uk-text-upper uk-margin-small-left">{{ jobSummary.usageScore }}</span>
+                        <span *ngIf="jobSummary.usageScore<50" class="uk-badge uk-badge-danger uk-text-upper uk-margin-small-left">{{ jobSummary.usageScore }}</span>
+                      </p>
+                    </div>
+                    <h2 class="heading_c uk-margin-small-bottom">Details</h2>
+
+                    <ul class="md-list md-list-addon">
+                      <li>
+                        <div class="md-list-addon-element">
+                          <!--<img class="md-user-image md-list-addon-avatar dense-image dense-ready" src="assets/img/avatars/avatar_02_tn@2x.png" alt="" data-dense-cap="2">-->
+                        </div>
+                        <div class="md-list-content">
+                          <span class="md-list-heading">Compatibility Test</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="md-list-addon-element">
+                          <i class="md-list-addon-icon material-icons">gavel</i>
+                        </div>
+                        <div class="md-list-content">
+                          <span class="md-list-heading">Cris</span>
+                          <span class="uk-text-small uk-text-muted">Guidelines</span>
+                        </div>
+                      </li>
+<!--                      <li>-->
+<!--                        <div class="md-list-addon-element">-->
+<!--                          <i class="md-list-addon-icon material-icons">collections_bookmark</i>-->
+<!--                        </div>-->
+<!--                        <div class="md-list-content">-->
+<!--                          <span class="md-list-heading">{{ jobSummary.validationSet }}</span>-->
+<!--                          <span class="uk-text-small uk-text-muted">Validation set</span>-->
+<!--                        </div>-->
+<!--                      </li>-->
+                      <li>
+                        <div class="md-list-addon-element">
+                          <i class="md-list-addon-icon material-icons"></i>
+                        </div>
+                        <div class="md-list-content uk-margin-small-bottom">
+                          <span class="md-list-heading">{{ jobSummary.dateStarted | date }}</span>
+                          <span class="uk-text-small uk-text-muted">Started</span>
+                        </div>
+                        <div class="md-list-content">
+                          <span class="md-list-heading">
+                            <ng-container *ngIf="jobSummary.dateFinished; else notFinished">{{ jobSummary.dateFinished | date }}</ng-container>
+                            <ng-template #notFinished>--</ng-template>
+                          </span>
+<!--                            {{ jobSummary.dateFinished ? jobSummary.dateFinished : '&#45;&#45;' }}</span>-->
+                          <span class="uk-text-small uk-text-muted">Ended</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="md-list-addon-element">
+                          <i class="md-list-addon-icon material-icons"></i>
+                        </div>
+                        <div class="md-list-content">
+                          <span class="md-list-heading">{{ jobDuration }}</span>
+                          <span class="uk-text-small uk-text-muted">Duration</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT HELP CONTENT -->
+      <aside-help-content #rightHelperContent [position]="'right'"
+                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+      </aside-help-content>
+
+    </div>
+
+    <!-- BOTTOM HELP CONTENT -->
+    <help-content #bottomHelperContent [position]="'bottom'"
+                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+    </help-content>
+
+  </div>
+</div>
+
+
+<confirmation-dialog #checkErrors [title]="modalTitle" [isModalShown]="false" [hideModalButton]="'OK'">
+  <div>
+    <p>See the list of errors found for this specific rule</p>
+    <a *ngFor="let er of currentErrors" class="uk-display-block" target="_blank" href="{{ linkToError(er) }}">{{ er.message }}</a>
+  </div>
+</confirmation-dialog>
+

@@ -1,0 +1,22 @@
+<div id="sidebar_main" data-uk-sticky="end: .sidebar_main_swipe;" class="uk-visible@m uk-sticky uk-sticky-fixed" offset="65" style="position: sticky; top: 65px;">
+  <div sidebar-content="">
+    <div id="sidebar_toggle" (click)="toggleSidebar()"></div>
+    <div id="sidebar_content" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+      <div class="menu_section uk-margin-large-top ng-star-inserted" style="min-height: 30vh;">
+        <ul data-uk-nav="duration: 400" class="uk-list uk-nav uk-nav-default">
+          <li class="uk-parent" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./datasource/search']" title="Datasources" role="button">
+              <div class="uk-width-auto ng-star-inserted">
+                <div class="menu-icon">
+                  <span class="material-symbols-outlined">manage_search</span>
+                </div>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Datasources</span>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>

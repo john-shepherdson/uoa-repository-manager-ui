@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { JobsOfUser, StoredJob } from '../domain/typeScriptClasses';
+import {CrisStoredJob, JobsOfUser, StoredJob} from '../domain/typeScriptClasses';
 import { URLParameter } from '../domain/url-parameter';
 
 const headerOptions = {
@@ -26,6 +26,13 @@ export class MonitorService {
     console.log(`knocking on: ${url}`);
 
     return this.httpClient.get<StoredJob>(url, headerOptions);
+  }
+
+  getCrisJobSummary(jobId: string, groupBy: string): Observable<CrisStoredJob> {
+    const url = `${this.apiUrl}cris/job?jobId=${jobId}&groupBy=${groupBy}`;
+    console.log(`knocking on: ${url}`);
+
+    return this.httpClient.get<CrisStoredJob>(url, headerOptions);
   }
 
   getJobsOfUser(params: URLParameter[]): Observable<JobsOfUser> {

@@ -3,8 +3,7 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { environment } from '../../../environments/environment';
-import { CommunityContextService } from "../../services/communityContext.service";
+import { CommunityContextService } from '../../services/communityContext.service';
 
 @Component({
   selector: 'top-menu-landing',
@@ -64,8 +63,8 @@ export class TopmenuLandingComponent implements OnInit {
   }
 
   getIsUserAdmin() {
-    this.isUserAdmin = (this.authService.getUserRole().includes('SUPER_ADMINISTRATOR') ||
-                        this.authService.getUserRole().includes('CONTENT_PROVIDER_DASHBOARD_ADMINISTRATOR'));
+    this.isUserAdmin = (this.authService.getUserRole().includes('Super_Administrator') ||
+                        this.authService.getUserRole().includes('Content_Provider_Dashboard_Administrator'));
     return this.isUserAdmin;
   }
 }

@@ -374,6 +374,39 @@ export class StoredJob extends JobForValidation implements IsSerializable {
   filteredScores: { [index: string]: number };
 }
 
+export class CrisStoredJob implements IsSerializable {
+  id: number;
+  url: string;
+  admin: string;
+  status: string;
+  usageScore: number;
+  contentScore: number;
+  totalRecords: number;
+  usageJobStatus: string;
+  contentJobStatus: string;
+  dateSubmitted: Date;
+  dateStarted: Date;
+  dateFinished: Date;
+  ruleResults: ValidationResults[] = [];
+}
+
+export class ValidationResults implements IsSerializable {
+  metadataPrefix: string;
+  set: string;
+  type: string;
+  count: number;
+  failed: number;
+  rulesFailedCounts: Map<string, number>;
+  errors: ValidationError[];
+}
+
+export class ValidationError implements IsSerializable {
+  error: string;
+  identifier: string;
+  message: string;
+  metadataPrefix: string;
+}
+
 export class AdvQueryObject implements IsSerializable {
   datasource: string;
   topic: string;
@@ -641,10 +674,16 @@ export class Timezone {
   offset: number;
 }
 
+export class ValidationSet {
+  spec: string;
+  name: string;
+  descriptions: string[];
+}
+
 export class InterfaceInformation implements IsSerializable {
 
   identified: boolean;
-  sets: string[];
+  sets: ValidationSet[];
   adminEmails: string[];
 }
 
