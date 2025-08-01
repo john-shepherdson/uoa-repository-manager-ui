@@ -1,8 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { environment } from "../../../../environments/environment";
-import { Datasource } from "../domain/datasource.domain";
-import { Params } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import { Datasource } from '../domain/datasource.domain';
+import { Params } from '@angular/router';
+import { Paging } from '../../../domain/paging';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class DatasourceSearchService {
 
   search(queryParams: Params) {
 
-    let url = this.baseUrl + '/datasources';
+    const url = this.baseUrl + '/datasources';
     // Option A: leverage HttpParams.fromObject
     const params = new HttpParams({ fromObject: queryParams });
 
@@ -30,6 +31,6 @@ export class DatasourceSearchService {
     //   }
     // });
 
-    return this.http.get<Datasource[]>(url, {params: params});
+    return this.http.get<Paging<Datasource>>(url, {params: params});
   }
 }

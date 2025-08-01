@@ -9,21 +9,106 @@
           <div class="md-top-bar">
             <div class="uk-width-1-3@l uk-margin-auto">
               <form class="uk-search uk-search-default uk-width-1-1@m">
-                <div input placeholder="Search" type="text"
-                     [formInput]="keyword">
+                <div input placeholder="Search" type="text" [formInput]="filterForm.get('keyword')"
+                     (focusout)="handleFilterChanges('keyword')">
                 </div>
               </form>
             </div>
           </div>
         </div>
 
-        <div *ngFor="let datasource of datasources" >
-          <div class="uk-card uk-card-default uk-card-body uk-margin-medium-bottom">
-            <pre>{{ datasource | json }}</pre>
+      </div>
+    </div>
+
+    <div class="uk-section uk-section-default uk-background-norepeat uk-background-cover uk-background-top-center"
+         style="background-image: url('../../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);">
+
+      <div class="uk-flex uk-flex-center">
+        <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
+      </div>
+
+
+      <div *ngIf="!errorMessage" class="uk-container uk-container-large">
+
+        <div class="uk-padding-small uk-padding-remove-vertical">
+
+          <div class="uk-margin-medium uk-margin-top repositoryAdminActions">
+
+            <form [formGroup]="filterForm" class="uk-form-horizontal uk-flex">
+
+              <div class="uk-padding-xsmall uk-padding-remove-vertical">
+                <div input placeholder="Order" type="select" [formInput]="filterForm.get('order')"
+                     [options]="[{value: 'DESCENDING', label: 'Descending'}, {value: 'ASCENDING', label: 'Ascending'}]"
+                     (valueChange)="handleFilterChanges('order')">
+                </div>
+              </div>
+
+              <div class="uk-padding-xsmall uk-padding-remove-vertical">
+                <div input placeholder="Sort by" type="select" [formInput]="filterForm.get('sort')"
+                     [options]="sortByOptions" (valueChange)="handleFilterChanges('sort')">
+                </div>
+              </div>
+
+<!--                  <div class="" style="margin-left:auto; margin-right:0;">-->
+<!--                    <button class="uk-button uk-button-link" (click)="downloadCSV()">-->
+<!--                      <i class="fas fa-download uk-margin-small-right"></i>Export to CSV-->
+<!--                    </button>-->
+<!--                  </div>-->
+
+            </form>
+
           </div>
+
+          <div class="uk-width-1-1@m">
+
+            <div>
+              <mat-paginator *ngIf="datasources" [length]="datasources.total" [pageSizeOptions]="[10, 25, 50, 100]"
+                             [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value"
+                             [pageIndex]="filterForm.get('page').value"
+                             (page)="handlePaginationChanges($event)">
+              </mat-paginator>
+            </div>
+
+            <hr class="adminResultsHeader">
+
+            <div *ngIf="loadingMessage; else results" class="loading-big">
+              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+              <div class="transparentFilm"></div>
+            </div>
+
+            <ng-template #results>
+              <div *ngFor="let datasource of datasources?.results" >
+                <div class="uk-card uk-card-default uk-card-body uk-margin-medium-bottom">
+                  <div class="uk-flex uk-flex-between">
+                    <h5>{{ datasource.officialname }}
+                      <a *ngIf="datasource.websiteurl" class="material-icons" href="{{datasource.websiteurl}}" target="_blank">open_in_new</a>
+                    </h5>
+                    <img *ngIf="datasource.logourl" src="{{datasource.logourl}}" alt="logo image">
+                  </div>
+                  <p *ngIf="datasource.englishname" class="uk-text-italic">({{ datasource.englishname }})</p>
+                  <div *ngIf="datasource.description">
+                    <span>Description:</span>
+                    <p>{{ datasource.description }}</p>
+                  </div>
+                  <div *ngIf="datasource.organizations && datasource.organizations.length" class="">
+                    <span>Organizations:</span>
+                    <span *ngFor="let organization of datasource.organizations" class="uk-flex uk-flex-middle">
+                      <br><span>{{ organization.legalname }}</span>
+                      <a *ngIf="organization.websiteurl" href="{{organization.websiteurl}}" class="uk-flex uk-flex-middle"><span class="material-icons">open_in_new</span></a>
+                    </span>
+                  </div>
+<!--                  <pre>{{ datasource | json }}</pre>-->
+                </div>
+              </div>
+            </ng-template>
+
+
+          </div>
+
         </div>
 
       </div>
+
     </div>
 
   </div>
