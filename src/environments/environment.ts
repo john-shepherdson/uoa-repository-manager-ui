@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   AAI_LOGOUT: 'https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=',
   API_ENDPOINT: '/uoa-repository-manager-service',
+  LOGO_URL: 'https://beta.explore.openaire.eu/utils-service/download/',
   MATOMO_URL: 'https://analytics.openaire.eu/',
   MATOMO_SITE: 9222222,
   // FAQ_ENDPOINT: 'http://88.197.53.69:5555/api',

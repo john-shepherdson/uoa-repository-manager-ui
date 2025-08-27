@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CommunityContextService } from '../../services/communityContext.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'top-menu-dashboard',
@@ -8,6 +9,8 @@ import { CommunityContextService } from '../../services/communityContext.service
 })
 
 export class TopmenuDashboardComponent implements OnInit {
+  baseLogoUrl = environment.LOGO_URL;
+
   userLoggedIn = false;
   userName = '';
   isUserAdmin = false;
@@ -15,8 +18,6 @@ export class TopmenuDashboardComponent implements OnInit {
   communityLogo?: string;
 
   inBeta: boolean;
-
-  showSideBar = true;
 
   constructor(public authService: AuthenticationService, private communityService: CommunityContextService) { }
 
@@ -27,23 +28,14 @@ export class TopmenuDashboardComponent implements OnInit {
 
     this.communityService.community.subscribe({
       next: (community) => {
-        if (community !== null)
-          this.communityLogo = community.logoUrl;
+        if (community !== null) {
+          this.communityLogo = this.baseLogoUrl + community.logoUrl;
+        }
       }
     });
 
     const baseUrl = window.location.origin;
     this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
-  }
-
-  toggleSideMenu() {
-    const body = document.getElementsByTagName('body')[0];
-    if (this.showSideBar === true) {
-      body.classList.remove('sidebar_main_open');
-    } else {
-      body.classList.add('sidebar_main_open');
-    }
-    this.showSideBar = !this.showSideBar;
   }
 
   onClick(id: string) {
@@ -74,8 +66,9 @@ export class TopmenuDashboardComponent implements OnInit {
   parseUsername() {
     let firstLetters = '';
     const matches = this.getUserName().match(/\b(\w)/g);
-    if (matches)
+    if (matches) {
       firstLetters += matches.join('');
+    }
     return firstLetters;
   }
 

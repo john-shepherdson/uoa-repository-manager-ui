@@ -4,14 +4,17 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CommunityContextService } from '../../services/communityContext.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'top-menu-landing',
   templateUrl: './topmenu-landing.component.html',
-  styleUrls: ['../../../assets/css/landingpage/theme.css','../../../assets/css/landingpage/custom.css','../../../assets/css/landingpage/custom-provide.css','./topmenu-landing.component.css'],
+  styleUrls: ['../../../assets/css/landingpage/theme.css', '../../../assets/css/landingpage/custom.css', '../../../assets/css/landingpage/custom-provide.css', './topmenu-landing.component.css'],
 })
 
 export class TopmenuLandingComponent implements OnInit {
+  baseLogoUrl = environment.LOGO_URL;
+
   userLoggedIn = false;
   userName = '';
   isUserAdmin = false;
@@ -28,8 +31,9 @@ export class TopmenuLandingComponent implements OnInit {
 
     this.communityService.community.subscribe({
       next: (community) => {
-        if (community !== null)
-          this.communityLogo = community.logoUrl;
+        if (community !== null) {
+          this.communityLogo = this.baseLogoUrl + community.logoUrl;
+        }
       }
     });
 

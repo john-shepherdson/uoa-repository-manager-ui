@@ -8,7 +8,7 @@ import { RepositoryService } from './services/repository.service';
 import { RepositorySnippet } from './domain/typeScriptClasses';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { CommunityContextService } from './services/communityContext.service';
-import { DynamicStylesService } from "./services/dynamicStyles.service";
+import { DynamicStylesService } from './services/dynamicStyles.service';
 
 @Component({
   selector: 'oa-repo-manager',
@@ -147,27 +147,19 @@ export class AppComponent implements OnInit, OnDestroy {
     const communityId = hostSegments[0];
 
     if (hostSegments.length === 4) { // URL should be in format: <community-id>.<service>.<domain>.<tld>, e.g., 'egi.provide.openaire.eu'
-      this.communityService.loadCommunity(communityId).subscribe(
-        community => {
-          console.log('Community loaded:', community);
-        },
-        error => {
-          console.error('Failed to load community:', error);
-          // Handle error - maybe redirect to default org
-        }
-      );
+      this.communityService.loadCommunity(communityId);
     } else { // If the host is not of the form <community-id>.<service>.<domain>.<tld>
       // Handle error - maybe redirect to the default org
       if (environment.production === false) {
-        this.communityService.loadCommunity('egi').subscribe(
-          community => {
-            console.log('Mock community loaded:', community);
-          },
-          error => {
-            console.error('Failed to load community:', error);
-            // Handle error - maybe redirect to default org
-          }
-        );
+        // this.communityService.loadCommunity('egi').subscribe(
+        //   community => {
+        //     console.log('Mock community loaded:', community);
+        //   },
+        //   error => {
+        //     console.error('Failed to load community:', error);
+        //     // Handle error - maybe redirect to default org
+        //   }
+        // );
       }
     }
   }
