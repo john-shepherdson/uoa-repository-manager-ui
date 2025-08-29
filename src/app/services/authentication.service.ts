@@ -12,7 +12,7 @@ export class AuthenticationService {
               private http: HttpClient) {}
 
   private apiUrl: string = environment.API_ENDPOINT;
-  private loginUrl = environment.API_ENDPOINT + '/openid_connect_login';
+  private loginUrl = environment.API_ENDPOINT + '/oauth2/authorization/openaire';
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
@@ -36,6 +36,7 @@ export class AuthenticationService {
       sessionStorage.setItem('state.location', '/myDataSources');
     }
     console.log('redirect location', sessionStorage.getItem('state.location'));
+    console.log('login to -> ', this.loginUrl);
     window.location.href = this.loginUrl;
   }
 
@@ -44,10 +45,10 @@ export class AuthenticationService {
     sessionStorage.clear();
     this.isLoggedIn_.next(false);
     console.log('logging out, calling:');
-    console.log(`${this.apiUrl}/openid_logout`);
+    console.log(`${this.apiUrl}/logout`);
 
     /*window.location.href = `${this.apiUrl}/openid_logout`;*/
-    window.location.href = `${environment.AAI_LOGOUT + window.location.origin + this.apiUrl}/openid_logout`;
+    window.location.href = `${environment.AAI_LOGOUT + window.location.origin + this.apiUrl}/logout`;
   }
 
   public tryLogin() {
