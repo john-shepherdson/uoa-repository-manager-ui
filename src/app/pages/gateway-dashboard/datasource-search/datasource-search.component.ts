@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { DatasourceSearchService } from "../services/datasource-search.service";
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { Datasource } from "../domain/datasource.domain";
 import { InputComponent, Option } from '../../../shared/input.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -14,7 +14,6 @@ import { objectKeys } from 'codelyzer/util/objectKeys';
   templateUrl: './datasource-search.component.html',
   imports: [
     NgForOf,
-    JsonPipe,
     InputComponent,
     ReactiveFormsModule,
     NgIf,

@@ -62,7 +62,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'gateway-dashboard',
-    children: GatewayDashboardRouting
+    loadChildren: () => import('./pages/gateway-dashboard/gateway-dashboard.routing').then(m => m.GatewayDashboardRouting),
+    // children: GatewayDashboardRouting
   },
   {
     path: '403-forbidden',

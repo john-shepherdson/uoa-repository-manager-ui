@@ -1,10 +1,13 @@
 import { Route } from '@angular/router';
 import { GatewayAdminGuard } from '../../services/guard-functions';
+import { GatewayDashboardComponent } from "./gateway-dashboard.component";
+import { DatasourceSearchComponent } from "./datasource-search/datasource-search.component";
+import { RequestsComponent } from "./requests/requests.component";
 
 export const GatewayDashboardRouting: Route[] = [
   {
     path: '',
-    loadComponent: () => import('./gateway-dashboard.component').then(m => m.GatewayDashboardComponent),
+    component: GatewayDashboardComponent,
     canActivateChild: [GatewayAdminGuard],
     children: [
       {
@@ -14,7 +17,19 @@ export const GatewayDashboardRouting: Route[] = [
       },
       {
         path: 'datasource/search',
-        loadComponent: () => import('./datasource-search/datasource-search.component').then(m => m.DatasourceSearchComponent),
+        component: DatasourceSearchComponent,
+      },
+      {
+        path: 'myDataSources',
+        component: DatasourceSearchComponent,
+      },
+      {
+        path: 'requests/my',
+        component: RequestsComponent,
+      },
+      {
+        path: 'requests/actions',
+        component: RequestsComponent,
       }
     ]
   }

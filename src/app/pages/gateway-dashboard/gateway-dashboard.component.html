@@ -2,7 +2,8 @@
      [class.sidebar_main_active]="open && (hasSidebar || hasAdminMenu)"
      [class.sidebar_mini]="!open &&  (hasSidebar || hasAdminMenu)"
      [class.sidebar_hover]="hover">
-  <gateway-sidebar *ngIf="hasSidebar" (hoverChange)="onHoverChange($event)"></gateway-sidebar>
+<!--  Community id should not be part of the sidebar  -->
+  <gateway-sidebar *ngIf="hasSidebar" (hoverChange)="onHoverChange($event)" [communityId]="communityId"></gateway-sidebar>
   <main class="uk-width-1-1">
     <router-outlet></router-outlet>
   </main>

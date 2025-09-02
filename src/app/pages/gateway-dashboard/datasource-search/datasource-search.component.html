@@ -94,7 +94,7 @@
                     <span>Organizations:</span>
                     <span *ngFor="let organization of datasource.organizations" class="uk-flex uk-flex-middle">
                       <br><span>{{ organization.legalname }}</span>
-                      <a *ngIf="organization.websiteurl" href="{{organization.websiteurl}}" class="uk-flex uk-flex-middle"><span class="material-icons">open_in_new</span></a>
+                      <a *ngIf="organization.websiteurl" href="{{organization.websiteurl}}" target="_blank" class="uk-flex uk-flex-middle"><span class="material-icons">open_in_new</span></a>
                     </span>
                   </div>
 <!--                  <pre>{{ datasource | json }}</pre>-->

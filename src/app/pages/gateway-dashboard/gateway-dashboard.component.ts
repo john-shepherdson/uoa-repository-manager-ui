@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { GatewaySidebarComponent } from './side-menu/gateway-sidebar.component';
 import { NgIf } from '@angular/common';
+import { CommunityContextService } from "../../services/communityContext.service";
 
 @Component({
   selector: 'gateway-dashboard',
@@ -14,12 +15,26 @@ import { NgIf } from '@angular/common';
   ]
 })
 
-export class GatewayDashboardComponent {
+export class GatewayDashboardComponent implements OnInit {
   open = true;
   hasSidebar = true;
   hasAdminMenu = false;
   hover = false;
 
+  communityId?: string;
+
+  constructor(private communityService: CommunityContextService) {}
+
+  ngOnInit() {
+    this.communityService.getCurrentCommunityId().subscribe({
+      next: (communityId) => {
+        this.communityId = communityId;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
 
   onHoverChange(state: boolean) {
     this.hover = state;

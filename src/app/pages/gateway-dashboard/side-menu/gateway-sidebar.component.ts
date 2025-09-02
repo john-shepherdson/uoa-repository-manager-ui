@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -12,6 +12,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 
 export class GatewaySidebarComponent {
+  @Input() communityId?: string; //Community id should not be part of the sidebar
 
   @Output() hoverChange = new EventEmitter<boolean>();
 

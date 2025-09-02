@@ -2,17 +2,50 @@
   <div sidebar-content="">
     <div id="sidebar_toggle" (click)="toggleSidebar()"></div>
     <div id="sidebar_content" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
-      <div class="menu_section uk-margin-large-top ng-star-inserted" style="min-height: 30vh;">
+      <div class="menu_section uk-margin-large-top " style="min-height: 30vh;">
         <ul data-uk-nav="duration: 400" class="uk-list uk-nav uk-nav-default">
           <li class="uk-parent" [routerLinkActive]="['uk-active']">
-            <a class="uk-flex uk-flex-middle" [routerLink]="['./datasource/search']" title="Datasources" role="button">
-              <div class="uk-width-auto ng-star-inserted">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./myDataSources']" [queryParams]="{primaryGateway: communityId, affiliatedGateway: communityId}" title="Datasources" role="button">
+              <div class="uk-width-auto ">
                 <div class="menu-icon">
                   <span class="material-symbols-outlined">manage_search</span>
                 </div>
               </div>
               <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Datasources</span>
             </a>
+          </li>
+          <li class="uk-parent" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./datasource/search']"  title="Explore datasource" role="button">
+              <div class="uk-width-auto ">
+                <div class="menu-icon">
+                  <span class="material-symbols-outlined">manage_search</span>
+                </div>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Explore datasource</span>
+            </a>
+          </li>
+          <li class="uk-parent" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./requests/my']" title="Requests" role="button">
+              <div class="uk-width-auto">
+                <div class="menu-icon">
+                  <span class="material-symbols-outlined">assignment_add</span>
+                </div>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Requests</span>
+              <span class="uk-nav-parent-icon hide-on-close "></span>
+            </a>
+            <ul class="uk-nav-sub" hidden="">
+              <li class="" [routerLinkActive]="['uk-active']" role="presentation">
+                <a [routerLink]="['./requests/my']" title="My requests">
+                  <span class="uk-text-truncate">My requests</span>
+                </a>
+              </li>
+              <li class="" [routerLinkActive]="['uk-active']" role="presentation">
+                <a [routerLink]="['./requests/actions']" title="Requests actions">
+                  <span class="uk-text-truncate">Actions</span>
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
 
