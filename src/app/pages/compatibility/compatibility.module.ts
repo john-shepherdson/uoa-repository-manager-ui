@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompatibilityRouting } from './compatibility.routing';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
@@ -22,7 +21,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   imports: [
     CommonModule,
-    TabsModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     CompatibilityRouting,

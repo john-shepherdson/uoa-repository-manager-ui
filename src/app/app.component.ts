@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { environment } from '../environments/environment';
-import { MatomoTracker } from 'ngx-matomo';
+import { MatomoTracker } from 'ngx-matomo-client';
 import { ConfirmationDialogComponent } from './shared/reusablecomponents/confirmation-dialog.component';
 import { RepositoryService } from './services/repository.service';
 import { RepositorySnippet } from './domain/typeScriptClasses';

@@ -2,7 +2,6 @@
  * Created by myrto on 11/27/17.
  */
 import { NgModule } from '@angular/core';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CommonModule } from '@angular/common';
 import { MetricsRouting } from './metrics.routing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +17,6 @@ import { InputDirective } from '../../../directives/input.directive';
 @NgModule ({
     imports: [
         CommonModule,
-        TabsModule.forRoot(),
         MetricsRouting,
         ReusableComponentsModule,
         ReactiveFormsModule,

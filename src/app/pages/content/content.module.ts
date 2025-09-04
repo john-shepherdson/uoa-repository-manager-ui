@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ContentNotificationsOfSubscriptionComponent } from './content-notifications-of-subscription.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ContentRouting } from './content.routing';
 import { ContentComponent } from './content.component';
 import { ContentNotificationsComponent } from './content-notifications.component';
@@ -11,7 +10,6 @@ import { ContentNotificationsComponent } from './content-notifications.component
 @NgModule ({
   imports: [
     CommonModule,
-    TabsModule.forRoot(),
     ContentRouting,
     ReactiveFormsModule,
     ReusableComponentsModule

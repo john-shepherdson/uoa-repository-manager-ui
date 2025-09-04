@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { RepositoryComponent } from "./repository.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { AuthGuardService } from "../../services/auth-guard.service";
+import { authGuard } from "../../services/auth-guard.service";
 import { SourcesUpdateRepoComponent } from "./update/sources-update-repo.component";
 
 const repositoryRoutes: Routes = [
@@ -32,22 +32,22 @@ const repositoryRoutes: Routes = [
           {
             path: 'getImpact',
             loadChildren: () => import('./metrics/metrics.module').then(m => m.MetricsModule),
-            canActivate: [AuthGuardService]
+            canActivate: [authGuard]
           },
           {
             path: 'aggregationHistory',
             loadChildren: () => import('./aggregationhistory/compatibility-monitor.module').then(m => m.AggregationHistoryModule),
-            canActivate: [AuthGuardService]
+            canActivate: [authGuard]
           },
           {
             path: 'events',
             loadChildren: () => import('./events/events.module').then(m => m.EventsModule),
-            canActivate: [AuthGuardService]
+            canActivate: [authGuard]
           },
           {
             path: 'update',
             component: SourcesUpdateRepoComponent,
-            canActivate: [AuthGuardService],
+            canActivate: [authGuard],
             data: {
               hasSidebar: true
             }

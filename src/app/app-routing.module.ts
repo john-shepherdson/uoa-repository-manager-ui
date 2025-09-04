@@ -1,12 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './pages/landing/home/home.component';
-import { AuthGuardService } from './services/auth-guard.service';
 import { ForbiddenPageComponent } from './shared/reusablecomponents/403-forbidden-page.component';
 import { EmptyPageComponent } from './pages/emptypage/empty-page.component';
 import { AboutComponent } from './pages/landing/about/about.component';
 import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.component';
-import { GatewayDashboardRouting } from './pages/gateway-dashboard/gateway-dashboard.routing';
+import { authGuard } from "./services/auth-guard.service";
 
 const appRoutes: Routes = [
   {
@@ -25,27 +24,27 @@ const appRoutes: Routes = [
   {
     path: 'emptyPage',
     component: EmptyPageComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [authGuard]
   },
   {
     path: 'myDataSources',
     component: MyDataSourcesComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [authGuard]
   },
   {
     path: 'repository',
     loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
-    canActivate: [AuthGuardService]
+    canActivate: [authGuard]
   },
   {
     path: 'repositoryAdmin',
     loadChildren: () => import('./pages/repository/repository.module').then(m => m.RepositoryModule),
-    canActivate: [AuthGuardService]
+    canActivate: [authGuard]
   },
   {
     path: 'sources',
     loadChildren: () => import('./pages/sources/sources.module').then(m => m.SourcesModule),
-    canActivate: [AuthGuardService]
+    canActivate: [authGuard]
   },
   {
     path: 'compatibility',
@@ -54,7 +53,7 @@ const appRoutes: Routes = [
   {
     path: 'content',
     loadChildren: () => import('./pages/content/content.module').then(m => m.ContentModule),
-    canActivate: [AuthGuardService]
+    canActivate: [authGuard]
   },
   {
     path: 'admin',

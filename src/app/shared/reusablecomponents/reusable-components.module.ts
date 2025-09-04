@@ -14,8 +14,6 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 import { RepositoryTilesComponent } from './repository-tiles.component';
 import { ForbiddenPageComponent } from './403-forbidden-page.component';
 import { HelpContentService } from '../../services/help-content.service';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TopmenuLandingComponent } from '../topmenulanding/topmenu-landing.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ReadMoreComponent, ReadMoreTextComponent } from './read-more.component';
@@ -40,8 +38,6 @@ const myGroups = [
   imports: [
     CommonModule,
     RouterModule,
-    TabsModule.forRoot(),
-    ModalModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

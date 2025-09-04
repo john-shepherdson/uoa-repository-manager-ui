@@ -1,4 +1,4 @@
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CompatibilityComponent } from './compatibility.component';
@@ -6,8 +6,8 @@ import { CompatibilityValidateTypeComponent } from './compatibility-validate-typ
 import { CompatibilityValidationHistoryComponent } from './compatibility-validation-history.component';
 import { CompatibilityValidationResultsComponent } from './compatibility-validation-results.component';
 import { CompatibilityValidateComponent } from './compatibility-validate.component';
-import { AuthGuardService } from '../../services/auth-guard.service';
-import {CompatibilityValidationCrisResultsComponent} from './compatibility-validation-cris-results.component';
+import { authGuard } from '../../services/auth-guard.service';
+import { CompatibilityValidationCrisResultsComponent } from './compatibility-validation-cris-results.component';
 
 const compatibilityRoutes: Routes = [
   {
@@ -17,17 +17,17 @@ const compatibilityRoutes: Routes = [
       {
         path: 'validate',
         component: CompatibilityValidateComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [authGuard]
       },
       {
         path: 'validate/:type',
         component: CompatibilityValidateTypeComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [authGuard]
       },
       {
         path: 'browseHistory',
         component: CompatibilityValidationHistoryComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [authGuard]
       },
       {
         path: 'browseHistory/cris/:id',
@@ -40,17 +40,17 @@ const compatibilityRoutes: Routes = [
       // {
       //   path: 'monitor',
       //   component: CompatibilityMonitorComponent,
-      //   canActivate: [AuthGuardService]
+      //   canActivate: [authGuard]
       // },
       // {
       //   path: 'monitor/:id',
       //   component: CompatibilityMonitorRepoComponent,
-      //   canActivate: [AuthGuardService]
+      //   canActivate: [authGuard]
       // },
       // {
       //   path: 'monitor/fullHistory/:id',
       //   component: CompatibilityMonitorFullHistoryRepoComponent,
-      //   canActivate: [AuthGuardService]
+      //   canActivate: [authGuard]
       // }
     ]
   }
