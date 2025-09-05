@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CommonModule } from '@angular/common';
 import { ReusableComponentsModule } from '../../../shared/reusablecomponents/reusable-components.module';
 import { EventsRoutingModule } from './events-routing.module';
@@ -13,7 +12,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule ({
   imports: [
     CommonModule,
-    TabsModule.forRoot(),
     EventsRoutingModule,
     ReusableComponentsModule,
     ReactiveFormsModule,

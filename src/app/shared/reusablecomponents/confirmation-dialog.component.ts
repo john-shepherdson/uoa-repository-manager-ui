@@ -2,7 +2,6 @@
  * Created by stefania on 5/2/17.
  */
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'confirmation-dialog',
@@ -10,7 +9,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 })
 export class ConfirmationDialogComponent {
 
-  @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
+  // @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
 
   @Input() public isModalShown: boolean = false;
 

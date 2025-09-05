@@ -19,7 +19,7 @@
 <!--</div>-->
 
 
-<div *ngIf="isModalShown" class="uk-modal {{isModalShown ? 'uk-open' : ''}}" bsModal #autoShownModal="bs-modal" (onHidden)="onHidden()" aria-hidden="false"
+<div *ngIf="isModalShown" class="uk-modal {{isModalShown ? 'uk-open' : ''}}" (onHidden)="onHidden()" aria-hidden="false"
      [ngStyle]="{'display': isModalShown ? 'block' : 'none'}" style="overflow-y: auto">
   <div class="uk-modal-dialog" style="top: 95.5px;">
     <div class="uk-modal-header">

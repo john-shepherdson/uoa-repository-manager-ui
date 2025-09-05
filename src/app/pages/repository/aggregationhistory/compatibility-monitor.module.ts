@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CommonModule } from '@angular/common';
 import { ReusableComponentsModule } from '../../../shared/reusablecomponents/reusable-components.module';
 import { AggregationHistoryRoutingModule } from './compatibility-monitor-routing.module';
@@ -9,7 +8,6 @@ import { CompatibilityMonitorFullHistoryRepoComponent } from './compatibility-mo
 @NgModule ({
   imports: [
     CommonModule,
-    TabsModule.forRoot(),
     AggregationHistoryRoutingModule,
     ReusableComponentsModule
   ],
