@@ -1,3 +1,5 @@
+@timeline-background-color: @global-primary-background;
+
 .timeline, .timeline::before, .timeline::after, .timeline *, .timeline ::before, .timeline ::after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -26,7 +28,7 @@
   bottom: 0;
   width: 3px;
   //background: rgba(0, 0, 0, 0.085);
-  background: @provide-color;
+  background: @timeline-background-color;
   content: '';
   display: block;
 }
@@ -73,7 +75,7 @@
   width: 44px;
   border-radius: 50%;
   //background: #9e9e9e;
-  background: @provide-color;
+  background: @timeline-background-color;
   text-align: center;
   border: 4px solid #fff;
 }

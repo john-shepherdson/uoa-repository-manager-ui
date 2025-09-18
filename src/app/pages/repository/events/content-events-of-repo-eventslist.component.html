@@ -615,8 +615,9 @@
     </div>
   </div>
 
+</div>
 
-  <confirmation-dialog #subscribeToEventsModal [title]="'Create subscription for'" [isModalShown]="isModalShown"
+<confirmation-dialog #subscribeToEventsModal [title]="'Create subscription for'" [isModalShown]="isModalShown"
                      [confirmActionButton]="'Subscribe'" (emitObject)="subscribeToEvents($event)">
   <div *ngIf="eventsPage">
     <div *ngIf="modalErrorMessage" class="uk-alert uk-alert-danger">{{ modalErrorMessage }}</div>
@@ -635,46 +636,46 @@
         <div>
           <table class="uk-table uk-table-striped">
             <tbody>
-              <tr>
-                <td class="uk-width-1-5">Trust</td>
-                <td>[{{advanceSearch.trust.min}}, {{advanceSearch.trust.max}}]</td>
-              </tr>
-              <tr *ngIf="advanceSearch.titles && advanceSearch.titles.length>0">
-                <td class="uk-width-1-5">Titles</td>
-                <td>
+            <tr>
+              <td class="uk-width-1-5">Trust</td>
+              <td>[{{advanceSearch.trust.min}}, {{advanceSearch.trust.max}}]</td>
+            </tr>
+            <tr *ngIf="advanceSearch.titles && advanceSearch.titles.length>0">
+              <td class="uk-width-1-5">Titles</td>
+              <td>
                   <span *ngFor="let title of advanceSearch.titles; let i = index">
                     <br *ngIf="i>0">
                     {{title}}
                   </span>
-                </td>
-              </tr>
-              <tr *ngIf="advanceSearch.authors && advanceSearch.authors.length>0">
-                <td class="uk-width-1-5">Authors</td>
-                <td>
+              </td>
+            </tr>
+            <tr *ngIf="advanceSearch.authors && advanceSearch.authors.length>0">
+              <td class="uk-width-1-5">Authors</td>
+              <td>
                   <span *ngFor="let author of advanceSearch.authors; let i = index">
                     <br *ngIf="i>0">
                     {{author}}
                   </span>
-                </td>
-              </tr>
-              <tr *ngIf="advanceSearch.subjects && advanceSearch.subjects.length>0">
-                <td class="uk-width-1-5">Subjects</td>
-                <td>
+              </td>
+            </tr>
+            <tr *ngIf="advanceSearch.subjects && advanceSearch.subjects.length>0">
+              <td class="uk-width-1-5">Subjects</td>
+              <td>
                   <span *ngFor="let subject of advanceSearch.subjects; let i = index">
                     <br *ngIf="i>0">
                     {{subject}}
                   </span>
-                </td>
-              </tr>
-              <tr *ngIf="advanceSearch.dates && advanceSearch.dates.length>0">
-                <td class="uk-width-1-5">Dates</td>
-                <td>
+              </td>
+            </tr>
+            <tr *ngIf="advanceSearch.dates && advanceSearch.dates.length>0">
+              <td class="uk-width-1-5">Dates</td>
+              <td>
                   <span *ngFor="let date of advanceSearch.dates; let i = index">
                     <br *ngIf="i>0">
                     {{date.min}} <span class="uk-margin-small-left uk-margin-small-right">-</span> {{date.max}}
                   </span>
-                </td>
-              </tr>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -682,4 +683,3 @@
     </div>
   </div>
 </confirmation-dialog>
-</div>
