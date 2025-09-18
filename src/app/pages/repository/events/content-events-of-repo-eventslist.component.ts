@@ -8,7 +8,7 @@ import { loadingEvents, noEventsForTopic, noEventsWithParams, noServiceMessage,
 import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfirmationDialogComponent } from '../../../shared/reusablecomponents/confirmation-dialog.component';
-import { SharedService } from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 
 @Component ({
   selector: 'app-content-events-of-repo-eventslist',
@@ -94,10 +94,10 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     );
 
     const body = document.getElementsByTagName('body')[0];
-    body.classList.remove("top_bar_active");   // remove the class
-    body.classList.add("page_heading_active");
-    body.classList.remove("landing");
-    body.classList.add("dashboard");
+    body.classList.remove('top_bar_active');   // remove the class
+    body.classList.add('page_heading_active');
+    body.classList.remove('landing');
+    body.classList.add('dashboard');
   }
 
   getParams() {
@@ -264,10 +264,6 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     );
   }
 
-  isHighlighted(item: any, itemList: any[]) {
-    return itemList.some(x => x === item);
-  }
-
   getCorrectTopic() {
     const temp = this.topic.split('|');
     this.correctTopic = temp[0];
@@ -278,50 +274,11 @@ export class ContentEventsOfRepoEventslistComponent implements OnInit {
     }
   }
 
-  goToNextPage() {
-    /* RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
-    /*if(this.eventsPage.currPage < this.eventsPage.totalPages) {
-      console.log(`Get me page ${this.eventsPage.currPage+1}!`);
-      this.getEventsPage(this.eventsPage.currPage+1);
-    }*/
-
-    /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
-    if ( (this.currentPage + 1) < this.eventsPage.totalPages) {
-      this.currentPage = this.currentPage + 1;
-      console.log(`Get me page ${this.currentPage}!`);
-      this.getEventsPage(this.currentPage);
-
-      window.scrollTo(0, 0);
-    }
-
-  }
-
-  goToPreviousPage() {
-    /* RESTORE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
-    /*if(this.eventsPage.currPage > 0) {
-      console.log(`Get me page ${this.eventsPage.currPage-1}!`);
-      this.getEventsPage(this.eventsPage.currPage-1);
-    }*/
-
-    /* DELETE WHEN ADVANCED SHOW EVENTS IS FIXED AND SENDS CORRECT VALUE FOR CURRENT PAGE */
-    if (this.currentPage > 0) {
-      this.currentPage = this.currentPage - 1;
-      console.log(`Get me page ${this.currentPage}!`);
-      this.getEventsPage(this.currentPage);
-
-      window.scrollTo(0, 0);
-    }
-  }
-
   showSubscriptionModal() {
     if (this.advanceSearch && this.eventsPage) {
       this.subscribeToEventsModal.confirmed = false;
       this.subscribeToEventsModal.showModal();
     }
-  }
-
-  choseFrequency(freq: string) {
-    this.frequencyChoice = freq;
   }
 
   subscribeToEvents(event: any) {
