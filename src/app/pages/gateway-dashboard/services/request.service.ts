@@ -1,0 +1,47 @@
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../../../environments/environment";
+import { Params } from "@angular/router";
+import { Paging } from "../../../domain/paging";
+import { CommunityContextService } from "src/app/services/communityContext.service";
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RequestsService {
+    private baseUrl = environment.API_ENDPOINT ;
+
+    private communityID?: string;
+    
+    constructor(private http: HttpClient, private communityService: CommunityContextService) {
+      this.communityService.getCurrentCommunityId().subscribe({
+      next: (communityID) => {
+        this.communityID = communityID;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+    }
+
+    getRequests(queryParams: Params) {
+        const url = `${this.baseUrl}/datasource-gateway-requests`;
+        let params = new HttpParams({ fromObject: queryParams });
+
+        // let params = new HttpParams();0
+        if (this.communityID)
+          params = params.append('targetGatewayId', this.communityID);
+        // Object.entries(queryParams).forEach(([key, value]) => {
+        //   if (value == null) { return; }
+        //   if (Array.isArray(value)) {
+        //     value.forEach(v => params = params.append(key, v));
+        //   } else {
+        //     params = params.set(key, value);
+        //   }
+        // });
+
+        return this.http.get<Paging<Request>>(url, { params });
+    }
+}

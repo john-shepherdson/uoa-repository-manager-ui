@@ -3,87 +3,138 @@
 
     <div class="uk-section uk-section-default">
       <div class="uk-container uk-container-large">
-        <h4 class="uk-margin-bottom">Requests</h4>
+        <h4 class="uk-margin-bottom">Requests</h4><hr>
       </div>
     </div>
 
-    <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
-      <thead>
-        <tr>
-          <th class="uk-text-center uk-table-middle">ID</th>
-          <th class="uk-text-center uk-table-middle">Request Type</th>
-          <th class="uk-text-center uk-table-middle">created</th>
-          <th class="uk-text-center uk-table-middle">last updated</th>
-          <th class="uk-text-center uk-table-middle">Owner Approval</th>
-          <th class="uk-text-center uk-table-middle">Source Gateway Approval</th>
-          <th class="uk-text-center uk-table-middle">Target Gateway Approval</th>
-          <th class="uk-text-center uk-table-middle">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let request of requests">
-          <!-- Request ID -->
-          <td>{{ request.id }}</td>
+    <!--Pagination-->
 
-          <!-- Request Type -->
-          <td>{{ request.requestType }}</td>
-          
-           <!-- created -->
-          <td>
-            <strong>{{ request.createdBy }}</strong><br>
-            <small>by {{ request.createdAt }}</small>
-          </td>
+    <!-- <mat-paginator *ngIf="total > 0" [length]="total" [pageSizeOptions]="[3, 10, 25, 50]" [showFirstLastButtons]="true"
+      [pageSize]="pageSize" [pageIndex]="page" (page)="handlePaginationChanges($event)">
+    </mat-paginator> -->
 
-          <!-- last updated -->
-          <td>
-            <strong>{{ request.updatedBy }}</strong><br>
-            <small>by {{ request.updatedAt }}</small>
-          </td>
-          <!-- Owner Approval -->
-          <td>
-            <strong>{{ request.ownerApproval.actorId}}</strong><br>
-            <span [ngClass]="{
-              'uk-label uk-label-success': request.ownerApproval.decision === 'APPROVED',
-              'uk-label uk-label-warning': request.ownerApproval.decision === 'PENDING',
-              'uk-label uk-label-danger': request.ownerApproval.decision === 'REJECTED'
-            }">{{ request.ownerApproval.decision }}</span><br>
-            <small> {{ request.ownerApproval.decidedAt }}</small><br>
-            <span>{{ request.ownerApproval.comment}}</span>
-          </td>
-          <!-- Source Gateway Approval -->
-           <td>
-            <strong>{{ request.sourceGatewayApproval?.actorId}}</strong><br>
-            <span [ngClass]="{
-              'uk-label uk-label-success': request.sourceGatewayApproval?.decision === 'APPROVED',
-              'uk-label uk-label-warning': request.sourceGatewayApproval?.decision === 'PENDING',
-              'uk-label uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
-            }">{{ request.sourceGatewayApproval?.decision }}</span><br>
-            <small> {{ request.sourceGatewayApproval?.decidedAt }}</small><br>
-            <span>{{ request.sourceGatewayApproval?.comment}}</span>
-           </td>
-          <!-- Target Gateway Approval -->
-          <td>
-            <strong>{{ request.targetGatewayApproval?.actorId}}</strong><br>
-            <span [ngClass]="{
-              'uk-label uk-label-success': request.targetGatewayApproval?.decision === 'APPROVED',
-              'uk-label uk-label-warning': request.targetGatewayApproval?.decision === 'PENDING',
-              'uk-label uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
+    
+
+    <div class="uk-section uk-section-default uk-margin-remove">
+      <div class="uk-container uk-container-large uk-margin-remove">
+
+
+            <mat-paginator *ngIf="total > 0" [length]="total" [pageSizeOptions]="[3, 10, 25, 50]" [showFirstLastButtons]="true"
+              [pageSize]="pageSize" [pageIndex]="page" (page)="handlePaginationChanges($event)">
+            </mat-paginator>
+        <div class="uk-card uk-card-default uk-card-body">
+          <div class="uk-overflow-auto">
+          <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
+            <thead>
+              <tr>
+                <th class="uk-text-center uk-table-middle">ID</th>
+                <th class="uk-text-center uk-table-middle">Request Type</th>
+                <th class="uk-text-center uk-table-middle">created</th>
+                <th class="uk-text-center uk-table-middle">last updated</th>
+                <th class="uk-text-center uk-table-middle">Owner Approval</th>
+                <th class="uk-text-center uk-table-middle">Source Gateway Approval</th>
+                <th class="uk-text-center uk-table-middle">Target Gateway Approval</th>
+                <th class="uk-text-center uk-table-middle">Status</th>
+                <th *ngIf="showActionsColumn" class="uk-text-center uk-table-middle">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let request of requests">
+                <!-- Request ID -->
+                <td>{{ request.id }}</td>
+
+                <!-- Request Type -->
+                <td>{{ request.requestType }}</td>
+
+                <!-- created -->
+                <td>
+                  <strong>{{ request.createdBy }}</strong><br>
+                  <small>by {{ request.createdAt }}</small>
+                </td>
+
+                <!-- last updated -->
+                <td>
+                  <strong>{{ request.updatedBy }}</strong><br>
+                  <small>by {{ request.updatedAt }}</small>
+                </td>
+                <!-- Owner Approval -->
+                <td>
+
+                  <ng-container *ngIf="request.ownerApproval != null; else missingOwnerApproval">
+                    <span class="uk-label" [ngClass]="{
+                            'uk-label-success': request.ownerApproval?.decision === 'APPROVED',
+                            'uk-label-warning': request.ownerApproval?.decision === 'PENDING',
+                            'uk-label-danger': request.ownerApproval?.decision === 'REJECTED'
+                          }">{{ request.ownerApproval?.decision }}</span><br>
+                    <small> {{ request.ownerApproval?.decidedAt }}</small><br>
+                    <span>{{ request.ownerApproval?.comment}}</span>
+                  </ng-container>
+                  <ng-template #missingOwnerApproval>--</ng-template>
+                </td>
+                <!-- Source Gateway Approval -->
+                <td>
+
+                  <ng-container *ngIf="request.sourceGatewayApproval != null; else missingSourceGatewayApproval">
+                    <span class="uk-label" [ngClass]="{
+                            'uk-label-success': request.sourceGatewayApproval?.decision === 'APPROVED',
+                            'uk-label-warning': request.sourceGatewayApproval?.decision === 'PENDING',
+                            'uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
+                          }">{{ request.sourceGatewayApproval?.decision }}</span><br>
+                    <small> {{ request.sourceGatewayApproval?.decidedAt }}</small><br>
+                    <span>{{ request.sourceGatewayApproval?.comment}}</span>
+                  </ng-container>
+                  <ng-template #missingSourceGatewayApproval>--</ng-template>
+                </td>
+                <!-- Target Gateway Approval -->
+                <td>
+
+                  <ng-container *ngIf="request.targetGatewayApproval != null; else missingTargetGatewayApproval">
+                    <span class="uk-label" [ngClass]="{
+              'uk-label-success': request.targetGatewayApproval?.decision === 'APPROVED',
+              'uk-label-warning': request.targetGatewayApproval?.decision === 'PENDING',
+              'uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
             }">{{ request.targetGatewayApproval?.decision }}</span><br>
-            <small> {{ request.targetGatewayApproval?.decidedAt }}</small><br>
-            <span>{{ request.targetGatewayApproval?.comment}}</span>
-          </td>
+                    <small> {{ request.targetGatewayApproval?.decidedAt }}</small><br>
+                    <span>{{ request.targetGatewayApproval?.comment}}</span>
+                  </ng-container>
+                  <ng-template #missingTargetGatewayApproval>--</ng-template>
+                </td>
 
-          <!-- Overall Status-->
-           <td>
-            <span class="uk-label" [ngClass]="{
+                <!-- Overall Status-->
+                <td>
+                  <span class="uk-label" [ngClass]="{
               'uk-label-success': request.status === 'APPROVED',
               'uk-label-warning': request.status === 'PENDING',
               'uk-label-danger': request.status === 'REJECTED'
             }">{{ request.status}}</span>
-           </td>
-        </tr>
-      </tbody>
-    </table>
+                </td>
 
+                <!-- Actions Column -->
+                <td *ngIf="showActionsColumn" class="uk-text-center"></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <!--Pagination-->
+
+        <div class="uk-margin-top uk-flex uk-flex-center">
+          <ul class="uk-pagination uk-margin-remove" *ngIf="total > pageSize">
+            <li [class.uk-disabled]="page === 0">
+              <a (click)="page > 0 && onPageChange(page)"><span uk-pagination-previous></span></a>
+            </li>
+
+            <li *ngFor="let p of getPagesArray()" [class.uk-active]="p === page + 1">
+              <a (click)="onPageChange(p)">{{ p }}</a>
+            </li>
+
+            <li [class.uk-disabled]="page >= (total / pageSize) - 1">
+              <a (click)="page < (total / pageSize) - 1 && onPageChange(page + 2)"><span uk-pagination-next></span></a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <!-- <pre>{{ requests | json }}</pre> -->
   </div>
-</div>
