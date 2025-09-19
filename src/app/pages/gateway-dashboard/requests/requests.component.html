@@ -3,25 +3,40 @@
 
     <div class="uk-section uk-section-default">
       <div class="uk-container uk-container-large">
-        <h4 class="uk-margin-bottom">Requests</h4><hr>
+        <h4 class="uk-margin-bottom">Requests</h4>
       </div>
+      <hr>
     </div>
-
-    <!--Pagination-->
-
-    <!-- <mat-paginator *ngIf="total > 0" [length]="total" [pageSizeOptions]="[3, 10, 25, 50]" [showFirstLastButtons]="true"
-      [pageSize]="pageSize" [pageIndex]="page" (page)="handlePaginationChanges($event)">
-    </mat-paginator> -->
-
+    <hr>
     
+    <form [formGroup]="filterForm" class="uk-form-horizontal uk-flex">
+    
+      <div class="uk-padding-xsmall uk-padding-remove-vertical">
+        <div input placeholder="Request Type" type="select" [formInput]="filterForm.get('requestType')"
+          [options]="[{value: 'PRIMARY', label: 'Primary'}, {value: 'AFFILIATED', label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
+          (valueChange)="handleFilterChanges('requestType')">
+        </div>
+      </div>
+    
+      <div class="uk-padding-xsmall uk-padding-remove-vertical">
+        <div input placeholder="Status" type="select" [formInput]="filterForm.get('status')" [options]="statusOptions"
+          (valueChange)="handleFilterChanges('status')">
+        </div>
+      </div>
+    
+    </form>
 
     <div class="uk-section uk-section-default uk-margin-remove">
       <div class="uk-container uk-container-large uk-margin-remove">
 
 
-            <mat-paginator *ngIf="total > 0" [length]="total" [pageSizeOptions]="[3, 10, 25, 50]" [showFirstLastButtons]="true"
-              [pageSize]="pageSize" [pageIndex]="page" (page)="handlePaginationChanges($event)">
+            <mat-paginator *ngIf="requests" [length]="requests.total" [pageSizeOptions]="[5, 10, 25, 50]"
+               [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value"
+               [pageIndex]="filterForm.get('page').value"
+               (page)="handlePaginationChanges($event)">
             </mat-paginator>
+
+
         <div class="uk-card uk-card-default uk-card-body">
           <div class="uk-overflow-auto">
           <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
@@ -39,7 +54,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let request of requests">
+              <tr *ngFor="let request of requests.results">
                 <!-- Request ID -->
                 <td>{{ request.id }}</td>
 
@@ -118,7 +133,7 @@
         </div>
         <!--Pagination-->
 
-        <div class="uk-margin-top uk-flex uk-flex-center">
+        <!-- <div class="uk-margin-top uk-flex uk-flex-center">
           <ul class="uk-pagination uk-margin-remove" *ngIf="total > pageSize">
             <li [class.uk-disabled]="page === 0">
               <a (click)="page > 0 && onPageChange(page)"><span uk-pagination-previous></span></a>
@@ -132,7 +147,7 @@
               <a (click)="page < (total / pageSize) - 1 && onPageChange(page + 2)"><span uk-pagination-next></span></a>
             </li>
           </ul>
-        </div>
+        </div> -->
 
       </div>
     </div>

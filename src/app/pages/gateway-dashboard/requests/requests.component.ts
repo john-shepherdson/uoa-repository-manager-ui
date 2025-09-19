@@ -1,80 +1,123 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RequestsService } from "../services/request.service";
 import { CommunityContextService } from "src/app/services/communityContext.service";
 import { AdminPgRouting } from "../../adminPg/adminPg.routing";
 import { Router } from "@angular/router";
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Params } from '@angular/router';
+import { InputComponent, Option } from '../../../shared/input.component';
+import { ActivatedRoute } from "@angular/router";
+import { Paging } from "src/app/domain/paging";
+
+
+
 
 
 @Component({
   selector: 'gateway-requests',
   standalone: true,
   templateUrl: './requests.component.html',
-  imports: [CommonModule, AdminPgRouting, MatPaginatorModule]
+  imports: [CommonModule, AdminPgRouting, MatPaginatorModule, ReactiveFormsModule, InputComponent]
 })
 
 export class RequestsComponent implements OnInit {
-  requests: Request[] = [];
+  requests: Paging<Request>;
   communityId?: string;
   showActionsColumn: boolean = false;
+  qParams: Params = {};
+  loading: boolean = false;
+  
+  errorMessage: string | null = null;
+  loadingMessage: string | null = null;
 
-  //Pagination variables
-  page  = 0;
-  pageSize = 3;
-  total = 0;
-  loading = false;
+  filterForm: FormGroup = new FormGroup({
+    sort: new FormControl<string | null>(null),
+    order: new FormControl<string | null>(null),
+    page: new FormControl<number>(0),
+    size: new FormControl<number>(5),
+    keyword: new FormControl<string | null>(null),
+    requestType: new FormControl<string | null>(null),
+    status: new FormControl<string | null>(null)
+    // from: '0'
+  });
 
-  constructor(private requestsService: RequestsService, private communityService: CommunityContextService, private router: Router) {}
+  statusOptions: Option[] = [
+    {value: 'PENDING', label: 'Pending'},
+    {value: 'APPROVED', label: 'Approved'},
+    {value: 'REJECTED', label: 'Rejected'},
+    {value: 'CANCELLED', label: 'Cancelled'},
+    {value: 'EXPIRED', label: 'Expired'},
+    {value: 'null', label: 'Reset'}
+  ];
+
+
+
+  constructor(private requestsService: RequestsService, private communityService: CommunityContextService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+
     const currentUrl = this.router.url;
     this.showActionsColumn = currentUrl.includes('/requests/actions');
 
-    this.loadRequests(this.page);
-    }
+    this.route.queryParams.subscribe(params => {
+      this.qParams = {...params};
 
-  loadRequests(page: number): void {
-    this.loading = true;
+      Object.keys(params).forEach(key => {
+        this.filterForm.get(key)?.setValue(params[key]);
+      });
 
-    const queryParams = {
-      page: page,
-      size: this.pageSize,
-      sort: 'status',
-      order: 'ASC'
-    };
-
-    this.requestsService.getRequests(queryParams).subscribe({
-      next: (data) => {
-        this.requests = data.results;
-        this.total = data.total;
-        this.page = page;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching requests:', err);
-        this.loading = false;
+       // 2) optionally push defaults into the URL if absent:
+      if (!params['page'] || !params['size']) {
+        this.qParams['page'] = this.filterForm.get('page').value;
+        this.qParams['size'] = this.filterForm.get('size').value;
+        this.updateWithNavigation();
+        return;  // prevents the search below from running on renavigation
       }
+
+      this.loadingMessage = 'Loading requests...';
+      this.requestsService.getRequests(params).pipe().subscribe({
+        next: (data) => {
+          this.requests = data;
+          this.loadingMessage = null;
+        },
+        error: (err) => {
+          console.error('Error fetching requests:', err);
+          this.loadingMessage = null;
+          this.errorMessage = 'Error fetching requests';
+        }
+      });
     });
   }
 
-  onPageChange(newPage: number): void {
-    this.loadRequests(newPage - 1);
+ handleFilterChanges(path: string) {
+
+    const value = this.filterForm.get(path)?.value;
+
+    if (value === 'null' || value === '') {
+      delete this.qParams[path];
+    } else {
+      this.qParams[path] = value;
+    }
+
+    this.qParams['page'] = 0;
+    this.filterForm.get('page')?.setValue(0);
+    this.updateWithNavigation();
   }
 
-  getTotalPages(): number {
-    return Math.ceil(this.total / this.pageSize);
+  handlePaginationChanges(event: PageEvent) {
+    // console.log(event);
+    this.qParams['page'] = event.pageIndex;
+    this.qParams['size'] = event.pageSize;
+    this.updateWithNavigation();
   }
 
-  getPagesArray(): number[] {
-    return Array.from({ length: this.getTotalPages() }, (_, i) => i + 1);
+  updateWithNavigation() {
+    this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
   }
 
-  handlePaginationChanges(event: PageEvent): void {
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.loadRequests(this.page);
-  }
+
 }
   
 
