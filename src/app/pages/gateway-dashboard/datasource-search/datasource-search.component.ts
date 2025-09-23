@@ -37,7 +37,9 @@ export class DatasourceSearchComponent implements OnInit {
     order: new FormControl<string>(null),
     page: new FormControl<number>(0),
     size: new FormControl<number>(10),
-    keyword: new FormControl<string>(null)
+    keyword: new FormControl<string>(null),
+    requestType: new FormControl<string | null>(null),
+    status: new FormControl<string | null>(null)
     // from: '0'
   });
 
@@ -46,6 +48,15 @@ export class DatasourceSearchComponent implements OnInit {
     {value: 'dateofvalidation', label: 'Validation Date'},
     {value: 'officialname', label: 'Name'},
     {value: 'id', label: 'Id'}
+  ];
+
+  statusOptions: Option[] = [
+    {value: 'PENDING', label: 'Pending'},
+    {value: 'APPROVED', label: 'Approved'},
+    {value: 'REJECTED', label: 'Rejected'},
+    {value: 'CANCELLED', label: 'Cancelled'},
+    {value: 'EXPIRED', label: 'Expired'},
+    {value: 'null', label: 'Reset'}
   ];
 
   constructor(private route: ActivatedRoute, private router: Router, private datasourceSearch: DatasourceSearchService) {}
@@ -83,8 +94,17 @@ export class DatasourceSearchComponent implements OnInit {
   }
 
   handleFilterChanges(path: string) {
-    // console.log(this.filterForm.get(path)?.value);
-    this.qParams[path] = this.filterForm.get(path)?.value;
+
+    const value = this.filterForm.get(path)?.value;
+
+    if (value === 'null' || value === '') {
+      delete this.qParams[path];
+    } else {
+      this.qParams[path] = value;
+    }
+
+    this.qParams['page'] = 0;
+    this.filterForm.get('page')?.setValue(0);
     this.updateWithNavigation();
   }
 

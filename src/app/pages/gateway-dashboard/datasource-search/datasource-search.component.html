@@ -38,14 +38,27 @@
 
               <div class="uk-padding-xsmall uk-padding-remove-vertical">
                 <div input placeholder="Order" type="select" [formInput]="filterForm.get('order')"
-                     [options]="[{value: 'DESCENDING', label: 'Descending'}, {value: 'ASCENDING', label: 'Ascending'}]"
-                     (valueChange)="handleFilterChanges('order')">
+                  [options]="[{value: 'DESCENDING', label: 'Descending'}, {value: 'ASCENDING', label: 'Ascending'}]"
+                  (valueChange)="handleFilterChanges('order')">
                 </div>
               </div>
-
+              
               <div class="uk-padding-xsmall uk-padding-remove-vertical">
-                <div input placeholder="Sort by" type="select" [formInput]="filterForm.get('sort')"
-                     [options]="sortByOptions" (valueChange)="handleFilterChanges('sort')">
+                <div input placeholder="Sort by" type="select" [formInput]="filterForm.get('sort')" [options]="sortByOptions"
+                  (valueChange)="handleFilterChanges('sort')">
+                </div>
+              </div>
+              
+              <div class="uk-padding-xsmall uk-padding-remove-vertical">
+                <div input placeholder="Request Type" type="select" [formInput]="filterForm.get('requestType')"
+                  [options]="[{value: 'PRIMARY', label: 'Primary'}, {value: 'AFFILIATED', label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
+                  (valueChange)="handleFilterChanges('requestType')">
+                </div>
+              </div>
+              
+              <div class="uk-padding-xsmall uk-padding-remove-vertical">
+                <div input placeholder="Status" type="select" [formInput]="filterForm.get('status')" [options]="statusOptions"
+                  (valueChange)="handleFilterChanges('status')">
                 </div>
               </div>
 
