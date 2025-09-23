@@ -10,7 +10,7 @@
             <div class="uk-width-1-3@l uk-margin-auto">
               <form class="uk-search uk-search-default uk-width-1-1@m">
                 <div input placeholder="Search" type="text" [formInput]="filterForm.get('keyword')"
-                     (focusout)="handleFilterChanges('keyword')">
+                  (focusout)="handleFilterChanges('keyword')">
                 </div>
               </form>
             </div>
@@ -21,7 +21,7 @@
     </div>
 
     <div class="uk-section uk-section-default uk-background-norepeat uk-background-cover uk-background-top-center"
-         style="background-image: url('../../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);">
+      style="background-image: url('../../../../assets/imgs/landing/abstract2.svg'); !important; min-height: calc(80vh);">
 
       <div class="uk-flex uk-flex-center">
         <div *ngIf="errorMessage" class="uk-alert uk-alert-danger">{{ errorMessage }}</div>
@@ -42,31 +42,31 @@
                   (valueChange)="handleFilterChanges('order')">
                 </div>
               </div>
-              
+
               <div class="uk-padding-xsmall uk-padding-remove-vertical">
-                <div input placeholder="Sort by" type="select" [formInput]="filterForm.get('sort')" [options]="sortByOptions"
-                  (valueChange)="handleFilterChanges('sort')">
+                <div input placeholder="Sort by" type="select" [formInput]="filterForm.get('sort')"
+                  [options]="sortByOptions" (valueChange)="handleFilterChanges('sort')">
                 </div>
               </div>
-              
+
               <div class="uk-padding-xsmall uk-padding-remove-vertical">
                 <div input placeholder="Request Type" type="select" [formInput]="filterForm.get('requestType')"
                   [options]="[{value: 'PRIMARY', label: 'Primary'}, {value: 'AFFILIATED', label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
                   (valueChange)="handleFilterChanges('requestType')">
                 </div>
               </div>
-              
+
               <div class="uk-padding-xsmall uk-padding-remove-vertical">
-                <div input placeholder="Status" type="select" [formInput]="filterForm.get('status')" [options]="statusOptions"
-                  (valueChange)="handleFilterChanges('status')">
+                <div input placeholder="Status" type="select" [formInput]="filterForm.get('status')"
+                  [options]="statusOptions" (valueChange)="handleFilterChanges('status')">
                 </div>
               </div>
 
-<!--                  <div class="" style="margin-left:auto; margin-right:0;">-->
-<!--                    <button class="uk-button uk-button-link" (click)="downloadCSV()">-->
-<!--                      <i class="fas fa-download uk-margin-small-right"></i>Export to CSV-->
-<!--                    </button>-->
-<!--                  </div>-->
+              <!--                  <div class="" style="margin-left:auto; margin-right:0;">-->
+              <!--                    <button class="uk-button uk-button-link" (click)="downloadCSV()">-->
+              <!--                      <i class="fas fa-download uk-margin-small-right"></i>Export to CSV-->
+              <!--                    </button>-->
+              <!--                  </div>-->
 
             </form>
 
@@ -76,21 +76,22 @@
 
             <div>
               <mat-paginator *ngIf="datasources" [length]="datasources.total" [pageSizeOptions]="[10, 25, 50, 100]"
-                             [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value"
-                             [pageIndex]="filterForm.get('page').value"
-                             (page)="handlePaginationChanges($event)">
+                [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value"
+                [pageIndex]="filterForm.get('page').value" (page)="handlePaginationChanges($event)">
               </mat-paginator>
             </div>
 
             <hr class="adminResultsHeader">
 
             <div *ngIf="loadingMessage; else results" class="loading-big">
-              <div class="loader-big" style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{ loadingMessage }}</div>
+              <div class="loader-big"
+                style="text-align: center; padding-top: 170px; color: rgb(47, 64, 80); font-weight: bold;">{{
+                loadingMessage }}</div>
               <div class="transparentFilm"></div>
             </div>
 
             <ng-template #results>
-                <!-- <div *ngFor="let res of datasources?.results" class="uk-card uk-card-default uk-margin-bottom">
+              <!-- <div *ngFor="let res of datasources?.results" class="uk-card uk-card-default uk-margin-bottom">
                     <div class="uk-card-body large-padding">
                       <div class="uk-text-meta">{{res.eoscDatasourceType.split('::')[0]}}  {{res.eoscDatasourceType.split('::')[1]}}  {{res.eoscDatasourceType.split('::')[2]}}</div>
                       <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top"><a [routerLink]="['/repositoryAdmin/' + res.id]">{{res.officialname}}</a></div>
@@ -100,42 +101,45 @@
                       <div><span class="mute-title">Organization: </span><span *ngFor="let organization of res.organizations; let i=index" class="small-content"><span *ngIf="i>0">, </span>{{organization.legalname + ' (' + getCountryName(organization.country) + ')'}}</span></div>
                     </div>
                   </div> -->
-                  <div *ngFor="let res of datasources?.results" class="uk-card uk-card-default uk-margin-bottom">
-                    <div class="uk-card-body large-padding">
-                      <div class="uk-flex uk-flex-between uk-margin-small-bottom">
-                        <div class="uk-text-meta">
-                          {{ res.eoscDatasourceType.split('::')[0] }} {{ res.eoscDatasourceType.split('::')[1] }} {{
-                          res.eoscDatasourceType.split('::')[2] }}
-                        </div>
-                        <div class="small-content uk-label" *ngIf="res.primaryProvideGateway === 'egi' || (res.affiliatedProvideGateways?.includes?.('egi'))"
-                          [ngClass]="{'uk-label-primary' : res.primaryProvideGateway === 'egi', 'uk-label-secondary': res.affiliatedProvideGateways.indexOf('egi') !== -1 }">
-                          <ng-container *ngIf="res.primaryProvideGateway === 'egi'">PRIMARY</ng-container>
-                          <ng-container *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways.indexOf('egi') !== -1">AFFILIATED</ng-container>
-                        </div>
-                      </div>
-                      <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top">
-                        <a [routerLink]="['/repositoryAdmin/' + res.id]">{{ res.officialname }}</a>
-                      </div>
-                      <div class="uk-margin-small-bottom">
-                        <span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>
-                        {{ res.id }}
-                      </div>
-                      <div class="uk-margin-small-bottom">
-                        <span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>
-                        {{ res.registeredby }}
-                      </div>
-                      <div class="uk-margin-small-bottom">
-                        <span class="mute-title">Date: </span>
-                        <span class="small-content">{{ res.registrationdate }}</span>
-                      </div>
-                      <div>
-                        <span class="mute-title">Organization: </span>
-                        <span *ngFor="let organization of res.organizations; let i=index" class="small-content">
-                          <span *ngIf="i>0">, </span>{{ organization.legalname + ' (' + getCountryName(organization.country) + ')' }}
-                        </span>
-                      </div>
+              <div *ngFor="let res of datasources?.results" class="uk-card uk-card-default uk-margin-bottom">
+                <div class="uk-card-body large-padding">
+                  <div class="uk-flex uk-flex-between uk-margin-small-bottom">
+                    <div class="uk-text-meta">
+                      {{ res.eoscDatasourceType.split('::')[0] }} {{ res.eoscDatasourceType.split('::')[1] }} {{
+                      res.eoscDatasourceType.split('::')[2] }}
+                    </div>
+                    <div class="small-content uk-label"
+                      *ngIf="res.primaryProvideGateway === 'egi' || (res.affiliatedProvideGateways?.includes?.('egi'))"
+                      [ngClass]="{'uk-label-primary' : res.primaryProvideGateway === 'egi', 'uk-label-secondary': res.affiliatedProvideGateways.indexOf('egi') !== -1 }">
+                      <ng-container *ngIf="res.primaryProvideGateway === 'egi'">PRIMARY</ng-container>
+                      <ng-container
+                        *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways.indexOf('egi') !== -1">AFFILIATED</ng-container>
                     </div>
                   </div>
+                  <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top">
+                    <a [routerLink]="['/repositoryAdmin/' + res.id]">{{ res.officialname }}</a>
+                  </div>
+                  <div class="uk-margin-small-bottom">
+                    <span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>
+                    {{ res.id }}
+                  </div>
+                  <div class="uk-margin-small-bottom">
+                    <span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>
+                    {{ res.registeredby }}
+                  </div>
+                  <div class="uk-margin-small-bottom">
+                    <span class="mute-title">Date: </span>
+                    <span class="small-content">{{ res.registrationdate }}</span>
+                  </div>
+                  <div>
+                    <span class="mute-title">Organization: </span>
+                    <span *ngFor="let organization of res.organizations; let i=index" class="small-content">
+                      <span *ngIf="i>0">, </span>{{ organization.legalname + ' (' + getCountryName(organization.country)
+                      + ')' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
               <!-- <div *ngFor="let datasource of datasources?.results" >
                 <div class="uk-card uk-card-default uk-card-body uk-margin-medium-bottom">
@@ -158,7 +162,7 @@
                     </span>
                   </div>
                   <pre>{{ datasource | json }}</pre>-->
-                <!-- </div> -->
+              <!-- </div> -->
               <!-- </div> -->
             </ng-template>
 

@@ -32,7 +32,7 @@ export class RequestsComponent implements OnInit {
   errorMessage: string | null = null;
   loadingMessage: string | null = null;
 
-  keyword: FormControl = new FormControl(null);
+  // keyword: FormControl = new FormControl(null);
   filterForm: FormGroup = new FormGroup({
     sort: new FormControl<string | null>(null),
     order: new FormControl<string | null>(null),
