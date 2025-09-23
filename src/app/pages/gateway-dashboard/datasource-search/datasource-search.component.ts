@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { DatasourceSearchService } from "../services/datasource-search.service";
-import { NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf, NgClass } from '@angular/common';
 import { Datasource } from "../domain/datasource.domain";
 import { InputComponent, Option } from '../../../shared/input.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Paging } from '../../../domain/paging';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { objectKeys } from 'codelyzer/util/objectKeys';
+import { Country } from 'src/app/domain/typeScriptClasses';
 
 @Component({
   selector: 'datasource-search',
@@ -17,15 +18,16 @@ import { objectKeys } from 'codelyzer/util/objectKeys';
     InputComponent,
     ReactiveFormsModule,
     NgIf,
-    MatPaginatorModule
-  ],
+    MatPaginatorModule,
+    NgClass
+],
   standalone: true
 })
 
 export class DatasourceSearchComponent implements OnInit {
 
   qParams: Params = {};
-
+  countries: Country[] = [];
   datasources?: Paging<Datasource>;
 
   errorMessage: string | null = null;
@@ -117,6 +119,14 @@ export class DatasourceSearchComponent implements OnInit {
 
   updateWithNavigation() {
     this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
+  }
+
+    getCountryName(countryCode: string): string {
+    for (const country of Object.values(this.countries)) {
+      if (country.code === countryCode) {
+        return country.name;
+      }
+    }
   }
 
 }

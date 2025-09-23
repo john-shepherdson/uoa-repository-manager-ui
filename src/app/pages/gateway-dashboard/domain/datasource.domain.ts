@@ -44,10 +44,15 @@ export interface Organization {
   legalname: string
   websiteurl?: string
   logourl?: string
-  country: string
+  country: Country
 }
 
 export interface Identity {
   pid: string
   issuertype: string
+}
+
+export interface Country {
+  name: string;
+  code: string;
 }

@@ -90,7 +90,54 @@
             </div>
 
             <ng-template #results>
-              <div *ngFor="let datasource of datasources?.results" >
+                <!-- <div *ngFor="let res of datasources?.results" class="uk-card uk-card-default uk-margin-bottom">
+                    <div class="uk-card-body large-padding">
+                      <div class="uk-text-meta">{{res.eoscDatasourceType.split('::')[0]}}  {{res.eoscDatasourceType.split('::')[1]}}  {{res.eoscDatasourceType.split('::')[2]}}</div>
+                      <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top"><a [routerLink]="['/repositoryAdmin/' + res.id]">{{res.officialname}}</a></div>
+                      <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>{{res.id}}</div>
+                      <div class="uk-margin-small-bottom"><span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>{{res.registeredby}}</div>
+                      <div class="uk-margin-small-bottom"><span class="mute-title">Date: </span><span class="small-content">{{res.registrationdate}}</span></div>
+                      <div><span class="mute-title">Organization: </span><span *ngFor="let organization of res.organizations; let i=index" class="small-content"><span *ngIf="i>0">, </span>{{organization.legalname + ' (' + getCountryName(organization.country) + ')'}}</span></div>
+                    </div>
+                  </div> -->
+                  <div *ngFor="let res of datasources?.results" class="uk-card uk-card-default uk-margin-bottom">
+                    <div class="uk-card-body large-padding">
+                      <div class="uk-flex uk-flex-between uk-margin-small-bottom">
+                        <div class="uk-text-meta">
+                          {{ res.eoscDatasourceType.split('::')[0] }} {{ res.eoscDatasourceType.split('::')[1] }} {{
+                          res.eoscDatasourceType.split('::')[2] }}
+                        </div>
+                        <div class="small-content uk-label" *ngIf="res.primaryProvideGateway === 'egi' || (res.affiliatedProvideGateways?.includes?.('egi'))"
+                          [ngClass]="{'uk-label-primary' : res.primaryProvideGateway === 'egi', 'uk-label-secondary': res.affiliatedProvideGateways.indexOf('egi') !== -1 }">
+                          <ng-container *ngIf="res.primaryProvideGateway === 'egi'">PRIMARY</ng-container>
+                          <ng-container *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways.indexOf('egi') !== -1">AFFILIATED</ng-container>
+                        </div>
+                      </div>
+                      <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top">
+                        <a [routerLink]="['/repositoryAdmin/' + res.id]">{{ res.officialname }}</a>
+                      </div>
+                      <div class="uk-margin-small-bottom">
+                        <span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>
+                        {{ res.id }}
+                      </div>
+                      <div class="uk-margin-small-bottom">
+                        <span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>
+                        {{ res.registeredby }}
+                      </div>
+                      <div class="uk-margin-small-bottom">
+                        <span class="mute-title">Date: </span>
+                        <span class="small-content">{{ res.registrationdate }}</span>
+                      </div>
+                      <div>
+                        <span class="mute-title">Organization: </span>
+                        <span *ngFor="let organization of res.organizations; let i=index" class="small-content">
+                          <span *ngIf="i>0">, </span>{{ organization.legalname + ' (' + getCountryName(organization.country) + ')' }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+              <!-- <div *ngFor="let datasource of datasources?.results" >
                 <div class="uk-card uk-card-default uk-card-body uk-margin-medium-bottom">
                   <div class="uk-flex uk-flex-between">
                     <h5>{{ datasource.officialname }}
@@ -110,9 +157,9 @@
                       <a *ngIf="organization.websiteurl" href="{{organization.websiteurl}}" target="_blank" class="uk-flex uk-flex-middle"><span class="material-icons">open_in_new</span></a>
                     </span>
                   </div>
-<!--                  <pre>{{ datasource | json }}</pre>-->
-                </div>
-              </div>
+                  <pre>{{ datasource | json }}</pre>-->
+                <!-- </div> -->
+              <!-- </div> -->
             </ng-template>
 
 
