@@ -105,42 +105,72 @@
                 <div class="uk-card-body large-padding">
                   <div class="uk-flex uk-flex-between uk-margin-small-bottom">
                     <div class="uk-text-meta">
-                      {{ res.eoscDatasourceType.split('::')[0] }} {{ res.eoscDatasourceType.split('::')[1] }} {{
-                      res.eoscDatasourceType.split('::')[2] }}
+                      {{ res.eoscDatasourceType.split('::')[0] }}
+                      {{ res.eoscDatasourceType.split('::')[1] }}
+                      {{ res.eoscDatasourceType.split('::')[2] }}
                     </div>
-                    <div class="small-content uk-label"
-                      *ngIf="res.primaryProvideGateway === 'egi' || (res.affiliatedProvideGateways?.includes?.('egi'))"
-                      [ngClass]="{'uk-label-primary' : res.primaryProvideGateway === 'egi', 'uk-label-secondary': res.affiliatedProvideGateways.indexOf('egi') !== -1 }">
-                      <ng-container *ngIf="res.primaryProvideGateway === 'egi'">PRIMARY</ng-container>
-                      <ng-container
-                        *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways.indexOf('egi') !== -1">AFFILIATED</ng-container>
+
+                    <!-- PRIMARY -->
+                    <div *ngIf="res.primaryProvideGateway === 'egi'" class="small-content uk-label uk-label-primary">
+                      PRIMARY
+                    </div>
+
+                    <!-- AFFILIATED -->
+                    <div *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways?.includes('egi')"
+                      class="small-content uk-label uk-label-secondary">
+                      AFFILIATED
                     </div>
                   </div>
+
                   <div class="repositoryCardHeader uk-margin-bottom uk-margin-small-top">
                     <a [routerLink]="['/repositoryAdmin/' + res.id]">{{ res.officialname }}</a>
                   </div>
+
                   <div class="uk-margin-small-bottom">
                     <span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">ID</span>
                     {{ res.id }}
                   </div>
+
                   <div class="uk-margin-small-bottom">
                     <span class="uk-badge uk-badge-primary uk-badge-notification uk-margin-small-right">RM</span>
                     {{ res.registeredby }}
                   </div>
+
                   <div class="uk-margin-small-bottom">
                     <span class="mute-title">Date: </span>
                     <span class="small-content">{{ res.registrationdate }}</span>
                   </div>
+
                   <div>
                     <span class="mute-title">Organization: </span>
                     <span *ngFor="let organization of res.organizations; let i=index" class="small-content">
-                      <span *ngIf="i>0">, </span>{{ organization.legalname + ' (' + getCountryName(organization.country)
-                      + ')' }}
+                      <span *ngIf="i>0">, </span>
+                      {{ organization.legalname + ' (' + getCountryName(organization.country) + ')' }}
                     </span>
                   </div>
                 </div>
-              </div>
 
+                <!-- FOOTER -->
+                <div class="uk-card-footer uk-flex uk-flex-right uk-flex-middle">
+                  <!-- Show button only when AFFILIATED -->
+                  <button *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways?.includes('egi')"
+                    class="uk-button uk-button-primary uk-button-small" (click)="requestPrimary(res)">
+                    Request PRIMARY
+                  </button>
+
+                  <!-- Show both buttons when NONE -->
+                  <ng-container
+                    *ngIf="res.primaryProvideGateway !== 'egi' && !res.affiliatedProvideGateways?.includes('egi')">
+                    <button class="uk-button uk-button-small uk-button-primary uk-margin-small-right"
+                      (click)="requestPrimary(res)">
+                      Request PRIMARY
+                    </button>
+                    <button class="uk-button uk-button-small uk-button-secondary" (click)="requestAffiliated(res)">
+                      Request AFFILIATED
+                    </button>
+                  </ng-container>
+                </div>
+              </div>
               <!-- <div *ngFor="let datasource of datasources?.results" >
                 <div class="uk-card uk-card-default uk-card-body uk-margin-medium-bottom">
                   <div class="uk-flex uk-flex-between">
@@ -165,15 +195,9 @@
               <!-- </div> -->
               <!-- </div> -->
             </ng-template>
-
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
 </div>
