@@ -118,6 +118,32 @@ export class RequestsComponent implements OnInit {
     this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
   }
 
+  approveRequest(requestId: number) {
+    console.log('Approve request', requestId);
+    this.requestsService.updateRequest(requestId, 'APPROVED',"TARGET_GATEWAY_ADMIN", 'Approved by admin')
+      .subscribe({
+        next: (res) => {
+          console.log('Request approved:', res);
+        },
+        error: (err) => {
+          console.error('Error approving request:', err);
+        }
+      });
+  }
+
+  rejectRequest(requestId: number) {
+    console.log('Reject request', requestId);
+    this.requestsService.updateRequest(requestId, 'REJECTED', "TARGET_GATEWAY_ADMIN", 'Rejected by admin')
+      .subscribe({
+        next: (res) => {
+          console.log('Request rejected:', res);
+        },
+        error: (err) => {
+          console.error('Error rejecting request:', err);
+        }
+      });
+  }
+
 
 }
   

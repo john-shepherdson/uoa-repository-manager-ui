@@ -11,6 +11,8 @@ import { environment } from '../../environments/environment';
 export class CommunityContextService {
   private currentCommunityId = new BehaviorSubject<string | null>(null);
 
+  // private currentUserId = new BehaviorSubject<string | null>(null);
+
   baseUrl = environment.API_ENDPOINT;
 
   community: BehaviorSubject<Community | null> = new BehaviorSubject<Community | null>(null);
@@ -36,5 +38,13 @@ export class CommunityContextService {
       }
     });
   }
+
+//   getCurrentUserId() {
+//   return this.currentUserId.asObservable();
+// }
+
+// setCurrentUserId(id: string) {
+//   this.currentUserId.next(id);
+// }
 
 }

@@ -14,6 +14,7 @@ export class RequestsService {
     private baseUrl = environment.API_ENDPOINT ;
 
     private communityID?: string;
+    private userID?: string;
     
     constructor(private http: HttpClient, private communityService: CommunityContextService) {
       this.communityService.getCurrentCommunityId().subscribe({
@@ -24,6 +25,7 @@ export class RequestsService {
         console.error(err);
       }
     });
+
     }
 
     getRequests(queryParams: Params) {
@@ -54,4 +56,18 @@ export class RequestsService {
 
         return this.http.get<Paging<Request>>(url, { params });
     }
+
+   updateRequest(requestId: number, decision: 'APPROVED' | 'REJECTED', authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN', comment?: string): Observable<Request> {
+    const url = `${this.baseUrl}/datasource-gateway-requests`;
+    const params = { 'role': authority }; // query param
+
+  const updateRequest = {
+    id: requestId,     // body
+    decision,
+    comment: comment || null
+  };
+
+  return this.http.put<Request>(url, updateRequest, { params });
+}
+
 }
