@@ -139,7 +139,12 @@
                 </td>
 
                 <!-- Actions Column -->
-                <td *ngIf="showActionsColumn" class="uk-text-center"></td>
+                <td *ngIf="showActionsColumn" class="uk-text-center">
+                  <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-primary uk-button-small uk-margin-small-right"
+                    (click)="approveRequest(request.id)">Approve</button>
+                  <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"
+                    (click)="rejectRequest(request.id)">Reject</button>
+                </td>
               </tr>
             </tbody>
           </table>
