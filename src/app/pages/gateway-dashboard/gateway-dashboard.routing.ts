@@ -26,10 +26,16 @@ export const GatewayDashboardRouting: Route[] = [
       {
         path: 'requests/my',
         component: RequestsComponent,
+        data: {
+          requestParams: { requestedBy: 'TARGET_GATEWAY_ADMIN' }
+        },
       },
       {
         path: 'requests/actions',
         component: RequestsComponent,
+        data: {
+          requestParams: { requestedBy: 'DATASOURCE_ADMIN' }
+        },
       }
     ]
   }
