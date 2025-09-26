@@ -1,23 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { deleteCookie, getCookie } from '../domain/utils';
-import { BehaviorSubject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {BehaviorSubject, Subscription, timer} from 'rxjs';
 
 @Injectable()
 export class AuthenticationService {
 
   constructor(private router: Router,
-              private http: HttpClient) {}
+              private http: HttpClient) {
+  }
 
+  private loginInterval: Subscription;
   private apiUrl: string = environment.API_ENDPOINT;
   private loginUrl = environment.API_ENDPOINT + '/oauth2/authorization/openaire';
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
-
-  private cookie: string = null;
 
   public isLoggedIn_ = new BehaviorSubject(false);
 
@@ -25,8 +24,42 @@ export class AuthenticationService {
     return this.isLoggedIn_;
   }
 
+  public refreshUserInfo() {
+    /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTDOWN */
+    if (this.loginInterval == null || this.loginInterval.closed) {
+      this.loginInterval = timer(0, 1000 * 60 * 5).subscribe(() => {
+        this.http.get(this.apiUrl + '/user/login', {withCredentials: true}).subscribe(
+          userInfo => {
+            sessionStorage.setItem('name', userInfo['name']);
+            sessionStorage.setItem('email', userInfo['email'].trim());
+            sessionStorage.setItem('role', userInfo['role']);
+            if (!this.isLoggedIn_?.value) {
+              this.isLoggedIn_.next(true);
+            }
+          },
+          error => {
+            console.debug('/user/login status: ', error.status);
+            this.router.navigate(['/home']);
+            this.isLoggedIn_.next(false);
+            this.loginInterval.unsubscribe();
+          },
+          () => {
+            console.debug(`the current user is: ${sessionStorage.getItem('name')},
+                         ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
+            if (sessionStorage.getItem('state.location')) {
+              const state = sessionStorage.getItem('state.location');
+              sessionStorage.removeItem('state.location');
+              console.debug(`returning to state: ${state}`);
+              this.router.navigate([state]);
+            }
+          }
+        );
+      });
+    }
+  }
+
   public loginWithState() {
-    console.log(`logging in with state. Current url is: ${this.router.url}`);
+    console.debug(`logging in with state. Current url is: ${this.router.url}`);
     if (this.redirectUrl) {
       const url = this.redirectUrl;
       this.redirectUrl = null;
@@ -35,105 +68,34 @@ export class AuthenticationService {
       /*sessionStorage.setItem("state.location", this.router.url);*/
       sessionStorage.setItem('state.location', '/myDataSources');
     }
-    console.log('redirect location', sessionStorage.getItem('state.location'));
-    console.log('login to -> ', this.loginUrl);
+    console.debug('redirect location: ', sessionStorage.getItem('state.location'));
+    this.refreshUserInfo();
     window.location.href = this.loginUrl;
   }
 
   public logout() {
-    deleteCookie('AccessToken');
     sessionStorage.clear();
     this.isLoggedIn_.next(false);
-    console.log('logging out, calling:');
-    console.log(`${this.apiUrl}/logout`);
-
-    /*window.location.href = `${this.apiUrl}/openid_logout`;*/
-    window.location.href = `${environment.AAI_LOGOUT + window.location.origin + this.apiUrl}/logout`;
+    console.debug(`logging out, calling: ${this.apiUrl}/logout`);
+    window.location.href = `${this.apiUrl}/logout`;
   }
 
   public tryLogin() {
-    this.cookie = getCookie('AccessToken');
-    if (this.cookie && this.cookie !== '') {
-      // console.log(`I got the cookie!`);
-      // console.log(`in tryLogin -> document.cookie is: ${document.cookie.toString()}`);
-      /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTDOWN */
-      setInterval(() => {
-        this.http.get(this.apiUrl + '/user/login', { withCredentials: true }).subscribe(
-          userInfo => {
-            // console.log('User is still logged in');
-            // console.log(userInfo);
-            this.isLoggedIn_.next(true);
-          },
-          () => {
-            this.logout();
-          },
-          () => {
-            this.cookie = getCookie('AccessToken');
-            if ( !this.cookie || this.cookie === '') {
-              this.logout();
-            }
-          }
-        );
-        /*this.redirectUrl = window.location.pathname;
-        this.loginWithState();*/
-
-      }, 1000 * 60 * 5);
-      if (!this.getIsUserLoggedIn()) {
-        // console.log(`session.name wasn't found --> logging in via repo-service!`);
-        this.http.get(this.apiUrl + '/user/login', { withCredentials: true }).subscribe(
-          userInfo => {
-            // console.log(userInfo);
-            sessionStorage.setItem('name', userInfo['name']);
-            sessionStorage.setItem('email', userInfo['email'].trim());
-            sessionStorage.setItem('role', userInfo['role']);
-            this.isLoggedIn_.next(true);
-            // console.log(`the current user is: ${sessionStorage.getItem('name')},
-            //              ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
-          },
-          error => {
-            sessionStorage.clear();
-            console.log('Error!');
-            console.log(error);
-            deleteCookie('AccessToken');
-            deleteCookie('AccessToken');
-            this.isLoggedIn_.next(false);
-            this.router.navigate(['/home']);
-          },
-          () => {
-            if ( sessionStorage.getItem('state.location') ) {
-              const state = sessionStorage.getItem('state.location');
-              sessionStorage.removeItem('state.location');
-              console.log(`tried to login - returning to state: ${state}`);
-              if ( !this.getIsUserLoggedIn() ) {
-                // console.log('user hasn't logged in yet -- redirecting to home');
-                this.router.navigate(['/home']);
-              } else {
-                this.router.navigate([state]);
-              }
-            }
-          }
-        );
-      } else {
-        this.isLoggedIn_.next(true);
-        // console.log(`the current user is: ${sessionStorage.getItem('name')},
-        //              ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
-        if (this.redirectUrl) {
-          const url = this.redirectUrl;
-          this.redirectUrl = null;
-          this.router.navigate([url]);
-          // console.log('route is', url);
-        }
-      }
+    this.refreshUserInfo();
+    if (this.redirectUrl) {
+      const url = this.redirectUrl;
+      this.redirectUrl = null;
+      this.router.navigate([url]);
+      console.debug('Redirecting to: ', url);
     }
   }
 
   public getIsUserLoggedIn() {
-    // todo: probably not all of them are needed
-    return this.isLoggedIn_.value && this.cookie && this.cookie !== '' && sessionStorage.getItem('email') !== null;
+    return this.isLoggedIn_.value && sessionStorage.getItem('email') !== null;
   }
 
   public getUserName() {
-    if (this.isLoggedIn_.value) {
+    if (this.getIsUserLoggedIn()) {
       return sessionStorage.getItem('name');
     } else {
       return '';

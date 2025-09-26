@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
         this.statisticsNumbers = res;
         // this.statisticsNumbers.lastYearUsagestats = JSON.parse(res['lastYearUsagestats'].toString());
       },
-      error => console.log(error),
+      error => console.debug(error.message),
       () => {
         // console.log('statisticsNumbers is', JSON.stringify(this.statisticsNumbers));
       }
