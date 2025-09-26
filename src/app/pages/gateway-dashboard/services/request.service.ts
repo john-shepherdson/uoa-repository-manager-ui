@@ -5,6 +5,7 @@ import { environment } from "../../../../environments/environment";
 import { Params } from "@angular/router";
 import { Paging } from "../../../domain/paging";
 import { CommunityContextService } from "src/app/services/communityContext.service";
+import {Request} from '../domain/request.domain';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class RequestsService {
 
     private communityID?: string;
     private userID?: string;
-    
+
     constructor(private http: HttpClient, private communityService: CommunityContextService) {
       this.communityService.getCurrentCommunityId().subscribe({
       next: (communityID) => {
@@ -28,7 +29,7 @@ export class RequestsService {
 
     }
 
-    getRequests(queryParams: Params) {
+    getRequests(queryParams: Params): Observable<Paging<Request>> {
         const url = `${this.baseUrl}/datasource-gateway-requests`;
         let params = new HttpParams();
 

@@ -18,24 +18,24 @@
     </div>
       </div>
     </div>
-    
+
     <div class="uk-section uk-section-default">
       <div class="uk-container uk-container-large">
         <form [formGroup]="filterForm" class="uk-form-horizontal uk-flex">
-    
+
           <div class="uk-padding-xsmall uk-padding-remove-vertical">
             <div input placeholder="Request Type" type="select" [formInput]="filterForm.get('requestType')"
               [options]="[{value: 'PRIMARY', label: 'Primary'}, {value: 'AFFILIATED', label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
               (valueChange)="handleFilterChanges('requestType')">
             </div>
           </div>
-    
+
           <div class="uk-padding-xsmall uk-padding-remove-vertical">
             <div input placeholder="Status" type="select" [formInput]="filterForm.get('status')" [options]="statusOptions"
               (valueChange)="handleFilterChanges('status')">
             </div>
           </div>
-    
+
         </form>
       </div>
     </div>
@@ -68,7 +68,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let request of requests.results">
+              <tr *ngFor="let request of requests?.results">
                 <!-- Request ID -->
                 <td>{{ request.id }}</td>
 
