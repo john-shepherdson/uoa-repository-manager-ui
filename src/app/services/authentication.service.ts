@@ -111,7 +111,7 @@ export class AuthenticationService {
   }
 
   public getUserRole() {
-    if (this.isLoggedIn_.value) {
+    if (this.getIsUserLoggedIn()) {
       return sessionStorage.getItem('role');
     } else {
       return '';
