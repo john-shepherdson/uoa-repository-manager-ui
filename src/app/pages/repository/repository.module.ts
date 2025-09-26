@@ -11,6 +11,7 @@ import { SourcesModule } from '../sources/sources.module';
 import { UpdateRepoAdminsComponent } from './update/update-repo-admins.component';
 import { RepositorySideMenuComponent } from './repository-sidebar/repository-sidebar.component';
 import { InputComponent } from '../../shared/input.component';
+import { GatewaysComponent } from './gateways/gateways.component';
 
 @NgModule ({
   imports: [
@@ -26,6 +27,7 @@ import { InputComponent } from '../../shared/input.component';
     RepositorySideMenuComponent,
     RepositoryComponent,
     DashboardComponent,
+    GatewaysComponent,
     SourcesUpdateRepoComponent,
     UpdateRepoAdminsComponent
   ],

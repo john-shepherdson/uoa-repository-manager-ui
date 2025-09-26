@@ -113,6 +113,8 @@ export class DatasourceDetails {
   organizations: OrganizationDetails[] = new Array<OrganizationDetails>();
   identities: IdentitiesDetails[];
   status: string;
+  primaryProvideGateway: string
+  affiliatedProvideGateways: string[]
   typology: string;
 }
 

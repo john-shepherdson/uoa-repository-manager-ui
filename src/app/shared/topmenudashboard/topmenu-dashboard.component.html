@@ -40,7 +40,21 @@
                     </div>
                   </li>
                   <li class="uk-parent" [routerLinkActive]="['uk-active']"><a [routerLink]="['/content', 'notifications']" class=""> Notifications</a></li>
-                  <li class="uk-parent" [routerLinkActive]="['uk-active']"><a [routerLink]="['/myDataSources']" class="">Manage</a></li>
+                  <li class="uk-parent" [routerLinkActive]="['uk-active']">
+                    <a href="" class=""> Manage</a>
+                    <div  class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left uk-height-max-medium uk-overflow-auto uk-drop" style="top: 70px; left: 212.033px; max-width: 1698px;">
+                      <div>
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                          <li>
+                            <a [routerLink]="['/myDataSources']">My Datasource</a>
+                          </li>
+                          <li>
+                            <a [routerLink]="['/myRequests']">My Request</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
                 </ul>
               </div>
               <div class="uk-navbar-right">

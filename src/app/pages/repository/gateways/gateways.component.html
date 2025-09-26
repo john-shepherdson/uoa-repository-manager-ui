@@ -1,0 +1,82 @@
+<div id="page_content">
+  <div id="page_content_inner" class="">
+
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-expand">
+
+        <!-- TOP HELP CONTENT -->
+        <!-- <help-content #topHelperContent [position]="'top'"
+                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content> -->
+
+        <div class="uk-grid" style="min-height: 80vh">
+
+          <!-- LEFT HELP CONTENT -->
+          <!-- <aside-help-content #leftHelperContent [position]="'left'"
+                              [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content> -->
+
+          <!-- MIDDLE -->
+          <div class=" uk-width-expand@m">
+
+
+            <div>
+              <h5>Primary Gateway</h5>
+              <div *ngIf="primaryCommunity" class="uk-card uk-card-default uk-child-width-1-2" uk-grid>
+                <div class="uk-card-media-left uk-cover-container">
+                  <img [src]="primaryCommunity?.logoUrl" alt="Primary Gateway Logo" uk-cover>
+                  <canvas width="80" height="100"></canvas>
+                </div>
+                <div>
+                  <div class="uk-card-body">
+                    <dl class="uk-description-list">
+                      <dt><h3>{{ primaryCommunity.displayName || primaryCommunity.name}}</h3></dt>
+                      <dd><p>{{ primaryCommunity.description }}</p></dd>
+                    </dl>
+                    <!-- <h3>{{ primaryCommunity.displayName || primaryCommunity.name}}</h3>
+                    <p>{{ primaryCommunity.description }}</p> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="uk-margin-medium-top">
+              <h5>Affiliated Gateways</h5>
+              <div *ngIf="affiliatedCommunities.length > 0; else noAffiliated">
+                <div *ngFor="let comm of affiliatedCommunities"
+                  class="uk-card uk-card-default uk-child-width-1-2 uk-margin-small" uk-grid>
+                  <div class="uk-card-media-left uk-cover-container">
+                    <img [src]="comm?.logoUrl" alt="Affiliated Gateway Logo" uk-cover>
+                    <canvas width="300" height="200"></canvas>
+                  </div>
+                  <div>
+                    <div class="uk-card-body">
+                      <h3>{{ comm.displayName || comm.name}}</h3>
+                      <p>{{ comm.description }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #noAffiliated>
+                <p>No affiliated gateways available.</p>
+              </ng-template>
+
+            </div>
+
+            <!-- RIGHT HELP CONTENT -->
+            <!-- <aside-help-content #rightHelperContent [position]="'right'"
+                              [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content> -->
+
+          </div>
+
+          <!-- BOTTOM HELP CONTENT -->
+          <!-- <help-content #bottomHelperContent [position]="'bottom'"
+                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content> -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>

@@ -4,6 +4,7 @@ import { RepositoryComponent } from "./repository.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { authGuard } from "../../services/auth-guard.service";
 import { SourcesUpdateRepoComponent } from "./update/sources-update-repo.component";
+import { GatewaysComponent } from "./gateways/gateways.component";
 
 const repositoryRoutes: Routes = [
   {
@@ -52,6 +53,14 @@ const repositoryRoutes: Routes = [
               hasSidebar: true
             }
           },
+          {
+            path: 'gateways',
+            component: GatewaysComponent,
+            canActivate: [authGuard],
+            data: {
+              hasSidebar: true
+            }
+          }
           // {
           //   path: 'videos/:id',
           //   component: VideoLesson

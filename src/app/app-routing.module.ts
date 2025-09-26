@@ -6,6 +6,7 @@ import { EmptyPageComponent } from './pages/emptypage/empty-page.component';
 import { AboutComponent } from './pages/landing/about/about.component';
 import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.component';
 import { authGuard } from "./services/auth-guard.service";
+import { MyRequestsComponent } from './pages/my-requests/my-requests.component';
 
 const appRoutes: Routes = [
   {
@@ -29,6 +30,11 @@ const appRoutes: Routes = [
   {
     path: 'myDataSources',
     component: MyDataSourcesComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'myRequests',
+    component:MyRequestsComponent,
     canActivate: [authGuard]
   },
   {

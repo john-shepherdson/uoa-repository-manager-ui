@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { Datasource } from '../domain/datasource.domain';
 import { Params } from '@angular/router';
 import { Paging } from '../../../domain/paging';
+import { DatasourceDetails } from 'src/app/domain/typeScriptClasses';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,6 @@ export class DatasourceSearchService {
     //   }
     // });
 
-    return this.http.get<Paging<Datasource>>(url, {params: params});
+    return this.http.get<Paging<DatasourceDetails>>(url, {params: params});
   }
 }
