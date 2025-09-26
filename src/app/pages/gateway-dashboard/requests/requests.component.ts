@@ -10,6 +10,7 @@ import {InputComponent, Option} from '../../../shared/input.component';
 import {Paging} from 'src/app/domain/paging';
 import {combineLatest, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
+import {Request} from '../domain/request.domain';
 
 
 @Component({
