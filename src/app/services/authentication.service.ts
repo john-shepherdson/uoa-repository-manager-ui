@@ -24,6 +24,15 @@ export class AuthenticationService {
     return this.isLoggedIn_;
   }
 
+  public getLoginUrl(path: string = null): string {
+    const continueUrl = window.location.origin + encodeURIComponent(path ? path : this.router.url);
+    return `${this.loginUrl}?continue=${continueUrl}`;
+  }
+
+  public getLogoutUrl(): string {
+    return `${this.apiUrl}/logout`
+  }
+
   public refreshUserInfo() {
     /* SETTING INTERVAL TO REFRESH SESSION TIMEOUT COUNTDOWN */
     if (this.loginInterval == null || this.loginInterval.closed) {
@@ -64,20 +73,18 @@ export class AuthenticationService {
       const url = this.redirectUrl;
       this.redirectUrl = null;
       sessionStorage.setItem('state.location', url);
-    } else {
+    } else if (this.router.url === '/home') {
       /*sessionStorage.setItem("state.location", this.router.url);*/
       sessionStorage.setItem('state.location', '/myDataSources');
     }
     console.debug('redirect location: ', sessionStorage.getItem('state.location'));
-    this.refreshUserInfo();
-    window.location.href = this.loginUrl;
+    window.location.href = this.getLoginUrl();
   }
 
   public logout() {
     sessionStorage.clear();
     this.isLoggedIn_.next(false);
-    console.debug(`logging out, calling: ${this.apiUrl}/logout`);
-    window.location.href = `${this.apiUrl}/logout`;
+    window.location.href = this.getLogoutUrl();
   }
 
   public tryLogin() {
