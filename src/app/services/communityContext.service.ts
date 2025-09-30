@@ -34,6 +34,7 @@ export class CommunityContextService {
       next: (community) => {
         this.community.next(community);
       }, error: (error) => {
+        // Todo: handle error (maybe redirect to 404?)
         console.error('Error loading community:', error);
       }
     });

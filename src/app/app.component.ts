@@ -144,23 +144,20 @@ export class AppComponent implements OnInit, OnDestroy {
   private loadCommunityFromRoute() {
     // Extract org ID from the current URL
     const hostSegments = window.location.host.split('.');
-    const communityId = hostSegments[0];
 
-    if (hostSegments.length === 4) { // URL should be in format: <community-id>.<service>.<domain>.<tld>, e.g., 'egi.provide.openaire.eu'
+    let communityId: string | null = null;
+
+    if (hostSegments[0] === 'beta' && hostSegments.length === 5) {
+      communityId = hostSegments[1];
+    } else if (hostSegments.length === 4) {
+      communityId = hostSegments[0];
+    }
+
+    if (communityId != null) { // URL should be in format: (optional<beta>.)<community-id>.<service>.<domain>.<tld>, e.g., 'egi.provide.openaire.eu'
       this.communityService.loadCommunity(communityId);
-    } else { // If the host is not of the form <community-id>.<service>.<domain>.<tld>
+    } else {
+      // If the host is not of the form <community-id>.<service>.<domain>.<tld>
       // Handle error - maybe redirect to the default org
-      if (environment.production === false) {
-        // this.communityService.loadCommunity('egi').subscribe(
-        //   community => {
-        //     console.log('Mock community loaded:', community);
-        //   },
-        //   error => {
-        //     console.error('Failed to load community:', error);
-        //     // Handle error - maybe redirect to default org
-        //   }
-        // );
-      }
     }
   }
 
