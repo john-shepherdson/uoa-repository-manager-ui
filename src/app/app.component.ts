@@ -147,8 +147,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
     let communityId: string | null = null;
 
-    if (hostSegments[0] === 'beta' && hostSegments.length === 5) {
-      communityId = hostSegments[1];
+    if (hostSegments[0] === 'beta') {
+      if ( hostSegments.length === 5)
+        communityId = hostSegments[1];
     } else if (hostSegments.length === 4) {
       communityId = hostSegments[0];
     }
