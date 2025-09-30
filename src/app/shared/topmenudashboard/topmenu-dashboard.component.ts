@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../services/authentication.service';
-import { CommunityContextService } from '../../services/communityContext.service';
-import { environment } from '../../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from '../../services/authentication.service';
+import {CommunityContextService} from '../../services/communityContext.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'top-menu-dashboard',
@@ -19,7 +19,8 @@ export class TopmenuDashboardComponent implements OnInit {
 
   inBeta: boolean;
 
-  constructor(public authService: AuthenticationService, private communityService: CommunityContextService) { }
+  constructor(public authService: AuthenticationService, private communityService: CommunityContextService) {
+  }
 
   ngOnInit() {
     this.getIsUserLoggedIn();
@@ -29,13 +30,17 @@ export class TopmenuDashboardComponent implements OnInit {
     this.communityService.community.subscribe({
       next: (community) => {
         if (community !== null) {
-          this.communityLogo = this.baseLogoUrl + community.logoUrl;
+          if (community.logoUrl.startsWith('http')) {
+            this.communityLogo = community.logoUrl;
+          } else {
+            this.communityLogo = this.baseLogoUrl + community.logoUrl;
+          }
         }
       }
     });
 
     const baseUrl = window.location.origin;
-    this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
+    this.inBeta = (baseUrl.includes('beta') || baseUrl.includes('athenarc'));
   }
 
   onClick(id: string) {

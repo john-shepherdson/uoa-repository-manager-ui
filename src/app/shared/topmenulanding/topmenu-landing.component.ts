@@ -32,7 +32,11 @@ export class TopmenuLandingComponent implements OnInit {
     this.communityService.community.subscribe({
       next: (community) => {
         if (community !== null) {
-          this.communityLogo = this.baseLogoUrl + community.logoUrl;
+          if (community.logoUrl.startsWith('http')) {
+            this.communityLogo = community.logoUrl;
+          } else {
+            this.communityLogo = this.baseLogoUrl + community.logoUrl;
+          }
         }
       }
     });
