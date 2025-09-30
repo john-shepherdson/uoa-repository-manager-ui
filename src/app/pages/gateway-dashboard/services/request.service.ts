@@ -8,6 +8,7 @@ import { CommunityContextService } from "src/app/services/communityContext.servi
 import {Request} from '../domain/request.domain';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -56,6 +57,16 @@ export class RequestsService {
         // });
 
         return this.http.get<Paging<Request>>(url, { params });
+    }
+
+    getRequestsbyId(id: string) {
+
+      const url = `${this.baseUrl}/datasource-gateway-requests`;
+      let params = new HttpParams();
+      params = params.append('datasourceIds', id)
+      params = params.append('size', 100)
+
+      return this.http.get<Paging<Request>>(url, {params})
     }
 
    updateRequest(requestId: number, decision: 'APPROVED' | 'REJECTED', authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN', comment?: string): Observable<Request> {

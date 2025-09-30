@@ -25,6 +25,8 @@ import { JoinComponent } from './pages/join/join.component';
 import { AboutComponent } from './pages/landing/about/about.component';
 import { environment } from '../environments/environment';
 import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.component';
+import { MyRequestsComponent } from './pages/my-requests/my-requests.component';
+import { MatStepperModule } from "@angular/material/stepper";
 
 
 
@@ -35,7 +37,8 @@ import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.c
     AboutComponent,
     EmptyPageComponent,
     JoinComponent,
-    MyDataSourcesComponent
+    MyDataSourcesComponent,
+    MyRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -46,17 +49,18 @@ import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.c
     ReusableComponentsModule,
     CookieLawModule,
     MatomoModule.forRoot({
-      scriptUrl: environment.MATOMO_URL + 'matomo.js',
-      trackers: [
-        {
-          trackerUrl: environment.MATOMO_URL + 'matomo.php',
-          siteId: environment.MATOMO_SITE
-        }
-      ]
+        scriptUrl: environment.MATOMO_URL + 'matomo.js',
+        trackers: [
+            {
+                trackerUrl: environment.MATOMO_URL + 'matomo.php',
+                siteId: environment.MATOMO_SITE
+            }
+        ]
     }),
     MatomoRouterModule.forRoot({}),
-    AppRoutingModule
-  ],
+    AppRoutingModule,
+    MatStepperModule
+],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
