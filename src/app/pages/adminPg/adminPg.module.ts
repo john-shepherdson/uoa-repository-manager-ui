@@ -9,6 +9,7 @@ import { RegistrationComponent } from './adminPg-registrations.component';
 import { AdminSideMenuComponent } from './admin-sidebar/admin-sidebar.component';
 import { InputComponent } from '../../shared/input.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { GatewayRequestsComponent } from './gateway-requests/gateway-requests.component';
 
 @NgModule ({
   imports: [
@@ -24,7 +25,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AdminPgComponent,
     AdminSideMenuComponent,
     AdminPgMetricsComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    GatewayRequestsComponent
   ]
 })
 

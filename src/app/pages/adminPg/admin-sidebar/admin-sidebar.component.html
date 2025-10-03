@@ -1,3 +1,4 @@
+
 <div id="sidebar_main" uk-sticky="end: .sidebar_main_swipe;" class="uk-visible@m uk-sticky uk-sticky-fixed" offset="65" style="position: sticky; top: 65px;">
   <div sidebar-content="">
     <div id="sidebar_toggle" (click)="toggleSidebar()"></div>
@@ -38,6 +39,17 @@
               </div>
               <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Help Texts</span>
               <!--              <span class="uk-nav-parent-icon hide-on-close ng-star-inserted"></span>-->
+            </a>
+          </li>
+
+          <li class="uk-parent" [routerLinkActive]="['uk-active']">
+            <a class="uk-flex uk-flex-middle" [routerLink]="['./gateway-requests']" title="Gateway Requests" role="button" aria-controls="uk-nav-97-content-4" aria-expanded="false" aria-disabled="false">
+              <div class="uk-width-auto ng-star-inserted">
+                <div class="menu-icon" ng-reflect-ratio="0.9" ng-reflect-svg="<svg xmlns=&quot;http://www.w3.org/" ng-reflect-flex="true">
+                  <span class="material-symbols-outlined">move_group</span>
+                </div>
+              </div>
+              <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Gateway Requests</span>
             </a>
           </li>
 

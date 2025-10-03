@@ -46,7 +46,7 @@ export class MyRequestsComponent implements OnInit {
     let ids = this.repositories.map(repo => repo.id);
     const params: any = {datasourcesIds: ids};
     ids.forEach(id => {
-      this.requestsService.getRequestsbyId(id).subscribe(
+      this.requestsService.getRequestsbyId(id, "datasourceIds").subscribe(
         next => {
           
           this.requests.set(id, next.results);

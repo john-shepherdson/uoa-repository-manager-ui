@@ -50,11 +50,8 @@ export class RequestsComponent implements OnInit, OnDestroy {
   ];
 
 
-  constructor(private requestsService: RequestsService,
-              private communityService: CommunityContextService,
-              private router: Router,
-              private route: ActivatedRoute) {
-  }
+  constructor(private requestsService: RequestsService, private communityService: CommunityContextService, private router: Router,
+      private route: ActivatedRoute) {}
 
   ngOnInit(): void {
 

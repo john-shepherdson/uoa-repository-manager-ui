@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { DatasourceSearchService } from "../services/datasource-search.service";
 import { NgForOf, NgIf, NgClass } from '@angular/common';
@@ -8,6 +8,9 @@ import { Paging } from '../../../domain/paging';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { objectKeys } from 'codelyzer/util/objectKeys';
 import { Country, DatasourceDetails } from 'src/app/domain/typeScriptClasses';
+import { RequestsService } from '../services/request.service';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+
 
 @Component({
   selector: 'datasource-search',
@@ -23,6 +26,7 @@ import { Country, DatasourceDetails } from 'src/app/domain/typeScriptClasses';
 })
 
 export class DatasourceSearchComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
 
   qParams: Params = {};
   countries: Country[] = [];
@@ -59,7 +63,7 @@ export class DatasourceSearchComponent implements OnInit {
     {value: 'null', label: 'Reset'}
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router, private datasourceSearch: DatasourceSearchService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private datasourceSearch: DatasourceSearchService, private requestService: RequestsService) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -78,7 +82,7 @@ export class DatasourceSearchComponent implements OnInit {
       }
 
       this.loadingMessage = 'Fetching datasources..';
-      this.datasourceSearch.search(params).pipe().subscribe({
+      this.datasourceSearch.search(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (data) => {
           this.datasources = data;
           this.loadingMessage = null;
@@ -126,5 +130,47 @@ export class DatasourceSearchComponent implements OnInit {
       }
     }
   }
+
+
+
+  // createRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
+  //   console.log('ID: ', datasourceId, ' type: ', type);
+    
+  //   this.requestService.createRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+  //     next: (value) => {
+  //       console.log(value);
+  //     },
+  //     error: (err) => {
+  //       console.error(err);
+  //     }
+  //   })
+
+  // }
+
+  createGatewayRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
+    console.log(`Submitting Gateway Request for ID: ${datasourceId}, Type: ${type}`);
+    
+    this.requestService.createGatewayRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+        next: (value) => {
+            console.log('Gateway Request successful:', value);
+        },
+        error: (err) => {
+            console.error('Gateway Request failed:', err);
+        }
+    });
+}
+
+  createDatasourceRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
+    console.log(`Submitting Datasource Request for ID: ${datasourceId}, Type: ${type}`);
+    
+    this.requestService.createDatasourceRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+        next: (value) => {
+            console.log('Datasource Request successful:', value);
+        },
+        error: (err) => {
+            console.error('Datasource Request failed:', err);
+        }
+    });
+}
 
 }

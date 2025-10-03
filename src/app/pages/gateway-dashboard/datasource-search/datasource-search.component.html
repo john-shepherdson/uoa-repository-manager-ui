@@ -154,7 +154,7 @@
                 <div class="uk-card-footer uk-flex uk-flex-right uk-flex-middle">
                   <!-- Show button only when AFFILIATED -->
                   <button *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways?.includes('egi')"
-                    class="uk-button uk-button-primary uk-button-small" (click)="requestPrimary(res)">
+                    class="uk-button uk-button-primary uk-button-small" (click)="createDatasourceRequest(res.id, 'PRIMARY')">
                     Request PRIMARY
                   </button>
 
@@ -162,11 +162,11 @@
                   <ng-container
                     *ngIf="res.primaryProvideGateway !== 'egi' && !res.affiliatedProvideGateways?.includes('egi')">
                     <button class="uk-button uk-button-small uk-button-primary uk-margin-small-right"
-                      (click)="requestPrimary(res)">
-                      Request PRIMARY
+                      (click)="createDatasourceRequest(res.id, 'PRIMARY')">
+                      Request as PRIMARY
                     </button>
-                    <button class="uk-button uk-button-small uk-button-secondary" (click)="requestAffiliated(res)">
-                      Request AFFILIATED
+                    <button class="uk-button uk-button-small uk-button-secondary" (click)="createGatewayRequest(res.id, 'AFFILIATED')">
+                      Request as AFFILIATED
                     </button>
                   </ng-container>
                 </div>

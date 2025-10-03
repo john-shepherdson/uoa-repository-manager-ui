@@ -4,6 +4,7 @@ import { AdminPgComponent } from './adminPg.component';
 import { AdminPgMetricsComponent } from './adminPg-metrics.component';
 import { authGuard, canMatchGuard } from '../../services/auth-guard.service';
 import { RegistrationComponent } from './adminPg-registrations.component';
+import { GatewayRequestsComponent } from './gateway-requests/gateway-requests.component';
 
 const adminRoutes: Routes = [
   {
@@ -19,6 +20,10 @@ const adminRoutes: Routes = [
       {
         path: 'registrations',
         component: RegistrationComponent
+      },
+      {
+        path: 'gateway-requests',
+        component: GatewayRequestsComponent
       }
     ]
   }

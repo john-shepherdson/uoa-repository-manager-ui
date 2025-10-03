@@ -59,11 +59,11 @@ export class RequestsService {
         return this.http.get<Paging<Request>>(url, { params });
     }
 
-    getRequestsbyId(id: string) {
+    getRequestsbyId(id: string, key: string) {
 
       const url = `${this.baseUrl}/datasource-gateway-requests`;
       let params = new HttpParams();
-      params = params.append('datasourceIds', id)
+      params = params.append(key, id)
       params = params.append('size', 100)
 
       return this.http.get<Paging<Request>>(url, {params})
@@ -81,5 +81,43 @@ export class RequestsService {
 
   return this.http.put<Request>(url, updateRequest, { params });
 }
+
+// createRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string): Observable<Request>{
+//   const url = `${this.baseUrl}/datasource-gateway-requests`;
+  
+//         const createRequest = {
+//           datasourceId: datasourceId,
+//           gatewayId: this.communityID,
+//           requestType: type,
+//           comment: comment || null
+//         };
+
+//         return this.http.post<Request>(url, createRequest)
+// }
+
+private requestBoby(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string) {
+  return {
+    datasourceId: datasourceId,
+    gatewayId: this.communityID,
+    requestType: type,
+    comment: comment || null
+  };
+}
+
+createGatewayRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string): Observable<Request> {
+  const url = `${this.baseUrl}/datasource-gateway-requests/gateways`;
+
+  const createRequest = this.requestBoby(datasourceId, type, comment);
+  return this.http.post<Request>(url, createRequest);
+}
+
+createDatasourceRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string) : Observable<Request> {
+  const url = `${this.baseUrl}/datasource-gateway-requests/datasources`;
+
+  const createRequest = this.requestBoby(datasourceId, type, comment);
+  return this.http.post<Request>(url, createRequest);
+
+}
+
 
 }
