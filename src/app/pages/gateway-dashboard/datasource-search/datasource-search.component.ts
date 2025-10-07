@@ -60,15 +60,6 @@ export class DatasourceSearchComponent implements OnInit {
     {value: 'id', label: 'Id'}
   ];
 
-  statusOptions: Option[] = [
-    {value: 'PENDING', label: 'Pending'},
-    {value: 'APPROVED', label: 'Approved'},
-    {value: 'REJECTED', label: 'Rejected'},
-    {value: 'CANCELLED', label: 'Cancelled'},
-    {value: 'EXPIRED', label: 'Expired'},
-    {value: 'null', label: 'Reset'}
-  ];
-
   constructor(private route: ActivatedRoute, private router: Router, private datasourceSearch: DatasourceSearchService, private requestService: RequestsService) {}
 
   ngOnInit() {
@@ -141,7 +132,7 @@ export class DatasourceSearchComponent implements OnInit {
 
   // createRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
   //   console.log('ID: ', datasourceId, ' type: ', type);
-    
+
   //   this.requestService.createRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
   //     next: (value) => {
   //       console.log(value);
@@ -155,7 +146,7 @@ export class DatasourceSearchComponent implements OnInit {
 
   createGatewayRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
     console.log(`Submitting Gateway Request for ID: ${datasourceId}, Type: ${type}`);
-    
+
     this.requestService.createGatewayRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (value) => {
             console.log('Gateway Request successful:', value);
@@ -168,7 +159,7 @@ export class DatasourceSearchComponent implements OnInit {
 
   createDatasourceRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
     console.log(`Submitting Datasource Request for ID: ${datasourceId}, Type: ${type}`);
-    
+
     this.requestService.createDatasourceRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (value) => {
             console.log('Datasource Request successful:', value);

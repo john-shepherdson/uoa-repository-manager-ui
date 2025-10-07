@@ -49,19 +49,6 @@
                 </div>
               </div>
 
-              <div class="uk-padding-xsmall uk-padding-remove-vertical">
-                <div input placeholder="Request Type" type="select" [formInput]="filterForm.get('requestType')"
-                  [options]="[{value: 'PRIMARY', label: 'Primary'}, {value: 'AFFILIATED', label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
-                  (valueChange)="handleFilterChanges('requestType')">
-                </div>
-              </div>
-
-              <div class="uk-padding-xsmall uk-padding-remove-vertical">
-                <div input placeholder="Status" type="select" [formInput]="filterForm.get('status')"
-                  [options]="statusOptions" (valueChange)="handleFilterChanges('status')">
-                </div>
-              </div>
-
               <!--                  <div class="" style="margin-left:auto; margin-right:0;">-->
               <!--                    <button class="uk-button uk-button-link" (click)="downloadCSV()">-->
               <!--                      <i class="fas fa-download uk-margin-small-right"></i>Export to CSV-->
