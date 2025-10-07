@@ -39,6 +39,28 @@ export class RequestsService {
     return;
   }
 
+  getAllRequests(queryParams: Params): Observable<Paging<Request>> {
+    const url = `${this.baseUrl}/datasource-gateway-requests`;
+    let params = new HttpParams();
+
+    // Build params safely: skip null/undefined, stringify values, support arrays
+    Object.entries(queryParams || {}).forEach(([key, value]) => {
+      if (value === null || value === undefined) {
+        return;
+      }
+      if (Array.isArray(value)) {
+        value.forEach(v => {
+          if (v !== null && v !== undefined) {
+            params = params.append(key, String(v));
+          }
+        });
+      } else {
+        params = params.set(key, String(value));
+      }
+    });
+    return this.http.get<Paging<Request>>(url, {params});
+  }
+
   getRequests(queryParams: Params): Observable<Paging<Request>> {
     const url = `${this.baseUrl}/datasource-gateway-requests`;
     let params = new HttpParams();

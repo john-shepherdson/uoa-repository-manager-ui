@@ -11,10 +11,10 @@ import {BaseGatewayRequestsComponent} from './base-gateway-requests.component';
 
 @Component({
   selector: 'gateway-requests',
-  templateUrl: 'base-gateway-requests.component.html'
+  templateUrl: '../../gateway-dashboard/requests/requests.component.html'
 })
 
-export class GatewayRequestsComponent extends BaseGatewayRequestsComponent {
+export class AdminRequestsComponent extends BaseGatewayRequestsComponent {
 
   constructor(
     protected requestsService: RequestsService,
@@ -26,6 +26,6 @@ export class GatewayRequestsComponent extends BaseGatewayRequestsComponent {
   }
 
   protected getRequests(params: any): Observable<Paging<Request>> {
-    return this.requestsService.getGatewayRequests(params);
+    return this.requestsService.getAllRequests(params);
   }
 }

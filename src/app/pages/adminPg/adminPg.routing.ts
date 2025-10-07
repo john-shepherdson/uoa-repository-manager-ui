@@ -4,7 +4,7 @@ import { AdminPgComponent } from './adminPg.component';
 import { AdminPgMetricsComponent } from './adminPg-metrics.component';
 import { authGuard, canMatchGuard } from '../../services/auth-guard.service';
 import { RegistrationComponent } from './adminPg-registrations.component';
-import { GatewayRequestsComponent } from './gateway-requests/gateway-requests.component';
+import { AdminRequestsComponent } from './gateway-requests/admin-requests.component';
 
 const adminRoutes: Routes = [
   {
@@ -22,8 +22,15 @@ const adminRoutes: Routes = [
         component: RegistrationComponent
       },
       {
-        path: 'gateway-requests',
-        component: GatewayRequestsComponent
+        path: 'openaire-requests',
+        component: AdminRequestsComponent,
+        data: {
+          requestParams: { requestedBy: 'TARGET_GATEWAY_ADMIN' }
+        }
+      },
+      {
+        path: 'all-requests',
+        component: AdminRequestsComponent
       }
     ]
   }
