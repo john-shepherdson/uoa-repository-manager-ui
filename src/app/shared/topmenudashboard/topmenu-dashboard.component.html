@@ -49,7 +49,7 @@
                             <a [routerLink]="['/myDataSources']">My Datasource</a>
                           </li>
                           <li>
-                            <a [routerLink]="['/myRequests']">My Request</a>
+                            <a [routerLink]="['/myRequests']">Requests</a>
                           </li>
                         </ul>
                       </div>
@@ -81,7 +81,7 @@
 <!--                        </li>-->
                         <li *ngIf="getIsUserAdmin()" class="uk-nav-divider"></li>
                         <li *ngIf="getUserGatewayAdmin()" class="">
-                          <a [routerLink]="['/gateway-dashboard','myDataSources']" [queryParams]="{ primaryGateway: 'egi', affiliatedGateway: 'egi', page: 0, size: 10 }" class="">Gateway Admin Options</a>
+                          <a [routerLink]="['/gateway-dashboard','gatewayDataSources']" [queryParams]="{ primaryGateway: 'egi', affiliatedGateway: 'egi', page: 0, size: 10 }" class="">Gateway Admin Options</a>
                         </li>
                         <li *ngIf="getUserGatewayAdmin()" class="uk-nav-divider"></li>
                         <li><a (click)="logout()">Log out</a></li>

@@ -18,30 +18,18 @@
                                         </h6>
 
                                         <!-- Body με table -->
-                                        <div class="uk-overflow-auto uk-card-body">
+                                        <div class="uk-card-body">
                                             <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
                                                 <thead>
-                                                    <tr>
-                                                        <th class="uk-text-center uk-table-middle">ID</th>
-                                                        <th class="uk-text-center uk-table-middle">Request Type</th>
-                                                        <th class="uk-text-center uk-table-middle">Created</th>
-                                                        <th class="uk-text-center uk-table-middle">Last Updated</th>
-                                                        <th class="uk-text-center uk-table-middle">Status</th>
-                                                        <th class="uk-text-center uk-table-middle">Actions</th>
+                                                    <tr>                                                  
+                                                        <th class="uk-table-middle">Request Type</th>
+                                                        <th class="uk-table-middle">Status</th>
+                                                        <th class="uk-table-middle">Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let request of requests.get(repo?.id)">
-                                                        <td>{{ request.id }}</td>
                                                         <td>{{ request.requestType }}</td>
-                                                        <td>
-                                                            <strong>{{ request.createdBy }}</strong><br>
-                                                            <small>{{ request.createdAt }}</small>
-                                                        </td>
-                                                        <td>
-                                                            <strong>{{ request.updatedBy }}</strong><br>
-                                                            <small>{{ request.updatedAt }}</small>
-                                                        </td>
                                                         <td>
                                                             <span class="uk-label" [ngClass]="{
                                                                     'uk-label-success': request.status === 'APPROVED',
@@ -51,7 +39,7 @@
                                                                 {{ request.status }}
                                                             </span>
                                                         </td>
-                                                        <td class="uk-text-center">
+                                                        <td>
                                                             <button *ngIf="request.status === 'PENDING'"
                                                                 class="uk-button uk-button-primary uk-button-small uk-margin-small-right"
                                                                 (click)="approveRequest(request.id, repo)">Approve</button>

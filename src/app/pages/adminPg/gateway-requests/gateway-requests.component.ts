@@ -3,9 +3,6 @@ import { RequestsService } from "../../gateway-dashboard/services/request.servic
 import { SharedService } from "src/app/services/shared.service";
 import { RepositoryService } from "src/app/services/repository.service";
 import { Request } from "../../gateway-dashboard/domain/request.domain";
-import {CommunityContextService} from 'src/app/services/communityContext.service';
-import {AdminPgRouting} from '../../adminPg/adminPg.routing';
-import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {InputComponent, Option} from '../../../shared/input.component';
 import {Paging} from 'src/app/domain/paging';

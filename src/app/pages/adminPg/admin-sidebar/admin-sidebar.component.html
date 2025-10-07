@@ -50,7 +50,20 @@
                 </div>
               </div>
               <span class="uk-width-expand@l uk-text-truncate uk-margin-small-left hide-on-close">Gateway Requests</span>
+              <span class="uk-nav-parent-icon hide-on-close "></span>
             </a>
+            <ul class="uk-nav-sub" hidden="">
+              <li class="" [routerLinkActive]="['uk-active']" role="presentation">
+                <a [routerLink]="['./gateway-requests']" title="OpenAIRE requests">
+                  <span class="uk-text-truncate">OpenAIRE Requests</span>
+                </a>
+              </li>
+              <li class="" [routerLinkActive]="['uk-active']" role="presentation">
+                <a [routerLink]="['./gateway-requests']" title="All requests">
+                  <span class="uk-text-truncate">All requests</span>
+                </a>
+              </li>
+            </ul>
           </li>
 
         </ul>

@@ -21,6 +21,11 @@ export const GatewayDashboardRouting: Route[] = [
       },
       {
         path: 'myDataSources',
+        redirectTo: 'gatewayDataSources',
+        pathMatch: 'full'
+      },
+      {
+        path: 'gatewayDataSources',
         component: DatasourceSearchComponent,
       },
       {

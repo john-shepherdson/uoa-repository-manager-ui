@@ -10,6 +10,7 @@ import { objectKeys } from 'codelyzer/util/objectKeys';
 import { Country, DatasourceDetails } from 'src/app/domain/typeScriptClasses';
 import { RequestsService } from '../services/request.service';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import UIkit from 'uikit';
 
 
 @Component({
@@ -34,6 +35,11 @@ export class DatasourceSearchComponent implements OnInit {
 
   errorMessage: string | null = null;
   loadingMessage: string | null = null;
+
+  commentText = '';
+  currentDatasourceId: string | null = null;
+  currentType: 'PRIMARY' | 'AFFILIATED' | null = null;
+  currentRequestKind: 'datasource' | 'gateway' | null = null;
 
   // keyword: FormControl = new FormControl(null);
   filterForm: FormGroup = new FormGroup({
@@ -172,5 +178,14 @@ export class DatasourceSearchComponent implements OnInit {
         }
     });
 }
+
+openCommentModal(id: string, type: 'PRIMARY' | 'AFFILIATED', requestKind: 'datasource' | 'gateway') {
+  this.currentDatasourceId = id;
+  this.currentType = type;
+  this.currentRequestKind = requestKind;
+  this.commentText = '';
+  UIkit.modal('#comment-modal').show();
+}
+
 
 }

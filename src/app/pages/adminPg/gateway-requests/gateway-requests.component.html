@@ -51,41 +51,24 @@
 
 
                 <div class="uk-card uk-card-default uk-card-body">
-                    <div class="uk-overflow-auto">
                         <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
                             <thead>
-                                <tr>
-                                    <th class="uk-text-center uk-table-middle">ID</th>
-                                    <th class="uk-text-center uk-table-middle">Request Type</th>
-                                    <th class="uk-text-center uk-table-middle">created</th>
-                                    <th class="uk-text-center uk-table-middle">last updated</th>
-                                    <th class="uk-text-center uk-table-middle">Owner Approval</th>
-                                    <th class="uk-text-center uk-table-middle">Source Gateway Approval</th>
-                                    <th class="uk-text-center uk-table-middle">Target Gateway Approval</th>
-                                    <th class="uk-text-center uk-table-middle">Status</th>
-                                    <th *ngIf="showActionsColumn" class="uk-text-center uk-table-middle">Actions</th>
+                                <tr>                                
+                                    <th class="uk-table-middle">Request Type</th>
+                                    <th class="uk-table-middle">Datasources</th>
+                                    <th class="uk-table-middle">Source Gateway</th>
+                                    <th class="uk-table-middle">Target Gateway</th>
+                                    <th class="uk-table-middle">Status</th>
+                                    <th *ngIf="showActionsColumn" class="uk-table-middle">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let request of requests?.results">
-                                    <!-- Request ID -->
-                                    <td>{{ request.id }}</td>
+                                <tr *ngFor="let request of requests?.results">                             
 
                                     <!-- Request Type -->
                                     <td>{{ request.requestType }}</td>
 
-                                    <!-- created -->
-                                    <td>
-                                        <strong>{{ request.createdBy }}</strong><br>
-                                        <small>by {{ request.createdAt }}</small>
-                                    </td>
-
-                                    <!-- last updated -->
-                                    <td>
-                                        <strong>{{ request.updatedBy }}</strong><br>
-                                        <small>by {{ request.updatedAt }}</small>
-                                    </td>
-                                    <!-- Owner Approval -->
+                                    <!--Datadource-->
                                     <td>
 
                                         <ng-container *ngIf="request.ownerApproval != null; else missingOwnerApproval">
@@ -94,12 +77,13 @@
                             'uk-label-warning': request.ownerApproval?.decision === 'PENDING',
                             'uk-label-danger': request.ownerApproval?.decision === 'REJECTED'
                           }">{{ request.ownerApproval?.decision }}</span><br>
-                                            <small> {{ request.ownerApproval?.decidedAt }}</small><br>
-                                            <span>{{ request.ownerApproval?.comment}}</span>
+                                            <small> {{ request.ownerApproval?.decidedAt | date: 'yyyy-MM-dd' }}</small><br>
+                                            <span> {{ request.datasource?.label }}</span>
+                                            <!-- <span>{{ request.ownerApproval?.comment}}</span> -->
                                         </ng-container>
                                         <ng-template #missingOwnerApproval>--</ng-template>
                                     </td>
-                                    <!-- Source Gateway Approval -->
+                                    <!-- Source Gateway-->
                                     <td>
 
                                         <ng-container
@@ -109,12 +93,12 @@
                             'uk-label-warning': request.sourceGatewayApproval?.decision === 'PENDING',
                             'uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
                           }">{{ request.sourceGatewayApproval?.decision }}</span><br>
-                                            <small> {{ request.sourceGatewayApproval?.decidedAt }}</small><br>
-                                            <span>{{ request.sourceGatewayApproval?.comment}}</span>
+                                            <small> {{ request.sourceGatewayApproval?.decidedAt | date: 'yyyy-MM-dd' }}</small><br>
+                                            <!-- <span>{{ request.sourceGatewayApproval?.comment}}</span> -->
                                         </ng-container>
                                         <ng-template #missingSourceGatewayApproval>--</ng-template>
                                     </td>
-                                    <!-- Target Gateway Approval -->
+                                    <!-- Target Gateway-->
                                     <td>
 
                                         <ng-container
@@ -124,8 +108,8 @@
               'uk-label-warning': request.targetGatewayApproval?.decision === 'PENDING',
               'uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
             }">{{ request.targetGatewayApproval?.decision }}</span><br>
-                                            <small> {{ request.targetGatewayApproval?.decidedAt }}</small><br>
-                                            <span>{{ request.targetGatewayApproval?.comment}}</span>
+                                            <small> {{ request.targetGatewayApproval?.decidedAt | date: 'yyyy-MM-dd' }}</small><br>
+                                            <!-- <span>{{ request.targetGatewayApproval?.comment}}</span> -->
                                         </ng-container>
                                         <ng-template #missingTargetGatewayApproval>--</ng-template>
                                     </td>
@@ -151,7 +135,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
                 </div>
             </div>
         </div>
