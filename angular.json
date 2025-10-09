@@ -97,11 +97,16 @@
             "browserTarget": "uoa-repository-manager-ui:build",
             "port": 4200,
             "host": "0.0.0.0",
-            "disableHostCheck": true
+            "allowedHosts": ["localtest.me", ".localtest.me", "*.localtest.me"],
+            "publicHost": "localtest.me:4200"
           },
           "configurations": {
             "production": {
               "browserTarget": "uoa-repository-manager-ui:build:production"
+            },
+            "localtest": {
+              "allowedHosts": ["localtest.me", ".localtest.me"],
+              "publicHost": "localtest.me:4200"
             }
           }
         },
