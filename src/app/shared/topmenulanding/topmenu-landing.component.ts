@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CommunityContextService } from '../../services/communityContext.service';
 import { environment } from '../../../environments/environment';
+import { HomeComponent } from 'src/app/pages/landing/home-pages/home.component';
 
 @Component({
   selector: 'top-menu-landing',
@@ -21,6 +22,8 @@ export class TopmenuLandingComponent implements OnInit {
   communityLogo?: string;
 
   inBeta: boolean;
+
+  isGatewayView: boolean;
 
   constructor(public authService: AuthenticationService, private communityService: CommunityContextService) { }
 
@@ -43,6 +46,12 @@ export class TopmenuLandingComponent implements OnInit {
 
     const baseUrl = window.location.origin;
     this.inBeta = ( baseUrl.includes('beta') || baseUrl.includes('athenarc') );
+
+    this.communityService.getCurrentCommunityId().subscribe({
+        next: (id)=> {
+            this.isGatewayView = !!id;
+        }
+     })
   }
 
   onClick(id: string) {

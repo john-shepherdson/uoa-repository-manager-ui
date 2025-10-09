@@ -31,12 +31,19 @@ export class RequestsService {
 
   getGatewayActions(queryParams: Params): Observable<Paging<Request>> {
     // TODO: implement : path: /gateways/{id}/actions
-    return;
+  
+    let gateway = this.communityID ? this.communityID : 'openaire-infrastructure'
+    
+    const url = `${this.baseUrl}/gateways/${gateway}/actions`;
+    return this.getRequestsFromUrl(url, queryParams);
   }
 
   getGatewayRequests(queryParams: Params): Observable<Paging<Request>> {
     // TODO: implement : path: /gateways/{id}/requests
-    return;
+    let gateway = this.communityID ? this.communityID : 'openaire-infrastructure'
+    
+    const url = `${this.baseUrl}/gateways/${gateway}/requests`;
+    return this.getRequestsFromUrl(url, queryParams);
   }
 
   getAllRequests(queryParams: Params): Observable<Paging<Request>> {
@@ -59,6 +66,28 @@ export class RequestsService {
       }
     });
     return this.http.get<Paging<Request>>(url, {params});
+  }
+
+  getRequestsFromUrl(url: string, queryParams: Params): Observable<Paging<Request>> {
+    
+    let params = new HttpParams();
+
+    Object.entries(queryParams || {}).forEach(([key, value]) => {
+      if (value === null || value === undefined) {
+        return;
+      }
+      if (Array.isArray(value)) {
+        value.forEach(v => {
+          if (v !== null && v !== undefined) {
+            params = params.append(key, String(v));
+          }
+        });
+      } else {
+        params = params.set(key, String(value));
+      }
+    });
+    return this.http.get<Paging<Request>>(url, {params});
+
   }
 
   getRequests(queryParams: Params): Observable<Paging<Request>> {

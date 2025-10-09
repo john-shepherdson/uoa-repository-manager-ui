@@ -115,7 +115,7 @@ export class RequestsComponent implements OnInit, OnDestroy {
   }
 
   handlePaginationChanges(event: PageEvent) {
-    // console.log(event);
+    console.log(event);
     this.qParams['page'] = event.pageIndex;
     this.qParams['size'] = event.pageSize;
     this.updateWithNavigation();

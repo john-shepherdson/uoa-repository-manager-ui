@@ -9,8 +9,13 @@ import {Paging} from 'src/app/domain/paging';
 import {combineLatest, Observable, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 
-@Directive()
+@Directive({
+  selector: 'base-gateway-request',
+  standalone: true,
+})
+
 export abstract class BaseGatewayRequestsComponent implements OnInit {
   requests: Paging<Request>;
   private sub?: Subscription;
@@ -94,7 +99,6 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
   }
 
   handleFilterChanges(path: string) {
-
     const value = this.filterForm.get(path)?.value;
 
     if (value === 'null' || value === '') {
@@ -107,6 +111,13 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     this.filterForm.get('page')?.setValue(0);
     this.updateWithNavigation();
   }
+
+   handlePaginationChanges(event: PageEvent) {
+      console.log(event);
+      this.qParams['page'] = event.pageIndex;
+      this.qParams['size'] = event.pageSize;
+      this.updateWithNavigation();
+    }
 
   updateWithNavigation() {
     this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
