@@ -98,12 +98,12 @@
                     </div>
 
                     <!-- PRIMARY -->
-                    <div *ngIf="res.primaryProvideGateway === 'egi'" class="small-content uk-label uk-label-primary">
+                    <div *ngIf="res.primaryProvideGateway === this.communityId" class="small-content uk-label uk-label-primary">
                       PRIMARY
                     </div>
 
                     <!-- AFFILIATED -->
-                    <div *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways?.includes('egi')"
+                    <div *ngIf="res.primaryProvideGateway !== this.communityId && res.affiliatedProvideGateways?.includes(this.communityId)"
                       class="small-content uk-label uk-label-secondary">
                       AFFILIATED
                     </div>
@@ -140,14 +140,14 @@
                 <!-- FOOTER -->
                 <div class="uk-card-footer uk-flex uk-flex-right uk-flex-middle">
                   <!-- Show button only when AFFILIATED -->
-                  <button *ngIf="res.primaryProvideGateway !== 'egi' && res.affiliatedProvideGateways?.includes('egi')"
+                  <button *ngIf="res.primaryProvideGateway !== this.communityId && res.affiliatedProvideGateways?.includes(this.communityId)"
                     class="uk-button uk-button-primary uk-button-small" (click)="createDatasourceRequest(res.id, 'PRIMARY')">
                     Request PRIMARY
                   </button>
 
                   <!-- Show both buttons when NONE -->
                   <ng-container
-                    *ngIf="res.primaryProvideGateway !== 'egi' && !res.affiliatedProvideGateways?.includes('egi')">
+                    *ngIf="res.primaryProvideGateway !== this.communityId && !res.affiliatedProvideGateways?.includes(this.communityId)">
                     <button class="uk-button uk-button-small uk-button-primary uk-margin-small-right"
                       (click)="createDatasourceRequest(res.id, 'PRIMARY')">
                       Request as PRIMARY

@@ -4,6 +4,8 @@ import { environment } from '../../../../environments/environment';
 import { Params } from '@angular/router';
 import { Paging } from '../../../domain/paging';
 import { DatasourceDetails } from 'src/app/domain/typeScriptClasses';
+import {CommunityService} from '../../../services/community.service';
+import {CommunityContextService} from '../../../services/communityContext.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,15 @@ import { DatasourceDetails } from 'src/app/domain/typeScriptClasses';
 export class DatasourceSearchService {
   private baseUrl = environment.API_ENDPOINT ;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
+
+  searchGatewayDatasources(communityId, queryParams: Params) {
+    const url = this.baseUrl + '/datasources';
+    queryParams = { 'primaryGateway': communityId, 'affiliatedGateway': communityId, ...queryParams }
+    const params = new HttpParams({ fromObject: queryParams });
+    return this.http.get<Paging<DatasourceDetails>>(url, {params: params});
+  }
 
   search(queryParams: Params) {
 

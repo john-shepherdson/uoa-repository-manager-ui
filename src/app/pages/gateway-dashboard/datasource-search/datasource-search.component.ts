@@ -1,16 +1,18 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { DatasourceSearchService } from "../services/datasource-search.service";
-import { NgForOf, NgIf, NgClass } from '@angular/common';
-import { InputComponent, Option } from '../../../shared/input.component';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Paging } from '../../../domain/paging';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { objectKeys } from 'codelyzer/util/objectKeys';
-import { Country, DatasourceDetails } from 'src/app/domain/typeScriptClasses';
-import { RequestsService } from '../services/request.service';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {DatasourceSearchService} from '../services/datasource-search.service';
+import {NgForOf, NgIf} from '@angular/common';
+import {InputComponent, Option} from '../../../shared/input.component';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Paging} from '../../../domain/paging';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {objectKeys} from 'codelyzer/util/objectKeys';
+import {Country, DatasourceDetails} from 'src/app/domain/typeScriptClasses';
+import {RequestsService} from '../services/request.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import UIkit from 'uikit';
+import {Observable} from 'rxjs';
+import {CommunityContextService} from '../../../services/communityContext.service';
 
 
 @Component({
@@ -22,7 +24,7 @@ import UIkit from 'uikit';
     ReactiveFormsModule,
     NgIf,
     MatPaginatorModule
-],
+  ],
   standalone: true
 })
 
@@ -30,6 +32,8 @@ export class DatasourceSearchComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   qParams: Params = {};
+  gateway = false;
+  communityId;
   countries: Country[] = [];
   datasources?: Paging<DatasourceDetails>;
 
@@ -60,7 +64,30 @@ export class DatasourceSearchComponent implements OnInit {
     {value: 'id', label: 'Id'}
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router, private datasourceSearch: DatasourceSearchService, private requestService: RequestsService) {}
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private datasourceSearch: DatasourceSearchService,
+              private requestService: RequestsService,
+              private communityContextService: CommunityContextService) {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (value) => {
+        this.gateway = value.gateway;
+      }
+    });
+    this.communityContextService.community.subscribe({
+      next: (community) => {
+        this.communityId = community ? community.id : 'openaire-infrastructure';
+      }
+    });
+  }
+
+  private getDatasources(params): Observable<Paging<DatasourceDetails>> {
+    if (this.gateway) {
+      return this.datasourceSearch.searchGatewayDatasources(this.communityId, params);
+    } else {
+      return this.datasourceSearch.search(params);
+    }
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -79,7 +106,7 @@ export class DatasourceSearchComponent implements OnInit {
       }
 
       this.loadingMessage = 'Fetching datasources..';
-      this.datasourceSearch.search(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      this.getDatasources(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (data) => {
           this.datasources = data;
           this.loadingMessage = null;
@@ -120,14 +147,13 @@ export class DatasourceSearchComponent implements OnInit {
     this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
   }
 
-    getCountryName(countryCode: string): string {
+  getCountryName(countryCode: string): string {
     for (const country of Object.values(this.countries)) {
       if (country.code === countryCode) {
         return country.name;
       }
     }
   }
-
 
 
   // createRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
@@ -148,35 +174,35 @@ export class DatasourceSearchComponent implements OnInit {
     console.log(`Submitting Gateway Request for ID: ${datasourceId}, Type: ${type}`);
 
     this.requestService.createGatewayRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-        next: (value) => {
-            console.log('Gateway Request successful:', value);
-        },
-        error: (err) => {
-            console.error('Gateway Request failed:', err);
-        }
+      next: (value) => {
+        console.log('Gateway Request successful:', value);
+      },
+      error: (err) => {
+        console.error('Gateway Request failed:', err);
+      }
     });
-}
+  }
 
   createDatasourceRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
     console.log(`Submitting Datasource Request for ID: ${datasourceId}, Type: ${type}`);
 
     this.requestService.createDatasourceRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-        next: (value) => {
-            console.log('Datasource Request successful:', value);
-        },
-        error: (err) => {
-            console.error('Datasource Request failed:', err);
-        }
+      next: (value) => {
+        console.log('Datasource Request successful:', value);
+      },
+      error: (err) => {
+        console.error('Datasource Request failed:', err);
+      }
     });
-}
+  }
 
-openCommentModal(id: string, type: 'PRIMARY' | 'AFFILIATED', requestKind: 'datasource' | 'gateway') {
-  this.currentDatasourceId = id;
-  this.currentType = type;
-  this.currentRequestKind = requestKind;
-  this.commentText = '';
-  UIkit.modal('#comment-modal').show();
-}
+  openCommentModal(id: string, type: 'PRIMARY' | 'AFFILIATED', requestKind: 'datasource' | 'gateway') {
+    this.currentDatasourceId = id;
+    this.currentType = type;
+    this.currentRequestKind = requestKind;
+    this.commentText = '';
+    UIkit.modal('#comment-modal').show();
+  }
 
 
 }

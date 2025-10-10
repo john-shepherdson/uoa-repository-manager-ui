@@ -27,6 +27,9 @@ export const GatewayDashboardRouting: Route[] = [
       {
         path: 'gatewayDataSources',
         component: DatasourceSearchComponent,
+        data: {
+          gateway: true
+        }
       },
       {
         path: 'requests/my',

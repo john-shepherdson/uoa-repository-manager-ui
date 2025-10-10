@@ -81,8 +81,7 @@
 <!--                        </li>-->
                         <li *ngIf="getIsUserAdmin()" class="uk-nav-divider"></li>
                         <li *ngIf="getUserGatewayAdmin()" class="">
-                          <a [routerLink]="['/gateway-dashboard','gatewayDataSources']"
-                             [queryParams]="{primaryGateway: communityId, affiliatedGateway: communityId}" class="">Gateway Admin Options</a>
+                          <a [routerLink]="['/gateway-dashboard','gatewayDataSources']" class="">Gateway Admin Options</a>
                         </li>
                         <li *ngIf="getUserGatewayAdmin()" class="uk-nav-divider"></li>
                         <li><a (click)="logout()">Log out</a></li>
