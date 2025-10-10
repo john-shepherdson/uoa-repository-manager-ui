@@ -31,9 +31,9 @@ export class RequestsService {
 
   getGatewayActions(queryParams: Params): Observable<Paging<Request>> {
     // TODO: implement : path: /gateways/{id}/actions
-  
+
     let gateway = this.communityID ? this.communityID : 'openaire-infrastructure'
-    
+
     const url = `${this.baseUrl}/gateways/${gateway}/actions`;
     return this.getRequestsFromUrl(url, queryParams);
   }
@@ -41,7 +41,7 @@ export class RequestsService {
   getGatewayRequests(queryParams: Params): Observable<Paging<Request>> {
     // TODO: implement : path: /gateways/{id}/requests
     let gateway = this.communityID ? this.communityID : 'openaire-infrastructure'
-    
+
     const url = `${this.baseUrl}/gateways/${gateway}/requests`;
     return this.getRequestsFromUrl(url, queryParams);
   }
@@ -69,7 +69,7 @@ export class RequestsService {
   }
 
   getRequestsFromUrl(url: string, queryParams: Params): Observable<Paging<Request>> {
-    
+
     let params = new HttpParams();
 
     Object.entries(queryParams || {}).forEach(([key, value]) => {
@@ -136,16 +136,16 @@ export class RequestsService {
   }
 
   updateRequest(requestId: number, decision: 'APPROVED' | 'REJECTED', authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN', comment?: string): Observable<Request> {
-    const url = `${this.baseUrl}/datasource-gateway-requests`;
-    const params = {'role': authority}; // query param
+    const url = `${this.baseUrl}/datasource-gateway-requests/${requestId}`;
 
     const updateRequest = {
       id: requestId,     // body
       decision,
+      performedBy: authority,
       comment: comment || null
     };
 
-    return this.http.put<Request>(url, updateRequest, {params});
+    return this.http.put<Request>(url, updateRequest);
   }
 
 // createRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string): Observable<Request>{
