@@ -1,16 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { UsageStatsSummary } from '../../../domain/typeScriptClasses';
-import { AuthenticationService } from '../../../services/authentication.service';
-import { StatisticsService } from '../../../services/statistics.service';
-import { Router } from '@angular/router';
+import { UsageStatsSummary } from '../../../../domain/typeScriptClasses';
+import { AuthenticationService } from '../../../../services/authentication.service';
+import { StatisticsService } from '../../../../services/statistics.service';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+
 
 @Component ({
-  selector: 'app-landing',
-  templateUrl: './home.component.html',
-  styleUrls: ['../../../../assets/css/landingpage/theme.css', '../../../../assets/css/landingpage/custom.css', '../../../../assets/css/landingpage/custom-provide.css'],
+  selector: 'app-home-default',
+  templateUrl: './home-default.component.html',
+  styleUrls: ['../../../../../assets/css/landingpage/theme.css', '../../../../../assets/css/landingpage/custom.css', '../../../../../assets/css/landingpage/custom-provide.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+  ]
 })
 
-export class HomeComponent implements OnInit {
+export class HomeDefaultComponent implements OnInit {
 
   statisticsNumbers: UsageStatsSummary;
   inBeta: boolean;

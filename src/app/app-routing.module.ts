@@ -1,12 +1,12 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { HomeComponent } from './pages/landing/home/home.component';
 import { ForbiddenPageComponent } from './shared/reusablecomponents/403-forbidden-page.component';
 import { EmptyPageComponent } from './pages/emptypage/empty-page.component';
 import { AboutComponent } from './pages/landing/about/about.component';
 import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.component';
 import { authGuard } from "./services/auth-guard.service";
 import { MyRequestsComponent } from './pages/my-requests/my-requests.component';
+import { HomeComponent } from './pages/landing/home-pages/home.component';
 
 const appRoutes: Routes = [
   {

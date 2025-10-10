@@ -23,6 +23,7 @@ import { DatasourceUpdateFormComponent } from './sources-forms/datasource-update
 import { DatasourceCreateFormComponent } from './sources-forms/datasource-create-form.component';
 import { DatasourceNewInterfaceFormComponent } from './sources-forms/datasource-new-interface-form.component';
 import {InputComponent} from '../input.component';
+import { MatStepperModule } from "@angular/material/stepper";
 
 const myGroups = [
   MyGroup,
@@ -42,8 +43,9 @@ const myGroups = [
     ReactiveFormsModule,
     HttpClientModule,
     InputComponent,
-    NgOptimizedImage
-  ],
+    NgOptimizedImage,
+    MatStepperModule
+],
     declarations: [
         HelpContentComponent,
         AsideHelpContentComponent,

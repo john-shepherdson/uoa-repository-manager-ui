@@ -32,7 +32,10 @@
                     <a class="uk-search-input" [routerLink]="['about']" [routerLinkActive]="['uk-active']">About</a>
                   </li>
                   <li *ngIf="getIsUserLoggedIn()">
-                    <a class="uk-search-input" [routerLink]="['myDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
+                    <a *ngIf="isGatewayView; else elseBlock" class="uk-search-input" [routerLink]="['gateDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
+                    <ng-template #elseBlock>
+                      <a class="uk-search-input" [routerLink]="['myDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
+                    </ng-template>
                   </li>
                   <li><a (click)="logout()">Logout</a></li>
                 </ul>
@@ -45,7 +48,7 @@
     </div>
 
     <!--LAPTOP-->
-    <div class="tm-toolbar uk-visible@m">
+    <div *ngIf="!isGatewayView" class="tm-toolbar uk-visible@m">
       <div class="uk-container uk-flex uk-flex-middle uk-container-expand">
 
 
@@ -84,7 +87,7 @@
 
     <div class="tm-header uk-visible@m tm-header-transparent" uk-header="">
       <div class="uk-navbar-container uk-sticky uk-navbar-transparent" uk-sticky="top:0" media="768"
-           cls-active="uk-active uk-navbar-sticky" style="" animation="uk-animation-slide-top"
+           cls-active="uk-active uk-navbar-sticky" animation="uk-animation-slide-top"
            top=".tm-header + [class*=&quot;uk-section&quot;]" cls-inactive="uk-navbar-transparent">
         <div class="uk-container uk-container-expand">
           <nav class="uk-navbar" uk-navbar="{&quot;align&quot;:&quot;left&quot;}">
@@ -104,7 +107,14 @@
                   <a [routerLink]="['about']" [routerLinkActive]="['uk-active']">About</a>
                 </li>
                 <li *ngIf="getIsUserLoggedIn()" class="uk-parent" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['myDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
+                  <!-- <a [routerLink]="isGatewayView ? ['gatewayDataSources'] : ['myDataSources']" -->
+                     <!-- [routerLinkActive]="['uk-active']">{{isGatewayView ? 'Gateway' : 'Dashboard'}}</a> -->
+                     
+                  <a *ngIf="isGatewayView && isUserGatewayAdmin; else elseBlock" [routerLink]="['gateway-dashboard/gatewayDataSources']" [routerLinkActive]="['uk-active']">Gateway</a>
+                  <ng-template #elseBlock>
+                    <a [routerLink]="['myDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
+                  </ng-template>
+                  
                 </li>
 
                 <li *ngIf="!getIsUserLoggedIn()" class="uk-parent">

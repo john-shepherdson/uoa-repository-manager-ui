@@ -1,14 +1,24 @@
-import {Injectable} from '@angular/core';
+import {DestroyRef, inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject, Subscription, timer} from 'rxjs';
+import { CommunityContextService } from './communityContext.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class AuthenticationService {
+  private communityService = inject(CommunityContextService);
+  private destroyRef = inject(DestroyRef);
 
-  constructor(private router: Router,
-              private http: HttpClient) {
+  private communityId?: string;
+
+  constructor(private router: Router, private http: HttpClient) {
+    this.communityService.getCurrentCommunityId().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (id) => {
+        this.communityId = id;
+      }
+    });
   }
 
   private loginInterval: Subscription;
@@ -56,7 +66,10 @@ export class AuthenticationService {
             console.debug(`the current user is: ${sessionStorage.getItem('name')},
                          ${sessionStorage.getItem('email')}, ${sessionStorage.getItem('role')}`);
             if (sessionStorage.getItem('state.location')) {
-              const state = sessionStorage.getItem('state.location');
+              let state = sessionStorage.getItem('state.location');
+              if (state === '/myDataSources' && !!this.communityId && this.getUserRole().includes('beta_gateway')) {
+                state = '/gateway-dashboard/gatewayDataSources';
+              }
               sessionStorage.removeItem('state.location');
               console.debug(`returning to state: ${state}`);
               this.router.navigate([state]);
@@ -75,6 +88,7 @@ export class AuthenticationService {
       sessionStorage.setItem('state.location', url);
     } else if (this.router.url === '/home') {
       /*sessionStorage.setItem("state.location", this.router.url);*/
+    
       sessionStorage.setItem('state.location', '/myDataSources');
     }
     console.debug('redirect location: ', sessionStorage.getItem('state.location'));

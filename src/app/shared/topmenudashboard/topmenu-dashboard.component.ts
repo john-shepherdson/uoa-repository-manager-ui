@@ -16,6 +16,7 @@ export class TopmenuDashboardComponent implements OnInit {
   isUserAdmin = false;
   isUserGatewayAdmin = false;
   communityLogo?: string;
+  communityId?: string;
 
   inBeta: boolean;
 
@@ -30,6 +31,7 @@ export class TopmenuDashboardComponent implements OnInit {
     this.communityService.community.subscribe({
       next: (community) => {
         if (community !== null) {
+          this.communityId = community.id;
           if (community.logoUrl.startsWith('http')) {
             this.communityLogo = community.logoUrl;
           } else {

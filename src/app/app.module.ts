@@ -16,7 +16,6 @@ import { ValidatorService } from './services/validator.service';
 import { UsagestatsService } from './services/usagestats.service';
 import { StatisticsService } from './services/statistics.service';
 import { AuthenticationService } from './services/authentication.service';
-import { HomeComponent } from './pages/landing/home/home.component';
 import { MatomoRouterModule, MatomoModule } from 'ngx-matomo-client';
 import { DashboardService } from './services/dashboard.service';
 import { EmptyPageComponent } from './pages/emptypage/empty-page.component';
@@ -27,13 +26,13 @@ import { environment } from '../environments/environment';
 import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.component';
 import { MyRequestsComponent } from './pages/my-requests/my-requests.component';
 import { MatStepperModule } from "@angular/material/stepper";
+import { GatewayHomeComponent } from "./pages/landing/home-pages/gateway/gateway-home.component";
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     AboutComponent,
     EmptyPageComponent,
     JoinComponent,
@@ -59,7 +58,8 @@ import { MatStepperModule } from "@angular/material/stepper";
     }),
     MatomoRouterModule.forRoot({}),
     AppRoutingModule,
-    MatStepperModule
+    MatStepperModule,
+    GatewayHomeComponent
 ],
   providers: [
     {

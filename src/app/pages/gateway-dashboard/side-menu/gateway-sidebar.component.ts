@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'gateway-sidebar',
   templateUrl: './gateway-sidebar.component.html',
   imports: [
     RouterLinkActive,
-    RouterLink
+    RouterLink,
+    RouterModule
   ],
   standalone: true
 })

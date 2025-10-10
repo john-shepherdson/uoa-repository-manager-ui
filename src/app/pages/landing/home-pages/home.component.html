@@ -1,0 +1,9 @@
+
+<!-- {{isGatewayView | json}} -->
+<ng-container *ngIf="isGatewayView ; else defaultView">
+    <app-gateway-home></app-gateway-home>
+</ng-container>
+
+<ng-template #defaultView>
+    <app-home-default></app-home-default>
+</ng-template>
