@@ -19,6 +19,7 @@ export class TopmenuLandingComponent implements OnInit {
   userLoggedIn = false;
   userName = '';
   isUserAdmin = false;
+  isUserGatewayAdmin = false;
   communityLogo?: string;
 
   inBeta: boolean;
@@ -83,5 +84,9 @@ export class TopmenuLandingComponent implements OnInit {
     this.isUserAdmin = (this.authService.getUserRole().includes('Super_Administrator') ||
                         this.authService.getUserRole().includes('Content_Provider_Dashboard_Administrator'));
     return this.isUserAdmin;
+  }
+
+  getIsUserGatewayAdmin() {
+    return this.isUserGatewayAdmin = (this.authService.getUserRole().includes('beta_gateway'));
   }
 }

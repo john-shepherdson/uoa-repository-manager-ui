@@ -32,7 +32,7 @@
                     <a class="uk-search-input" [routerLink]="['about']" [routerLinkActive]="['uk-active']">About</a>
                   </li>
                   <li *ngIf="getIsUserLoggedIn()">
-                    <a *ngIf="isGatewayView; else elseBlock" class="uk-search-input" [routerLink]="['gatewayDataSources']" [routerLinkActive]="['uk-active']">Gateway</a>
+                    <a *ngIf="isGatewayView; else elseBlock" class="uk-search-input" [routerLink]="['gateDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
                     <ng-template #elseBlock>
                       <a class="uk-search-input" [routerLink]="['myDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
                     </ng-template>
@@ -110,7 +110,7 @@
                   <!-- <a [routerLink]="isGatewayView ? ['gatewayDataSources'] : ['myDataSources']" -->
                      <!-- [routerLinkActive]="['uk-active']">{{isGatewayView ? 'Gateway' : 'Dashboard'}}</a> -->
                      
-                  <a *ngIf="isGatewayView; else elseBlock" [routerLink]="['gatewayDataSources']" [routerLinkActive]="['uk-active']">Gateway</a>
+                  <a *ngIf="isGatewayView && isUserGatewayAdmin; else elseBlock" [routerLink]="['gateway-dashboard/gatewayDataSources']" [routerLinkActive]="['uk-active']">Gateway</a>
                   <ng-template #elseBlock>
                     <a [routerLink]="['myDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
                   </ng-template>

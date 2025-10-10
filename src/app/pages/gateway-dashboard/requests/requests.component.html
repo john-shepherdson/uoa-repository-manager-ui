@@ -93,6 +93,7 @@
                             'uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
                           }">{{ request.sourceGatewayApproval?.decision }}</span><br>
                     <small> {{ request.sourceGatewayApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small><br>
+                    <div>{{request.sourceGateway.label}}</div>
                     <!-- <span>{{ request.sourceGatewayApproval?.comment}}</span> -->
                   </ng-container>
                   <ng-template #missingSourceGatewayApproval>--</ng-template>
@@ -107,6 +108,7 @@
               'uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
             }">{{ request.targetGatewayApproval?.decision }}</span><br>
                     <small> {{ request.targetGatewayApproval?.decidedAt | date: 'dd/MM/yyyy'}}</small><br>
+                    <div>{{request.targetGateway.label}}</div>
                     <!-- <span>{{ request.targetGatewayApproval?.comment}}</span> -->
                   </ng-container>
                   <ng-template #missingTargetGatewayApproval>--</ng-template>
