@@ -47,12 +47,12 @@
             <mat-paginator *ngIf="requests" [length]="requests.total" [pageSizeOptions]="[5, 10, 25, 50]"
                [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value"
                [pageIndex]="filterForm.get('page').value"
-               (page)="handlePaginationChanges($event)">
+               (page)="handlePaginationChanges($event)" class="uk-margin-small-bottom">
             </mat-paginator>
 
 
-        <div class="uk-card uk-card-default uk-card-body">
-          <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
+        <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
+          <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-width-1-1">
             <thead>
               <tr>
                 <th class="uk-table-middle">Request Type</th>
@@ -70,21 +70,21 @@
 
                 <!-- Datasource -->
                 <td>
-
+                  <strong> {{request.datasource?.label}}</strong><br>
                   <ng-container *ngIf="request.ownerApproval != null; else missingOwnerApproval">
                     <span class="uk-label" [ngClass]="{
-                                              'uk-label-success': request.ownerApproval?.decision === 'APPROVED',
-                                              'uk-label-warning': request.ownerApproval?.decision === 'PENDING',
-                                              'uk-label-danger': request.ownerApproval?.decision === 'REJECTED'
-                                            }">{{ request.ownerApproval?.decision }}</span><br>
-                    <small> {{ request.ownerApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small><br>
-                    <span> {{request.datasource?.label}}</span>
+                                                              'uk-label-success': request.ownerApproval?.decision === 'APPROVED',
+                                                              'uk-label-warning': request.ownerApproval?.decision === 'PENDING',
+                                                              'uk-label-danger': request.ownerApproval?.decision === 'REJECTED'
+                                                            }">{{ request.ownerApproval?.decision }}</span><br>
+                    <small> {{ request.ownerApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small>
                   </ng-container>
-                  <ng-template #missingOwnerApproval>--</ng-template>
+                  <ng-template #missingOwnerApproval></ng-template>
                 </td>
                 <!-- Source Gateway -->
                 <td>
 
+                  <strong>{{request.sourceGateway.label}}</strong>
                   <ng-container *ngIf="request.sourceGatewayApproval != null; else missingSourceGatewayApproval">
                     <span class="uk-label" [ngClass]="{
                             'uk-label-success': request.sourceGatewayApproval?.decision === 'APPROVED',
@@ -92,14 +92,13 @@
                             'uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
                           }">{{ request.sourceGatewayApproval?.decision }}</span><br>
                     <small> {{ request.sourceGatewayApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small><br>
-                    <div>{{request.sourceGateway.label}}</div>
                     <!-- <span>{{ request.sourceGatewayApproval?.comment}}</span> -->
                   </ng-container>
-                  <ng-template #missingSourceGatewayApproval>--</ng-template>
+                  <ng-template #missingSourceGatewayApproval></ng-template>
                 </td>
                 <!-- Target Gateway -->
                 <td>
-
+                  <span><strong>{{request.targetGateway.label}}</strong></span>
                   <ng-container *ngIf="request.targetGatewayApproval != null; else missingTargetGatewayApproval">
                     <span class="uk-label" [ngClass]="{
               'uk-label-success': request.targetGatewayApproval?.decision === 'APPROVED',
@@ -107,10 +106,9 @@
               'uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
             }">{{ request.targetGatewayApproval?.decision }}</span><br>
                     <small> {{ request.targetGatewayApproval?.decidedAt | date: 'dd/MM/yyyy'}}</small><br>
-                    <div>{{request.targetGateway.label}}</div>
                     <!-- <span>{{ request.targetGatewayApproval?.comment}}</span> -->
                   </ng-container>
-                  <ng-template #missingTargetGatewayApproval>--</ng-template>
+                  <ng-template #missingTargetGatewayApproval></ng-template>
                 </td>
 
                 <!-- Overall Status-->
@@ -124,10 +122,12 @@
 
                 <!-- Actions Column -->
                 <td *ngIf="showActionsColumn" class="uk-text-center">
-                  <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-primary uk-button-small uk-margin-small-right"
+                  <div class="uk-flex uk-flex-column uk-flex-center">
+                  <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
                     (click)="approveRequest(request.id)">Approve</button>
                   <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"
                     (click)="rejectRequest(request.id)">Reject</button>
+                    </div>
                 </td>
               </tr>
             </tbody>
