@@ -3,6 +3,8 @@ import { GatewayAdminGuard } from '../../services/guard-functions';
 import { GatewayDashboardComponent } from "./gateway-dashboard.component";
 import { DatasourceSearchComponent } from "./datasource-search/datasource-search.component";
 import { RequestsComponent } from "./requests/requests.component";
+import {GatewayActionsComponent} from '../adminPg/gateway-requests/gateway-actions.component';
+import {GatewayRequestsComponent} from '../adminPg/gateway-requests/gateway-requests.component';
 
 export const GatewayDashboardRouting: Route[] = [
   {
@@ -33,17 +35,11 @@ export const GatewayDashboardRouting: Route[] = [
       },
       {
         path: 'requests/my',
-        component: RequestsComponent,
-        data: {
-          requestParams: { requestedBy: 'TARGET_GATEWAY_ADMIN' }
-        },
+        component: GatewayRequestsComponent,
       },
       {
         path: 'requests/actions',
-        component: RequestsComponent,
-        data: {
-          requestParams: { requestedBy: 'DATASOURCE_ADMIN' }
-        },
+        component: GatewayActionsComponent,
       }
     ]
   }
