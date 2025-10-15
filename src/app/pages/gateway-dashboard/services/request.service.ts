@@ -90,41 +90,6 @@ export class RequestsService {
 
   }
 
-  getRequests(queryParams: Params): Observable<Paging<Request>> {
-    const url = `${this.baseUrl}/datasource-gateway-requests`;
-    let params = new HttpParams();
-
-    // Build params safely: skip null/undefined, stringify values, support arrays
-    Object.entries(queryParams || {}).forEach(([key, value]) => {
-      if (value === null || value === undefined) {
-        return;
-      }
-      if (Array.isArray(value)) {
-        value.forEach(v => {
-          if (v !== null && v !== undefined) {
-            params = params.append(key, String(v));
-          }
-        });
-      } else {
-        params = params.set(key, String(value));
-      }
-    });
-
-    if (this.communityID) {
-      params = params.set('targetGatewayId', this.communityID);
-    }
-    // Object.entries(queryParams).forEach(([key, value]) => {
-    //   if (value == null) { return; }
-    //   if (Array.isArray(value)) {
-    //     value.forEach(v => params = params.append(key, v));
-    //   } else {
-    //     params = params.set(key, value);
-    //   }
-    // });
-
-    return this.http.get<Paging<Request>>(url, {params});
-  }
-
   getRequestsbyId(id: string, key: string) {
 
     const url = `${this.baseUrl}/datasource-gateway-requests`;

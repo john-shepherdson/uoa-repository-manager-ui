@@ -13,6 +13,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import UIkit from 'uikit';
 import {Observable} from 'rxjs';
 import {CommunityContextService} from '../../../services/communityContext.service';
+import { StickyFooterComponent } from "src/app/shared/sticky-footer/sticky-footer.component";
 
 
 @Component({
@@ -23,8 +24,9 @@ import {CommunityContextService} from '../../../services/communityContext.servic
     InputComponent,
     ReactiveFormsModule,
     NgIf,
-    MatPaginatorModule
-  ],
+    MatPaginatorModule,
+    StickyFooterComponent
+],
   standalone: true
 })
 

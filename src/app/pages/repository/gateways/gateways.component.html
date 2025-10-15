@@ -22,45 +22,139 @@
 
             <div>
               <h5>Primary Gateway</h5>
-              <div *ngIf="primaryCommunity" class="uk-card uk-card-default uk-child-width-1-2" uk-grid>
-                <div class="uk-card-media-left uk-cover-container">
-                  <img [src]="primaryCommunity?.logoUrl" alt="Primary Gateway Logo" uk-cover>
-                  <canvas width="80" height="100"></canvas>
-                </div>
+              <div *ngIf="primaryCommunity" class="uk-child-width-1-2" uk-grid>
                 <div>
-                  <div class="uk-card-body">
-                    <dl class="uk-description-list">
-                      <dt><h3>{{ primaryCommunity.displayName || primaryCommunity.name}}</h3></dt>
-                      <dd><p>{{ primaryCommunity.description }}</p></dd>
-                    </dl>
-                    <!-- <h3>{{ primaryCommunity.displayName || primaryCommunity.name}}</h3>
-                    <p>{{ primaryCommunity.description }}</p> -->
+                  <div *ngIf="primaryCommunity" class="uk-card uk-card-default uk-grid-collapse uk-margin" uk-grid>
+                    <div class="uk-card-media-left uk-flex uk-flex-middle">
+                      <img [src]="primaryCommunity?.logoUrl" alt="Primary Gateway Logo" width="200" height="80" class="uk-margin-medium-left">
+                    </div>
+                    <div>
+                      <div class="uk-card-body">
+                        <dl class="uk-description-list">
+                          <dt><h3>{{ primaryCommunity.displayName || primaryCommunity.name}}</h3></dt>
+                          <dd><p>{{ primaryCommunity.description }}</p></dd>
+                        </dl>
+                        <!-- <h3>{{ primaryCommunity.displayName || primaryCommunity.name}}</h3>
+                        <p>{{ primaryCommunity.description }}</p> -->
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="uk-margin-medium-top">
-              <h5>Affiliated Gateways</h5>
-              <div *ngIf="affiliatedCommunities.length > 0; else noAffiliated">
-                <div *ngFor="let comm of affiliatedCommunities"
-                  class="uk-card uk-card-default uk-child-width-1-2 uk-margin-small" uk-grid>
-                  <div class="uk-card-media-left uk-cover-container">
-                    <img [src]="comm?.logoUrl" alt="Affiliated Gateway Logo" uk-cover>
-                    <canvas width="300" height="200"></canvas>
-                  </div>
-                  <div>
-                    <div class="uk-card-body">
-                      <h3>{{ comm.displayName || comm.name}}</h3>
-                      <p>{{ comm.description }}</p>
+            <div>
+              <div class="uk-margin-medium-top">
+                <h5>Affiliated Gateways</h5>
+                <div *ngIf="affiliatedCommunities.length > 0; else noAffiliated">
+                  <div *ngFor="let comm of affiliatedCommunities" class="uk-card uk-card-default uk-grid-collapse uk-margin"
+                    uk-grid>
+                    <div class="uk-card-media-left uk-flex uk-flex-middle">
+                      <img [src]="comm?.logoUrl" alt="Affiliated Gateway Logo" width="200" height="80"
+                        class="uk-margin-medium-left">
+                    </div>
+                    <div>
+                      <div class="uk-card-body">
+                        <dl class="uk-description-list">
+                          <dt>
+                            <h3>{{ comm.displayName || comm.name}}</h3>
+                          </dt>
+                          <dd>
+                            <p>{{ comm.description }}</p>
+                          </dd>
+                        </dl>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <ng-template #noAffiliated>
+                  <p>No affiliated gateways available.</p>
+                </ng-template>
               </div>
-              <ng-template #noAffiliated>
-                <p>No affiliated gateways available.</p>
-              </ng-template>
+            </div>
 
+            <div>
+              <h5>Requests</h5>
+              <div *ngIf="requests && requests.results?.length > 0; else noRequests">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
+                  <thead>
+                    <tr>
+                      <th class="uk-table-middle">Request Type</th>
+                      <th class="uk-table-middle">Datasource</th>
+                      <th class="uk-table-middle">Source Gateway</th>
+                      <th class="uk-table-middle">Target Gateway</th>
+                      <th class="uk-table-middle">Status</th>
+                      <th class="uk-table-middle">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let request of requests.results">
+                      <td>{{ request.requestType }}</td>
+                      <!-- Datasource -->
+                      <td>
+                        <ng-container *ngIf="request.ownerApproval != null; else missingOwnerApproval">
+                          <span class="uk-label" [ngClass]="{
+                                                  'uk-label-success': request.ownerApproval?.decision === 'APPROVED',
+                                                  'uk-label-warning': request.ownerApproval?.decision === 'PENDING',
+                                                  'uk-label-danger': request.ownerApproval?.decision === 'REJECTED'
+                                                  }">
+                            {{ request.ownerApproval?.decision }}
+                          </span><br>
+                          <small> {{ request.ownerApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small><br>
+                          <span> {{request.datasource?.label}}</span>
+                        </ng-container>
+                        <ng-template #missingOwnerApproval>--</ng-template>
+                      </td>
+                      <!-- Source Gateway-->
+                      <td>
+                        <ng-container *ngIf="request.sourceGatewayApproval != null; else missingSourceGatewayApproval">
+                          <span class="uk-label" [ngClass]="{
+                                                  'uk-label-success': request.sourceGatewayApproval?.decision === 'APPROVED',
+                                                  'uk-label-warning': request.sourceGatewayApproval?.decision === 'PENDING',
+                                                  'uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
+                                                }">{{ request.sourceGatewayApproval?.decision }}</span><br>
+                          <small> {{ request.sourceGatewayApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small><br>
+                          <div>{{request.sourceGateway.label}}</div>
+                          <!-- <span>{{ request.sourceGatewayApproval?.comment}}</span> -->
+                        </ng-container>
+                        <ng-template #missingSourceGatewayApproval>--</ng-template>
+                      </td>
+                      <!-- Target Gateway -->
+                      <td>
+                        <ng-container *ngIf="request.targetGatewayApproval != null; else missingTargetGatewayApproval">
+                          <span class="uk-label" [ngClass]="{
+                                    'uk-label-success': request.targetGatewayApproval?.decision === 'APPROVED',
+                                    'uk-label-warning': request.targetGatewayApproval?.decision === 'PENDING',
+                                    'uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
+                                  }">{{ request.targetGatewayApproval?.decision }}</span><br>
+                          <small> {{ request.targetGatewayApproval?.decidedAt | date: 'dd/MM/yyyy'}}</small><br>
+                          <div>{{request.targetGateway.label}}</div>
+                          <!-- <span>{{ request.targetGatewayApproval?.comment}}</span> -->
+                        </ng-container>
+                        <ng-template #missingTargetGatewayApproval>--</ng-template>
+                      </td>
+                      <td>
+                        <span class="uk-label" [ngClass]="{
+                                          'uk-label-success': request.status === 'APPROVED',
+                                          'uk-label-warning': request.status === 'PENDING',
+                                          'uk-label-danger': request.status === 'REJECTED'
+                                         }">
+                          {{ request.status }}
+                        </span>
+                      </td>
+                      <td>
+                        <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-primary uk-button-small uk-margin-small-right"
+                          (click)="approveRequest(request.id, repo)">Approve</button>
+                        <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"
+                          (click)="rejectRequest(request.id, repo)">Reject</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noRequests>
+                <div class="uk-alert">No requests for this repository.</div>
+              </ng-template>
             </div>
 
             <!-- RIGHT HELP CONTENT -->

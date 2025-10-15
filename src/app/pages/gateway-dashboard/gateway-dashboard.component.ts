@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { GatewaySidebarComponent } from './side-menu/gateway-sidebar.component';
 import { NgIf } from '@angular/common';
 import { CommunityContextService } from "../../services/communityContext.service";
+import { StickyFooterComponent } from 'src/app/shared/sticky-footer/sticky-footer.component';
 
 @Component({
   selector: 'gateway-dashboard',
@@ -11,7 +12,8 @@ import { CommunityContextService } from "../../services/communityContext.service
   imports: [
     RouterOutlet,
     GatewaySidebarComponent,
-    NgIf
+    NgIf,
+    StickyFooterComponent
   ]
 })
 

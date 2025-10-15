@@ -85,7 +85,7 @@ export class RequestsComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe(params => {
-        this.requestsService.getRequests(params).subscribe({
+        this.requestsService.getAllRequests(params).subscribe({
           next: (data) => {
             this.requests = data;
             this.loadingMessage = null;

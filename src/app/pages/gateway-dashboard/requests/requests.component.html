@@ -79,7 +79,6 @@
                                             }">{{ request.ownerApproval?.decision }}</span><br>
                     <small> {{ request.ownerApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small><br>
                     <span> {{request.datasource?.label}}</span>
-                    <!-- <span>{{ request.ownerApproval?.comment}}</span> -->
                   </ng-container>
                   <ng-template #missingOwnerApproval>--</ng-template>
                 </td>
