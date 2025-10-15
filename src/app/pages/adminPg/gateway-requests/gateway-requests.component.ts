@@ -12,7 +12,7 @@ import { InputComponent } from 'src/app/shared/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'gateway-actions',
+    selector: 'gateway-requests',
     templateUrl: '../../gateway-dashboard/requests/requests.component.html',
     standalone: true,
     imports: [
@@ -22,7 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ]
 })
 
-export class GatewayActionsComponent extends BaseGatewayRequestsComponent {
+export class GatewayRequestsComponent extends BaseGatewayRequestsComponent {
      constructor(
         protected requestsService: RequestsService,
         protected sharedService: SharedService,
@@ -33,6 +33,6 @@ export class GatewayActionsComponent extends BaseGatewayRequestsComponent {
       }
 
     protected getRequests(params: any): Observable<Paging<Request>> {
-        return this.requestsService.getGatewayActions(params);
+        return this.requestsService.getGatewayRequests(params);
     }
 }
