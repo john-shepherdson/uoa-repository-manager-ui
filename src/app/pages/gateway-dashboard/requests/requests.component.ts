@@ -11,13 +11,15 @@ import {Paging} from 'src/app/domain/paging';
 import {combineLatest, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {Request} from '../domain/request.domain';
+import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-table.component';
+
 
 
 @Component({
   selector: 'gateway-requests',
   standalone: true,
   templateUrl: './requests.component.html',
-  imports: [CommonModule, AdminPgRouting, MatPaginatorModule, ReactiveFormsModule, InputComponent]
+  imports: [CommonModule, AdminPgRouting, MatPaginatorModule, ReactiveFormsModule, InputComponent, ReusableTableComponent]
 })
 
 export class RequestsComponent implements OnInit, OnDestroy {
@@ -82,7 +84,7 @@ export class RequestsComponent implements OnInit, OnDestroy {
     ])
       .pipe(
         map(([defaults, query]) => ({...defaults, ...query})), // precedence: query > defaults
-        distinctUntilChanged()
+        // distinctUntilChanged()
       )
       .subscribe(params => {
         this.requestsService.getAllRequests(params).subscribe({

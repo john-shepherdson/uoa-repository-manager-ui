@@ -24,7 +24,6 @@ import { JoinComponent } from './pages/join/join.component';
 import { AboutComponent } from './pages/landing/about/about.component';
 import { environment } from '../environments/environment';
 import { MyDataSourcesComponent } from './pages/my-datasources/my-data-sources.component';
-import { MyRequestsComponent } from './pages/my-requests/my-requests.component';
 import { MatStepperModule } from "@angular/material/stepper";
 import { GatewayHomeComponent } from "./pages/landing/home-pages/gateway/gateway-home.component";
 
@@ -37,7 +36,6 @@ import { GatewayHomeComponent } from "./pages/landing/home-pages/gateway/gateway
     EmptyPageComponent,
     JoinComponent,
     MyDataSourcesComponent,
-    MyRequestsComponent
   ],
   imports: [
     BrowserModule,

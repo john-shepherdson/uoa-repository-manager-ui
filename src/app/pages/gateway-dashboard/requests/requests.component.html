@@ -40,121 +40,27 @@
       </div>
     </div>
 
-    <div class="uk-section uk-section-default uk-margin-remove uk-flex uk-flex-center">
-      <div class="uk-container uk-container-large uk-margin-remove">
-
-        <div class="uk-flex uk-flex-center uk-margin-small-bottom">
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-large">
+        <!-- Pagination -->
+        <div class=" uk-margin-small-bottom">
           <mat-paginator *ngIf="requests" [length]="requests.total" [pageSizeOptions]="[5, 10, 25, 50]"
             [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value"
             [pageIndex]="filterForm.get('page').value" (page)="handlePaginationChanges($event)"
             class="uk-margin-small-bottom">
           </mat-paginator>
         </div>
+        
 
-        <div class="uk-flex uk-flex-center">
-          <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m">
-            <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-width-1-1">
-              <thead>
-                <tr>
-                  <th class="uk-table-middle">Request Type</th>
-                  <th class="uk-table-middle">Datasource</th>
-                  <th class="uk-table-middle">Source Gateway</th>
-                  <th class="uk-table-middle">Target Gateway</th>
-                  <th class="uk-table-middle">Status</th>
-                  <th *ngIf="showActionsColumn" class="uk-text-center uk-table-middle">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let request of requests?.results">
-                  <!-- Request Type -->
-                  <td>{{ request.requestType }}</td>
-
-                  <!-- Datasource -->
-                  <td>
-                    <strong> {{request.datasource?.label}}</strong><br>
-                    <ng-container *ngIf="request.ownerApproval != null; else missingOwnerApproval">
-                      <span class="uk-label" [ngClass]="{
-                                                              'uk-label-success': request.ownerApproval?.decision === 'APPROVED',
-                                                              'uk-label-warning': request.ownerApproval?.decision === 'PENDING',
-                                                              'uk-label-danger': request.ownerApproval?.decision === 'REJECTED'
-                                                            }">{{ request.ownerApproval?.decision }}</span><br>
-                      <small> {{ request.ownerApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small>
-                    </ng-container>
-                    <ng-template #missingOwnerApproval></ng-template>
-                  </td>
-                  <!-- Source Gateway -->
-                  <td>
-
-                    <strong>{{request.sourceGateway.label}}</strong><br>
-                    <ng-container *ngIf="request.sourceGatewayApproval != null; else missingSourceGatewayApproval">
-                      <span class="uk-label" [ngClass]="{
-                            'uk-label-success': request.sourceGatewayApproval?.decision === 'APPROVED',
-                            'uk-label-warning': request.sourceGatewayApproval?.decision === 'PENDING',
-                            'uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
-                          }">{{ request.sourceGatewayApproval?.decision }}</span><br>
-                      <small> {{ request.sourceGatewayApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small><br>
-                      <!-- <span>{{ request.sourceGatewayApproval?.comment}}</span> -->
-                    </ng-container>
-                    <ng-template #missingSourceGatewayApproval></ng-template>
-                  </td>
-                  <!-- Target Gateway -->
-                  <td>
-                    <span><strong>{{request.targetGateway.label}}</strong></span><br>
-                    <ng-container *ngIf="request.targetGatewayApproval != null; else missingTargetGatewayApproval">
-                      <span class="uk-label" [ngClass]="{
-              'uk-label-success': request.targetGatewayApproval?.decision === 'APPROVED',
-              'uk-label-warning': request.targetGatewayApproval?.decision === 'PENDING',
-              'uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
-            }">{{ request.targetGatewayApproval?.decision }}</span><br>
-                      <small> {{ request.targetGatewayApproval?.decidedAt | date: 'dd/MM/yyyy'}}</small><br>
-                      <!-- <span>{{ request.targetGatewayApproval?.comment}}</span> -->
-                    </ng-container>
-                    <ng-template #missingTargetGatewayApproval></ng-template>
-                  </td>
-
-                  <!-- Overall Status-->
-                  <td>
-                    <span class="uk-label" [ngClass]="{
-              'uk-label-success': request.status === 'APPROVED',
-              'uk-label-warning': request.status === 'PENDING',
-              'uk-label-danger': request.status === 'REJECTED'
-            }">{{ request.status}}</span>
-                  </td>
-
-                  <!-- Actions Column -->
-                  <td *ngIf="showActionsColumn" class="uk-text-center">
-                    <div class="uk-flex uk-flex-column uk-flex-center">
-                      <button *ngIf="request.status === 'PENDING'"
-                        class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
-                        (click)="approveRequest(request.id)">Approve</button>
-                      <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"
-                        (click)="rejectRequest(request.id)">Reject</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="">
+          <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
+            <!-- Table -->
+            <app-reusable-table
+              [data]="requests?.results" [showActionsColumn]="showActionsColumn"
+              (approve)="approveRequest($event)" (reject)="rejectRequest($event)">
+            </app-reusable-table>
           </div>
         </div>
-        <!--Pagination-->
-
-        <!-- <div class="uk-margin-top uk-flex uk-flex-center">
-          <ul class="uk-pagination uk-margin-remove" *ngIf="total > pageSize">
-            <li [class.uk-disabled]="page === 0">
-              <a (click)="page > 0 && onPageChange(page)"><span uk-pagination-previous></span></a>
-            </li>
-
-            <li *ngFor="let p of getPagesArray()" [class.uk-active]="p === page + 1">
-              <a (click)="onPageChange(p)">{{ p }}</a>
-            </li>
-
-            <li [class.uk-disabled]="page >= (total / pageSize) - 1">
-              <a (click)="page < (total / pageSize) - 1 && onPageChange(page + 2)"><span uk-pagination-next></span></a>
-            </li>
-          </ul>
-        </div> -->
-
       </div>
     </div>
-    <!-- <pre>{{ requests | json }}</pre> -->
   </div>

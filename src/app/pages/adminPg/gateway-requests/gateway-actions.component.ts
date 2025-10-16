@@ -10,6 +10,7 @@ import {BaseGatewayRequestsComponent} from './base-gateway-requests.component';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from 'src/app/shared/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-table.component';
 
 @Component({
     selector: 'gateway-actions',
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     imports: [
         CommonModule,
         InputComponent,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ReusableTableComponent
     ]
 })
 

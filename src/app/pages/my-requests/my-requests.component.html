@@ -1,66 +1,38 @@
 <div id="page_content">
-    <div id="page_content_inner">
-        <div class="uk-section uk-section-default">
-            <div class="uk-container uk-container-expand">
-                <div class="">
-                    <h5>My Requests</h5>
+  <div id="page_content_inner">
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-expand">
+        <div class="">
+          <h5>My Requests</h5>
 
-                    <div>
-                        <div *ngIf="loading">Loading repositories...</div>
-                        <div *ngIf="!loading">
-                            <div *ngIf="repositories && foundRequest else noRequest">
-                                <ng-container *ngFor="let repo of repositories">
-                                    <div class="uk-card uk-card-default" *ngIf="requests.get(repo.id)?.length > 0">
+          <div>
+            <div *ngIf="loading">Loading repositories...</div>
+            <div *ngIf="!loading">
+              <div *ngIf="repositories && foundRequest else noRequest">
+                <ng-container *ngFor="let repo of repositories">
+                  <div class="uk-card uk-card-default" *ngIf="requests.get(repo.id)?.length > 0">
 
-                                        <!-- Header -->
-                                        <h6 class="uk-card-header">
-                                            {{ repo?.officialname }}
-                                        </h6>
+                    <!-- Header -->
+                    <h6 class="uk-card-header">
+                      {{ repo?.officialname }}
+                    </h6>
 
-                                        <!-- Body με table -->
-                                        <div class="uk-card-body">
-                                            <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="uk-table-middle">Request Type</th>
-                                                        <th class="uk-table-middle">Status</th>
-                                                        <th class="uk-table-middle">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let request of requests.get(repo?.id)">
-                                                        <td>{{ request.requestType }}</td>
-                                                        <td>
-                                                            <span class="uk-label" [ngClass]="{
-                                                                    'uk-label-success': request.status === 'APPROVED',
-                                                                    'uk-label-warning': request.status === 'PENDING',
-                                                                    'uk-label-danger': request.status === 'REJECTED'
-                                                                  }">
-                                                                {{ request.status }}
-                                                            </span>
-                                                        </td>
-                                                        <td *ngIf="request.status === 'PENDING' && request.requestedBy !== 'DATASOURCE_ADMIN'">
-                                                            <button *ngIf="request.status === 'PENDING'"
-                                                                class="uk-button uk-button-primary uk-button-small uk-margin-small-right"
-                                                                (click)="approveRequest(request.id, repo)">Approve</button>
-                                                            <button *ngIf="request.status === 'PENDING'"
-                                                                class="uk-button uk-button-danger uk-button-small"
-                                                                (click)="rejectRequest(request.id, repo)">Reject</button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                        <ng-template #noRequest>
-                            <div class="uk-alert">No requests found.</div>
-                        </ng-template>
+                    <!-- Body with table -->
+                    <div class="uk-card-body">
+                      <app-reusable-table [data]="requests.get(repo.id)" [showActionsColumn]="true"
+                        (approve)="approveRequest($event, repo)" (reject)="rejectRequest($event, repo)">
+                      </app-reusable-table>
                     </div>
-                </div>
+                  </div>
+                </ng-container>
+              </div>
             </div>
+            <ng-template #noRequest>
+              <div class="uk-alert">No requests found.</div>
+            </ng-template>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

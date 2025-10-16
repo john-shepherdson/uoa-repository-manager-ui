@@ -10,6 +10,7 @@ import { AdminSideMenuComponent } from './admin-sidebar/admin-sidebar.component'
 import { InputComponent } from '../../shared/input.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AdminRequestsComponent } from './gateway-requests/admin-requests.component';
+import { ReusableTableComponent } from "src/app/shared/reusable-table/reusable-table.component";
 
 @NgModule ({
   imports: [
@@ -20,7 +21,8 @@ import { AdminRequestsComponent } from './gateway-requests/admin-requests.compon
     ReusableComponentsModule,
     InputComponent,
     MatPaginatorModule,
-  ],
+    ReusableTableComponent
+],
   declarations: [
     AdminPgComponent,
     AdminSideMenuComponent,

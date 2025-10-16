@@ -107,7 +107,7 @@ export class DatasourceSearchComponent implements OnInit {
         return;  // prevents the search below from running on renavigation
       }
 
-      this.loadingMessage = 'Fetching datasources..';
+      this.loadingMessage = 'Loading datasources..';
       this.getDatasources(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (data) => {
           this.datasources = data;

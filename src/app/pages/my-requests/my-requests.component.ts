@@ -5,11 +5,19 @@ import { RepositorySnippet } from '../../domain/typeScriptClasses';
 import { RepositoryService } from "src/app/services/repository.service";
 import { takeUntil } from "rxjs/operators";
 import { Request } from "../gateway-dashboard/domain/request.domain";
+import { ReusableTableComponent } from "src/app/shared/reusable-table/reusable-table.component";
+import { NgFor, NgIf } from "@angular/common";
 
 
 @Component({
   selector: 'app-my-requests',
-  templateUrl: './my-requests.component.html'
+  templateUrl: './my-requests.component.html',
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    ReusableTableComponent
+  ]
 })
 export class MyRequestsComponent implements OnInit {
   repositories: RepositorySnippet[] = [];

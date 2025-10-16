@@ -10,10 +10,12 @@ import {combineLatest, Observable, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
+import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-table.component';
 
 @Directive({
   selector: 'base-gateway-request',
   standalone: true,
+ providers: [ReusableTableComponent]
 })
 
 export abstract class BaseGatewayRequestsComponent implements OnInit {
@@ -121,5 +123,33 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 
   updateWithNavigation() {
     this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
+  }
+    
+  approveRequest(requestId: number) {
+    this.requestsService.updateRequest(requestId, 'APPROVED', 'TARGET_GATEWAY_ADMIN', 'Approved by admin')
+      .subscribe({
+        next: () => {
+          // reload current list
+          this.getRequests(this.qParams).subscribe({
+            next: data => this.requests = data,
+            error: err => console.error('Error reloading requests after approve:', err)
+          });
+        },
+        error: err => console.error('Error approving request:', err)
+      });
+  }
+
+  rejectRequest(requestId: number) {
+    this.requestsService.updateRequest(requestId, 'REJECTED', 'TARGET_GATEWAY_ADMIN', 'Rejected by admin')
+      .subscribe({
+        next: () => {
+          // reload current list
+          this.getRequests(this.qParams).subscribe({
+            next: data => this.requests = data,
+            error: err => console.error('Error reloading requests after reject:', err)
+          });
+        },
+        error: err => console.error('Error rejecting request:', err)
+      });
   }
 }
