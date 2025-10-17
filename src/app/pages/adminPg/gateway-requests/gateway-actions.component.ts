@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { InputComponent } from 'src/app/shared/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-table.component';
+import { CommunityContextService } from 'src/app/services/communityContext.service';
 
 @Component({
     selector: 'gateway-actions',
@@ -30,8 +31,9 @@ export class GatewayActionsComponent extends BaseGatewayRequestsComponent {
         protected sharedService: SharedService,
         protected repositoryService: RepositoryService,
         protected router: Router,
-        protected route: ActivatedRoute) {
-        super(requestsService, sharedService, repositoryService, router, route);
+        protected route: ActivatedRoute,
+        protected communityService: CommunityContextService) {
+        super(requestsService, sharedService, repositoryService, router, route, communityService);
       }
 
     protected getRequests(params: any): Observable<Paging<Request>> {

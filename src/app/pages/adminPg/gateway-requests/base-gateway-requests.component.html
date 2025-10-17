@@ -52,7 +52,7 @@
 
         <div class="uk-card uk-card-default uk-card-body">
           <app-reusable-table
-             [data]="requests?.results" [showActionsColumn]="showActionsColumn"
+             [data]="requests?.results" [showActionsColumn]="showActionsColumn" [currentCommunityId]="communityId"
             (approve)="approveRequest($event)" (reject)="rejectRequest($event)">
           </app-reusable-table>
 

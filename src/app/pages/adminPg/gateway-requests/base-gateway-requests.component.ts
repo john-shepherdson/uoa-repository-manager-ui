@@ -11,6 +11,7 @@ import {distinctUntilChanged, map} from 'rxjs/operators';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-table.component';
+import { CommunityContextService } from 'src/app/services/communityContext.service';
 
 @Directive({
   selector: 'base-gateway-request',
@@ -26,6 +27,7 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string | null = null;
   loadingMessage: string | null = null;
+  communityId: string | null = null;
 
   // keyword: FormControl = new FormControl(null);
   filterForm: FormGroup = new FormGroup({
@@ -51,7 +53,8 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     protected sharedService: SharedService,
     protected repositoryService: RepositoryService,
     protected router: Router,
-    protected route: ActivatedRoute) {
+    protected route: ActivatedRoute,
+    protected communityService: CommunityContextService) {
   }
 
   protected abstract getRequests(params: any): Observable<Paging<Request>>;
@@ -98,6 +101,11 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
           }
         });
       });
+
+      this.communityService.getCurrentCommunityId().subscribe(id => {
+        console.log('Current community ID:', id);
+        this.communityId = id;
+      });
   }
 
   handleFilterChanges(path: string) {
@@ -125,31 +133,100 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
   }
     
-  approveRequest(requestId: number) {
-    this.requestsService.updateRequest(requestId, 'APPROVED', 'TARGET_GATEWAY_ADMIN', 'Approved by admin')
+  // approveRequest(requestId: number) {
+  //   this.requestsService.updateRequest(requestId, 'APPROVED', 'TARGET_GATEWAY_ADMIN', 'Approved by admin')
+  //     .subscribe({
+  //       next: () => {
+  //         // reload current list
+  //         this.getRequests(this.qParams).subscribe({
+  //           next: data => this.requests = data,
+  //           error: err => console.error('Error reloading requests after approve:', err)
+  //         });
+  //       },
+  //       error: err => console.error('Error approving request:', err)
+  //     });
+  // }
+
+  approveRequest(request: Request) {
+    console.log('Before approve: ', request);
+     {{this.communityId}}
+    if (!this.communityId) {
+      console.error('Community ID is not set');
+  }
+
+  let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
+  if (request.sourceGateway.id === this.communityId) {
+      authority = 'SOURCE_GATEWAY_ADMIN';
+  } else if (request.targetGateway.id === this.communityId) {
+      authority = 'TARGET_GATEWAY_ADMIN';
+  } else {
+      console.error('Current community is neither source nor target for this request');
+      return;
+  }
+    console.log('Authority chosen: ', authority);
+    this.requestsService.updateRequest(request.id, 'APPROVED', authority, 'Approved by admin')
       .subscribe({
-        next: () => {
-          // reload current list
+        next: action => {
           this.getRequests(this.qParams).subscribe({
-            next: data => this.requests = data,
-            error: err => console.error('Error reloading requests after approve:', err)
-          });
+          next: (data) => {
+            this.requests = data;
+            this.loadingMessage = null;
+          },
+          error: (err) => {
+            console.error('Error fetching requests:', err);
+            this.loadingMessage = null;
+            this.errorMessage = 'Error fetching requests';
+          }
+        });
         },
         error: err => console.error('Error approving request:', err)
       });
-  }
+}
 
-  rejectRequest(requestId: number) {
-    this.requestsService.updateRequest(requestId, 'REJECTED', 'TARGET_GATEWAY_ADMIN', 'Rejected by admin')
+  // rejectRequest(requestId: number) {
+  //   this.requestsService.updateRequest(requestId, 'REJECTED', 'TARGET_GATEWAY_ADMIN', 'Rejected by admin')
+  //     .subscribe({
+  //       next: () => {
+  //         // reload current list
+  //         this.getRequests(this.qParams).subscribe({
+  //           next: data => this.requests = data,
+  //           error: err => console.error('Error reloading requests after reject:', err)
+  //         });
+  //       },
+  //       error: err => console.error('Error rejecting request:', err)
+  //     });
+  // }
+
+  rejectRequest(request: Request) {
+    if (!this.communityId) {
+      console.error('Community ID is not set');
+      return;
+  }
+  let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
+  if (request.sourceGateway.id === this.communityId) {
+      authority = 'SOURCE_GATEWAY_ADMIN';
+  } else if (request.targetGateway.id === this.communityId) {
+      authority = 'TARGET_GATEWAY_ADMIN';
+  } else {
+      console.error('Current community is neither source nor target for this request');
+      return;
+  }
+    this.requestsService.updateRequest(request.id, 'REJECTED', authority, 'Rejected by admin')
       .subscribe({
-        next: () => {
-          // reload current list
+        next: updateRequest => {
           this.getRequests(this.qParams).subscribe({
-            next: data => this.requests = data,
-            error: err => console.error('Error reloading requests after reject:', err)
-          });
+          next: (data) => {
+            this.requests = data;
+            this.loadingMessage = null;
+        },
+          error: (err) => {
+            console.error('Error fetching requests:', err);
+            this.loadingMessage = null;
+            this.errorMessage = 'Error fetching requests';
+          }
+        });
         },
         error: err => console.error('Error rejecting request:', err)
       });
-  }
+}
 }

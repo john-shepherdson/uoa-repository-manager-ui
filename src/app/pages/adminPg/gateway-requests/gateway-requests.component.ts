@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { InputComponent } from 'src/app/shared/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { CommunityContextService } from 'src/app/services/communityContext.service';
 
 @Component({
     selector: 'gateway-requests',
@@ -20,7 +22,8 @@ import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-t
         CommonModule,
         InputComponent,
         ReactiveFormsModule,
-        ReusableTableComponent
+        ReusableTableComponent,
+        MatPaginatorModule
     ]
 })
 
@@ -30,8 +33,9 @@ export class GatewayRequestsComponent extends BaseGatewayRequestsComponent {
         protected sharedService: SharedService,
         protected repositoryService: RepositoryService,
         protected router: Router,
-        protected route: ActivatedRoute) {
-        super(requestsService, sharedService, repositoryService, router, route);
+        protected route: ActivatedRoute,
+        protected communityService: CommunityContextService) {
+        super(requestsService, sharedService, repositoryService, router, route, communityService);
       }
 
     protected getRequests(params: any): Observable<Paging<Request>> {

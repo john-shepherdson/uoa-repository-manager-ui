@@ -35,24 +35,22 @@
               [options]="statusOptions" (valueChange)="handleFilterChanges('status')">
             </div>
           </div>
-
         </form>
       </div>
     </div>
 
     <div class="uk-section uk-section-default">
       <div class="uk-container uk-container-large">
-        <!-- Pagination -->
-        <div class=" uk-margin-small-bottom">
-          <mat-paginator *ngIf="requests" [length]="requests.total" [pageSizeOptions]="[5, 10, 25, 50]"
-            [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value"
-            [pageIndex]="filterForm.get('page').value" (page)="handlePaginationChanges($event)"
-            class="uk-margin-small-bottom">
-          </mat-paginator>
-        </div>
         
+            <div class=" uk-margin-small-bottom">
+               {{requests?.results?.length}} requests found. 
+              <mat-paginator *ngIf="requests?.results?.length" [length]="requests?.total" [pageSizeOptions]="[5, 10, 25, 50]"
+                [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value" [pageIndex]="filterForm.get('page').value"
+                (page)="handlePaginationChanges($event)" class="uk-margin-small-bottom">
+              </mat-paginator>
+            </div>
+            <hr>
 
-        <div class="">
           <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
             <!-- Table -->
             <app-reusable-table
@@ -60,7 +58,6 @@
               (approve)="approveRequest($event)" (reject)="rejectRequest($event)">
             </app-reusable-table>
           </div>
-        </div>
       </div>
     </div>
   </div>

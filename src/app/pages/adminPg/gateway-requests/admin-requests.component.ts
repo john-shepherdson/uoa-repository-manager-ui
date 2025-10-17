@@ -7,6 +7,7 @@ import {Paging} from 'src/app/domain/paging';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BaseGatewayRequestsComponent} from './base-gateway-requests.component';
+import { CommunityContextService } from 'src/app/services/communityContext.service';
 
 
 @Component({
@@ -21,8 +22,9 @@ export class AdminRequestsComponent extends BaseGatewayRequestsComponent {
     protected sharedService: SharedService,
     protected repositoryService: RepositoryService,
     protected router: Router,
-    protected route: ActivatedRoute) {
-    super(requestsService, sharedService, repositoryService, router, route);
+    protected route: ActivatedRoute,
+    protected communityService: CommunityContextService) {
+    super(requestsService, sharedService, repositoryService, router, route, communityService);
   }
 
   protected getRequests(params: any): Observable<Paging<Request>> {

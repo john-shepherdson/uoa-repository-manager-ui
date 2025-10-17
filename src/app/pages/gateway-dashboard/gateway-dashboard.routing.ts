@@ -2,7 +2,6 @@ import { Route } from '@angular/router';
 import { GatewayAdminGuard } from '../../services/guard-functions';
 import { GatewayDashboardComponent } from "./gateway-dashboard.component";
 import { DatasourceSearchComponent } from "./datasource-search/datasource-search.component";
-import { RequestsComponent } from "./requests/requests.component";
 import {GatewayActionsComponent} from '../adminPg/gateway-requests/gateway-actions.component';
 import {GatewayRequestsComponent} from '../adminPg/gateway-requests/gateway-requests.component';
 

@@ -12,15 +12,16 @@ import { Request } from "src/app/pages/gateway-dashboard/domain/request.domain";
 export class ReusableTableComponent {
     @Input() data: Request[] = [];
     @Input() showActionsColumn: boolean = false;
+    @Input() currentGatewayId: string | null = null;
 
-    @Output() approve = new EventEmitter<number>();
-    @Output() reject = new EventEmitter<number>();
+    @Output() approve = new EventEmitter<Request>();
+    @Output() reject = new EventEmitter<Request>();
 
-    onApprove(id: number) {
-        this.approve.emit(id);
+    onApprove(request: Request) {
+        this.approve.emit(request);
     }
 
-    onReject(id: number) {
-        this.reject.emit(id);
+    onReject(request: Request) {
+        this.reject.emit(request);
     }
 }

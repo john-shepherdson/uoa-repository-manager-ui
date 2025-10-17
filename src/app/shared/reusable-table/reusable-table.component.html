@@ -32,7 +32,7 @@
       <td>
         <strong>{{ request.sourceGateway?.label }}</strong><br>
         <ng-container *ngIf="request.sourceGatewayApproval != null; else missingSourceGatewayApproval">
-          <span class="uk-label" [ngClass]="{
+          <span *ngIf="request.sourceGateway.id === currentGatewayId" class="uk-label" [ngClass]="{
             'uk-label-success': request.sourceGatewayApproval?.decision === 'APPROVED',
             'uk-label-warning': request.sourceGatewayApproval?.decision === 'PENDING',
             'uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
@@ -46,7 +46,7 @@
       <td>
         <strong>{{ request.targetGateway?.label }}</strong><br>
         <ng-container *ngIf="request.targetGatewayApproval != null; else missingTargetGatewayApproval">
-          <span class="uk-label" [ngClass]="{
+          <span *ngIf="request.targetGateway.id === currentGatewayId" class="uk-label" [ngClass]="{
             'uk-label-success': request.targetGatewayApproval?.decision === 'APPROVED',
             'uk-label-warning': request.targetGatewayApproval?.decision === 'PENDING',
             'uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
