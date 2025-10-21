@@ -64,18 +64,24 @@
         }">{{ request.status }}</span>
       </td>
 
-      <!-- Actions Column -->
+      <!-- Actions -->
       <td *ngIf="showActionsColumn" class="uk-text-center">
         <div class="uk-flex uk-flex-column uk-flex-center">
-          <button 
+          <button *ngIf="request.status === 'PENDING'"
             class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
-            (click)="openDecisionModal(request, 'APPROVED')">{{ request.status === 'REJECTED' ? 'Change to Approve' : 'Approve'}}
+            (click)="openDecisionModal(request, 'APPROVED')">
+            Approve
           </button>
-
-          <button class="uk-button uk-button-danger uk-button-small"
-            (click)="openDecisionModal(request, 'REJECTED')">{{ request.status === 'APPROVED' ? 'Change to Reject' : 'Reject'}}</button>
+      
+          <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"
+            (click)="openDecisionModal(request, 'REJECTED')">
+            Reject
+          </button>
+          <span *ngIf="request.status !== 'PENDING'" class="uk-text-bold uk-text-small">
+          </span>
         </div>
       </td>
+
     </tr>
   </tbody>
 </table>
@@ -83,11 +89,9 @@
 <div id="decision-modal" class="uk-modal-container" uk-modal>
   <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
     <button class="uk-modal-close-default" type="button" uk-close (click)="closeModal()"></button>
-
     <h3 class="uk-modal-title">
       {{ modalDecision === 'APPROVED' ? 'Approve' : 'Reject' }} Request
     </h3>
-    
     <div class="uk-margin">
       <label class="uk-form-label" for="modal-comment">
         Please create a comment (optional):

@@ -34,6 +34,8 @@ export class GatewayActionsComponent extends BaseGatewayRequestsComponent {
         protected route: ActivatedRoute,
         protected communityService: CommunityContextService) {
         super(requestsService, sharedService, repositoryService, router, route, communityService);
+
+        this.showActionsColumn = true;
       }
 
     protected getRequests(params: any): Observable<Paging<Request>> {

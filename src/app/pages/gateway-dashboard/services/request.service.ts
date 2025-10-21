@@ -26,7 +26,13 @@ export class RequestsService {
         console.error(err);
       }
     });
+  }
 
+  getOpenaireActions(queryParams: Params): Observable<Paging<Request>> {
+    let gateway = 'openaire-infrastructure'
+
+    const url = `${this.baseUrl}/gateways/${gateway}/actions`;
+    return this.getRequestsFromUrl(url, queryParams);
   }
 
   getGatewayActions(queryParams: Params): Observable<Paging<Request>> {

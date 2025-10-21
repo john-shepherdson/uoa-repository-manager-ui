@@ -5,7 +5,7 @@ import { AdminPgMetricsComponent } from './adminPg-metrics.component';
 import { authGuard, canMatchGuard } from '../../services/auth-guard.service';
 import { RegistrationComponent } from './adminPg-registrations.component';
 import { AdminRequestsComponent } from './gateway-requests/admin-requests.component';
-import { GatewayActionsComponent } from './gateway-requests/gateway-actions.component';
+import { OpenaireActionsComponent } from './gateway-requests/openaire-actions.component';
 const adminRoutes: Routes = [
   {
     path: '',
@@ -23,7 +23,7 @@ const adminRoutes: Routes = [
       },
       {
         path: 'openaire-requests',
-        component: GatewayActionsComponent,
+        component: OpenaireActionsComponent,
         // data: {
         //   requestParams: { sourceGatewayId: 'openaire-infrastructure' }
         // }

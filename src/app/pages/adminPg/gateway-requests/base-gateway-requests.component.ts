@@ -61,7 +61,7 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUrl = this.router.url;
-    this.showActionsColumn = currentUrl.includes('/requests/actions');
+    // this.showActionsColumn = currentUrl.includes('/requests/actions');
     this.sub = combineLatest([
       // Load component route data[requestParams]
       this.route.data.pipe(map(data => (data['requestParams'] ?? {}))),
