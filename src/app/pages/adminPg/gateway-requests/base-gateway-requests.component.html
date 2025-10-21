@@ -25,7 +25,7 @@
 
           <div class="uk-padding-xsmall uk-padding-remove-vertical">
             <div input placeholder="Request Type" type="select" [formInput]="filterForm.get('requestType')"
-                 [options]="[{value: 'PRIMARY', label: 'Primary'}, {value: 'AFFILIATED', label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
+                 [options]="[{value: RequestType.PRIMARY, label: 'Primary'}, {value: RequestType.PRIMARY, label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
                  (valueChange)="handleFilterChanges('requestType')">
             </div>
           </div>

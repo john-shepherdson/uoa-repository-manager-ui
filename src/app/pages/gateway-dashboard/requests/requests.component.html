@@ -25,7 +25,7 @@
 
           <div class="uk-padding-xsmall uk-padding-remove-vertical">
             <div input placeholder="Request Type" type="select" [formInput]="filterForm.get('requestType')"
-              [options]="[{value: 'PRIMARY', label: 'Primary'}, {value: 'AFFILIATED', label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
+              [options]="[{value: RequestType.PRIMARY, label: 'Primary'}, {value: RequestType.AFFILIATED, label: 'Affiliated'}, {value: 'null', label: 'Reset'}]"
               (valueChange)="handleFilterChanges('requestType')">
             </div>
           </div>
@@ -41,9 +41,9 @@
 
     <div class="uk-section uk-section-default">
       <div class="uk-container uk-container-large">
-        
+
             <div class=" uk-margin-small-bottom">
-               {{requests?.results?.length}} requests found. 
+               {{requests?.results?.length}} requests found.
               <mat-paginator *ngIf="requests?.results?.length" [length]="requests?.total" [pageSizeOptions]="[5, 10, 25, 50]"
                 [showFirstLastButtons]="true" [pageSize]="filterForm.get('size').value" [pageIndex]="filterForm.get('page').value"
                 (page)="handlePaginationChanges($event)" class="uk-margin-small-bottom">

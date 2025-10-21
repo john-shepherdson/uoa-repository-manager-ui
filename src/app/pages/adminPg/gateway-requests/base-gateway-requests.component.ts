@@ -2,7 +2,7 @@ import {Directive, OnInit} from '@angular/core';
 import {RequestsService} from '../../gateway-dashboard/services/request.service';
 import {SharedService} from 'src/app/services/shared.service';
 import {RepositoryService} from 'src/app/services/repository.service';
-import {Request} from '../../gateway-dashboard/domain/request.domain';
+import {Authority, Decision, Request, RequestType} from '../../gateway-dashboard/domain/request.domain';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Option} from '../../../shared/input.component';
 import {Paging} from 'src/app/domain/paging';
@@ -20,6 +20,8 @@ import {CommunityContextService} from 'src/app/services/communityContext.service
 })
 
 export abstract class BaseGatewayRequestsComponent implements OnInit {
+  protected readonly RequestType = RequestType;
+
   requests: Paging<Request>;
   private sub?: Subscription;
   showActionsColumn: boolean = false;
@@ -230,7 +232,7 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 //       });
 // }
 
-  handleDecision(event: { request: Request, decision: 'APPROVED' | 'REJECTED'; comment?: string }) {
+  handleDecision(event: { request: Request; decision: Decision; comment?: string }) {
     const {request, decision, comment} = event;
 
     if (!this.communityId) {
@@ -239,11 +241,11 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
       this.errorMessage = 'Community ID is not found';
       return;
     }
-    let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
+    let authority: Authority;
     if (request.sourceGateway.id === this.communityId) {
-      authority = 'SOURCE_GATEWAY_ADMIN';
+      authority = Authority.SOURCE_GATEWAY_ADMIN;
     } else if (request.targetGateway.id === this.communityId) {
-      authority = 'TARGET_GATEWAY_ADMIN';
+      authority = Authority.TARGET_GATEWAY_ADMIN;
     } else {
       console.error('Current community is neither source nor target for this request');
       this.loadingMessage = null;
@@ -253,7 +255,7 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     this.updateDecision(request.id, decision, authority, comment);
   }
 
-  protected updateDecision(id: number, decision: 'APPROVED' | 'REJECTED', authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN', comment: string) {
+  protected updateDecision(id: number, decision: Decision, authority: Authority, comment: string) {
     this.requestsService.updateRequest(id, decision, authority, comment || '')
       .subscribe({
         next: () => {

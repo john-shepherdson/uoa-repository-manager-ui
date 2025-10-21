@@ -15,6 +15,7 @@ import {Observable} from 'rxjs';
 import {CommunityContextService} from '../../../services/communityContext.service';
 import { StickyFooterComponent } from "src/app/shared/sticky-footer/sticky-footer.component";
 import {environment} from '../../../../environments/environment';
+import {RequestType} from '../domain/request.domain';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class DatasourceSearchComponent implements OnInit {
 
   commentText = '';
   currentDatasourceId: string | null = null;
-  currentType: 'PRIMARY' | 'AFFILIATED' | null = null;
+  currentType: RequestType = null;
   currentRequestKind: 'datasource' | 'gateway' | null = null;
 
   // keyword: FormControl = new FormControl(null);
@@ -159,7 +160,7 @@ export class DatasourceSearchComponent implements OnInit {
   }
 
 
-  // createRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
+  // createRequest(datasourceId: string, type: RequestType) {
   //   console.log('ID: ', datasourceId, ' type: ', type);
 
   //   this.requestService.createRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
@@ -173,7 +174,7 @@ export class DatasourceSearchComponent implements OnInit {
 
   // }
 
-  createGatewayRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
+  createGatewayRequest(datasourceId: string, type: RequestType) {
     console.log(`Submitting Gateway Request for ID: ${datasourceId}, Type: ${type}`);
 
     this.requestService.createGatewayRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
@@ -186,7 +187,7 @@ export class DatasourceSearchComponent implements OnInit {
     });
   }
 
-  createDatasourceRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED') {
+  createDatasourceRequest(datasourceId: string, type: RequestType) {
     console.log(`Submitting Datasource Request for ID: ${datasourceId}, Type: ${type}`);
 
     this.requestService.createDatasourceRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
@@ -199,7 +200,7 @@ export class DatasourceSearchComponent implements OnInit {
     });
   }
 
-  openCommentModal(id: string, type: 'PRIMARY' | 'AFFILIATED', requestKind: 'datasource' | 'gateway') {
+  openCommentModal(id: string, type: RequestType, requestKind: 'datasource' | 'gateway') {
     this.currentDatasourceId = id;
     this.currentType = type;
     this.currentRequestKind = requestKind;
@@ -208,4 +209,5 @@ export class DatasourceSearchComponent implements OnInit {
   }
 
 
+  protected readonly RequestType = RequestType;
 }

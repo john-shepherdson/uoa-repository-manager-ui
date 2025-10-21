@@ -7,38 +7,38 @@ import {Paging} from 'src/app/domain/paging';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BaseGatewayRequestsComponent} from './base-gateway-requests.component';
-import { CommonModule } from '@angular/common';
-import { InputComponent } from 'src/app/shared/input.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-table.component';
-import { CommunityContextService } from 'src/app/services/communityContext.service';
+import {CommonModule} from '@angular/common';
+import {InputComponent} from 'src/app/shared/input.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {ReusableTableComponent} from 'src/app/shared/reusable-table/reusable-table.component';
+import {CommunityContextService} from 'src/app/services/communityContext.service';
 
 @Component({
-    selector: 'gateway-actions',
-    templateUrl: '../../gateway-dashboard/requests/requests.component.html',
-    standalone: true,
-    imports: [
-        CommonModule,
-        InputComponent,
-        ReactiveFormsModule,
-        ReusableTableComponent
-    ]
+  selector: 'gateway-actions',
+  templateUrl: '../../gateway-dashboard/requests/requests.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    InputComponent,
+    ReactiveFormsModule,
+    ReusableTableComponent
+  ]
 })
 
 export class GatewayActionsComponent extends BaseGatewayRequestsComponent {
-     constructor(
-        protected requestsService: RequestsService,
-        protected sharedService: SharedService,
-        protected repositoryService: RepositoryService,
-        protected router: Router,
-        protected route: ActivatedRoute,
-        protected communityService: CommunityContextService) {
-        super(requestsService, sharedService, repositoryService, router, route, communityService);
+  constructor(
+    protected requestsService: RequestsService,
+    protected sharedService: SharedService,
+    protected repositoryService: RepositoryService,
+    protected router: Router,
+    protected route: ActivatedRoute,
+    protected communityService: CommunityContextService) {
+    super(requestsService, sharedService, repositoryService, router, route, communityService);
 
-        this.showActionsColumn = true;
-      }
+    this.showActionsColumn = true;
+  }
 
-    protected getRequests(params: any): Observable<Paging<Request>> {
-        return this.requestsService.getGatewayActions(params);
-    }
+  protected getRequests(params: any): Observable<Paging<Request>> {
+    return this.requestsService.getGatewayActions(params);
+  }
 }

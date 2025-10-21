@@ -4,9 +4,14 @@ import { RequestsService } from '../gateway-dashboard/services/request.service';
 import { RepositorySnippet } from '../../domain/typeScriptClasses';
 import { RepositoryService } from "src/app/services/repository.service";
 import { takeUntil } from "rxjs/operators";
-import { Request } from "../gateway-dashboard/domain/request.domain";
+import {Authority, Decision, Request} from '../gateway-dashboard/domain/request.domain';
 import { ReusableTableComponent } from "src/app/shared/reusable-table/reusable-table.component";
 import { NgFor, NgIf } from "@angular/common";
+import {BaseGatewayRequestsComponent} from '../adminPg/gateway-requests/base-gateway-requests.component';
+import {Observable} from 'rxjs';
+import {Paging} from '../../domain/paging';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CommunityContextService} from '../../services/communityContext.service';
 
 
 @Component({
@@ -19,13 +24,16 @@ import { NgFor, NgIf } from "@angular/common";
     ReusableTableComponent
   ]
 })
-export class MyRequestsComponent implements OnInit {
+export class MyRequestsComponent extends BaseGatewayRequestsComponent implements OnInit {
   repositories: RepositorySnippet[] = [];
   loading = false;
-  requests: Map<string, Request[]> = new Map();
+  requestsMap: Map<string, Request[]> = new Map();
   foundRequest: boolean = false;
 
-  constructor(private sharedService: SharedService, private requestsService: RequestsService, private repositoryService: RepositoryService) {}
+  constructor(protected sharedService: SharedService, protected requestsService: RequestsService, protected repositoryService: RepositoryService,
+              protected router: Router, protected route: ActivatedRoute, protected communityService: CommunityContextService) {
+    super(requestsService, sharedService, repositoryService, router, route, communityService);
+  }
 
   ngOnInit(): void {
     const repos = this.sharedService.getRepositoriesOfUser();
@@ -50,18 +58,26 @@ export class MyRequestsComponent implements OnInit {
     }
   }
 
+  protected getRequests(params: any): Observable<Paging<Request>> {
+    return this.requestsService.getAllRequests(params);
+  }
+
+  handleDecision(event: { request: Request; decision: Decision; comment?: string }) {
+    const {request, decision, comment} = event;
+    this.updateDecision(request.id, decision, Authority.DATASOURCE_ADMIN, comment);
+  }
+
   loadRequestsForRepos() {
     let ids = this.repositories.map(repo => repo.id);
-    const params: any = {datasourcesIds: ids};
     ids.forEach(id => {
-      this.requestsService.getRequestsbyId(id, "datasourceIds").subscribe(
+      this.getRequests({datasourceIds: id, size: 100}).subscribe(
         next => {
-          
-          this.requests.set(id, next.results);
+
+          this.requestsMap.set(id, next.results);
           if (next.results.length > 0) {
             this.foundRequest = true;
           }
-          console.log(this.requests);
+          console.log(this.requestsMap);
         }
       )
     })

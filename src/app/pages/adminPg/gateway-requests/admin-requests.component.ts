@@ -7,7 +7,7 @@ import {Paging} from 'src/app/domain/paging';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BaseGatewayRequestsComponent} from './base-gateway-requests.component';
-import { CommunityContextService } from 'src/app/services/communityContext.service';
+import {CommunityContextService} from 'src/app/services/communityContext.service';
 
 
 @Component({

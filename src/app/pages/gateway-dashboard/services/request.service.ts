@@ -5,7 +5,7 @@ import {environment} from '../../../../environments/environment';
 import {Params} from '@angular/router';
 import {Paging} from '../../../domain/paging';
 import {CommunityContextService} from 'src/app/services/communityContext.service';
-import {Request} from '../domain/request.domain';
+import {Authority, Decision, Request, RequestType} from '../domain/request.domain';
 
 
 @Injectable({
@@ -106,7 +106,7 @@ export class RequestsService {
     return this.http.get<Paging<Request>>(url, {params});
   }
 
-  updateRequest(requestId: number, decision: 'APPROVED' | 'REJECTED', authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN', comment?: string): Observable<Request> {
+  updateRequest(requestId: number, decision: Decision, authority: Authority, comment?: string): Observable<Request> {
     const url = `${this.baseUrl}/datasource-gateway-requests/${requestId}`;
 
     const updateRequest = {
@@ -119,7 +119,7 @@ export class RequestsService {
     return this.http.put<Request>(url, updateRequest);
   }
 
-// createRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string): Observable<Request>{
+// createRequest(datasourceId: string, type: RequestType, comment?: string): Observable<Request>{
 //   const url = `${this.baseUrl}/datasource-gateway-requests`;
 
 //         const createRequest = {
@@ -132,7 +132,7 @@ export class RequestsService {
 //         return this.http.post<Request>(url, createRequest)
 // }
 
-  private requestBody(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string) {
+  private requestBody(datasourceId: string, type: RequestType, comment?: string) {
     return {
       datasourceId: datasourceId,
       gatewayId: this.communityID,
@@ -141,14 +141,14 @@ export class RequestsService {
     };
   }
 
-  createGatewayRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string): Observable<Request> {
+  createGatewayRequest(datasourceId: string, type: RequestType, comment?: string): Observable<Request> {
     const url = `${this.baseUrl}/datasource-gateway-requests/gateways`;
 
     const createRequest = this.requestBody(datasourceId, type, comment);
     return this.http.post<Request>(url, createRequest);
   }
 
-  createDatasourceRequest(datasourceId: string, type: 'PRIMARY' | 'AFFILIATED', comment?: string): Observable<Request> {
+  createDatasourceRequest(datasourceId: string, type: RequestType, comment?: string): Observable<Request> {
     const url = `${this.baseUrl}/datasource-gateway-requests/datasources`;
 
     const createRequest = this.requestBody(datasourceId, type, comment);

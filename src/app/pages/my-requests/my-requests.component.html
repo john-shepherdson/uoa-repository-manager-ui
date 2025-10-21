@@ -10,7 +10,7 @@
             <div *ngIf="!loading">
               <div *ngIf="repositories && foundRequest else noRequest">
                 <ng-container *ngFor="let repo of repositories">
-                  <div class="uk-card uk-card-default uk-margin-small-bottom" *ngIf="requests.get(repo.id)?.length > 0">
+                  <div class="uk-card uk-card-default uk-margin-small-bottom" *ngIf="requestsMap.get(repo.id)?.length > 0">
 
                     <!-- Header -->
                     <h6 class="uk-card-header">
@@ -19,7 +19,7 @@
 
                     <!-- Body with table -->
                     <div class="uk-card-body">
-                      <app-reusable-table [data]="requests.get(repo.id)" [showActionsColumn]="true"
+                      <app-reusable-table [data]="requestsMap.get(repo.id)" [showActionsColumn]="true"
                         (confirmDecision)="handleDecision($event)">
                       </app-reusable-table>
                     </div>
