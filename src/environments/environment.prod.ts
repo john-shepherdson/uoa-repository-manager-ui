@@ -6,5 +6,6 @@ export const environment = {
   MATOMO_SITE: 111,
   API_ENDPOINT: '/api',
   FAQ_ENDPOINT: '/uoa-admin-tools/api',
-  FAQ_HOMEPAGE: '/uoa-admin-tools/dashboard'
+  FAQ_HOMEPAGE: '/uoa-admin-tools/dashboard',
+  OPENAIRE_ID: 'openaire-infrastructure'
 };

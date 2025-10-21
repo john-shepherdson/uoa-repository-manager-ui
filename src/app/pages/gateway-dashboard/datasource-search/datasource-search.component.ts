@@ -14,6 +14,7 @@ import UIkit from 'uikit';
 import {Observable} from 'rxjs';
 import {CommunityContextService} from '../../../services/communityContext.service';
 import { StickyFooterComponent } from "src/app/shared/sticky-footer/sticky-footer.component";
+import {environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -78,7 +79,7 @@ export class DatasourceSearchComponent implements OnInit {
     });
     this.communityContextService.community.subscribe({
       next: (community) => {
-        this.communityId = community ? community.id : 'openaire-infrastructure';
+        this.communityId = community ? community.id : environment.OPENAIRE_ID;
       }
     });
   }

@@ -72,7 +72,7 @@
             (click)="openDecisionModal(request, 'APPROVED')">
             Approve
           </button>
-      
+
           <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"
             (click)="openDecisionModal(request, 'REJECTED')">
             Reject
@@ -90,16 +90,18 @@
   <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
     <button class="uk-modal-close-default" type="button" uk-close (click)="closeModal()"></button>
     <h3 class="uk-modal-title">
+      {{modalDecision}}
+      {{this.modalRequest | json}}
       {{ modalDecision === 'APPROVED' ? 'Approve' : 'Reject' }} Request
     </h3>
     <div class="uk-margin">
       <label class="uk-form-label" for="modal-comment">
         Please create a comment (optional):
       </label>
-      <textarea 
+      <textarea
         id="modal-comment"
-        class="uk-textarea" 
-        rows="4" 
+        class="uk-textarea"
+        rows="4"
         placeholder="Type your comment here..."
         [(ngModel)]="modalComment"
         name="modalComment">
@@ -107,16 +109,16 @@
     </div>
 
     <p class="uk-text-right">
-      <button 
-        class="uk-button uk-button-default uk-modal-close" 
-        type="button" 
+      <button
+        class="uk-button uk-button-default uk-modal-close"
+        type="button"
         (click)="closeModal()">
         Cancel
       </button>
-      <button 
-        class="uk-button" 
-        [ngClass]="{'uk-button-primary': modalDecision === 'APPROVED', 'uk-button-danger': modalDecision === 'REJECTED'}" 
-        type="button" 
+      <button
+        class="uk-button"
+        [ngClass]="{'uk-button-primary': modalDecision === 'APPROVED', 'uk-button-danger': modalDecision === 'REJECTED'}"
+        type="button"
         (click)="confirmModal()">
         Confirm {{ modalDecision === 'APPROVED' ? 'Approval' : 'Rejection' }}
       </button>

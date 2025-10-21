@@ -6,6 +6,7 @@ import { authGuard, canMatchGuard } from '../../services/auth-guard.service';
 import { RegistrationComponent } from './adminPg-registrations.component';
 import { AdminRequestsComponent } from './gateway-requests/admin-requests.component';
 import { OpenaireActionsComponent } from './gateway-requests/openaire-actions.component';
+import {environment} from '../../../environments/environment';
 const adminRoutes: Routes = [
   {
     path: '',
@@ -25,7 +26,7 @@ const adminRoutes: Routes = [
         path: 'openaire-requests',
         component: OpenaireActionsComponent,
         // data: {
-        //   requestParams: { sourceGatewayId: 'openaire-infrastructure' }
+        //   requestParams: { sourceGatewayId: environment.OPENAIRE_ID }
         // }
       },
       {

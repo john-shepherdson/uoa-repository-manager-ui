@@ -1,4 +1,4 @@
-import {Component, Directive, OnInit} from '@angular/core';
+import {Directive, OnInit} from '@angular/core';
 import {RequestsService} from '../../gateway-dashboard/services/request.service';
 import {SharedService} from 'src/app/services/shared.service';
 import {RepositoryService} from 'src/app/services/repository.service';
@@ -9,14 +9,14 @@ import {Paging} from 'src/app/domain/paging';
 import {combineLatest, Observable, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
-import { ReusableTableComponent } from 'src/app/shared/reusable-table/reusable-table.component';
-import { CommunityContextService } from 'src/app/services/communityContext.service';
+import {PageEvent} from '@angular/material/paginator';
+import {ReusableTableComponent} from 'src/app/shared/reusable-table/reusable-table.component';
+import {CommunityContextService} from 'src/app/services/communityContext.service';
 
 @Directive({
   selector: 'base-gateway-request',
   standalone: true,
- providers: [ReusableTableComponent]
+  providers: [ReusableTableComponent]
 })
 
 export abstract class BaseGatewayRequestsComponent implements OnInit {
@@ -102,10 +102,10 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
         });
       });
 
-      this.communityService.getCurrentCommunityId().subscribe(id => {
-        console.log('Current community ID:', id);
-        this.communityId = id;
-      });
+    this.communityService.getCurrentCommunityId().subscribe(id => {
+      console.log('Current community ID:', id);
+      this.communityId = id;
+    });
   }
 
   handleFilterChanges(path: string) {
@@ -122,17 +122,17 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     this.updateWithNavigation();
   }
 
-   handlePaginationChanges(event: PageEvent) {
-      console.log(event);
-      this.qParams['page'] = event.pageIndex;
-      this.qParams['size'] = event.pageSize;
-      this.updateWithNavigation();
-    }
+  handlePaginationChanges(event: PageEvent) {
+    console.log(event);
+    this.qParams['page'] = event.pageIndex;
+    this.qParams['size'] = event.pageSize;
+    this.updateWithNavigation();
+  }
 
   updateWithNavigation() {
     this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
   }
-    
+
   // approveRequest(requestId: number) {
   //   this.requestsService.updateRequest(requestId, 'APPROVED', 'TARGET_GATEWAY_ADMIN', 'Approved by admin')
   //     .subscribe({
@@ -230,7 +230,7 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 //       });
 // }
 
-  handleDecision(event: {request: Request, decision: 'APPROVED' | 'REJECTED'; comment?: string}) {
+  handleDecision(event: { request: Request, decision: 'APPROVED' | 'REJECTED'; comment?: string }) {
     const {request, decision, comment} = event;
 
     if (!this.communityId) {
@@ -241,30 +241,34 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     }
     let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
     if (request.sourceGateway.id === this.communityId) {
-        authority = 'SOURCE_GATEWAY_ADMIN';
+      authority = 'SOURCE_GATEWAY_ADMIN';
     } else if (request.targetGateway.id === this.communityId) {
-        authority = 'TARGET_GATEWAY_ADMIN';
+      authority = 'TARGET_GATEWAY_ADMIN';
     } else {
-        console.error('Current community is neither source nor target for this request');
-        this.loadingMessage = null;
-        this.errorMessage = 'Current community is neither source nor target for this request';
-        return;
+      console.error('Current community is neither source nor target for this request');
+      this.loadingMessage = null;
+      this.errorMessage = 'Current community is neither source nor target for this request';
+      return;
     }
-    this.requestsService.updateRequest(request.id, decision, authority, comment || '')
+    this.updateDecision(request.id, decision, authority, comment);
+  }
+
+  protected updateDecision(id: number, decision: 'APPROVED' | 'REJECTED', authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN', comment: string) {
+    this.requestsService.updateRequest(id, decision, authority, comment || '')
       .subscribe({
         next: () => {
           this.getRequests(this.qParams).subscribe({
-          next: (data) => {
-            this.requests = data;
-            this.loadingMessage = null;
-            this.errorMessage = null;
-          },
-          error: (err) => {
-            console.error('Error fetching requests:', err);
-            this.loadingMessage = null;
-            this.errorMessage = 'Error fetching requests';
-          }
-  });
+            next: (data) => {
+              this.requests = data;
+              this.loadingMessage = null;
+              this.errorMessage = null;
+            },
+            error: (err) => {
+              console.error('Error fetching requests:', err);
+              this.loadingMessage = null;
+              this.errorMessage = 'Error fetching requests';
+            }
+          });
         },
         error: err => {
           this.loadingMessage = null;
@@ -273,6 +277,6 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
         }
       });
   }
-  
+
 }
 

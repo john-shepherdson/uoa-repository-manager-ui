@@ -12,7 +12,8 @@ export const environment = {
   // FAQ_ENDPOINT: 'http://88.197.53.69:5555/api',
   // FAQ_HOMEPAGE: 'http://88.197.53.69:5555'
   FAQ_ENDPOINT: 'https://provide.openaire.eu/uoa-admin-tools/api',
-  FAQ_HOMEPAGE: 'https://provide.openaire.eu/uoa-admin-tools/dashboard'
+  FAQ_HOMEPAGE: 'https://provide.openaire.eu/uoa-admin-tools/dashboard',
+  OPENAIRE_ID: 'openaire-infrastructure'
 };
 
 /*

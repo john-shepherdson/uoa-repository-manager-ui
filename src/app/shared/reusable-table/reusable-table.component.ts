@@ -57,7 +57,7 @@ export class ReusableTableComponent {
         }
         this.modalRequest = null;
         this.modalDecision = null;
-        this.modalComment = ''; 
+        this.modalComment = '';
     }
 }
 
