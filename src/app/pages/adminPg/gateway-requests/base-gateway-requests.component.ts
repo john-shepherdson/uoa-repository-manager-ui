@@ -147,41 +147,41 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
   //     });
   // }
 
-  approveRequest(request: Request) {
-    console.log('Before approve: ', request);
-     {{this.communityId}}
-    if (!this.communityId) {
-      console.error('Community ID is not set');
-  }
+//   approveRequest(request: Request) {
+//     console.log('Before approve: ', request);
+//      {{this.communityId}}
+//     if (!this.communityId) {
+//       console.error('Community ID is not set');
+//   }
 
-  let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
-  if (request.sourceGateway.id === this.communityId) {
-      authority = 'SOURCE_GATEWAY_ADMIN';
-  } else if (request.targetGateway.id === this.communityId) {
-      authority = 'TARGET_GATEWAY_ADMIN';
-  } else {
-      console.error('Current community is neither source nor target for this request');
-      return;
-  }
-    console.log('Authority chosen: ', authority);
-    this.requestsService.updateRequest(request.id, 'APPROVED', authority, 'Approved by admin')
-      .subscribe({
-        next: action => {
-          this.getRequests(this.qParams).subscribe({
-          next: (data) => {
-            this.requests = data;
-            this.loadingMessage = null;
-          },
-          error: (err) => {
-            console.error('Error fetching requests:', err);
-            this.loadingMessage = null;
-            this.errorMessage = 'Error fetching requests';
-          }
-        });
-        },
-        error: err => console.error('Error approving request:', err)
-      });
-}
+//   let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
+//   if (request.sourceGateway.id === this.communityId) {
+//       authority = 'SOURCE_GATEWAY_ADMIN';
+//   } else if (request.targetGateway.id === this.communityId) {
+//       authority = 'TARGET_GATEWAY_ADMIN';
+//   } else {
+//       console.error('Current community is neither source nor target for this request');
+//       return;
+//   }
+//     console.log('Authority chosen: ', authority);
+//     this.requestsService.updateRequest(request.id, 'APPROVED', authority, 'Approved by admin')
+//       .subscribe({
+//         next: action => {
+//           this.getRequests(this.qParams).subscribe({
+//           next: (data) => {
+//             this.requests = data;
+//             this.loadingMessage = null;
+//           },
+//           error: (err) => {
+//             console.error('Error fetching requests:', err);
+//             this.loadingMessage = null;
+//             this.errorMessage = 'Error fetching requests';
+//           }
+//         });
+//         },
+//         error: err => console.error('Error approving request:', err)
+//       });
+// }
 
   // rejectRequest(requestId: number) {
   //   this.requestsService.updateRequest(requestId, 'REJECTED', 'TARGET_GATEWAY_ADMIN', 'Rejected by admin')
@@ -197,36 +197,82 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
   //     });
   // }
 
-  rejectRequest(request: Request) {
+//   rejectRequest(request: Request) {
+//     if (!this.communityId) {
+//       console.error('Community ID is not set');
+//       return;
+//   }
+//   let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
+//   if (request.sourceGateway.id === this.communityId) {
+//       authority = 'SOURCE_GATEWAY_ADMIN';
+//   } else if (request.targetGateway.id === this.communityId) {
+//       authority = 'TARGET_GATEWAY_ADMIN';
+//   } else {
+//       console.error('Current community is neither source nor target for this request');
+//       return;
+//   }
+//     this.requestsService.updateRequest(request.id, 'REJECTED', authority, 'Rejected by admin')
+//       .subscribe({
+//         next: updateRequest => {
+//           this.getRequests(this.qParams).subscribe({
+//           next: (data) => {
+//             this.requests = data;
+//             this.loadingMessage = null;
+//         },
+//           error: (err) => {
+//             console.error('Error fetching requests:', err);
+//             this.loadingMessage = null;
+//             this.errorMessage = 'Error fetching requests';
+//           }
+//         });
+//         },
+//         error: err => console.error('Error rejecting request:', err)
+//       });
+// }
+
+  handleDecision(event: {request: Request, decision: 'APPROVED' | 'REJECTED'; comment?: string}) {
+    const {request, decision, comment} = event;
+
     if (!this.communityId) {
       console.error('Community ID is not set');
+      this.loadingMessage = null;
+      this.errorMessage = 'Community ID is not found';
       return;
-  }
-  let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
-  if (request.sourceGateway.id === this.communityId) {
-      authority = 'SOURCE_GATEWAY_ADMIN';
-  } else if (request.targetGateway.id === this.communityId) {
-      authority = 'TARGET_GATEWAY_ADMIN';
-  } else {
-      console.error('Current community is neither source nor target for this request');
-      return;
-  }
-    this.requestsService.updateRequest(request.id, 'REJECTED', authority, 'Rejected by admin')
+    }
+    let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
+    if (request.sourceGateway.id === this.communityId) {
+        authority = 'SOURCE_GATEWAY_ADMIN';
+    } else if (request.targetGateway.id === this.communityId) {
+        authority = 'TARGET_GATEWAY_ADMIN';
+    } else {
+        console.error('Current community is neither source nor target for this request');
+        this.loadingMessage = null;
+        this.errorMessage = 'Current community is neither source nor target for this request';
+        return;
+    }
+    this.requestsService.updateRequest(request.id, decision, authority, comment || '')
       .subscribe({
-        next: updateRequest => {
+        next: () => {
           this.getRequests(this.qParams).subscribe({
           next: (data) => {
             this.requests = data;
             this.loadingMessage = null;
-        },
+            this.errorMessage = null;
+          },
           error: (err) => {
             console.error('Error fetching requests:', err);
             this.loadingMessage = null;
             this.errorMessage = 'Error fetching requests';
           }
-        });
+  });
         },
-        error: err => console.error('Error rejecting request:', err)
+        error: err => {
+          this.loadingMessage = null;
+          this.errorMessage = `Error processing request: ${err.message || err}`;
+          console.error('Error processing request:', err);
+        }
       });
+  }
+  
 }
-}
+

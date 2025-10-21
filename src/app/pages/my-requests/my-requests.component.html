@@ -20,7 +20,7 @@
                     <!-- Body with table -->
                     <div class="uk-card-body">
                       <app-reusable-table [data]="requests.get(repo.id)" [showActionsColumn]="true"
-                        (approve)="approveRequest($event, repo)" (reject)="rejectRequest($event, repo)">
+                        (confirmDecision)="handleDecision($event)">
                       </app-reusable-table>
                     </div>
                   </div>

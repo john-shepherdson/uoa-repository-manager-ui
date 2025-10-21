@@ -31,30 +31,29 @@
       <!-- Source Gateway -->
       <td>
         <strong>{{ request.sourceGateway?.label }}</strong><br>
-        <ng-container *ngIf="request.sourceGatewayApproval != null; else missingSourceGatewayApproval">
-          <span *ngIf="request.sourceGateway.id === currentGatewayId" class="uk-label" [ngClass]="{
+        <ng-container *ngIf="request.sourceGatewayApproval != null && request.sourceGateway.id === currentGatewayId">
+          <span class="uk-label" [ngClass]="{
             'uk-label-success': request.sourceGatewayApproval?.decision === 'APPROVED',
             'uk-label-warning': request.sourceGatewayApproval?.decision === 'PENDING',
             'uk-label-danger': request.sourceGatewayApproval?.decision === 'REJECTED'
           }">{{ request.sourceGatewayApproval?.decision }}</span><br>
           <small>{{ request.sourceGatewayApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small>
         </ng-container>
-        <ng-template #missingSourceGatewayApproval></ng-template>
       </td>
 
       <!-- Target Gateway -->
       <td>
         <strong>{{ request.targetGateway?.label }}</strong><br>
-        <ng-container *ngIf="request.targetGatewayApproval != null; else missingTargetGatewayApproval">
-          <span *ngIf="request.targetGateway.id === currentGatewayId" class="uk-label" [ngClass]="{
+        <ng-container *ngIf="request.targetGatewayApproval != null && request.targetGateway.id === currentGatewayId">
+          <span class="uk-label" [ngClass]="{
             'uk-label-success': request.targetGatewayApproval?.decision === 'APPROVED',
             'uk-label-warning': request.targetGatewayApproval?.decision === 'PENDING',
             'uk-label-danger': request.targetGatewayApproval?.decision === 'REJECTED'
           }">{{ request.targetGatewayApproval?.decision }}</span><br>
           <small>{{ request.targetGatewayApproval?.decidedAt | date: 'dd/MM/yyyy' }}</small>
         </ng-container>
-        <ng-template #missingTargetGatewayApproval></ng-template>
       </td>
+
 
       <!-- Overall Status -->
       <td>
@@ -68,14 +67,55 @@
       <!-- Actions Column -->
       <td *ngIf="showActionsColumn" class="uk-text-center">
         <div class="uk-flex uk-flex-column uk-flex-center">
-          <button *ngIf="request.status === 'PENDING'"
-                  class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
-                  (click)="onApprove(request.id)">Approve</button>
-          <button *ngIf="request.status === 'PENDING'"
-                  class="uk-button uk-button-danger uk-button-small"
-                  (click)="onReject(request.id)">Reject</button>
+          <button 
+            class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
+            (click)="openDecisionModal(request, 'APPROVED')">{{ request.status === 'REJECTED' ? 'Change to Approve' : 'Approve'}}
+          </button>
+
+          <button class="uk-button uk-button-danger uk-button-small"
+            (click)="openDecisionModal(request, 'REJECTED')">{{ request.status === 'APPROVED' ? 'Change to Reject' : 'Reject'}}</button>
         </div>
       </td>
     </tr>
   </tbody>
 </table>
+
+<div id="decision-modal" class="uk-modal-container" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+    <button class="uk-modal-close-default" type="button" uk-close (click)="closeModal()"></button>
+
+    <h3 class="uk-modal-title">
+      {{ modalDecision === 'APPROVED' ? 'Approve' : 'Reject' }} Request
+    </h3>
+    
+    <div class="uk-margin">
+      <label class="uk-form-label" for="modal-comment">
+        Please create a comment (optional):
+      </label>
+      <textarea 
+        id="modal-comment"
+        class="uk-textarea" 
+        rows="4" 
+        placeholder="Type your comment here..."
+        [(ngModel)]="modalComment"
+        name="modalComment">
+      </textarea>
+    </div>
+
+    <p class="uk-text-right">
+      <button 
+        class="uk-button uk-button-default uk-modal-close" 
+        type="button" 
+        (click)="closeModal()">
+        Cancel
+      </button>
+      <button 
+        class="uk-button" 
+        [ngClass]="{'uk-button-primary': modalDecision === 'APPROVED', 'uk-button-danger': modalDecision === 'REJECTED'}" 
+        type="button" 
+        (click)="confirmModal()">
+        Confirm {{ modalDecision === 'APPROVED' ? 'Approval' : 'Rejection' }}
+      </button>
+    </p>
+  </div>
+</div>

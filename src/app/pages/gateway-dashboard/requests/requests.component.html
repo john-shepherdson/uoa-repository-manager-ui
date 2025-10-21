@@ -54,8 +54,8 @@
           <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
             <!-- Table -->
             <app-reusable-table
-              [data]="requests?.results" [showActionsColumn]="showActionsColumn"
-              (approve)="approveRequest($event)" (reject)="rejectRequest($event)">
+              [data]="requests?.results" [showActionsColumn]="!showActionsColumn" [currentGatewayId]="communityId"
+              (confirmDecision)="handleDecision($event)">
             </app-reusable-table>
           </div>
       </div>
