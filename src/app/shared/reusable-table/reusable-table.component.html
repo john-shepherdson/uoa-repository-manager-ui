@@ -31,7 +31,7 @@
       <!-- Source Gateway -->
       <td>
         <strong>{{ request.sourceGateway?.label }}</strong><br>
-        <ng-container *ngIf="request.sourceGatewayApproval != null && request.sourceGateway.id === currentGatewayId">
+        <ng-container *ngIf="request.sourceGatewayApproval != null">
           <span class="uk-label" [ngClass]="{
             'uk-label-success': request.sourceGatewayApproval?.decision === 'APPROVED',
             'uk-label-warning': request.sourceGatewayApproval?.decision === 'PENDING',
@@ -44,7 +44,7 @@
       <!-- Target Gateway -->
       <td>
         <strong>{{ request.targetGateway?.label }}</strong><br>
-        <ng-container *ngIf="request.targetGatewayApproval != null && request.targetGateway.id === currentGatewayId">
+        <ng-container *ngIf="request.targetGatewayApproval != null">
           <span class="uk-label" [ngClass]="{
             'uk-label-success': request.targetGatewayApproval?.decision === 'APPROVED',
             'uk-label-warning': request.targetGatewayApproval?.decision === 'PENDING',
@@ -67,13 +67,14 @@
       <!-- Actions -->
       <td *ngIf="showActionsColumn" class="uk-text-center">
         <div class="uk-flex uk-flex-column uk-flex-center">
-          <button *ngIf="request.status === 'PENDING'"
+          <button *ngIf="request.status === 'PENDING' || request.status === 'BLOCKED'"
             class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
             (click)="openDecisionModal(request, 'APPROVED')">
             Approve
           </button>
 
-          <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"
+          <button *ngIf="request.status === 'PENDING' || request.status === 'BLOCKED'"
+             class="uk-button uk-button-danger uk-button-small"
             (click)="openDecisionModal(request, 'REJECTED')">
             Reject
           </button>
@@ -86,12 +87,14 @@
   </tbody>
 </table>
 
-<div id="decision-modal" class="uk-modal-container" uk-modal>
+<div #decisionModal class="uk-modal-container" uk-modal>
   <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
     <button class="uk-modal-close-default" type="button" uk-close (click)="closeModal()"></button>
+    <!--DEBUG-->
+    <p>DEBUG: modalDecison= {{modalDecision}}</p>
     <h3 class="uk-modal-title">
-      {{modalDecision}}
-      {{this.modalRequest | json}}
+      <!-- {{modalDecision}}
+      {{this.modalRequest | json}} -->
       {{ modalDecision === 'APPROVED' ? 'Approve' : 'Reject' }} Request
     </h3>
     <div class="uk-margin">

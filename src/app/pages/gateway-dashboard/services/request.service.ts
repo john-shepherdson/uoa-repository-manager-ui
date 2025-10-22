@@ -8,6 +8,7 @@ import {CommunityContextService} from 'src/app/services/communityContext.service
 import {Authority, Decision, Request, RequestType} from '../domain/request.domain';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +27,12 @@ export class RequestsService {
         console.error(err);
       }
     });
+  }
+
+  getBlockedRequests(queryParams: Params): Observable<Paging<Request>> {
+    const fullParams = {...queryParams, 'status': 'BLOCKED'};
+    const url = `${this.baseUrl}/datasource-gateway-requests`;
+    return this.getRequestsFromUrl(url, fullParams);
   }
 
   getOpenaireActions(queryParams: Params): Observable<Paging<Request>> {

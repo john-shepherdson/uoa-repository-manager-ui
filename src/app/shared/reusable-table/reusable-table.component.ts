@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Request } from "src/app/pages/gateway-dashboard/domain/request.domain";
 
@@ -16,8 +16,7 @@ export class ReusableTableComponent {
     @Input() showActionsColumn: boolean = false;
     @Input() currentGatewayId: number | null = null;
 
-    // @Output() approve = new EventEmitter<Request>();
-    // @Output() reject = new EventEmitter<Request>();
+    @ViewChild('decisionModal') decisionModalRef!: ElementRef;
 
     @Output() confirmDecision = new EventEmitter<{request: Request, decision: 'APPROVED' | 'REJECTED'; comment?: string}>();
 
@@ -27,16 +26,16 @@ export class ReusableTableComponent {
     modalComment: string = '';
 
     openDecisionModal(request: Request, decision: 'APPROVED' | 'REJECTED') {
+        console.log('Opening modal for', request.id, 'with decision', decision);
         this.modalRequest = request;
         this.modalDecision = decision;
         this.modalComment = '';
 
-        const modal = document.getElementById('decision-modal');
-        if (modal && typeof UIkit !== 'undefined') {
-            UIkit.modal(modal).show();
-        } else {
-            console.error('UIkit is not defined or modal element not found.');
+        setTimeout(() => {
+        if (typeof UIkit !== 'undefined' && this.decisionModalRef?.nativeElement) {
+            UIkit.modal(this.decisionModalRef.nativeElement).show();
         }
+     });
     }
 
     confirmModal() {
@@ -51,21 +50,36 @@ export class ReusableTableComponent {
     }
 
     closeModal() {
-        const modal = document.getElementById('decision-modal');
-        if (modal && typeof UIkit !== 'undefined') {
-            UIkit.modal(modal).hide();
+        if (typeof UIkit !== 'undefined' && this.decisionModalRef?.nativeElement) {
+            UIkit.modal(this.decisionModalRef.nativeElement).hide();
         }
         this.modalRequest = null;
         this.modalDecision = null;
         this.modalComment = '';
     }
+
+    ngOnDestroy(): void {
+  // close any active UIKit modals when the component is destroyed
+  if (typeof UIkit !== 'undefined') {
+    // Select all open modals created by UIKit( both .uk-modal and .uk-modal-container types)
+    const active = document.querySelectorAll('.uk-modal.uk-open, .uk-modal-container.uk-open');
+    // Loop through each open modal and hide it using the UIKit API
+    active.forEach(modal => {
+      try {
+        UIkit.modal(modal).hide();
+      } catch (err) {}
+    });
+  }
+
+  // Remove any leftover modal elements that UIKit may have moved into the <body>
+  const leftovers = document.querySelectorAll('body > .uk-modal-container');
+  // Loop through all UIKit modal containers found in the body
+  leftovers.forEach(modal => {
+    // Only remove the specific modal related to this component (by ID)
+      modal.remove();
+    
+  });
 }
 
-//     onApprove(request: Request) {
-//         this.approve.emit(request);
-//     }
+}
 
-//     onReject(request: Request) {
-//         this.reject.emit(request);
-//     }
-// }

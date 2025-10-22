@@ -7,6 +7,7 @@ import { RegistrationComponent } from './adminPg-registrations.component';
 import { AdminRequestsComponent } from './gateway-requests/admin-requests.component';
 import { OpenaireActionsComponent } from './gateway-requests/openaire-actions.component';
 import {environment} from '../../../environments/environment';
+import { BlockedRequestsComponent } from './gateway-requests/blocked-requests.component';
 const adminRoutes: Routes = [
   {
     path: '',
@@ -32,6 +33,10 @@ const adminRoutes: Routes = [
       {
         path: 'all-requests',
         component: AdminRequestsComponent
+      },
+      {
+        path: 'blocked-requests',
+        component: BlockedRequestsComponent
       }
     ]
   }

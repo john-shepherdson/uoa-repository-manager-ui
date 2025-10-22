@@ -58,9 +58,14 @@
                   <span class="uk-text-truncate">OpenAIRE Requests</span>
                 </a>
               </li>
-              <li class="" [routerLinkActive]="['uk-active']" role="presentation">
+              <li [routerLinkActive]="['uk-active']" role="presentation">
                 <a [routerLink]="['./all-requests']" title="All requests">
                   <span class="uk-text-truncate">All requests</span>
+                </a>
+              </li>
+              <li [routerLinkActive]="['uk-active']" role="presentation">
+                <a [routerLink]="['./blocked-requests']" title="Blocked requests">
+                  <span class="uk-text-truncate">Blocked requests</span>
                 </a>
               </li>
             </ul>
