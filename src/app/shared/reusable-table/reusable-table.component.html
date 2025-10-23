@@ -90,11 +90,7 @@
 <div #decisionModal class="uk-modal-container" uk-modal>
   <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
     <button class="uk-modal-close-default" type="button" uk-close (click)="closeModal()"></button>
-    <!--DEBUG-->
-    <p>DEBUG: modalDecison= {{modalDecision}}</p>
     <h3 class="uk-modal-title">
-      <!-- {{modalDecision}}
-      {{this.modalRequest | json}} -->
       {{ modalDecision === 'APPROVED' ? 'Approve' : 'Reject' }} Request
     </h3>
     <div class="uk-margin">
