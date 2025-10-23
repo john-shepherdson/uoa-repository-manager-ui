@@ -66,7 +66,7 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
   handleDecision(event: { request: Request; decision: Decision; comment?: string }) {
     const {request, decision, comment} = event;
     // this.updateDecision(request.id, decision, Authority.DATASOURCE_ADMIN, comment);
-    this.requestsService.updateRequest(request.id, decision, Authority.DATASOURCE_ADMIN, comment || '').subscribe({
+    this.requestsService.createRequestDecision(request.id, decision, Authority.DATASOURCE_ADMIN, comment || '').subscribe({
       next: () => {
         this.loadRequestsForRepos();
       },

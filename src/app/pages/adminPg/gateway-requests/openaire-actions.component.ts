@@ -8,7 +8,7 @@ import {RepositoryService} from 'src/app/services/repository.service';
 import {Authority, Decision, Request} from '../../gateway-dashboard/domain/request.domain';
 import {CommunityContextService} from 'src/app/services/communityContext.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable, PartialObserver} from 'rxjs';
 import {Paging} from 'src/app/domain/paging';
 import {InputComponent} from 'src/app/shared/input.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -54,18 +54,7 @@ export class OpenaireActionsComponent extends BaseGatewayRequestsComponent {
       authority = Authority.SOURCE_GATEWAY_ADMIN;
     } else if (request.targetGateway.id === environment.OPENAIRE_ID) {
       authority = Authority.TARGET_GATEWAY_ADMIN;
-    }/* else {
-      console.error('Current community is neither source nor target for this request');
-      this.loadingMessage = null;
-      this.errorMessage = 'Current community is neither source nor target for this request';
-      return;
-    }*/
-    if (!!authority) {
-      this.updateDecision(request.id, decision, authority, comment);
-    } else {
-      console.log('About to approve blocked resource.');
-      // TODO: Use another method to APPROVE the BLOCKED request
-      //  or create new component for handling disputes.
     }
+    this.updateDecision(request.id, decision, authority, comment);
   }
 }
