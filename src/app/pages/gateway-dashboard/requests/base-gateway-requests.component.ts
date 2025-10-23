@@ -167,29 +167,28 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
       .subscribe(this.reloadRequests);
   }
 
-  protected reloadRequests(): PartialObserver<Request> {
-    return {
-      next: () => {
-        this.getRequests(this.qParams).subscribe({
-          next: (data) => {
-            this.requests = data;
-            this.loadingMessage = null;
-            this.errorMessage = null;
-          },
-          error: (err) => {
-            console.error('Error fetching requests:', err);
-            this.loadingMessage = null;
-            this.errorMessage = 'Error fetching requests';
-          }
-        });
-      },
-      error: err => {
-        this.loadingMessage = null;
-        this.errorMessage = `Error processing request: ${err.message || err}`;
-        console.error('Error processing request:', err);
-      }
-    };
-  }
+  protected readonly reloadRequests: PartialObserver<any> = {
+    next: () => {
+      this.getRequests(this.qParams).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.requests = data;
+          this.loadingMessage = null;
+          this.errorMessage = null;
+        },
+        error: (err) => {
+          console.error('Error fetching requests:', err);
+          this.loadingMessage = null;
+          this.errorMessage = 'Error fetching requests';
+        }
+      });
+    },
+    error: err => {
+      this.loadingMessage = null;
+      this.errorMessage = `Error processing request: ${err.message || err}`;
+      console.error('Error processing request:', err);
+    }
+  };
 
 }
 
