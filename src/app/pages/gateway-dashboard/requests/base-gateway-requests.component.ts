@@ -1,24 +1,28 @@
 import {Directive, OnInit} from '@angular/core';
-import {RequestsService} from '../../gateway-dashboard/services/request.service';
+import {RequestsService} from '../services/request.service';
 import {SharedService} from 'src/app/services/shared.service';
 import {RepositoryService} from 'src/app/services/repository.service';
-import {Authority, Decision, Request, RequestType} from '../../gateway-dashboard/domain/request.domain';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Option} from '../../../shared/input.component';
+import {Authority, Decision, Request, RequestType} from '../domain/request.domain';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {InputComponent, Option} from '../../../shared/input.component';
 import {Paging} from 'src/app/domain/paging';
 import {combineLatest, Observable, PartialObserver, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {ReusableTableComponent} from 'src/app/shared/reusable-table/reusable-table.component';
 import {CommunityContextService} from 'src/app/services/communityContext.service';
+import {CommonModule} from '@angular/common';
 
-@Directive({
-  selector: 'base-gateway-request',
-  standalone: true,
-  providers: [ReusableTableComponent]
-})
+export const BASE_IMPORTS = [
+  CommonModule,
+  InputComponent,
+  ReactiveFormsModule,
+  ReusableTableComponent,
+  MatPaginatorModule
+] as const;
 
+@Directive()
 export abstract class BaseGatewayRequestsComponent implements OnInit {
   protected readonly RequestType = RequestType;
 

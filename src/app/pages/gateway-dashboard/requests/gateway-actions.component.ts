@@ -1,28 +1,20 @@
 import {Component} from '@angular/core';
-import {RequestsService} from '../../gateway-dashboard/services/request.service';
+import {RequestsService} from '../services/request.service';
 import {SharedService} from 'src/app/services/shared.service';
 import {RepositoryService} from 'src/app/services/repository.service';
-import {Request} from '../../gateway-dashboard/domain/request.domain';
+import {Request} from '../domain/request.domain';
 import {Paging} from 'src/app/domain/paging';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {BaseGatewayRequestsComponent} from './base-gateway-requests.component';
-import {CommonModule} from '@angular/common';
-import {InputComponent} from 'src/app/shared/input.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {ReusableTableComponent} from 'src/app/shared/reusable-table/reusable-table.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {BASE_IMPORTS, BaseGatewayRequestsComponent} from './base-gateway-requests.component';
 import {CommunityContextService} from 'src/app/services/communityContext.service';
 
 @Component({
   selector: 'gateway-actions',
-  templateUrl: '../../gateway-dashboard/requests/requests.component.html',
+  templateUrl: './requests.component.html',
   standalone: true,
   imports: [
-    CommonModule,
-    InputComponent,
-    ReactiveFormsModule,
-    ReusableTableComponent
+    ...BASE_IMPORTS,
   ]
 })
 

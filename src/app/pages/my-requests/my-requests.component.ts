@@ -1,18 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { SharedService } from '../../services/shared.service';
-import { RequestsService } from '../gateway-dashboard/services/request.service';
-import { RepositorySnippet } from '../../domain/typeScriptClasses';
-import { RepositoryService } from "src/app/services/repository.service";
-import { takeUntil } from "rxjs/operators";
+import {Component, OnInit} from '@angular/core';
+import {SharedService} from '../../services/shared.service';
+import {RequestsService} from '../gateway-dashboard/services/request.service';
+import {RepositorySnippet} from '../../domain/typeScriptClasses';
+import {RepositoryService} from 'src/app/services/repository.service';
 import {Authority, Decision, Request} from '../gateway-dashboard/domain/request.domain';
-import { ReusableTableComponent } from "src/app/shared/reusable-table/reusable-table.component";
-import { NgFor, NgIf } from "@angular/common";
-import {BaseGatewayRequestsComponent} from '../adminPg/gateway-requests/base-gateway-requests.component';
+import {NgFor, NgIf} from '@angular/common';
 import {Observable} from 'rxjs';
 import {Paging} from '../../domain/paging';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommunityContextService} from '../../services/communityContext.service';
-import { Input } from "@angular/core";
+import {BASE_IMPORTS, BaseGatewayRequestsComponent} from '../gateway-dashboard/requests/base-gateway-requests.component';
 
 
 @Component({
@@ -22,7 +19,7 @@ import { Input } from "@angular/core";
   imports: [
     NgIf,
     NgFor,
-    ReusableTableComponent
+    ...BASE_IMPORTS
   ]
 })
 export class MyRequestsComponent extends BaseGatewayRequestsComponent implements OnInit {
@@ -38,7 +35,7 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
 
   ngOnInit(): void {
     const repos = this.sharedService.getRepositoriesOfUser();
-     console.log("Repositories from sharedService:", repos);
+    console.log('Repositories from sharedService:', repos);
     if (repos && repos.length) {
       this.repositories = repos;
       this.loadRequestsForRepos();
@@ -46,16 +43,16 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
       // subscribe to observable if not yet available
       this.loading = true;
       this.repositoryService.getRepositoriesSnippetsOfUser()
-      .subscribe(
-        repos => {
-          this.repositories = repos;
-          this.loading = false;
-          this.loadRequestsForRepos();
-      },
-    (err) => {
-        console.error('Error loading repositories of user:', err);
-        this.loading = false;
-      });
+        .subscribe(
+          repos => {
+            this.repositories = repos;
+            this.loading = false;
+            this.loadRequestsForRepos();
+          },
+          (err) => {
+            console.error('Error loading repositories of user:', err);
+            this.loading = false;
+          });
     }
   }
 
@@ -73,7 +70,7 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
       error: err => {
         console.error('Error updating request decision:', err);
       }
-    })
+    });
   }
 
   loadRequestsForRepos() {
@@ -88,8 +85,8 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
           }
           console.log(this.requestsMap);
         }
-      )
-    })
+      );
+    });
   }
 
 }
