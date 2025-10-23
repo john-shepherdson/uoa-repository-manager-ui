@@ -12,6 +12,7 @@ import {Observable} from 'rxjs';
 import {Paging} from '../../domain/paging';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommunityContextService} from '../../services/communityContext.service';
+import { Input } from "@angular/core";
 
 
 @Component({
@@ -64,7 +65,15 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
 
   handleDecision(event: { request: Request; decision: Decision; comment?: string }) {
     const {request, decision, comment} = event;
-    this.updateDecision(request.id, decision, Authority.DATASOURCE_ADMIN, comment);
+    // this.updateDecision(request.id, decision, Authority.DATASOURCE_ADMIN, comment);
+    this.requestsService.updateRequest(request.id, decision, Authority.DATASOURCE_ADMIN, comment || '').subscribe({
+      next: () => {
+        this.loadRequestsForRepos();
+      },
+      error: err => {
+        console.error('Error updating request decision:', err);
+      }
+    })
   }
 
   loadRequestsForRepos() {

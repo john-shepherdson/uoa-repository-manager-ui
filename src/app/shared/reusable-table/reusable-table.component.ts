@@ -15,9 +15,8 @@ export class ReusableTableComponent {
     @Input() data: Request[] = [];
     @Input() showActionsColumn: boolean = false;
     @Input() currentGatewayId: number | null = null;
-
+    @Input() allowBlockedActions: boolean = false;
     @ViewChild('decisionModal') decisionModalRef!: ElementRef;
-
     @Output() confirmDecision = new EventEmitter<{request: Request, decision: 'APPROVED' | 'REJECTED'; comment?: string}>();
 
     // modal state

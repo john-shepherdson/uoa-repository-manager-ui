@@ -67,13 +67,13 @@
       <!-- Actions -->
       <td *ngIf="showActionsColumn" class="uk-text-center">
         <div class="uk-flex uk-flex-column uk-flex-center">
-          <button *ngIf="request.status === 'PENDING' || request.status === 'BLOCKED'"
+          <button *ngIf="request.status === 'PENDING' || (request.status === 'BLOCKED' && allowBlockedActions)"
             class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
             (click)="openDecisionModal(request, 'APPROVED')">
             Approve
           </button>
 
-          <button *ngIf="request.status === 'PENDING' || request.status === 'BLOCKED'"
+          <button *ngIf="request.status === 'PENDING' || (request.status === 'BLOCKED'&& allowBlockedActions)"
              class="uk-button uk-button-danger uk-button-small"
             (click)="openDecisionModal(request, 'REJECTED')">
             Reject

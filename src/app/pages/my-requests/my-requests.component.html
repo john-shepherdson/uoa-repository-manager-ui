@@ -19,7 +19,7 @@
 
                     <!-- Body with table -->
                     <div class="uk-card-body">
-                      <app-reusable-table [data]="requestsMap.get(repo.id)" [showActionsColumn]="true"
+                      <app-reusable-table [data]="requestsMap.get(repo.id)" [allowBlockedActions]="false" [showActionsColumn]="true"
                         (confirmDecision)="handleDecision($event)">
                       </app-reusable-table>
                     </div>
