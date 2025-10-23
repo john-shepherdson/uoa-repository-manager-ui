@@ -3,7 +3,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {DatasourceSearchService} from '../services/datasource-search.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {InputComponent, Option} from '../../../shared/input.component';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Paging} from '../../../domain/paging';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {objectKeys} from 'codelyzer/util/objectKeys';
@@ -16,6 +16,9 @@ import {CommunityContextService} from '../../../services/communityContext.servic
 import { StickyFooterComponent } from "src/app/shared/sticky-footer/sticky-footer.component";
 import {environment} from '../../../../environments/environment';
 import {RequestType} from '../domain/request.domain';
+import { ViewChild, ElementRef } from '@angular/core';
+
+declare const UIkit: any;
 
 
 @Component({
@@ -27,7 +30,8 @@ import {RequestType} from '../domain/request.domain';
     ReactiveFormsModule,
     NgIf,
     MatPaginatorModule,
-    StickyFooterComponent
+    StickyFooterComponent,
+    FormsModule
 ],
   standalone: true
 })
@@ -67,6 +71,63 @@ export class DatasourceSearchComponent implements OnInit {
     {value: 'officialname', label: 'Name'},
     {value: 'id', label: 'Id'}
   ];
+
+  // Modal State
+
+    @ViewChild('datasourceModal') requestModalRef!: ElementRef;
+
+  modalDatasourceId: number | null = null;
+  modalRequestType: 'PRIMARY' | 'AFFILIATED' | null = null;
+  modalComment = '';
+
+    openRequestModal(datasourceId: number, type: 'PRIMARY' | 'AFFILIATED') {
+    this.modalDatasourceId = datasourceId;
+    this.modalRequestType = type;
+    this.modalComment = '';
+
+    setTimeout(() => {
+      if (typeof UIkit !== 'undefined' && this.requestModalRef?.nativeElement) {
+        UIkit.modal(this.requestModalRef.nativeElement).show();
+      }
+    });
+  }
+     closeModal() {
+    if (typeof UIkit !== 'undefined' && this.requestModalRef?.nativeElement) {
+      UIkit.modal(this.requestModalRef.nativeElement).hide();
+    }
+    this.modalDatasourceId = null;
+    this.modalRequestType = null;
+    this.modalComment = '';
+  }
+
+  confirmModal() {
+    if (this.modalDatasourceId && this.modalRequestType) {
+      console.log('Confirmed request', this.modalDatasourceId, this.modalRequestType, 'with comment', this.modalComment);
+
+      this.createGatewayRequest(this.modalDatasourceId.toString(), this.modalRequestType === 'PRIMARY' ? RequestType.PRIMARY : RequestType.AFFILIATED);
+      this.closeModal();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (typeof UIkit !== 'undefined') {
+      const active = document.querySelectorAll('.uk-modal.uk-open, .uk-modal-container.uk-open');
+      active.forEach(modal => {
+        try {
+          UIkit.modal(modal).hide();
+        } catch (err) {}
+      });
+    }
+
+    const leftovers = document.querySelectorAll('.body > .uk-modal-container');
+    leftovers.forEach(modal => {
+      try {
+        UIkit.modal(modal).hide();
+      } catch (err) {}
+    })
+  }
+
+
 
   constructor(private route: ActivatedRoute,
               private router: Router,
