@@ -12,6 +12,7 @@ import {Observable} from 'rxjs';
 import {Paging} from 'src/app/domain/paging';
 import {InputComponent} from 'src/app/shared/input.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import {environment} from '../../../../environments/environment';
 
 @Component({
@@ -22,7 +23,8 @@ import {environment} from '../../../../environments/environment';
     CommonModule,
     InputComponent,
     ReusableTableComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule
   ]
 })
 export class OpenaireActionsComponent extends BaseGatewayRequestsComponent {

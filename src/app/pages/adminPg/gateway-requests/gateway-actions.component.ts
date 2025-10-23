@@ -11,6 +11,7 @@ import {CommonModule} from '@angular/common';
 import {InputComponent} from 'src/app/shared/input.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ReusableTableComponent} from 'src/app/shared/reusable-table/reusable-table.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import {CommunityContextService} from 'src/app/services/communityContext.service';
 
 @Component({

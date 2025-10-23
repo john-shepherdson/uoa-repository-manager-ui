@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { InputComponent } from "src/app/shared/input.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from "@angular/common";
 import { BaseGatewayRequestsComponent } from "./base-gateway-requests.component";
 import { ReusableTableComponent } from "src/app/shared/reusable-table/reusable-table.component";
@@ -22,7 +23,8 @@ import { Request } from "src/app/pages/gateway-dashboard/domain/request.domain";
         CommonModule,
         ReusableTableComponent,
         InputComponent,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatPaginatorModule
     ]
 })
 export class BlockedRequestsComponent extends BaseGatewayRequestsComponent {
