@@ -5,12 +5,9 @@ import { Component } from "@angular/core";
   templateUrl: './sticky-footer.component.html',
   standalone: true,
   styles: [`
-    :host {
-      display: block;
-      position: sticky;
-      bottom: 0;
-      background-color: transparent;
-    } 
+    .footer-logo {
+      height: 26px;
+    }
   `]
 })
 export class StickyFooterComponent {
