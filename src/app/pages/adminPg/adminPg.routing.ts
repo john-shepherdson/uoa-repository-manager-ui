@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AdminPgComponent } from './adminPg.component';
-import { AdminPgMetricsComponent } from './adminPg-metrics.component';
-import { authGuard, canMatchGuard } from '../../services/auth-guard.service';
-import { RegistrationComponent } from './adminPg-registrations.component';
-import { AdminRequestsComponent } from './gateway-requests/admin-requests.component';
-import { OpenaireActionsComponent } from './gateway-requests/openaire-actions.component';
-import {environment} from '../../../environments/environment';
-import { BlockedRequestsComponent } from './gateway-requests/blocked-requests.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AdminPgComponent} from './adminPg.component';
+import {AdminPgMetricsComponent} from './adminPg-metrics.component';
+import {authGuard, canMatchGuard} from '../../services/auth-guard.service';
+import {RegistrationComponent} from './adminPg-registrations.component';
+import {OpenaireActionsComponent} from '../gateway-dashboard/requests/openaire-actions.component';
+import {AdminRequestsComponent} from '../gateway-dashboard/requests/admin-requests.component';
+import {BlockedRequestsComponent} from '../gateway-dashboard/requests/blocked-requests.component';
+
 const adminRoutes: Routes = [
   {
     path: '',
@@ -42,7 +42,7 @@ const adminRoutes: Routes = [
   }
 ];
 
-@NgModule ({
+@NgModule({
   imports: [RouterModule.forChild(adminRoutes)],
   exports: [RouterModule]
 })

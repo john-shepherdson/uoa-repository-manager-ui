@@ -113,14 +113,25 @@ export class RequestsService {
     return this.http.get<Paging<Request>>(url, {params});
   }
 
-  updateRequest(requestId: number, decision: Decision, authority: Authority, comment?: string): Observable<Request> {
-    const url = `${this.baseUrl}/datasource-gateway-requests/${requestId}`;
+  createRequestDecision(requestId: number, decision: Decision, authority: Authority, comment?: string): Observable<Request> {
+    const url = `${this.baseUrl}/datasource-gateway-requests/${requestId}/decisions`;
 
     const updateRequest = {
-      id: requestId,     // body
+      id: requestId,
       decision,
       performedBy: authority,
       comment: comment || null
+    };
+
+    return this.http.post<Request>(url, updateRequest);
+  }
+
+  updateRequestStatus(requestId: number, decision: Decision): Observable<Request> {
+    const url = `${this.baseUrl}/datasource-gateway-requests/${requestId}/status`;
+
+    const updateRequest = {
+      id: requestId,
+      status: decision
     };
 
     return this.http.put<Request>(url, updateRequest);

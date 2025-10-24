@@ -9,7 +9,6 @@ import { RegistrationComponent } from './adminPg-registrations.component';
 import { AdminSideMenuComponent } from './admin-sidebar/admin-sidebar.component';
 import { InputComponent } from '../../shared/input.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { AdminRequestsComponent } from './gateway-requests/admin-requests.component';
 import { ReusableTableComponent } from "src/app/shared/reusable-table/reusable-table.component";
 
 @NgModule ({
@@ -27,8 +26,7 @@ import { ReusableTableComponent } from "src/app/shared/reusable-table/reusable-t
     AdminPgComponent,
     AdminSideMenuComponent,
     AdminPgMetricsComponent,
-    RegistrationComponent,
-    AdminRequestsComponent
+    RegistrationComponent
   ]
 })
 

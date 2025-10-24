@@ -1,24 +1,28 @@
 import {Directive, OnInit} from '@angular/core';
-import {RequestsService} from '../../gateway-dashboard/services/request.service';
+import {RequestsService} from '../services/request.service';
 import {SharedService} from 'src/app/services/shared.service';
 import {RepositoryService} from 'src/app/services/repository.service';
-import {Authority, Decision, Request, RequestType} from '../../gateway-dashboard/domain/request.domain';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Option} from '../../../shared/input.component';
+import {Authority, Decision, Request, RequestType} from '../domain/request.domain';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {InputComponent, Option} from '../../../shared/input.component';
 import {Paging} from 'src/app/domain/paging';
-import {combineLatest, Observable, Subscription} from 'rxjs';
+import {combineLatest, Observable, PartialObserver, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {ReusableTableComponent} from 'src/app/shared/reusable-table/reusable-table.component';
 import {CommunityContextService} from 'src/app/services/communityContext.service';
+import {CommonModule} from '@angular/common';
 
-@Directive({
-  selector: 'base-gateway-request',
-  standalone: true,
-  providers: [ReusableTableComponent]
-})
+export const BASE_IMPORTS = [
+  CommonModule,
+  InputComponent,
+  ReactiveFormsModule,
+  ReusableTableComponent,
+  MatPaginatorModule
+] as const;
 
+@Directive()
 export abstract class BaseGatewayRequestsComponent implements OnInit {
   protected readonly RequestType = RequestType;
 
@@ -135,103 +139,6 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     this.router.navigate([], {relativeTo: this.route, queryParams: this.qParams}).then();
   }
 
-  // approveRequest(requestId: number) {
-  //   this.requestsService.updateRequest(requestId, 'APPROVED', 'TARGET_GATEWAY_ADMIN', 'Approved by admin')
-  //     .subscribe({
-  //       next: () => {
-  //         // reload current list
-  //         this.getRequests(this.qParams).subscribe({
-  //           next: data => this.requests = data,
-  //           error: err => console.error('Error reloading requests after approve:', err)
-  //         });
-  //       },
-  //       error: err => console.error('Error approving request:', err)
-  //     });
-  // }
-
-//   approveRequest(request: Request) {
-//     console.log('Before approve: ', request);
-//      {{this.communityId}}
-//     if (!this.communityId) {
-//       console.error('Community ID is not set');
-//   }
-
-//   let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
-//   if (request.sourceGateway.id === this.communityId) {
-//       authority = 'SOURCE_GATEWAY_ADMIN';
-//   } else if (request.targetGateway.id === this.communityId) {
-//       authority = 'TARGET_GATEWAY_ADMIN';
-//   } else {
-//       console.error('Current community is neither source nor target for this request');
-//       return;
-//   }
-//     console.log('Authority chosen: ', authority);
-//     this.requestsService.updateRequest(request.id, 'APPROVED', authority, 'Approved by admin')
-//       .subscribe({
-//         next: action => {
-//           this.getRequests(this.qParams).subscribe({
-//           next: (data) => {
-//             this.requests = data;
-//             this.loadingMessage = null;
-//           },
-//           error: (err) => {
-//             console.error('Error fetching requests:', err);
-//             this.loadingMessage = null;
-//             this.errorMessage = 'Error fetching requests';
-//           }
-//         });
-//         },
-//         error: err => console.error('Error approving request:', err)
-//       });
-// }
-
-  // rejectRequest(requestId: number) {
-  //   this.requestsService.updateRequest(requestId, 'REJECTED', 'TARGET_GATEWAY_ADMIN', 'Rejected by admin')
-  //     .subscribe({
-  //       next: () => {
-  //         // reload current list
-  //         this.getRequests(this.qParams).subscribe({
-  //           next: data => this.requests = data,
-  //           error: err => console.error('Error reloading requests after reject:', err)
-  //         });
-  //       },
-  //       error: err => console.error('Error rejecting request:', err)
-  //     });
-  // }
-
-//   rejectRequest(request: Request) {
-//     if (!this.communityId) {
-//       console.error('Community ID is not set');
-//       return;
-//   }
-//   let authority: 'SOURCE_GATEWAY_ADMIN' | 'TARGET_GATEWAY_ADMIN';
-//   if (request.sourceGateway.id === this.communityId) {
-//       authority = 'SOURCE_GATEWAY_ADMIN';
-//   } else if (request.targetGateway.id === this.communityId) {
-//       authority = 'TARGET_GATEWAY_ADMIN';
-//   } else {
-//       console.error('Current community is neither source nor target for this request');
-//       return;
-//   }
-//     this.requestsService.updateRequest(request.id, 'REJECTED', authority, 'Rejected by admin')
-//       .subscribe({
-//         next: updateRequest => {
-//           this.getRequests(this.qParams).subscribe({
-//           next: (data) => {
-//             this.requests = data;
-//             this.loadingMessage = null;
-//         },
-//           error: (err) => {
-//             console.error('Error fetching requests:', err);
-//             this.loadingMessage = null;
-//             this.errorMessage = 'Error fetching requests';
-//           }
-//         });
-//         },
-//         error: err => console.error('Error rejecting request:', err)
-//       });
-// }
-
   handleDecision(event: { request: Request; decision: Decision; comment?: string }) {
     const {request, decision, comment} = event;
 
@@ -256,29 +163,32 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
   }
 
   protected updateDecision(id: number, decision: Decision, authority: Authority, comment: string) {
-    this.requestsService.updateRequest(id, decision, authority, comment || '')
-      .subscribe({
-        next: () => {
-          this.getRequests(this.qParams).subscribe({
-            next: (data) => {
-              this.requests = data;
-              this.loadingMessage = null;
-              this.errorMessage = null;
-            },
-            error: (err) => {
-              console.error('Error fetching requests:', err);
-              this.loadingMessage = null;
-              this.errorMessage = 'Error fetching requests';
-            }
-          });
-        },
-        error: err => {
+    this.requestsService.createRequestDecision(id, decision, authority, comment || '')
+      .subscribe(this.reloadRequests);
+  }
+
+  protected readonly reloadRequests: PartialObserver<any> = {
+    next: () => {
+      this.getRequests(this.qParams).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.requests = data;
           this.loadingMessage = null;
-          this.errorMessage = `Error processing request: ${err.message || err}`;
-          console.error('Error processing request:', err);
+          this.errorMessage = null;
+        },
+        error: (err) => {
+          console.error('Error fetching requests:', err);
+          this.loadingMessage = null;
+          this.errorMessage = 'Error fetching requests';
         }
       });
-  }
+    },
+    error: err => {
+      this.loadingMessage = null;
+      this.errorMessage = `Error processing request: ${err.message || err}`;
+      console.error('Error processing request:', err);
+    }
+  };
 
 }
 

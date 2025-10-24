@@ -1,9 +1,9 @@
-import { Route } from '@angular/router';
-import { GatewayAdminGuard } from '../../services/guard-functions';
-import { GatewayDashboardComponent } from "./gateway-dashboard.component";
-import { DatasourceSearchComponent } from "./datasource-search/datasource-search.component";
-import {GatewayActionsComponent} from '../adminPg/gateway-requests/gateway-actions.component';
-import {GatewayRequestsComponent} from '../adminPg/gateway-requests/gateway-requests.component';
+import {Route} from '@angular/router';
+import {GatewayAdminGuard} from '../../services/guard-functions';
+import {GatewayDashboardComponent} from './gateway-dashboard.component';
+import {DatasourceSearchComponent} from './datasource-search/datasource-search.component';
+import {GatewayRequestsComponent} from './requests/gateway-requests.component';
+import {GatewayActionsComponent} from './requests/gateway-actions.component';
 
 export const GatewayDashboardRouting: Route[] = [
   {
