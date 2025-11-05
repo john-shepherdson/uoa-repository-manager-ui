@@ -6,6 +6,7 @@ import { ForbiddenPageComponent } from './shared/reusablecomponents/403-forbidde
 import { EmptyPageComponent } from './pages/emptypage/empty-page.component';
 import { JoinComponent } from './pages/join/join.component';
 import { AboutComponent } from './pages/landing/about/about.component';
+import {MyDataSourcesComponent} from './pages/my-datasources/my-data-sources.component';
 
 const appRoutes: Routes = [
   {
@@ -21,14 +22,19 @@ const appRoutes: Routes = [
     path: 'about',
     component: AboutComponent
   },
-  {
-    path: 'join',
-    component: JoinComponent,
-    canActivate: [AuthGuardService]
-  },
+  // {
+  //   path: 'join',
+  //   component: JoinComponent,
+  //   canActivate: [AuthGuardService]
+  // },
   {
     path: 'emptyPage',
     component: EmptyPageComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'myDataSources',
+    component: MyDataSourcesComponent,
     canActivate: [AuthGuardService]
   },
   {
@@ -67,13 +73,14 @@ const appRoutes: Routes = [
     // fixme redirect to 404
     path: '**',
     redirectTo: '/403-forbidden',
+    pathMatch: 'full'
     // component: ForbiddenPageComponent
   }
 ];
 
 
 @NgModule ({
-  imports: [RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(appRoutes, {})],
   exports: [RouterModule]
 })
 

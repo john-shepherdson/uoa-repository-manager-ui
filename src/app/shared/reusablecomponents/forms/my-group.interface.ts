@@ -2,7 +2,7 @@
  * Created by stefanos on 15/5/2017.
  */
 import { AfterContentInit, Component, EventEmitter, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Description } from '../../../domain/oa-description';
 
@@ -30,7 +30,7 @@ export class MyGroup implements OnInit, AfterContentInit {
 
   @Input() public index: number = -1;
 
-  protected _fb: FormBuilder;
+  protected _fb: UntypedFormBuilder;
 
   protected groupDefinition: { [key:string]: any };
 
@@ -46,11 +46,11 @@ export class MyGroup implements OnInit, AfterContentInit {
   @Input() public inRegister: boolean = false;
 
   constructor(injector: Injector) {
-    this._fb = injector.get(FormBuilder);
+    this._fb = injector.get(UntypedFormBuilder);
     this.patchData.subscribe(_ => {
       if (typeof _ !== 'undefined') {
         setTimeout( () => {
-          (this.group as FormGroup).patchValue(_);
+          (this.group as UntypedFormGroup).patchValue(_);
         }, 500);
       }
     });
@@ -60,7 +60,7 @@ export class MyGroup implements OnInit, AfterContentInit {
     return this.index !== -1;
   }
 
-  public generate(): FormGroup {
+  public generate(): UntypedFormGroup {
     const ret = this._fb.group(this.groupDefinition);
     if (this.patchData) {
       // console.log(this.patchData);
@@ -81,19 +81,19 @@ export class MyGroup implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
     if (this.index === -1) {
-      if (<string>this.name === '' || (<FormGroup>this.parentGroup).contains(<string>this.name)) {
+      if (<string>this.name === '' || (<UntypedFormGroup>this.parentGroup).contains(<string>this.name)) {
         const obj = this.generate();
         Object.keys(obj.controls).forEach(c => {
-          (<FormGroup>this.parentGroup.get(<string>this.name)).addControl(c, obj.controls[c]);
+          (<UntypedFormGroup>this.parentGroup.get(<string>this.name)).addControl(c, obj.controls[c]);
         });
-        this.group = this.parentGroup.get(this.name as string) as FormGroup;
+        this.group = this.parentGroup.get(this.name as string) as UntypedFormGroup;
       } else {
-        (<FormGroup>this.parentGroup).addControl(<string>this.name, this.generate());
-        this.group = this.parentGroup.get(this.name as string) as FormGroup;
+        (<UntypedFormGroup>this.parentGroup).addControl(<string>this.name, this.generate());
+        this.group = this.parentGroup.get(this.name as string) as UntypedFormGroup;
       }
     } else {
       this.name = this.index;
-      this.group = this.parentGroup as FormGroup;
+      this.group = this.parentGroup as UntypedFormGroup;
     }
   }
 

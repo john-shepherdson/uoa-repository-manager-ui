@@ -23,15 +23,17 @@
      [ngStyle]="{'display': isModalShown ? 'block' : 'none'}" style="overflow-y: auto">
   <div class="uk-modal-dialog" style="top: 95.5px;">
     <div class="uk-modal-header">
-      <h3 class="uk-modal-title">{{title}}
+      <h5 class="">{{title}}
         <!--<i class="material-icons" data-uk-tooltip="{pos:'top'}" title="headline tooltip"></i>-->
-      </h3>
+      </h5>
     </div>
-    <ng-content></ng-content>
+    <div class="uk-modal-body">
+      <ng-content></ng-content>
+    </div>
     <div class="uk-modal-footer uk-text-right">
-      <button (click)="hideModal()" type="button" class="md-btn md-btn-flat uk-modal-close">{{ hideModalButton }}</button>
-      <button *ngIf="confirmActionButton" (click)="confirmedAction()" type="button" class="md-btn md-btn-flat md-btn-flat-primary">{{confirmActionButton}}</button>
-      <button *ngIf="confirmButNotCloseButton" (click)="confirmedButNotCloseAction()" type="button" class="md-btn md-btn-flat md-btn-flat-primary">{{confirmButNotCloseButton}}</button>
+      <button (click)="hideModal()" type="button" class="uk-button uk-modal-close">{{ hideModalButton }}</button>
+      <button *ngIf="confirmActionButton" (click)="confirmedAction()" type="button" class="uk-button uk-button-primary">{{confirmActionButton}}</button>
+      <button *ngIf="confirmButNotCloseButton" (click)="confirmedButNotCloseAction()" type="button" class="uk-button uk-button-primary">{{confirmButNotCloseButton}}</button>
     </div>
   </div>
 </div>

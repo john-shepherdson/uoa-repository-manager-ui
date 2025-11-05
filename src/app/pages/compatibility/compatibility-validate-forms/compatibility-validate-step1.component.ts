@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { didntChooseBaseUrl, invalidCustomBaseUrl } from '../../../domain/shared-messages';
 import { ValidatorService } from '../../../services/validator.service';
 
@@ -9,14 +9,14 @@ import { ValidatorService } from '../../../services/validator.service';
 })
 
 export class CompatibilityValidateStep1Component implements OnInit {
-  group: FormGroup;
+  group: UntypedFormGroup;
   errorMessage: string;
 
   @Input() baseUrlList: string[];
 
   @Output() emitObject: EventEmitter<any> = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit() {
     this.group = this.fb.group({
@@ -37,7 +37,7 @@ export class CompatibilityValidateStep1Component implements OnInit {
   }
 
   submitForm() {
-    if (this.group.get('selectBaseUrl').enabled){
+    if (this.group.get('selectBaseUrl').enabled) {
       if ( this.group.get('selectBaseUrl').value) {
         this.emitObject.emit(this.group.get('selectBaseUrl').value);
         console.log(`selected baseUrl!`);

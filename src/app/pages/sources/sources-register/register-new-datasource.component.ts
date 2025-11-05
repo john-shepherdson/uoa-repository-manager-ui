@@ -1,15 +1,20 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Repository, RepositoryInterface } from '../../../domain/typeScriptClasses';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { AsideHelpContentComponent, HelpContentComponent } from '../../../shared/reusablecomponents/help-content.component';
 import { RepositoryService } from '../../../services/repository.service';
 import { DatasourceCreateFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-create-form.component';
-import { DatasourceNewInterfaceFormComponent } from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
+import {
+  DatasourceNewInterfaceFormComponent
+} from '../../../shared/reusablecomponents/sources-forms/datasource-new-interface-form.component';
 import { from, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { errorsInInterfaces, formErrorRegisterRepo, noInterfacesSaved } from '../../../domain/shared-messages';
-import {DatasourceUpdateTermsFormComponent} from '../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
+import {
+  DatasourceUpdateTermsFormComponent
+} from '../../../shared/reusablecomponents/sources-forms/datasource-update-terms-form.component';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-register-new-datasource',
@@ -41,6 +46,8 @@ export class RegisterNewDatasourceComponent implements OnInit {
   @ViewChild('bottomHelperContent', { static: true })
   public bottomHelperContent: HelpContentComponent;
 
+  @ViewChild('stepper') stepper: MatStepper;
+
   @ViewChild('registerDatasource')
   registerDatasource: DatasourceCreateFormComponent;
 
@@ -53,7 +60,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
   @ViewChild('updateTermsForm')
   updateTermsForm: DatasourceUpdateTermsFormComponent;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private repoService: RepositoryService) {}
@@ -102,7 +109,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
   moveAStep() {
     this.errorMessage = '';
     if (this.currentStep === 1) {
-      this.registerDatasource.registerDatasource();
+      this.registerDatasource.registerDatasource(this.stepper);
     } else if (this.currentStep === 2) {
       of(this.getInterfaces()).subscribe(
         errors => {
@@ -111,6 +118,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
             window.scrollTo(1, 1);
           } else {
             if (this.repoInterfaces.length > 0) {
+              this.stepper.next();
               this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=termsOfUse`);
             } else {
               this.errorMessage = noInterfacesSaved;
@@ -133,6 +141,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
     } else if (this.currentStep === 3) {
       this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=interfaces`);
     }
+    this.stepper.previous();
   }
 
   addInterfaceToList(intrf?: RepositoryInterface) {
@@ -159,6 +168,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
     let invalidFormsCount = 0;
     for (const el of this.interfacesArray.toArray()) {
       const intrf = el.getInterface();
+      console.log(intrf);
       if (intrf) {
         this.repoInterfaces.push(intrf);
         console.log(JSON.stringify(intrf));
@@ -265,6 +275,7 @@ export class RegisterNewDatasourceComponent implements OnInit {
           this.loadingMessage = '';
           this.repo = null;
           this.repoInterfaces = [];
+          this.stepper.next();
           this.router.navigateByUrl(`/sources/register/${this.datasourceType}?step=finish`);
         }
       );

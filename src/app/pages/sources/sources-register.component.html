@@ -1,190 +1,187 @@
 <div id="page_content">
   <div id="page_content_inner">
-    <h2 class="heading_b uk-margin-bottom">Register your datasource</h2>
 
-    <!-- TOP HELP CONTENT -->
-    <help-content #topHelperContent [position]="'top'"
-                  [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-    </help-content>
+    <div class="uk-section uk-section-default">
+      <div class="uk-container uk-container-expand">
 
-    <div class="uk-grid">
+        <h4 class="uk-margin-bottom">Register your datasource</h4>
 
-      <!-- LEFT HELP CONTENT -->
-      <aside-help-content #leftHelperContent [position]="'left'"
-                          [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-      </aside-help-content>
+        <!-- TOP HELP CONTENT -->
+        <help-content #topHelperContent [position]="'top'"
+                      [ngClass]="topHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
 
-      <!-- MIDDLE -->
-      <div class=" uk-width-expand@m">
+        <div class="uk-grid">
 
-        <div class="uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m" data-uk-grid-margin="">
+          <!-- LEFT HELP CONTENT -->
+          <aside-help-content #leftHelperContent [position]="'left'"
+                              [ngClass]="leftHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content>
 
-          <div class="uk-row-first">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+          <!-- MIDDLE -->
+          <div class=" uk-width-expand@m">
+
+            <div class="uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m uk-margin-medium-top" data-uk-grid-margin="" uk-grid>
+
+              <div class="uk-row-first">
+                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
             datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
-              <a [routerLink]="['repository']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
-                <div class="">
-                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Literature%20repository.svg" alt="" width="51">
-                </div>
-                <h3>Repository</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('repository')" style="cursor: pointer">
-                  <p class="uk-margin-remove">Make sure your repository is already registered in one of the following global registries -
-                    <a href="https://v2.sherpa.ac.uk/opendoar/">OpenDOAR<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a>,
-                    <a href="http://www.re3data.org/">Re3data<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a> or
-                    <a href="https://fairsharing.org/search?fairsharingRegistry=Database">FAIRsharing<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a>
-                    and is compatible with the
-                    <a href="https://guidelines.openaire.eu/en/latest/">OpenAIRE Guidelines<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a>.
-                    <br>For any questions please contact the <a href="mailto:helpdesk@openaire.eu" target="_blank">OpenAIRE helpdesk.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a>
-                  </p>
+                  <a [routerLink]="['repository']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+                  <div class="uk-card-body uk-margin-medium-top uk-margin-bottom">
+                    <div class="">
+                      <img class="el-image" src="../../../assets/imgs/datasourcetypes/Literature%20repository.svg" alt="" width="51">
+                    </div>
+                    <h5>Repository</h5>
+                    <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('repository')" style="cursor: pointer">
+                      <p class="uk-margin-remove">Make sure your repository is already registered in one of the following global registries -
+                        <a href="https://v2.sherpa.ac.uk/opendoar/">OpenDOAR<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a>,
+                        <a href="http://www.re3data.org/">Re3data<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a> or
+                        <a href="https://fairsharing.org/search?fairsharingRegistry=Database">FAIRsharing<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a>
+                        and is compatible with the
+                        <a href="https://guidelines.openaire.eu/en/latest/">OpenAIRE Guidelines<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a>.
+                        <br>For any questions please contact the <a href="mailto:helpdesk@openaire.eu" target="_blank">OpenAIRE helpdesk.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i></a>
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+              <div class="">
+                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
             datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
-              <a [routerLink]="['journal']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
-                <div class="">
-                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Journal.svg" alt="" width="37">
-                </div>
-                <h3>Journal</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('journal')" style="cursor: pointer">
-                  <p class="uk-margin-remove">Make sure that your Journal is compatible with the OpenAIRE Guidelines for Literature Repositories.</p>
-                  <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
-                    For any questions please contact the OpenAIRE helpdesk.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
-                  </a>
+                  <a [routerLink]="['journal']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+                  <div class="uk-card-body uk-margin-medium-top uk-margin-bottom">
+                    <div class="">
+                      <img class="el-image" src="../../../assets/imgs/datasourcetypes/Journal.svg" alt="" width="37">
+                    </div>
+                    <h5>Journal</h5>
+                    <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('journal')" style="cursor: pointer">
+                      <p class="uk-margin-remove">Make sure that your Journal is compatible with the OpenAIRE Guidelines for Literature Repositories.</p>
+                      <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
+                        For any questions please contact the OpenAIRE helpdesk.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="uk-row-first">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+              <div class="uk-row-first">
+                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
             datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
-              <a [routerLink]="['aggregator']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
-                <div class="">
-                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Aggregator.svg" alt="" width="50">
-                </div>
-                <h3>Aggregator</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('aggregator')" style="cursor: pointer">
-                  <p class="uk-margin-remove">Make sure that your publications' aggregator is compatible with the OpenAIRE Guidelines for Literature Repositories.</p>
-                  <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
-                    For any questions please contact the OpenAIRE helpdesk.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
-                  </a>
+                  <a [routerLink]="['aggregator']" [queryParams]="{ step: 'basicInformation' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+                  <div class="uk-card-body uk-margin-medium-top uk-margin-bottom">
+                    <div class="">
+                      <img class="el-image" src="../../../assets/imgs/datasourcetypes/Aggregator.svg" alt="" width="50">
+                    </div>
+                    <h5>Aggregator</h5>
+                    <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('aggregator')" style="cursor: pointer">
+                      <p class="uk-margin-remove">Make sure that your publications' aggregator is compatible with the OpenAIRE Guidelines for Literature Repositories.</p>
+                      <a href="https://www.openaire.eu/support/helpdesk" target="_blank">
+                        For any questions please contact the OpenAIRE helpdesk.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <div class="">
+                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
+                  <a [routerLink]="['cris']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
+                  <div class="uk-card-body uk-margin-medium-top uk-margin-bottom">
+                    <div class="">
+                      <img class="el-image" src="../../../assets/imgs/datasourcetypes/Cris.svg" alt="" width="50">
+                    </div>
+                    <h5>CRIS systems</h5>
+                    <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('cris')" style="cursor: pointer">
+                      <p class="uk-margin-remove">Please make sure your CRIS is registered in DRIS the Directory of Research
+                        Information Systems, and is compatible with the OpenAIRE Guidelines for CRIS Managers.
+                        <a href="https://dspacecris.eurocris.org/cris/explore/dris" target="_blank">
+                          List provided by DRIS.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
+
+            <hr style="border-top: 1px solid #dedede; margin-top: 40px; margin-bottom: 30px;">
+
+            <h4 class="uk-margin-bottom">Coming soon</h4>
+
+            <div class="uk-margin uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m uk-margin-medium-top" uk-grid="">
+
+              <div class="uk-row-first">
+                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
+                  <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
+                  <div class="uk-card-body uk-margin-medium-top uk-margin-bottom">
+                    <div class="">
+                      <img class="el-image" src="../../../assets/imgs/datasourcetypes/Software.svg" alt="" width="51">
+                    </div>
+                    <h5>Software</h5>
+                    <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+                      <p class="uk-margin-remove">Stay tuned.</p>
+                    </div>
+                  </div>
+                  <div class="whiteFilm"></div>
+                </div>
+              </div>
+
+              <div class="">
+                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
+                  <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
+                  <div class="uk-card-body uk-margin-medium-top uk-margin-bottom">
+                    <div class="">
+                      <img class="el-image" src="../../../assets/imgs/datasourcetypes/Catch-all.svg" alt="" width="47">
+                    </div>
+                    <h5>Catch-all</h5>
+                    <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+                      <p class="uk-margin-remove">Stay tuned.</p>
+                    </div>
+                  </div>
+                  <div class="whiteFilm"></div>
+                </div>
+              </div>
+
+              <div class="">
+                <div class="uk-text-center uk-card uk-card-default uk-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
+            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
+                  <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
+                  <div class="uk-card-body uk-margin-medium-top uk-margin-bottom">
+                    <div class="">
+                      <img class="el-image" src="../../../assets/imgs/datasourcetypes/Other.svg" alt="" width="50">
+                    </div>
+                    <h5>Other sources</h5>
+                    <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+                      <p class="uk-margin-remove">Stay tuned.</p>
+                    </div>
+                  </div>
+                  <div class="whiteFilm"></div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
+
+          <!-- RIGHT HELP CONTENT -->
+          <aside-help-content #rightHelperContent [position]="'right'"
+                              [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
+          </aside-help-content>
 
         </div>
 
-        <div class="uk-margin uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m" uk-grid="">
-
-          <div class="">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
-            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
-              <a [routerLink]="['cris']" [queryParams]="{ step: 'selectDatasource' }" class="el-link uk-position-cover uk-margin-remove-adjacent"></a>
-              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
-                <div class="">
-                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Cris.svg" alt="" width="50">
-                </div>
-                <h3>CRIS systems</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary" (click)="goTo('cris')" style="cursor: pointer">
-                  <p class="uk-margin-remove">Please make sure your CRIS is registered in DRIS the Directory of Research
-                    Information Systems, and is compatible with the OpenAIRE Guidelines for CRIS Managers.
-                    <a href="https://dspacecris.eurocris.org/cris/explore/dris" target="_blank">
-                      List provided by DRIS.<i class="fas fa-external-link-alt" style="margin-left: 3px !important;"></i>
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <hr style="border-top: 1px solid #dedede; margin-top: 40px; margin-bottom: 30px;">
-
-        <h2 class="heading_b uk-margin-bottom">Coming soon</h2>
-
-        <div class="uk-margin uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m" uk-grid="">
-
-          <div class="uk-row-first">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
-            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
-              <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
-              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
-                <div class="">
-                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Software.svg" alt="" width="51">
-                </div>
-                <h3>Software</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
-                  <p class="uk-margin-remove">Stay tuned.</p>
-                </div>
-              </div>
-              <div class="whiteFilm"></div>
-            </div>
-          </div>
-
-          <div class="">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
-            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
-              <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
-              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
-                <div class="">
-                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Catch-all.svg" alt="" width="47">
-                </div>
-                <h3>Catch-all</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
-                  <p class="uk-margin-remove">Stay tuned.</p>
-                </div>
-              </div>
-              <div class="whiteFilm"></div>
-            </div>
-          </div>
-
-          <div class="">
-            <div class="uk-text-center md-card md-card-default md-card-hover uk-scrollspy-inview uk-animation-slide-top-medium
-            datasourceTypeCard uk-inline-clip uk-transition-toggle" uk-scrollspy-class="" tabindex="0">
-              <a class="el-link uk-position-cover uk-margin-remove-adjacent uk-disabled"></a>
-              <div class="md-card-content large-padding uk-margin-medium-top uk-margin-bottom">
-                <div class="">
-                  <img class="el-image" src="../../../assets/imgs/datasourcetypes/Other.svg" alt="" width="50">
-                </div>
-                <h3>Other sources</h3>
-                <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
-                  <p class="uk-margin-remove">Stay tuned.</p>
-                </div>
-              </div>
-              <div class="whiteFilm"></div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="uk-margin uk-grid uk-grid-match uk-grid-medium repositoryTypeSelection uk-child-width-1-3@l uk-child-widht-1-3@m" uk-grid="">
-
-
-
-        </div>
+        <!-- BOTTOM HELP CONTENT -->
+        <help-content #bottomHelperContent [position]="'bottom'"
+                      [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
+        </help-content>
 
       </div>
-
-      <!-- RIGHT HELP CONTENT -->
-      <aside-help-content #rightHelperContent [position]="'right'"
-                          [ngClass]="rightHelperContent.isPresent()?'tm-sidebar uk-width-1-4@m uk-first-column':'clear-style'">
-      </aside-help-content>
-
     </div>
-
-    <!-- BOTTOM HELP CONTENT -->
-    <help-content #bottomHelperContent [position]="'bottom'"
-                  [ngClass]="bottomHelperContent.isPresent()?'uk-margin-medium-top uk-margin-medium-bottom':'clear-style'">
-    </help-content>
 
   </div>
 </div>

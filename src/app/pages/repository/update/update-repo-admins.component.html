@@ -55,7 +55,7 @@
     <div class="whiteFilm"></div>
   </div>
   <div *ngIf="selectedAdminForDelete">
-    <h6>Are you sure you want to remove this user admin?</h6>
+    <div class="uk-margin-bottom">Are you sure you want to remove this user admin?</div>
     <pre>
       <ng-container *ngIf="selectedAdminForDelete.firstName || selectedAdminForDelete.lastName">
         {{selectedAdminForDelete.firstName}} {{selectedAdminForDelete.lastName}}
@@ -79,10 +79,11 @@
     <div class="whiteFilm"></div>
   </div>
 
-  <h6>Add the email address of the new user admin. Make sure the user already has an OpenAIRE account with this email address.</h6>
+  <div class="uk-margin-bottom">Add the email address of the new user admin. Make sure the user already has an OpenAIRE account with this email address.</div>
   <form>
     <div class="uk-margin">
-      <input class="uk-input" placeholder="Enter email..." [formControl]="emailControl">
+      <div input placeholder="Enter email..." type="text" [formInput]="emailControl"></div>
+<!--      <input class="uk-input" placeholder="Enter email..." [formControl]="emailControl">-->
     </div>
   </form>
 </confirmation-dialog>

@@ -25,6 +25,7 @@ import {SharedService} from './services/shared.service';
 import {JoinComponent} from './pages/join/join.component';
 import {AboutComponent} from './pages/landing/about/about.component';
 import {environment} from '../environments/environment';
+import {MyDataSourcesComponent} from './pages/my-datasources/my-data-sources.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {environment} from '../environments/environment';
     HomeComponent,
     AboutComponent,
     EmptyPageComponent,
-    JoinComponent
+    JoinComponent,
+    MyDataSourcesComponent
   ],
   imports: [
     BrowserModule,

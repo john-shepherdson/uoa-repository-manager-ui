@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TabsModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AdminPgRouting } from './adminPg.routing';
 import { ReusableComponentsModule } from '../../shared/reusablecomponents/reusable-components.module';
 import { AdminPgComponent } from './adminPg.component';
 import { AdminPgMetricsComponent } from './adminPg-metrics.component';
 import {RegistrationComponent} from './adminPg-registrations.component';
+import {AdminSideMenuComponent} from './admin-sidebar/admin-sidebar.component';
+import { InputComponent } from '../../shared/input.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule ({
   imports: [
@@ -16,9 +19,12 @@ import {RegistrationComponent} from './adminPg-registrations.component';
     ReactiveFormsModule,
     AdminPgRouting,
     ReusableComponentsModule,
+    InputComponent,
+    MatPaginatorModule,
   ],
   declarations: [
     AdminPgComponent,
+    AdminSideMenuComponent,
     AdminPgMetricsComponent,
     RegistrationComponent
   ]

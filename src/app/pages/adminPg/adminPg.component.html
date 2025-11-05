@@ -1,0 +1,10 @@
+<div id="sidebar" class="sidebar_main_swipe uk-flex uk-background-default"
+     [class.sidebar_main_active]="open && (hasSidebar || hasAdminMenu)"
+     [class.sidebar_mini]="!open &&  (hasSidebar || hasAdminMenu)"
+     [class.sidebar_hover]="hover">
+  <!--  <side-menu *ngIf="hasSidebar"></side-menu>-->
+  <app-admin-side-menu *ngIf="hasSidebar" (hoverChange)="onHoverChange($event)"></app-admin-side-menu>
+  <main class="uk-width-1-1">
+      <router-outlet></router-outlet>
+  </main>
+</div>

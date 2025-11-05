@@ -1,6 +1,6 @@
 export const typologies = [
   {
-    value: '',
+    value: 'Other',
     name: '[Other] (enter name below)'
   },
   {

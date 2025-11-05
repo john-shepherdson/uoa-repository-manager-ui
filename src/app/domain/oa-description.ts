@@ -4,7 +4,7 @@
 
 /* class copied from omtd-platform git repository */
 
-/* THE DESCRIPTION TEXTS PROBABLY NEED REVIEWING ! */
+/* THE DESCRIPTION TEXTS PROBABLY NEED REVIEWING! */
 
 export class Description {
   desc: string;
