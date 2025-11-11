@@ -1,44 +1,3 @@
-<!--<header id="header_main">-->
-<!--  &lt;!&ndash;<div class="header_main_content">&ndash;&gt;-->
-<!--    &lt;!&ndash;<nav class="uk-navbar">&ndash;&gt;-->
-
-<!--      &lt;!&ndash;&lt;!&ndash; main sidebar switch &ndash;&gt;&ndash;&gt;-->
-<!--      &lt;!&ndash;<a (click)="toggleSideMenu()" id="sidebar_main_toggle" class="sSwitch sSwitch_left">&ndash;&gt;-->
-<!--        &lt;!&ndash;<span class="sSwitchIcon"></span>&ndash;&gt;-->
-<!--      &lt;!&ndash;</a>&ndash;&gt;-->
-
-<!--    &lt;!&ndash;</nav>&ndash;&gt;-->
-<!--  &lt;!&ndash;</div>&ndash;&gt;-->
-
-<!--  <nav class="uk-navbar uk-light">-->
-<!--    <div class="uk-navbar-right">-->
-<!--      <ul class="uk-navbar-nav user_actions">-->
-<!--        <li>-->
-<!--          <div>-->
-<!--            <a class="uk-icon ng-star-inserted" aria-expanded="false">-->
-<!--              <svg height="60" width="60">-->
-<!--                <circle cx="30" cy="30" r="20" stroke-width="1"></circle>-->
-<!--                <text dy=".4em" font-size="16" text-anchor="middle" x="50%" y="50%" class="ng-star-inserted"> {{ parseUsername() }} </text>-->
-<!--              </svg>-->
-<!--              &lt;!&ndash;<i class="material-icons">keyboard_arrow_down</i>&ndash;&gt;-->
-<!--            </a>-->
-<!--            <div class="uk-padding-remove-horizontal ng-star-inserted uk-dropdown" uk-dropdown="mode: click; offset: -2; delay-hide: 0; flip: false; pos: bottom-right">-->
-<!--              <ul class="uk-nav uk-dropdown-nav">-->
-<!--                <li>-->
-<!--                  <a id="logout" (click)="logout()">Log out</a>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--            </div>&lt;!&ndash;&ndash;&gt;-->
-<!--            <div id="logout2"></div>-->
-<!--          </div>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </nav>-->
-
-<!--</header>&lt;!&ndash; main header end &ndash;&gt;-->
-
-
 <div>
   <div>
 
@@ -50,8 +9,10 @@
 
     <div id="main-menu" class="uk-visible@m">
       <div>
-        <div class="uk-navbar-container uk-sticky uk-sticky-fixed" uk-sticky="" >
-          <a target="_blank" ng-reflect-target="_blank" class="ng-star-inserted"><img alt="BETA" class="uk-position-top-left ng-star-inserted" style="height: 65px; width: 65px; z-index: 1000;" src="assets/prototype_flag.svg"></a>
+        <div class="uk-navbar-container uk-sticky uk-sticky-fixed" data-uk-sticky="" >
+          <a *ngIf="environment.beta" target="_blank">
+            <img alt="BETA" class="uk-position-top-left" style="height: 65px; width: 65px; z-index: 1000;" src="assets/prototype_flag.svg">
+          </a>
           <div class="uk-container uk-container-expand">
             <nav class="uk-navbar" uk-navbar="delay-hide: 400">
               <div class="uk-navbar-left">
