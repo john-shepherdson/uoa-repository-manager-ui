@@ -1,21 +1,21 @@
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {DatasourceSearchService} from '../services/datasource-search.service';
-import {NgForOf, NgIf} from '@angular/common';
-import {InputComponent, Option} from '../../../shared/input.component';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Paging} from '../../../domain/paging';
-import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
-import {objectKeys} from 'codelyzer/util/objectKeys';
-import {Country, DatasourceDetails} from 'src/app/domain/typeScriptClasses';
-import {RequestsService} from '../services/request.service';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { DatasourceSearchService } from '../services/datasource-search.service';
+import { NgForOf, NgIf } from '@angular/common';
+import { InputComponent, Option } from '../../../shared/input.component';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Paging } from '../../../domain/paging';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { objectKeys } from 'codelyzer/util/objectKeys';
+import { Country, DatasourceDetails } from 'src/app/domain/typeScriptClasses';
+import { RequestsService } from '../services/request.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import UIkit from 'uikit';
-import {Observable} from 'rxjs';
-import {CommunityContextService} from '../../../services/communityContext.service';
+import { Observable } from 'rxjs';
+import { CommunityContextService } from '../../../services/communityContext.service';
 import { StickyFooterComponent } from "src/app/shared/sticky-footer/sticky-footer.component";
-import {environment} from '../../../../environments/environment';
-import {RequestType} from '../domain/request.domain';
+import { environment } from '../../../../environments/environment';
+import { RequestType } from '../domain/request.domain';
 import { ViewChild, ElementRef } from '@angular/core';
 
 declare const UIkit: any;
@@ -32,7 +32,7 @@ declare const UIkit: any;
     MatPaginatorModule,
     StickyFooterComponent,
     FormsModule
-],
+  ],
   standalone: true
 })
 
@@ -74,13 +74,31 @@ export class DatasourceSearchComponent implements OnInit {
 
   // Modal State
 
-    @ViewChild('datasourceModal') requestModalRef!: ElementRef;
+  @ViewChild('datasourceModal') requestModalRef!: ElementRef;
 
   modalDatasourceId: number | null = null;
   modalRequestType: 'PRIMARY' | 'AFFILIATED' | null = null;
   modalComment = '';
 
-    openRequestModal(datasourceId: number, type: 'PRIMARY' | 'AFFILIATED') {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private datasourceSearch: DatasourceSearchService,
+              private requestService: RequestsService,
+              private communityContextService: CommunityContextService) {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (value) => {
+        this.gateway = value.gateway;
+      }
+    });
+
+    this.communityContextService.community.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (community) => {
+        this.communityId = community ? community.id : environment.OPENAIRE_ID;
+      }
+    });
+  }
+
+  openRequestModal(datasourceId: number, type: 'PRIMARY' | 'AFFILIATED') {
     this.modalDatasourceId = datasourceId;
     this.modalRequestType = type;
     this.modalComment = '';
@@ -91,7 +109,8 @@ export class DatasourceSearchComponent implements OnInit {
       }
     });
   }
-     closeModal() {
+
+  closeModal() {
     if (typeof UIkit !== 'undefined' && this.requestModalRef?.nativeElement) {
       UIkit.modal(this.requestModalRef.nativeElement).hide();
     }
@@ -125,25 +144,6 @@ export class DatasourceSearchComponent implements OnInit {
         UIkit.modal(modal).hide();
       } catch (err) {}
     })
-  }
-
-
-
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private datasourceSearch: DatasourceSearchService,
-              private requestService: RequestsService,
-              private communityContextService: CommunityContextService) {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (value) => {
-        this.gateway = value.gateway;
-      }
-    });
-    this.communityContextService.community.subscribe({
-      next: (community) => {
-        this.communityId = community ? community.id : environment.OPENAIRE_ID;
-      }
-    });
   }
 
   private getDatasources(params): Observable<Paging<DatasourceDetails>> {

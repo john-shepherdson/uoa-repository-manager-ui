@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  beta: true,
   AAI_LOGOUT: 'https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=',
   API_ENDPOINT: '/uoa-repository-manager-service',
   LOGO_URL: 'https://beta.explore.openaire.eu/utils-service/download/',
