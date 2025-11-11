@@ -102,7 +102,7 @@
                   <a [routerLink]="['about']" [routerLinkActive]="['uk-active']">About</a>
                 </li>
                 <li *ngIf="getIsUserLoggedIn()" class="uk-parent" [routerLinkActive]="['uk-active']">
-                  <a [routerLink]="['join']" [routerLinkActive]="['uk-active']">Dashboard</a>
+                  <a [routerLink]="['myDataSources']" [routerLinkActive]="['uk-active']">Dashboard</a>
                 </li>
 
                 <li *ngIf="!getIsUserLoggedIn()" class="uk-parent">

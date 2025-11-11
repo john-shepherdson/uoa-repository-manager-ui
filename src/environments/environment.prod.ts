@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  beta: false,
   AAI_LOGOUT: 'https://aai.openaire.eu/proxy/saml2/idp/SingleLogoutService.php?ReturnTo=',
   MATOMO_URL: 'https://analytics.openaire.eu/',
   MATOMO_SITE: 111,

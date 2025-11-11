@@ -5,11 +5,12 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'top-menu-dashboard',
   templateUrl: './topmenu-dashboard.component.html',
-  // styleUrls: ['./topmenu-dashboard.component.css'],
-  // encapsulation: ViewEncapsulation.None
 })
 
 export class TopmenuDashboardComponent implements OnInit {
+
+  protected readonly environment = environment;
+
   userLoggedIn = false;
   userName = '';
   isUserAdmin = false;
