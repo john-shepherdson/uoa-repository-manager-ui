@@ -1,5 +1,5 @@
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router, RouterLink} from '@angular/router';
 import {DatasourceSearchService} from '../services/datasource-search.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {InputComponent, Option} from '../../../shared/input.component';
@@ -10,10 +10,9 @@ import {objectKeys} from 'codelyzer/util/objectKeys';
 import {Country, DatasourceDetails} from 'src/app/domain/typeScriptClasses';
 import {RequestsService} from '../services/request.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import UIkit from 'uikit';
 import {Observable} from 'rxjs';
 import {CommunityContextService} from '../../../services/communityContext.service';
-import { StickyFooterComponent } from "src/app/shared/sticky-footer/sticky-footer.component";
+import { StickyFooterComponent } from 'src/app/shared/sticky-footer/sticky-footer.component';
 import {environment} from '../../../../environments/environment';
 import {RequestType} from '../domain/request.domain';
 import { ViewChild, ElementRef } from '@angular/core';
@@ -31,17 +30,19 @@ declare const UIkit: any;
     NgIf,
     MatPaginatorModule,
     StickyFooterComponent,
-    FormsModule
-],
+    FormsModule,
+    RouterLink
+  ],
   standalone: true
 })
 
-export class DatasourceSearchComponent implements OnInit {
+export class DatasourceSearchComponent implements OnInit, OnDestroy {
   private destroyRef = inject(DestroyRef);
 
   qParams: Params = {};
   gateway = false;
   communityId;
+  communityIdReady = false;
   countries: Country[] = [];
   datasources?: Paging<DatasourceDetails>;
 
@@ -65,6 +66,12 @@ export class DatasourceSearchComponent implements OnInit {
     // from: '0'
   });
 
+  @ViewChild('datasourceModal') requestModalRef!: ElementRef;
+
+  modalDatasourceId: number | null = null;
+  modalRequestType: 'PRIMARY' | 'AFFILIATED' | null = null;
+  modalComment = '';
+
   sortByOptions: Option[] = [
     {value: 'registrationdate', label: 'Registration Date'},
     {value: 'dateofvalidation', label: 'Validation Date'},
@@ -72,62 +79,7 @@ export class DatasourceSearchComponent implements OnInit {
     {value: 'id', label: 'Id'}
   ];
 
-  // Modal State
-
-    @ViewChild('datasourceModal') requestModalRef!: ElementRef;
-
-  modalDatasourceId: number | null = null;
-  modalRequestType: 'PRIMARY' | 'AFFILIATED' | null = null;
-  modalComment = '';
-
-    openRequestModal(datasourceId: number, type: 'PRIMARY' | 'AFFILIATED') {
-    this.modalDatasourceId = datasourceId;
-    this.modalRequestType = type;
-    this.modalComment = '';
-
-    setTimeout(() => {
-      if (typeof UIkit !== 'undefined' && this.requestModalRef?.nativeElement) {
-        UIkit.modal(this.requestModalRef.nativeElement).show();
-      }
-    });
-  }
-     closeModal() {
-    if (typeof UIkit !== 'undefined' && this.requestModalRef?.nativeElement) {
-      UIkit.modal(this.requestModalRef.nativeElement).hide();
-    }
-    this.modalDatasourceId = null;
-    this.modalRequestType = null;
-    this.modalComment = '';
-  }
-
-  confirmModal() {
-    if (this.modalDatasourceId && this.modalRequestType) {
-      console.log('Confirmed request', this.modalDatasourceId, this.modalRequestType, 'with comment', this.modalComment);
-
-      this.createGatewayRequest(this.modalDatasourceId.toString(), this.modalRequestType === 'PRIMARY' ? RequestType.PRIMARY : RequestType.AFFILIATED);
-      this.closeModal();
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (typeof UIkit !== 'undefined') {
-      const active = document.querySelectorAll('.uk-modal.uk-open, .uk-modal-container.uk-open');
-      active.forEach(modal => {
-        try {
-          UIkit.modal(modal).hide();
-        } catch (err) {}
-      });
-    }
-
-    const leftovers = document.querySelectorAll('.body > .uk-modal-container');
-    leftovers.forEach(modal => {
-      try {
-        UIkit.modal(modal).hide();
-      } catch (err) {}
-    })
-  }
-
-
+  protected readonly RequestType = RequestType;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -142,16 +94,10 @@ export class DatasourceSearchComponent implements OnInit {
     this.communityContextService.community.subscribe({
       next: (community) => {
         this.communityId = community ? community.id : environment.OPENAIRE_ID;
+        this.communityIdReady = true;
+        console.log('Community ID is ready: ', this.communityId);
       }
     });
-  }
-
-  private getDatasources(params): Observable<Paging<DatasourceDetails>> {
-    if (this.gateway) {
-      return this.datasourceSearch.searchGatewayDatasources(this.communityId, params);
-    } else {
-      return this.datasourceSearch.search(params);
-    }
   }
 
   ngOnInit() {
@@ -184,6 +130,67 @@ export class DatasourceSearchComponent implements OnInit {
       });
     });
 
+  }
+
+  ngOnDestroy(): void {
+    if (typeof UIkit !== 'undefined') {
+      const active = document.querySelectorAll('.uk-modal.uk-open, .uk-modal-container.uk-open');
+      active.forEach(modal => {
+        try {
+          UIkit.modal(modal).hide();
+        } catch (err) {}
+      });
+    }
+
+    const leftovers = document.querySelectorAll('.body > .uk-modal-container');
+    leftovers.forEach(modal => {
+      try {
+        UIkit.modal(modal).hide();
+      } catch (err) {}
+    });
+  }
+
+  // Modal State
+
+  openRequestModal(datasourceId: number, type: 'PRIMARY' | 'AFFILIATED') {
+    this.modalDatasourceId = datasourceId;
+    this.modalRequestType = type;
+    this.modalComment = '';
+
+    setTimeout(() => {
+      if (typeof UIkit !== 'undefined' && this.requestModalRef?.nativeElement) {
+        UIkit.modal(this.requestModalRef.nativeElement).show();
+      }
+    });
+  }
+  closeModal() {
+    if (typeof UIkit !== 'undefined' && this.requestModalRef?.nativeElement) {
+      UIkit.modal(this.requestModalRef.nativeElement).hide();
+    }
+    this.modalDatasourceId = null;
+    this.modalRequestType = null;
+    this.modalComment = '';
+  }
+
+  confirmModal() {
+    if (this.modalDatasourceId && this.modalRequestType) {
+      console.log('Confirmed request', this.modalDatasourceId, this.modalRequestType, 'with comment', this.modalComment);
+
+      this.createGatewayRequest(
+        this.modalDatasourceId.toString(),
+        this.modalRequestType === 'PRIMARY'
+          ? RequestType.PRIMARY : RequestType.AFFILIATED,
+        this.modalComment);
+      this.closeModal();
+    }
+  }
+
+  private getDatasources(params): Observable<Paging<DatasourceDetails>> {
+    if (this.gateway) {
+      return this.datasourceSearch.searchGatewayDatasources(this.communityId, params);
+    } else {
+      return this.datasourceSearch.search(params);
+    }
   }
 
   handleFilterChanges(path: string) {
@@ -235,10 +242,19 @@ export class DatasourceSearchComponent implements OnInit {
 
   // }
 
-  createGatewayRequest(datasourceId: string, type: RequestType) {
+  createGatewayRequest(datasourceId: string, type: RequestType, comment?: string) {
+      if (!this.communityIdReady || !this.communityId) {
+        console.warn('Community ID not ready yet');
+        return;
+      }
     console.log(`Submitting Gateway Request for ID: ${datasourceId}, Type: ${type}`);
 
-    this.requestService.createGatewayRequest(datasourceId, type).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+    this.requestService.createGatewayRequest(
+      datasourceId,
+      type,
+      this.communityId,
+      comment)
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (value) => {
         console.log('Gateway Request successful:', value);
       },
@@ -269,6 +285,4 @@ export class DatasourceSearchComponent implements OnInit {
     UIkit.modal('#comment-modal').show();
   }
 
-
-  protected readonly RequestType = RequestType;
 }

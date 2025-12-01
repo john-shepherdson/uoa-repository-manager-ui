@@ -150,19 +150,19 @@ export class RequestsService {
 //         return this.http.post<Request>(url, createRequest)
 // }
 
-  private requestBody(datasourceId: string, type: RequestType, comment?: string) {
+  private requestBody(datasourceId: string, type: RequestType, communityId: string, comment?: string) {
     return {
       datasourceId: datasourceId,
-      gatewayId: this.communityID,
+      gatewayId: communityId,
       requestType: type,
       comment: comment || null
     };
   }
 
-  createGatewayRequest(datasourceId: string, type: RequestType, comment?: string): Observable<Request> {
+  createGatewayRequest(datasourceId: string, type: RequestType, communityId: string, comment?: string): Observable<Request> {
     const url = `${this.baseUrl}/datasource-gateway-requests/gateways`;
 
-    const createRequest = this.requestBody(datasourceId, type, comment);
+    const createRequest = this.requestBody(datasourceId, type, communityId, comment);
     return this.http.post<Request>(url, createRequest);
   }
 
