@@ -10,7 +10,7 @@
     <div id="main-menu" class="uk-visible@m">
       <div>
         <div class="uk-navbar-container uk-sticky uk-sticky-fixed" data-uk-sticky="" >
-          <a target="_blank">
+          <a *ngIf="environment.beta" target="_blank">
             <img alt="BETA" class="uk-position-top-left" style="height: 65px; width: 65px; z-index: 1000;" src="assets/prototype_flag.svg">
           </a>
           <div class="uk-container uk-container-expand">

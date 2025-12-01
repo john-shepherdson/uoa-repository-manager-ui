@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../services/authentication.service';
-import {CommunityContextService} from '../../services/communityContext.service';
-import {environment} from '../../../environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
+import { CommunityContextService } from '../../services/communityContext.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'top-menu-dashboard',
@@ -9,6 +9,9 @@ import {environment} from '../../../environments/environment';
 })
 
 export class TopmenuDashboardComponent implements OnInit {
+
+  protected readonly environment = environment;
+
   baseLogoUrl = environment.LOGO_URL;
 
   userLoggedIn = false;
