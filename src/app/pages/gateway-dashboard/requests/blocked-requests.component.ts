@@ -35,8 +35,8 @@ export class BlockedRequestsComponent extends OpenaireActionsComponent {
   }
 
   protected updateDecision(id: number, decision: Decision, authority: Authority, comment: string) {
-    console.warn('Comment is ignored.')
+    console.warn('Comment is ignored.');
     this.requestsService.updateRequestStatus(id, decision)
-      .subscribe(super.reloadRequests);
+      .subscribe(() => this.reloadRequests.next({}));
   }
 }

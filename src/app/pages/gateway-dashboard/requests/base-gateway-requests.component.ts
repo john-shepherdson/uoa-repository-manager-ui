@@ -13,6 +13,7 @@ import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {ReusableTableComponent} from 'src/app/shared/reusable-table/reusable-table.component';
 import {CommunityContextService} from 'src/app/services/communityContext.service';
 import {CommonModule} from '@angular/common';
+import {environment} from '../../../../environments/environment';
 
 export const BASE_IMPORTS = [
   CommonModule,
@@ -28,9 +29,9 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 
   requests: Paging<Request>;
   private sub?: Subscription;
-  showActionsColumn: boolean = false;
+  showActionsColumn = false;
   qParams: Params = {};
-  loading: boolean = false;
+  loading = false;
   errorMessage: string | null = null;
   loadingMessage: string | null = null;
   communityId: string | null = null;
@@ -62,6 +63,29 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     protected route: ActivatedRoute,
     protected communityService: CommunityContextService) {
   }
+
+  protected readonly reloadRequests: PartialObserver<any> = {
+    next: () => {
+      this.getRequests(this.qParams).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.requests = data;
+          this.loadingMessage = null;
+          this.errorMessage = null;
+        },
+        error: (err) => {
+          console.error('Error fetching requests:', err);
+          this.loadingMessage = null;
+          this.errorMessage = 'Error fetching requests';
+        }
+      });
+    },
+    error: err => {
+      this.loadingMessage = null;
+      this.errorMessage = `Error processing request: ${err.message || err}`;
+      console.error('Error processing request:', err);
+    }
+  };
 
   protected abstract getRequests(params: any): Observable<Paging<Request>>;
 
@@ -110,7 +134,8 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 
     this.communityService.getCurrentCommunityId().subscribe(id => {
       console.log('Current community ID:', id);
-      this.communityId = id;
+      this.communityId = id ? id : environment.OPENAIRE_ID ;
+      console.log(this.communityId);
     });
   }
 
@@ -141,7 +166,7 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 
   handleDecision(event: { request: Request; decision: Decision; comment?: string }) {
     const {request, decision, comment} = event;
-
+    console.log(this.communityId);
     if (!this.communityId) {
       console.error('Community ID is not set');
       this.loadingMessage = null;
@@ -166,29 +191,6 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
     this.requestsService.createRequestDecision(id, decision, authority, comment || '')
       .subscribe(this.reloadRequests);
   }
-
-  protected readonly reloadRequests: PartialObserver<any> = {
-    next: () => {
-      this.getRequests(this.qParams).subscribe({
-        next: (data) => {
-          console.log(data);
-          this.requests = data;
-          this.loadingMessage = null;
-          this.errorMessage = null;
-        },
-        error: (err) => {
-          console.error('Error fetching requests:', err);
-          this.loadingMessage = null;
-          this.errorMessage = 'Error fetching requests';
-        }
-      });
-    },
-    error: err => {
-      this.loadingMessage = null;
-      this.errorMessage = `Error processing request: ${err.message || err}`;
-      console.error('Error processing request:', err);
-    }
-  };
 
 }
 

@@ -36,24 +36,21 @@ export class RequestsService {
   }
 
   getOpenaireActions(queryParams: Params): Observable<Paging<Request>> {
-    let gateway = environment.OPENAIRE_ID
+    const gateway = environment.OPENAIRE_ID;
 
     const url = `${this.baseUrl}/gateways/${gateway}/actions`;
     return this.getRequestsFromUrl(url, queryParams);
   }
 
   getGatewayActions(queryParams: Params): Observable<Paging<Request>> {
-    // TODO: implement : path: /gateways/{id}/actions
-
-    let gateway = this.communityID ? this.communityID : environment.OPENAIRE_ID
+    const gateway = this.communityID ? this.communityID : environment.OPENAIRE_ID;
 
     const url = `${this.baseUrl}/gateways/${gateway}/actions`;
     return this.getRequestsFromUrl(url, queryParams);
   }
 
   getGatewayRequests(queryParams: Params): Observable<Paging<Request>> {
-    // TODO: implement : path: /gateways/{id}/requests
-    let gateway = this.communityID ? this.communityID : environment.OPENAIRE_ID
+    const gateway = this.communityID ? this.communityID : environment.OPENAIRE_ID;
 
     const url = `${this.baseUrl}/gateways/${gateway}/requests`;
     return this.getRequestsFromUrl(url, queryParams);
