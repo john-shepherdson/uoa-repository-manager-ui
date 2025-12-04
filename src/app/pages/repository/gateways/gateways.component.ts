@@ -57,30 +57,30 @@ export class GatewaysComponent implements OnInit {
     }
   }
 
-  approveRequest(requestId: number) {
-    console.log('Approve request', requestId);
-    this.requestsService.createRequestDecision(requestId, Decision.APPROVED, Authority.TARGET_GATEWAY_ADMIN, 'Approved by admin')
-      .subscribe({
-        next: (res) => {
-          console.log('Request approved:', res);
-        },
-        error: (err) => {
-          console.error('Error approving request:', err);
-        }
-      });
-  }
-
-  rejectRequest(requestId: number) {
-    console.log('Reject request', requestId);
-    this.requestsService.createRequestDecision(requestId, Decision.REJECTED, Authority.TARGET_GATEWAY_ADMIN, 'Rejected by admin')
-      .subscribe({
-        next: (res) => {
-          console.log('Request rejected:', res);
-        },
-        error: (err) => {
-          console.error('Error rejecting request:', err);
-        }
-      });
-  }
+  // approveRequest(requestId: number) {
+  //   console.log('Approve request', requestId);
+  //   this.requestsService.createRequestDecision(requestId, Decision.APPROVED, Authority.TARGET_GATEWAY_ADMIN, 'Approved by admin')
+  //     .subscribe({
+  //       next: (res) => {
+  //         console.log('Request approved:', res);
+  //       },
+  //       error: (err) => {
+  //         console.error('Error approving request:', err);
+  //       }
+  //     });
+  // }
+  //
+  // rejectRequest(requestId: number) {
+  //   console.log('Reject request', requestId);
+  //   this.requestsService.createRequestDecision(requestId, Decision.REJECTED, Authority.TARGET_GATEWAY_ADMIN, 'Rejected by admin')
+  //     .subscribe({
+  //       next: (res) => {
+  //         console.log('Request rejected:', res);
+  //       },
+  //       error: (err) => {
+  //         console.error('Error rejecting request:', err);
+  //       }
+  //     });
+  // }
 
 }

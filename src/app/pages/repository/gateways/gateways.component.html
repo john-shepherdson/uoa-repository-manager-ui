@@ -84,7 +84,7 @@
                       <th class="uk-table-middle">Source Gateway</th>
                       <th class="uk-table-middle">Target Gateway</th>
                       <th class="uk-table-middle">Status</th>
-                      <th class="uk-table-middle">Actions</th>
+<!--                      <th class="uk-table-middle">Actions</th>-->
                     </tr>
                   </thead>
                   <tbody>
@@ -142,12 +142,12 @@
                           {{ request.status }}
                         </span>
                       </td>
-                      <td>
-                        <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-primary uk-button-small uk-margin-small-right"
-                          (click)="approveRequest(request.id, repo)">Approve</button>
-                        <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"
-                          (click)="rejectRequest(request.id, repo)">Reject</button>
-                      </td>
+<!--                      <td>-->
+<!--                        <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-primary uk-button-small uk-margin-small-right"-->
+<!--                          (click)="approveRequest(request.id, repo)">Approve</button>-->
+<!--                        <button *ngIf="request.status === 'PENDING'" class="uk-button uk-button-danger uk-button-small"-->
+<!--                          (click)="rejectRequest(request.id, repo)">Reject</button>-->
+<!--                      </td>-->
                     </tr>
                   </tbody>
                 </table>
