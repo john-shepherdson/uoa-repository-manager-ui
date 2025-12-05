@@ -26,10 +26,12 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
   repositories: RepositorySnippet[] = [];
   loading = false;
   requestsMap: Map<string, Request[]> = new Map();
-  foundRequest: boolean = false;
+  foundRequest = false;
 
-  constructor(protected sharedService: SharedService, protected requestsService: RequestsService, protected repositoryService: RepositoryService,
-              protected router: Router, protected route: ActivatedRoute, protected communityService: CommunityContextService) {
+  constructor(protected sharedService: SharedService, protected requestsService: RequestsService,
+              protected repositoryService: RepositoryService,
+              protected router: Router, protected route: ActivatedRoute,
+              protected communityService: CommunityContextService) {
     super(requestsService, sharedService, repositoryService, router, route, communityService);
   }
 
