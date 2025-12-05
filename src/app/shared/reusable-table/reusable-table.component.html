@@ -1,5 +1,6 @@
-<table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-width-1-1">
-  <thead>
+<ng-container *ngIf="data.length > 0; else noRequests">
+  <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-width-1-1">
+    <thead>
     <tr>
       <th class="uk-table-middle">Request Type</th>
       <th class="uk-table-middle">Datasource</th>
@@ -8,8 +9,8 @@
       <th class="uk-table-middle">Status</th>
       <th *ngIf="showActionsColumn" class="uk-text-center uk-table-middle">Actions</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <tr *ngFor="let request of data">
       <!-- Request Type -->
       <td>{{ request.requestType }}</td>
@@ -68,14 +69,14 @@
       <td *ngIf="showActionsColumn" class="uk-text-center">
         <div class="uk-flex uk-flex-column uk-flex-center">
           <button *ngIf="!request.ownerApproval || request.ownerApproval?.decision === 'PENDING'"
-            class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
-            (click)="openDecisionModal(request, 'APPROVED')">
+                  class="uk-button uk-button-primary uk-button-small uk-margin-small-bottom"
+                  (click)="openDecisionModal(request, 'APPROVED')">
             Approve
           </button>
 
           <button *ngIf="!request.ownerApproval || request.ownerApproval?.decision === 'PENDING'"
-             class="uk-button uk-button-danger uk-button-small"
-            (click)="openDecisionModal(request, 'REJECTED')">
+                  class="uk-button uk-button-danger uk-button-small"
+                  (click)="openDecisionModal(request, 'REJECTED')">
             Reject
           </button>
           <span *ngIf="request.status !== 'PENDING'" class="uk-text-bold uk-text-small">
@@ -84,8 +85,13 @@
       </td>
 
     </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</ng-container>
+
+<ng-template #noRequests>
+  <div class="uk-alert">No Requests at the moment.</div>
+</ng-template>
 
 <div #decisionModal class="uk-modal-container" uk-modal>
   <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
