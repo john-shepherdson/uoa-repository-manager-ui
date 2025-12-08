@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {RequestsService} from '../services/request.service';
 import {SharedService} from 'src/app/services/shared.service';
 import {RepositoryService} from 'src/app/services/repository.service';
-import {Request} from '../domain/request.domain';
+import {Authority, Decision, Request} from '../domain/request.domain';
 import {Paging} from 'src/app/domain/paging';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -33,5 +33,16 @@ export class GatewayActionsComponent extends BaseGatewayRequestsComponent {
 
   protected getRequests(params: any): Observable<Paging<Request>> {
     return this.requestsService.getGatewayActions(params);
+  }
+
+  override handleDecision(event: { request: Request; decision: Decision; comment?: string }) {
+    const { request, decision, comment } = event;
+    this.updateDecision(request.id, decision, Authority.DATASOURCE_ADMIN, comment || '');
+  }
+
+  override checkIfActionsAllowed(request: Request): boolean {
+    const sourcePending = !request.sourceGatewayApproval || request.sourceGatewayApproval.decision === 'PENDING';
+    const datasourcePending = !request.ownerApproval || request.ownerApproval.decision === 'PENDING';
+    return sourcePending && datasourcePending;
   }
 }

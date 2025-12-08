@@ -192,5 +192,9 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
       .subscribe(this.reloadRequests);
   }
 
+checkIfActionsAllowed(request: Request): boolean {
+    return true;
+}
+
 }
 

@@ -55,7 +55,7 @@
             <!-- Table -->
             <app-reusable-table
               [data]="requests?.results" [allowBlockedActions]="true" [showActionsColumn]="showActionsColumn" [currentGatewayId]="communityId"
-              (confirmDecision)="handleDecision($event)">
+              [canPerformActions]="checkIfActionsAllowed" (confirmDecision)="handleDecision($event)">
             </app-reusable-table>
           </div>
       </div>
