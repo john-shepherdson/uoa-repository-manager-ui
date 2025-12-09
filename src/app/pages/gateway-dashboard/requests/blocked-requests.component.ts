@@ -27,10 +27,9 @@ export class BlockedRequestsComponent extends OpenaireActionsComponent {
     protected route: ActivatedRoute,
     protected communityService: CommunityContextService) {
     super(requestsService, sharedService, repositoryService, router, route, communityService);
-    this.showActionsColumn = true;
   }
 
-  protected getRequests(params: any): Observable<Paging<Request>> {
+  protected override getRequests(params: any): Observable<Paging<Request>> {
     return this.requestsService.getBlockedRequests(params);
   }
 
@@ -38,5 +37,9 @@ export class BlockedRequestsComponent extends OpenaireActionsComponent {
     console.warn('Comment is ignored.');
     this.requestsService.updateRequestStatus(id, decision)
       .subscribe(() => this.reloadRequests.next({}));
+  }
+
+  protected override checkIfActionsAllowed(request: Request): boolean {
+    return request.status === 'BLOCKED';
   }
 }

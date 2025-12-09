@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {Request} from 'src/app/pages/gateway-dashboard/domain/request.domain';
+import {Decision, Request} from 'src/app/pages/gateway-dashboard/domain/request.domain';
 
 declare const UIkit: any;
 
@@ -13,18 +13,16 @@ declare const UIkit: any;
 })
 export class ReusableTableComponent {
   @Input() data: Request[] = [];
-  @Input() showActionsColumn: boolean = false;
-  @Input() currentGatewayId: number | null = null;
-  @Input() allowBlockedActions: boolean = false;
   @ViewChild('decisionModal') decisionModalRef!: ElementRef;
-  @Output() confirmDecision = new EventEmitter<{ request: Request, decision: 'APPROVED' | 'REJECTED'; comment?: string }>();
-  @Input() canPerformActions: (request: Request) => boolean = () => true;
+  @Output() confirmDecision = new EventEmitter<{ request: Request, decision: Decision; comment?: string }>();
+  @Input({required: true}) showActionsColumn: () => boolean;
+  @Input({required: true}) canPerformActions: (request: Request) => boolean;
   // modal state
   modalRequest: Request | null = null;
-  modalDecision: 'APPROVED' | 'REJECTED' | null = null;
+  modalDecision: Decision | null = null;
   modalComment: string = '';
 
-  openDecisionModal(request: Request, decision: 'APPROVED' | 'REJECTED') {
+  openDecisionModal(request: Request, decision: Decision) {
     console.log('Opening modal for', request.id, 'with decision', decision);
     this.modalRequest = request;
     this.modalDecision = decision;
@@ -81,5 +79,6 @@ export class ReusableTableComponent {
     });
   }
 
+  protected readonly Decision = Decision;
 }
 

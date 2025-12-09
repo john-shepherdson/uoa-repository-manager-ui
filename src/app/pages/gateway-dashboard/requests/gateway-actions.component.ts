@@ -27,11 +27,9 @@ export class GatewayActionsComponent extends BaseGatewayRequestsComponent {
     protected route: ActivatedRoute,
     protected communityService: CommunityContextService) {
     super(requestsService, sharedService, repositoryService, router, route, communityService);
-
-    this.showActionsColumn = true;
   }
 
-  protected getRequests(params: any): Observable<Paging<Request>> {
+  protected override getRequests(params: any): Observable<Paging<Request>> {
     return this.requestsService.getGatewayActions(params);
   }
 
@@ -40,9 +38,8 @@ export class GatewayActionsComponent extends BaseGatewayRequestsComponent {
     this.updateDecision(request.id, decision, Authority.DATASOURCE_ADMIN, comment || '');
   }
 
-  override checkIfActionsAllowed(request: Request): boolean {
+  protected override checkIfActionsAllowed(request: Request): boolean {
     const sourcePending = !request.sourceGatewayApproval || request.sourceGatewayApproval.decision === 'PENDING';
-    const datasourcePending = !request.ownerApproval || request.ownerApproval.decision === 'PENDING';
-    return sourcePending && datasourcePending;
+    return request.status === 'PENDING' && sourcePending;
   }
 }

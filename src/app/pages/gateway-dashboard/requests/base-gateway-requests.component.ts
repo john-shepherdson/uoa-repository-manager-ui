@@ -29,7 +29,6 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 
   requests: Paging<Request>;
   private sub?: Subscription;
-  showActionsColumn = false;
   qParams: Params = {};
   loading = false;
   errorMessage: string | null = null;
@@ -89,6 +88,10 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
 
   protected abstract getRequests(params: any): Observable<Paging<Request>>;
 
+  protected showActionsColumn(): boolean {
+    return true;
+  }
+
   ngOnInit(): void {
     const currentUrl = this.router.url;
     // this.showActionsColumn = currentUrl.includes('/requests/actions');
@@ -133,9 +136,8 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
       });
 
     this.communityService.getCurrentCommunityId().subscribe(id => {
-      console.log('Current community ID:', id);
-      this.communityId = id ? id : environment.OPENAIRE_ID ;
-      console.log(this.communityId);
+      this.communityId = id ? id : environment.OPENAIRE_ID;
+      console.debug('Current community ID:', this.communityId);
     });
   }
 
@@ -192,9 +194,7 @@ export abstract class BaseGatewayRequestsComponent implements OnInit {
       .subscribe(this.reloadRequests);
   }
 
-checkIfActionsAllowed(request: Request): boolean {
-    return true;
-}
+  protected abstract checkIfActionsAllowed(request: Request): boolean;
 
 }
 

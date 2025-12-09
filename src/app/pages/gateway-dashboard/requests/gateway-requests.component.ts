@@ -27,10 +27,17 @@ export class GatewayRequestsComponent extends BaseGatewayRequestsComponent {
     protected route: ActivatedRoute,
     protected communityService: CommunityContextService) {
     super(requestsService, sharedService, repositoryService, router, route, communityService);
-    this.showActionsColumn = false;
   }
 
-  protected getRequests(params: any): Observable<Paging<Request>> {
+  protected override showActionsColumn(): boolean {
+    return false;
+  }
+
+  protected override getRequests(params: any): Observable<Paging<Request>> {
     return this.requestsService.getGatewayRequests(params);
+  }
+
+  protected override checkIfActionsAllowed(request: Request): boolean {
+    return false;
   }
 }

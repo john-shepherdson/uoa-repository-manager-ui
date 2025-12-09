@@ -29,10 +29,17 @@ export class AdminRequestsComponent extends BaseGatewayRequestsComponent {
     protected route: ActivatedRoute,
     protected communityService: CommunityContextService) {
     super(requestsService, sharedService, repositoryService, router, route, communityService);
-    this.showActionsColumn = false;
   }
 
-  protected getRequests(params: any): Observable<Paging<Request>> {
+  protected override showActionsColumn() {
+    return false;
+  }
+
+  protected override getRequests(params: any): Observable<Paging<Request>> {
     return this.requestsService.getAllRequests(params);
+  }
+
+  protected override checkIfActionsAllowed(request: Request): boolean {
+    return false;
   }
 }

@@ -29,8 +29,6 @@ export class OpenaireActionsComponent extends BaseGatewayRequestsComponent {
     protected communityService: CommunityContextService) {
 
     super(requestsService, sharedService, repositoryService, router, route, communityService);
-    this.showActionsColumn = true;
-
   }
 
   protected getRequests(params: any): Observable<Paging<Request>> {
@@ -47,5 +45,10 @@ export class OpenaireActionsComponent extends BaseGatewayRequestsComponent {
       authority = Authority.TARGET_GATEWAY_ADMIN;
     }
     this.updateDecision(request.id, decision, authority, comment);
+  }
+
+  protected override checkIfActionsAllowed(request: Request): boolean {
+    const sourcePending = !request.sourceGatewayApproval || request.sourceGatewayApproval.decision === 'PENDING';
+    return request.status === 'PENDING' && sourcePending;
   }
 }

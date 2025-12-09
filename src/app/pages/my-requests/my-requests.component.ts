@@ -58,7 +58,7 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
     }
   }
 
-  protected getRequests(params: any): Observable<Paging<Request>> {
+  protected override getRequests(params: any): Observable<Paging<Request>> {
     return this.requestsService.getAllRequests(params);
   }
 
@@ -85,10 +85,14 @@ export class MyRequestsComponent extends BaseGatewayRequestsComponent implements
           if (next.results.length > 0) {
             this.foundRequest = true;
           }
-          console.log(this.requestsMap);
         }
       );
     });
+  }
+
+  protected override checkIfActionsAllowed(request: Request): boolean {
+    const datasourcePending = !request.ownerApproval || request.ownerApproval.decision === 'PENDING';
+    return request.status === 'PENDING' && datasourcePending;
   }
 
 }
