@@ -27,7 +27,7 @@ export const canMatchGuard: CanMatchFn = (route: Route, segments: UrlSegment[]) 
 
   const role = authenticationService.getUserRole();
   if (role && (role.includes('Super_Administrator') || role.includes('Content_Provider_Dashboard_Administrator'))) {
-    console.log('Admin recognized');
+    console.debug('Admin recognized');
     return true;
   }
 
